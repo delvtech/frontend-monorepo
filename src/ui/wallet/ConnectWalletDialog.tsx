@@ -2,7 +2,6 @@ import React, { ReactElement, useCallback } from "react";
 import SimpleDialog from "src/ui/base/Dialog/Dialog";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-import Image from "next/image";
 import {
   getWalletConnectConnector,
   injectedConnector,
@@ -10,6 +9,8 @@ import {
 import Button from "src/ui/base/Button/Button";
 import { ButtonSize, ButtonVariant } from "src/ui/base/Button/styles";
 import H3 from "src/ui/base/H3/H3";
+import MetaMaskIcon from "src/ui/base/svg/MetaMaskIcon/MetaMaskIcon";
+import WalletConnectIcon from "src/ui/base/svg/WalletConnectIcon/WalletConnectIcon";
 import { t } from "ttag";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -17,12 +18,10 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 interface ConnectWalletDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onConnected?: () => void;
 }
 export function ConnectWalletDialog({
   isOpen,
   onClose,
-  onConnected,
 }: ConnectWalletDialogProps): ReactElement {
   const {
     activate,
@@ -33,10 +32,9 @@ export function ConnectWalletDialog({
   const activateConnector = useCallback(
     async (connector: InjectedConnector | WalletConnectConnector) => {
       await activate(connector, deactivateActiveConnector);
-      onConnected?.();
       onClose?.();
     },
-    [activate, deactivateActiveConnector, onClose, onConnected],
+    [activate, deactivateActiveConnector, onClose],
   );
 
   const handleConnectToMetaMask = useCallback(async () => {
@@ -65,13 +63,7 @@ export function ConnectWalletDialog({
             className="grid place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
           >
             <div className="grid place-items-center">
-              <div className="relative h-16 w-16">
-                <Image
-                  layout="fill"
-                  src="/assets/metamask.svg"
-                  alt="MetaMask"
-                />
-              </div>
+              <MetaMaskIcon className="h-16 w-16" />
               <span className="mt-2 text-base">MetaMask</span>
             </div>
           </Button>
@@ -82,13 +74,7 @@ export function ConnectWalletDialog({
             className="grid place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
           >
             <div className="grid h-full w-full place-items-center">
-              <div className="relative h-16 w-16">
-                <Image
-                  layout="fill"
-                  src="/assets/walletConnectIcon.svg"
-                  alt="MetaMask"
-                />
-              </div>
+              <WalletConnectIcon className="h-16 w-16" />
               <span className="mt-2 text-base">WalletConnect</span>
             </div>
           </Button>

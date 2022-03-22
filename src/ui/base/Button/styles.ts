@@ -34,6 +34,7 @@ export enum ButtonVariant {
   OUTLINE_BLUE = "outlineBlue",
   MINIMAL = "minimal",
   PALE = "paleLily",
+  REWARD = "reward",
 }
 
 export function getButtonClass({
@@ -61,7 +62,11 @@ export function getButtonClass({
     "focus:ring-2",
     "focus:ring-offset-2",
     "focus:ring-brandDarkBlue",
-    { "flex-1": fill, "pointer-events-none": disabled, "opacity-50": disabled },
+    {
+      "flex-1": fill,
+      "pointer-events-none": disabled,
+      "opacity-50": disabled,
+    },
   );
 
   return buttonStyle;
@@ -118,6 +123,14 @@ function getBackground(
     case ButtonVariant.PALE:
       return classNames("bg-paleLily", "hover:bg-paleLily-dark");
 
+    case ButtonVariant.REWARD:
+      return classNames(
+        "bg-gradient-to-b",
+        "from-zinc-500/20",
+        "to-brandLightBlue",
+        "hover:from-brandLightBlue",
+      );
+
     default: {
       assertNever(variant);
     }
@@ -129,6 +142,7 @@ function getTextColor(variant: ButtonVariant): string {
     case ButtonVariant.PRIMARY:
     case ButtonVariant.OUTLINE_WHITE:
     case ButtonVariant.GRADIENT:
+    case ButtonVariant.REWARD:
       return classNames("text-white");
 
     case ButtonVariant.SECONDARY:

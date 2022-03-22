@@ -13,10 +13,6 @@ import { t } from "ttag";
 interface PageViewProps {
   children?: ReactNode;
   childrenContainerClassName?: string;
-  /**
-   * Whether or not the sidebar navigation should be shown, defaults to true
-   */
-  showSidebar?: boolean;
   showHeader?: boolean;
   showFooter?: boolean;
 }
@@ -24,7 +20,6 @@ interface PageViewProps {
 export default function PageView(props: PageViewProps): ReactElement {
   const {
     children,
-    showSidebar = true,
     showHeader = true,
     showFooter = false,
     childrenContainerClassName,
@@ -36,12 +31,8 @@ export default function PageView(props: PageViewProps): ReactElement {
       <div
         className={classNames(
           "flex h-full w-full justify-between bg-appBackgroundLight",
-          {
-            "md:pl-60": showSidebar,
-          },
         )}
       >
-        {showSidebar ? <Sidebar account={account} /> : null}
         <div className="flex h-full w-full flex-1 flex-col items-center p-6">
           {showHeader ? <Header /> : null}
 

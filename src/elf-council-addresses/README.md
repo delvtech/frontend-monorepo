@@ -2,8 +2,7 @@
 
 ## Background
 
-This directory stores the `*.addresses.json` files used to run the app. 
-
+This directory stores the `*.addresses.json` files used to run the app.
 
 Currently we only have a `testnet.addresses.json`.
 
@@ -26,4 +25,5 @@ console.log("Element Token address", addressesJson.addresses.elementToken);
 ```
 
 ## Note on adding new chains
+
 Each `*.addresses.json` file must match the `AddressesJsonFile.ts` interface.

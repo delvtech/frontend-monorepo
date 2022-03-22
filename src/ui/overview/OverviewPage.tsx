@@ -1,136 +1,134 @@
 import React, { ReactElement } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
-import { Disclosure } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
-import classNames from "classnames";
 import { t } from "ttag";
 
-import Card from "src/ui/base/Card/Card";
 import H1 from "src/ui/base/H1/H1";
-import { PortfolioCard } from "src/ui/overview/PortfolioCard";
+import USDCIcon from "src/ui/base/svg/USDCIcon";
+import {
+  ExternalLinkIcon,
+  InformationCircleIcon,
+} from "@heroicons/react/outline";
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import H3 from "src/ui/base/H3/H3";
 
-import { SummaryCards } from "./SummaryCards";
-import { ProposalsJson } from "elf-council-proposals";
-
-interface OverviewPageProps {
-  proposalsJson: ProposalsJson;
-}
-export function OverviewPage({
-  proposalsJson,
-}: OverviewPageProps): ReactElement {
+const pools = [
+  {
+    name: "LP Principal Token yUSDC:07-APR-22-GMT",
+    tokenSymbol: "LP Principal Token yUSDC:07-APR-22-GMT",
+    poolAddress: "0xEA4058419730bc53Cce50950D458E41c22F94452",
+    poolIcon: <USDCIcon className="mr-4 inline h-8 w-8" />,
+    rewardsRate: "500 ELFI/week",
+    title: "Front-end Developer",
+    department: "Optimization",
+    depositedBalance: "0.0000",
+    pendingRewards: "0.0000 ELFI",
+    lpTokenBalance: "0.0000",
+  },
+];
+interface OverviewPageProps {}
+export function OverviewPage({}: OverviewPageProps): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
   return (
-    <div className="h-full w-full space-y-6 lg:max-w-[1024px]">
-      <div className="px-8 py-1">
-        <H1 className="text-center text-principalRoyalBlue">
-          {" "}
-          {t`Governance Overview`}
-        </H1>
+    <div className="flex h-full w-full flex-col items-center space-y-6 ">
+      <div className="relative mb-6">
+        <h2 className="text-center text-3xl font-extrabold leading-8 tracking-tight text-principalRoyalBlue sm:text-4xl">
+          {t`Element Finance Liquidity Mining`}
+        </h2>
+        <p className="mx-auto mt-4 max-w-3xl text-center text-xl text-gray-500">
+          {t`Earn voting power (a.k.a. ELFI) by staking your Element Finance LP tokens.`}
+        </p>
       </div>
-      <SummaryCards proposalsJson={proposalsJson} />
-      <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 lg:flex-row lg:space-x-6 lg:space-y-0">
-        <div className="w-full">
-          <PortfolioCard account={account} />
-        </div>
-        <div className="w-full">
-          <FAQ />
-        </div>
+
+      <div className="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+        <table className="min-w-full divide-y divide-gray-300">
+          <thead className="bg-gray-50">
+            <tr>
+              <th
+                scope="col"
+                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+              >
+                {t`Eligible LP Token`}
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
+                {t`Weekly Rewards`}
+              </th>
+              <th
+                scope="col"
+                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+              >
+                {t`Your pending rewards`}
+              </th>
+              <th
+                scope="col"
+                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+              >
+                {t`Staked balance`}
+              </th>
+              <th
+                scope="col"
+                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+              >
+                {t`Available to stake`}
+              </th>
+              {/* Actions*/}
+              <th
+                scope="col"
+                className="relative py-3.5 pl-3 pr-4 text-sm sm:pr-6"
+              >{t`Actions`}</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 bg-white">
+            {pools.map((pool) => (
+              <tr key={pool.depositedBalance}>
+                <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                  <a
+                    href={`https://testnet.element.fi/pools/${pool.poolAddress}`}
+                    className="underline hover:no-underline"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {pool.poolIcon}
+                    {pool.name}
+                    <ExternalLinkIcon className="mb-1 ml-0.5 inline h-4" />
+                  </a>
+                </td>
+
+                <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
+                  {pool.rewardsRate}
+                </td>
+                <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                  {pool.pendingRewards}
+                </td>
+                <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                  {pool.depositedBalance}
+                </td>
+                <td className="px-3 py-4 text-sm text-gray-500">
+                  {pool.lpTokenBalance}
+                </td>
+                <td className="flex space-x-2 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                  <Button>{t`Stake`}</Button>
+                  <Button
+                    disabled
+                    variant={ButtonVariant.MINIMAL}
+                  >{t`Unstake`}</Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+      <p className="mx-auto mt-4 max-w-3xl text-center text-base text-gray-500">
+        <InformationCircleIcon className="mr-1 mb-0.5 inline h-4 w-4" />
+        {t`Note: Clicking Unstake will also claim your pending ELFI rewards.`}
+      </p>
     </div>
   );
 }
 
 export default OverviewPage;
-
-function FAQ() {
-  return (
-    <Card className="w-full shadow-md lg:max-w-[512px]">
-      <span className="text-xl font-bold tracking-widest text-principalRoyalBlue">{t`FAQ`}</span>
-      <div className="w-full pt-4">
-        <div className="mx-auto w-full max-w-md rounded-2xl bg-white">
-          <Disclosure as="div" className="mt-2">
-            {({ open }) => (
-              <>
-                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky px-4 py-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                  <span>{t`What is Element Council?`}</span>
-
-                  <ChevronDownIcon
-                    className={classNames(
-                      open ? classNames("rotate-180 transform") : "",
-                      "ml-2 h-5 w-5 transition duration-150 ease-in-out",
-                    )}
-                    aria-hidden="true"
-                  />
-                </Disclosure.Button>
-                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  {t`The goal of vibrations is to plant the seeds of interconnectedness rather than pain. Energy is a constant.`}
-                </Disclosure.Panel>
-              </>
-            )}
-          </Disclosure>
-          <Disclosure as="div" className="mt-2">
-            {({ open }) => (
-              <>
-                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky px-4 py-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                  <span>{t`How does delegated voting work?`}</span>
-                  <ChevronDownIcon
-                    className={classNames(
-                      open ? classNames("rotate-180 transform") : "",
-                      "ml-2 h-5 w-5 transition duration-150 ease-in-out",
-                    )}
-                    aria-hidden="true"
-                  />
-                </Disclosure.Button>
-                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  Inspiration requires exploration. To traverse the circuit is
-                  to become one with it.
-                </Disclosure.Panel>
-              </>
-            )}
-          </Disclosure>
-          <Disclosure as="div" className="mt-2">
-            {({ open }) => (
-              <>
-                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky px-4 py-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                  <span>{t`Who are the GSC (Governance Steering Council)?`}</span>
-                  <ChevronDownIcon
-                    className={classNames(
-                      open ? classNames("rotate-180 transform") : "",
-                      "ml-2 h-5 w-5 transition duration-150 ease-in-out",
-                    )}
-                    aria-hidden="true"
-                  />
-                </Disclosure.Button>
-                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  {t`To wander the vision quest is to become one with it. We exist as electromagnetic forces.`}
-                </Disclosure.Panel>
-              </>
-            )}
-          </Disclosure>
-          <Disclosure as="div" className="mt-2">
-            {({ open }) => (
-              <>
-                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky px-4 py-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                  <span>{t`What is a voting vault?`}</span>
-                  <ChevronDownIcon
-                    className={classNames(
-                      open ? classNames("rotate-180 transform") : "",
-                      "ml-2 h-5 w-5 transition duration-150 ease-in-out",
-                    )}
-                    aria-hidden="true"
-                  />
-                </Disclosure.Button>
-                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  The dreamscape is beaming with sub-atomic particles.
-                  Aspiration is a constant.
-                </Disclosure.Panel>
-              </>
-            )}
-          </Disclosure>
-        </div>
-      </div>
-    </Card>
-  );
-}
