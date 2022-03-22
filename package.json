@@ -114,8 +114,8 @@
     "src/**/*.{css,scss}": "stylelint",
     "*.{js,css,md}": "prettier --write"
   },
-  "name": "elf-council-frontend",
-  "homepage": "https://github.com/element-fi/elf-council-frontend",
+  "name": "liquidity-mining-ui",
+  "homepage": "https://github.com/element-fi/liquidity-mining-ui",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -129,15 +129,8 @@
     "prettier:check": "prettier --check \"{pages,src}/**/*.ts{,x}\"",
     "stylelint": "stylelint \"src/**/*.{css,scss}\"",
     "start": "next start",
-    "_copy-testnet-addresses": "cp ../elf-council-testnet/src/addresses/testnet.addresses.json src/elf-council-addresses/testnet.addresses.json",
-    "_copy-testnet-tokenlist": "cp ../elf-council-testnet/src/tokenlist/testnet.tokenlist.json src/elf-council-tokenlist/testnet.tokenlist.json",
-    "copy-testnet": "npm run _copy-testnet-addresses && npm run _copy-testnet-tokenlist",
-    "update-elf-council-typechain": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-typechain.git",
-    "update-elf-council-proposals": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-proposals.git",
-    "update-elf-council-tokenlist": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-tokenlist.git",
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -s public",
-    "chromatic": "chromatic --exit-zero-on-changes --skip 'dependabot/**'",
     "prepare": "husky install",
     "test": "jest",
     "test-watch": "jest --watch"
