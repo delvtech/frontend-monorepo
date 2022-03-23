@@ -14,7 +14,7 @@ import { t } from "ttag";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import ElementUrls from "src/elf/urls";
+import ExternalUrls from "src/elf/urls";
 import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";
 
 interface SidebarProps {
@@ -59,32 +59,32 @@ export default function Sidebar(props: SidebarProps): ReactElement {
             </button>
           </div>
           <div className="mt-16 space-y-6">
-            <SidebarLink
-              link="/"
+            <SidebarLinkExternal
+              link={ExternalUrls.GOVERNANCE_OVERVIEW}
               label={t`Overview`}
-              router={router}
               icon={
                 <HomeIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
               }
             />
-            <SidebarLink
-              link="/proposals"
+            <SidebarLinkExternal
+              link={ExternalUrls.GOVERNANCE_PROPOSALS}
               label={t`Proposals`}
-              router={router}
               icon={
                 <PencilAltIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
               }
             />
-            <SidebarLink
-              link="/delegate"
+            <SidebarLinkExternal
+              link={ExternalUrls.GOVERNANCE_DELEGATE}
               label={t`Delegate`}
-              router={router}
               icon={
                 <UserGroupIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
               }
             />
-            <SidebarLinkExternal link={ElementUrls.FORUM} label={t`Forum`} />
-            <SidebarLinkExternal link={ElementUrls.DOCS} label={t`Resources`} />
+            <SidebarLinkExternal link={ExternalUrls.FORUM} label={t`Forum`} />
+            <SidebarLinkExternal
+              link={ExternalUrls.DOCS}
+              label={t`Resources`}
+            />
           </div>
         </div>
         <PoweredByCouncil className="h-24 w-24" />
@@ -93,16 +93,10 @@ export default function Sidebar(props: SidebarProps): ReactElement {
   );
 }
 
-interface SidebarLinkProps {
-  link: string;
-  label: string;
-  router: NextRouter;
-  icon?: ReactElement;
-}
-
 interface SidebarLinkExternalProps {
   link: string;
   label: string;
+  icon?: ReactElement;
 }
 
 interface AirdropLinkProps {
@@ -121,37 +115,9 @@ function AirdropLink(props: AirdropLinkProps): ReactElement {
     </div>
   );
 }
-function SidebarLink(props: SidebarLinkProps): ReactElement {
-  const { link, label, router, icon } = props;
-
-  const isActive = router.pathname === link;
-
-  return (
-    <div className="flex justify-center">
-      <Link href={link}>
-        {/* There's a big discussion about how awful the Link api is for a11y
-      here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
-      best thing to do for now is just ignore this rule when an anchor tag is
-      the child of a Link since all a tags *should* have an href 🙁 */
-        /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a className="flex items-center px-2 hover:bg-blue-50 md:w-[55%]">
-          {icon}
-          <div
-            className={classNames(
-              "flex cursor-pointer justify-start p-3 text-brandDarkBlue-dark",
-              { "font-bold": isActive },
-            )}
-          >
-            <p>{label}</p>
-          </div>
-        </a>
-      </Link>
-    </div>
-  );
-}
 
 function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
-  const { link, label } = props;
+  const { link, label, icon } = props;
   return (
     <div className="flex justify-center ">
       <a
@@ -160,7 +126,9 @@ function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
         rel="noreferrer"
         className="flex items-center px-2  hover:bg-blue-50 md:w-[55%]"
       >
-        <ExternalLinkIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
+        {icon || (
+          <ExternalLinkIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
+        )}
         <div className="flex cursor-pointer justify-center p-3 text-brandDarkBlue-dark">
           <p>{label}</p>
         </div>

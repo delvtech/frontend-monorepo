@@ -33,6 +33,7 @@ export default function PageView(props: PageViewProps): ReactElement {
           "flex h-full w-full justify-between bg-appBackgroundLight",
         )}
       >
+        <Sidebar account={account} />
         <div className="flex h-full w-full flex-1 flex-col items-center p-6">
           {showHeader ? <Header /> : null}
 

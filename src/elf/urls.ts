@@ -1,17 +1,20 @@
-export enum ElementUrls {
+export enum ExternalUrls {
   // apps
   CORE_LANDING = "https://element.fi",
   CORE_APP = "https://app.element.fi",
-  NFT_APP = "",
+
+  // TODO: Update to the actual links once Council is deployed
+  GOVERNANCE_OVERVIEW = "https://elf-council-frontend.vercel.app/",
+  GOVERNANCE_PROPOSALS = "https://elf-council-frontend.vercel.app/proposals",
+  GOVERNANCE_DELEGATE = "https://elf-council-frontend.vercel.app/delegate",
+
   // socials
   DISCORD = "https://element.fi/discord",
   FORUM = "https://forum.element.fi",
-  TELEGRAM = "",
   TWITTER = "https://twitter.com/element_fi",
+
   // resources
   DOCS = "https://docs-element-finance.gitbook.io/element-council",
-  GITHUB = "https://github.com/element-fi",
-  MEDIUM = "https://medium.com/element-finance",
 }
 
-export default ElementUrls;
+export default ExternalUrls;
