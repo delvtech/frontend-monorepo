@@ -4,7 +4,6 @@ import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { t } from "ttag";
 
-import H1 from "src/ui/base/H1/H1";
 import USDCIcon from "src/ui/base/svg/USDCIcon";
 import {
   ExternalLinkIcon,
@@ -12,7 +11,8 @@ import {
 } from "@heroicons/react/outline";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import H3 from "src/ui/base/H3/H3";
+import Card, { CardVariant } from "src/ui/base/Card/Card";
+import CardHeader from "src/ui/base/Card/CardHeader";
 
 const pools = [
   {
@@ -28,18 +28,20 @@ const pools = [
     lpTokenBalance: "0.0000",
   },
 ];
-interface OverviewPageProps {}
-export function OverviewPage({}: OverviewPageProps): ReactElement {
+export function OverviewPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
   return (
     <div className="flex h-full w-full flex-col items-center space-y-6 ">
       <div className="relative mb-6">
-        <h2 className="text-center text-3xl font-extrabold leading-8 tracking-tight text-principalRoyalBlue sm:text-4xl">
-          {t`Element Finance Liquidity Mining`}
-        </h2>
-        <p className="mx-auto mt-4 max-w-3xl text-center text-xl text-gray-500">
-          {t`Earn voting power (a.k.a. ELFI) by staking your Element Finance LP tokens.`}
-        </p>
+        <Card variant={CardVariant.GRADIENT}>
+          <CardHeader
+            title={t`Learn about our Liquidity Mining program`}
+            description={t`Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.`}
+            action={
+              <Button variant={ButtonVariant.WHITE}>{t`Learn more`}</Button>
+            }
+          />
+        </Card>
       </div>
 
       <div className="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">

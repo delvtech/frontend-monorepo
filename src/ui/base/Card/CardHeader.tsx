@@ -18,16 +18,14 @@ export default function CardHeader({
       className={classnames(
         "-ml-4",
         "-mt-4",
-        "flex flex-wrap justify-between sm:flex-nowrap",
+        "flex justify-between sm:flex-nowrap",
       )}
     >
       <div className="ml-4 mt-2">
-        <h2 className="text-left text-lg font-semibold leading-6 text-brandDarkBlue">
+        <h2 className="text-left text-lg font-semibold leading-6 text-white">
           {title}
         </h2>
-        <p className="mt-1 text-left text-sm text-brandDarkBlue">
-          {description}
-        </p>
+        <p className="mt-1 text-left text-sm text-white">{description}</p>
       </div>
       <div className="ml-4 mt-4 shrink-0">{action}</div>
     </div>
