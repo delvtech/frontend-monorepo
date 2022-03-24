@@ -8,7 +8,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/solid";
 import Link from "next/link";
-import { useRouter, NextRouter } from "next/router";
+import { useRouter } from "next/router";
 import classNames from "classnames";
 import { t } from "ttag";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
@@ -24,7 +24,6 @@ interface SidebarProps {
 export default function Sidebar(props: SidebarProps): ReactElement {
   const { account } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
 
   const onOpen = useCallback(() => {
     setIsOpen(true);

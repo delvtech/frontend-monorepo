@@ -34,7 +34,7 @@ export default function PageView(props: PageViewProps): ReactElement {
         )}
       >
         <Sidebar account={account} />
-        <div className="flex h-full w-full flex-1 flex-col items-center p-6">
+        <div className="flex h-full w-full flex-1 flex-col items-center p-6 md:ml-60">
           {showHeader ? <Header /> : null}
 
           <div
