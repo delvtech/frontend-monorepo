@@ -38,7 +38,7 @@ const pools = [
   },
 ];
 const columnClass = "text-left text-sm font-semibold";
-export function OverviewPage(): ReactElement {
+export function LiquidityMiningPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
   return (
     <div className="mt-8 flex h-full w-full flex-col items-center space-y-6">
@@ -128,4 +128,4 @@ export function OverviewPage(): ReactElement {
   );
 }
 
-export default OverviewPage;
+export default LiquidityMiningPage;
