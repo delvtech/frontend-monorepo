@@ -61,7 +61,11 @@ export function LiquidityMiningPage(): ReactElement {
 
         <div className="flex-col space-y-4">
           {GOERLI_ELIGIBLE_POOLS.map((pool) => (
-            <EligiblePoolCardRow key={pool.address} pool={pool} />
+            <EligiblePoolCardRow
+              key={pool.address}
+              account={account}
+              pool={pool}
+            />
           ))}
         </div>
       </div>

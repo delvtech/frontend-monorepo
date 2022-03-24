@@ -8,6 +8,7 @@ import { PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
 import USDCIcon from "src/ui/base/svg/USDCIcon";
 
 interface EligiblePoolCardRowProps {
+  account: string | null | undefined;
   pool: PrincipalPoolTokenInfo;
 }
 
