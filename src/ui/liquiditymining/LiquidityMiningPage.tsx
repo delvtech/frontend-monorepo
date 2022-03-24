@@ -1,43 +1,19 @@
-import React, { ReactElement } from "react";
-
 import { Web3Provider } from "@ethersproject/providers";
-import { useWeb3React } from "@web3-react/core";
-import { t } from "ttag";
-
-import USDCIcon from "src/ui/base/svg/USDCIcon";
+import { InformationCircleIcon as InformationCircleIconOutline } from "@heroicons/react/outline";
 import { InformationCircleIcon } from "@heroicons/react/solid";
-import {
-  ExternalLinkIcon,
-  InformationCircleIcon as InformationCircleIconOutline,
-} from "@heroicons/react/outline";
+import { useWeb3React } from "@web3-react/core";
+import React, { ReactElement } from "react";
+import { GOERLI_ELIGIBLE_POOLS } from "src/elf/liquiditymining/eligiblepools";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { t } from "ttag";
 
-const pools = [
-  {
-    name: "LP Principal Token yUSDC:07-APR-22-GMT",
-    tokenSymbol: "LP Principal Token yUSDC:07-APR-22-GMT",
-    poolAddress: "0xEA4058419730bc53Cce50950D458E41c22F94452",
-    poolIcon: <USDCIcon className="mr-4 inline h-8 w-8" />,
-    rewardsRate: "500.0000",
-    depositedBalance: "0.0000",
-    pendingRewards: "0.0000 ELFI",
-    lpTokenBalance: "0.0000",
-  },
-  {
-    name: "LP Principal Token eyUSDC:10-AUG-22-GMT",
-    tokenSymbol: "LP Principal Token eyUSDC:10-AUG-22-GMT",
-    poolAddress: "0x4294005520c453EB8Fa66F53042cfC79707855c4",
-    poolIcon: <USDCIcon className="mr-4 inline h-8 w-8" />,
-    rewardsRate: "500.0000",
-    depositedBalance: "0.0000",
-    pendingRewards: "0.0000 ELFI",
-    lpTokenBalance: "0.0000",
-  },
-];
+import { EligiblePoolCardRow } from "./EligiblePoolCardRow";
+
 const columnClass = "text-left text-sm font-semibold";
+
 export function LiquidityMiningPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
   return (
@@ -48,7 +24,7 @@ export function LiquidityMiningPage(): ReactElement {
             <h2 className="text-left text-lg font-semibold leading-6 text-white">
               {t`Welcome to our Liquidity Mining program`}
             </h2>
-            <p className="mt-1 text-left text-white">{t`Earn ELFI by staking your Element Finance LP Tokens. The ELFI you earn can be used to increase your delegate's voting power in Element Council.`}</p>
+            <p className="mt-1 text-left text-white">{t`Earn more ELFI by staking your Element Finance LP Tokens. The ELFI you earn can be used to increase your delegate's voting power in Element Council.`}</p>
           </div>
           <div className="ml-4 mt-4 shrink-0">
             {<Button variant={ButtonVariant.WHITE}>{t`Learn more`}</Button>}
@@ -84,39 +60,8 @@ export function LiquidityMiningPage(): ReactElement {
         </Card>
 
         <div className="flex-col space-y-4">
-          {pools.map((pool) => (
-            <Card key={pool.depositedBalance} className="!py-2">
-              <div className="grid grid-cols-7 items-center">
-                <a
-                  href={`https://testnet.element.fi/pools/${pool.poolAddress}`}
-                  className="col-span-2 text-sm underline hover:no-underline"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {pool.poolIcon}
-                  {pool.name}
-                  <ExternalLinkIcon className="mb-1 ml-0.5 inline h-4" />
-                </a>
-
-                <div className="text-sm text-gray-500">{pool.rewardsRate}</div>
-                <div className="text-sm text-gray-500">
-                  {pool.lpTokenBalance}
-                </div>
-                <div className="text-sm text-gray-500">
-                  {pool.pendingRewards}
-                </div>
-                <div className="text-sm text-gray-500">
-                  {pool.depositedBalance}
-                </div>
-                <div className="flex space-x-2 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                  <Button variant={ButtonVariant.GRADIENT}>{t`Stake`}</Button>
-                  <Button
-                    disabled
-                    variant={ButtonVariant.OUTLINE_BLUE}
-                  >{t`Unstake`}</Button>
-                </div>
-              </div>
-            </Card>
+          {GOERLI_ELIGIBLE_POOLS.map((pool) => (
+            <EligiblePoolCardRow key={pool.address} pool={pool} />
           ))}
         </div>
       </div>
