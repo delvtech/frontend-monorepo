@@ -7,13 +7,9 @@ import {
   PencilAltIcon,
   UserGroupIcon,
 } from "@heroicons/react/solid";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import classNames from "classnames";
 import { t } from "ttag";
-import AnchorButton from "src/ui/base/Button/AnchorButton";
 import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 import ExternalUrls from "src/elf/urls";
 import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";
 
@@ -96,23 +92,6 @@ interface SidebarLinkExternalProps {
   link: string;
   label: string;
   icon?: ReactElement;
-}
-
-interface AirdropLinkProps {
-  link: string;
-}
-function AirdropLink(props: AirdropLinkProps): ReactElement {
-  const { link } = props;
-
-  return (
-    <div className="text-center">
-      <Link href={link} passHref>
-        <AnchorButton variant={ButtonVariant.GRADIENT}>
-          {t`Claim ELFI`}
-        </AnchorButton>
-      </Link>
-    </div>
-  );
 }
 
 function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
