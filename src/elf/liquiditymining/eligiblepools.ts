@@ -1,27 +1,25 @@
 import { goerliTokenList, PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
-import {
-  ConvergentCurvePool,
-  ConvergentCurvePool__factory,
-} from "@elementfi/core-typechain/dist/v1.1";
+import { ConvergentCurvePool__factory } from "@elementfi/core-typechain/dist/v1.1";
 import { defaultProvider } from "src/elf/providers/providers";
+import mapValues from "lodash.mapvalues";
 
-const eligibleGoerliPoolTokenInfos: Record<string, PrincipalPoolTokenInfo> = {};
-const eligibleGoerliPoolContracts: Record<string, ConvergentCurvePool> = {};
-[
-  // The safelist of goerli pools that are eligible for Liquidity Mining
-  "0xEA4058419730bc53Cce50950D458E41c22F94452",
-  "0x4294005520c453EB8Fa66F53042cfC79707855c4",
-].forEach((address) => {
-  // safe to cast because they are hand-selected from the tokenlist itself
-  const tokenInfo = goerliTokenList.tokens.find(
-    (token) => token.address === address,
-  ) as PrincipalPoolTokenInfo;
+// Copied ccpool addresses from goerli.tokenlist.json and matched up manually
+// against the poolIds from the masterchef contract
+export const poolIdsByPoolAddress: Record<string, number> = {
+  "0xEA4058419730bc53Cce50950D458E41c22F94452": 1,
+  "0x4294005520c453EB8Fa66F53042cfC79707855c4": 2,
+};
 
-  const contract = ConvergentCurvePool__factory.connect(
-    address,
-    defaultProvider,
-  );
-
-  eligibleGoerliPoolTokenInfos[address] = tokenInfo;
-  eligibleGoerliPoolContracts[address] = contract;
-});
+export const eligibleGoerliPoolContracts = mapValues(
+  poolIdsByPoolAddress,
+  (v, address) =>
+    ConvergentCurvePool__factory.connect(address, defaultProvider),
+);
+export const eligibleGoerliPoolTokenInfos = mapValues(
+  poolIdsByPoolAddress,
+  (v, address) =>
+    // safe to cast because they are hand-selected from the tokenlist itself
+    goerliTokenList.tokens.find(
+      (token) => token.address === address,
+    ) as PrincipalPoolTokenInfo,
+);

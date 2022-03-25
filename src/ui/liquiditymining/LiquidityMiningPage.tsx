@@ -3,7 +3,10 @@ import { InformationCircleIcon as InformationCircleIconOutline } from "@heroicon
 import { InformationCircleIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement } from "react";
-import { GOERLI_ELIGIBLE_POOLS } from "src/elf/liquiditymining/eligiblepools";
+import {
+  eligibleGoerliPoolTokenInfos,
+  poolIdsByPoolAddress,
+} from "src/elf/liquiditymining/eligiblepools";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
@@ -41,10 +44,10 @@ export function LiquidityMiningPage(): ReactElement {
             >{t`Eligible LP Token`}</div>
             <div className={columnClass}>
               <span>
-                {t`ELFI / $1K Week`}
+                {t`ELFI / block` /* TODO: make this {t`ELFI / $1K Week`} */}
                 <Tooltip
                   content={
-                    "The weekly amount of ELFI earned by $1,000 of LP tokens staked"
+                    "The weekly amount of ELFI earned for $1,000 worth of LP tokens staked"
                   }
                 >
                   <InformationCircleIcon className="ml-1 mb-0.5 inline h-4 w-4" />
@@ -60,11 +63,11 @@ export function LiquidityMiningPage(): ReactElement {
         </Card>
 
         <div className="flex-col space-y-4">
-          {GOERLI_ELIGIBLE_POOLS.map((pool) => (
+          {Object.keys(poolIdsByPoolAddress).map((pool) => (
             <EligiblePoolCardRow
-              key={pool.address}
+              key={pool}
               account={account}
-              pool={pool}
+              pool={eligibleGoerliPoolTokenInfos[pool]}
             />
           ))}
         </div>
