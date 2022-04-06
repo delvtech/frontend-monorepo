@@ -4,6 +4,9 @@ const nextConfig = {
   eslint: {
     dirs: ["pages", "src"],
   },
+  experimental: {
+    externalDir: true,
+  },
   webpack: (config) => {
     // https://github.com/a16z/zkp-merkle-airdrop-fe-ex#notes
     config.resolve.fallback = {

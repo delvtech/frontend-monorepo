@@ -24,8 +24,8 @@
   },
   "include": [
     "next-env.d.ts",
-    "apps",
-    "packages",
+    "src",
+    "pages",
   ],
   "exclude": [
     "node_modules"

@@ -1,5 +1,5 @@
 import { defaultProvider } from "src/elf/providers/providers";
-import { MCMod__factory } from "src/peripherals/typechain";
+import { MCMod__factory } from "peripherals/typechain";
 
 // TODO: Make a masterchef mainnet contract instance
 const MASTER_CHEF_GOERLI_ADDRESS = "0x97CBcFA11318c405F0b9804ce0c7574602c4F762";
