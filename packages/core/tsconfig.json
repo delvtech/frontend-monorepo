@@ -20,9 +20,6 @@
     "jsx": "preserve",
     "rootDir": "../",
     "baseUrl": "../",
-    "paths": {
-      "core/*": ["./core/*"],
-    },
     "incremental": true
   },
   "exclude": [

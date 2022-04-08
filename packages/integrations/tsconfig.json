@@ -20,12 +20,7 @@
     "jsx": "preserve",
     "rootDir": "../",
     "baseUrl": "../",
-    "incremental": true,
-    "paths": {
-      "integrations/*": [
-        "./integrations/*"
-      ],
-    },
+    "incremental": true
   },
   "exclude": [
     "node_modules"

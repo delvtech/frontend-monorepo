@@ -22,9 +22,6 @@
     "rootDir": ".",
     "baseUrl": "../",
     "incremental": true,
-    "paths": {
-      "base/*": ["./base/*"],
-    },
   },
   "exclude": [
     "node_modules"
