@@ -6,6 +6,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card from "src/ui/base/Card/Card";
 import { PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
 import USDCIcon from "src/ui/base/svg/USDCIcon";
+import { formatMoney } from "base/money/formatMoney";
 import { eligibleGoerliPoolContracts } from "src/elf/liquiditymining/eligiblepools";
 import { formatBalance } from "src/formatBalance";
 import { useLPTokenBalance } from "./hooks/useLPTokenBalance";
@@ -25,7 +26,7 @@ export function EligiblePoolCardRow({
 }: EligiblePoolCardRowProps): ReactElement {
   const poolIcon = <USDCIcon className="mr-4 inline h-8 w-8" />;
   const ccPoolTVL = useTotalFiatLiquidity(pool);
-  console.log('ccPoolTVL', ccPoolTVL);
+  console.log("ccPoolTVL", ccPoolTVL);
 
   const poolContract = eligibleGoerliPoolContracts[poolAddress];
   const { data: lpTokenBalance } = useLPTokenBalance(poolContract, account);
@@ -36,7 +37,7 @@ export function EligiblePoolCardRow({
 
   return (
     <Card className="!py-2">
-      <div className="grid grid-cols-7 items-center">
+      <div className="grid grid-cols-8 items-center">
         <a
           href={`https://testnet.element.fi/pools/${poolAddress}`}
           className="col-span-2 text-sm underline hover:no-underline"
@@ -48,6 +49,7 @@ export function EligiblePoolCardRow({
           <ExternalLinkIcon className="mb-1 ml-0.5 inline h-4" />
         </a>
 
+        <div className="text-sm text-gray-500">{formatMoney(ccPoolTVL)}</div>
         <div className="text-sm text-gray-500">{rewardsRate.toFixed(2)}</div>
         <div className="text-sm text-gray-500">{depositedBalance}</div>
         <div className="text-sm text-gray-500">{pendingRewards}</div>

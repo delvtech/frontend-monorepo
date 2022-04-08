@@ -1,6 +1,5 @@
 import { Web3Provider } from "@ethersproject/providers";
 import { InformationCircleIcon as InformationCircleIconOutline } from "@heroicons/react/outline";
-import { InformationCircleIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement } from "react";
 import {
@@ -10,12 +9,10 @@ import {
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { t } from "ttag";
 
 import { EligiblePoolCardRow } from "./EligiblePoolCardRow";
-
-const columnClass = "text-left text-sm font-semibold";
+import { EligiblePoolsTableHeader } from "./EligiblePoolsTableHeader";
 
 export function LiquidityMiningPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
@@ -37,30 +34,7 @@ export function LiquidityMiningPage(): ReactElement {
 
       <div className=" flex flex-col space-y-6 ">
         {/* Header */}
-        <Card variant={CardVariant.GRADIENT} className="!p-4 !px-6 text-white">
-          <div className="grid grid-cols-7 ">
-            <div
-              className={`${columnClass} col-span-2`}
-            >{t`Eligible LP Token`}</div>
-            <div className={columnClass}>
-              <span>
-                {t`ELFI / block` /* TODO: make this {t`ELFI / $1K Week`} */}
-                <Tooltip
-                  content={
-                    "The weekly amount of ELFI earned for $1,000 worth of LP tokens staked"
-                  }
-                >
-                  <InformationCircleIcon className="ml-1 mb-0.5 inline h-4 w-4" />
-                </Tooltip>
-              </span>
-            </div>
-            <div className={columnClass}>{t`Staked balance`}</div>
-            <div className={columnClass}>{t`Earned rewards`}</div>
-            <div className={columnClass}>{t`Available to stake`}</div>
-            {/* Actions (spacer) */}
-            <div />
-          </div>
-        </Card>
+        <EligiblePoolsTableHeader />
 
         <div className="flex-col space-y-4">
           {Object.keys(poolIdsByPoolAddress).map((pool) => (
