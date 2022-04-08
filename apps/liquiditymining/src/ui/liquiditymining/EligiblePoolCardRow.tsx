@@ -10,6 +10,7 @@ import { eligibleGoerliPoolContracts } from "src/elf/liquiditymining/eligiblepoo
 import { formatBalance } from "src/formatBalance";
 import { useLPTokenBalance } from "./hooks/useLPTokenBalance";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
+import { useTotalFiatLiquidity } from "core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
 import { usePoolRewardsRate } from "./hooks/usePoolRewardsRate";
 
 interface EligiblePoolCardRowProps {
@@ -19,9 +20,12 @@ interface EligiblePoolCardRowProps {
 
 export function EligiblePoolCardRow({
   account,
+  pool,
   pool: { name, address: poolAddress },
 }: EligiblePoolCardRowProps): ReactElement {
   const poolIcon = <USDCIcon className="mr-4 inline h-8 w-8" />;
+  const ccPoolTVL = useTotalFiatLiquidity(pool);
+  console.log('ccPoolTVL', ccPoolTVL);
 
   const poolContract = eligibleGoerliPoolContracts[poolAddress];
   const { data: lpTokenBalance } = useLPTokenBalance(poolContract, account);

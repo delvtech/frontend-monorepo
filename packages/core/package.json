@@ -1,0 +1,19 @@
+{
+  "name": "core",
+  "version": "1.0.0",
+  "description": "Frontend integration logic for core elf-contracts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@elementfi/core-typechain": "^2.0.6",
+    "@elementfi/react-query-typechain": "^1.2.0",
+    "@elementfi/tokenlist": "^2.4.0",
+    "@types/lodash.keyby": "^4.6.6",
+    "base": "^1.0.0",
+    "lodash.keyby": "^4.6.0",
+    "ts-money": "^0.4.7"
+  }
+}
