@@ -10,27 +10,17 @@ Single repo that contains the shareable package code and the apps that depend on
 
 ### Installing new packages 
 
+Here are a few examples of how to install packages in this repo:
+
 ```bash
 # Install prettier for the top-level package.json, useful for tooling that
-# applies to the entire monorepo
+# runs against the entire monorepo
 npm install prettier 
 
-# Install lodash for the packages/base workspace 
-# Note: specify the workspace by its name in `package.json`, ie: `base` not `packages/base`
+# Install lodash for the packages/base workspace.
+# Note: specify the workspace by the name in its `package.json`, ie: `base` not `packages/base`
 npm install lodash -w base
 
 # Install peripherals workspace as dependency for the liquidity mining app
 npm install peripherals -w liquiditymining
-```
-
-### Add a new workspace to the monorepo
-
-```bash
-# adding a package
-cd packages/
-npm init package-name -w
-
-# adding an app
-cd apps/
-npm init app-name -w
 ```
