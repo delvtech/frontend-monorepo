@@ -8,10 +8,11 @@ This repo contains frontend packages and applications that are maintained by Ele
 - This repo contains an .nvmrc, so you can just run `nvm use` from the top-level.
 
 ## Required `npm` version
-- **npm 8.6.0**
-- By default, node ships with npm@6.14.16.
+- **npm 8.3.1**
+- Vercel has depends on npm 8.3.1 and doesn't let us change it.
+- By default, node 14.19.1 ships with npm@6.14.16.
 - The `npm workspaces` feature was introduced in 7.x, so you will have to upgrade npm manually.
-- Run: `npm install -g npm@8.6.0`
+- Run: `npm install -g npm@8.3.1`
 
 ## Development
 
