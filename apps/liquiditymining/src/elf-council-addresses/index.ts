@@ -1,4 +1,4 @@
-import { AddressesJsonFile } from "elf-council-tokenlist";
+import { AddressesJsonFile } from "@elementfi/elf-council-tokenlist";
 
 import testnetAddressList from "./testnet.addresses.json";
 import waffleAddressList from "./waffle.addresses.json";
