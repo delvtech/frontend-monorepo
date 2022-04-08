@@ -1,4 +1,4 @@
-import { sortAddresses } from "base/sortAddresses/sortAddresses";
+import { sortAddresses } from "base/utils/sortAddresses/sortAddresses";
 
 describe("sortAddresses", () => {
   test("when given an empty string[] should return an empty string[] ", () => {

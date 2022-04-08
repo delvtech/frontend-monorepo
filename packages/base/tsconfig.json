@@ -18,6 +18,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
+    // set rootDir to "." because base is not allowed to import from anywhere else
     "rootDir": ".",
     "baseUrl": "../",
     "incremental": true,
