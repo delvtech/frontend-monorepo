@@ -26,7 +26,6 @@ export function EligiblePoolCardRow({
 }: EligiblePoolCardRowProps): ReactElement {
   const poolIcon = <USDCIcon className="mr-4 inline h-8 w-8" />;
   const ccPoolTVL = useTotalFiatLiquidity(pool);
-  console.log("ccPoolTVL", ccPoolTVL);
 
   const poolContract = eligibleGoerliPoolContracts[poolAddress];
   const { data: lpTokenBalance } = useLPTokenBalance(poolContract, account);
