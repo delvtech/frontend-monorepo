@@ -1,0 +1,32 @@
+[
+  {
+    "id": "dai",
+    "name": "Dai",
+    "symbol": "dai"
+  },
+  {
+    "id": "ethereum",
+    "name": "Ethereum",
+    "symbol": "eth"
+  },
+  {
+    "id": "tether",
+    "name": "Tether",
+    "symbol": "usdt"
+  },
+  {
+    "id": "usd-coin",
+    "name": "USD Coin",
+    "symbol": "usdc"
+  },
+  {
+    "id": "weth",
+    "name": "WETH",
+    "symbol": "weth"
+  },
+  {
+    "id": "wrapped-bitcoin",
+    "name": "Wrapped Bitcoin",
+    "symbol": "wbtc"
+  }
+]
