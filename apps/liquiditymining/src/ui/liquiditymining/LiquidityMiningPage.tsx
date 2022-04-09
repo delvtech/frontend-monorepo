@@ -19,15 +19,19 @@ export function LiquidityMiningPage(): ReactElement {
   return (
     <div className="mt-8 flex h-full w-full flex-col items-center space-y-6">
       <div className="relative mb-6">
-        <Card variant={CardVariant.GRADIENT} className="flex">
+        <Card className="flex">
           <div className="ml-4 mt-2">
-            <h2 className="text-left text-lg font-semibold leading-6 text-white">
+            <h2 className="text-left text-lg font-semibold leading-6 text-principalRoyalBlue">
               {t`Welcome to our Liquidity Mining program`}
             </h2>
-            <p className="mt-1 text-left text-white">{t`Earn more ELFI by staking your Element Finance LP Tokens. The ELFI you earn can be used to increase your delegate's voting power in Element Council.`}</p>
+            <p className="mt-1 text-left text-principalRoyalBlue">{t`Earn more ELFI by staking your Element Finance LP Tokens. The ELFI you earn can be used to increase your delegate's voting power in Element Council.`}</p>
           </div>
           <div className="ml-4 mt-4 shrink-0">
-            {<Button variant={ButtonVariant.WHITE}>{t`Learn more`}</Button>}
+            {
+              <Button
+                variant={ButtonVariant.OUTLINE_BLUE}
+              >{t`Learn more`}</Button>
+            }
           </div>
         </Card>
       </div>
