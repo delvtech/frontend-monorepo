@@ -1,5 +1,5 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
-import { ONE_MINUTE_IN_MILLISECONDS } from "base/constants/time";
+import { ONE_MINUTE_IN_MILLISECONDS } from "base/time/time";
 import {
   isGoerli,
   isMainnet,
