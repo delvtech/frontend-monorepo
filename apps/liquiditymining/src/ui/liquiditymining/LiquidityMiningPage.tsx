@@ -10,9 +10,9 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
+import { EligiblePoolCard } from "./EligiblePoolCard";
 
-import { EligiblePoolCardRow } from "./EligiblePoolCardRow";
-import { EligiblePoolsTableHeader } from "./EligiblePoolsTableHeader";
+import { EligiblePoolsTable } from "./EligiblePoolsTable";
 
 export function LiquidityMiningPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
@@ -35,25 +35,17 @@ export function LiquidityMiningPage(): ReactElement {
           </div>
         </Card>
       </div>
-
-      <div className=" flex flex-col space-y-6 ">
-        {/* Header */}
-        <EligiblePoolsTableHeader />
-
-        <div className="flex-col space-y-4">
-          {Object.keys(poolIdsByPoolAddress).map((pool) => (
-            <EligiblePoolCardRow
-              key={pool}
-              account={account}
-              pool={eligibleGoerliPoolTokenInfos[pool]}
-            />
-          ))}
-        </div>
+      <div className="flex gap-8">
+        {Object.keys(poolIdsByPoolAddress).map((pool) => (
+          <EligiblePoolCard
+            key={pool}
+            account={account}
+            pool={eligibleGoerliPoolTokenInfos[pool]}
+          />
+        ))}
       </div>
-      <p className="mx-auto mt-4 max-w-3xl text-center text-base text-gray-500">
-        <InformationCircleIconOutline className="mr-1 mb-0.5 inline h-4 w-4" />
-        {t`Note: Clicking Unstake will also claim your pending ELFI rewards.`}
-      </p>
+
+      {/* <EligiblePoolsTable account={account} /> */}
     </div>
   );
 }
