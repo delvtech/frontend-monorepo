@@ -2,7 +2,11 @@ import { usePoolInfo } from "src/ui/liquiditymining/hooks/usePoolInfo";
 import { useSushiPerBlock } from "src/ui/liquiditymining/hooks/useSushiPerBlock";
 import { useTotalAllocPoint } from "src/ui/liquiditymining/hooks/useTotalAlloc";
 
-export function usePoolRewardsRate(poolAddress: string): number {
+/**
+ * Grabs the amount of sushi this pool is allocated per block
+ * // TODO: Move to peripherals/ workspace
+ */
+export function useELFIPerBlock(poolAddress: string): number {
   const { data: sushiPerBlock } = useSushiPerBlock();
   const { data: totalAllocPoint } = useTotalAllocPoint();
 

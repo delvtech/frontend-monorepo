@@ -9,6 +9,9 @@ export enum ChainId {
   LOCAL = 31337,
 }
 
+export const ETHEREUM_BLOCK_PER_DAY = 5760;
+export const ETHEREUM_BLOCKS_PER_WEEK = ETHEREUM_BLOCK_PER_DAY * 7;
+
 export const ChainNames: Record<ChainId, string> = {
   [ChainId.MAINNET]: "Ethereum Mainnet",
   [ChainId.GOERLI]: "Goerli Testnet",
