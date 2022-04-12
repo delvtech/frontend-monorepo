@@ -40,7 +40,7 @@ export function useQueryBatchSwap(
   tokenInAddress: string,
   tokenOutAddress: string,
   amount: BigNumber,
-  wethAddress: string
+  wethAddress: string,
 ): QueryObserverResult<BigNumber[]> {
   const poolId = getTokenInfo<PoolInfo>(pool.address).extensions.poolId;
 
@@ -49,7 +49,7 @@ export function useQueryBatchSwap(
     "queryBatchSwap",
     {
       enabled: [poolId, tokenInAddress, amount?.gt(0), tokenOutAddress].every(
-        (v) => !!v
+        (v) => !!v,
       ),
       callArgs: makeQueryBatchSwapCallArgs(
         kind,
@@ -57,9 +57,9 @@ export function useQueryBatchSwap(
         tokenInAddress,
         amount,
         tokenOutAddress,
-        wethAddress
+        wethAddress,
       ),
-    }
+    },
   );
 
   return queryBatchSwapResults;
@@ -73,7 +73,7 @@ export function getCalcSwap(
   tokenOutAddress: string,
   tokenInReserves: string,
   tokenOutReserves: string,
-  totalSupply: string
+  totalSupply: string,
 ): QueryBatchSwapCalcResults {
   const { baseAssetInfo } = getPoolTokens(poolInfo);
   const { decimals, address: baseAssetAddress } = baseAssetInfo;
@@ -88,7 +88,7 @@ export function getCalcSwap(
       kind,
       decimals,
       tokenInReserves,
-      tokenOutReserves
+      tokenOutReserves,
     );
   }
 
@@ -111,7 +111,7 @@ export function getCalcSwap(
       tokenOutReserves,
       totalSupply,
       // TODO: figure out why this is flipped
-      !isBaseAssetIn
+      !isBaseAssetIn,
     );
   }
 
@@ -123,22 +123,22 @@ export function getTokenReserves(
   balances: BigNumber[] | never[],
   tokenInAddress: string,
   tokenOutAddress: string,
-  decimals: number
+  decimals: number,
 ): { tokenInReserves: string; tokenOutReserves: string } {
   const balancesByAddress: Record<string, BigNumber | undefined> = {};
   tokens
     .filter((address): address is string => !!address)
     .forEach(
-      (address, index) => (balancesByAddress[address] = balances[index])
+      (address, index) => (balancesByAddress[address] = balances[index]),
     );
   const tokenInReserves = formatUnits(
     balancesByAddress[tokenInAddress ?? ""] ?? 0,
-    decimals
+    decimals,
   );
 
   const tokenOutReserves = formatUnits(
     balancesByAddress[tokenOutAddress ?? ""] ?? 0,
-    decimals
+    decimals,
   );
   return { tokenInReserves, tokenOutReserves };
 }
@@ -148,13 +148,13 @@ function calcSwapYieldPool(
   kind: SwapKind,
   decimals: number,
   tokenInReserves: string,
-  tokenOutReserves: string
+  tokenOutReserves: string,
 ): QueryBatchSwapCalcResults {
   if (kind === SwapKind.GIVEN_IN) {
     const calcOutNumber = calcSwapOutGivenInWeightedPoolUNSAFE(
       amount,
       tokenOutReserves,
-      tokenInReserves
+      tokenInReserves,
     );
 
     const calcOut =
@@ -167,7 +167,7 @@ function calcSwapYieldPool(
   const calcInNumber = calcSwapInGivenOutWeightedPoolUNSAFE(
     amount,
     tokenOutReserves,
-    tokenInReserves
+    tokenInReserves,
   );
   const calcIn =
     clipStringValueToDecimals(calcInNumber.toString(), decimals) ?? "0";

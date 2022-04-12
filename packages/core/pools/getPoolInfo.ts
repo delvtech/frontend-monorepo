@@ -7,12 +7,12 @@ export const getAllPoolAddresses = (): string[] =>
   [...yieldPools, ...principalPools].map(({ address }) => address);
 
 export function getPoolTokenInfoFromContract(
-  poolContract: PoolContract | undefined
+  poolContract: PoolContract | undefined,
 ): PoolInfo | undefined {
   const allPools = [...yieldPools, ...principalPools];
 
   const poolInfo = allPools.find(
-    (pool) => pool.address === poolContract?.address
+    (pool) => pool.address === poolContract?.address,
   );
 
   return poolInfo;

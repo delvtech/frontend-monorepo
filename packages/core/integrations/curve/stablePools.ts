@@ -19,18 +19,18 @@ const {
 const crvalusdContract = CRVLUSD__factory.connect(
   // Note: the CRVLUSD_factory is the same, so it can handle both alusd and lusd pools.
   crvalusdAddress || "0x0000000000000000000000000000000000000000",
-  defaultProvider
+  defaultProvider,
 );
 
 const crvlusdContract = CRVLUSD__factory.connect(
   crvlusdAddress,
-  defaultProvider
+  defaultProvider,
 );
 
 const crvMimContract = CRVLUSD__factory.connect(
   // Note: the CRVLUSD_factory is the same, so it can handle both lusd and mim pools.
   crvMimAddress,
-  defaultProvider
+  defaultProvider,
 );
 
 const crvEursContract = CRVLUSD__factory.connect(
@@ -40,7 +40,7 @@ const crvEursContract = CRVLUSD__factory.connect(
   // elf-tokenlist which all pass down the pool contract address.
   // TODO: fix the above inconsistency
   "0x0Ce6a5fF5217e38315f87032CF90686C96627CAA",
-  defaultProvider
+  defaultProvider,
 );
 
 export const curveVirtualPriceContractsByAddress: Record<string, CRVLUSD> = {

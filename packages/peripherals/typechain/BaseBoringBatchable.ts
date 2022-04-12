@@ -23,7 +23,7 @@ export interface BaseBoringBatchableInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "batch",
-    values: [BytesLike[], boolean]
+    values: [BytesLike[], boolean],
   ): string;
 
   decodeFunctionResult(functionFragment: "batch", data: BytesLike): Result;
@@ -41,15 +41,15 @@ export interface BaseBoringBatchable extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -61,33 +61,33 @@ export interface BaseBoringBatchable extends BaseContract {
     batch(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     "batch(bytes[],bool)"(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
   };
 
   batch(
     calls: BytesLike[],
     revertOnFail: boolean,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    overrides?: PayableOverrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   "batch(bytes[],bool)"(
     calls: BytesLike[],
     revertOnFail: boolean,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    overrides?: PayableOverrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     batch(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [boolean[], string[]] & { successes: boolean[]; results: string[] }
     >;
@@ -95,7 +95,7 @@ export interface BaseBoringBatchable extends BaseContract {
     "batch(bytes[],bool)"(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [boolean[], string[]] & { successes: boolean[]; results: string[] }
     >;
@@ -107,13 +107,13 @@ export interface BaseBoringBatchable extends BaseContract {
     batch(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     "batch(bytes[],bool)"(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
   };
 
@@ -121,13 +121,13 @@ export interface BaseBoringBatchable extends BaseContract {
     batch(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     "batch(bytes[],bool)"(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

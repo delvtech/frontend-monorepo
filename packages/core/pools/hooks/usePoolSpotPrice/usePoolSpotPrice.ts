@@ -24,18 +24,18 @@ const SPOT_PRICE_AMOUNT = "0.01";
 
 export function usePoolSpotPrice(
   poolContract: PoolContract | undefined,
-  tokenIn: string
+  tokenIn: string,
 ): number | undefined {
   const { data } = usePoolTokens(poolContract);
   const [tokens, balances] = data ?? [[], []];
   const poolInfo = getPoolTokenInfoFromContract(poolContract);
   const { data: totalSupplyBN } = useSmartContractReadCall(
     poolContract,
-    "totalSupply"
+    "totalSupply",
   );
   const totalSupply = formatUnits(
     totalSupplyBN ?? 0,
-    BALANCER_POOL_LP_TOKEN_DECIMALS
+    BALANCER_POOL_LP_TOKEN_DECIMALS,
   );
 
   const { result: [, amountOut = 0] = [] } = useMemo(() => {
@@ -57,7 +57,7 @@ export function usePoolSpotPrice(
       balances,
       tokenInAddress,
       tokenOutAddress,
-      baseAssetInfo.decimals
+      baseAssetInfo.decimals,
     );
     const result = getCalcSwap(
       SPOT_PRICE_AMOUNT,
@@ -67,7 +67,7 @@ export function usePoolSpotPrice(
       tokenOutAddress,
       tokenInReserves,
       tokenOutReserves,
-      totalSupply
+      totalSupply,
     );
     return result;
   }, [balances, poolInfo, tokenIn, tokens, totalSupply]);

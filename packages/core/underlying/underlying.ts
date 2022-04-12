@@ -31,17 +31,17 @@ const daiContract = DAI__factory.connect(daiAddress, defaultProvider);
 const crvlusdContract = ERC20__factory.connect(crvlusdAddress, defaultProvider);
 const crvalusdContract = ERC20__factory.connect(
   crvalusdAddress,
-  defaultProvider
+  defaultProvider,
 );
 const crvmimContract = ERC20__factory.connect(crvmimAddress, defaultProvider);
 
 const crvTricryptoContract = ERC20__factory.connect(
   crvtricryptoAddress,
-  defaultProvider
+  defaultProvider,
 );
 const crv3CryptoContract = ERC20__factory.connect(
   crv3cryptoAddress,
-  defaultProvider
+  defaultProvider,
 );
 
 const steCrvContract = ERC20__factory.connect(stecrvAddress, defaultProvider);
@@ -66,7 +66,7 @@ export const underlyingContractsByAddress = Object.freeze({
 
 const underlyingERC20PermitAddresses = [usdcAddress];
 export function isUnderlyingAddressERC20Permit(
-  underlyingAddress: string
+  underlyingAddress: string,
 ): boolean {
   return underlyingERC20PermitAddresses.includes(underlyingAddress);
 }

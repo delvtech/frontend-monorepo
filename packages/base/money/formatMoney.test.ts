@@ -8,7 +8,7 @@ test("should format undefined balance correctly", () => {
 
 test("should format to default value correctly", () => {
   expect(
-    formatMoney(undefined, { defaultMoney: new Money(0, Currencies.USD) })
+    formatMoney(undefined, { defaultMoney: new Money(0, Currencies.USD) }),
   ).toEqual("$0.00");
 });
 

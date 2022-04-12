@@ -43,10 +43,10 @@ export function getPoolTokens(poolInfo: PoolInfo): PoolTokens {
   ]) as [string, string];
 
   const baseAssetIndex = sortedAddresses.findIndex(
-    (address) => address === baseAssetAddress
+    (address) => address === baseAssetAddress,
   );
   const termAssetIndex = sortedAddresses.findIndex(
-    (address) => address === termAssetAddress
+    (address) => address === termAssetAddress,
   );
 
   return {

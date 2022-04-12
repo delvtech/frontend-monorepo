@@ -26,7 +26,7 @@ export interface BoringBatchableInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "batch",
-    values: [BytesLike[], boolean]
+    values: [BytesLike[], boolean],
   ): string;
   encodeFunctionData(
     functionFragment: "permitToken",
@@ -38,14 +38,14 @@ export interface BoringBatchableInterface extends utils.Interface {
       BigNumberish,
       BigNumberish,
       BytesLike,
-      BytesLike
-    ]
+      BytesLike,
+    ],
   ): string;
 
   decodeFunctionResult(functionFragment: "batch", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "permitToken",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
 
   events: {};
@@ -61,15 +61,15 @@ export interface BoringBatchable extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -81,13 +81,13 @@ export interface BoringBatchable extends BaseContract {
     batch(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     "batch(bytes[],bool)"(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     permitToken(
@@ -99,7 +99,7 @@ export interface BoringBatchable extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     "permitToken(address,address,address,uint256,uint256,uint8,bytes32,bytes32)"(
@@ -111,20 +111,20 @@ export interface BoringBatchable extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
   };
 
   batch(
     calls: BytesLike[],
     revertOnFail: boolean,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    overrides?: PayableOverrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   "batch(bytes[],bool)"(
     calls: BytesLike[],
     revertOnFail: boolean,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    overrides?: PayableOverrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   permitToken(
@@ -136,7 +136,7 @@ export interface BoringBatchable extends BaseContract {
     v: BigNumberish,
     r: BytesLike,
     s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   "permitToken(address,address,address,uint256,uint256,uint8,bytes32,bytes32)"(
@@ -148,14 +148,14 @@ export interface BoringBatchable extends BaseContract {
     v: BigNumberish,
     r: BytesLike,
     s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     batch(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [boolean[], string[]] & { successes: boolean[]; results: string[] }
     >;
@@ -163,7 +163,7 @@ export interface BoringBatchable extends BaseContract {
     "batch(bytes[],bool)"(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [boolean[], string[]] & { successes: boolean[]; results: string[] }
     >;
@@ -177,7 +177,7 @@ export interface BoringBatchable extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     "permitToken(address,address,address,uint256,uint256,uint8,bytes32,bytes32)"(
@@ -189,7 +189,7 @@ export interface BoringBatchable extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
@@ -199,13 +199,13 @@ export interface BoringBatchable extends BaseContract {
     batch(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     "batch(bytes[],bool)"(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     permitToken(
@@ -217,7 +217,7 @@ export interface BoringBatchable extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     "permitToken(address,address,address,uint256,uint256,uint8,bytes32,bytes32)"(
@@ -229,7 +229,7 @@ export interface BoringBatchable extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
   };
 
@@ -237,13 +237,13 @@ export interface BoringBatchable extends BaseContract {
     batch(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     "batch(bytes[],bool)"(
       calls: BytesLike[],
       revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     permitToken(
@@ -255,7 +255,7 @@ export interface BoringBatchable extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     "permitToken(address,address,address,uint256,uint256,uint8,bytes32,bytes32)"(
@@ -267,7 +267,7 @@ export interface BoringBatchable extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

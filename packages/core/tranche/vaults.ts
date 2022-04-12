@@ -8,19 +8,19 @@ import { assetProxyTokenInfos } from "core/tranche/positions";
 import keyBy from "lodash.keyby";
 
 export const vaultTokenInfos: VaultTokenInfo[] = tokenListJson.tokens.filter(
-  (tokenInfo) => isVaultToken(tokenInfo)
+  (tokenInfo) => isVaultToken(tokenInfo),
 );
 const vaultContracts = assetProxyTokenInfos.map(({ extensions: { vault } }) =>
-  TestYVault__factory.connect(vault, defaultProvider)
+  TestYVault__factory.connect(vault, defaultProvider),
 );
 
 export const vaultContractsByAddress = keyBy(
   vaultContracts,
-  (vault) => vault.address
+  (vault) => vault.address,
 );
 
 export function isVaultToken(
-  tokenInfo: TokenInfo
+  tokenInfo: TokenInfo,
 ): tokenInfo is VaultTokenInfo {
   return !!tokenInfo?.tags?.includes(TokenTag.VAULT);
 }
