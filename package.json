@@ -7,7 +7,7 @@
   "scripts": {
     "prepare": "husky install",
     "prettier:w": "prettier --write '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",
-    "prettier:check": "prettier --check '*/src/**/*.{ts,tsx}'"
+    "prettier:check": "prettier --check '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
     "{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}": [
