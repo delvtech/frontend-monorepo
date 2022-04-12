@@ -24,14 +24,14 @@ const {
 
 export function useTokenPrice<TContract extends ERC20>(
   contract: TContract,
-  currency: Currency
+  currency: Currency,
 ): QueryObserverResult<Money> {
   const { symbol: tokenSymbol, decimals } = getTokenInfo(contract.address);
 
   // Regular base assets
   const coinGeckoPriceResult = useCoinGeckoPrice(
     getCoinGeckoId(tokenSymbol), // query is disabled when this is undefined
-    currency
+    currency,
   );
 
   // Curve stable pools, eg: crvLUSD
@@ -43,7 +43,7 @@ export function useTokenPrice<TContract extends ERC20>(
   const curveStablePoolPriceResult = useCurveStablecoinPoolVirtualPrice(
     // query is disabled when this is undefined
     curveStablePoolContract,
-    decimals
+    decimals,
   );
 
   // Individual Curve non-stable pools, eg crvTricrypto or steCRV

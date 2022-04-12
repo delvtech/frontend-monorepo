@@ -26,7 +26,7 @@ export function calcSwapPrincipalPool(
   decimals: number,
   tokenInReserves: string,
   tokenOutReserves: string,
-  totalSupply: string
+  totalSupply: string,
 ): PrincipalPoolCalcSwapResult {
   // check for bad inputs, ie: 0 (including "0.0", et al) and empty strings
   if (!+amount) {
@@ -70,7 +70,7 @@ export function calcSwapPrincipalPool(
         String(adjustedOutReserves),
         timeRemainingSeconds,
         tParamSeconds,
-        true // swapKind === SwapKind.GIVEN_IN (calculate output)
+        true, // swapKind === SwapKind.GIVEN_IN (calculate output)
       );
 
       // We get back NaN when there are insufficient reserves
@@ -97,7 +97,7 @@ export function calcSwapPrincipalPool(
         String(adjustedInReserves),
         timeRemainingSeconds,
         tParamSeconds,
-        false // swapKind === SwapKind.GIVEN_IN (calculate output)
+        false, // swapKind === SwapKind.GIVEN_IN (calculate output)
       );
 
       // We get back NaN when there are insufficient reserves
@@ -134,7 +134,7 @@ export function calcSwapPrincipalPoolOld(
   tokenInReserves: string,
   tokenOutReserves: string,
   totalSupply: string,
-  baseAssetIn: boolean
+  baseAssetIn: boolean,
 ): QueryBatchSwapCalcResults {
   const nowInSeconds = Math.round(Date.now() / 1000);
   const { extensions } = poolInfo;
@@ -160,7 +160,7 @@ export function calcSwapPrincipalPoolOld(
       String(adjustedOutReserves),
       timeRemainingSeconds,
       tParamSeconds,
-      true //                         swapKind === SwapKind.GIVEN_IN (calculate output)
+      true, //                         swapKind === SwapKind.GIVEN_IN (calculate output)
     );
 
     const calcOut =
@@ -175,7 +175,7 @@ export function calcSwapPrincipalPoolOld(
     String(adjustedInReserves),
     timeRemainingSeconds,
     tParamSeconds,
-    false //                        swapKind === SwapKind.GIVEN_IN (calculate output)
+    false, //                        swapKind === SwapKind.GIVEN_IN (calculate output)
   );
 
   const calcIn =

@@ -111,10 +111,7 @@
     "typescript": "^4.5.5"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,md}": [
-      "npm run prettier",
-      "eslint --fix"
-    ],
+    "src/**/*.{js,jsx,ts,tsx,json,md}": ["npm run prettier", "eslint --fix"],
     "*.js": "eslint --cache --fix",
     "src/**/*.{css,scss}": "stylelint",
     "*.{js,css,md}": "prettier --write"

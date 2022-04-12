@@ -17,9 +17,11 @@ import Card from "src/ui/base/Card/Card";
 import USDCIcon from "src/ui/base/svg/USDCIcon";
 import Well from "src/ui/base/Well/Well";
 import { useLPTokenBalance } from "src/ui/liquiditymining/hooks/useLPTokenBalance";
-import { usePoolRewardsRate } from "src/ui/liquiditymining/hooks/usePoolRewardsRate";
+import { useELFIPerBlock } from "src/ui/liquiditymining/hooks/useELFIPerBlock";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
 import { t } from "ttag";
+import { ETHEREUM_BLOCKS_PER_WEEK } from "base/ethereum/ethereum";
+import { commify } from "@ethersproject/units";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -49,7 +51,9 @@ export function EligiblePoolCard({
 
   const poolContract = eligibleGoerliPoolContracts[poolAddress];
   const { data: lpTokenBalance } = useLPTokenBalance(poolContract, account);
-  const rewardsRate = usePoolRewardsRate(poolAddress);
+  const elfiPerBlock = useELFIPerBlock(poolAddress);
+  const elfiPerWeek = ETHEREUM_BLOCKS_PER_WEEK * elfiPerBlock;
+
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || "0.0";
   const pendingRewards = userInfo?.rewardDebt || "0.0";
@@ -71,7 +75,7 @@ export function EligiblePoolCard({
         </div>
         <div className="grid grid-cols-2 gap-8">
           <span className="text-principalRoyalBlue">{t`Total ELFI / Week`}</span>
-          <span className="text-right">1,100 ELFI</span>
+          <span className="text-right">{commify(elfiPerWeek)} ELFI</span>
         </div>
       </Well>
 
@@ -86,7 +90,7 @@ export function EligiblePoolCard({
         </div>
         <div className="grid grid-cols-2 gap-8 ">
           <span className="text-principalRoyalBlue">{t`Unclaimed`}</span>
-          <span className="text-right font-semibold">22.43 ELFI</span>
+          <span className="text-right font-semibold">{`${pendingRewards} ELFI`}</span>
         </div>
       </div>
 

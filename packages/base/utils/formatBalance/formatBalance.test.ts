@@ -25,6 +25,6 @@ test("should return '1000.0' when when given one thousand eth and formatCommas i
   const oneThousandEther = BigNumber.from("1000000000000000000000");
 
   expect(
-    formatBalance(oneThousandEther, 18, 4, { formatCommas: false })
+    formatBalance(oneThousandEther, 18, 4, { formatCommas: false }),
   ).toEqual("1000.0");
 });

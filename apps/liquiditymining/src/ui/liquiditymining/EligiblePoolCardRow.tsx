@@ -11,7 +11,7 @@ import { formatBalance } from "src/formatBalance";
 import { useLPTokenBalance } from "./hooks/useLPTokenBalance";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
 import { useTotalFiatLiquidity } from "core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
-import { usePoolRewardsRate } from "./hooks/usePoolRewardsRate";
+import { useELFIPerBlock } from "./hooks/useELFIPerBlock";
 import { getVaultTokenInfoForTranche } from "core/tranche/tranches";
 import { formatAbbreviatedDate } from "src/base/dates";
 import { convertEpochSecondsToDate } from "base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
@@ -50,7 +50,7 @@ export function EligiblePoolCardRow({
 
   const poolContract = eligibleGoerliPoolContracts[poolAddress];
   const { data: lpTokenBalance } = useLPTokenBalance(poolContract, account);
-  const rewardsRate = usePoolRewardsRate(poolAddress);
+  const rewardsRate = useELFIPerBlock(poolAddress);
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || "0.0";
   const pendingRewards = userInfo?.rewardDebt || "0.0";

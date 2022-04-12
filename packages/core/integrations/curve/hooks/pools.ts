@@ -34,7 +34,7 @@ export function useCrv3CryptoPrice({
   // tricrypto is made up of usdt, eth, and wbtc so we get a price in usdt
   const { data: usdtPrice } = useCoinGeckoPrice(
     getCoinGeckoId("usdt"),
-    Currencies.USD
+    Currencies.USD,
   );
 
   const calcWithdrawOneCoinResult = useSmartContractReadCall(
@@ -51,9 +51,9 @@ export function useCrv3CryptoPrice({
             +(usdtPrice as Money).toString();
           return Money.fromDecimal(price, Currencies.USD, Math.round);
         },
-        [Currencies.USD, usdtPrice]
+        [Currencies.USD, usdtPrice],
       ),
-    }
+    },
   );
 
   if (isGoerli(AddressesJson.chainId)) {
@@ -68,7 +68,7 @@ export function useTriCryptoPrice({
   // tricrypto is made up of usdt, eth, and wbtc so we get a price in usdt
   const { data: usdtPrice } = useCoinGeckoPrice(
     getCoinGeckoId("usdt"),
-    Currencies.USD
+    Currencies.USD,
   );
 
   const calcWithdrawOneCoinResult = useSmartContractReadCall(
@@ -85,9 +85,9 @@ export function useTriCryptoPrice({
             +(usdtPrice as Money).toString();
           return Money.fromDecimal(price, Currencies.USD, Math.round);
         },
-        [Currencies.USD, usdtPrice]
+        [Currencies.USD, usdtPrice],
       ),
-    }
+    },
   );
 
   if (isGoerli(AddressesJson.chainId)) {
@@ -103,7 +103,7 @@ export function useSteCrvPrice({
   // steCRV is made up of eth and stEth, so we get a price in eth
   const { data: ethPrice } = useCoinGeckoPrice(
     getCoinGeckoId("eth"),
-    Currencies.USD
+    Currencies.USD,
   );
 
   const calcWithdrawOneCoinResult = useSmartContractReadCall(
@@ -120,9 +120,9 @@ export function useSteCrvPrice({
             +(ethPrice as Money).toString();
           return Money.fromDecimal(price, Currencies.USD, Math.round);
         },
-        [Currencies.USD, ethPrice]
+        [Currencies.USD, ethPrice],
       ),
-    }
+    },
   );
 
   if (isGoerli(AddressesJson.chainId)) {

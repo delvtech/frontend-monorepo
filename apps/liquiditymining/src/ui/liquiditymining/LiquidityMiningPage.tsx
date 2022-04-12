@@ -12,8 +12,6 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
 import { EligiblePoolCard } from "./EligiblePoolCard";
 
-import { EligiblePoolsTable } from "./EligiblePoolsTable";
-
 export function LiquidityMiningPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
   return (
@@ -45,7 +43,8 @@ export function LiquidityMiningPage(): ReactElement {
         ))}
       </div>
 
-      {/* <EligiblePoolsTable account={account} /> */}
+      {/* TODO: Delete this if we go with cards instead
+      <EligiblePoolsTable account={account} /> */}
     </div>
   );
 }

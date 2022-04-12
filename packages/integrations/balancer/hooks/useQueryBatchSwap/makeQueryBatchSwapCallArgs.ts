@@ -28,7 +28,7 @@ export function makeQueryBatchSwapCallArgs(
   tokenInAddress: string | undefined,
   amount: BigNumber | undefined,
   tokenOutAddress: string | undefined,
-  wethAddress: string
+  wethAddress: string,
 ): StaticContractMethodArgs<Vault, "queryBatchSwap"> | undefined {
   if (!poolId || !amount?.gt(0) || !tokenInAddress || !tokenOutAddress) {
     return undefined;
@@ -43,15 +43,15 @@ export function makeQueryBatchSwapCallArgs(
     assets = sortAddresses(
       assets
         .map((address) => mapETHSentinelToWETH(address, wethAddress))
-        .map((address) => mapWETHToETHSentinel(address, wethAddress))
+        .map((address) => mapWETHToETHSentinel(address, wethAddress)),
     );
   }
 
   const assetInIndex = assets.findIndex(
-    (address) => address === tokenInAddress
+    (address) => address === tokenInAddress,
   );
   const assetOutIndex = assets.findIndex(
-    (address) => address === tokenOutAddress
+    (address) => address === tokenOutAddress,
   );
 
   const swaps: BatchSwapStep[] = [

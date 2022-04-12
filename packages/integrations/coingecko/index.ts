@@ -18,7 +18,7 @@ const CoinGeckoIds: {
   [symbol: string]: string;
 } = coinsJSON.reduce(
   (memo, value) => ({ ...memo, [value.symbol]: value.id }),
-  {}
+  {},
 );
 
 export function getCoinGeckoId(symbol: string | undefined): string | undefined {
@@ -30,11 +30,11 @@ export function getCoinGeckoId(symbol: string | undefined): string | undefined {
 }
 export async function fetchCoinGeckoPrice(
   coinGeckoId: string,
-  currency: Currency
+  currency: Currency,
 ): Promise<Money> {
   const currencyCode = currency.code.toLowerCase();
   const result = await fetch(
-    `https://api.coingecko.com/api/v3/simple/price?ids=${coinGeckoId}&vs_currencies=${currencyCode}`
+    `https://api.coingecko.com/api/v3/simple/price?ids=${coinGeckoId}&vs_currencies=${currencyCode}`,
   );
 
   // Result looks like:
@@ -51,19 +51,19 @@ export async function fetchCoinGeckoPrice(
     currency,
     // Money.fromDecimal will throw if price has more decimals than the currency
     // allows unless you pass a rounding function
-    Math.round
+    Math.round,
   );
 }
 
 export async function fetchCoinGeckoHistoricalPrice(
   coinGeckoId: string,
   currency: Currency,
-  daysAgo = 1
+  daysAgo = 1,
 ): Promise<Money> {
   const dateString = format(subDays(new Date(), daysAgo), "dd-MM-yyyy");
   const currencyCode = currency.code.toLowerCase();
   const result = await fetch(
-    `https://api.coingecko.com/api/v3/coins/${coinGeckoId}/history?date=${dateString}`
+    `https://api.coingecko.com/api/v3/coins/${coinGeckoId}/history?date=${dateString}`,
   );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -76,6 +76,6 @@ export async function fetchCoinGeckoHistoricalPrice(
     currency,
     // Money.fromDecimal will throw if price has more decimals than the currency
     // allows unless you pass a rounding function
-    Math.round
+    Math.round,
   );
 }
