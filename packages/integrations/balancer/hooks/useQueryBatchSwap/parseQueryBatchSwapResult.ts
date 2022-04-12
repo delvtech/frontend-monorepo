@@ -16,7 +16,7 @@ export function parseQueryBatchSwapResult(
   tokenInAddress: string,
   tokenOutAddress: string,
   batchSwaps: BigNumber[],
-  wethAddress: string
+  wethAddress: string,
 ): ParsedQueryBatchSwapResult {
   // balancer's batchSwap requires that the assets be sorted
   let assets = sortAddresses([tokenInAddress, tokenOutAddress]);
@@ -25,14 +25,14 @@ export function parseQueryBatchSwapResult(
   // it were WETH.
   if (assets.includes(BALANCER_ETH_SENTINEL)) {
     assets = sortAddresses(
-      assets.map((address) => mapETHSentinelToWETH(address, wethAddress))
+      assets.map((address) => mapETHSentinelToWETH(address, wethAddress)),
     ).map((address) => mapWETHToETHSentinel(address, wethAddress));
   }
   const tokenInIndex = assets.findIndex(
-    (address) => address === tokenInAddress
+    (address) => address === tokenInAddress,
   );
   const tokenOutIndex = assets.findIndex(
-    (address) => address === tokenOutAddress
+    (address) => address === tokenOutAddress,
   );
   const tokenIn = batchSwaps?.[tokenInIndex];
   const tokenOut = batchSwaps?.[tokenOutIndex];
