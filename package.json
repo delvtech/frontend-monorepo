@@ -6,18 +6,13 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "prettier:w": "prettier --write",
-    "prettier:all": "prettier --write '*/src/**/*.{ts,tsx}'",
     "prettier:check": "prettier --check '*/src/**/*.{ts,tsx}'"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,md}": [
-      "npm run prettier",
-      "eslint --fix"
+    "{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}": [
+      "prettier --write"
     ],
-    "*.js": "eslint --cache --fix",
-    "src/**/*.{css,scss}": "stylelint",
-    "*.{js,css,md}": "prettier --write"
+    "*.{js,css,md,json}": "prettier --write"
   },
   "workspaces": [
     "apps/*",
@@ -27,5 +22,8 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.2"
+  },
+  "devDependencies": {
+    "husky": "^7.0.0"
   }
 }
