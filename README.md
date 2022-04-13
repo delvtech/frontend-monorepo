@@ -3,21 +3,21 @@
 This repo contains frontend packages and applications that are maintained by Element Finance.
 
 ## Required `node` version
+
 - **Node 14.19.1**
 - Vercel only supports node 12.x and 14.x as of this writing.
 - This repo contains an .nvmrc, so you can just run `nvm use` from the top-level.
 
-## Required `npm` version
-- **npm 8.3.1**
-- Vercel has depends on npm 8.3.1 and doesn't let us change it.
-- By default, node 14.19.1 ships with npm@6.14.16.
-- The `npm workspaces` feature was introduced in 7.x, so you will have to upgrade npm manually.
-- Run: `npm install -g npm@8.3.1`
+## Required `yarn` version
+
+- **yarn 1.22.18 **
+- Vercel supports Yarn 1, see: https://vercel.com/support/articles/does-vercel-support-yarn-2
+- Run: `npm install -g yarn@1.22.18`
 
 ## Development
 
 1. Clone the repo: `git clone git@github.com:element-fi/liquidity-mining-ui.git`
-2. Run `npm ci` at the top-level to install all packages across every workspace
+2. Run `yarn` at the top-level to install all packages across every workspace
 
 ### Installing new packages
 
@@ -26,12 +26,12 @@ Here are a few examples of how to install packages in this repo:
 ```bash
 # Install prettier for the top-level package.json, useful for tooling that
 # runs against the entire monorepo
-npm install prettier
+yarn add prettier
 
 # Install lodash for the packages/base workspace.
 # Note: specify the workspace by the name in its `package.json`, ie: `base` not `packages/base`
-npm install lodash -w base
+yarn workspace base add lodash
 
 # Install peripherals workspace as dependency for the liquidity mining app
-npm install peripherals -w liquiditymining
+# confirm this: yarn workspace liquidity-mining-ui add peripherals
 ```
