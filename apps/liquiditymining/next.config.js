@@ -1,4 +1,4 @@
-const svgrTemplate = import("./svgr-template");
+const svgrTemplate = require("./svgr-template");
 
 const nextConfig = {
   eslint: {
