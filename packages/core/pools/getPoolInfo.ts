@@ -1,7 +1,7 @@
-import { principalPools } from "core/pools/ccpool";
-import { PoolContract } from "core/pools/PoolContract";
-import { PoolInfo } from "core/pools/PoolInfo";
-import { yieldPools } from "core/pools/weightedPool";
+import { principalPools } from "@elementfi/core/pools/ccpool";
+import { PoolContract } from "@elementfi/core/pools/PoolContract";
+import { PoolInfo } from "@elementfi/core/pools/PoolInfo";
+import { yieldPools } from "@elementfi/core/pools/weightedPool";
 
 export const getAllPoolAddresses = (): string[] =>
   [...yieldPools, ...principalPools].map(({ address }) => address);

@@ -1,8 +1,8 @@
-import { SwapKind } from "integrations/balancer/SwapKind";
-import { clipStringValueToDecimals } from "base/math/fixedPoint";
-import { calcSwapCCPoolUNSAFE } from "integrations/balancer/calcPoolSwap";
-import { QueryBatchSwapCalcResults } from "integrations/balancer/QueryBatchSwapCalcResults";
-import { assertNever } from "base/utils/assertNever";
+import { SwapKind } from "@elementfi/integrations/balancer/SwapKind";
+import { clipStringValueToDecimals } from "@elementfi/base/math/fixedPoint";
+import { calcSwapCCPoolUNSAFE } from "@elementfi/integrations/balancer/calcPoolSwap";
+import { QueryBatchSwapCalcResults } from "@elementfi/integrations/balancer/QueryBatchSwapCalcResults";
+import { assertNever } from "@elementfi/base/utils/assertNever";
 import { PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
 
 export enum PrincipalPoolCalcSwapError {

@@ -4,8 +4,8 @@ import {
 } from "@elementfi/core-typechain/dist/v1";
 import { TokenInfo, TokenTag, YieldPoolTokenInfo } from "@elementfi/tokenlist";
 // TODO: stuff under packages/ should not have a default provider
-import { defaultProvider } from "core/providers/providers";
-import { tokenListJson } from "core/tokenlists/tokenlists";
+import { defaultProvider } from "@elementfi/core/providers/providers";
+import { tokenListJson } from "@elementfi/core/tokenlists/tokenlists";
 import keyBy from "lodash.keyby";
 
 // hard limit set by Balancer.  Cannot trade in/out more than 30% of the pool

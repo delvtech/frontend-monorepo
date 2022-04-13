@@ -3,7 +3,7 @@ import {
   CurveStethPool__factory,
 } from "@elementfi/core-typechain/dist/libraries";
 // TODO: stuff under packages/ should not have a default provider
-import { defaultProvider } from "core/providers/providers";
+import { defaultProvider } from "@elementfi/core/providers/providers";
 
 /*
  * Curve pools that aren't strictly stablecoins are architected such that the LP

@@ -1,8 +1,8 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
-import { AddressesJson } from "core/addresses/addresses";
-import { formatBalance } from "base/utils/formatBalance/formatBalance";
-import { ONE_MINUTE_IN_MILLISECONDS } from "base/time/time";
-import { isGoerli } from "base/ethereum/ethereum";
+import { AddressesJson } from "@elementfi/core/addresses/addresses";
+import { formatBalance } from "@elementfi/base/utils/formatBalance/formatBalance";
+import { ONE_MINUTE_IN_MILLISECONDS } from "@elementfi/base/time/time";
+import { isGoerli } from "@elementfi/base/ethereum/ethereum";
 import { BigNumber } from "ethers";
 import { useCallback } from "react";
 import { QueryObserverResult } from "react-query";

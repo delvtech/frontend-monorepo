@@ -4,9 +4,9 @@ import {
   ERC20__factory,
   WETH__factory,
 } from "@elementfi/core-typechain/dist/libraries";
-import { AddressesJson } from "core/addresses/addresses";
+import { AddressesJson } from "@elementfi/core/addresses/addresses";
 // TODO: stuff under packages/ should not have a default provider
-import { defaultProvider } from "core/providers/providers";
+import { defaultProvider } from "@elementfi/core/providers/providers";
 
 const {
   addresses: {

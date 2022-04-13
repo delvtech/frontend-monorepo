@@ -1,13 +1,13 @@
 import { Vault } from "@elementfi/core-typechain/dist/v1";
-import { SwapKind } from "integrations/balancer/SwapKind";
-import { balancerVaultContract } from "integrations/balancer/vault";
-import { makeQueryBatchSwapCallArgs } from "integrations/balancer/hooks/useQueryBatchSwap/makeQueryBatchSwapCallArgs";
-import { getQueriesData } from "base/queries/queryResults";
+import { SwapKind } from "@elementfi/integrations/balancer/SwapKind";
+import { balancerVaultContract } from "@elementfi/integrations/balancer/vault";
+import { makeQueryBatchSwapCallArgs } from "@elementfi/integrations/balancer/hooks/useQueryBatchSwap/makeQueryBatchSwapCallArgs";
+import { getQueriesData } from "@elementfi/base/queries/queryResults";
 import {
   useSmartContractReadCalls,
   UseSmartContractReadCallOptions,
 } from "@elementfi/react-query-typechain";
-import { PoolContract } from "core/pools/PoolContract";
+import { PoolContract } from "@elementfi/core/pools/PoolContract";
 import { BigNumber } from "ethers";
 import zip from "lodash.zip";
 import { QueryObserverResult } from "react-query";

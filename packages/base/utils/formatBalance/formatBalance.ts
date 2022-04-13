@@ -1,7 +1,7 @@
 import { BigNumber } from "ethers";
 import { commify, formatUnits } from "ethers/lib/utils";
 
-import { clipStringValueToDecimals } from "base/math/fixedPoint";
+import { clipStringValueToDecimals } from "@elementfi/base/math/fixedPoint";
 
 interface FormatBalanceOptions {
   /**

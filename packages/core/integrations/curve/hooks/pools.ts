@@ -1,21 +1,21 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
-import { ONE_MINUTE_IN_MILLISECONDS } from "base/time/time";
+import { ONE_MINUTE_IN_MILLISECONDS } from "@elementfi/base/time/time";
 import {
   isGoerli,
   isMainnet,
   NUM_ETH_DECIMALS,
   ONE_ETHER,
-} from "base/ethereum/ethereum";
-import { AddressesJson } from "core/addresses/addresses";
+} from "@elementfi/base/ethereum/ethereum";
+import { AddressesJson } from "@elementfi/core/addresses/addresses";
 import {
   crv3CryptoPoolContract,
   crvTriCryptoPoolContract,
   steCrvPoolContract,
-} from "core/integrations/curve/pools";
+} from "@elementfi/core/integrations/curve/pools";
 import { BigNumber } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
-import { getCoinGeckoId } from "integrations/coingecko";
-import { useCoinGeckoPrice } from "integrations/coingecko/hooks/useCoinGeckoPrice";
+import { getCoinGeckoId } from "@elementfi/integrations/coingecko";
+import { useCoinGeckoPrice } from "@elementfi/integrations/coingecko/hooks/useCoinGeckoPrice";
 import { useCallback } from "react";
 import { QueryObserverResult } from "react-query";
 import { Currencies, Money } from "ts-money";

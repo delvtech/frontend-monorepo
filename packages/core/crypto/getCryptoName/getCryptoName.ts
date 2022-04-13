@@ -1,11 +1,11 @@
 import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
-import { assertNever } from "base/utils/assertNever";
+import { assertNever } from "@elementfi/base/utils/assertNever";
 import {
   CryptoAsset,
   CryptoAssetType,
   findTokenContract,
-} from "core/crypto/CryptoAsset";
-import { TokenMetadata } from "core/tokenlists/tokenlists";
+} from "@elementfi/core/crypto/CryptoAsset";
+import { TokenMetadata } from "@elementfi/core/tokenlists/tokenlists";
 
 export function getCryptoName(asset: CryptoAsset): string {
   const assetType = asset.type;

@@ -4,10 +4,10 @@ import {
 } from "@elementfi/tokenlist";
 import { ExternalLinkIcon } from "@heroicons/react/outline";
 import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
-import { convertEpochSecondsToDate } from "base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
-import { useTotalFiatLiquidity } from "core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
-import { getTokenInfo } from "core/tokenlists/tokenlists";
-import { getVaultTokenInfoForTranche } from "core/tranche/tranches";
+import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
+import { useTotalFiatLiquidity } from "@elementfi/core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
+import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
+import { getVaultTokenInfoForTranche } from "@elementfi/core/tranche/tranches";
 import React, { ReactElement } from "react";
 import { formatAbbreviatedDate } from "src/base/dates";
 import { eligibleGoerliPoolContracts } from "src/elf/liquiditymining/eligiblepools";
@@ -20,7 +20,7 @@ import { useLPTokenBalance } from "src/ui/liquiditymining/hooks/useLPTokenBalanc
 import { useELFIPerBlock } from "src/ui/liquiditymining/hooks/useELFIPerBlock";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
 import { t } from "ttag";
-import { ETHEREUM_BLOCKS_PER_WEEK } from "base/ethereum/ethereum";
+import { ETHEREUM_BLOCKS_PER_WEEK } from "@elementfi/base/ethereum/ethereum";
 import { commify } from "@ethersproject/units";
 
 interface EligiblePoolCardProps {

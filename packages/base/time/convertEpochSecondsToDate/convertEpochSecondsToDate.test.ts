@@ -1,4 +1,4 @@
-import { convertEpochSecondsToDate } from "base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
+import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
 
 test("when given 5 as an input should return correct date", () => {
   const expectedOutput = new Date(

@@ -1,6 +1,6 @@
 import { BigNumber, BytesLike } from "ethers";
 
-import { SwapKind } from "integrations/balancer/SwapKind";
+import { SwapKind } from "@elementfi/integrations/balancer/SwapKind";
 
 export interface SingleSwap {
   poolId: BytesLike;

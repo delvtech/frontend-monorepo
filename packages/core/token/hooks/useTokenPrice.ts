@@ -1,19 +1,19 @@
 import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
-import { isMainnet } from "base/ethereum/ethereum";
-import { AddressesJson } from "core/addresses/addresses";
+import { isMainnet } from "@elementfi/base/ethereum/ethereum";
+import { AddressesJson } from "@elementfi/core/addresses/addresses";
 import {
   useCrv3CryptoPrice,
   useSteCrvPrice,
   useTriCryptoPrice,
-} from "core/integrations/curve/hooks/pools";
-import { useCurveStablecoinPoolVirtualPrice } from "core/integrations/curve/hooks/stablePools";
+} from "@elementfi/core/integrations/curve/hooks/pools";
+import { useCurveStablecoinPoolVirtualPrice } from "@elementfi/core/integrations/curve/hooks/stablePools";
 import {
   curveVirtualPriceContractsByAddress,
   isCurveStablePool,
-} from "core/integrations/curve/stablePools";
-import { getTokenInfo } from "core/tokenlists/tokenlists";
-import { getCoinGeckoId } from "integrations/coingecko";
-import { useCoinGeckoPrice } from "integrations/coingecko/hooks/useCoinGeckoPrice";
+} from "@elementfi/core/integrations/curve/stablePools";
+import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
+import { getCoinGeckoId } from "@elementfi/integrations/coingecko";
+import { useCoinGeckoPrice } from "@elementfi/integrations/coingecko/hooks/useCoinGeckoPrice";
 import { QueryObserverResult } from "react-query";
 import { Currency, Money } from "ts-money";
 

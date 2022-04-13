@@ -1,6 +1,6 @@
 import { BigNumberish, BytesLike } from "ethers";
 
-import { SwapKind } from "integrations/balancer/SwapKind";
+import { SwapKind } from "@elementfi/integrations/balancer/SwapKind";
 
 /**
  * This is taken from the IPoolSwapStructs.sol, which uses this interface for SwapIn and

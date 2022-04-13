@@ -1,13 +1,13 @@
 import { Vault } from "@elementfi/core-typechain/dist/v1";
-import { FundManagement } from "integrations/balancer/FundManagement";
-import { SwapKind } from "integrations/balancer/SwapKind";
-import { BatchSwapStep } from "integrations/balancer/SwapRequest";
+import { FundManagement } from "@elementfi/integrations/balancer/FundManagement";
+import { SwapKind } from "@elementfi/integrations/balancer/SwapKind";
+import { BatchSwapStep } from "@elementfi/integrations/balancer/SwapRequest";
 import {
   mapETHSentinelToWETH,
   mapWETHToETHSentinel,
-} from "integrations/balancer/balancer";
-import { BALANCER_ETH_SENTINEL } from "integrations/balancer/ethSentinel";
-import { sortAddresses } from "base/utils/sortAddresses/sortAddresses";
+} from "@elementfi/integrations/balancer/balancer";
+import { BALANCER_ETH_SENTINEL } from "@elementfi/integrations/balancer/ethSentinel";
+import { sortAddresses } from "@elementfi/base/utils/sortAddresses/sortAddresses";
 import { StaticContractMethodArgs } from "@elementfi/react-query-typechain";
 import { BigNumber } from "ethers";
 import { parseEther } from "ethers/lib/utils";

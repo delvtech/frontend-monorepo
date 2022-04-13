@@ -1,9 +1,9 @@
 import { Money } from "ts-money";
 
-import { useTotalLiquidity } from "core/pools/hooks/useTotalLiquidity";
-import { useTokenPrice } from "core/token/hooks/useTokenPrice";
-import { getPoolTokens } from "core/pools/getPoolTokens";
-import { PoolInfo } from "core/pools/PoolInfo";
+import { useTotalLiquidity } from "@elementfi/core/pools/hooks/useTotalLiquidity";
+import { useTokenPrice } from "@elementfi/core/token/hooks/useTokenPrice";
+import { getPoolTokens } from "@elementfi/core/pools/getPoolTokens";
+import { PoolInfo } from "@elementfi/core/pools/PoolInfo";
 import { Currencies } from "ts-money";
 
 export function useTotalFiatLiquidity(poolInfo: PoolInfo): Money | undefined {

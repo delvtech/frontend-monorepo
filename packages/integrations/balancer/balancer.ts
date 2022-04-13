@@ -1,4 +1,4 @@
-import { BALANCER_ETH_SENTINEL } from "integrations/balancer/ethSentinel";
+import { BALANCER_ETH_SENTINEL } from "@elementfi/integrations/balancer/ethSentinel";
 
 export function mapETHSentinelToWETH(
   possiblyEthSentinel: string,

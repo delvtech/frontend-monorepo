@@ -2,17 +2,17 @@ import { useMemo } from "react";
 
 import { formatUnits } from "ethers/lib/utils";
 
-import { BALANCER_POOL_LP_TOKEN_DECIMALS } from "integrations/balancer/pools";
+import { BALANCER_POOL_LP_TOKEN_DECIMALS } from "@elementfi/integrations/balancer/pools";
 import {
   getCalcSwap,
   getTokenReserves,
-} from "integrations/balancer/hooks/useQueryBatchSwap/useQueryBatchSwap";
+} from "@elementfi/integrations/balancer/hooks/useQueryBatchSwap/useQueryBatchSwap";
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
-import { usePoolTokens } from "core/pools/hooks/usePoolTokens/usePoolTokens";
-import { SwapKind } from "integrations/balancer/SwapKind";
-import { getPoolTokenInfoFromContract } from "core/pools/getPoolInfo";
-import { getPoolTokens } from "core/pools/getPoolTokens";
-import { PoolContract } from "core/pools/PoolContract";
+import { usePoolTokens } from "@elementfi/core/pools/hooks/usePoolTokens/usePoolTokens";
+import { SwapKind } from "@elementfi/integrations/balancer/SwapKind";
+import { getPoolTokenInfoFromContract } from "@elementfi/core/pools/getPoolInfo";
+import { getPoolTokens } from "@elementfi/core/pools/getPoolTokens";
+import { PoolContract } from "@elementfi/core/pools/PoolContract";
 
 /**
  * Lazy spot price technique until we get a better method.  Right now just calculates how much out

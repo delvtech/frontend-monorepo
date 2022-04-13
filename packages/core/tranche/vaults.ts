@@ -2,9 +2,9 @@ import { TestYVault__factory } from "@elementfi/core-typechain/dist/v1";
 import { TokenInfo, VaultTokenInfo } from "@elementfi/tokenlist";
 import { TokenTag } from "@elementfi/tokenlist/dist/tags";
 // TODO: stuff under packages/ should not have a default provider
-import { defaultProvider } from "core/providers/providers";
-import { tokenListJson } from "core/tokenlists/tokenlists";
-import { assetProxyTokenInfos } from "core/tranche/positions";
+import { defaultProvider } from "@elementfi/core/providers/providers";
+import { tokenListJson } from "@elementfi/core/tokenlists/tokenlists";
+import { assetProxyTokenInfos } from "@elementfi/core/tranche/positions";
 import keyBy from "lodash.keyby";
 
 export const vaultTokenInfos: VaultTokenInfo[] = tokenListJson.tokens.filter(

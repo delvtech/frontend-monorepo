@@ -1153,9 +1153,9 @@
     typescript "^4.3.5"
 
 "@elementfi/tokenlist@^2.3.1", "@elementfi/tokenlist@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@elementfi/tokenlist/-/tokenlist-2.4.0.tgz#6498213d4b654eb9ebfa8c1711649de6eec1c777"
-  integrity sha512-mJasMJZ+yRaDBVdAqSKNEj+BzU6llIVKwmoRCt9qWepFHF/yjNYdJkYkylgorZUf19Oc+/F48TfoLUVCCCYy5g==
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@elementfi/tokenlist/-/tokenlist-2.5.0.tgz#f8740441c4799c243b523518002938d68f71dfa1"
+  integrity sha512-7BG2XczgQnSaNbVRvSDW53w7sSmPPTh2PKbVTzyu9odzUjNoOvENa9D1sgrGZfX3GkJkP3FoXh2CUTsxD0Xlaw==
   dependencies:
     "@uniswap/token-lists" "git+https://github.com/Uniswap/token-lists.git#add-array-extension-support"
     dotenv "^16.0.0"
@@ -3429,9 +3429,9 @@ async@^1.4.2:
   integrity sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=
 
 async@^2.0.1, async@^2.1.2, async@^2.4.0, async@^2.5.0, async@^2.6.1:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/async/-/async-2.6.3.tgz#d72625e2344a3656e3a3ad4fa749fa83299d82ff"
-  integrity sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
+  version "2.6.4"
+  resolved "https://registry.yarnpkg.com/async/-/async-2.6.4.tgz#706b7ff6084664cd7eae713f6f965433b5504221"
+  integrity sha512-mzo5dfJYwAn29PeiJ0zvwTo04zj8HDJj0Mn8TD7sno7q12prdbnasKJHhkm2c1LgrhlJ0teaea8860oxi51mGA==
   dependencies:
     lodash "^4.17.14"
 

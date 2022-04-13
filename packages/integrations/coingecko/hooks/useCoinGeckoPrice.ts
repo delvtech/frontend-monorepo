@@ -2,8 +2,8 @@ import { QueryObserverResult, useQuery } from "react-query";
 
 import { Currencies, Currency, Money } from "ts-money";
 
-import { fetchCoinGeckoPrice } from "integrations/coingecko";
-import { ONE_MINUTE_IN_MILLISECONDS } from "base/time/time";
+import { fetchCoinGeckoPrice } from "@elementfi/integrations/coingecko";
+import { ONE_MINUTE_IN_MILLISECONDS } from "@elementfi/base/time/time";
 
 export function useCoinGeckoPrice(
   coinGeckoId: string | undefined,
