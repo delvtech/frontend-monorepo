@@ -10,12 +10,12 @@ import { eligibleGoerliPoolContracts } from "src/elf/liquiditymining/eligiblepoo
 import { formatBalance } from "src/formatBalance";
 import { useLPTokenBalance } from "./hooks/useLPTokenBalance";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
-import { useTotalFiatLiquidity } from "core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
+import { useTotalFiatLiquidity } from "@elementfi/core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
 import { useELFIPerBlock } from "./hooks/useELFIPerBlock";
-import { getVaultTokenInfoForTranche } from "core/tranche/tranches";
+import { getVaultTokenInfoForTranche } from "@elementfi/core/tranche/tranches";
 import { formatAbbreviatedDate } from "src/base/dates";
 import { convertEpochSecondsToDate } from "base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
-import { getTokenInfo } from "core/tokenlists/tokenlists";
+import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import { Popover2 } from "@blueprintjs/popover2";
 import {
   DotsHorizontalIcon,

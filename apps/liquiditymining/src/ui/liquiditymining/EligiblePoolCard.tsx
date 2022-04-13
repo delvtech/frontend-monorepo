@@ -5,9 +5,9 @@ import {
 import { ExternalLinkIcon } from "@heroicons/react/outline";
 import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
 import { convertEpochSecondsToDate } from "base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
-import { useTotalFiatLiquidity } from "core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
-import { getTokenInfo } from "core/tokenlists/tokenlists";
-import { getVaultTokenInfoForTranche } from "core/tranche/tranches";
+import { useTotalFiatLiquidity } from "@elementfi/core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
+import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
+import { getVaultTokenInfoForTranche } from "@elementfi/core/tranche/tranches";
 import React, { ReactElement } from "react";
 import { formatAbbreviatedDate } from "src/base/dates";
 import { eligibleGoerliPoolContracts } from "src/elf/liquiditymining/eligiblepools";

@@ -9,10 +9,10 @@ import {
   TokenTag,
 } from "@elementfi/tokenlist";
 // TODO: stuff under packages/ should not have a default provider
-import { defaultProvider } from "core/providers/providers";
-import { tokenListJson } from "core/tokenlists/tokenlists";
+import { defaultProvider } from "@elementfi/core/providers/providers";
+import { tokenListJson } from "@elementfi/core/tokenlists/tokenlists";
 import keyBy from "lodash.keyby";
-import { AddressesJson } from "core/addresses/addresses";
+import { AddressesJson } from "@elementfi/core/addresses/addresses";
 
 /**
  * The list of all principal token pools. This includes pools with mature

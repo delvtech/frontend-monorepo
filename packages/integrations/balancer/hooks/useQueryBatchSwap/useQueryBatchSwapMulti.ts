@@ -7,7 +7,7 @@ import {
   useSmartContractReadCalls,
   UseSmartContractReadCallOptions,
 } from "@elementfi/react-query-typechain";
-import { PoolContract } from "core/pools/PoolContract";
+import { PoolContract } from "@elementfi/core/pools/PoolContract";
 import { BigNumber } from "ethers";
 import zip from "lodash.zip";
 import { QueryObserverResult } from "react-query";

@@ -1,5 +1,5 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
-import { AddressesJson } from "core/addresses/addresses";
+import { AddressesJson } from "@elementfi/core/addresses/addresses";
 import { formatBalance } from "base/utils/formatBalance/formatBalance";
 import { ONE_MINUTE_IN_MILLISECONDS } from "base/time/time";
 import { isGoerli } from "base/ethereum/ethereum";

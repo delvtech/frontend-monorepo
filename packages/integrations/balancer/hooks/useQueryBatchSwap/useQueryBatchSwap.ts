@@ -1,11 +1,11 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 import { clipStringValueToDecimals } from "base/math/fixedPoint";
-import { isPrincipalPool } from "core/pools/ccpool";
-import { getPoolTokens } from "core/pools/getPoolTokens";
-import { PoolContract } from "core/pools/PoolContract";
-import { PoolInfo } from "core/pools/PoolInfo";
-import { isYieldPool } from "core/pools/weightedPool";
-import { getTokenInfo } from "core/tokenlists/tokenlists";
+import { isPrincipalPool } from "@elementfi/core/pools/ccpool";
+import { getPoolTokens } from "@elementfi/core/pools/getPoolTokens";
+import { PoolContract } from "@elementfi/core/pools/PoolContract";
+import { PoolInfo } from "@elementfi/core/pools/PoolInfo";
+import { isYieldPool } from "@elementfi/core/pools/weightedPool";
+import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import { BigNumber } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 import {

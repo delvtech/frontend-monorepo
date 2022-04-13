@@ -1,6 +1,9 @@
 import { BALANCER_ETH_SENTINEL } from "integrations/balancer/ethSentinel";
 import { typeAassertNever } from "base/utils/typeAssertNever";
-import { CryptoAsset, CryptoAssetType } from "core/crypto/CryptoAsset";
+import {
+  CryptoAsset,
+  CryptoAssetType,
+} from "@elementfi/core/crypto/CryptoAsset";
 
 /**
  * Disambiguates the crypto asset to get a suitable token address for the

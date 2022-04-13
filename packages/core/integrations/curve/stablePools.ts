@@ -1,8 +1,8 @@
 import { CRVLUSD } from "@elementfi/core-typechain/dist/libraries/CRVLUSD";
 import { CRVLUSD__factory } from "@elementfi/core-typechain/dist/libraries/factories/CRVLUSD__factory";
-import { AddressesJson } from "core/addresses/addresses";
+import { AddressesJson } from "@elementfi/core/addresses/addresses";
 // TODO: stuff under packages/ should not have a default provider
-import { defaultProvider } from "core/providers/providers";
+import { defaultProvider } from "@elementfi/core/providers/providers";
 
 /**
  * Curve stable pools provide a `get_virtual_price` method for getting the price.

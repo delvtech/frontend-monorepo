@@ -5,11 +5,11 @@ import {
   YieldPoolTokenInfo,
 } from "@elementfi/tokenlist";
 import { sortAddresses } from "base/utils/sortAddresses/sortAddresses";
-import { getTokenInfo } from "core/tokenlists/tokenlists";
-import { underlyingContractsByAddress } from "core/underlying/underlying";
-import { PoolInfo } from "core/pools/PoolInfo";
-import { interestTokenContractsByAddress } from "core/interestToken/interestToken";
-import { trancheContractsByAddress } from "core/tranche/tranches";
+import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
+import { underlyingContractsByAddress } from "@elementfi/core/underlying/underlying";
+import { PoolInfo } from "@elementfi/core/pools/PoolInfo";
+import { interestTokenContractsByAddress } from "@elementfi/core/interestToken/interestToken";
+import { trancheContractsByAddress } from "@elementfi/core/tranche/tranches";
 
 interface PoolTokens {
   baseAssetInfo: TokenInfo;

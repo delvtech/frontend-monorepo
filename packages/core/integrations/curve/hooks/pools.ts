@@ -6,12 +6,12 @@ import {
   NUM_ETH_DECIMALS,
   ONE_ETHER,
 } from "base/ethereum/ethereum";
-import { AddressesJson } from "core/addresses/addresses";
+import { AddressesJson } from "@elementfi/core/addresses/addresses";
 import {
   crv3CryptoPoolContract,
   crvTriCryptoPoolContract,
   steCrvPoolContract,
-} from "core/integrations/curve/pools";
+} from "@elementfi/core/integrations/curve/pools";
 import { BigNumber } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 import { getCoinGeckoId } from "integrations/coingecko";

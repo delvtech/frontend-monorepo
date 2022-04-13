@@ -12,10 +12,13 @@ import {
 } from "@elementfi/tokenlist";
 import { EMPTY_ARRAY } from "base/constants/emptyArray";
 // TODO: stuff under packages/ should not have a default provider
-import { defaultProvider } from "core/providers/providers";
-import { getTokenInfo, tokenListJson } from "core/tokenlists/tokenlists";
-import { getIsMature } from "core/tranche/getIsMature";
-import { vaultContractsByAddress } from "core/tranche/vaults";
+import { defaultProvider } from "@elementfi/core/providers/providers";
+import {
+  getTokenInfo,
+  tokenListJson,
+} from "@elementfi/core/tokenlists/tokenlists";
+import { getIsMature } from "@elementfi/core/tranche/getIsMature";
+import { vaultContractsByAddress } from "@elementfi/core/tranche/vaults";
 import keyBy from "lodash.keyby";
 
 export function isPrincipalToken(

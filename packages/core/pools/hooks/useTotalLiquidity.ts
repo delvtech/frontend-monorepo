@@ -1,9 +1,9 @@
 import { formatUnits } from "ethers/lib/utils";
-import { usePoolSpotPrice } from "core/pools/hooks/usePoolSpotPrice/usePoolSpotPrice";
-import { usePoolTokens } from "core/pools/hooks/usePoolTokens/usePoolTokens";
-import { getPoolContract } from "core/pools/getPoolContract";
-import { getPoolTokens } from "core/pools/getPoolTokens";
-import { PoolInfo } from "core/pools/PoolInfo";
+import { usePoolSpotPrice } from "@elementfi/core/pools/hooks/usePoolSpotPrice/usePoolSpotPrice";
+import { usePoolTokens } from "@elementfi/core/pools/hooks/usePoolTokens/usePoolTokens";
+import { getPoolContract } from "@elementfi/core/pools/getPoolContract";
+import { getPoolTokens } from "@elementfi/core/pools/getPoolTokens";
+import { PoolInfo } from "@elementfi/core/pools/PoolInfo";
 
 export function useTotalLiquidity(poolInfo: PoolInfo): number {
   const pool = getPoolContract(poolInfo.address);

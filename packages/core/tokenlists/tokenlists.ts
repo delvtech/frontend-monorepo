@@ -9,7 +9,7 @@ import {
   TokenList,
 } from "@elementfi/tokenlist";
 import keyBy from "lodash.keyby";
-import TokenListJsonFileTestnet from "core/tokenlists/testnet.tokenlist.json";
+import TokenListJsonFileTestnet from "@elementfi/core/tokenlists/testnet.tokenlist.json";
 
 type AnyTokenListInfo =
   | TokenInfo
