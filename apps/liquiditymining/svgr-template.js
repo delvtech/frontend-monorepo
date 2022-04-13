@@ -1,4 +1,4 @@
-const t = require("@babel/types");
+import t from "@babel/types";
 
 /**
  * This template is used in the @svgr/webpack loader options to ensure a unique

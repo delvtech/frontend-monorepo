@@ -2,7 +2,7 @@
 // and https://github.com/firebase/firebase-js-sdk/issues/3096#issuecomment-827741103
 // Overcomes error from jest internals...: https://github.com/facebook/jest/issues/7780
 
-const JSDOMEnvironment = require("jest-environment-jsdom");
+import JSDOMEnvironment from "jest-environment-jsdom";
 
 class MyEnvironment extends JSDOMEnvironment {
   constructor(config) {

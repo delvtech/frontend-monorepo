@@ -51,7 +51,7 @@ export function useCrv3CryptoPrice({
             +(usdtPrice as Money).toString();
           return Money.fromDecimal(price, Currencies.USD, Math.round);
         },
-        [Currencies.USD, usdtPrice],
+        [usdtPrice],
       ),
     },
   );
@@ -85,7 +85,7 @@ export function useTriCryptoPrice({
             +(usdtPrice as Money).toString();
           return Money.fromDecimal(price, Currencies.USD, Math.round);
         },
-        [Currencies.USD, usdtPrice],
+        [usdtPrice],
       ),
     },
   );
@@ -120,7 +120,7 @@ export function useSteCrvPrice({
             +(ethPrice as Money).toString();
           return Money.fromDecimal(price, Currencies.USD, Math.round);
         },
-        [Currencies.USD, ethPrice],
+        [ethPrice],
       ),
     },
   );
