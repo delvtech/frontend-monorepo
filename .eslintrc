@@ -1,4 +1,5 @@
 {
+  "root": true,
   "ignorePatterns": ["*.json", "*.md"],
   "extends": [
     "next",
@@ -84,6 +85,9 @@
       "eslint-import-resolver-typescript": {
         "alwaysTryTypes": true
       }
+    },
+    "next": {
+      "rootDir": "{apps,packages}/*"
     }
   }
 }

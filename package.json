@@ -8,11 +8,14 @@
   "scripts": {
     "prepare": "husky install",
     "prettier:w": "prettier --write '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",
-    "prettier:check": "prettier --check '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'"
+    "prettier:check": "prettier --check '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",
+    "eslint:w": "eslint --fix '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",
+    "eslint:check": "eslint '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
     "{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}": [
-      "prettier --write"
+      "prettier --write",
+      "eslint --fix"
     ],
     "*.{js,css,md,json}": "prettier --write"
   },
@@ -23,6 +26,18 @@
     ]
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/parser": "^4.31.1",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "^12.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-config-typescript": "^3.0.0",
+    "eslint-plugin-flowtype": "^8.0.3",
+    "eslint-plugin-jest-dom": "^4.0.1",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-tailwindcss": "^3.4.4",
+    "eslint-plugin-testing-library": "^5.0.6",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.2"
