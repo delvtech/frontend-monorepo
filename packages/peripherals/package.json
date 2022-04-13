@@ -1,5 +1,5 @@
 {
-  "name": "peripherals",
+  "name": "@elementfi/peripherals",
   "version": "1.0.0",
   "main": "typechain/index.ts",
   "scripts": {
