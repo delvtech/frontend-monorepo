@@ -1,11 +1,11 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
-import { ONE_MINUTE_IN_MILLISECONDS } from "base/time/time";
+import { ONE_MINUTE_IN_MILLISECONDS } from "@elementfi/base/time/time";
 import {
   isGoerli,
   isMainnet,
   NUM_ETH_DECIMALS,
   ONE_ETHER,
-} from "base/ethereum/ethereum";
+} from "@elementfi/base/ethereum/ethereum";
 import { AddressesJson } from "@elementfi/core/addresses/addresses";
 import {
   crv3CryptoPoolContract,

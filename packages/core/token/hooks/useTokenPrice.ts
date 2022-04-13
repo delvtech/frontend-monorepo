@@ -1,5 +1,5 @@
 import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
-import { isMainnet } from "base/ethereum/ethereum";
+import { isMainnet } from "@elementfi/base/ethereum/ethereum";
 import { AddressesJson } from "@elementfi/core/addresses/addresses";
 import {
   useCrv3CryptoPrice,

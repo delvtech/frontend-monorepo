@@ -14,7 +14,7 @@ import { useTotalFiatLiquidity } from "@elementfi/core/pools/hooks/useTotalFiatL
 import { useELFIPerBlock } from "./hooks/useELFIPerBlock";
 import { getVaultTokenInfoForTranche } from "@elementfi/core/tranche/tranches";
 import { formatAbbreviatedDate } from "src/base/dates";
-import { convertEpochSecondsToDate } from "base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
+import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import { Popover2 } from "@blueprintjs/popover2";
 import {

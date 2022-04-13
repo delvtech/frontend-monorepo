@@ -1,8 +1,11 @@
-import { PrefEnvelope, makePrefEnvelope } from "base/prefs/prefEnvelope";
+import {
+  PrefEnvelope,
+  makePrefEnvelope,
+} from "@elementfi/base/prefs/prefEnvelope";
 import {
   LocalStorage,
   useLocalStorage,
-} from "base/localstorage/useLocalStorage";
+} from "@elementfi/base/localstorage/useLocalStorage";
 import { useCallback, useMemo } from "react";
 import { useQuery, useQueryClient } from "react-query";
 

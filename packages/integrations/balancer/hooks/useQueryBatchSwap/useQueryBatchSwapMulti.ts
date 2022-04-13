@@ -2,7 +2,7 @@ import { Vault } from "@elementfi/core-typechain/dist/v1";
 import { SwapKind } from "integrations/balancer/SwapKind";
 import { balancerVaultContract } from "integrations/balancer/vault";
 import { makeQueryBatchSwapCallArgs } from "integrations/balancer/hooks/useQueryBatchSwap/makeQueryBatchSwapCallArgs";
-import { getQueriesData } from "base/queries/queryResults";
+import { getQueriesData } from "@elementfi/base/queries/queryResults";
 import {
   useSmartContractReadCalls,
   UseSmartContractReadCallOptions,

@@ -10,7 +10,7 @@ import {
   YieldTokenInfo,
   TokenTag,
 } from "@elementfi/tokenlist";
-import { EMPTY_ARRAY } from "base/constants/emptyArray";
+import { EMPTY_ARRAY } from "@elementfi/base/constants/emptyArray";
 // TODO: stuff under packages/ should not have a default provider
 import { defaultProvider } from "@elementfi/core/providers/providers";
 import {

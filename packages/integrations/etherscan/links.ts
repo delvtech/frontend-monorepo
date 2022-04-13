@@ -1,4 +1,4 @@
-import { ChainId } from "base/ethereum/ethereum";
+import { ChainId } from "@elementfi/base/ethereum/ethereum";
 
 const ETHERSCAN_GOERLI_DOMAIN = "https://goerli.etherscan.io";
 const ETHERSCAN_MAINNET_DOMAIN = "https://etherscan.io";

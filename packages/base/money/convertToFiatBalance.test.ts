@@ -4,7 +4,7 @@ import { BigNumber } from "ethers";
 import {
   convertToFiatBalance,
   convertNumberToFiatBalance,
-} from "base/money/convertToFiatBalance";
+} from "@elementfi/base/money/convertToFiatBalance";
 
 describe("convertToFiatBalance", () => {
   const oneEther = BigNumber.from("1000000000000000000");
