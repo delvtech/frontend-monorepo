@@ -12,8 +12,8 @@ import {
   isCurveStablePool,
 } from "@elementfi/core/integrations/curve/stablePools";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
-import { getCoinGeckoId } from "integrations/coingecko";
-import { useCoinGeckoPrice } from "integrations/coingecko/hooks/useCoinGeckoPrice";
+import { getCoinGeckoId } from "@elementfi/integrations/coingecko";
+import { useCoinGeckoPrice } from "@elementfi/integrations/coingecko/hooks/useCoinGeckoPrice";
 import { QueryObserverResult } from "react-query";
 import { Currency, Money } from "ts-money";
 

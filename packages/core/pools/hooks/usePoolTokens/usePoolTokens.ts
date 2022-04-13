@@ -3,7 +3,7 @@ import {
   PrincipalPoolTokenInfo,
   YieldPoolTokenInfo,
 } from "@elementfi/tokenlist";
-import { balancerVaultContract } from "integrations/balancer/vault";
+import { balancerVaultContract } from "@elementfi/integrations/balancer/vault";
 import {
   useSmartContractReadCall,
   ContractMethodArgs,
