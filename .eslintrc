@@ -22,7 +22,7 @@
     },
     // js files in the root dir can use `const ... = require(...)`
     {
-      "files": ["./*.js"],
+      "files": ["./*.js", "apps/**/*.js"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }
