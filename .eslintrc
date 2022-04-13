@@ -1,4 +1,5 @@
 {
+  "root": true,
   "ignorePatterns": ["*.json", "*.md"],
   "extends": [
     "next",
@@ -21,7 +22,7 @@
     },
     // js files in the root dir can use `const ... = require(...)`
     {
-      "files": ["./*.js"],
+      "files": ["./*.js", "apps/**/*.js"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }
@@ -41,21 +42,6 @@
       "warn",
       {
         "argsIgnorePattern": "^unused"
-      }
-    ],
-    "@typescript-eslint/no-magic-numbers": [
-      "error",
-      {
-        "ignore": [
-          -1, 0, 1, 2, 3, 4, 8, 10,
-          // the length of a wallet address
-          42, 100
-        ],
-        "ignoreArrayIndexes": true,
-        "ignoreDefaultValues": true,
-        "ignoreNumericLiteralTypes": true,
-        "ignoreReadonlyClassProperties": true,
-        "ignoreEnums": true
       }
     ],
     "import/no-unused-modules": "error",
@@ -84,6 +70,9 @@
       "eslint-import-resolver-typescript": {
         "alwaysTryTypes": true
       }
+    },
+    "next": {
+      "rootDir": "{apps,packages}/*"
     }
   }
 }

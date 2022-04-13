@@ -89,10 +89,12 @@ function getBackground(
   switch (variant) {
     case ButtonVariant.PRIMARY:
       return !error
-        ? classNames("bg-brandDarkBlue", "hover:bg-brandDarkBlue-dark")
+        ? // eslint-disable-next-line tailwindcss/no-custom-classname
+          classNames("bg-brandDarkBlue", "hover:bg-brandDarkBlue-dark")
         : classNames("bg-red-500", "hover:bg-red-700");
 
     case ButtonVariant.SECONDARY:
+      // eslint-disable-next-line tailwindcss/no-custom-classname
       return classNames("bg-hackerSky", "hover:bg-hackerSky-dark");
 
     case ButtonVariant.GRADIENT:
@@ -121,6 +123,7 @@ function getBackground(
       return classNames("bg-white", "hover:bg-opacity-80");
 
     case ButtonVariant.PALE:
+      // eslint-disable-next-line tailwindcss/no-custom-classname
       return classNames("bg-paleLily", "hover:bg-paleLily-dark");
 
     case ButtonVariant.REWARD:

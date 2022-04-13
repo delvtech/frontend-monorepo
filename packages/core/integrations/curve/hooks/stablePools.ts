@@ -35,7 +35,7 @@ export function useCurveStablecoinPoolVirtualPrice(
           const price = +formatBalance(virtualPriceBigNumber, decimals);
           return Money.fromDecimal(price, Currencies.USD, Math.round);
         },
-        [Currencies.USD, decimals],
+        [decimals],
       ),
     },
   );

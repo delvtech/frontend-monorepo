@@ -90,7 +90,7 @@ export function EligiblePoolCardRow({
           content={
             <div className="flex flex-col gap-8 p-8">
               <a
-                href={""}
+                href={"https://element.fi"}
                 className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100"
               >
                 <PlusCircleIcon
@@ -105,7 +105,7 @@ export function EligiblePoolCardRow({
                 </div>
               </a>
               <a
-                href={""}
+                href={"https://www.element.fi/"}
                 className="-m-3 flex items-start rounded-lg p-3 transition duration-150 ease-in-out hover:bg-gray-50"
               >
                 <MinusCircleIcon

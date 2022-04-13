@@ -60,6 +60,7 @@ export function ConnectWalletDialog({
             size={ButtonSize.AUTO}
             variant={ButtonVariant.MINIMAL}
             onClick={handleConnectToMetaMask}
+            // eslint-disable-next-line tailwindcss/no-custom-classname
             className="grid place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
           >
             <div className="grid place-items-center">
@@ -71,6 +72,7 @@ export function ConnectWalletDialog({
             size={ButtonSize.AUTO}
             variant={ButtonVariant.MINIMAL}
             onClick={handleConnectToWalletConnect}
+            // eslint-disable-next-line tailwindcss/no-custom-classname
             className="grid place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
           >
             <div className="grid h-full w-full place-items-center">
