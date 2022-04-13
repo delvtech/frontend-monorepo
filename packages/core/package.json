@@ -10,7 +10,7 @@
   "dependencies": {
     "@elementfi/core-typechain": "^2.0.6",
     "@elementfi/react-query-typechain": "^1.2.0",
-    "@elementfi/tokenlist": "^2.4.0",
+    "@elementfi/tokenlist": "^2.5.0",
     "@types/lodash.keyby": "^4.6.6",
     "base": "^1.0.0",
     "lodash.keyby": "^4.6.0",
