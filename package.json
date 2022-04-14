@@ -10,14 +10,17 @@
     "prettier:w": "prettier --write '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",
     "prettier:check": "prettier --check '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",
     "eslint:w": "eslint --fix '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",
-    "eslint:check": "eslint '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'"
+    "eslint:check": "eslint '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",
+    "stylelint:w": "stylelint --fix '{apps,packages}/**/*.{css,scss}'",
+    "stylelint:check": "stylelint '{apps,packages}/**/*.{css,scss}'"
   },
   "lint-staged": {
     "{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}": [
       "prettier --write",
       "eslint --fix"
     ],
-    "*.{js,css,md,json}": "prettier --write"
+    "*.{js,css,md,json}": "prettier --write",
+    "{apps,packages}/**/*.{css,scss}": "stylelint"
   },
   "workspaces": {
     "packages": [
@@ -26,6 +29,8 @@
     ]
   },
   "dependencies": {
+    "stylelint": "^14.5.3",
+    "stylelint-config-recommended": "^7.0.0",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "eslint": "^7.32.0",
