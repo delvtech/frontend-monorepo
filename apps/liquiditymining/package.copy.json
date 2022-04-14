@@ -122,7 +122,6 @@
   "scripts": {
     "build": "next build",
     "build:tailwind": "npx tailwindcss build -i styles/globals.css -o src/tailwind.output.css",
-    "depcruise": "depcruise --config .dependency-cruiser.js .",
     "dev": "next dev",
     "dev-goerli": "cross-env NEXT_PUBLIC_CHAIN_NAME=goerli next dev",
     "lint": "next lint",

@@ -21,7 +21,7 @@ import { useELFIPerBlock } from "src/ui/liquiditymining/hooks/useELFIPerBlock";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
 import { t } from "ttag";
 import { ETHEREUM_BLOCKS_PER_WEEK } from "@elementfi/base/ethereum/ethereum";
-import { commify } from "@ethersproject/units";
+import { commify } from "ethers/lib/utils";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
