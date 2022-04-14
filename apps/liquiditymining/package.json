@@ -105,8 +105,7 @@
     "copy-testnet": "npm run _copy-testnet-addresses && npm run _copy-testnet-tokenlist",
     "chromatic": "chromatic --exit-zero-on-changes --skip 'dependabot/**'",
     "test": "jest",
-    "test-watch": "jest --watch",
-    "depcruise": "depcruise --preserve-symlinks --config ../../.dependency-cruiser.js ."
+    "test-watch": "jest --watch"
   },
   "version": "0.1.0"
 }
