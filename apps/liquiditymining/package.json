@@ -44,7 +44,6 @@
     "d3-format": "^3.1.0",
     "d3-time-format": "^4.1.0",
     "date-fns": "^2.28.0",
-    "dependency-cruiser": "^11.4.0",
     "ethers": "^5.6.0",
     "graphql": "^15.8.0",
     "graphql-request": "^3.7.0",
