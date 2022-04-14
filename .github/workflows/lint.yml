@@ -1,4 +1,4 @@
-name: Eslint
+name: Lint
 
 on: [pull_request]
 
@@ -13,3 +13,4 @@ jobs:
           node-version: "14.x"
       - run: yarn
       - run: yarn run eslint:check
+      - run: yarn run stylelint:check
