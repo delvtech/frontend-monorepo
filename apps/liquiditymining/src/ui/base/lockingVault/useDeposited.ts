@@ -1,5 +1,5 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
-import { formatEther } from "@ethersproject/units";
+import { formatEther } from "ethers/lib/utils";
 import { lockingVaultContract } from "src/elf/contracts";
 
 export function useDeposited(

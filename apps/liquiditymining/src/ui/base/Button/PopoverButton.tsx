@@ -7,7 +7,7 @@ import classNames from "classnames";
 import { ButtonProps } from "src/ui/base/Button/Button";
 import { getButtonClass } from "src/ui/base/Button/styles";
 import usePopperWithRefs from "src/ui/base/usePopperWithRefs";
-import { isFunction } from "lodash";
+import isFunction from "lodash.isfunction";
 
 interface PopoverButtonProps extends ButtonProps {
   popover: ReactNode;
