@@ -55,8 +55,9 @@ export const FormationSlider: React.FC<FormationSliderProps> = ({
     window.addEventListener("resize", checkCurrentSlides, false);
   }, []);
 
-  const sliderChildren = (slider.current?.props.children as Array<ReactNode>)
-    .length;
+  const sliderChildren =
+    (slider.current?.props.children as Array<ReactNode>) &&
+    (slider.current?.props.children as Array<ReactNode>).length;
 
   return (
     <FormationSliderContainer>
