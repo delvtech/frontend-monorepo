@@ -52,10 +52,12 @@ export function WalletProfileButton(
 }
 
 export function ConnectWalletButton({
+  className,
   label = t`Connect Wallet`,
   variant = ButtonVariant.OUTLINE_BLUE,
   onClick,
 }: {
+  className?: string;
   label?: string;
   variant?: ButtonVariant;
   onClick?: () => void;
@@ -72,7 +74,11 @@ export function ConnectWalletButton({
 
   return (
     <Fragment>
-      <Button variant={variant} onClick={handleButtonClick}>
+      <Button
+        className={className}
+        variant={variant}
+        onClick={handleButtonClick}
+      >
         {label}
       </Button>
       <ConnectWalletDialog
