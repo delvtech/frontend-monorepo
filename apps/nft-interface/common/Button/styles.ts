@@ -149,8 +149,8 @@ export const Button = styled.button<ButtonStyles>`
   border: 1px solid
     ${({ variant = ButtonVariant.PRIMARY }) => getBorder(variant)};
   font-family: "Defcon Zero";
-  font-size: ${({}) => "14px"};
-  color: ${({}) => "white"};
+  font-size: ${() => "14px"};
+  color: ${() => "white"};
 
   &:hover {
     background-color: ${COLORS.greenDarkest};

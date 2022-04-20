@@ -1,18 +1,18 @@
 import React from "react";
 
-interface WalletDialogContext {
+export interface WalletDialogContextType {
   isOpen: boolean;
   close: () => void;
   open: () => void;
 }
 
-const defaultContext: WalletDialogContext = {
+const defaultContext: WalletDialogContextType = {
   isOpen: false,
   close: () => {},
   open: () => {},
 };
 
-const WalletDialogContext =
-  React.createContext<WalletDialogContext>(defaultContext);
+export const WalletDialogContext =
+  React.createContext<WalletDialogContextType>(defaultContext);
 
 export default WalletDialogContext;
