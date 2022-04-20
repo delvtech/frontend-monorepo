@@ -37,7 +37,7 @@ export default function Button({
 
   return (
     <button
-      disabled={disabled}
+      disabled={disabled || loading}
       onClick={onClick}
       type="button"
       className={classNames(buttonClassName, className)}
