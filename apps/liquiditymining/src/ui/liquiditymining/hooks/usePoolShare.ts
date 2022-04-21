@@ -24,9 +24,9 @@ export function usePoolShare(
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || "0.0";
 
-  if (+depositedBalance === 0 || !totalPoolShare) {
+  if (!depositedBalance || !totalPoolShare) {
     return "0.00%";
   }
 
-  return `${(100 / (+totalPoolShare / +depositedBalance)).toFixed(2)}%`;
+  return `${((+depositedBalance / +totalPoolShare) * 100).toFixed(2)}%`;
 }
