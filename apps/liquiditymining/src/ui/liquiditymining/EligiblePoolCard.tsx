@@ -22,6 +22,8 @@ import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
 import { t } from "ttag";
 import { ETHEREUM_BLOCKS_PER_WEEK } from "@elementfi/base/ethereum/ethereum";
 import { commify } from "ethers/lib/utils";
+import { getPoolURL } from "@elementfi/core/pools/urls";
+import { ChainId } from "@elementfi/base/ethereum/ethereum";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -58,7 +60,8 @@ export function EligiblePoolCard({
   const depositedBalance = userInfo?.amount || "0.0";
   const pendingRewards = userInfo?.rewardDebt || "0.0";
 
-  const POOL_HREF = `https://app.element.fi/pools/${poolAddress}`;
+  // TODO: Get ChainId from environment
+  const POOL_HREF = getPoolURL(ChainId.GOERLI, poolAddress);
 
   return (
     <Card className="flex w-[382px] flex-col space-y-6">
