@@ -31,7 +31,7 @@ export default function Button({
     size,
     round,
     fill,
-    disabled,
+    disabled: disabled ?? loading,
     error,
   });
 
