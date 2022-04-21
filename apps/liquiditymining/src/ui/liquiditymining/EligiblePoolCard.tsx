@@ -55,7 +55,7 @@ export function EligiblePoolCard({
   const elfiPerBlock = useELFIPerBlock(poolAddress);
   const elfiPerWeek = ETHEREUM_BLOCKS_PER_WEEK * elfiPerBlock;
 
-  const poolShare = usePoolShare(pool, account);
+  const poolShare = usePoolShare(poolAddress, account);
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || "0.0";
   const pendingRewards = userInfo?.rewardDebt || "0.0";
