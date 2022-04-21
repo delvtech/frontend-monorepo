@@ -2,7 +2,6 @@ import {
   PrincipalPoolTokenInfo,
   PrincipalTokenInfo,
 } from "@elementfi/tokenlist";
-import { ExternalLinkIcon } from "@heroicons/react/outline";
 import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
 import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
 import { useTotalFiatLiquidity } from "@elementfi/core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
@@ -11,6 +10,7 @@ import { getVaultTokenInfoForTranche } from "@elementfi/core/tranche/tranches";
 import React, { ReactElement } from "react";
 import { formatAbbreviatedDate } from "src/base/dates";
 import { eligibleGoerliPoolContracts } from "src/elf/liquiditymining/eligiblepools";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card from "src/ui/base/Card/Card";
@@ -23,6 +23,8 @@ import { t } from "ttag";
 import { ETHEREUM_BLOCKS_PER_WEEK } from "@elementfi/base/ethereum/ethereum";
 import { commify } from "ethers/lib/utils";
 import { usePoolShare } from "./hooks/usePoolShare";
+import { getPoolURL } from "@elementfi/core/pools/urls";
+import { ChainId } from "@elementfi/base/ethereum/ethereum";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -60,15 +62,17 @@ export function EligiblePoolCard({
   const depositedBalance = userInfo?.amount || "0.0";
   const pendingRewards = userInfo?.rewardDebt || "0.0";
 
+  // TODO: Get ChainId from environment
+  const POOL_HREF = getPoolURL(ChainId.GOERLI, poolAddress);
+
   return (
     <Card className="flex w-[382px] flex-col space-y-6">
       <div className="flex flex-col items-center">
         <USDCIcon className="mb-3 h-12" />
         <span className="font-semibold text-principalRoyalBlue ">{t`${baseAssetSymbol} Principal Pool LP Token`}</span>
-        <span className="font-semibold text-gray-600">
-          {dateLabel}
-          <ExternalLinkIcon className="mb-1 ml-1 inline h-4 " />
-        </span>
+        <ExternalLink href={POOL_HREF}>
+          <span className="font-semibold text-gray-600">{dateLabel}</span>
+        </ExternalLink>
       </div>
       <Well>
         <div className="grid grid-cols-2 gap-8 ">
