@@ -4,7 +4,10 @@
 
 Install dependencies
 
+This interface is part of Element's monorepo. Install depencies from the monorepo root.
+
 ```bash
+# in monorepo project root
 yarn
 # or
 yarn install
@@ -21,13 +24,13 @@ NEXT_PUBLIC_TARGET_CHAIN=1 #mainnet
 Run the development server
 
 ```bash
-yarn dev
+yarn workspace nft-interface dev
 ```
 
 Run local production server
 
 ```bash
-yarn start
+yarn workspace nft-interface start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
