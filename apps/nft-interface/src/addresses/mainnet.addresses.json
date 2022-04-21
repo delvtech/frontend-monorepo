@@ -1,0 +1,6 @@
+{
+  "minter": "0x0b23B95143Baf28e04686A892B0ebA4707efed5f",
+  "tokenContract": "0xDb042927c36791Bd500698c7d1bD81b6864229b5",
+  "lockingVault": "0x02Bd4A3b1b95b01F2Aa61655415A5d3EAAcaafdD",
+  "vestingVault": "0x6de73946eab234f1ee61256f10067d713af0e37a"
+}

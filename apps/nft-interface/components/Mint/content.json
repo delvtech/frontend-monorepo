@@ -1,0 +1,17 @@
+{
+  "stale": {
+    "title": "Check eligibility",
+    "status": "",
+    "description": "You’re currently eligible to mint an ELF as a member of the Element community in this release period. To mint your own unique ELF click the minting button below and start the process when minting is live on April 6th."
+  },
+  "pending": {
+    "title": "Mint in progress",
+    "status": "Mint loading...",
+    "description": "Standby ELF. We’re currently working to mint your ELF and the minting process is currently in progress. Please do not refresh the page, or exit out of the window during this process."
+  },
+  "success": {
+    "title": "ELF acquired",
+    "status": "Congratulations on minting 🎉",
+    "description": "Congratulations on Minting! You now hold a piece of the future of the elfiverse and hold an identity as a community member of the protocol.  Unlike many other NFT grants, these ELF NFTs are given to you with the most open, accommodating license from Creative Commons (called Creative Commons Attribution 4.0 International) for the underlying image content. The license allows you to copy, distribute, remix, adapt, and build upon the image, even commercially. The license terms are available here: https://creativecommons.org/licenses/by/4.0/legalcode and are summarized here: https://creativecommons.org/licenses/by/4.0/."
+  }
+}

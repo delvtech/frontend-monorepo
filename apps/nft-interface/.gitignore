@@ -1,0 +1,22 @@
+.DS_Store
+
+# Dependencies directory
+node_modules/
+
+# Next.js build output
+.next
+
+storybook-static/
+
+# local environment that may have private keys
+.env.local
+.env
+
+# Es-lint cache
+.eslintcache
+
+# coverage files created by Jest
+coverage/
+
+# storybook build log
+build-storybook.log

@@ -1,0 +1,17 @@
+[
+  {
+    "leaf": {
+      "address": "0x019dA82db28D078c76B894d086f5e92269786637",
+      "tokenId": { "type": "BigNumber", "hex": "0x29" }
+    },
+    "proof": [
+      "0x82f7045a33a1c6e8970bff2967222fc7dd18d1efbef53419acb9a8c1d930d82e",
+      "0x6488b63655dbb825c58c930a7846dfa19d97267a654c4be32b3f1bf75f41a76d",
+      "0x2fcf9b1df45bfa7ee5c130311f75ebcb7bf64c74bdf9fb27c3a12f81c78a6e6a",
+      "0x37d4b494689174be3c9d90a0e522cf3611650f97a9566349cf708eac8a668946",
+      "0x94244073e4ee7787b0360688a603b47cac2e3138fa135fe2dc332214df118bdb",
+      "0x3a93d24bfc8bb70c13fc8294ac1d7b5c6607686b59c4ad23afd7db42a8c12578",
+      "0xf1ac77d98d631146a673db81fb20411ef1a2b2d90d2e7e3e09e30c0d7341d56b"
+    ]
+  }
+]
