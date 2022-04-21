@@ -15,10 +15,10 @@ import { useLPTokenBalance } from "./useLPTokenBalance";
  * @returns A string denoting a user's percentage in the specified pool
  */
 export function usePoolShare(
-  poolInfo: PoolInfo,
+  poolAddress: string,
   account: string | null | undefined,
 ): string {
-  const poolId = poolIdsByPoolAddress[poolInfo.address];
+  const poolId = poolIdsByPoolAddress[poolAddress];
   const poolContract = eligibleGoerliPoolContracts[poolId];
 
   const totalPoolShare = useLPTokenBalance(
@@ -26,7 +26,7 @@ export function usePoolShare(
     MASTER_CHEF_GOERLI_ADDRESS,
   );
 
-  const { data: userInfo } = useUserInfo(account, poolInfo.address);
+  const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || "0.0";
 
   if (+depositedBalance === 0) {
