@@ -84,7 +84,7 @@ export function EligiblePoolCard({
       <div className="space-y-2 px-2">
         <div className="grid grid-cols-2 gap-8 ">
           <span className="text-principalRoyalBlue">{t`Pool Share`}</span>
-          <span className="text-right">{poolShare}%</span>
+          <span className="text-right">{poolShare}</span>
         </div>
         <div className="grid grid-cols-2 gap-8 ">
           <span className="text-principalRoyalBlue">{t`ELFI / Week`}</span>
