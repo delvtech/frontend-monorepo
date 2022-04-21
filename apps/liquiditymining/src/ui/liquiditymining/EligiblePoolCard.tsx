@@ -22,6 +22,7 @@ import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
 import { t } from "ttag";
 import { ETHEREUM_BLOCKS_PER_WEEK } from "@elementfi/base/ethereum/ethereum";
 import { commify } from "ethers/lib/utils";
+import { usePoolShare } from "./hooks/usePoolShare";
 import { getPoolURL } from "@elementfi/core/pools/urls";
 import { ChainId } from "@elementfi/base/ethereum/ethereum";
 
@@ -56,6 +57,7 @@ export function EligiblePoolCard({
   const elfiPerBlock = useELFIPerBlock(poolAddress);
   const elfiPerWeek = ETHEREUM_BLOCKS_PER_WEEK * elfiPerBlock;
 
+  const poolShare = usePoolShare(poolAddress, account);
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || "0.0";
   const pendingRewards = userInfo?.rewardDebt || "0.0";
@@ -86,7 +88,7 @@ export function EligiblePoolCard({
       <div className="space-y-2 px-2">
         <div className="grid grid-cols-2 gap-8 ">
           <span className="text-principalRoyalBlue">{t`Pool Share`}</span>
-          <span className="text-right">0.25%</span>
+          <span className="text-right">{poolShare}</span>
         </div>
         <div className="grid grid-cols-2 gap-8 ">
           <span className="text-principalRoyalBlue">{t`ELFI / Week`}</span>
