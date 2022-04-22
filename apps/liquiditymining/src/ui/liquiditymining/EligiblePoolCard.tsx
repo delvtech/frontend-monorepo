@@ -30,6 +30,8 @@ import { getPoolURL } from "@elementfi/core/pools/urls";
 import { ChainId } from "@elementfi/base/ethereum/ethereum";
 import { StakeDialog } from "./StakeDialog";
 import { Signer } from "ethers";
+import { useLPTokenPrice } from "./hooks/useLPTokenPrice";
+import { useTotalFiatStaked } from "./hooks/useTotalFiatStaked";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -73,6 +75,8 @@ export function EligiblePoolCard({
   // TODO: Get ChainId from environment
   const POOL_HREF = getPoolURL(ChainId.GOERLI, poolAddress);
 
+  const totalFiatStaked = useTotalFiatStaked(pool, account);
+
   return (
     <>
       <Card className="flex w-[382px] flex-col space-y-6">
@@ -86,7 +90,7 @@ export function EligiblePoolCard({
         <Well>
           <div className="grid grid-cols-2 gap-8 ">
             <span className="text-principalRoyalBlue">{t`Total Staked`}</span>
-            <span className="text-right">$9,000,000</span>
+            <span className="text-right">${commify(totalFiatStaked)}</span>
           </div>
           <div className="grid grid-cols-2 gap-8">
             <span className="text-principalRoyalBlue">{t`Total ELFI / Week`}</span>
