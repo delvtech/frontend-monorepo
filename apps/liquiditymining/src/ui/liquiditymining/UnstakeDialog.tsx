@@ -55,7 +55,7 @@ export function UnstakeDialog({
 
   return (
     <SimpleDialog className="!max-w-sm" isOpen={isOpen} onClose={onClose}>
-      <H2 className="mb-8 text-center !text-3xl tracking-wide text-brandDarkBlue-dark">{t`Unstake`}</H2>
+      <H2 className="mb-8 text-center text-3xl tracking-wide text-brandDarkBlue-dark">{t`Unstake`}</H2>
       <TokenInput
         id="stake-input"
         className="mb-1"
