@@ -10,7 +10,7 @@ export function useIsPoolApproved(
   return useSmartContractReadCall(poolContract, "allowance", {
     callArgs: [account as string, masterChef.address],
     select: (allowance) => allowance.gt(0),
-    enabled: !!poolContract || !!account,
+    enabled: !!poolContract && !!account,
     staleTime: Infinity,
   });
 }
