@@ -24,13 +24,15 @@ import { useELFIPerBlock } from "src/ui/liquiditymining/hooks/useELFIPerBlock";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
 import { t } from "ttag";
 import { ETHEREUM_BLOCKS_PER_WEEK } from "@elementfi/base/ethereum/ethereum";
-import { commify } from "ethers/lib/utils";
+import { commify, parseEther } from "ethers/lib/utils";
 import { usePoolShare } from "./hooks/usePoolShare";
 import { getPoolURL } from "@elementfi/core/pools/urls";
 import { ChainId } from "@elementfi/base/ethereum/ethereum";
 import { StakeDialog } from "./StakeDialog";
 import { Signer } from "ethers";
 import { UnstakeDialog } from "./UnstakeDialog";
+import { useUnstakeAndClaim } from "./hooks/useUnstakeAndClaim";
+import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -49,6 +51,7 @@ export function EligiblePoolCard({
 }: EligiblePoolCardProps): ReactElement {
   const [stakeDialogIsShowing, setStakeDialogIsShowing] = useState(false);
   const [unstakeDialogIsShowing, setUnstakeDialogIsShowing] = useState(false);
+
   const vaultTokenInfo = getVaultTokenInfoForTranche(bond);
   const {
     symbol,
@@ -57,6 +60,7 @@ export function EligiblePoolCard({
 
   const { symbol: baseAssetSymbol } = getTokenInfo(underlying);
 
+  const poolId = poolIdsByPoolAddress[pool.address];
   const poolIcon = <USDCIcon className="mr-4 inline h-8 w-8 flex-shrink-0" />;
   const ccPoolTVL = useTotalFiatLiquidity(pool);
   const unlockDate = convertEpochSecondsToDate(unlockTimestamp);
@@ -74,6 +78,28 @@ export function EligiblePoolCard({
 
   // TODO: Get ChainId from environment
   const POOL_HREF = getPoolURL(ChainId.GOERLI, poolAddress);
+
+  const [transactionIsPending, setTransactionIsPending] = useState(false);
+  const transactionOptions = useTransactionOptionsWithToast({
+    options: {
+      onTransactionSubmitted: () => {
+        setTransactionIsPending(true);
+      },
+      onTransactionMined: () => {
+        setTransactionIsPending(false);
+      },
+    },
+  });
+
+  const { mutate: unstakeAndClaim } = useUnstakeAndClaim(
+    signer,
+    transactionOptions,
+  );
+  const handleClaim = () => {
+    if (account) {
+      unstakeAndClaim([poolId, parseEther(depositedBalance), account]);
+    }
+  };
 
   return (
     <>
@@ -135,6 +161,9 @@ export function EligiblePoolCard({
           <Button
             className="w-full justify-center"
             variant={ButtonVariant.OUTLINE_BLUE}
+            onClick={handleClaim}
+            loading={transactionIsPending}
+            disabled={!+depositedBalance}
           >{t`Claim`}</Button>
         </div>
       </Card>
@@ -142,7 +171,7 @@ export function EligiblePoolCard({
       <StakeDialog
         account={account}
         signer={signer}
-        poolId={poolIdsByPoolAddress[pool.address]}
+        poolId={poolId}
         poolContract={poolContract}
         isOpen={stakeDialogIsShowing}
         onClose={() => setStakeDialogIsShowing(false)}
@@ -151,7 +180,7 @@ export function EligiblePoolCard({
       <UnstakeDialog
         account={account}
         signer={signer}
-        poolId={poolIdsByPoolAddress[pool.address]}
+        poolId={poolId}
         poolContract={poolContract}
         isOpen={unstakeDialogIsShowing}
         onClose={() => setUnstakeDialogIsShowing(false)}
