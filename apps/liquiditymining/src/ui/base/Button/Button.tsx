@@ -31,13 +31,13 @@ export default function Button({
     size,
     round,
     fill,
-    disabled: disabled ?? loading,
+    disabled: disabled || loading,
     error,
   });
 
   return (
     <button
-      disabled={disabled ?? loading}
+      disabled={disabled || loading}
       onClick={onClick}
       type="button"
       className={classNames(buttonClassName, className)}
