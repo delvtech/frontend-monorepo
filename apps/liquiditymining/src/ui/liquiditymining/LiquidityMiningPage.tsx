@@ -2,18 +2,17 @@ import { Web3Provider } from "@ethersproject/providers";
 import { InformationCircleIcon as InformationCircleIconOutline } from "@heroicons/react/outline";
 import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement } from "react";
-import {
-  eligibleGoerliPoolTokenInfos,
-  poolIdsByPoolAddress,
-} from "src/elf/liquiditymining/eligiblepools";
+import { eligibleGoerliPoolTokenInfos } from "src/elf/liquiditymining/eligiblepools";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
+import { useSigner } from "src/ui/signer/useSigner";
 import { EligiblePoolCard } from "./EligiblePoolCard";
 
 export function LiquidityMiningPage(): ReactElement {
-  const { account } = useWeb3React<Web3Provider>();
+  const { account, library } = useWeb3React<Web3Provider>();
+  const signer = useSigner(account, library);
   return (
     <div className="mt-8 flex h-full w-full flex-col items-center space-y-6">
       <div className="relative mb-6">
@@ -34,11 +33,12 @@ export function LiquidityMiningPage(): ReactElement {
         </Card>
       </div>
       <div className="flex gap-8">
-        {Object.keys(poolIdsByPoolAddress).map((pool) => (
+        {Object.values(eligibleGoerliPoolTokenInfos).map((pool) => (
           <EligiblePoolCard
-            key={pool}
+            key={pool.address}
             account={account}
-            pool={eligibleGoerliPoolTokenInfos[pool]}
+            signer={signer}
+            pool={pool}
           />
         ))}
       </div>
