@@ -1,6 +1,9 @@
 import { goerliTokenList, PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
 // We aren't deploying v1 terms anymore, so we only need to support v1.1 for LM
-import { ConvergentCurvePool__factory } from "@elementfi/core-typechain/dist/v1.1";
+import {
+  ConvergentCurvePool,
+  ConvergentCurvePool__factory,
+} from "@elementfi/core-typechain/dist/v1.1";
 import { defaultProvider } from "src/elf/providers/providers";
 import mapValues from "lodash.mapvalues";
 
@@ -11,12 +14,15 @@ export const poolIdsByPoolAddress: Record<string, number> = {
   "0x4294005520c453EB8Fa66F53042cfC79707855c4": 2,
 };
 
-export const eligibleGoerliPoolContracts = mapValues(
-  poolIdsByPoolAddress,
-  (v, address) =>
-    ConvergentCurvePool__factory.connect(address, defaultProvider),
+export const eligibleGoerliPoolContracts: {
+  [poolAddress: string]: ConvergentCurvePool;
+} = mapValues(poolIdsByPoolAddress, (v, address) =>
+  ConvergentCurvePool__factory.connect(address, defaultProvider),
 );
-export const eligibleGoerliPoolTokenInfos = mapValues(
+
+export const eligibleGoerliPoolTokenInfos: {
+  [poolAddress: string]: PrincipalPoolTokenInfo;
+} = mapValues(
   poolIdsByPoolAddress,
   (v, address) =>
     // safe to cast because they are hand-selected from the tokenlist itself
