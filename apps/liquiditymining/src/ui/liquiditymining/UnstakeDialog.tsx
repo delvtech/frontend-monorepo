@@ -5,17 +5,15 @@ import { t } from "ttag";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import TokenInput from "src/ui/base/Input/TokenInput";
-import { useStake } from "./hooks/useStake";
+import { useUnstake } from "./hooks/useUnstake";
 import { Signer } from "ethers";
 import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton";
 import { parseEther } from "ethers/lib/utils";
 import { ConvergentCurvePool } from "@elementfi/core-typechain/dist/v1.1";
-import { useLPTokenBalance } from "./hooks/useLPTokenBalance";
-import { useIsPoolApproved } from "./hooks/useIsPoolApproved";
-import { useApprovePool } from "./hooks/useApprovePool";
 import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
+import { useUserInfo } from "./hooks/useUserInfo";
 
-interface StakeDialogProps {
+interface UnstakeDialogProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   poolId: number;
@@ -24,19 +22,18 @@ interface StakeDialogProps {
   onClose?: () => void;
 }
 
-export function StakeDialog({
+export function UnstakeDialog({
   account,
   signer,
   poolId,
   poolContract,
   isOpen,
   onClose = () => {},
-}: StakeDialogProps): ReactElement {
-  const [stakeAmount, setStakeAmount] = useState("0");
+}: UnstakeDialogProps): ReactElement {
+  const [unstakeAmount, setUnstakeAmount] = useState("0");
   const [transactionIsPending, setTransactionIsPending] = useState(false);
-  const { data: availableAmount } = useLPTokenBalance(poolContract, account);
-  const isApprovedResult = useIsPoolApproved(poolContract, account);
-  const { data: isApproved } = isApprovedResult;
+  const { data: userInfo } = useUserInfo(account, poolContract.address);
+  const depositedBalance = userInfo?.amount || "0";
 
   const transactionOptions = useTransactionOptionsWithToast({
     options: {
@@ -49,54 +46,34 @@ export function StakeDialog({
     },
   });
 
-  const { mutate: approve } = useApprovePool(
-    poolContract,
-    account,
-    signer,
-    transactionOptions,
-  );
-  const handleApprove = () => {
-    approve();
-  };
-
-  const { mutate: stake } = useStake(signer, transactionOptions);
+  const { mutate: unstake } = useUnstake(signer, transactionOptions);
   const handleStake = () => {
     if (account) {
-      stake([poolId, parseEther(stakeAmount), account]);
+      unstake([poolId, parseEther(unstakeAmount), account]);
     }
   };
 
   return (
     <SimpleDialog className="!max-w-sm" isOpen={isOpen} onClose={onClose}>
-      <H2 className="mb-8 text-center text-3xl tracking-wide text-brandDarkBlue-dark">{t`Stake`}</H2>
+      <H2 className="mb-8 text-center text-3xl tracking-wide text-brandDarkBlue-dark">{t`Unstake`}</H2>
       <TokenInput
         id="stake-input"
         className="mb-1"
         name="Stake Amount"
         screenReaderLabel="Amount to stake"
-        value={stakeAmount}
-        onChange={setStakeAmount}
-        maxValue={availableAmount}
+        value={unstakeAmount}
+        onChange={setUnstakeAmount}
+        maxValue={depositedBalance}
         showMaxButton
-        disabled={!isApproved}
       />
-      <p className="mb-6 text-blueGrey">{t`Available to stake: ${parseFloat(
-        availableAmount || "0",
+      <p className="mb-6 text-blueGrey">{t`Staked balance: ${parseFloat(
+        depositedBalance || "0",
       ).toFixed(3)}`}</p>
       {!account ? (
         <ConnectWalletButton
           className="w-full justify-center"
           variant={ButtonVariant.GRADIENT}
         />
-      ) : !isApproved ? (
-        <Button
-          className="w-full justify-center"
-          variant={ButtonVariant.GRADIENT}
-          onClick={handleApprove}
-          loading={transactionIsPending}
-        >
-          {t`Approve`}
-        </Button>
       ) : (
         <Button
           className="w-full justify-center"
@@ -104,7 +81,7 @@ export function StakeDialog({
           onClick={handleStake}
           loading={transactionIsPending}
         >
-          {t`Stake`}
+          {t`Unstake`}
         </Button>
       )}
     </SimpleDialog>
