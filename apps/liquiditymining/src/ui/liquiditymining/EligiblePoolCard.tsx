@@ -30,7 +30,6 @@ import { getPoolURL } from "@elementfi/core/pools/urls";
 import { ChainId } from "@elementfi/base/ethereum/ethereum";
 import { StakeDialog } from "./StakeDialog";
 import { Signer } from "ethers";
-import { useLPTokenPrice } from "./hooks/useLPTokenPrice";
 import { useTotalFiatStaked } from "./hooks/useTotalFiatStaked";
 
 interface EligiblePoolCardProps {
