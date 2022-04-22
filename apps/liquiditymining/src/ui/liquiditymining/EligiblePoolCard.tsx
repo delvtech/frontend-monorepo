@@ -30,6 +30,7 @@ import { getPoolURL } from "@elementfi/core/pools/urls";
 import { ChainId } from "@elementfi/base/ethereum/ethereum";
 import { StakeDialog } from "./StakeDialog";
 import { Signer } from "ethers";
+import { UnstakeDialog } from "./UnstakeDialog";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -47,6 +48,7 @@ export function EligiblePoolCard({
   },
 }: EligiblePoolCardProps): ReactElement {
   const [stakeDialogIsShowing, setStakeDialogIsShowing] = useState(false);
+  const [unstakeDialogIsShowing, setUnstakeDialogIsShowing] = useState(false);
   const vaultTokenInfo = getVaultTokenInfoForTranche(bond);
   const {
     symbol,
@@ -116,7 +118,10 @@ export function EligiblePoolCard({
               <span className="font-semibold">{depositedBalance}</span>
             </div>
             <div className="flex justify-end space-x-2">
-              <Button variant={ButtonVariant.OUTLINE_BLUE}>
+              <Button
+                variant={ButtonVariant.OUTLINE_BLUE}
+                onClick={() => setUnstakeDialogIsShowing(true)}
+              >
                 <MinusIcon className="h-6 text-principalRoyalBlue" />
               </Button>
               <Button
@@ -141,6 +146,15 @@ export function EligiblePoolCard({
         poolContract={poolContract}
         isOpen={stakeDialogIsShowing}
         onClose={() => setStakeDialogIsShowing(false)}
+      />
+
+      <UnstakeDialog
+        account={account}
+        signer={signer}
+        poolId={poolIdsByPoolAddress[pool.address]}
+        poolContract={poolContract}
+        isOpen={unstakeDialogIsShowing}
+        onClose={() => setUnstakeDialogIsShowing(false)}
       />
     </>
   );
