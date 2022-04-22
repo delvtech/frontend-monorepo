@@ -22,11 +22,9 @@ export function usePoolShare(
   );
 
   const { data: userInfo } = useUserInfo(account, poolAddress);
-  const depositedBalance = userInfo?.amount || "0.0";
+  const depositedBalance = userInfo?.amount || 0;
 
-  if (!depositedBalance || !totalPoolShare) {
-    return "0.00%";
-  }
+  const share = (+depositedBalance / +(totalPoolShare || 0)) * 100;
 
-  return `${((+depositedBalance / +totalPoolShare) * 100).toFixed(2)}%`;
+  return `${(share || 0).toFixed(2)}%`;
 }
