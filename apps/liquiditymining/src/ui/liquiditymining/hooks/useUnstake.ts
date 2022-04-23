@@ -27,7 +27,7 @@ export function useUnstake(
             query,
             masterChef.address,
             "userInfo",
-            [poolId, account as string],
+            [poolId, account],
           ),
       });
       options?.onTransactionMined?.(...args);
