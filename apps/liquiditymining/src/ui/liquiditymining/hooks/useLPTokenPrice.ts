@@ -3,7 +3,6 @@ import { useTotalFiatLiquidity } from "@elementfi/core/pools/hooks/useTotalFiatL
 import { useLPTokenBalance } from "src/ui/liquiditymining/hooks/useLPTokenBalance";
 import { eligibleGoerliPoolContracts } from "src/elf/liquiditymining/eligiblepools";
 import { MASTER_CHEF_GOERLI_ADDRESS } from "src/elf/liquiditymining/masterChef";
-import { commify } from "ethers/lib/utils";
 
 /**
  * Function to calculate the price of a pool's LP token
@@ -24,5 +23,5 @@ export function useLPTokenPrice(poolInfo: PoolInfo): string {
     return "0.00";
   }
 
-  return commify(ccPoolTVL.divide(+totalLPTokens).amount.toFixed(2));
+  return ccPoolTVL.divide(+totalLPTokens).amount.toFixed(2);
 }
