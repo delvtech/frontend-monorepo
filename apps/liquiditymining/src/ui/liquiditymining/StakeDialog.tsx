@@ -32,7 +32,7 @@ export function StakeDialog({
   isOpen,
   onClose = () => {},
 }: StakeDialogProps): ReactElement {
-  const [stakeAmount, setStakeAmount] = useState("0");
+  const [stakeAmount, setStakeAmount] = useState("");
   const [transactionIsPending, setTransactionIsPending] = useState(false);
   const { data: availableAmount } = useLPTokenBalance(poolContract, account);
   const isApprovedResult = useIsPoolApproved(poolContract, account);
