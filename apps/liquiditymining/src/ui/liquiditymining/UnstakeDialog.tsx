@@ -30,7 +30,7 @@ export function UnstakeDialog({
   isOpen,
   onClose = () => {},
 }: UnstakeDialogProps): ReactElement {
-  const [unstakeAmount, setUnstakeAmount] = useState("0");
+  const [unstakeAmount, setUnstakeAmount] = useState("");
   const [transactionIsPending, setTransactionIsPending] = useState(false);
   const { data: userInfo } = useUserInfo(account, poolContract.address);
   const depositedBalance = userInfo?.amount || "0";

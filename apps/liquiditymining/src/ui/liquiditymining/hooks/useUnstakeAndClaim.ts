@@ -6,6 +6,7 @@ import {
 } from "@elementfi/react-query-typechain";
 import { MCMod } from "@elementfi/peripherals";
 import { masterChef } from "src/elf/liquiditymining/masterChef";
+import { invalidateBalanceQueries } from "src/ui/liquiditymining/utils/invalidateBalanceQueries";
 
 export function useUnstakeAndClaim(
   signer: Signer | undefined,
@@ -15,10 +16,12 @@ export function useUnstakeAndClaim(
   unknown,
   Parameters<MCMod["withdrawAndHarvest"]>
 > {
-  return useSmartContractTransaction(
-    masterChef,
-    "withdrawAndHarvest",
-    signer,
-    options,
-  );
+  return useSmartContractTransaction(masterChef, "withdrawAndHarvest", signer, {
+    ...options,
+    onTransactionMined: (...args) => {
+      const [poolId, _, account] = args[1];
+      invalidateBalanceQueries(poolId, account);
+      options?.onTransactionMined?.(...args);
+    },
+  });
 }

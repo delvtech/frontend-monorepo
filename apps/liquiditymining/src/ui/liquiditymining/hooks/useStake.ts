@@ -6,6 +6,7 @@ import {
 } from "@elementfi/react-query-typechain";
 import { MCMod } from "@elementfi/peripherals";
 import { masterChef } from "src/elf/liquiditymining/masterChef";
+import { invalidateBalanceQueries } from "src/ui/liquiditymining/utils/invalidateBalanceQueries";
 
 export function useStake(
   signer: Signer | undefined,
@@ -15,5 +16,12 @@ export function useStake(
   unknown,
   Parameters<MCMod["deposit"]>
 > {
-  return useSmartContractTransaction(masterChef, "deposit", signer, options);
+  return useSmartContractTransaction(masterChef, "deposit", signer, {
+    ...options,
+    onTransactionMined: (...args) => {
+      const [poolId, _, account] = args[1];
+      invalidateBalanceQueries(poolId, account);
+      options?.onTransactionMined?.(...args);
+    },
+  });
 }
