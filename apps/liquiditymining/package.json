@@ -74,7 +74,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@types/d3-format": "^3.0.1",
-    "@types/jest": "^26.0.24",
+    "@types/jest": "^27.4.1",
     "babel-loader": "^8.2.3",
     "chromatic": "^6.5.3",
     "cross-env": "^7.0.3",
