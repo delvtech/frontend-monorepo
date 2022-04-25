@@ -23,15 +23,18 @@ import { useLPTokenBalance } from "src/ui/liquiditymining/hooks/useLPTokenBalanc
 import { useELFIPerBlock } from "src/ui/liquiditymining/hooks/useELFIPerBlock";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
 import { t } from "ttag";
-import { ETHEREUM_BLOCKS_PER_WEEK } from "@elementfi/base/ethereum/ethereum";
-import { commify, parseEther } from "ethers/lib/utils";
-import { usePoolShare } from "./hooks/usePoolShare";
+import {
+  ETHEREUM_BLOCKS_PER_WEEK,
+  ChainId,
+} from "@elementfi/base/ethereum/ethereum";
 import { getPoolURL } from "@elementfi/core/pools/urls";
-import { ChainId } from "@elementfi/base/ethereum/ethereum";
-import { StakeDialog } from "./StakeDialog";
+import { commify, parseEther } from "ethers/lib/utils";
+import { usePoolShare } from "src/ui/liquiditymining/hooks/usePoolShare";
+import { StakeDialog } from "src/ui/liquiditymining/StakeDialog";
 import { Signer } from "ethers";
-import { UnstakeDialog } from "./UnstakeDialog";
-import { useUnstakeAndClaim } from "./hooks/useUnstakeAndClaim";
+import { useTotalFiatStaked } from "src/ui/liquiditymining/hooks/useTotalFiatStaked";
+import { UnstakeDialog } from "src/ui/liquiditymining/UnstakeDialog";
+import { useUnstakeAndClaim } from "src/ui/liquiditymining/hooks/useUnstakeAndClaim";
 import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
 
 interface EligiblePoolCardProps {
@@ -79,6 +82,8 @@ export function EligiblePoolCard({
   // TODO: Get ChainId from environment
   const POOL_HREF = getPoolURL(ChainId.GOERLI, poolAddress);
 
+  const totalFiatStaked = useTotalFiatStaked(pool, account);
+
   const [transactionIsPending, setTransactionIsPending] = useState(false);
   const transactionOptions = useTransactionOptionsWithToast({
     options: {
@@ -114,7 +119,7 @@ export function EligiblePoolCard({
         <Well>
           <div className="grid grid-cols-2 gap-8 ">
             <span className="text-principalRoyalBlue">{t`Total Staked`}</span>
-            <span className="text-right">$9,000,000</span>
+            <span className="text-right">${commify(totalFiatStaked)}</span>
           </div>
           <div className="grid grid-cols-2 gap-8">
             <span className="text-principalRoyalBlue">{t`Total ELFI / Week`}</span>
