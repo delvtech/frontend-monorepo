@@ -19,7 +19,6 @@ import { ContractTransaction, ethers, Signer } from "ethers";
 import { isNumber } from "lodash";
 import { jt, t } from "ttag";
 
-import { assertNever } from "src/base/assertNever";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { defaultProvider } from "src/elf/providers/providers";
@@ -54,6 +53,7 @@ import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 
 import { TooltipDefinition } from "./tooltipDefinitions";
 import { GSCMember } from "src/ui/proposals/GSCMember";
+import { assertNever } from "@elementfi/base/utils/assertNever";
 
 const author = ethers.Wallet.createRandom().address;
 

@@ -1,5 +1,5 @@
+import { assertNever } from "@elementfi/base/utils/assertNever";
 import classNames from "classnames";
-import { assertNever } from "src/base/assertNever";
 
 export enum ButtonSize {
   SMALL = "SMALL",

@@ -7,9 +7,9 @@ import classNames from "classnames";
 import ElementUrls from "src/elf/urls";
 import Card from "src/ui/base/Card/Card";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
-import { assertNever } from "src/base/assertNever";
 import { useNFTTokenBalanceOf } from "src/ui/overview/useNFTTokenBalanceOf";
 import useNumDelegates from "./useNumDelegates";
+import { assertNever } from "@elementfi/base/utils/assertNever";
 
 interface ElfiverseBannerProps {
   account: string | null | undefined;

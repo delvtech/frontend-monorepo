@@ -22,7 +22,6 @@ import { t, jt } from "ttag";
 
 import H1 from "src/ui/base/H1/H1";
 import H2 from "src/ui/base/H2/H2";
-import { assertNever } from "src/base/assertNever";
 import ElementUrl from "src/elf/urls";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
@@ -54,6 +53,7 @@ import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPo
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
+import { assertNever } from "@elementfi/base/utils/assertNever";
 
 interface ProposalDetailsCardProps {
   className?: string;

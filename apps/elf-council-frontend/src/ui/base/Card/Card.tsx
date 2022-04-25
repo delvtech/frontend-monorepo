@@ -2,7 +2,7 @@
 
 import classNames from "classnames";
 import { ElementType, ReactElement } from "react";
-import { assertNever } from "src/base/assertNever";
+import { assertNever } from "@elementfi/base/utils/assertNever";
 import { PolymorphicComponentProps } from "src/@types/helper";
 
 export enum CardVariant {
