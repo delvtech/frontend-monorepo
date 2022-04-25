@@ -68,7 +68,7 @@ export function UnstakeDialog({
       />
       <p className="mb-6 text-blueGrey">{t`Staked balance: ${parseFloat(
         depositedBalance || "0",
-      ).toFixed(3)}`}</p>
+      ).toFixed(2)} ELFI`}</p>
       {!account ? (
         <ConnectWalletButton
           className="w-full justify-center"

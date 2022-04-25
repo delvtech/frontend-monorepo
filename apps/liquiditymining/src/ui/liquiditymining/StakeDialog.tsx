@@ -82,7 +82,7 @@ export function StakeDialog({
       />
       <p className="mb-6 text-blueGrey">{t`Available to stake: ${parseFloat(
         availableAmount || "0",
-      ).toFixed(3)}`}</p>
+      ).toFixed(4)} LP Tokens`}</p>
       {!account ? (
         <ConnectWalletButton
           className="w-full justify-center"
