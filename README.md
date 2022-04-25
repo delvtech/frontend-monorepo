@@ -35,3 +35,17 @@ yarn workspace base add lodash
 # Install peripherals workspace as dependency for the liquidity mining app
 # confirm this: yarn workspace liquidity-mining-ui add peripherals
 ```
+
+### Running workspace scripts
+
+To run scripts in workspaces, use the following command:
+
+```bash
+yarn workspace <workspace-name> <packge.json script>
+```
+
+Example
+
+```bash
+yarn workspace elf-council-frontend start
+```
