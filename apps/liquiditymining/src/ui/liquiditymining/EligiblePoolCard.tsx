@@ -76,7 +76,9 @@ export function EligiblePoolCard({
   const poolShare = usePoolShare(poolAddress, account);
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || "0.0";
+  const depositedBalanceLabel = (+depositedBalance).toFixed(4);
   const pendingRewards = userInfo?.rewardDebt || "0.0";
+  const pendingRewardsLabel = (+pendingRewards).toFixed(2);
 
   // TODO: Get ChainId from environment
   const POOL_HREF = getPoolURL(ChainId.GOERLI, poolAddress);
@@ -133,11 +135,11 @@ export function EligiblePoolCard({
           </div>
           <div className="grid grid-cols-2 gap-8 ">
             <span className="text-principalRoyalBlue">{t`ELFI / Week`}</span>
-            <span className="text-right">{`${pendingRewards} ELFI`}</span>
+            <span className="text-right">{`${pendingRewardsLabel} ELFI`}</span>
           </div>
           <div className="grid grid-cols-2 gap-8 ">
             <span className="text-principalRoyalBlue">{t`Unclaimed`}</span>
-            <span className="text-right font-semibold">{`${pendingRewards} ELFI`}</span>
+            <span className="text-right font-semibold">{`${pendingRewardsLabel} ELFI`}</span>
           </div>
         </div>
 
@@ -145,7 +147,7 @@ export function EligiblePoolCard({
           <div className="grid grid-cols-2 gap-8 ">
             <div className="flex flex-col">
               <span className="mb-1 text-principalRoyalBlue">LP Staked</span>
-              <span className="font-semibold">{depositedBalance}</span>
+              <span className="font-semibold">{depositedBalanceLabel}</span>
             </div>
             <div className="flex justify-end space-x-2">
               <Button
