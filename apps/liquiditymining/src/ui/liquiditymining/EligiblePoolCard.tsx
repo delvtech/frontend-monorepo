@@ -17,7 +17,6 @@ import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card from "src/ui/base/Card/Card";
-import USDCIcon from "src/ui/base/svg/USDCIcon";
 import Well from "src/ui/base/Well/Well";
 import { useLPTokenBalance } from "src/ui/liquiditymining/hooks/useLPTokenBalance";
 import { useELFIPerBlock } from "src/ui/liquiditymining/hooks/useELFIPerBlock";
@@ -33,6 +32,7 @@ import { Signer } from "ethers";
 import { UnstakeDialog } from "./UnstakeDialog";
 import { useUnstakeAndClaim } from "./hooks/useUnstakeAndClaim";
 import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
+import AssetIcon from "src/ui/base/svg/AssetIcon/AssetIcon";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -61,7 +61,6 @@ export function EligiblePoolCard({
   const { symbol: baseAssetSymbol } = getTokenInfo(underlying);
 
   const poolId = poolIdsByPoolAddress[pool.address];
-  const poolIcon = <USDCIcon className="mr-4 inline h-8 w-8 flex-shrink-0" />;
   const ccPoolTVL = useTotalFiatLiquidity(pool);
   const unlockDate = convertEpochSecondsToDate(unlockTimestamp);
   const dateLabel = formatAbbreviatedDate(unlockDate);
@@ -105,7 +104,7 @@ export function EligiblePoolCard({
     <>
       <Card className="flex w-[382px] flex-col space-y-6">
         <div className="flex flex-col items-center">
-          <USDCIcon className="mb-3 h-12" />
+          <AssetIcon symbol={baseAssetSymbol} className="mb-3 h-12" />
           <span className="font-semibold text-principalRoyalBlue ">{t`${baseAssetSymbol} Principal Pool LP Token`}</span>
           <ExternalLink href={POOL_HREF}>
             <span className="font-semibold text-gray-600">{dateLabel}</span>
