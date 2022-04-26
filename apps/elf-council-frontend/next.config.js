@@ -1,6 +1,9 @@
 const svgrTemplate = require("./svgr-template");
 
 const nextConfig = {
+  experimental: {
+    externalDir: true,
+  },
   eslint: {
     dirs: ["pages", "src"],
   },
