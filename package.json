@@ -29,7 +29,7 @@
     ]
   },
   "dependencies": {
-    "stylelint": "^14.5.3",
+    "stylelint": "^14.8.0",
     "stylelint-config-recommended": "^7.0.0",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
@@ -48,6 +48,6 @@
     "prettier": "^2.6.2"
   },
   "resolutions": {
-    "@types/react": "17.0.38"
+    "@types/react": "17.0.44"
   }
 }
