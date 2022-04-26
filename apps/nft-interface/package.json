@@ -12,7 +12,7 @@
     "update-elf-council-typechain": "yarn add git+https://github.com/element-fi/elf-council-typechain.git"
   },
   "dependencies": {
-    "@alch/alchemy-web3": "^1.2.3",
+    "@alch/alchemy-web3": "^1.4.1",
     "@elementfi/react-query-typechain": "^1.2.0",
     "@fontsource/rubik": "^4.5.1",
     "@web3-react/core": "^6.1.9",
