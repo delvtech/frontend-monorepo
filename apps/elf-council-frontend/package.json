@@ -106,7 +106,6 @@
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -s public",
     "chromatic": "chromatic --exit-zero-on-changes --skip 'dependabot/**'",
-    "prepare": "husky install",
     "test": "jest",
     "test-watch": "jest --watch"
   },
