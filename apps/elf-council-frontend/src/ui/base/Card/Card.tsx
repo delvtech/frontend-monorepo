@@ -1,8 +1,10 @@
 // See: https://tailwindui.com/components/application-ui/layout/panels#component-415761fd4b5592742ec78ce4c638973e
 
-import classNames from "classnames";
 import { ElementType, ReactElement } from "react";
+
 import { assertNever } from "@elementfi/base/utils/assertNever";
+import classNames from "classnames";
+
 import { PolymorphicComponentProps } from "src/@types/helper";
 
 export enum CardVariant {

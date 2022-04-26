@@ -3,6 +3,7 @@
     "@alch/alchemy-web3": "^1.2.5",
     "@babel/types": "^7.17.0",
     "@blueprintjs/popover2": "^1.0.0",
+    "@elementfi/base": "^1.0.0",
     "@elementfi/elf-council-proposals": "^1.0.2",
     "@elementfi/elf-council-tokenlist": "^1.0.2",
     "@elementfi/elf-council-typechain": "^1.0.2",
@@ -60,7 +61,6 @@
     "react-popper": "^2.2.5",
     "react-query": "^3.34.16",
     "react-use": "^17.3.2",
-    "@elementfi/base": "^1.0.0",
     "storybook-color-picker": "^2.3.1",
     "tailwindcss": "^3.0.23",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
@@ -106,7 +106,6 @@
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -s public",
     "chromatic": "chromatic --exit-zero-on-changes --skip 'dependabot/**'",
-    "prepare": "husky install",
     "test": "jest",
     "test-watch": "jest --watch"
   },
