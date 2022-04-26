@@ -33,11 +33,9 @@ export function StakeDialog({
   onClose = () => {},
 }: StakeDialogProps): ReactElement {
   const [stakeAmount, setStakeAmount] = useState("");
-  const [transactionIsPending, setTransactionIsPending] = useState(false);
   const { data: availableAmount } = useLPTokenBalance(poolContract, account);
-  const isApprovedResult = useIsPoolApproved(poolContract, account);
-  const { data: isApproved } = isApprovedResult;
 
+  const [transactionIsPending, setTransactionIsPending] = useState(false);
   const transactionOptions = useTransactionOptionsWithToast({
     options: {
       onTransactionSubmitted: () => {
@@ -49,15 +47,13 @@ export function StakeDialog({
     },
   });
 
+  const { data: isApproved } = useIsPoolApproved(poolContract, account);
   const { mutate: approve } = useApprovePool(
     poolContract,
     account,
     signer,
     transactionOptions,
   );
-  const handleApprove = () => {
-    approve();
-  };
 
   const { mutate: stake } = useStake(signer, transactionOptions);
   const handleStake = () => {
@@ -92,7 +88,7 @@ export function StakeDialog({
         <Button
           className="w-full justify-center"
           variant={ButtonVariant.GRADIENT}
-          onClick={handleApprove}
+          onClick={approve}
           loading={transactionIsPending}
         >
           {t`Approve`}
