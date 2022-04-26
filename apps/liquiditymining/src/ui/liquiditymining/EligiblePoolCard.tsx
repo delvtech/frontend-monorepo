@@ -27,13 +27,13 @@ import {
   ChainId,
 } from "@elementfi/base/ethereum/ethereum";
 import { getPoolURL } from "@elementfi/core/pools/urls";
-import { commify, parseEther } from "ethers/lib/utils";
+import { commify } from "ethers/lib/utils";
 import { usePoolShare } from "src/ui/liquiditymining/hooks/usePoolShare";
 import { StakeDialog } from "src/ui/liquiditymining/StakeDialog";
 import { Signer } from "ethers";
 import { useTotalFiatStaked } from "src/ui/liquiditymining/hooks/useTotalFiatStaked";
 import { UnstakeDialog } from "src/ui/liquiditymining/UnstakeDialog";
-import { useUnstakeAndClaim } from "src/ui/liquiditymining/hooks/useUnstakeAndClaim";
+import { useClaim } from "src/ui/liquiditymining/hooks/useClaim";
 import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
 import AssetIcon from "src/ui/base/svg/AssetIcon/AssetIcon";
 
@@ -97,13 +97,10 @@ export function EligiblePoolCard({
     },
   });
 
-  const { mutate: unstakeAndClaim } = useUnstakeAndClaim(
-    signer,
-    transactionOptions,
-  );
+  const { mutate: claim } = useClaim(signer, transactionOptions);
   const handleClaim = () => {
     if (account) {
-      unstakeAndClaim([poolId, parseEther(depositedBalance), account]);
+      claim([poolId, account]);
     }
   };
 
