@@ -4,8 +4,6 @@ import {
   useSmartContractReadCall,
   useSmartContractTransaction,
 } from "@elementfi/react-query-typechain";
-import { ChevronDownIcon } from "@heroicons/react/solid";
-import classNames from "classnames";
 import { BigNumber, Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { t } from "ttag";
@@ -16,13 +14,12 @@ import {
   lockingVaultContract,
   vestingContract,
 } from "src/elf/contracts";
-import PopoverButton from "src/ui/base/Button/PopoverButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 import { useQueryVotePowerView } from "src/ui/voting/useQueryVotePower";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
+import Button from "src/ui/base/Button/Button";
 
 const { lockingVault, vestingVault } = addressesJson.addresses;
 interface JoinGSCButtonProps {
@@ -44,69 +41,18 @@ export function JoinGSCButton(props: JoinGSCButtonProps): ReactElement {
   const handleJoin = useHandleJoin(account, signer);
   const handleLeave = useHandleLeave(account, signer);
 
+  if (canLeaveGSC) {
+    return (
+      <Button disabled={!canLeaveGSC} onClick={handleLeave}>{t`Leave`}</Button>
+    );
+  }
+
   return (
-    <PopoverButton
+    <Button
       variant={variant}
-      disabled={false}
-      className="p-0"
-      popover={
-        <Card variant={CardVariant.HACKER_SKY}>
-          <div className="-mx-4 -my-5 flex flex-col py-2 text-white">
-            <DropdownItem
-              disabled={!hasEnoughToJoinGSC || isOnGSC}
-              label={t`Join`}
-              onSelectItem={handleJoin}
-            />
-            <DropdownItem
-              disabled={!canLeaveGSC}
-              label={t`leave`}
-              onSelectItem={handleLeave}
-            />
-          </div>
-        </Card>
-      }
-    >
-      {(open: boolean) => (
-        <div className="flex w-[90px] items-center justify-center">
-          <span>{t`Choose`}</span>
-
-          <ChevronDownIcon
-            className={classNames(
-              open ? classNames("rotate-180 transform") : "",
-              "ml-2 h-5 w-5 transition duration-150 ease-in-out",
-            )}
-            aria-hidden="true"
-          />
-        </div>
-      )}
-    </PopoverButton>
-  );
-}
-interface DropdownItemProps {
-  label: string;
-  disabled?: boolean;
-  onSelectItem: (choice: string) => void;
-}
-
-function DropdownItem(props: DropdownItemProps) {
-  const { label, onSelectItem, disabled } = props;
-
-  const handleSelectItem = useCallback(() => {
-    onSelectItem(label);
-  }, [label, onSelectItem]);
-
-  const hoverBackground = disabled ? undefined : "hover:bg-principalRoyalBlue";
-  return (
-    <button
-      disabled={disabled}
-      className={classNames(
-        hoverBackground,
-        "flex w-[125px] items-center justify-between rounded px-3 py-2 hover:bg-opacity-20",
-      )}
-      onClick={handleSelectItem}
-    >
-      <span className="text-principalRoyalBlue mr-2">{label}</span>
-    </button>
+      disabled={!hasEnoughToJoinGSC || isOnGSC}
+      onClick={handleJoin}
+    >{t`Join`}</Button>
   );
 }
 
