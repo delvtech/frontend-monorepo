@@ -34,7 +34,6 @@ export function GSCOverviewPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
 
   const { data: members = [] } = useGSCMembers();
-  console.log(members);
   const candidates = useGSCCandidates();
   const topTwentyCandidates = candidates.slice(0, NUM_CANDIDATES_TO_SHOW);
 
