@@ -20,6 +20,7 @@ import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
+import { GSCPortfolioCard } from "./GSCPortfolioCard";
 
 const provider = defaultProvider;
 const NUM_CANDIDATES_TO_SHOW = 20;
@@ -31,7 +32,9 @@ enum TabOption {
 }
 
 export function GSCOverviewPage(): ReactElement {
-  const { account } = useWeb3React<Web3Provider>();
+  const { account, library } = useWeb3React<Web3Provider>();
+
+  const signer = library?.getSigner();
 
   const { data: members = [] } = useGSCMembers();
   const candidates = useGSCCandidates();
@@ -46,7 +49,7 @@ export function GSCOverviewPage(): ReactElement {
   const handleChangeTab = (opt: TabOption) => setCurrentTab(opt);
 
   return (
-    <div className="w-full space-y-6 xl:max-w-[1024px]">
+    <div className="w-full max-w-7xl space-y-6">
       <Head>
         <title>{t`GSCOverview | Element Council Protocol`}</title>
       </Head>
@@ -55,8 +58,10 @@ export function GSCOverviewPage(): ReactElement {
         {t`Governance GSC Overview`}
       </H1>
 
-      <Card className="max-w-2xl">
-        <div className="w-full max-w-2xl flex-col justify-center space-y-6 ">
+      <GSCPortfolioCard account={account} signer={signer} />
+
+      <Card className="">
+        <div className="w-full flex-col justify-center space-y-6 ">
           {/* Nav buttons */}
           <div className="flex justify-center">
             <Tabs aria-label={t`Filter proposals`}>
@@ -153,7 +158,7 @@ export function GSCOverviewPage(): ReactElement {
 
           {currentTab === TabOption.Current &&
             (members.length ? (
-              <div className=" max-w-fit">
+              <div className="">
                 <ul className="space-y-2">
                   {members.map((member) => {
                     const handleDelegation = () => {};
@@ -200,7 +205,7 @@ export function GSCOverviewPage(): ReactElement {
             ))}
 
           {currentTab === TabOption.Rising && (
-            <div className="h-96 max-w-fit overflow-y-scroll">
+            <div className="h-96 overflow-y-scroll">
               <ul className="space-y-2">
                 {topTwentyCandidates.map((delegate) => {
                   const handleDelegation = () => {};
