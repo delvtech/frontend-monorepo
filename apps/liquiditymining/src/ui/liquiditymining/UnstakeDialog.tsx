@@ -5,13 +5,13 @@ import { t } from "ttag";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import TokenInput from "src/ui/base/Input/TokenInput";
-import { useUnstake } from "./hooks/useUnstake";
 import { Signer } from "ethers";
 import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton";
 import { parseEther } from "ethers/lib/utils";
 import { ConvergentCurvePool } from "@elementfi/core-typechain/dist/v1.1";
 import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
 import { useUserInfo } from "./hooks/useUserInfo";
+import { useUnstakeAndClaim } from "./hooks/useUnstakeAndClaim";
 
 interface UnstakeDialogProps {
   account: string | null | undefined;
@@ -31,10 +31,10 @@ export function UnstakeDialog({
   onClose = () => {},
 }: UnstakeDialogProps): ReactElement {
   const [unstakeAmount, setUnstakeAmount] = useState("");
-  const [transactionIsPending, setTransactionIsPending] = useState(false);
   const { data: userInfo } = useUserInfo(account, poolContract.address);
   const depositedBalance = userInfo?.amount || "0";
 
+  const [transactionIsPending, setTransactionIsPending] = useState(false);
   const transactionOptions = useTransactionOptionsWithToast({
     options: {
       onTransactionSubmitted: () => {
@@ -46,10 +46,13 @@ export function UnstakeDialog({
     },
   });
 
-  const { mutate: unstake } = useUnstake(signer, transactionOptions);
+  const { mutate: unstakeAndClaim } = useUnstakeAndClaim(
+    signer,
+    transactionOptions,
+  );
   const handleStake = () => {
     if (account) {
-      unstake([poolId, parseEther(unstakeAmount), account]);
+      unstakeAndClaim([poolId, parseEther(unstakeAmount), account]);
     }
   };
 
@@ -81,7 +84,7 @@ export function UnstakeDialog({
           onClick={handleStake}
           loading={transactionIsPending}
         >
-          {t`Unstake`}
+          {t`Unstake and Claim`}
         </Button>
       )}
     </SimpleDialog>
