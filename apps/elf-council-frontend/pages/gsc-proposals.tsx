@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 
 import { ProposalsJson } from "@elementfi/elf-council-proposals";
 
-import { PROPOSALS_JSON_URL } from "src/elf-council-proposals";
+import { GSC_PROPOSALS_JSON_URL } from "src/elf-council-proposals";
 import PageView from "src/ui/app/PageView";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import GSCProposalsPage from "src/ui/proposals/GSCProposalsPage";
@@ -35,7 +35,7 @@ export async function getStaticProps(): Promise<{
   // the client. This makes it easy to update the proposals.json as needed
   // without having to do a deploy.
   try {
-    const res = await fetch(PROPOSALS_JSON_URL);
+    const res = await fetch(GSC_PROPOSALS_JSON_URL);
     const proposalsJson = await res.json();
     return {
       props: { proposalsJson },
