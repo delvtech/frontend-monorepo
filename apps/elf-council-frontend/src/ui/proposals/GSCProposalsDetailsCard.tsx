@@ -23,7 +23,6 @@ import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { defaultProvider } from "src/elf/providers/providers";
 import ElementUrl from "src/elf/urls";
-import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
@@ -40,7 +39,6 @@ import {
   ProposalStatusLabels,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
-import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
@@ -48,10 +46,8 @@ import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
 import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTransactionForAccount";
 import { useVote } from "src/ui/voting/useVote";
-import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 
-import { TooltipDefinition } from "./tooltipDefinitions";
 import { GSCMember } from "src/ui/proposals/GSCMember";
 import { assertNever } from "@elementfi/base/utils/assertNever";
 
@@ -81,11 +77,6 @@ export function GSCProposalDetailsCard(
 
   const { data: snapshotProposals } = useSnapshotProposals([snapshotId]);
   const snapshotProposal = snapshotProposals && snapshotProposals[0];
-
-  const accountVotingPower = useVotingPowerForAccountAtBlockNumber(
-    account,
-    proposal.created,
-  );
 
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
@@ -117,11 +108,7 @@ export function GSCProposalDetailsCard(
   );
 
   const submitButtonDisabled =
-    !isNumber(newBallot) ||
-    !account ||
-    !isVotingOpen ||
-    isVoteTxPending ||
-    !+accountVotingPower;
+    !isNumber(newBallot) || !account || !isVotingOpen || isVoteTxPending;
 
   const { mutate: vote } = useVote(account, signer, proposal.created, {
     onError: (e) => {
@@ -273,24 +260,9 @@ export function GSCProposalDetailsCard(
 
         {/* Voting Related Stats / Action Buttons */}
         <div className="mt-auto">
-          {/* Stale Voting Warning Message */}
-          {isVotingOpen ? (
-            <div className="my-4">
-              <StaleVotingPowerMessage account={account} proposal={proposal} />
-            </div>
-          ) : null}
-
           {/* Action Buttons */}
           <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
             <div className="flex w-full items-end justify-between">
-              {/* User Stats */}
-              <BalanceWithLabel
-                className="mt-4 w-full"
-                balance={accountVotingPower}
-                tooltipText={t`${TooltipDefinition.OWNED_PROPOSAL_VOTING_POWER}`}
-                label={t`Voting Power`}
-              />
-
               {etherscanLink && (
                 <ExternalLink
                   href={etherscanLink}
@@ -305,7 +277,7 @@ export function GSCProposalDetailsCard(
                 currentBallot={newBallot}
                 onSelectBallot={setCurrentBallot}
                 variant={ButtonVariant.WHITE}
-                disabled={!isVotingOpen || !+accountVotingPower}
+                disabled={!isVotingOpen}
               />
               {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
                 <div className="ml-4 flex w-full items-center text-white ">
