@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import toast from "react-hot-toast";
 
+import { assertNever } from "@elementfi/base/utils/assertNever";
 import { Proposal } from "@elementfi/elf-council-proposals";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import {
@@ -33,6 +34,7 @@ import H2 from "src/ui/base/H2/H2";
 import { Intent } from "src/ui/base/Intent";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
+import { GSCMember } from "src/ui/proposals/GSCMember";
 import GSCVoteTallys from "src/ui/proposals/GSCVoteTally";
 import {
   getProposalStatus,
@@ -41,15 +43,12 @@ import {
 import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
-import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
+import { useVotingPowerForGSCProposal } from "src/ui/proposals/useVotingPowerForGSCProposal";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
 import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTransactionForAccount";
-import { useVote } from "src/ui/voting/useVote";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-
-import { GSCMember } from "src/ui/proposals/GSCMember";
-import { assertNever } from "@elementfi/base/utils/assertNever";
+import { useGSCVote } from "src/ui/voting/useGSCVote";
 
 const author = ethers.Wallet.createRandom().address;
 
@@ -99,7 +98,7 @@ export function GSCProposalDetailsCard(
     return null;
   }, [isChangingVote, lastVoteTransaction, newVoteTransaction]);
 
-  const proposalVotingResults = useVotingPowerForProposal(proposalId);
+  const proposalVotingResults = useVotingPowerForGSCProposal(proposalId);
   const proposalStatus = getProposalStatus(
     isVotingOpen,
     isExecuted,
@@ -110,7 +109,7 @@ export function GSCProposalDetailsCard(
   const submitButtonDisabled =
     !isNumber(newBallot) || !account || !isVotingOpen || isVoteTxPending;
 
-  const { mutate: vote } = useVote(account, signer, proposal.created, {
+  const { mutate: vote } = useGSCVote(account, signer, proposal.created, {
     onError: (e) => {
       setIsVoteTxPending(false);
       toast.error(e.message, { id: toastIdRef.current });
