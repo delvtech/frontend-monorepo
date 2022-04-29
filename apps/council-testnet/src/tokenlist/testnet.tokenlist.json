@@ -1,0 +1,114 @@
+{
+  "name": "Council testnet token list",
+  "logoURI": "https://element.fi/logo.svg",
+  "timestamp": "2022-04-28T16:28:22.261Z",
+  "version": {
+    "major": 0,
+    "minor": 1,
+    "patch": 0
+  },
+  "tokens": [
+    {
+      "chainId": 31337,
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "symbol": "ELFI",
+      "decimals": 18,
+      "name": "Element Governance Token"
+    },
+    {
+      "chainId": 31337,
+      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "name": "Element Core Voting Contract",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "dayInBlocks": 6496,
+        "baseQuorum": "50.0",
+        "lockDuration": 10,
+        "minProposalPower": "50.0",
+        "extraVoteTime": 15
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      "name": "Element GSC Core Voting Contract",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "dayInBlocks": 6496,
+        "baseQuorum": "1.0",
+        "lockDuration": 10,
+        "minProposalPower": "1.0",
+        "extraVoteTime": 15
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      "name": "Element Locking Vault",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "token": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        "staleBlockLag": 50
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+      "name": "Element Vesting Vault",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "token": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        "staleBlockLag": 50
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      "name": "Element Governance Steering Committee Vault",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "coreVoting": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+        "votingPowerBound": "100000000000000000000",
+        "idleDuration": "345600"
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+      "name": "Element Airdrop Contract",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "rewardsRoot": "0x7a0cd759a3fe80f970fcc6f41e5949dcf094e8be8395e12813f6a566c6334dd7",
+        "lockingVault": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+        "expiration": "1682699297",
+        "token": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0x9A676e781A523b5d0C0e43731313A708CB607508",
+      "name": "Element Treasury",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "owner": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      "name": "Element Timelock",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "waitTime": "10"
+      }
+    }
+  ]
+}
