@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@alch/alchemy-web3": "^1.2.5",
+    "@alch/alchemy-web3": "^1.4.2",
     "@babel/types": "^7.17.0",
     "@blueprintjs/popover2": "^1.0.0",
     "@elementfi/base": "^1.0.0",
