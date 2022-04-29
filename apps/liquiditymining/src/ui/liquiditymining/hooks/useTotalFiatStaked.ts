@@ -14,7 +14,7 @@ export function useTotalFiatStaked(
   poolInfo: PoolInfo,
   account: string | null | undefined,
 ): string {
-  const LPTokenPrice = useLPTokenPrice(
+  const lpTokenPrice = useLPTokenPrice(
     poolInfo,
     eligibleGoerliPoolContracts[poolInfo.address],
   );
@@ -22,5 +22,5 @@ export function useTotalFiatStaked(
   const { data: userInfo } = useUserInfo(account, poolInfo.address);
   const depositedBalance = userInfo?.amount || "0.0";
 
-  return (+LPTokenPrice * +depositedBalance).toFixed(2);
+  return (+lpTokenPrice * +depositedBalance).toFixed(2);
 }
