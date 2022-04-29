@@ -31,7 +31,10 @@ import { commify } from "ethers/lib/utils";
 import { usePoolShare } from "src/ui/liquiditymining/hooks/usePoolShare";
 import { StakeDialog } from "src/ui/liquiditymining/StakeDialog";
 import { Signer } from "ethers";
-import { useTotalFiatStaked } from "src/ui/liquiditymining/hooks/useTotalFiatStaked";
+import {
+  useTotalFiatStaked,
+  useTotalFiatStakedForUser,
+} from "src/ui/liquiditymining/hooks/useTotalFiatStaked";
 import { UnstakeDialog } from "src/ui/liquiditymining/UnstakeDialog";
 import { useClaim } from "src/ui/liquiditymining/hooks/useClaim";
 import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
@@ -83,7 +86,8 @@ export function EligiblePoolCard({
   // TODO: Get ChainId from environment
   const POOL_HREF = getPoolURL(ChainId.GOERLI, poolAddress);
 
-  const totalFiatStaked = useTotalFiatStaked(pool, account);
+  const totalFiatStakedForUser = useTotalFiatStakedForUser(pool, account);
+  const totalFiatStaked = useTotalFiatStaked(pool);
 
   const [transactionIsPending, setTransactionIsPending] = useState(false);
   const transactionOptions = useTransactionOptionsWithToast({
