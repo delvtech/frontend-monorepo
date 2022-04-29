@@ -5,7 +5,7 @@
 .next
 
 # elf-frontend 
-apps/elf-frontend/version.output.json
+apps/elf-frontend/src/version.output.json
 
 # council-testnet
 apps/council-testnet/artifacts/
