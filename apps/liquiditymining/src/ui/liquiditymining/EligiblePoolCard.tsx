@@ -75,9 +75,9 @@ export function EligiblePoolCard({
 
   const poolShare = usePoolShare(poolAddress, account);
   const { data: userInfo } = useUserInfo(account, poolAddress);
-  const depositedBalance = userInfo?.amount || "0.0";
+  const depositedBalance = userInfo?.amount || "0";
   const depositedBalanceLabel = (+depositedBalance).toFixed(4);
-  const pendingRewards = userInfo?.rewardDebt || "0.0";
+  const pendingRewards = userInfo?.rewardDebt || "0";
   const pendingRewardsLabel = (+pendingRewards).toFixed(2);
 
   // TODO: Get ChainId from environment
@@ -104,6 +104,9 @@ export function EligiblePoolCard({
     }
   };
 
+  const isStakeDisabled = !+(lpTokenBalance || 0);
+  const isUnstakeDisabled = !+depositedBalance;
+  const isClaimDisabled = !+pendingRewards;
   return (
     <>
       <Card className="flex w-[382px] flex-col space-y-6">
@@ -148,25 +151,39 @@ export function EligiblePoolCard({
             </div>
             <div className="flex justify-end space-x-2">
               <Button
-                variant={ButtonVariant.OUTLINE_BLUE}
+                disabled={isUnstakeDisabled}
+                variant={
+                  isUnstakeDisabled
+                    ? ButtonVariant.MINIMAL
+                    : ButtonVariant.OUTLINE_BLUE
+                }
                 onClick={() => setUnstakeDialogIsShowing(true)}
               >
                 <MinusIcon className="h-6 text-principalRoyalBlue" />
               </Button>
               <Button
-                variant={ButtonVariant.OUTLINE_BLUE}
+                disabled={isStakeDisabled}
+                variant={
+                  isStakeDisabled
+                    ? ButtonVariant.MINIMAL
+                    : ButtonVariant.OUTLINE_BLUE
+                }
                 onClick={() => setStakeDialogIsShowing(true)}
               >
-                <PlusIcon className="h-6 text-principalRoyalBlue" />
+                <PlusIcon className={`h-6 text-principalRoyalBlue`} />
               </Button>
             </div>
           </div>
           <Button
             className="w-full justify-center"
-            variant={ButtonVariant.OUTLINE_BLUE}
+            variant={
+              isClaimDisabled
+                ? ButtonVariant.MINIMAL
+                : ButtonVariant.OUTLINE_BLUE
+            }
             onClick={handleClaim}
             loading={transactionIsPending}
-            disabled={!+depositedBalance}
+            disabled={isClaimDisabled}
           >{t`Claim`}</Button>
         </div>
       </Card>
