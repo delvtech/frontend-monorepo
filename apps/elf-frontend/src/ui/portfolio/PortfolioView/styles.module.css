@@ -1,0 +1,8 @@
+.assetTabs :global(.bp3-tab-list) {
+  width: 100%;
+}
+
+a.accountLink:hover {
+  text-decoration: none;
+  border-bottom: 3px solid var(--bp3-text-color-muted);
+}

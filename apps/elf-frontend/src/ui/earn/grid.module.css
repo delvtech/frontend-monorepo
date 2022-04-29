@@ -1,0 +1,7 @@
+.earnGrid {
+  display: grid;
+  width: 100%;
+  /* vault, tvl, vault apy, fixed apr, lp apys, liquidity, price, term, expand */
+  grid-template-columns: 164px 104px 72px 64px 100px 100px 72px 1fr 104px;
+  column-gap: 1.8rem;
+}

@@ -1,0 +1,86 @@
+{
+  "name": "Testnet token list",
+  "logoURI": "https://element.fi/logo.svg",
+  "tags": {
+    "eP": {
+      "name": "Principal token",
+      "description": "Token that represents a deposit of principal into a yield position"
+    },
+    "eY": {
+      "name": "Yield token",
+      "description": "Token that represents the yield on a deposit into a yield position"
+    }
+  },
+  "timestamp": "2021-05-02T22:09:16.374Z",
+  "version": {
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  },
+  "tokens": [
+    {
+      "chainId": 31337,
+      "address": "0xC2Dd2Bc51eBd34E81204D79d58E1c425c926835d",
+      "symbol": "eP-ETH",
+      "decimals": 18,
+      "name": "ETH Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 31337,
+      "address": "0xe2Bb99ef9D1F1C225621a0b8118f9a45eb01ACBF",
+      "symbol": "eP-ETH",
+      "decimals": 18,
+      "name": "ETH Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 31337,
+      "address": "0x1233A3E9902bCeb466d865fEC0aC1aD59E81ef60",
+      "symbol": "eP-ETH",
+      "decimals": 18,
+      "name": "ETH Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 31337,
+      "address": "0xcbe49e0cAA0a2df8098B0527ECd11041029DEcfc",
+      "symbol": "eP-USDC",
+      "decimals": 6,
+      "name": "USDC Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 31337,
+      "address": "0x1F708C24a0D3A740cD47cC0444E9480899f3dA7D",
+      "symbol": "eY-ETH",
+      "decimals": 18,
+      "name": "ETH Yield Token",
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 31337,
+      "address": "0xf41B47c54dEFF12f8fE830A411a09D865eBb120E",
+      "symbol": "eY-ETH",
+      "decimals": 18,
+      "name": "ETH Yield Token",
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 31337,
+      "address": "0x05242D4AC717Cdf38C36AF290F2b0DA99AA82c67",
+      "symbol": "eY-ETH",
+      "decimals": 18,
+      "name": "ETH Yield Token",
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 31337,
+      "address": "0x1655f30B495586cDC5E1E332844FabF7363b3667",
+      "symbol": "eY-USDC",
+      "decimals": 6,
+      "name": "USDC Yield Token",
+      "tags": ["eY"]
+    }
+  ]
+}

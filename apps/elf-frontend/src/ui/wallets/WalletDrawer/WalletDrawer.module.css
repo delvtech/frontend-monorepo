@@ -1,0 +1,4 @@
+.walletDrawer :global(.bp3-drawer-header) {
+  padding: 0;
+  box-shadow: none;
+}

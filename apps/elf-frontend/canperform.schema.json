@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "chainId": {
+      "type": "integer"
+    },
+    "description": {
+      "type": "string"
+    },
+    "canPerform": {
+      "type": "object",
+      "properties": {
+        "tranches": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "trancheAddress": {
+                  "type": "string"
+                },
+                "mint": {
+                  "type": "boolean"
+                },
+                "withdrawPrincipal": {
+                  "type": "boolean"
+                },
+                "withdrawInterest": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "trancheAddress",
+                "withdrawPrincipal",
+                "mint",
+                "withdrawInterest"
+              ]
+            }
+          ]
+        },
+        "convergentPools": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "convergentPoolAddress": {
+                  "type": "string"
+                },
+                "buy": {
+                  "type": "boolean"
+                },
+                "sell": {
+                  "type": "boolean"
+                },
+                "addLiquidity": {
+                  "type": "boolean"
+                },
+                "removeLiquidity": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "convergentPoolAddress",
+                "buy",
+                "sell",
+                "addLiquidity",
+                "removeLiquidity"
+              ]
+            }
+          ]
+        },
+        "weightedPools": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "weightedPoolAddress": {
+                  "type": "string"
+                },
+                "buy": {
+                  "type": "boolean"
+                },
+                "sell": {
+                  "type": "boolean"
+                },
+                "addLiquidity": {
+                  "type": "boolean"
+                },
+                "removeLiquidity": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "weightedPoolAddress",
+                "buy",
+                "sell",
+                "addLiquidity",
+                "removeLiquidity"
+              ]
+            }
+          ]
+        }
+      },
+      "required": ["tranches", "convergentPools", "weightedPools"]
+    }
+  },
+  "required": ["chainId", "description", "canPerform"]
+}

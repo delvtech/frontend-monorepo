@@ -1,0 +1,17 @@
+.tokenInput :global(.bp3-input-left-container) {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.stakingInput :global(.bp3-input-left-container) {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.stakingInput :global(.bp3-input-action) {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}

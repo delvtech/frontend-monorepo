@@ -1,0 +1,7 @@
+.yieldPoolGridColumns {
+  display: grid;
+  width: 100%;
+  /* Pool, liquidity, lp apy, vault apy,  price, term, actions*/
+  grid-template-columns: 288px 104px 64px 72px 96px 1fr 96px;
+  column-gap: 2.2rem;
+}

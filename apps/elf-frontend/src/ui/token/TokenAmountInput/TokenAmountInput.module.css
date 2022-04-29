@@ -1,0 +1,22 @@
+.investmentAmount :global(.bp3-input-group) {
+  width: 100%;
+}
+
+.investmentAmount input {
+  text-align: right;
+
+  /* equivalent to tw('pr-5'); */
+  padding: 1.25rem;
+}
+
+.investmentAmount :global(.bp3-input-left-container) {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.investmentAmount :global(.bp3-input-action) {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}

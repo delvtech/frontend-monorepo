@@ -1,0 +1,3 @@
+tailwind.output.css
+# this is a copied directory and therefore does not conform to our prettier version
+src/elf-contracts
