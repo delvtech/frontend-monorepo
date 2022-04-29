@@ -253,7 +253,7 @@ export function GSCProposalDetailsCard(
           </Tag>
         ) : (
           <div className="max-h-72 w-full overflow-scroll">
-            <GSCVoteTallys provider={defaultProvider} />
+            <GSCVoteTallys provider={defaultProvider} proposalId={proposalId} />
           </div>
         )}
 
