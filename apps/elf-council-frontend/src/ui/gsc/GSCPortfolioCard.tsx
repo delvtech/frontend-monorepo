@@ -34,37 +34,37 @@ export function GSCPortfolioCard({
   const votingPower = useVotingPowerForAccountAtLatestBlock(account);
 
   return (
-    <Card variant={CardVariant.GRADIENT} className="w-full shadow-md">
+    <Card variant={CardVariant.GRADIENT} className="w-fit shadow-md lg:w-full">
       <div>
-        <span className="text-lg font-bold text-white">{t`Governance Portfolio`}</span>
+        <span className="text-md font-bold text-white lg:text-lg">{t`Governance Portfolio`}</span>
         {account && (
           <span className="ml-2 text-white">
             <ExternalLink
               href={getEtherscanAddress(account)}
               text={formattedAddress || ""}
-              className="inline-flex text-sm font-light text-white"
+              className="inline-flex text-xs font-light text-white xl:text-sm"
             />
           </span>
         )}
       </div>
 
-      <div className="mb-8 flex min-h-full min-w-fit flex-row items-center">
+      <div className="mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center">
         {/* Voting Power */}
         <BalanceWithLabel
-          className="mt-4 mr-12 w-44"
+          className="mt-4 mr-4 w-44 xl:mr-12"
           balance={votingPower}
           tooltipText={t`${TooltipDefinition.OWNED_VOTING_POWER}`}
           label={t`Voting Power`}
         />
 
         {/* GSC eligibility progress bar */}
-        <div className="mt-4 mr-12 flex w-1/3 min-w-fit items-center align-middle">
+        <div className="mt-4 mr-8 flex min-w-fit max-w-xs flex-grow items-center align-middle lg:w-44">
           <ThresholdProgressBar account={account} />
         </div>
 
-        <div className="ml-auto mr-12 flex flex-row">
+        <div className="mt-4 mr-2 flex flex-row lg:ml-auto lg:mt-0 xl:mr-12">
           {/* GSC History */}
-          <div className="mr-24 flex w-48 flex-col">
+          <div className="mr-4 flex w-fit flex-col lg:mr-16 xl:mr-24">
             <span className="text-xl text-white">{t`GSC History`}</span>
             <span className="w-max text-sm text-white">{t`Member since 04/20/2022`}</span>
           </div>

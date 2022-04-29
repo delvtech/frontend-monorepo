@@ -1,27 +1,18 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { ReactElement, useState } from "react";
 
-import {
-  useSmartContractReadCall,
-  useSmartContractTransaction,
-} from "@elementfi/react-query-typechain";
 import { BigNumber, Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
-import { addressesJson } from "src/elf-council-addresses";
-import {
-  gscVaultContract,
-  lockingVaultContract,
-  vestingContract,
-} from "src/elf/contracts";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
-import { useQueryVotePowerView } from "src/ui/voting/useQueryVotePower";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import Button from "src/ui/base/Button/Button";
+import Dialog from "src/ui/base/Dialog/Dialog";
+import { useJoinGSC } from "./useJoinGSC";
+import { useLeaveGSC } from "./useLeaveGSC";
 
-const { lockingVault, vestingVault } = addressesJson.addresses;
 interface JoinGSCButtonProps {
   account: string | null | undefined;
   signer: Signer | undefined;
@@ -38,85 +29,93 @@ export function JoinGSCButton(props: JoinGSCButtonProps): ReactElement {
   const hasEnoughToJoinGSC = parseEther(votePower).gte(threshold);
   const canLeaveGSC = isOnGSC && parseEther(votePower).lt(threshold);
 
-  const handleJoin = useHandleJoin(account, signer);
-  const handleLeave = useHandleLeave(account, signer);
+  const handleJoin = useJoinGSC(account, signer);
+  const handleLeave = useLeaveGSC(account, signer);
 
-  if (canLeaveGSC) {
-    return (
-      <Button disabled={!canLeaveGSC} onClick={handleLeave}>{t`Leave`}</Button>
-    );
-  }
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
-    <Button
-      variant={variant}
-      disabled={!hasEnoughToJoinGSC || isOnGSC}
-      onClick={handleJoin}
-    >{t`Join`}</Button>
+    <>
+      {canLeaveGSC ? (
+        <Button
+          disabled={!canLeaveGSC}
+          onClick={handleLeave}
+        >{t`Leave`}</Button>
+      ) : (
+        <Button
+          variant={variant}
+          // disabled={!hasEnoughToJoinGSC || isOnGSC || !active}
+          disabled={false}
+          onClick={() => setDialogOpen(true)}
+        >{t`Join`}</Button>
+      )}
+      <Dialog isOpen={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <div>
+          <div className="text-principalRoyalBlue mb-4 text-lg font-bold">
+            Join Confirmation
+          </div>
+          <div className="text-principalRoyalBlue mb-8 text-sm">
+            Are you sure you want to join the the GSC? This means that you will
+            be responsible for the rights and responsibilities of a GSC member
+            and held accountable by Element DAO from this moment forward.
+          </div>
+          <div className="flex w-full justify-end">
+            <Button
+              className="mr-2"
+              variant={ButtonVariant.OUTLINE_BLUE}
+              onClick={() => setDialogOpen(false)}
+            >{t`Cancel`}</Button>
+            <Button
+              variant={ButtonVariant.GRADIENT}
+              onClick={() => handleJoin}
+            >{t`Join`}</Button>
+          </div>
+        </div>
+      </Dialog>
+    </>
   );
 }
 
-const EMPTY_BYTE = "0x00";
-function useHandleJoin(
-  account: string | null | undefined,
-  signer: Signer | undefined,
-) {
-  const { mutate: join } = useSmartContractTransaction(
-    gscVaultContract,
-    "proveMembership",
-    signer,
+export function LeaveGSCButton(props: JoinGSCButtonProps): ReactElement {
+  const { account, signer } = props;
+
+  const votePower = useVotingPowerForAccountAtLatestBlock(account);
+  const { data: threshold = BigNumber.from(0) } = useGSCVotePowerThreshold();
+  const { data: isOnGSC } = useIsGSCMember(account);
+
+  const canLeaveGSC = isOnGSC && parseEther(votePower).lt(threshold);
+
+  const handleJoin = useJoinGSC(account, signer);
+  const handleLeave = useLeaveGSC(account, signer);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  return (
+    <>
+      <Button disabled={!canLeaveGSC} onClick={handleLeave}>{t`Leave`}</Button>
+      <Dialog isOpen={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <div>
+          <div className="text-principalRoyalBlue mb-4 text-lg font-bold">
+            Leave Confirmation
+          </div>
+          <div className="text-principalRoyalBlue mb-8 text-sm">
+            Are you sure you want to join the the GSC? This means that you will
+            be responsible for the rights and responsibilities of a GSC member
+            and held accountable by Element DAO from this moment forward.
+          </div>
+          <div className="flex w-full justify-end">
+            <Button
+              className="mr-2"
+              variant={ButtonVariant.OUTLINE_BLUE}
+              onClick={() => setDialogOpen(false)}
+            >{t`Cancel`}</Button>
+            <Button
+              variant={ButtonVariant.GRADIENT}
+              onClick={() => handleJoin}
+            >{t`Confirm`}</Button>
+          </div>
+        </div>
+      </Dialog>
+    </>
   );
-
-  const lockingVaultVotePower = useQueryVotePowerView(
-    account,
-    lockingVaultContract,
-  );
-  const vestingVaultVotePower = useQueryVotePowerView(account, vestingContract);
-
-  const handleJoin = useCallback(async () => {
-    const vaults: string[] = [];
-
-    if (!!Number(lockingVaultVotePower)) {
-      vaults.push(lockingVault);
-    }
-
-    if (!!Number(vestingVaultVotePower)) {
-      vaults.push(vestingVault);
-    }
-
-    // stub out empty bytes for the extra data since neither locking nor vesting use it
-    const extraData = vaults.map(() => EMPTY_BYTE);
-    join([vaults, extraData]);
-  }, [join, lockingVaultVotePower, vestingVaultVotePower]);
-
-  return handleJoin;
-}
-
-function useHandleLeave(
-  account: string | null | undefined,
-  signer: Signer | undefined,
-) {
-  const { data: userVaults } = useSmartContractReadCall(
-    gscVaultContract,
-    "getUserVaults",
-    { callArgs: [account as string], enabled: !!account },
-  );
-
-  const { mutate: kick } = useSmartContractTransaction(
-    gscVaultContract,
-    "kick",
-    signer,
-  );
-
-  const handleLeave = useCallback(() => {
-    if (!account) {
-      return;
-    }
-
-    // stub out extra data since neither locking vault nor vesting vault use it
-    const extraData = userVaults?.map(() => EMPTY_BYTE) || [];
-    kick([account, extraData]);
-  }, [account, kick, userVaults]);
-
-  return handleLeave;
 }
