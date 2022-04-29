@@ -31,7 +31,7 @@ enum TabOption {
 }
 
 export function GSCOverviewPage(): ReactElement {
-  const { active, account, library } = useWeb3React<Web3Provider>();
+  const { account, library } = useWeb3React<Web3Provider>();
   const signer = library?.getSigner();
 
   const { data: members = [] } = useGSCMembers();
@@ -55,7 +55,7 @@ export function GSCOverviewPage(): ReactElement {
         {t`Governance GSC Overview`}
       </H1>
 
-      <GSCPortfolioCard active={active} account={account} signer={signer} />
+      <GSCPortfolioCard account={account} signer={signer} />
 
       <Card className="">
         <div className="w-full flex-col justify-center space-y-6 ">

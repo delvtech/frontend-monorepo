@@ -20,14 +20,12 @@ import { FeatureFlag } from "src/elf/featureFlag/featureFlag";
 import { ThresholdProgressBar } from "src/ui/gsc/ThresholdProgressBar";
 
 interface PortfolioCardProps {
-  active: boolean;
   account: string | undefined | null;
   provider?: Provider;
   signer?: Signer;
 }
 
 export function GSCPortfolioCard({
-  active,
   account,
   provider,
   signer,
@@ -71,7 +69,7 @@ export function GSCPortfolioCard({
             <span className="w-max text-sm text-white">{t`Member since 04/20/2022`}</span>
           </div>
           {/* TODO @cashd: Branch between Join/Leave GSC Button */}
-          <JoinGSCButton active={active} account={account} signer={signer} />
+          <JoinGSCButton account={account} signer={signer} />
         </div>
       </div>
     </Card>

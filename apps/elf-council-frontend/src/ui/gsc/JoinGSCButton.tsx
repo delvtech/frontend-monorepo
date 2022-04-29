@@ -14,14 +14,12 @@ import { useJoinGSC } from "./useJoinGSC";
 import { useLeaveGSC } from "./useLeaveGSC";
 
 interface JoinGSCButtonProps {
-  active: boolean;
   account: string | null | undefined;
   signer: Signer | undefined;
   variant?: ButtonVariant;
 }
 
 export function JoinGSCButton({
-  active,
   account,
   signer,
   variant = ButtonVariant.PRIMARY,
@@ -48,7 +46,7 @@ export function JoinGSCButton({
       ) : (
         <Button
           variant={variant}
-          disabled={!hasEnoughToJoinGSC || isOnGSC || !active}
+          disabled={!hasEnoughToJoinGSC || isOnGSC}
           onClick={() => setDialogOpen(true)}
         >{t`Join`}</Button>
       )}
