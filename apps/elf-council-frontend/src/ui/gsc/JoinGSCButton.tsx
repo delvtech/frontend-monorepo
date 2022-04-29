@@ -1,39 +1,29 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { ReactElement, useState } from "react";
 
-import {
-  useSmartContractReadCall,
-  useSmartContractTransaction,
-} from "@elementfi/react-query-typechain";
-import { ChevronDownIcon } from "@heroicons/react/solid";
-import classNames from "classnames";
 import { BigNumber, Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
-import { addressesJson } from "src/elf-council-addresses";
-import {
-  gscVaultContract,
-  lockingVaultContract,
-  vestingContract,
-} from "src/elf/contracts";
-import PopoverButton from "src/ui/base/Button/PopoverButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
-import { useQueryVotePowerView } from "src/ui/voting/useQueryVotePower";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
+import Button from "src/ui/base/Button/Button";
+import Dialog from "src/ui/base/Dialog/Dialog";
+import { useJoinGSC } from "./useJoinGSC";
+import { useLeaveGSC } from "./useLeaveGSC";
 
-const { lockingVault, vestingVault } = addressesJson.addresses;
 interface JoinGSCButtonProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   variant?: ButtonVariant;
 }
 
-export function JoinGSCButton(props: JoinGSCButtonProps): ReactElement {
-  const { account, signer, variant = ButtonVariant.PRIMARY } = props;
-
+export function JoinGSCButton({
+  account,
+  signer,
+  variant = ButtonVariant.PRIMARY,
+}: JoinGSCButtonProps): ReactElement {
   const votePower = useVotingPowerForAccountAtLatestBlock(account);
   const { data: threshold = BigNumber.from(0) } = useGSCVotePowerThreshold();
   const { data: isOnGSC } = useIsGSCMember(account);
@@ -41,136 +31,92 @@ export function JoinGSCButton(props: JoinGSCButtonProps): ReactElement {
   const hasEnoughToJoinGSC = parseEther(votePower).gte(threshold);
   const canLeaveGSC = isOnGSC && parseEther(votePower).lt(threshold);
 
-  const handleJoin = useHandleJoin(account, signer);
-  const handleLeave = useHandleLeave(account, signer);
+  const handleJoin = useJoinGSC(account, signer);
+  const handleLeave = useLeaveGSC(account, signer);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
-    <PopoverButton
-      variant={variant}
-      disabled={false}
-      className="p-0"
-      popover={
-        <Card variant={CardVariant.HACKER_SKY}>
-          <div className="-mx-4 -my-5 flex flex-col py-2 text-white">
-            <DropdownItem
-              disabled={!hasEnoughToJoinGSC || isOnGSC}
-              label={t`Join`}
-              onSelectItem={handleJoin}
-            />
-            <DropdownItem
-              disabled={!canLeaveGSC}
-              label={t`leave`}
-              onSelectItem={handleLeave}
-            />
+    <>
+      {canLeaveGSC ? (
+        <Button
+          disabled={!canLeaveGSC}
+          onClick={handleLeave}
+        >{t`Leave`}</Button>
+      ) : (
+        <Button
+          variant={variant}
+          disabled={!hasEnoughToJoinGSC || isOnGSC}
+          onClick={() => setDialogOpen(true)}
+        >{t`Join`}</Button>
+      )}
+      <Dialog isOpen={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <div>
+          <div className="text-principalRoyalBlue mb-4 text-lg font-bold">
+            {t`Join Confirmation`}
           </div>
-        </Card>
-      }
-    >
-      {(open: boolean) => (
-        <div className="flex w-[90px] items-center justify-center">
-          <span>{t`Choose`}</span>
-
-          <ChevronDownIcon
-            className={classNames(
-              open ? classNames("rotate-180 transform") : "",
-              "ml-2 h-5 w-5 transition duration-150 ease-in-out",
-            )}
-            aria-hidden="true"
-          />
+          <div className="text-principalRoyalBlue mb-8 text-sm">
+            {t`Are you sure you want to join the the GSC? This means that you will
+            be responsible for the rights and responsibilities of a GSC member
+            and held accountable by Element DAO from this moment forward.`}
+          </div>
+          <div className="flex w-full justify-end">
+            <Button
+              className="mr-2"
+              variant={ButtonVariant.OUTLINE_BLUE}
+              onClick={() => setDialogOpen(false)}
+            >{t`Cancel`}</Button>
+            <Button
+              variant={ButtonVariant.GRADIENT}
+              onClick={() => handleJoin}
+            >{t`Join`}</Button>
+          </div>
         </div>
-      )}
-    </PopoverButton>
+      </Dialog>
+    </>
   );
 }
-interface DropdownItemProps {
-  label: string;
-  disabled?: boolean;
-  onSelectItem: (choice: string) => void;
-}
 
-function DropdownItem(props: DropdownItemProps) {
-  const { label, onSelectItem, disabled } = props;
+export function LeaveGSCButton(props: JoinGSCButtonProps): ReactElement {
+  const { account, signer } = props;
 
-  const handleSelectItem = useCallback(() => {
-    onSelectItem(label);
-  }, [label, onSelectItem]);
+  const votePower = useVotingPowerForAccountAtLatestBlock(account);
+  const { data: threshold = BigNumber.from(0) } = useGSCVotePowerThreshold();
+  const { data: isOnGSC } = useIsGSCMember(account);
 
-  const hoverBackground = disabled ? undefined : "hover:bg-principalRoyalBlue";
+  const canLeaveGSC = isOnGSC && parseEther(votePower).lt(threshold);
+
+  const handleJoin = useJoinGSC(account, signer);
+  const handleLeave = useLeaveGSC(account, signer);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   return (
-    <button
-      disabled={disabled}
-      className={classNames(
-        hoverBackground,
-        "flex w-[125px] items-center justify-between rounded px-3 py-2 hover:bg-opacity-20",
-      )}
-      onClick={handleSelectItem}
-    >
-      <span className="text-principalRoyalBlue mr-2">{label}</span>
-    </button>
+    <>
+      <Button disabled={!canLeaveGSC} onClick={handleLeave}>{t`Leave`}</Button>
+      <Dialog isOpen={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <div>
+          <div className="text-principalRoyalBlue mb-4 text-lg font-bold">
+            {t`Leave Confirmation`}
+          </div>
+          <div className="text-principalRoyalBlue mb-8 text-sm">
+            {t`Are you sure you want to join the the GSC? This means that you will
+            be responsible for the rights and responsibilities of a GSC member
+            and held accountable by Element DAO from this moment forward.`}
+          </div>
+          <div className="flex w-full justify-end">
+            <Button
+              className="mr-2"
+              variant={ButtonVariant.OUTLINE_BLUE}
+              onClick={() => setDialogOpen(false)}
+            >{t`Cancel`}</Button>
+            <Button
+              variant={ButtonVariant.GRADIENT}
+              onClick={() => handleJoin}
+            >{t`Confirm`}</Button>
+          </div>
+        </div>
+      </Dialog>
+    </>
   );
-}
-
-const EMPTY_BYTE = "0x00";
-function useHandleJoin(
-  account: string | null | undefined,
-  signer: Signer | undefined,
-) {
-  const { mutate: join } = useSmartContractTransaction(
-    gscVaultContract,
-    "proveMembership",
-    signer,
-  );
-
-  const lockingVaultVotePower = useQueryVotePowerView(
-    account,
-    lockingVaultContract,
-  );
-  const vestingVaultVotePower = useQueryVotePowerView(account, vestingContract);
-
-  const handleJoin = useCallback(async () => {
-    const vaults: string[] = [];
-
-    if (!!Number(lockingVaultVotePower)) {
-      vaults.push(lockingVault);
-    }
-
-    if (!!Number(vestingVaultVotePower)) {
-      vaults.push(vestingVault);
-    }
-
-    // stub out empty bytes for the extra data since neither locking nor vesting use it
-    const extraData = vaults.map(() => EMPTY_BYTE);
-    join([vaults, extraData]);
-  }, [join, lockingVaultVotePower, vestingVaultVotePower]);
-
-  return handleJoin;
-}
-
-function useHandleLeave(
-  account: string | null | undefined,
-  signer: Signer | undefined,
-) {
-  const { data: userVaults } = useSmartContractReadCall(
-    gscVaultContract,
-    "getUserVaults",
-    { callArgs: [account as string], enabled: !!account },
-  );
-
-  const { mutate: kick } = useSmartContractTransaction(
-    gscVaultContract,
-    "kick",
-    signer,
-  );
-
-  const handleLeave = useCallback(() => {
-    if (!account) {
-      return;
-    }
-
-    // stub out extra data since neither locking vault nor vesting vault use it
-    const extraData = userVaults?.map(() => EMPTY_BYTE) || [];
-    kick([account, extraData]);
-  }, [account, kick, userVaults]);
-
-  return handleLeave;
 }
