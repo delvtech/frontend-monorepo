@@ -1,0 +1,20 @@
+.inputWithIcon :global(.bp3-input-left-container) {
+  display: flex;
+  height: 100%;
+}
+
+/* InputGroup rightElement container element */
+.inputWithIcon :global(.bp3-input-action) {
+  display: flex;
+  height: 100%;
+}
+
+.inputColor :global(.bp3-input:disabled) {
+  background-color: var(--bp3-callout-background);
+  color: #182026;
+}
+
+.inputColorDark :global(.bp3-input:disabled) {
+  background-color: var(--bp3-callout-background);
+  color: white;
+}

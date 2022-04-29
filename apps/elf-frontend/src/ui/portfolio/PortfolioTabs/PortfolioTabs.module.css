@@ -1,0 +1,11 @@
+.portfolioTabs :global(.bp3-tab-list) {
+  width: 600px;
+  justify-content: space-between;
+}
+
+.skinnyTag:global(.bp3-tag) {
+  font-size: 12px;
+  padding-top: 0;
+  padding-bottom: 0;
+  min-height: 0;
+}

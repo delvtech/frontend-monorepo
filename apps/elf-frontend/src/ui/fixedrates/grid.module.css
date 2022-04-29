@@ -1,0 +1,15 @@
+.fixedRatesGrid {
+  display: grid;
+  /* principal token, term, fixed apr, action button */
+  grid-template-columns: 320px 128px 128px auto;
+  /* tailwind gap-16 */
+  column-gap: 4rem;
+}
+
+.fixedRatesZapGrid {
+  display: grid;
+  /* principal token, input tokens, term, fixed apr, action button */
+  grid-template-columns: 180px 120px 128px 100px 10px;
+  /* tailwind gap-16 */
+  column-gap: 4rem;
+}

@@ -1,0 +1,32 @@
+{
+  "canPerform": {
+    "convergentPools": [
+      {
+        "addLiquidity": false,
+        "buy": false,
+        "convergentPoolAddress": "0x0000000000000000000000000000000000000000",
+        "removeLiquidity": false,
+        "sell": false
+      }
+    ],
+    "tranches": [
+      {
+        "mint": false,
+        "trancheAddress": "0x0000000000000000000000000000000000000000",
+        "withdrawInterest": false,
+        "withdrawPrincipal": false
+      }
+    ],
+    "weightedPools": [
+      {
+        "addLiquidity": false,
+        "buy": false,
+        "removeLiquidity": false,
+        "sell": false,
+        "weightedPoolAddress": "0x0000000000000000000000000000000000000000"
+      }
+    ]
+  },
+  "chainId": 5,
+  "description": "Freeze minting or trading on any principal or yield token by adding its token address to the corresponding list below."
+}

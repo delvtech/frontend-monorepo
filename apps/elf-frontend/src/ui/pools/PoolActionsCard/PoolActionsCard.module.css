@@ -1,0 +1,3 @@
+.poolActionsCard :global(.bp3-tab-list) {
+  flex-wrap: wrap;
+}

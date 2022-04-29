@@ -1,0 +1,7 @@
+.tableRow:nth-child(even) {
+  background: var(--bp3-striped-table-row-color);
+}
+
+.tableRowDark:nth-child(even) {
+  background: var(--bp3-striped-table-row-dark-color);
+}

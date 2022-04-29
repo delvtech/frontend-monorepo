@@ -1,0 +1,68 @@
+{
+  "settings": {
+    "import/resolver": {
+      // always try to resolve types under `<root>@types` directory even it doesn't contain any
+      // source code, like `@types/unist`
+      "eslint-import-resolver-typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  },
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "no-undef": ["off"],
+        "react-hooks/exhaustive-deps": "error"
+      }
+    }
+  ],
+  "rules": {
+    "no-console": [
+      "warn",
+      {
+        "allow": ["warn", "error", "info", "assert"]
+      }
+    ],
+    "no-new-func": "error", // const func = new Function()
+    "prefer-template": "error",
+    "no-unused-vars": "off",
+    "import/no-unused-modules": "error",
+    "react/no-unused-prop-types": 0,
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "^unused" }
+    ],
+
+    "@typescript-eslint/explicit-module-boundary-types": "error", // exported functions must have return types
+    "@typescript-eslint/no-empty-interface": "off", // empty interfaces for component props should be allowed
+    "@typescript-eslint/no-empty-function": "off", // empty arrow functions are fine for noops when passed to components
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["\\.\\./*"]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Identifier[name='localStorage']",
+        "message": "Direct usage of window.localStorage is forbidden. Use elfLocalStorage instead."
+      },
+      {
+        "selector": "CallExpression[callee.name='useConsole']",
+        "message": "calling useConsole"
+      },
+      {
+        "selector": "CallExpression[callee.name='useWhyDidYouUpdate']",
+        "message": "calling useWhyDidYouUpdate"
+      }
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+.actionTabs :global(.bp3-tab-list) {
+  justify-content: center;
+}

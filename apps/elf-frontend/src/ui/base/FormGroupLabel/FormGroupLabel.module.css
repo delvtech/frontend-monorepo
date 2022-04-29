@@ -1,0 +1,8 @@
+.tooltipLabel {
+  /* 
+   * This is to match the margin on the tooltipped icon, which needs margin for
+   * the little triagle bit. If we update the tooltip postion (currently
+   * Position.TOP), we'll need to update this too. 
+   */
+  margin-top: 5px;
+}

@@ -1,0 +1,69 @@
+:root {
+  --rubik-font: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+
+  /*
+   * This is the height of the top navbar. Because of how the Navbar manages
+   * "stickiness", we need to offset the position of our main content by the
+   * height of the navbar.
+   * https://blueprintjs.com/docs/#core/components/navbar.fixed-to-viewport-top
+   */
+  --bp3-navbar-height: 50px;
+
+  /**
+   *  This is the color of the <Card> component's border.
+   */
+  --bp3-card-border-color: #d4d6d9;
+
+  /*
+   * Taken from Blueprint, this is the color of the dark mode app background.
+   * If using the blueprint Colors module, this is equivalent to
+   * Colors.DARK_GRAY2.
+   */
+  --bp3-dark-bg-color: #202b33;
+
+  /*
+   * Taken from Corwin's figma designs, this is the color of the light mode app
+   * background. see:
+   * https://www.figma.com/file/J4rZluhfmorIjgFRlwSTdT/Element-Finance-Brand-Identity?node-id=284%3A155
+   */
+  --bp3-bg-color: #f4f5f5;
+
+  /*
+   * Taken from Blueprint, this is the color of the dark mode Navbar component.
+   * If using the blueprint Colors module, this is equivalent to
+   * Colors.DARK_GRAY4.
+   */
+  --bp3-dark-navbar-bg-color: #30404d;
+
+  /*
+   * Taken from Blueprint, this is the color of the dark mode Navbar text.
+   * If using the blueprint Colors module, this is equivalent to
+   * Colors.LIGHT_GRAY5.
+   */
+  --bp3-dark-navbar-font-color: #f5f8fa;
+
+  --bp3-striped-table-row-color: rgba(191, 204, 214, 0.15);
+  --bp3-striped-table-row-dark-color: rgba(92, 112, 128, 0.15);
+
+  --bp3-callout-background: rgba(138, 155, 168, 0.15);
+  /*
+   * Taken from Blueprint, these are intent colors used to stylize text and border. In order, the
+   * colors are equivalent to:
+   * Colors.BLUE3,
+   * Colors.GREEN3,
+   * Colors.ORANGE3.
+   * Colors.RED3,
+   * Colors.GRAY1,
+   * Colors.GRAY1, opacity at 60%
+   */
+  --bp3-intent-primary: #137cbd;
+  --bp3-intent-primary-dark: #48aff0;
+  --bp3-intent-success: #0d8050;
+  --bp3-intent-success-dark: #3dcc91;
+  --bp3-intent-warning: #d9822b;
+  --bp3-intent-danger: #db3737;
+  --bp3-text-color-muted: #5c7080;
+  --bp3-text-color-disabled: rgba(#5c7080, 0.6);
+}

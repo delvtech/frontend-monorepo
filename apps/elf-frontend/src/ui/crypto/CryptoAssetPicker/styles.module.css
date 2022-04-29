@@ -1,0 +1,6 @@
+.baseAssetPicker :global(.bp3-menu) {
+  width: 100%;
+
+  /* tailwind equivalent of p-1 */
+  padding: 4px;
+}

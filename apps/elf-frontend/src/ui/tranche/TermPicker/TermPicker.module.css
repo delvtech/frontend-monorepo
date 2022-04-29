@@ -1,0 +1,3 @@
+.fullHeight:global(.bp3-popover-target) > div {
+  height: 100%;
+}

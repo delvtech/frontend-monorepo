@@ -1,0 +1,44 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Plural-Forms: nplurals = 2; plural = (n != 1);\n"
+"Language: es\n"
+"mime-version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/ui/wallets/ConnectWalletEmptyState/ConnectWalletEmptyState.tsx:39
+msgid "View and display your crypto balances"
+msgstr ""
+
+#: src/ui/wallets/ConnectWalletEmptyState/ConnectWalletEmptyState.tsx:15
+msgid "how Swaps work"
+msgstr ""
+
+#: src/ui/wallets/ConnectWalletEmptyState/ConnectWalletEmptyState.tsx:22
+msgid "No wallet connected."
+msgstr ""
+
+#: src/ui/wallets/ConnectWalletEmptyState/ConnectWalletEmptyState.tsx:36
+msgid "Connecting your wallet lets Element.fi do a few things:"
+msgstr ""
+
+#: src/ui/wallets/ConnectWalletEmptyState/ConnectWalletEmptyState.tsx:41
+msgid "Initialize Ethereum transactions on your behalf"
+msgstr ""
+
+#: src/ui/wallets/ConnectWalletEmptyState/ConnectWalletEmptyState.tsx:47
+msgid "Connect your wallet"
+msgstr ""
+
+#: src/ui/wallets/ConnectWalletEmptyState/ConnectWalletEmptyState.tsx:10
+msgid "BETA"
+msgstr ""
+
+#: src/ui/wallets/ConnectWalletEmptyState/ConnectWalletEmptyState.tsx:53
+msgid "Read more about (${ howSwapsWorkLink })."
+msgstr ""
+
+#: src/ui/wallets/ConnectWalletEmptyState/ConnectWalletEmptyState.tsx:52
+#, javascript-format
+msgid "Swaps are currently in ${ betaTag }."
+msgstr ""
