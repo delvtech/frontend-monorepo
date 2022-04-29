@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 
 import { Provider } from "@ethersproject/providers";
 import { Signer } from "ethers";
-import { commify, formatEther, parseEther } from "ethers/lib/utils";
+import { parseEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
@@ -17,15 +17,17 @@ import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { useFeatureFlag } from "src/elf/featureFlag/useFeatureFlag";
 import { FeatureFlag } from "src/elf/featureFlag/featureFlag";
-import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
+import { ThresholdProgressBar } from "src/ui/gsc/ThresholdProgressBar";
 
 interface PortfolioCardProps {
+  active: boolean;
   account: string | undefined | null;
   provider?: Provider;
   signer?: Signer;
 }
 
 export function GSCPortfolioCard({
+  active,
   account,
   provider,
   signer,
@@ -68,42 +70,15 @@ export function GSCPortfolioCard({
             <span className="text-xl text-white">{t`GSC History`}</span>
             <span className="w-max text-sm text-white">{t`Member since 04/20/2022`}</span>
           </div>
-
-          <JoinGSCButton account={account} signer={signer} />
+          {/* TODO @cashd: Branch between Join/Leave GSC Button */}
+          <JoinGSCButton active={active} account={account} signer={signer} />
         </div>
       </div>
     </Card>
   );
 }
 
-interface ThresholdProgressBarProps {
-  account: string | null | undefined;
-}
-function ThresholdProgressBar({
-  account,
-}: ThresholdProgressBarProps): ReactElement {
-  const { data: thresholdValue } = useGSCVotePowerThreshold();
-  const threshold = formatEther(thresholdValue || 0);
-
-  const votingPower = useVotingPowerForAccountAtLatestBlock(account);
-  const votingPercent = Math.floor((+votingPower / +threshold) * 100);
-
-  return (
-    <div className="mr-3 w-full space-y-1 text-white">
-      <div>
-        <span className="text-lg">{t`GSC Eligibility`}</span>
-      </div>
-      <ProgressBar progress={+votingPower / +threshold} />
-      <div>
-        <span className="text-sm">
-          {`${votingPercent}%`} ({commify(votingPower)} / {commify(threshold)} ){" "}
-        </span>
-        <span className="text-sm">{t`required to join GSC`}</span>
-      </div>
-    </div>
-  );
-}
-
+// TODO @cashd: Unused for now
 function useShowJoinButton(account: string | null | undefined) {
   const hasGSCFlag = useFeatureFlag(FeatureFlag.GSC);
   const votePower = useVotingPowerForAccountAtLatestBlock(account);

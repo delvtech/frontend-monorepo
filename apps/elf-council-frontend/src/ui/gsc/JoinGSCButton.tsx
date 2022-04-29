@@ -14,14 +14,18 @@ import { useJoinGSC } from "./useJoinGSC";
 import { useLeaveGSC } from "./useLeaveGSC";
 
 interface JoinGSCButtonProps {
+  active: boolean;
   account: string | null | undefined;
   signer: Signer | undefined;
   variant?: ButtonVariant;
 }
 
-export function JoinGSCButton(props: JoinGSCButtonProps): ReactElement {
-  const { account, signer, variant = ButtonVariant.PRIMARY } = props;
-
+export function JoinGSCButton({
+  active,
+  account,
+  signer,
+  variant = ButtonVariant.PRIMARY,
+}: JoinGSCButtonProps): ReactElement {
   const votePower = useVotingPowerForAccountAtLatestBlock(account);
   const { data: threshold = BigNumber.from(0) } = useGSCVotePowerThreshold();
   const { data: isOnGSC } = useIsGSCMember(account);
@@ -44,8 +48,7 @@ export function JoinGSCButton(props: JoinGSCButtonProps): ReactElement {
       ) : (
         <Button
           variant={variant}
-          // disabled={!hasEnoughToJoinGSC || isOnGSC || !active}
-          disabled={false}
+          disabled={!hasEnoughToJoinGSC || isOnGSC || !active}
           onClick={() => setDialogOpen(true)}
         >{t`Join`}</Button>
       )}

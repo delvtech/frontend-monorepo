@@ -9,8 +9,6 @@ import { defaultProvider } from "src/elf/providers/providers";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
-import { Intent } from "src/ui/base/Intent";
-import { Tag } from "src/ui/base/Tag/Tag";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { GSCMemberProfileRow } from "src/ui/gsc/GSCMemberProfileRow";
 import { useGSCMembers } from "./useGSCMembers";
@@ -20,7 +18,8 @@ import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
-import { GSCPortfolioCard } from "./GSCPortfolioCard";
+import { GSCPortfolioCard } from "src/ui/gsc/GSCPortfolioCard";
+import { ChangeDelegateButton } from "src/ui/gsc/ChangeDelegationButton";
 
 const provider = defaultProvider;
 const NUM_CANDIDATES_TO_SHOW = 20;
@@ -32,20 +31,18 @@ enum TabOption {
 }
 
 export function GSCOverviewPage(): ReactElement {
-  const { account, library } = useWeb3React<Web3Provider>();
-
+  const { active, account, library } = useWeb3React<Web3Provider>();
   const signer = library?.getSigner();
 
   const { data: members = [] } = useGSCMembers();
   const candidates = useGSCCandidates();
   const topTwentyCandidates = candidates.slice(0, NUM_CANDIDATES_TO_SHOW);
 
-  // TODO: stubbed, get real delegate
+  // TODO @cashd: Integrate real data
   const selectedDelegate = candidates[0]?.address;
   const delegateAddressOnChain = candidates[0]?.address;
 
   const [currentTab, setCurrentTab] = useState<TabOption>(TabOption.Overview);
-
   const handleChangeTab = (opt: TabOption) => setCurrentTab(opt);
 
   return (
@@ -58,7 +55,7 @@ export function GSCOverviewPage(): ReactElement {
         {t`Governance GSC Overview`}
       </H1>
 
-      <GSCPortfolioCard account={account} signer={signer} />
+      <GSCPortfolioCard active={active} account={account} signer={signer} />
 
       <Card className="">
         <div className="w-full flex-col justify-center space-y-6 ">
@@ -248,43 +245,6 @@ export function GSCOverviewPage(): ReactElement {
         </div>
       </Card>
     </div>
-  );
-}
-
-interface ChangeDelegateButtonProps {
-  onDelegationClick: () => void;
-  account: string | null | undefined;
-  isLoading: boolean;
-  isCurrentDelegate: boolean;
-}
-function ChangeDelegateButton({
-  onDelegationClick,
-  account,
-  isLoading,
-  isCurrentDelegate,
-}: ChangeDelegateButtonProps): ReactElement {
-  if (isCurrentDelegate) {
-    // !font-bold because Tag has font-medium which has cascade priority over font-bold
-    return (
-      <Tag
-        intent={Intent.SUCCESS}
-        className="block w-full text-center !font-bold shadow"
-      >
-        {t`Delegated`}
-      </Tag>
-    );
-  }
-
-  return (
-    <Button
-      onClick={onDelegationClick}
-      variant={ButtonVariant.GRADIENT}
-      disabled={!account || isLoading}
-      className="w-full justify-center"
-      loading={isLoading}
-    >
-      {t`Delegate`}
-    </Button>
   );
 }
 
