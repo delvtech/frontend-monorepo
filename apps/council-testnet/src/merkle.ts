@@ -26,7 +26,7 @@ export function hashAccount(account: Account): string {
 function keccak256Custom(bytes: Buffer) {
   const buffHash = ethers.utils.solidityKeccak256(
     ["bytes"],
-    [`0x${  bytes.toString("hex")}`],
+    [`0x${bytes.toString("hex")}`],
   );
   return Buffer.from(buffHash.slice(2), "hex");
 }
