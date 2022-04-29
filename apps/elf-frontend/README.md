@@ -1,41 +1,10 @@
 ## Building for production
 
-| Network          | Command                     |
-| ---------------- | --------------------------- |
-| Hardhat          | `npm run build`             |
-| Goerli           | `npm run build:goerli-app`  |
-| Ethereum Mainnet | `npm run build:mainnet-app` |
-
-## Developer Setup
-
-First install the dependencies. Open the directory in your terminal and run:
-
-```bash
-npm ci
-```
-
-> **note:** Running `npm ci` instead of just `npm i` or `npm install` will ensure that the package-lock.json isn't modified if you're using a different version of npm. See the [npm-ci docs](https://docs.npmjs.com/cli/v8/commands/npm-ci) for more info.
-
-To start the app in development mode:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The development server has some perks for developing like hot-code reloading, error reporting, and more, but it will pre-render each page on each request. This can cause some parts of the app to run a little slow. To start the app in production mode, run:
-
-```
-npm run build
-npm start
-```
-
-### Adding a new base asset
-
-1. Run `npm run update-elf-tokenlist`.
-1. Add a logo svg to `src/static/svg/` directory.
-1. Update `src/addresses/AddressesJsonFile.d.ts`
+| Network          | Command                                             |
+| ---------------- | --------------------------------------------------- |
+| Hardhat          | `yarn workspace elf-frontend run build`             |
+| Goerli           | `yarn workspace elf-frontend run build:goerli-app`  |
+| Ethereum Mainnet | `yarn workspace elf-frontend run build:mainnet-app` |
 
 ### Running against a mainnet fork environment
 
@@ -57,7 +26,7 @@ The purpose of doing this is so we can finance a wallet with a basket of ERC20 t
 In the elf-frontend-testnet directory, run:
 
 ```bash
-npm run start-mainnet:dev
+yarn workspace elf-frontend run start-mainnet:dev
 ```
 
 ##### Developing against the Mainnet fork environment
@@ -65,7 +34,7 @@ npm run start-mainnet:dev
 In a separate terminal, `cd` into this repo's directory and run:
 
 ```bash
-npm run start:dev-mainnet-fork-app
+yarn workspace elf-frontend run start:dev-mainnet-fork-app
 ```
 
 This will spin up the frontend as normal. It will be noticeably slower in initial instances as hardhat will have to first retrieve real state but will be cached in future instances. This will repeat itself when the target blocknumber is changed.
