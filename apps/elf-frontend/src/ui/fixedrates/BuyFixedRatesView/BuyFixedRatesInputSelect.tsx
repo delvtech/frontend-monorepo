@@ -39,9 +39,6 @@ export function BuyFixedRatesInputSelect({
   const height = isLargeScreen ? 40 : 30;
   const width = height;
 
-  console.log("DISABLE?: ", inputTokens.length === 1);
-  console.log(inputTokens);
-
   return (
     <div className={tw("flex", "flex-col", "space-y-3")}>
       <span className={tw("text-base", "text-left")}>{t`Choose Token`}</span>
