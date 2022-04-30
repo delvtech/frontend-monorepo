@@ -59,8 +59,6 @@ export function BuyFixedRatesViewWithZap({
       ? BuyFixedRatesKind.Swap
       : BuyFixedRatesKind.Zap;
 
-  const color = isDarkMode ? "bg-white" : "bg-blue";
-
   return (
     <Fragment>
       <Title
