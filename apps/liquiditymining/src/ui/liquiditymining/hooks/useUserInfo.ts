@@ -14,9 +14,12 @@ export function useUserInfo(
   return useSmartContractReadCall(masterChef, "userInfo", {
     callArgs: [poolIdsByPoolAddress[poolAddress], account as string],
     enabled: !!account,
-    select: ([amount, rewardDebt]) => ({
-      amount: formatEther(amount),
-      rewardDebt: formatEther(rewardDebt),
-    }),
+    select: ([amount, rewardDebt]) => {
+      console.table({ amount, rewardDebt });
+      return {
+        amount: formatEther(amount),
+        rewardDebt: formatEther(rewardDebt),
+      };
+    },
   });
 }

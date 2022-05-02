@@ -24,7 +24,7 @@ import {
   ChainId,
 } from "@elementfi/base/ethereum/ethereum";
 import { getPoolURL } from "@elementfi/core/pools/urls";
-import { commify } from "ethers/lib/utils";
+import { commify, formatEther } from "ethers/lib/utils";
 import { usePoolShare } from "src/ui/liquiditymining/hooks/usePoolShare";
 import { StakeDialog } from "src/ui/liquiditymining/StakeDialog";
 import { Signer } from "ethers";
@@ -38,6 +38,7 @@ import { Intent } from "src/ui/base/Intent";
 import H2 from "src/ui/base/H2/H2";
 import { Elfi } from "./Elfi";
 import classNames from "classnames";
+import { usePendingSushi } from "src/ui/liquiditymining/hooks/usePendingSushi";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -76,7 +77,9 @@ export function EligiblePoolCard({
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || "0";
   const depositedBalanceLabel = commify((+depositedBalance).toFixed(4));
-  const pendingRewards = userInfo?.rewardDebt || "0";
+
+  const { data: pendingRewards = "0" } = usePendingSushi(poolAddress, account);
+
   const pendingRewardsLabel = (+pendingRewards).toFixed(2);
 
   // TODO: Get ChainId from environment

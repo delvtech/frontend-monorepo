@@ -70,7 +70,7 @@ export function UnstakeDialog({
     signer,
     transactionOptions,
   );
-  const handleStake = () => {
+  const handleUnstakeAndClaim = () => {
     if (account) {
       unstakeAndClaim([poolId, parseEther(unstakeAmount), account]);
     }
@@ -137,7 +137,7 @@ export function UnstakeDialog({
         <Button
           className="w-full justify-center"
           variant={ButtonVariant.GRADIENT}
-          onClick={handleStake}
+          onClick={handleUnstakeAndClaim}
           loading={transactionIsPending}
           disabled={amountIsInvalid}
         >
