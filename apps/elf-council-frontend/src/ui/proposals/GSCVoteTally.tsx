@@ -1,34 +1,30 @@
-import { Provider } from "@ethersproject/providers";
-import zip from "lodash.zip";
 import { ReactElement, useMemo } from "react";
 import { QueryObserverResult, useQuery } from "react-query";
-import { gscCoreVotingContract, gscVaultContract } from "src/elf/contracts";
+
+import { Provider } from "@ethersproject/providers";
+import { ethers } from "ethers";
+import zip from "lodash.zip";
+import { msgid, ngettext, t } from "ttag";
+
+import { gscCoreVotingContract } from "src/elf/contracts";
 import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
 import { Ballot } from "src/ui/voting/Ballot";
-import { t } from "ttag";
-import { GSCMember } from "./GSCMember";
+import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
+import { formatWalletAddress } from "src/base/formatWalletAddress";
+import { useResolvedEnsName } from "src/ui/ethereum/useResolvedEnsName";
+import { isValidAddress } from "src/base/isValidAddress";
 
 // keeping dead code so i can test UI
-// const forList = [
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-// ];
-// const againstList = [ethers.Wallet.createRandom().address];
-// const abstainList = [ethers.Wallet.createRandom().address];
-// const noVoteList = [
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-//   ethers.Wallet.createRandom().address,
-// ];
+const votes = [
+  ethers.Wallet.createRandom().address,
+  ethers.Wallet.createRandom().address,
+  ethers.Wallet.createRandom().address,
+  // ethers.Wallet.createRandom().address,
+  // ethers.Wallet.createRandom().address,
+  // ethers.Wallet.createRandom().address,
+  // ethers.Wallet.createRandom().address,
+  // ethers.Wallet.createRandom().address,
+];
 
 interface GSCVoteTallysProps {
   provider: Provider;
@@ -45,32 +41,46 @@ export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
   );
   const tallys = useVoteTallys(memberAddresses, votesByMember);
   const { forList, againstList, abstainList, noVoteList } = tallys;
+  const allVotes = [...forList, ...againstList, ...abstainList];
+
+  const firstThreeVotes = allVotes.slice(0, 3);
+  const remainingVotes = allVotes.slice(3);
+
   return (
-    <div className="text-white">
-      <h3 className="mt-4 mb-2">{t`For (4):`}</h3>
-      <div className="grid w-full grid-cols-2 justify-between gap-1 lg:grid-cols-3">
-        {forList.map((address) => (
-          <GSCMember account={address} provider={provider} key={address} />
+    <div className="items-middle flex text-white">
+      <div className="flex flex-row-reverse justify-end">
+        {firstThreeVotes.map((account) => (
+          <WalletJazzicon
+            key={account}
+            size={36}
+            account={account}
+            style={{ marginRight: "-.5rem" }}
+            iconClassName="border-2 border-white border-inset"
+            className="flex items-center"
+          />
         ))}
       </div>
-      <h3 className="mt-4 mb-2">{t`Against (1):`}</h3>
-      <div className="grid w-full grid-cols-2 justify-between gap-1 lg:grid-cols-3">
-        {againstList.map((address) => (
-          <GSCMember account={address} provider={provider} key={address} />
-        ))}
-      </div>
-      <h3 className="mt-4 mb-2">{t`Abstain (1):`}</h3>
-      <div className="grid w-full grid-cols-2 justify-between gap-1 lg:grid-cols-3">
-        {abstainList.map((address) => (
-          <GSCMember account={address} provider={provider} key={address} />
-        ))}
-      </div>
-      <h3 className="mt-4 mb-2">{t`No vote (10):`}</h3>
-      <div className="grid w-full grid-cols-2 justify-between gap-1 lg:grid-cols-3">
-        {noVoteList.map((address) => (
-          <GSCMember account={address} provider={provider} key={address} />
-        ))}
-      </div>
+      {!firstThreeVotes.length && (
+        <div className="mt-4 text-sm">{t`No votes for this proposal.`}</div>
+      )}
+      {!!firstThreeVotes.length && firstThreeVotes.length && (
+        <div className="ml-4 flex items-center text-sm">
+          {t`Votes by `}
+          {firstThreeVotes &&
+            firstThreeVotes.map((address, index) => (
+              <>
+                <EnsNameOrFormattedAddress key={address} address={address} />
+                {index < firstThreeVotes.length - 1 ? ", " : " "}
+              </>
+            ))}
+          {!!remainingVotes.length &&
+            ngettext(
+              msgid` and ${remainingVotes.length} other.`,
+              ` and ${remainingVotes.length} others.`,
+              remainingVotes.length,
+            )}
+        </div>
+      )}
     </div>
   );
 }
@@ -137,4 +147,22 @@ function useVoteTallys(
 
     return { forList, againstList, abstainList, noVoteList };
   }, [members, votesByMember]);
+}
+
+interface EnsNameProps {
+  address: string;
+}
+function EnsNameOrFormattedAddress(props: EnsNameProps) {
+  const { address } = props;
+  const { data: ensName } = useResolvedEnsName(address);
+
+  // useResolvedEnsName will return the full address if no ens found.  We use:
+  // isValidAddress(ensName || address) so that we can format the address
+  // without needing to wait for useResolvedEnsName to resolve.
+  let formattedAddress;
+  if (isValidAddress(ensName || address)) {
+    formattedAddress = formatWalletAddress(address);
+  }
+
+  return <>{formattedAddress ?? ensName}</>;
 }
