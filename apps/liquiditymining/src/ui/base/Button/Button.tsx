@@ -1,6 +1,6 @@
 // See: https://tailwindui.com/components/application-ui/elements/buttons
 
-import { MouseEventHandler, ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 
 import classNames from "classnames";
 import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
