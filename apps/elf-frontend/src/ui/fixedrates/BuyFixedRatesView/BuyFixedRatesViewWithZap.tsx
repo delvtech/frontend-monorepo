@@ -19,6 +19,7 @@ import { BuyFixedRatesSwap } from "ui/fixedrates/BuyFixedRatesView/BuyFixedRates
 import { BuyFixedRatesTermPicker } from "ui/fixedrates/BuyFixedRatesView/BuyFixedRatesTermPicker";
 import { BuyFixedRatesZap } from "ui/fixedrates/BuyFixedRatesView/BuyFixedRatesZap";
 import { getFixedRateInputTokens } from "ui/fixedrates/getFixedRateInputTokens";
+import { useDarkMode } from "ui/prefs/useDarkMode/useDarkMode";
 
 export interface BuyFixedRatesViewProps {
   availablePrincipalTokens: PrincipalTokenInfo[];
@@ -35,6 +36,7 @@ export function BuyFixedRatesViewWithZap({
   principalTokenPoolInfo,
 }: BuyFixedRatesViewProps): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
+  const { isDarkMode } = useDarkMode();
   const { changeTab } = useNavigation();
   const goToFixedRatesListPage = useCallback(() => {
     changeTab(Navigation.FIXED_RATES);
@@ -78,7 +80,7 @@ export function BuyFixedRatesViewWithZap({
             className={tw("font-semibold")}
             icon={
               <Icon
-                color={Colors.WHITE}
+                color={isDarkMode ? Colors.WHITE : Colors.BLUE5}
                 icon={IconNames.DOWNLOAD}
                 size={32}
                 className={tw(
@@ -93,7 +95,13 @@ export function BuyFixedRatesViewWithZap({
             large
             onClick={goToFixedRatesListPage}
           >{t`Principal Pools`}</Button>
-          <div style={{ width: 1 }} className={tw("h-full", "bg-white")} />
+          <div
+            style={{
+              width: 1,
+              backgroundColor: isDarkMode ? "white" : "black",
+            }}
+            className={tw("h-full")}
+          />
           <span
             className={tw("pl-2", "font-semibold")}
           >{`${inputTokenInfos[0].symbol}`}</span>
