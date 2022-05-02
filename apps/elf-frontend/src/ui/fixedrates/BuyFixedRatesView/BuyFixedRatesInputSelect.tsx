@@ -52,15 +52,13 @@ export function BuyFixedRatesInputSelect({
         )}
       >
         <TokenInfoSelect
-          className={tw("w-full", "cursor-pointer")}
+          className={tw("w-full")}
+          disabled={inputTokens.length === 1}
           items={inputTokens}
           itemPredicate={(_, s) => s.address !== selectedToken.address}
           itemRenderer={({ symbol, address }, { handleClick }) => (
             // div -> button possibly broken something
-            <button
-              className={classNames(tw("p-1", "cursor-pointer"))}
-              onClick={handleClick}
-            >
+            <button className={classNames(tw("p-1"))} onClick={handleClick}>
               <LabeledText
                 containerClassName={tw("p-4")}
                 icon={inputTokenIconsByAddress[address]({
@@ -76,23 +74,28 @@ export function BuyFixedRatesInputSelect({
               />
             </button>
           )}
-          disabled={inputTokens.length === 1}
           onItemSelect={onTokenSelect}
           filterable={false}
         >
-          <LabeledText
-            containerClassName={tw("p-4")}
-            icon={inputTokenIconsByAddress[selectedToken.address]({
-              height,
-              width,
-            })}
-            iconClassName={tw("flex-shrink-0", "mr-4")}
-            large={isLargeScreen}
-            labelClassName={tw("text-xs", "text-left")}
-            label={""}
-            textClassName={tw("lg:text-base", "text-left")}
-            text={selectedToken.symbol}
-          />
+          <button
+            disabled={inputTokens.length === 1}
+            // disabled === true still sets cursor = pointer for some weird reason
+            style={{ cursor: inputTokens.length === 1 ? "default" : "pointer" }}
+          >
+            <LabeledText
+              containerClassName={tw("p-4")}
+              icon={inputTokenIconsByAddress[selectedToken.address]({
+                height,
+                width,
+              })}
+              iconClassName={tw("flex-shrink-0", "mr-4")}
+              large={isLargeScreen}
+              labelClassName={tw("text-xs", "text-left")}
+              label={""}
+              textClassName={tw("lg:text-base", "text-left")}
+              text={selectedToken.symbol}
+            />
+          </button>
         </TokenInfoSelect>
       </div>
     </div>
