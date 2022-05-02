@@ -15,7 +15,6 @@ import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card from "src/ui/base/Card/Card";
-import Well from "src/ui/base/Well/Well";
 import { useLPTokenBalance } from "src/ui/liquiditymining/hooks/useLPTokenBalance";
 import { useELFIPerBlock } from "src/ui/liquiditymining/hooks/useELFIPerBlock";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
@@ -38,6 +37,7 @@ import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import H2 from "src/ui/base/H2/H2";
 import { Elfi } from "./Elfi";
+import classNames from "classnames";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -75,7 +75,7 @@ export function EligiblePoolCard({
   const poolShare = usePoolShare(poolAddress, account);
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || "0";
-  const depositedBalanceLabel = (+depositedBalance).toFixed(4);
+  const depositedBalanceLabel = commify((+depositedBalance).toFixed(4));
   const pendingRewards = userInfo?.rewardDebt || "0";
   const pendingRewardsLabel = (+pendingRewards).toFixed(2);
 
@@ -103,12 +103,12 @@ export function EligiblePoolCard({
     }
   };
 
-  const isStakeDisabled = !+(lpTokenBalance || 0);
-  const isUnstakeDisabled = !+depositedBalance;
-  const isClaimDisabled = !+pendingRewards;
+  const hasNoBalance = !+(lpTokenBalance || 0);
+  const hasNotStaked = !+depositedBalance;
+  const hasNoRewards = !+pendingRewards;
   return (
     <>
-      <Card className={className}>
+      <Card className={classNames("flex flex-col !p-8", className)}>
         <div className="mb-8 flex items-center justify-between gap-3">
           <div>
             <H2 className="tracking-wide text-principalRoyalBlue">{t`${baseAssetSymbol} LP Token`}</H2>
@@ -123,64 +123,83 @@ export function EligiblePoolCard({
           </div>
           <AssetIcon symbol={baseAssetSymbol} className="mb-2 h-12" />
         </div>
-        <Well className="mb-6">
-          <p className="flex flex-wrap justify-between gap-x-1 px-1 align-baseline">
-            <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total Staked`}</span>
-            <span>${commify(totalFiatStaked)}</span>
-          </p>
-          <p className="mb-1 flex flex-wrap justify-between gap-x-1 px-1 align-baseline">
-            <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total ELFI / Week`}</span>
-            <Elfi amount={elfiPerWeek} />
-          </p>
-        </Well>
-
-        <div className="mb-6 space-y-1 px-2">
-          <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-            <span className="whitespace-nowrap text-principalRoyalBlue">{t`Pool Share`}</span>
-            <span>{poolShare}</span>
-          </p>
-          <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-            <span className="whitespace-nowrap text-principalRoyalBlue">{t`ELFI / Week`}</span>
-            <Elfi amount={pendingRewardsLabel} />
-          </p>
-          <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-            <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
-            <Elfi className="font-semibold" amount={pendingRewards} />
-          </p>
-        </div>
-
-        <div className="space-y-8 px-2">
-          <div className="grid grid-cols-2 gap-8 ">
-            <div className="flex flex-col">
-              <span className="mb-1 text-principalRoyalBlue">LP Staked</span>
-              <span className="font-semibold">{depositedBalanceLabel}</span>
-            </div>
-            <div className="flex justify-end space-x-2">
-              <Button
-                disabled={isUnstakeDisabled}
-                variant={ButtonVariant.MINIMAL}
-                onClick={() => setUnstakeDialogIsShowing(true)}
-                title="Unstake"
-              >
-                <MinusIcon className="h-5 text-principalRoyalBlue" />
-              </Button>
-              <Button
-                disabled={isStakeDisabled}
-                variant={ButtonVariant.MINIMAL}
-                onClick={() => setStakeDialogIsShowing(true)}
-                title="Stake"
-              >
-                <PlusIcon className={`h-5 text-principalRoyalBlue`} />
-              </Button>
-            </div>
+        <div className="flex flex-1 flex-col">
+          <div className="space-y-1 border-t border-b border-hackerSky-dark bg-hackerSky px-4 py-6">
+            <p className="gap-x-1align-baseline flex flex-wrap justify-between">
+              <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total Staked`}</span>
+              <span>${commify(totalFiatStaked)}</span>
+            </p>
+            <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+              <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total ELFI / Week`}</span>
+              <Elfi amount={elfiPerWeek} />
+            </p>
           </div>
-          <Button
-            className="w-full justify-center"
-            variant={ButtonVariant.GRADIENT}
-            onClick={handleClaim}
-            loading={transactionIsPending}
-            disabled={isClaimDisabled}
-          >{t`Claim ELFI`}</Button>
+          <div className="space-y-1 px-4 py-6">
+            <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+              <span className="whitespace-nowrap text-principalRoyalBlue">{t`Pool Share`}</span>
+              <span>{poolShare}</span>
+            </p>
+            <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+              <span className="whitespace-nowrap text-principalRoyalBlue">{t`ELFI / Week`}</span>
+              <Elfi amount={pendingRewardsLabel} />
+            </p>
+            <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+              <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
+              <Elfi
+                className={classNames(+pendingRewards > 0 && "font-semibold")}
+                amount={pendingRewards}
+              />
+            </p>
+          </div>
+          {hasNotStaked ? (
+            <>
+              <Button
+                className="mt-auto w-full justify-center"
+                variant={ButtonVariant.GRADIENT}
+                onClick={() => setStakeDialogIsShowing(true)}
+                loading={transactionIsPending}
+                disabled={hasNoBalance}
+              >{t`Stake`}</Button>
+            </>
+          ) : (
+            <>
+              <hr className="border-hackerSky-dark" />
+              <div className="flex justify-between px-4 py-6">
+                <div>
+                  <span className="block text-principalRoyalBlue">{t`LP Staked`}</span>
+                  <span className="block text-2xl">
+                    {depositedBalanceLabel}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    disabled={hasNotStaked}
+                    variant={ButtonVariant.MINIMAL}
+                    onClick={() => setUnstakeDialogIsShowing(true)}
+                    title="Unstake"
+                  >
+                    <MinusIcon className="h-5 text-principalRoyalBlue" />
+                  </Button>
+                  <Button
+                    disabled={hasNoBalance}
+                    variant={ButtonVariant.MINIMAL}
+                    onClick={() => setStakeDialogIsShowing(true)}
+                    title="Stake"
+                  >
+                    <PlusIcon className={`h-5 text-principalRoyalBlue`} />
+                  </Button>
+                </div>
+              </div>
+              <hr className="border-hackerSky-dark" />
+              <Button
+                className="mt-6 w-full justify-center"
+                variant={ButtonVariant.GRADIENT}
+                onClick={handleClaim}
+                loading={transactionIsPending}
+                disabled={hasNoRewards}
+              >{t`Claim ELFI`}</Button>
+            </>
+          )}
         </div>
       </Card>
 
