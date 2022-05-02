@@ -1,16 +1,18 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, ReactElement, ReactNode } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { XIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 
 interface SimpleDialogProps {
   className?: string;
+  showCloseIcon?: boolean;
   isOpen: boolean;
   onClose?: () => void;
   children?: ReactNode;
 }
 export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
-  const { className, isOpen, onClose, children } = props;
+  const { className, showCloseIcon, isOpen, onClose, children } = props;
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
@@ -54,6 +56,14 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
                 className,
               )}
             >
+              {showCloseIcon && (
+                <button
+                  onClick={onClose}
+                  className="absolute top-2 right-2 rounded-lg p-2 hover:bg-hackerSky"
+                >
+                  <XIcon className="w-6 fill-principalRoyalBlue" />
+                </button>
+              )}
               {children}
             </div>
           </Transition.Child>
