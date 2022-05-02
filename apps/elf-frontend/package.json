@@ -24,7 +24,7 @@
     "@ethersproject/bytes": "^5.5.0",
     "@ethersproject/contracts": "^5.4.1",
     "@ethersproject/hash": "^5.4.0",
-    "@ethersproject/providers": "^5.4.5",
+    "@ethersproject/providers": "^5.6.4",
     "@fontsource/inter": "^4.5.7",
     "@fontsource/rubik": "^4.5.0",
     "@metamask/jazzicon": "^2.0.0",
