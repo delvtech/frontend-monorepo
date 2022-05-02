@@ -11,17 +11,19 @@ import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
 import { Ballot } from "src/ui/voting/Ballot";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { formatWalletAddress } from "src/base/formatWalletAddress";
+import { useResolvedEnsName } from "src/ui/ethereum/useResolvedEnsName";
+import { isValidAddress } from "src/base/isValidAddress";
 
 // keeping dead code so i can test UI
 const votes = [
   ethers.Wallet.createRandom().address,
   ethers.Wallet.createRandom().address,
   ethers.Wallet.createRandom().address,
-  ethers.Wallet.createRandom().address,
-  ethers.Wallet.createRandom().address,
-  ethers.Wallet.createRandom().address,
-  ethers.Wallet.createRandom().address,
-  ethers.Wallet.createRandom().address,
+  // ethers.Wallet.createRandom().address,
+  // ethers.Wallet.createRandom().address,
+  // ethers.Wallet.createRandom().address,
+  // ethers.Wallet.createRandom().address,
+  // ethers.Wallet.createRandom().address,
 ];
 
 interface GSCVoteTallysProps {
@@ -60,12 +62,15 @@ export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
         ))}
       </div>
       {firstThreeVotes.length && (
-        <div className="items-middle ml-4 flex">
+        <div className="ml-4 flex items-center text-sm">
           {t`Votes by `}
           {firstThreeVotes &&
-            firstThreeVotes
-              .map((address) => `${formatWalletAddress(address)}`)
-              .join(", ")}
+            firstThreeVotes.map((address, index) => (
+              <>
+                <EnsNameOrFormattedAddress key={address} address={address} />
+                {index < firstThreeVotes.length - 1 ? ", " : " "}
+              </>
+            ))}
           {!!remainingVotes.length &&
             ngettext(
               msgid` and ${remainingVotes.length} other.`,
@@ -140,4 +145,22 @@ function useVoteTallys(
 
     return { forList, againstList, abstainList, noVoteList };
   }, [members, votesByMember]);
+}
+
+interface EnsNameProps {
+  address: string;
+}
+function EnsNameOrFormattedAddress(props: EnsNameProps) {
+  const { address } = props;
+  const { data: ensName } = useResolvedEnsName(address);
+
+  // useResolvedEnsName will return the full address if no ens found.  We use:
+  // isValidAddress(ensName || address) so that we can format the address
+  // without needing to wait for useResolvedEnsName to resolve.
+  let formattedAddress;
+  if (isValidAddress(ensName || address)) {
+    formattedAddress = formatWalletAddress(address);
+  }
+
+  return <>{formattedAddress ?? ensName}</>;
 }
