@@ -81,6 +81,9 @@ export function StakeDialog({
     }
   };
 
+  const amountIsInvalid =
+    isNaN(+stakeAmount) || +stakeAmount <= 0 || +stakeAmount > +availableAmount;
+
   return (
     <SimpleDialog
       className="!max-w-sm !p-10"
@@ -142,7 +145,7 @@ export function StakeDialog({
           variant={ButtonVariant.GRADIENT}
           onClick={handleStake}
           loading={transactionIsPending}
-          disabled={+stakeAmount <= 0 || +stakeAmount > +availableAmount}
+          disabled={amountIsInvalid}
         >
           {t`Stake`}
         </Button>

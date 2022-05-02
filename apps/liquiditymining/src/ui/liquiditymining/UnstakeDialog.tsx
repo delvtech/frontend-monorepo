@@ -76,6 +76,11 @@ export function UnstakeDialog({
     }
   };
 
+  const amountIsInvalid =
+    isNaN(+unstakeAmount) ||
+    +unstakeAmount <= 0 ||
+    +unstakeAmount > +depositedBalance;
+
   return (
     <SimpleDialog
       className="!max-w-sm !p-10"
@@ -132,7 +137,7 @@ export function UnstakeDialog({
           variant={ButtonVariant.GRADIENT}
           onClick={handleStake}
           loading={transactionIsPending}
-          disabled={+unstakeAmount <= 0 || +unstakeAmount > +depositedBalance}
+          disabled={amountIsInvalid}
         >
           {t`Unstake and Claim`}
         </Button>
