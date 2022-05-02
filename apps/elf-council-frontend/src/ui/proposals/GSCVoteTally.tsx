@@ -40,12 +40,11 @@ export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
     proposalId,
   );
   const tallys = useVoteTallys(memberAddresses, votesByMember);
-  // TODO: use real tallys
-  // const { forList, againstList, abstainList, noVoteList } = tallys;
-  // const allVotes = [...forList, ...againstList, ...abstainList];
+  const { forList, againstList, abstainList, noVoteList } = tallys;
+  const allVotes = [...forList, ...againstList, ...abstainList];
 
-  const firstThreeVotes = votes.slice(0, 3);
-  const remainingVotes = votes.slice(3);
+  const firstThreeVotes = allVotes.slice(0, 3);
+  const remainingVotes = allVotes.slice(3);
 
   return (
     <div className="items-middle flex text-white">
@@ -61,7 +60,10 @@ export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
           />
         ))}
       </div>
-      {firstThreeVotes.length && (
+      {!firstThreeVotes.length && (
+        <div className="mt-4 text-sm">{t`No votes for this proposal.`}</div>
+      )}
+      {!!firstThreeVotes.length && firstThreeVotes.length && (
         <div className="ml-4 flex items-center text-sm">
           {t`Votes by `}
           {firstThreeVotes &&
