@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import toast from "react-hot-toast";
 
+import { assertNever } from "@elementfi/base/utils/assertNever";
 import { Proposal } from "@elementfi/elf-council-proposals";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import {
@@ -23,7 +24,6 @@ import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { defaultProvider } from "src/elf/providers/providers";
 import ElementUrl from "src/elf/urls";
-import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
@@ -34,26 +34,21 @@ import H2 from "src/ui/base/H2/H2";
 import { Intent } from "src/ui/base/Intent";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
+import { GSCMember } from "src/ui/proposals/GSCMember";
 import GSCVoteTallys from "src/ui/proposals/GSCVoteTally";
 import {
   getProposalStatus,
   ProposalStatusLabels,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
-import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
-import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
+import { useVotingPowerForGSCProposal } from "src/ui/proposals/useVotingPowerForGSCProposal";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
 import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTransactionForAccount";
-import { useVote } from "src/ui/voting/useVote";
-import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-
-import { TooltipDefinition } from "./tooltipDefinitions";
-import { GSCMember } from "src/ui/proposals/GSCMember";
-import { assertNever } from "@elementfi/base/utils/assertNever";
+import { useGSCVote } from "src/ui/voting/useGSCVote";
 
 const author = ethers.Wallet.createRandom().address;
 
@@ -82,11 +77,6 @@ export function GSCProposalDetailsCard(
   const { data: snapshotProposals } = useSnapshotProposals([snapshotId]);
   const snapshotProposal = snapshotProposals && snapshotProposals[0];
 
-  const accountVotingPower = useVotingPowerForAccountAtBlockNumber(
-    account,
-    proposal.created,
-  );
-
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
 
@@ -108,7 +98,7 @@ export function GSCProposalDetailsCard(
     return null;
   }, [isChangingVote, lastVoteTransaction, newVoteTransaction]);
 
-  const proposalVotingResults = useVotingPowerForProposal(proposalId);
+  const proposalVotingResults = useVotingPowerForGSCProposal(proposalId);
   const proposalStatus = getProposalStatus(
     isVotingOpen,
     isExecuted,
@@ -117,13 +107,9 @@ export function GSCProposalDetailsCard(
   );
 
   const submitButtonDisabled =
-    !isNumber(newBallot) ||
-    !account ||
-    !isVotingOpen ||
-    isVoteTxPending ||
-    !+accountVotingPower;
+    !isNumber(newBallot) || !account || !isVotingOpen || isVoteTxPending;
 
-  const { mutate: vote } = useVote(account, signer, proposal.created, {
+  const { mutate: vote } = useGSCVote(account, signer, proposal.created, {
     onError: (e) => {
       setIsVoteTxPending(false);
       toast.error(e.message, { id: toastIdRef.current });
@@ -267,30 +253,15 @@ export function GSCProposalDetailsCard(
           </Tag>
         ) : (
           <div className="max-h-72 w-full overflow-scroll">
-            <GSCVoteTallys provider={defaultProvider} />
+            <GSCVoteTallys provider={defaultProvider} proposalId={proposalId} />
           </div>
         )}
 
         {/* Voting Related Stats / Action Buttons */}
         <div className="mt-auto">
-          {/* Stale Voting Warning Message */}
-          {isVotingOpen ? (
-            <div className="my-4">
-              <StaleVotingPowerMessage account={account} proposal={proposal} />
-            </div>
-          ) : null}
-
           {/* Action Buttons */}
           <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
             <div className="flex w-full items-end justify-between">
-              {/* User Stats */}
-              <BalanceWithLabel
-                className="mt-4 w-full"
-                balance={accountVotingPower}
-                tooltipText={t`${TooltipDefinition.OWNED_PROPOSAL_VOTING_POWER}`}
-                label={t`Voting Power`}
-              />
-
               {etherscanLink && (
                 <ExternalLink
                   href={etherscanLink}
@@ -305,7 +276,7 @@ export function GSCProposalDetailsCard(
                 currentBallot={newBallot}
                 onSelectBallot={setCurrentBallot}
                 variant={ButtonVariant.WHITE}
-                disabled={!isVotingOpen || !+accountVotingPower}
+                disabled={!isVotingOpen}
               />
               {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
                 <div className="ml-4 flex w-full items-center text-white ">
