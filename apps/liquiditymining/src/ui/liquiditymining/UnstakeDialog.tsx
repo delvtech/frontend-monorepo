@@ -132,6 +132,9 @@ export function UnstakeDialog({
           variant={ButtonVariant.GRADIENT}
           onClick={handleStake}
           loading={transactionIsPending}
+          disabled={
+            +setUnstakeAmount <= 0 || +setUnstakeAmount > +depositedBalance
+          }
         >
           {t`Unstake and Claim`}
         </Button>

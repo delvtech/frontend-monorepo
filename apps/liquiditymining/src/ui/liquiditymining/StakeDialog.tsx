@@ -43,7 +43,8 @@ export function StakeDialog({
   onClose = () => {},
 }: StakeDialogProps): ReactElement {
   const [stakeAmount, setStakeAmount] = useState("");
-  const { data: availableAmount } = useLPTokenBalance(poolContract, account);
+  const { data: lpTokenBalanceData } = useLPTokenBalance(poolContract, account);
+  const availableAmount = lpTokenBalanceData || "0";
   const {
     extensions: { underlying, bond },
   } = getTokenInfo<PrincipalPoolTokenInfo>(poolContract.address);
@@ -101,7 +102,7 @@ export function StakeDialog({
       </div>
       <p className="mb-8 flex flex-wrap justify-between gap-x-1 px-1 align-baseline text-lg">
         <span className="whitespace-nowrap text-principalRoyalBlue">{t`Available to stake`}</span>
-        <span>{commify((+(availableAmount || 0)).toFixed(4))}</span>
+        <span>{commify((+availableAmount).toFixed(4))}</span>
       </p>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label
@@ -141,6 +142,7 @@ export function StakeDialog({
           variant={ButtonVariant.GRADIENT}
           onClick={handleStake}
           loading={transactionIsPending}
+          disabled={+stakeAmount <= 0 || +stakeAmount > +availableAmount}
         >
           {t`Stake`}
         </Button>
