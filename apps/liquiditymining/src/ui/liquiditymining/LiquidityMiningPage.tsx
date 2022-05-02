@@ -29,7 +29,7 @@ export function LiquidityMiningPage(): ReactElement {
           className="block w-full shrink-0 justify-center lg:w-auto"
         >{t`Learn more`}</Button>
       </Card>
-      <div className="grid grid-cols-1 flex-wrap gap-8 lg:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 flex-wrap gap-8 xl:grid-cols-2 2xl:grid-cols-3">
         {Object.values(eligibleGoerliPoolTokenInfos).map((pool) => (
           <EligiblePoolCard
             key={pool.address}
