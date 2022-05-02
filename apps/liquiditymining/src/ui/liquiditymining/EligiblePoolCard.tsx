@@ -4,9 +4,7 @@ import {
 } from "@elementfi/tokenlist";
 import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
 import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
-import { useTotalFiatLiquidity } from "@elementfi/core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
-import { getVaultTokenInfoForTranche } from "@elementfi/core/tranche/tranches";
 import React, { ReactElement, useState } from "react";
 import { formatAbbreviatedDate } from "src/base/dates";
 import {
@@ -31,14 +29,15 @@ import { commify } from "ethers/lib/utils";
 import { usePoolShare } from "src/ui/liquiditymining/hooks/usePoolShare";
 import { StakeDialog } from "src/ui/liquiditymining/StakeDialog";
 import { Signer } from "ethers";
-import {
-  useTotalFiatStaked,
-  useTotalFiatStakedForUser,
-} from "src/ui/liquiditymining/hooks/useTotalFiatStaked";
+import { useTotalFiatStaked } from "src/ui/liquiditymining/hooks/useTotalFiatStaked";
 import { UnstakeDialog } from "src/ui/liquiditymining/UnstakeDialog";
 import { useClaim } from "src/ui/liquiditymining/hooks/useClaim";
 import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
 import AssetIcon from "src/ui/base/svg/AssetIcon/AssetIcon";
+import { Tag } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Intent";
+import H2 from "src/ui/base/H2/H2";
+import { Elfi } from "./Elfi";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -51,25 +50,20 @@ export function EligiblePoolCard({
   pool,
   pool: {
     address: poolAddress,
-    symbol: poolSymbol,
     extensions: { bond },
   },
 }: EligiblePoolCardProps): ReactElement {
   const [stakeDialogIsShowing, setStakeDialogIsShowing] = useState(false);
   const [unstakeDialogIsShowing, setUnstakeDialogIsShowing] = useState(false);
 
-  const vaultTokenInfo = getVaultTokenInfoForTranche(bond);
   const {
-    symbol,
     extensions: { unlockTimestamp, underlying },
   } = getTokenInfo<PrincipalTokenInfo>(bond);
 
   const { symbol: baseAssetSymbol } = getTokenInfo(underlying);
 
   const poolId = poolIdsByPoolAddress[pool.address];
-  const ccPoolTVL = useTotalFiatLiquidity(pool);
   const unlockDate = convertEpochSecondsToDate(unlockTimestamp);
-  const dateLabel = formatAbbreviatedDate(unlockDate);
 
   const poolContract = eligibleGoerliPoolContracts[poolAddress];
   const { data: lpTokenBalance } = useLPTokenBalance(poolContract, account);
@@ -86,7 +80,6 @@ export function EligiblePoolCard({
   // TODO: Get ChainId from environment
   const POOL_HREF = getPoolURL(ChainId.GOERLI, poolAddress);
 
-  const totalFiatStakedForUser = useTotalFiatStakedForUser(pool, account);
   const totalFiatStaked = useTotalFiatStaked(pool);
 
   const [transactionIsPending, setTransactionIsPending] = useState(false);
@@ -113,38 +106,45 @@ export function EligiblePoolCard({
   const isClaimDisabled = !+pendingRewards;
   return (
     <>
-      <Card className="flex w-[382px] flex-col space-y-6">
-        <div className="flex flex-col items-center">
-          <AssetIcon symbol={baseAssetSymbol} className="mb-3 h-12" />
-          <span className="font-semibold text-principalRoyalBlue ">{t`${baseAssetSymbol} Principal Pool LP Token`}</span>
-          <ExternalLink href={POOL_HREF}>
-            <span className="font-semibold text-gray-600">{dateLabel}</span>
-          </ExternalLink>
+      <Card className="w-[382px]">
+        <div className="mb-8 flex items-center justify-between gap-3">
+          <div>
+            <H2 className="text-center !text-2xl font-medium tracking-wide text-brandDarkBlue-dark">{t`${baseAssetSymbol} LP Token`}</H2>
+            <ExternalLink href={POOL_HREF}>
+              <Tag
+                intent={Intent.PRIMARY}
+                className="!rounded-full py-1 font-light"
+              >
+                {formatAbbreviatedDate(unlockDate)}
+              </Tag>
+            </ExternalLink>
+          </div>
+          <AssetIcon symbol={baseAssetSymbol} className="mb-2 h-14" />
         </div>
-        <Well>
-          <div className="grid grid-cols-2 gap-8 ">
-            <span className="text-principalRoyalBlue">{t`Total Staked`}</span>
-            <span className="text-right">${commify(totalFiatStaked)}</span>
-          </div>
-          <div className="grid grid-cols-2 gap-8">
-            <span className="text-principalRoyalBlue">{t`Total ELFI / Week`}</span>
-            <span className="text-right">{commify(elfiPerWeek)} ELFI</span>
-          </div>
+        <Well className="mb-6">
+          <p className="flex flex-wrap justify-between gap-x-1 px-1 align-baseline">
+            <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total Staked`}</span>
+            <span>${commify(totalFiatStaked)}</span>
+          </p>
+          <p className="mb-1 flex flex-wrap justify-between gap-x-1 px-1 align-baseline">
+            <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total ELFI / Week`}</span>
+            <Elfi amount={elfiPerWeek} />
+          </p>
         </Well>
 
-        <div className="space-y-2 px-2">
-          <div className="grid grid-cols-2 gap-8 ">
-            <span className="text-principalRoyalBlue">{t`Pool Share`}</span>
-            <span className="text-right">{poolShare}</span>
-          </div>
-          <div className="grid grid-cols-2 gap-8 ">
-            <span className="text-principalRoyalBlue">{t`ELFI / Week`}</span>
-            <span className="text-right">{`${pendingRewardsLabel} ELFI`}</span>
-          </div>
-          <div className="grid grid-cols-2 gap-8 ">
-            <span className="text-principalRoyalBlue">{t`Unclaimed`}</span>
-            <span className="text-right font-semibold">{`${pendingRewardsLabel} ELFI`}</span>
-          </div>
+        <div className="mb-6 space-y-1 px-2">
+          <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+            <span className="whitespace-nowrap text-principalRoyalBlue">{t`Pool Share`}</span>
+            <span>{poolShare}</span>
+          </p>
+          <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+            <span className="whitespace-nowrap text-principalRoyalBlue">{t`ELFI / Week`}</span>
+            <Elfi amount={pendingRewardsLabel} />
+          </p>
+          <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+            <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
+            <Elfi amount={pendingRewards} />
+          </p>
         </div>
 
         <div className="space-y-8 px-2">
@@ -156,39 +156,29 @@ export function EligiblePoolCard({
             <div className="flex justify-end space-x-2">
               <Button
                 disabled={isUnstakeDisabled}
-                variant={
-                  isUnstakeDisabled
-                    ? ButtonVariant.MINIMAL
-                    : ButtonVariant.OUTLINE_BLUE
-                }
+                variant={ButtonVariant.MINIMAL}
                 onClick={() => setUnstakeDialogIsShowing(true)}
+                title="Unstake"
               >
-                <MinusIcon className="h-6 text-principalRoyalBlue" />
+                <MinusIcon className="h-5 text-principalRoyalBlue" />
               </Button>
               <Button
                 disabled={isStakeDisabled}
-                variant={
-                  isStakeDisabled
-                    ? ButtonVariant.MINIMAL
-                    : ButtonVariant.OUTLINE_BLUE
-                }
+                variant={ButtonVariant.MINIMAL}
                 onClick={() => setStakeDialogIsShowing(true)}
+                title="Stake"
               >
-                <PlusIcon className={`h-6 text-principalRoyalBlue`} />
+                <PlusIcon className={`h-5 text-principalRoyalBlue`} />
               </Button>
             </div>
           </div>
           <Button
             className="w-full justify-center"
-            variant={
-              isClaimDisabled
-                ? ButtonVariant.MINIMAL
-                : ButtonVariant.OUTLINE_BLUE
-            }
+            variant={ButtonVariant.GRADIENT}
             onClick={handleClaim}
             loading={transactionIsPending}
             disabled={isClaimDisabled}
-          >{t`Claim`}</Button>
+          >{t`Claim ELFI`}</Button>
         </div>
       </Card>
 
