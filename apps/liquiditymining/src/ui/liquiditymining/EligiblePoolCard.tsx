@@ -145,7 +145,7 @@ export function EligiblePoolCard({
           </p>
           <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
             <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
-            <Elfi amount={pendingRewards} />
+            <Elfi className="font-semibold" amount={pendingRewards} />
           </p>
         </div>
 
