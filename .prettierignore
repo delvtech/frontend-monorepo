@@ -1,4 +1,13 @@
+# Prettier ignore needs to be configured at the top-level for all apps/projects
+# in the repo. It will not read in .prettierignore files from individual
+# workspaces.
+
 .next
 
 # elf-frontend 
-version.output.json
+apps/elf-frontend/src/version.output.json
+
+# council-testnet
+apps/council-testnet/artifacts/
+apps/council-testnet/cache/
+apps/council-testnet/elf-council/
