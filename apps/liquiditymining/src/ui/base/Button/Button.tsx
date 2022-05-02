@@ -1,21 +1,20 @@
 // See: https://tailwindui.com/components/application-ui/elements/buttons
 
-import { MouseEventHandler, ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 
 import classNames from "classnames";
 import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
 
 import { Spinner } from "src/ui/base/Spinner/Spinner";
+import { PropsOf } from "src/@types/helper";
 
-export interface ButtonProps extends ButtonStyles {
+export interface ButtonProps extends ButtonStyles, PropsOf<"button"> {
   children: ReactNode;
   className?: string;
   loading?: boolean;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function Button({
-  onClick,
   disabled,
   variant,
   size,
@@ -25,6 +24,7 @@ export default function Button({
   children,
   error,
   className,
+  ...buttonProps
 }: ButtonProps): ReactElement {
   const buttonClassName = getButtonClass({
     variant,
@@ -38,9 +38,9 @@ export default function Button({
   return (
     <button
       disabled={disabled || loading}
-      onClick={onClick}
       type="button"
       className={classNames(buttonClassName, className)}
+      {...buttonProps}
     >
       {loading ? (
         <div className="w-full justify-center">

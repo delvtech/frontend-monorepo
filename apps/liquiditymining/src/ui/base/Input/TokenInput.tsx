@@ -6,6 +6,7 @@ import { t } from "ttag";
 interface TokenInputProps {
   className?: string;
   inputClassName?: string;
+  buttonClassName?: string;
   screenReaderLabel: string;
   id: string;
   name: string;
@@ -21,6 +22,7 @@ interface TokenInputProps {
 export default function TokenInput({
   className,
   inputClassName,
+  buttonClassName,
   screenReaderLabel,
   id,
   name,
@@ -73,11 +75,14 @@ export default function TokenInput({
         />
         {showMaxButton && maxValue ? (
           <button
-            className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md bg-principalRoyalBlue px-2 py-1"
+            className={classNames(
+              "absolute top-1/2 right-3 -translate-y-1/2 rounded-md bg-principalRoyalBlue px-2 py-1 text-xs text-white",
+              buttonClassName,
+            )}
             onClick={() => onChange(maxValue)}
             disabled={disabled}
           >
-            <span className="text-xs text-white">{t`MAX`}</span>
+            {t`MAX`}
           </button>
         ) : null}
       </div>

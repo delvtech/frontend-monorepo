@@ -8,12 +8,22 @@ import TokenInput from "src/ui/base/Input/TokenInput";
 import { useStake } from "./hooks/useStake";
 import { Signer } from "ethers";
 import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton";
-import { parseEther } from "ethers/lib/utils";
+import { commify, parseEther } from "ethers/lib/utils";
 import { ConvergentCurvePool } from "@elementfi/core-typechain/dist/v1.1";
 import { useLPTokenBalance } from "./hooks/useLPTokenBalance";
 import { useIsPoolApproved } from "./hooks/useIsPoolApproved";
 import { useApprovePool } from "./hooks/useApprovePool";
 import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
+import {
+  PrincipalPoolTokenInfo,
+  PrincipalTokenInfo,
+} from "@elementfi/tokenlist";
+import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
+import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
+import { formatAbbreviatedDate } from "src/base/dates";
+import AssetIcon from "src/ui/base/svg/AssetIcon/AssetIcon";
+import { Intent } from "src/ui/base/Intent";
+import { Tag } from "src/ui/base/Tag/Tag";
 
 interface StakeDialogProps {
   account: string | null | undefined;
@@ -33,7 +43,16 @@ export function StakeDialog({
   onClose = () => {},
 }: StakeDialogProps): ReactElement {
   const [stakeAmount, setStakeAmount] = useState("");
-  const { data: availableAmount } = useLPTokenBalance(poolContract, account);
+  const { data: lpTokenBalanceData } = useLPTokenBalance(poolContract, account);
+  const availableAmount = lpTokenBalanceData || "0";
+  const {
+    extensions: { underlying, bond },
+  } = getTokenInfo<PrincipalPoolTokenInfo>(poolContract.address);
+  const { symbol: baseAssetSymbol } = getTokenInfo(underlying);
+  const {
+    extensions: { unlockTimestamp },
+  } = getTokenInfo<PrincipalTokenInfo>(bond);
+  const unlockDate = convertEpochSecondsToDate(unlockTimestamp);
 
   const [transactionIsPending, setTransactionIsPending] = useState(false);
   const transactionOptions = useTransactionOptionsWithToast({
@@ -62,12 +81,42 @@ export function StakeDialog({
     }
   };
 
+  const amountIsInvalid =
+    isNaN(+stakeAmount) || +stakeAmount <= 0 || +stakeAmount > +availableAmount;
+
   return (
-    <SimpleDialog className="!max-w-sm" isOpen={isOpen} onClose={onClose}>
-      <H2 className="mb-8 text-center text-3xl tracking-wide text-brandDarkBlue-dark">{t`Stake`}</H2>
+    <SimpleDialog
+      className="!max-w-sm !p-10"
+      showCloseIcon
+      isOpen={isOpen}
+      onClose={onClose}
+    >
+      <div className="mb-8 flex items-center gap-3">
+        <AssetIcon symbol={baseAssetSymbol} className="h-14" />
+        <div>
+          <H2 className="!text-2xl font-medium tracking-wide text-brandDarkBlue-dark">{t`${baseAssetSymbol} LP Token`}</H2>
+          <Tag
+            intent={Intent.PRIMARY}
+            className="!rounded-full py-1 font-light"
+          >
+            {formatAbbreviatedDate(unlockDate)}
+          </Tag>
+        </div>
+      </div>
+      <p className="mb-6 flex flex-wrap justify-between gap-x-1 px-1 align-baseline text-lg">
+        <span className="whitespace-nowrap text-principalRoyalBlue">{t`Available to stake`}</span>
+        <span>{commify((+availableAmount).toFixed(4))}</span>
+      </p>
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label
+        htmlFor="stake-input"
+        className="mb-1 block px-1 text-lg text-principalRoyalBlue"
+      >{t`Amount`}</label>
       <TokenInput
         id="stake-input"
-        className="mb-1"
+        className="mb-8"
+        inputClassName="h-12 !text-base"
+        buttonClassName="!bg-hackerSky hover:!bg-hackerSky-dark !text-principalRoyalBlue !px-4 !py-2 -mr-1"
         name="Stake Amount"
         screenReaderLabel="Amount to stake"
         value={stakeAmount}
@@ -76,9 +125,6 @@ export function StakeDialog({
         showMaxButton
         disabled={!isApproved}
       />
-      <p className="mb-6 text-blueGrey">{t`Available to stake: ${parseFloat(
-        availableAmount || "0",
-      ).toFixed(4)} LP Tokens`}</p>
       {!account ? (
         <ConnectWalletButton
           className="w-full justify-center"
@@ -99,6 +145,7 @@ export function StakeDialog({
           variant={ButtonVariant.GRADIENT}
           onClick={handleStake}
           loading={transactionIsPending}
+          disabled={amountIsInvalid}
         >
           {t`Stake`}
         </Button>
