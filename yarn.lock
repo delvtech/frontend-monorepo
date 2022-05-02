@@ -212,7 +212,7 @@
     ethers "~4.0.4"
     lodash "^4.17.11"
 
-"@alch/alchemy-web3@^1.4.2":
+"@alch/alchemy-web3@^1.1.7", "@alch/alchemy-web3@^1.4.2":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@alch/alchemy-web3/-/alchemy-web3-1.4.2.tgz#2615e15093f06122e39dd9fe70c46cad2f430243"
   integrity sha512-LYL7+63gX4/ScikArbC5YUrIOs93GSbOXm8pYWr+U538BfszAzhwwG9GHZsnUeERIWX+TPfxrfZCKvf90Da5CA==
@@ -1826,10 +1826,10 @@
     dotenv "^16.0.0"
     tsc "^2.0.3"
 
-"@elementfi/tokenlist@^2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@elementfi/tokenlist/-/tokenlist-2.7.0.tgz#204da6caca4e190b27e7035a29f3ebedb5a95d0a"
-  integrity sha512-ZK7L2wrHRtTbqNO6P5OOVZurdXJGH52NoWF6s0xw69hgyafRACBg37JSUTBNGvINOkr4napVZZ8Otyom9+NGbg==
+"@elementfi/tokenlist@^2.8.0":
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@elementfi/tokenlist/-/tokenlist-2.8.0.tgz#93f217ba0552823af9722b855a5dfd204f5f6ffb"
+  integrity sha512-O9+6jl8kLacMjBYC4+RTKWM2hIZLL6ri0tyF1wNJM+72pbQvJLciHyUHwiI1bvWjcpQtoEOcRxEfgYKCu8k9HA==
   dependencies:
     "@uniswap/token-lists" "https://github.com/Uniswap/token-lists.git#add-array-extension-support"
     dotenv "^16.0.0"
@@ -6309,10 +6309,6 @@
 "@uniswap/token-lists@git+https://github.com/Uniswap/token-lists.git#add-array-extension-support":
   version "1.0.0-beta.27"
   resolved "git+https://github.com/Uniswap/token-lists.git#023c78b9dfe90a5b0723b3b95ea6e669bdf6ab96"
-
-"@uniswap/token-lists@https://github.com/Uniswap/token-lists.git#add-array-extension-support":
-  version "1.0.0-beta.27"
-  resolved "https://github.com/Uniswap/token-lists.git#023c78b9dfe90a5b0723b3b95ea6e669bdf6ab96"
 
 "@walletconnect/browser-utils@^1.7.7":
   version "1.7.7"
