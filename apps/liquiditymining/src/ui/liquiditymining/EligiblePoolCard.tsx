@@ -111,7 +111,7 @@ export function EligiblePoolCard({
       <Card className={className}>
         <div className="mb-8 flex items-center justify-between gap-3">
           <div>
-            <H2 className="text-center !text-2xl font-medium tracking-wide text-brandDarkBlue-dark">{t`${baseAssetSymbol} LP Token`}</H2>
+            <H2 className="tracking-wide text-principalRoyalBlue">{t`${baseAssetSymbol} LP Token`}</H2>
             <ExternalLink href={POOL_HREF}>
               <Tag
                 intent={Intent.PRIMARY}
@@ -121,7 +121,7 @@ export function EligiblePoolCard({
               </Tag>
             </ExternalLink>
           </div>
-          <AssetIcon symbol={baseAssetSymbol} className="mb-2 h-14" />
+          <AssetIcon symbol={baseAssetSymbol} className="mb-2 h-12" />
         </div>
         <Well className="mb-6">
           <p className="flex flex-wrap justify-between gap-x-1 px-1 align-baseline">
