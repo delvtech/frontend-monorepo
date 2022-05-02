@@ -144,7 +144,7 @@ export function UnstakeDialog({
           {t`Unstake and Claim`}
         </Button>
       )}
-      <p className="mt-6 -mb-2 text-sm text-slate-400">{t`Your ELFI will automatically be delegated to your selected delegated. If you haven't chosen a delegate, it will be self-delegated.`}</p>
+      <p className="mt-6 -mb-2 text-sm text-slate-400">{t`Your ELFI will automatically be delegated to your selected delegate. If you haven't chosen a delegate, it will be self-delegated.`}</p>
     </SimpleDialog>
   );
 }
