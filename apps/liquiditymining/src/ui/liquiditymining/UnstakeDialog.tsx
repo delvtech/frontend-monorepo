@@ -83,7 +83,7 @@ export function UnstakeDialog({
 
   return (
     <SimpleDialog
-      className="!max-w-sm !p-10"
+      className="!max-w-sm !p-8"
       showCloseIcon
       isOpen={isOpen}
       onClose={onClose}
@@ -100,22 +100,24 @@ export function UnstakeDialog({
           </Tag>
         </div>
       </div>
-      <p className="mb-1 flex flex-wrap justify-between gap-x-1 px-1 align-baseline text-lg">
-        <span className="whitespace-nowrap text-principalRoyalBlue">{t`Staked balance`}</span>
-        <span>{commify((+depositedBalance).toFixed(4))}</span>
-      </p>
-      <p className="mb-6 flex flex-wrap justify-between gap-x-1 px-1 align-baseline text-lg">
-        <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
-        <Elfi amount={pendingRewards} />
-      </p>
+      <div className="mb-4 space-y-1 px-1">
+        <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+          <span className="whitespace-nowrap text-principalRoyalBlue">{t`Staked balance`}</span>
+          <span>{commify((+depositedBalance).toFixed(4))}</span>
+        </p>
+        <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+          <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
+          <Elfi amount={pendingRewards} />
+        </p>
+      </div>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label
         htmlFor="unstake-input"
-        className="mb-1 block px-1 text-lg text-principalRoyalBlue"
+        className="block px-1 text-lg text-principalRoyalBlue"
       >{t`Amount`}</label>
       <TokenInput
         id="unstake-input"
-        className="mb-8"
+        className="mb-6"
         inputClassName="h-12 !text-base"
         buttonClassName="!bg-hackerSky hover:!bg-hackerSky-dark !text-principalRoyalBlue !px-4 !py-2 -mr-1"
         name="Unstake Amount"
@@ -142,7 +144,7 @@ export function UnstakeDialog({
           {t`Unstake and Claim`}
         </Button>
       )}
-      <p className="mt-4 text-blueGrey">{t`Your ELFI will`}</p>
+      <p className="mt-6 -mb-2 text-sm text-slate-400">{t`Your ELFI will automatically be delegated to your selected delegated. If you haven't chosen a delegate, it will be self-delegated.`}</p>
     </SimpleDialog>
   );
 }

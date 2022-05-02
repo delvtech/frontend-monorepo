@@ -86,7 +86,7 @@ export function StakeDialog({
 
   return (
     <SimpleDialog
-      className="!max-w-sm !p-10"
+      className="!max-w-sm !p-8"
       showCloseIcon
       isOpen={isOpen}
       onClose={onClose}
@@ -103,7 +103,7 @@ export function StakeDialog({
           </Tag>
         </div>
       </div>
-      <p className="mb-6 flex flex-wrap justify-between gap-x-1 px-1 align-baseline text-lg">
+      <p className="mb-4 flex flex-wrap justify-between gap-x-1 px-1 align-baseline">
         <span className="whitespace-nowrap text-principalRoyalBlue">{t`Available to stake`}</span>
         <span>{commify((+availableAmount).toFixed(4))}</span>
       </p>
@@ -114,7 +114,7 @@ export function StakeDialog({
       >{t`Amount`}</label>
       <TokenInput
         id="stake-input"
-        className="mb-8"
+        className="mb-6"
         inputClassName="h-12 !text-base"
         buttonClassName="!bg-hackerSky hover:!bg-hackerSky-dark !text-principalRoyalBlue !px-4 !py-2 -mr-1"
         name="Stake Amount"
