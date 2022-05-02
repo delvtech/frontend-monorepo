@@ -86,7 +86,7 @@ export function UnstakeDialog({
       <div className="mb-8 flex items-center gap-3">
         <AssetIcon symbol={baseAssetSymbol} className="h-14" />
         <div>
-          <H2 className="text-center !text-2xl font-medium tracking-wide text-brandDarkBlue-dark">{t`${baseAssetSymbol} LP Token`}</H2>
+          <H2 className="!text-2xl font-medium tracking-wide text-brandDarkBlue-dark">{t`${baseAssetSymbol} LP Token`}</H2>
           <Tag
             intent={Intent.PRIMARY}
             className="!rounded-full py-1 font-light"
