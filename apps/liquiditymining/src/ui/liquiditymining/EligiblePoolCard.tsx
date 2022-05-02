@@ -43,6 +43,7 @@ interface EligiblePoolCardProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   pool: PrincipalPoolTokenInfo;
+  className?: string;
 }
 export function EligiblePoolCard({
   account,
@@ -52,6 +53,7 @@ export function EligiblePoolCard({
     address: poolAddress,
     extensions: { bond },
   },
+  className,
 }: EligiblePoolCardProps): ReactElement {
   const [stakeDialogIsShowing, setStakeDialogIsShowing] = useState(false);
   const [unstakeDialogIsShowing, setUnstakeDialogIsShowing] = useState(false);
@@ -106,7 +108,7 @@ export function EligiblePoolCard({
   const isClaimDisabled = !+pendingRewards;
   return (
     <>
-      <Card className="w-[382px]">
+      <Card className={className}>
         <div className="mb-8 flex items-center justify-between gap-3">
           <div>
             <H2 className="text-center !text-2xl font-medium tracking-wide text-brandDarkBlue-dark">{t`${baseAssetSymbol} LP Token`}</H2>
