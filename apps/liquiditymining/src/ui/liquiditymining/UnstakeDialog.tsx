@@ -118,15 +118,12 @@ export function UnstakeDialog({
       <TokenInput
         id="unstake-input"
         className="mb-6"
-        inputClassName="h-12 !text-base"
-        buttonClassName="!bg-hackerSky hover:!bg-hackerSky-dark !text-principalRoyalBlue !px-4 !py-2 -mr-1"
         name="Unstake Amount"
         screenReaderLabel="Amount to unstake"
         value={unstakeAmount}
         onChange={setUnstakeAmount}
         maxValue={depositedBalance}
         placeholder="0.00"
-        showMaxButton
       />
       {!account ? (
         <ConnectWalletButton
