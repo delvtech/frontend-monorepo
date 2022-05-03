@@ -212,7 +212,7 @@
     ethers "~4.0.4"
     lodash "^4.17.11"
 
-"@alch/alchemy-web3@^1.4.2":
+"@alch/alchemy-web3@^1.1.7", "@alch/alchemy-web3@^1.4.2":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@alch/alchemy-web3/-/alchemy-web3-1.4.2.tgz#2615e15093f06122e39dd9fe70c46cad2f430243"
   integrity sha512-LYL7+63gX4/ScikArbC5YUrIOs93GSbOXm8pYWr+U538BfszAzhwwG9GHZsnUeERIWX+TPfxrfZCKvf90Da5CA==
