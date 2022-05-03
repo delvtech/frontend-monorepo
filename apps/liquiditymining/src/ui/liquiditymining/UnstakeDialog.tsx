@@ -23,6 +23,7 @@ import { formatAbbreviatedDate } from "src/base/dates";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import { Elfi } from "./Elfi";
+import { usePendingSushi } from "./hooks/usePendingSushi";
 
 interface UnstakeDialogProps {
   account: string | null | undefined;
@@ -44,7 +45,10 @@ export function UnstakeDialog({
   const [unstakeAmount, setUnstakeAmount] = useState("");
   const { data: userInfo } = useUserInfo(account, poolContract.address);
   const depositedBalance = userInfo?.amount || "0";
-  const pendingRewards = userInfo?.rewardDebt || "0";
+  const { data: pendingRewards = "0" } = usePendingSushi(
+    poolContract.address,
+    account,
+  );
   const {
     extensions: { underlying, bond },
   } = getTokenInfo<PrincipalPoolTokenInfo>(poolContract.address);
@@ -118,15 +122,11 @@ export function UnstakeDialog({
       <TokenInput
         id="unstake-input"
         className="mb-6"
-        inputClassName="h-12 !text-base"
-        buttonClassName="!bg-hackerSky hover:!bg-hackerSky-dark !text-principalRoyalBlue !px-4 !py-2 -mr-1"
         name="Unstake Amount"
         screenReaderLabel="Amount to unstake"
         value={unstakeAmount}
         onChange={setUnstakeAmount}
         maxValue={depositedBalance}
-        placeholder="0.00"
-        showMaxButton
       />
       {!account ? (
         <ConnectWalletButton

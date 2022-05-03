@@ -115,14 +115,11 @@ export function StakeDialog({
       <TokenInput
         id="stake-input"
         className="mb-6"
-        inputClassName="h-12 !text-base"
-        buttonClassName="!bg-hackerSky hover:!bg-hackerSky-dark !text-principalRoyalBlue !px-4 !py-2 -mr-1"
         name="Stake Amount"
         screenReaderLabel="Amount to stake"
         value={stakeAmount}
         onChange={setStakeAmount}
         maxValue={availableAmount}
-        showMaxButton
         disabled={!isApproved}
       />
       {!account ? (

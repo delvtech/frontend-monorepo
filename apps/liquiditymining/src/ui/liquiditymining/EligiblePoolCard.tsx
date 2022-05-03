@@ -79,7 +79,7 @@ export function EligiblePoolCard({
   const depositedBalance = userInfo?.amount || "0";
   const depositedBalanceLabel = commify((+depositedBalance).toFixed(4));
 
-  const userElfiPerWeek = elfiPerWeek * poolShare;
+  const userElfiPerWeek = elfiPerWeek * +poolShare;
 
   const { data: pendingRewards = "0" } = usePendingSushi(poolAddress, account);
 
@@ -128,7 +128,7 @@ export function EligiblePoolCard({
           <AssetIcon symbol={baseAssetSymbol} className="mb-2 h-12" />
         </div>
         <div className="flex flex-1 flex-col">
-          <div className="space-y-1 border-t border-b border-hackerSky-dark bg-hackerSky px-4 py-6">
+          <div className="space-y-1 bg-hackerSky px-4 py-6">
             <p className="gap-x-1align-baseline flex flex-wrap justify-between">
               <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total Staked`}</span>
               <span>${commify(totalFiatStaked)}</span>
@@ -194,9 +194,8 @@ export function EligiblePoolCard({
                   </Button>
                 </div>
               </div>
-              <hr className="border-hackerSky-dark" />
               <Button
-                className="mt-6 w-full justify-center"
+                className="mt-2 w-full justify-center"
                 variant={ButtonVariant.GRADIENT}
                 onClick={handleClaim}
                 loading={transactionIsPending}
