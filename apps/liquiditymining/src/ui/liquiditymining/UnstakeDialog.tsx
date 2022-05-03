@@ -23,6 +23,7 @@ import { formatAbbreviatedDate } from "src/base/dates";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import { Elfi } from "./Elfi";
+import { usePendingSushi } from "./hooks/usePendingSushi";
 
 interface UnstakeDialogProps {
   account: string | null | undefined;
@@ -44,7 +45,10 @@ export function UnstakeDialog({
   const [unstakeAmount, setUnstakeAmount] = useState("");
   const { data: userInfo } = useUserInfo(account, poolContract.address);
   const depositedBalance = userInfo?.amount || "0";
-  const pendingRewards = userInfo?.rewardDebt || "0";
+  const { data: pendingRewards = "0" } = usePendingSushi(
+    poolContract.address,
+    account,
+  );
   const {
     extensions: { underlying, bond },
   } = getTokenInfo<PrincipalPoolTokenInfo>(poolContract.address);
