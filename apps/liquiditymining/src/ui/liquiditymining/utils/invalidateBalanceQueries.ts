@@ -17,6 +17,12 @@ export function invalidateBalanceQueries(
         poolId,
         account,
       ]) ||
+      matchSmartContractReadCallQuery(
+        query,
+        masterChef.address,
+        "pendingSushi",
+        [poolId, account],
+      ) ||
       matchSmartContractReadCallQuery(query, poolAddress, "balanceOf", [
         account,
       ]) ||
