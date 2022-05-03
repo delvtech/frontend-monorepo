@@ -141,11 +141,11 @@ export function EligiblePoolCard({
           <div className="space-y-1 px-4 py-6">
             <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
               <span className="whitespace-nowrap text-principalRoyalBlue">{t`Pool Share`}</span>
-              <span>{poolShare}</span>
+              <span>{formatPercent(+poolShare)}</span>
             </p>
             <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
               <span className="whitespace-nowrap text-principalRoyalBlue">{t`ELFI / Week`}</span>
-              <Elfi amount={pendingRewards} />
+              <Elfi amount={userElfiPerWeek} />
             </p>
             <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
               <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
