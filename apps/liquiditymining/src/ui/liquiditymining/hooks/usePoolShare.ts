@@ -6,6 +6,8 @@ import { useLPTokenBalance } from "./useLPTokenBalance";
 /**
  * Function to calculate the percent share of a user's deposit in a specified pool
  *
+ * returns a number value like .15 for 15%
+ *
  * @param poolAddress
  * @param account User address
  * @returns A string denoting a user's percentage in the specified pool
@@ -13,7 +15,7 @@ import { useLPTokenBalance } from "./useLPTokenBalance";
 export function usePoolShare(
   poolAddress: string,
   account: string | null | undefined,
-): string {
+): number {
   const poolContract = eligibleGoerliPoolContracts[poolAddress];
 
   const { data: totalPoolShare } = useLPTokenBalance(
@@ -24,7 +26,11 @@ export function usePoolShare(
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || 0;
 
-  const share = (+depositedBalance / +(totalPoolShare || 0)) * 100;
+  if (!+depositedBalance) {
+    return 0;
+  }
 
-  return `${(share || 0).toFixed(2)}%`;
+  const share = +depositedBalance / +(totalPoolShare || 0);
+
+  return share;
 }
