@@ -26,6 +26,10 @@ export function usePoolShare(
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || 0;
 
+  if (!+depositedBalance) {
+    return 0;
+  }
+
   const share = +depositedBalance / +(totalPoolShare || 0);
 
   return share;
