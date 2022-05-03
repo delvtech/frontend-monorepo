@@ -15,7 +15,6 @@ export function useUserInfo(
     callArgs: [poolIdsByPoolAddress[poolAddress], account as string],
     enabled: !!account,
     select: ([amount, rewardDebt]) => {
-      console.table({ amount, rewardDebt });
       return {
         amount: formatEther(amount),
         rewardDebt: formatEther(rewardDebt),
