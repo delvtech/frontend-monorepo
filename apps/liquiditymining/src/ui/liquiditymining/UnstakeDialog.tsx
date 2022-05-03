@@ -123,7 +123,6 @@ export function UnstakeDialog({
         value={unstakeAmount}
         onChange={setUnstakeAmount}
         maxValue={depositedBalance}
-        placeholder="0.00"
       />
       {!account ? (
         <ConnectWalletButton
