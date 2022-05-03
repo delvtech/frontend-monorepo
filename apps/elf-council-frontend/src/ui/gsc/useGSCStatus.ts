@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { formatUnits, parseEther } from "ethers/lib/utils";
+import { formatEther, parseEther } from "ethers/lib/utils";
 
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
@@ -33,10 +33,10 @@ export function useGSCStatus(account: string | null | undefined): GSCContext {
   const parsedVotingPower = parseEther(votingPower);
   const aboveThreshold = parsedVotingPower.gte(threshold);
   const approachingThreshold =
-    +formatUnits(threshold, 10) * APPROACHING_THRESHOLD_PERCENTAGE;
+    +formatEther(threshold) * APPROACHING_THRESHOLD_PERCENTAGE;
   const isApproaching =
     !threshold.isZero() &&
-    +formatUnits(parsedVotingPower, 10) > approachingThreshold &&
+    +formatEther(parsedVotingPower) > approachingThreshold &&
     !aboveThreshold;
 
   if (isOnGSC && !aboveThreshold) {
@@ -46,6 +46,16 @@ export function useGSCStatus(account: string | null | undefined): GSCContext {
       threshold,
     };
   }
+
+  if (isOnGSC) {
+    return {
+      status: EligibilityState.Current,
+      votingPower,
+      threshold,
+    };
+  }
+
+  console.log(formatEther(parsedVotingPower), formatEther(threshold));
 
   // Account is eligible to join GSC
   if (aboveThreshold) {
