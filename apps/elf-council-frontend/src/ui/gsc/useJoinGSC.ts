@@ -1,6 +1,9 @@
 import { useCallback } from "react";
 
-import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
+import {
+  useSmartContractTransaction,
+  UseSmartContractTransactionOptions,
+} from "@elementfi/react-query-typechain";
 import { Signer } from "ethers";
 
 import { addressesJson } from "src/elf-council-addresses";
@@ -10,6 +13,7 @@ import {
   vestingContract,
 } from "src/elf/contracts";
 import { useQueryVotePowerView } from "src/ui/voting/useQueryVotePower";
+import { GSCVault } from "@elementfi/elf-council-typechain";
 
 const { lockingVault, vestingVault } = addressesJson.addresses;
 
@@ -18,11 +22,13 @@ const EMPTY_BYTE = "0x00";
 export function useJoinGSC(
   account: string | null | undefined,
   signer?: Signer,
+  options?: UseSmartContractTransactionOptions<GSCVault, "proveMembership">,
 ): () => Promise<void> {
   const { mutate: join } = useSmartContractTransaction(
     gscVaultContract,
     "proveMembership",
     signer,
+    options,
   );
 
   const lockingVaultVotePower = useQueryVotePowerView(

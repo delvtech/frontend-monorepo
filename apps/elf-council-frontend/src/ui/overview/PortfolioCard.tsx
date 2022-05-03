@@ -15,7 +15,7 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
-import { JoinGSCButton } from "src/ui/gsc/JoinGSCButton";
+import { JoinGSCButton } from "src/ui/gsc/GSCButtons";
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
