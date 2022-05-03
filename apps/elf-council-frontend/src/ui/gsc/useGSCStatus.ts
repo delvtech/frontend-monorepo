@@ -23,7 +23,7 @@ export interface GSCContext {
 
 const APPROACHING_THRESHOLD_PERCENTAGE = 0.9;
 
-export function useGSCStatus(account?: string | null): GSCContext {
+export function useGSCStatus(account: string | null | undefined): GSCContext {
   const votingPower = useVotingPowerForAccountAtLatestBlock(account);
   const { data: thresholdValue } = useGSCVotePowerThreshold();
   const { data: isOnGSC } = useIsGSCMember(account);
@@ -39,56 +39,46 @@ export function useGSCStatus(account?: string | null): GSCContext {
     +formatUnits(parsedVotingPower, 10) > approachingThreshold &&
     !aboveThreshold;
 
-  if (isOnGSC) {
-    // Check if account has enough votes
-    if (isOnGSC && !aboveThreshold) {
-      return {
-        status: EligibilityState.Expiring,
-        votingPower,
-        threshold,
-      };
-    } else {
-      // Account is a GSC member is good standing
-      return {
-        status: EligibilityState.Current,
-        votingPower,
-        threshold,
-      };
-    }
-  } else {
-    // Account is eligible to join GSC
-    if (aboveThreshold) {
-      return {
-        status: EligibilityState.Eligible,
-        votingPower,
-        threshold,
-      };
-    }
-
-    // Account is not in GSC, but was previously
-    // This takes precedence over Approaching state
-    if (wasMemberKicked) {
-      return {
-        status: EligibilityState.Kicked,
-        votingPower,
-        threshold,
-      };
-    }
-
-    // Account is close to being eligible
-    if (isApproaching) {
-      return {
-        status: EligibilityState.Approaching,
-        votingPower,
-        threshold,
-      };
-    }
-
-    // Account is not eligible or close to join GSC
+  if (isOnGSC && !aboveThreshold) {
     return {
-      status: EligibilityState.NotEligible,
+      status: EligibilityState.Expiring,
       votingPower,
       threshold,
     };
   }
+
+  // Account is eligible to join GSC
+  if (aboveThreshold) {
+    return {
+      status: EligibilityState.Eligible,
+      votingPower,
+      threshold,
+    };
+  }
+
+  // Account is not in GSC, but was previously
+  // This takes precedence over Approaching state
+  if (wasMemberKicked) {
+    return {
+      status: EligibilityState.Kicked,
+      votingPower,
+      threshold,
+    };
+  }
+
+  // Account is close to being eligible
+  if (isApproaching) {
+    return {
+      status: EligibilityState.Approaching,
+      votingPower,
+      threshold,
+    };
+  }
+
+  // Account is not eligible or close to join GSC
+  return {
+    status: EligibilityState.NotEligible,
+    votingPower,
+    threshold,
+  };
 }
