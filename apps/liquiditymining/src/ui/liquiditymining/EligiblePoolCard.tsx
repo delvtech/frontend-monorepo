@@ -23,8 +23,9 @@ import {
   ETHEREUM_BLOCKS_PER_WEEK,
   ChainId,
 } from "@elementfi/base/ethereum/ethereum";
+import { formatPercent } from "@elementfi/base/utils/formatPercent/formatPercent";
 import { getPoolURL } from "@elementfi/core/pools/urls";
-import { commify, formatEther } from "ethers/lib/utils";
+import { commify } from "ethers/lib/utils";
 import { usePoolShare } from "src/ui/liquiditymining/hooks/usePoolShare";
 import { StakeDialog } from "src/ui/liquiditymining/StakeDialog";
 import { Signer } from "ethers";
@@ -78,9 +79,9 @@ export function EligiblePoolCard({
   const depositedBalance = userInfo?.amount || "0";
   const depositedBalanceLabel = commify((+depositedBalance).toFixed(4));
 
-  const { data: pendingRewards = "0" } = usePendingSushi(poolAddress, account);
+  const userElfiPerWeek = elfiPerWeek * poolShare || 0;
 
-  const pendingRewardsLabel = (+pendingRewards).toFixed(2);
+  const { data: pendingRewards = "0" } = usePendingSushi(poolAddress, account);
 
   // TODO: Get ChainId from environment
   const POOL_HREF = getPoolURL(ChainId.GOERLI, poolAddress);
@@ -144,7 +145,7 @@ export function EligiblePoolCard({
             </p>
             <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
               <span className="whitespace-nowrap text-principalRoyalBlue">{t`ELFI / Week`}</span>
-              <Elfi amount={pendingRewardsLabel} />
+              <Elfi amount={pendingRewards} />
             </p>
             <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
               <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
