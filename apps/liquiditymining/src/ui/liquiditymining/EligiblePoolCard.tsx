@@ -79,7 +79,7 @@ export function EligiblePoolCard({
   const depositedBalance = userInfo?.amount || "0";
   const depositedBalanceLabel = commify((+depositedBalance).toFixed(4));
 
-  const userElfiPerWeek = elfiPerWeek * poolShare;
+  const userElfiPerWeek = elfiPerWeek * +poolShare;
 
   const { data: pendingRewards = "0" } = usePendingSushi(poolAddress, account);
 
