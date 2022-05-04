@@ -30,11 +30,6 @@ export function LiquidityMiningPage(): ReactElement {
           className="block w-full shrink-0 justify-center lg:w-auto"
         >{t`Learn more`}</Button>
       </Card>
-      <EligiblePoolsTable
-        account={account}
-        signer={signer}
-        className="hidden xl:block"
-      />
       <div className="grid grid-cols-1 flex-wrap gap-8 lg:grid-cols-2 xl:hidden">
         {Object.values(eligibleGoerliPoolTokenInfos).map((pool) => (
           <EligiblePoolCard
@@ -45,6 +40,11 @@ export function LiquidityMiningPage(): ReactElement {
           />
         ))}
       </div>
+      <EligiblePoolsTable
+        account={account}
+        signer={signer}
+        className="hidden xl:block"
+      />
     </div>
   );
 }
