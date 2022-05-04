@@ -130,7 +130,7 @@ export function EligiblePoolCard({
           </div>
           <AssetIcon symbol={baseAssetSymbol} className="mb-2 h-12" />
         </div>
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col text-gray-500">
           <div className="space-y-1 px-4 py-6">
             <p className="gap-x-1align-baseline flex flex-wrap justify-between">
               <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total Staked`}</span>
@@ -168,7 +168,7 @@ export function EligiblePoolCard({
                   <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
                   <Elfi
                     className={classNames(
-                      +pendingRewards > 0 && "font-semibold",
+                      +pendingRewards > 0 && "font-semibold text-gray-800",
                     )}
                     amount={pendingRewards}
                   />
@@ -178,7 +178,7 @@ export function EligiblePoolCard({
               <div className="mb-2 flex justify-between px-4 py-6">
                 <div>
                   <span className="block text-principalRoyalBlue">{t`LP Staked`}</span>
-                  <span className="block text-2xl">
+                  <span className="block text-2xl text-gray-800">
                     {depositedBalanceLabel}
                   </span>
                 </div>
