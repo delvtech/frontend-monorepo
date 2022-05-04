@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { Signer } from "ethers";
 import { ReactElement } from "react";
 import { eligibleGoerliPoolTokenInfos } from "src/elf/liquiditymining/eligiblepools";
@@ -7,14 +8,16 @@ import { EligiblePoolTableRow } from "./EligiblePoolTableRow";
 interface EligiblePoolsTableProps {
   account: string | null | undefined;
   signer: Signer | undefined;
+  className?: string;
 }
 
 export function EligiblePoolsTable({
   account,
   signer,
+  className,
 }: EligiblePoolsTableProps): ReactElement {
   return (
-    <div className="rounded-3xl bg-white shadow-xl">
+    <div className={classNames("rounded-3xl bg-white shadow-xl", className)}>
       <div className="border-b border-hackerSky-dark p-5">
         <div className="grid grid-cols-[repeat(18,_minmax(0,_1fr))] items-center rounded-2xl bg-hackerSky p-5 text-sm font-semibold text-principalRoyalBlue">
           <span className="col-span-3">{t`LP Token`}</span>
