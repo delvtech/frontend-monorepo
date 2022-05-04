@@ -14,7 +14,7 @@ interface ThresholdProgressBarProps {
 export function ThresholdProgressBar({
   account,
 }: ThresholdProgressBarProps): ReactElement {
-  const { data: thresholdValue } = useGSCVotePowerThreshold();
+  const thresholdValue = useGSCVotePowerThreshold();
   const threshold = formatEther(thresholdValue || 0);
 
   const votingPower = useVotingPowerForAccountAtLatestBlock(account);
