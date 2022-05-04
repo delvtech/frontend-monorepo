@@ -114,6 +114,8 @@ export function UnstakeDialog({
           <Elfi amount={pendingRewards} />
         </p>
       </div>
+      {/* The id will be on the input from TokenInput, but eslint doesn't
+      know that yet. */}
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label
         htmlFor="unstake-input"
