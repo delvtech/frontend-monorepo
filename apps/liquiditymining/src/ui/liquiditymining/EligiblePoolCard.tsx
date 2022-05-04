@@ -70,7 +70,10 @@ export function EligiblePoolCard({
   const unlockDate = convertEpochSecondsToDate(unlockTimestamp);
 
   const poolContract = eligibleGoerliPoolContracts[poolAddress];
-  const { data: lpTokenBalance } = useLPTokenBalance(poolContract, account);
+  const { data: lpTokenBalance = "0" } = useLPTokenBalance(
+    poolContract,
+    account,
+  );
   const elfiPerBlock = useELFIPerBlock(poolAddress);
   const elfiPerWeek = ETHEREUM_BLOCKS_PER_WEEK * elfiPerBlock;
 
@@ -107,13 +110,13 @@ export function EligiblePoolCard({
     }
   };
 
-  const hasNoBalance = !+(lpTokenBalance || 0);
+  const hasNoBalance = !+lpTokenBalance;
   const hasNotStaked = !+depositedBalance;
   const hasNoRewards = !+pendingRewards;
   return (
     <>
       <Card className={classNames("flex flex-col !p-8", className)}>
-        <div className="mb-8 flex items-center justify-between gap-3">
+        <div className="mb-2 flex items-center justify-between gap-3">
           <div>
             <H2 className="tracking-wide text-principalRoyalBlue">{t`${baseAssetSymbol} LP Token`}</H2>
             <ExternalLink href={POOL_HREF}>
@@ -128,7 +131,7 @@ export function EligiblePoolCard({
           <AssetIcon symbol={baseAssetSymbol} className="mb-2 h-12" />
         </div>
         <div className="flex flex-1 flex-col">
-          <div className="space-y-1 bg-hackerSky px-4 py-6">
+          <div className="space-y-1 px-4 py-6">
             <p className="gap-x-1align-baseline flex flex-wrap justify-between">
               <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total Staked`}</span>
               <span>${commify(totalFiatStaked)}</span>
@@ -138,25 +141,9 @@ export function EligiblePoolCard({
               <Elfi amount={elfiPerWeek} />
             </p>
           </div>
-          <div className="space-y-1 px-4 py-6">
-            <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-              <span className="whitespace-nowrap text-principalRoyalBlue">{t`Pool Share`}</span>
-              <span>{formatPercent(+poolShare)}</span>
-            </p>
-            <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-              <span className="whitespace-nowrap text-principalRoyalBlue">{t`ELFI / Week`}</span>
-              <Elfi amount={userElfiPerWeek} />
-            </p>
-            <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-              <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
-              <Elfi
-                className={classNames(+pendingRewards > 0 && "font-semibold")}
-                amount={pendingRewards}
-              />
-            </p>
-          </div>
           {hasNotStaked ? (
             <>
+              <span className="mb-2"></span>
               <Button
                 className="mt-auto w-full justify-center"
                 variant={ButtonVariant.GRADIENT}
@@ -168,7 +155,27 @@ export function EligiblePoolCard({
           ) : (
             <>
               <hr className="border-hackerSky-dark" />
-              <div className="flex justify-between px-4 py-6">
+              <div className="space-y-1 bg-hackerSky  px-4 py-6">
+                <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+                  <span className="whitespace-nowrap text-principalRoyalBlue">{t`Pool Share`}</span>
+                  <span>{formatPercent(+poolShare)}</span>
+                </p>
+                <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+                  <span className="whitespace-nowrap text-principalRoyalBlue">{t`ELFI / Week`}</span>
+                  <Elfi amount={userElfiPerWeek} />
+                </p>
+                <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
+                  <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
+                  <Elfi
+                    className={classNames(
+                      +pendingRewards > 0 && "font-semibold",
+                    )}
+                    amount={pendingRewards}
+                  />
+                </p>
+              </div>
+              <hr className="border-hackerSky-dark" />
+              <div className="mb-2 flex justify-between px-4 py-6">
                 <div>
                   <span className="block text-principalRoyalBlue">{t`LP Staked`}</span>
                   <span className="block text-2xl">
@@ -195,7 +202,7 @@ export function EligiblePoolCard({
                 </div>
               </div>
               <Button
-                className="mt-2 w-full justify-center"
+                className="mt-auto w-full justify-center"
                 variant={ButtonVariant.GRADIENT}
                 onClick={handleClaim}
                 loading={transactionIsPending}
