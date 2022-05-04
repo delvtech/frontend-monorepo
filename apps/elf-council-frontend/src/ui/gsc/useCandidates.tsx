@@ -19,7 +19,8 @@ export function useGSCCandidates(): Delegate[] {
 
   return useMemo(
     () => sortVotingPower(votePowerByDelegates, gscMemberAddresses),
-    [gscMemberAddresses, votePowerByDelegates],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [gscMemberAddresses.length, votePowerByDelegates],
   );
 }
 
