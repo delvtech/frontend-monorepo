@@ -30,26 +30,28 @@ export function useIsTailwindLargeScreen(): boolean {
   return isLg || isXl;
 }
 
-function useIsTailwindSm(): boolean {
+export function useIsTailwindSm(): boolean {
   const isLessThanMd = useMedia(`(max-width: ${MEDIUM_BREAKPOINT}px)`);
   return isLessThanMd;
 }
-function useIsTailwindMd(): boolean {
-  const isAtLeastMdBreakpoint = useMedia(`(min-width: ${MEDIUM_BREAKPOINT}px)`);
-  const isLessThanLgBreakpoint = useMedia(
-    `(max-width: ${LARGE_BREAKPOINT - 1}px)`,
+export function useIsTailwindMd(): boolean {
+  const isBetweenMdAndLg = useMedia(
+    `(min-width: ${MEDIUM_BREAKPOINT}px) and (max-width: ${
+      LARGE_BREAKPOINT - 1
+    }px)`,
   );
-  return isAtLeastMdBreakpoint && isLessThanLgBreakpoint;
+  return isBetweenMdAndLg;
 }
 
-function useIsTailwindLg(): boolean {
-  const isAtLeastLgBreakpoint = useMedia(`(min-width: ${LARGE_BREAKPOINT}px)`);
-  const isLessThanXlBreakpoint = useMedia(
-    `(max-width: ${EXTRA_LARGE_BREAKPOINT - 1}px)`,
+export function useIsTailwindLg(): boolean {
+  const isBetweenLgAndXL = useMedia(
+    `(min-width: ${LARGE_BREAKPOINT}px) and (max-width: ${
+      EXTRA_LARGE_BREAKPOINT - 1
+    }px)`,
   );
-  return isAtLeastLgBreakpoint && isLessThanXlBreakpoint;
+  return isBetweenLgAndXL;
 }
 
-function useIsTailwindXl(): boolean {
+export function useIsTailwindXl(): boolean {
   return useMedia(`(min-width: ${EXTRA_LARGE_BREAKPOINT - 1}px)`);
 }
