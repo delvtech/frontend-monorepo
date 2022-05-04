@@ -9,10 +9,12 @@ import { t } from "ttag";
 import { useSigner } from "src/ui/signer/useSigner";
 import { EligiblePoolsTable } from "./EligiblePoolsTable";
 import { EligiblePoolCard } from "./EligiblePoolCard";
+import { useIsTailwindXl } from "src/ui/base/tailwindBreakpoints";
 
 export function LiquidityMiningPage(): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
   const signer = useSigner(account, library);
+  const isXLOrGreater = useIsTailwindXl();
   return (
     <div className="mt-8 h-full w-full max-w-screen-2xl items-center">
       <Card
@@ -30,21 +32,20 @@ export function LiquidityMiningPage(): ReactElement {
           className="block w-full shrink-0 justify-center lg:w-auto"
         >{t`Learn more`}</Button>
       </Card>
-      <div className="grid grid-cols-1 flex-wrap gap-8 lg:grid-cols-2 xl:hidden">
-        {Object.values(eligibleGoerliPoolTokenInfos).map((pool) => (
-          <EligiblePoolCard
-            key={pool.address}
-            account={account}
-            signer={signer}
-            pool={pool}
-          />
-        ))}
-      </div>
-      <EligiblePoolsTable
-        account={account}
-        signer={signer}
-        className="hidden xl:block"
-      />
+      {isXLOrGreater ? (
+        <EligiblePoolsTable account={account} signer={signer} />
+      ) : (
+        <div className="grid grid-cols-1 flex-wrap gap-8 lg:grid-cols-2">
+          {Object.values(eligibleGoerliPoolTokenInfos).map((pool) => (
+            <EligiblePoolCard
+              key={pool.address}
+              account={account}
+              signer={signer}
+              pool={pool}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
