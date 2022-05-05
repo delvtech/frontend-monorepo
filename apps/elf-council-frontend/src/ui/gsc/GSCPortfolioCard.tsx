@@ -48,23 +48,25 @@ export function GSCPortfolioCard({
         )}
       </div>
 
-      <div className="mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center">
+      <div className="mt-4 mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center space-y-3 lg:space-y-0">
         {/* Voting Power */}
         <BalanceWithLabel
-          className="mt-4 mr-4 w-44 xl:mr-12"
+          className="mr-4 basis-40"
           balance={votingPower}
           tooltipText={t`${TooltipDefinition.OWNED_VOTING_POWER}`}
           label={t`Voting Power`}
         />
 
         {/* GSC eligibility progress bar */}
-        <div className="mt-4 mr-8 flex min-w-fit max-w-xs flex-grow items-center align-middle lg:w-44">
-          <ThresholdProgressBar account={account} />
+        <div className="flex-shrink-0 grow-[2] basis-72">
+          <div className="mr-8 flex max-w-md items-center align-middle">
+            <ThresholdProgressBar account={account} />
+          </div>
         </div>
 
-        <div className="mt-4 mr-2 flex flex-row items-center lg:ml-auto lg:mt-0 xl:mr-12">
+        <div className="mr-2 flex grow basis-72 flex-row items-center lg:ml-auto">
           {/* GSC History */}
-          <div className="mr-4 flex w-fit flex-col lg:mr-16 xl:mr-36">
+          <div className="mr-auto flex w-fit flex-col">
             <GSCHistory status={status} />
           </div>
           {canLeaveGSC ? (

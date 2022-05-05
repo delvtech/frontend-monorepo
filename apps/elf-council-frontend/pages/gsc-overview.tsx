@@ -8,7 +8,7 @@ export default function GSCOverview(
   unusedProps: GSCOverviewProps,
 ): ReactElement {
   return (
-    <PageView childrenContainerClassName="flex justify-center">
+    <PageView childrenContainerClassName="flex justify-center min-w-fit">
       <GSCOverviewPage />
     </PageView>
   );
