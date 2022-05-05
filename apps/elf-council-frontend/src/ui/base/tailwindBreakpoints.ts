@@ -25,7 +25,7 @@ export function useBreakpoint(
 ): boolean {
   let query = `(min-width: ${gte === 0 ? 0 : breakpoints[gte]}px)`;
   if (lt) {
-    query += `(max-width: ${breakpoints[lt] - 1}px)`;
+    query += `and (max-width: ${breakpoints[lt] - 1}px)`;
   }
   return useMedia(query);
 }
