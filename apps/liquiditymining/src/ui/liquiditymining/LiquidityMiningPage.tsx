@@ -9,12 +9,12 @@ import { t } from "ttag";
 import { useSigner } from "src/ui/signer/useSigner";
 import { EligiblePoolsTable } from "./EligiblePoolsTable";
 import { EligiblePoolCard } from "./EligiblePoolCard";
-import { useIsTailwindXl } from "src/ui/base/tailwindBreakpoints";
+import { useBreakpoint } from "src/ui/base/tailwindBreakpoints";
 
 export function LiquidityMiningPage(): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
   const signer = useSigner(account, library);
-  const isXLOrGreater = useIsTailwindXl();
+  const isXLOrGreater = useBreakpoint("xl");
   return (
     <div className="mt-8 h-full w-full max-w-screen-2xl items-center">
       <Card

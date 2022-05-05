@@ -1,55 +1,39 @@
 import { useMedia } from "react-use";
 
 /**
- * 'sm' breakpoint from tailwind.
+ * breakpoints from tailwind
  */
-export const SMALL_BREAKPOINT = 640;
-/**
- * 'md' breakpoint from tailwind.
- */
-export const MEDIUM_BREAKPOINT = 768;
-/**
- * 'lg' breakpoint from tailwind.
- */
-export const LARGE_BREAKPOINT = 1024;
+const breakpoints = {
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+  "2xl": 1536,
+};
 
 /**
- * 'xl' breakpoint from tailwind.
+ * Takes a minimum breakpoint (`gte`) and optional maximum breakpoint (`lt`) and
+ * returns true if the screen width is greater than or equal to the min and less
+ * than the max.
+ *
+ * @param gte The breakpoint that the screen must be greater than *or equal to*.
+ * @param lt The breakpoint that the screen must be less than.
  */
-export const EXTRA_LARGE_BREAKPOINT = 1280;
+export function useBreakpoint(
+  gte: 0 | keyof typeof breakpoints,
+  lt?: keyof typeof breakpoints,
+): boolean {
+  let query = `(min-width: ${gte === 0 ? 0 : breakpoints[gte]}px)`;
+  if (lt) {
+    query += `(max-width: ${breakpoints[lt] - 1}px)`;
+  }
+  return useMedia(query);
+}
 
 export function useIsTailwindSmallScreen(): boolean {
-  const isSm = useIsTailwindSm();
-  const isMd = useIsTailwindMd();
-  return isSm || isMd;
+  return useBreakpoint(0, "lg");
 }
 
 export function useIsTailwindLargeScreen(): boolean {
-  const isLg = useIsTailwindLg();
-  const isXl = useIsTailwindXl();
-  return isLg || isXl;
-}
-
-function useIsTailwindSm(): boolean {
-  const isLessThanMd = useMedia(`(max-width: ${MEDIUM_BREAKPOINT}px)`);
-  return isLessThanMd;
-}
-function useIsTailwindMd(): boolean {
-  const isAtLeastMdBreakpoint = useMedia(`(min-width: ${MEDIUM_BREAKPOINT}px)`);
-  const isLessThanLgBreakpoint = useMedia(
-    `(max-width: ${LARGE_BREAKPOINT - 1}px)`,
-  );
-  return isAtLeastMdBreakpoint && isLessThanLgBreakpoint;
-}
-
-function useIsTailwindLg(): boolean {
-  const isAtLeastLgBreakpoint = useMedia(`(min-width: ${LARGE_BREAKPOINT}px)`);
-  const isLessThanXlBreakpoint = useMedia(
-    `(max-width: ${EXTRA_LARGE_BREAKPOINT - 1}px)`,
-  );
-  return isAtLeastLgBreakpoint && isLessThanXlBreakpoint;
-}
-
-function useIsTailwindXl(): boolean {
-  return useMedia(`(min-width: ${EXTRA_LARGE_BREAKPOINT - 1}px)`);
+  return useBreakpoint("lg");
 }
