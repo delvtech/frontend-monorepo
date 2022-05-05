@@ -24,6 +24,7 @@ export function useVotingPowerByDelegates(): VotePowerByDelegate {
   );
 
   const events = [...lockingVaultEvents, ...vestingVaultEvents];
+  // Using the length here is a better hook dependency
   // eslint-disable-next-line react-hooks/exhaustive-deps
   return useMemo(() => getVotePowerByDelegate(events), [events.length]);
 }
@@ -45,9 +46,9 @@ function getVotePowerByDelegate(events: Event[]): VotePowerByDelegate {
     if (delegate in votePowerByDelegates) {
       votePowerByDelegates[delegate] =
         votePowerByDelegates[delegate].add(amount);
+    } else {
+      votePowerByDelegates[delegate] = amount;
     }
-
-    votePowerByDelegates[delegate] = amount;
   });
 
   return votePowerByDelegates;

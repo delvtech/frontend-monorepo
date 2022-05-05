@@ -19,6 +19,7 @@ export function useGSCCandidates(): Delegate[] {
 
   return useMemo(
     () => sortVotingPower(votePowerByDelegates, gscMemberAddresses),
+    // Using the length here is a better hook dependency
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [gscMemberAddresses.length, votePowerByDelegates],
   );

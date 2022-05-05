@@ -62,7 +62,7 @@ export function GSCOverviewPage(): ReactElement {
   // Find GSC members that are kickable
   const { data: thresholdValue } = useGSCVotePowerThreshold();
   const kickableMembers = getKickableMembers(
-    members,
+    [...members],
     votingPowerByDelegate,
     thresholdValue ?? BigNumber.from(0),
   );
