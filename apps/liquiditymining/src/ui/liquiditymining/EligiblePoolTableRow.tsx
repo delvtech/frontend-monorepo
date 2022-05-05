@@ -14,7 +14,7 @@ import {
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card, { CardVariant } from "src/ui/base/Card/Card";
+import Card from "src/ui/base/Card/Card";
 import { useLPTokenBalance } from "src/ui/liquiditymining/hooks/useLPTokenBalance";
 import { useELFIPerBlock } from "src/ui/liquiditymining/hooks/useELFIPerBlock";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
@@ -72,7 +72,10 @@ export function EligiblePoolTableRow({
   const unlockDate = convertEpochSecondsToDate(unlockTimestamp);
 
   const poolContract = eligibleGoerliPoolContracts[poolAddress];
-  const { data: lpTokenBalance } = useLPTokenBalance(poolContract, account);
+  const { data: lpTokenBalance = "0" } = useLPTokenBalance(
+    poolContract,
+    account,
+  );
   const elfiPerBlock = useELFIPerBlock(poolAddress);
   const elfiPerWeek = ETHEREUM_BLOCKS_PER_WEEK * elfiPerBlock;
 
@@ -109,7 +112,7 @@ export function EligiblePoolTableRow({
     }
   };
 
-  const hasNoBalance = !+(lpTokenBalance || 0);
+  const hasNoBalance = !+lpTokenBalance;
   const hasNotStaked = !+depositedBalance;
   const hasNoRewards = !+pendingRewards;
   return (
@@ -127,7 +130,7 @@ export function EligiblePoolTableRow({
             <ExternalLink href={POOL_HREF}>
               <Tag
                 intent={Intent.PRIMARY}
-                className="!rounded-full py-[2px] text-[13px] font-light"
+                className="!rounded-full !py-[2px] text-[13px]"
               >
                 {formatAbbreviatedDate(unlockDate)}
               </Tag>
@@ -181,31 +184,31 @@ export function EligiblePoolTableRow({
                   placement: "bottom-end",
                 }}
                 popover={
-                  <Card className="mt-2 flex flex-col items-stretch">
-                    <Button
-                      disabled={hasNotStaked}
-                      variant={ButtonVariant.MINIMAL}
-                      onClick={() => setUnstakeDialogIsShowing(true)}
-                      className="gap-2"
-                    >
-                      <MinusIcon className="h-5 text-principalRoyalBlue" />
-                      {t`Unstake & Claim`}
-                    </Button>
+                  <Card className="my-2 flex flex-col items-stretch !p-3">
                     <Button
                       disabled={hasNoBalance}
                       variant={ButtonVariant.MINIMAL}
                       onClick={() => setStakeDialogIsShowing(true)}
-                      className="gap-2"
+                      className="gap-2 !shadow-none"
                     >
                       <PlusIcon className="h-5 text-principalRoyalBlue" />
                       {t`Stake`}
+                    </Button>
+                    <Button
+                      disabled={hasNotStaked}
+                      variant={ButtonVariant.MINIMAL}
+                      onClick={() => setUnstakeDialogIsShowing(true)}
+                      className="gap-2 !shadow-none"
+                    >
+                      <MinusIcon className="h-5 text-principalRoyalBlue" />
+                      {t`Unstake & Claim`}
                     </Button>
                     <Button
                       disabled={hasNoRewards}
                       variant={ButtonVariant.MINIMAL}
                       onClick={handleClaim}
                       loading={transactionIsPending}
-                      className="gap-2"
+                      className="gap-2 !shadow-none"
                     >
                       <GiftIcon className="h-5 text-principalRoyalBlue" />
                       {t`Claim ELFI`}

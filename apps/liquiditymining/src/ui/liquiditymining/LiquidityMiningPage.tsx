@@ -14,7 +14,7 @@ import { useBreakpoint } from "src/ui/base/tailwindBreakpoints";
 export function LiquidityMiningPage(): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
   const signer = useSigner(account, library);
-  const isXLOrGreater = useBreakpoint("xl");
+  const isLessThanXL = useBreakpoint(0, "xl");
   return (
     <div className="mt-8 h-full w-full max-w-screen-2xl items-center">
       <Card
@@ -32,9 +32,7 @@ export function LiquidityMiningPage(): ReactElement {
           className="block w-full shrink-0 justify-center lg:w-auto"
         >{t`Learn more`}</Button>
       </Card>
-      {isXLOrGreater ? (
-        <EligiblePoolsTable account={account} signer={signer} />
-      ) : (
+      {isLessThanXL ? (
         <div className="grid grid-cols-1 flex-wrap gap-8 lg:grid-cols-2">
           {Object.values(eligibleGoerliPoolTokenInfos).map((pool) => (
             <EligiblePoolCard
@@ -45,6 +43,8 @@ export function LiquidityMiningPage(): ReactElement {
             />
           ))}
         </div>
+      ) : (
+        <EligiblePoolsTable account={account} signer={signer} />
       )}
     </div>
   );
