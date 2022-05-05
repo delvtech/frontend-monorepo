@@ -97,7 +97,7 @@ export function StakeDialog({
           <H2 className="tracking-wide text-brandDarkBlue-dark">{t`${baseAssetSymbol} LP Token`}</H2>
           <Tag
             intent={Intent.PRIMARY}
-            className="!rounded-full py-1 font-light"
+            className="!rounded-full !py-1 font-light"
           >
             {formatAbbreviatedDate(unlockDate)}
           </Tag>

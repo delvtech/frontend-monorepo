@@ -122,7 +122,7 @@ export function EligiblePoolCard({
             <ExternalLink href={POOL_HREF}>
               <Tag
                 intent={Intent.PRIMARY}
-                className="!rounded-full py-1 font-light"
+                className="!rounded-full !py-1 font-light"
               >
                 {formatAbbreviatedDate(unlockDate)}
               </Tag>
