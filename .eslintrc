@@ -1,14 +1,22 @@
 {
+  // https://typescript-eslint.io/docs/linting/monorepo/
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "tsconfigRootDir": ".",
+    "project": ["{apps,packages}/**/tsconfig*.json"]
+  },
   "ignorePatterns": ["*.json", "*.md"],
   "extends": [
     "next",
     "react-app",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:testing-library/react",
     "plugin:jest-dom/recommended",
     "plugin:jsx-a11y/recommended",
-    "prettier"
+    "prettier",
+    "./node_modules/@synthetixio/synpress/.eslintrc.js"
   ],
   "plugins": ["tailwindcss", "jsx-a11y", "testing-library", "jest-dom"],
   "overrides": [
