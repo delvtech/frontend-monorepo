@@ -104,16 +104,18 @@ export function UnstakeDialog({
           </Tag>
         </div>
       </div>
-      <div className="mb-4 space-y-1 px-1">
+      <div className="mb-4 space-y-1 px-1 text-gray-500">
         <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-          <span className="whitespace-nowrap text-principalRoyalBlue">{t`Staked balance`}</span>
+          <span className="whitespace-nowrap">{t`Staked balance`}</span>
           <span>{commify((+depositedBalance).toFixed(4))}</span>
         </p>
         <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-          <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
+          <span className="whitespace-nowrap">{t`Unclaimed ELFI`}</span>
           <Elfi amount={pendingRewards} />
         </p>
       </div>
+      {/* The id will be on the input from TokenInput, but eslint doesn't
+      know that yet. */}
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label
         htmlFor="unstake-input"

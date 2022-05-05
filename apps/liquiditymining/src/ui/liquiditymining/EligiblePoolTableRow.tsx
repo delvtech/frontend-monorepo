@@ -2,7 +2,7 @@ import {
   PrincipalPoolTokenInfo,
   PrincipalTokenInfo,
 } from "@elementfi/tokenlist";
-import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon, MinusIcon, PlusIcon } from "@heroicons/react/solid";
 import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import React, { ReactElement, useState } from "react";
@@ -14,7 +14,7 @@ import {
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card from "src/ui/base/Card/Card";
+import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { useLPTokenBalance } from "src/ui/liquiditymining/hooks/useLPTokenBalance";
 import { useELFIPerBlock } from "src/ui/liquiditymining/hooks/useELFIPerBlock";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
@@ -40,6 +40,8 @@ import H2 from "src/ui/base/H2/H2";
 import { Elfi } from "./Elfi";
 import classNames from "classnames";
 import { usePendingSushi } from "src/ui/liquiditymining/hooks/usePendingSushi";
+import PopoverButton from "src/ui/base/Button/PopoverButton";
+import { GiftIcon } from "@heroicons/react/outline";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -47,7 +49,7 @@ interface EligiblePoolCardProps {
   pool: PrincipalPoolTokenInfo;
   className?: string;
 }
-export function EligiblePoolCard({
+export function EligiblePoolTableRow({
   account,
   signer,
   pool,
@@ -70,10 +72,7 @@ export function EligiblePoolCard({
   const unlockDate = convertEpochSecondsToDate(unlockTimestamp);
 
   const poolContract = eligibleGoerliPoolContracts[poolAddress];
-  const { data: lpTokenBalance = "0" } = useLPTokenBalance(
-    poolContract,
-    account,
-  );
+  const { data: lpTokenBalance } = useLPTokenBalance(poolContract, account);
   const elfiPerBlock = useELFIPerBlock(poolAddress);
   const elfiPerWeek = ETHEREUM_BLOCKS_PER_WEEK * elfiPerBlock;
 
@@ -110,108 +109,128 @@ export function EligiblePoolCard({
     }
   };
 
-  const hasNoBalance = !+lpTokenBalance;
+  const hasNoBalance = !+(lpTokenBalance || 0);
   const hasNotStaked = !+depositedBalance;
   const hasNoRewards = !+pendingRewards;
   return (
     <>
-      <Card className={classNames("flex flex-col !p-8", className)}>
-        <div className="mb-2 flex items-center justify-between gap-3">
+      <div
+        className={classNames(
+          "grid grid-cols-[repeat(18,_minmax(0,_1fr))] p-5 text-gray-500",
+          className,
+        )}
+      >
+        <div className="col-span-3 flex items-center gap-3">
+          <AssetIcon symbol={baseAssetSymbol} className="h-10" />
           <div>
-            <H2 className="tracking-wide text-principalRoyalBlue">{t`${baseAssetSymbol} LP Token`}</H2>
+            <H2 className="!text-base tracking-wide text-principalRoyalBlue">{t`${baseAssetSymbol} LP Token`}</H2>
             <ExternalLink href={POOL_HREF}>
               <Tag
                 intent={Intent.PRIMARY}
-                className="!rounded-full py-1 font-light"
+                className="!rounded-full py-[2px] text-[13px] font-light"
               >
                 {formatAbbreviatedDate(unlockDate)}
               </Tag>
             </ExternalLink>
           </div>
-          <AssetIcon symbol={baseAssetSymbol} className="mb-2 h-12" />
         </div>
-        <div className="flex flex-1 flex-col text-gray-500">
-          <div className="space-y-1 px-4 py-6">
-            <p className="gap-x-1align-baseline flex flex-wrap justify-between">
-              <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total Staked`}</span>
-              <span>${commify(totalFiatStaked)}</span>
-            </p>
-            <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-              <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total ELFI / Week`}</span>
-              <Elfi amount={elfiPerWeek} />
-            </p>
-          </div>
+        <span className="col-span-2 flex items-center justify-end">
+          ${commify(totalFiatStaked)}
+        </span>
+        <span className="col-span-2 flex items-center justify-end">
+          <Elfi amount={elfiPerWeek} />
+        </span>
+        <span className="col-span-2 flex items-center justify-end">
+          {formatPercent(+poolShare)}
+        </span>
+        <span className="col-span-2 flex items-center justify-end">
+          <Elfi amount={userElfiPerWeek} />
+        </span>
+        <span className="col-span-2 flex items-center justify-end">
+          <Elfi
+            className={classNames(
+              +pendingRewards > 0 && "font-semibold text-gray-800",
+            )}
+            amount={pendingRewards}
+          />
+        </span>
+        <span
+          className={classNames(
+            "col-span-2 flex items-center justify-end",
+            +depositedBalance > 0 && "font-semibold text-gray-800",
+          )}
+        >
+          {depositedBalanceLabel}
+        </span>
+        <div className="col-span-3 flex pl-10">
           {hasNotStaked ? (
-            <>
-              <span className="mb-2"></span>
-              <Button
-                className="mt-auto w-full justify-center"
-                variant={ButtonVariant.GRADIENT}
-                onClick={() => setStakeDialogIsShowing(true)}
-                loading={transactionIsPending}
-                disabled={hasNoBalance}
-              >{t`Stake`}</Button>
-            </>
+            <Button
+              className="flex-1 justify-center"
+              variant={ButtonVariant.GRADIENT}
+              onClick={() => setStakeDialogIsShowing(true)}
+              loading={transactionIsPending}
+              disabled={hasNoBalance}
+            >{t`Stake`}</Button>
           ) : (
-            <>
-              <hr className="border-hackerSky-dark" />
-              <div className="space-y-1 bg-hackerSky  px-4 py-6">
-                <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-                  <span className="whitespace-nowrap text-principalRoyalBlue">{t`Pool Share`}</span>
-                  <span>{formatPercent(+poolShare)}</span>
-                </p>
-                <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-                  <span className="whitespace-nowrap text-principalRoyalBlue">{t`ELFI / Week`}</span>
-                  <Elfi amount={userElfiPerWeek} />
-                </p>
-                <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-                  <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
-                  <Elfi
-                    className={classNames(
-                      +pendingRewards > 0 && "font-semibold text-gray-800",
-                    )}
-                    amount={pendingRewards}
-                  />
-                </p>
-              </div>
-              <hr className="border-hackerSky-dark" />
-              <div className="mb-2 flex justify-between px-4 py-6">
-                <div>
-                  <span className="block text-principalRoyalBlue">{t`LP Staked`}</span>
-                  <span className="block text-2xl text-gray-800">
-                    {depositedBalanceLabel}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    disabled={hasNotStaked}
-                    variant={ButtonVariant.MINIMAL}
-                    onClick={() => setUnstakeDialogIsShowing(true)}
-                    title="Unstake"
-                  >
-                    <MinusIcon className="h-5 text-principalRoyalBlue" />
-                  </Button>
-                  <Button
-                    disabled={hasNoBalance}
-                    variant={ButtonVariant.MINIMAL}
-                    onClick={() => setStakeDialogIsShowing(true)}
-                    title="Stake"
-                  >
-                    <PlusIcon className={`h-5 text-principalRoyalBlue`} />
-                  </Button>
-                </div>
-              </div>
-              <Button
-                className="mt-auto w-full justify-center"
+            <div className="flex-1">
+              <PopoverButton
+                className="w-full justify-center"
                 variant={ButtonVariant.GRADIENT}
-                onClick={handleClaim}
                 loading={transactionIsPending}
-                disabled={hasNoRewards}
-              >{t`Claim ELFI`}</Button>
-            </>
+                popoverOptions={{
+                  placement: "bottom-end",
+                }}
+                popover={
+                  <Card className="mt-2 flex flex-col items-stretch">
+                    <Button
+                      disabled={hasNotStaked}
+                      variant={ButtonVariant.MINIMAL}
+                      onClick={() => setUnstakeDialogIsShowing(true)}
+                      className="gap-2"
+                    >
+                      <MinusIcon className="h-5 text-principalRoyalBlue" />
+                      {t`Unstake & Claim`}
+                    </Button>
+                    <Button
+                      disabled={hasNoBalance}
+                      variant={ButtonVariant.MINIMAL}
+                      onClick={() => setStakeDialogIsShowing(true)}
+                      className="gap-2"
+                    >
+                      <PlusIcon className="h-5 text-principalRoyalBlue" />
+                      {t`Stake`}
+                    </Button>
+                    <Button
+                      disabled={hasNoRewards}
+                      variant={ButtonVariant.MINIMAL}
+                      onClick={handleClaim}
+                      loading={transactionIsPending}
+                      className="gap-2"
+                    >
+                      <GiftIcon className="h-5 text-principalRoyalBlue" />
+                      {t`Claim ELFI`}
+                    </Button>
+                  </Card>
+                }
+              >
+                {(open: boolean) => (
+                  <div className="flex w-[90px] items-center justify-center">
+                    {t`Actions`}
+
+                    <ChevronDownIcon
+                      className={classNames(
+                        open ? classNames("rotate-180 transform") : "",
+                        "ml-2 h-5 w-5 transition duration-150 ease-in-out",
+                      )}
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+              </PopoverButton>
+            </div>
           )}
         </div>
-      </Card>
+      </div>
 
       <StakeDialog
         account={account}

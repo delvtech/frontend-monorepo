@@ -12,31 +12,26 @@ function Header(): ReactElement {
   const { data: gasPrice } = useGasPrice();
 
   return (
-    <div className="flex w-full justify-between">
-      <div className="flex space-x-3"></div>
-      <div className="flex items-center space-x-4 text-gray-400">
-        {account ? (
-          <div className="flex items-center">
-            <a
-              href={GAS_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="mr-8 flex items-center"
-            >
-              <GasIcon className="h-5 w-5" />
-              <span className="ml-2 mr-1 font-bold text-principalRoyalBlue">
-                {gasPrice?.recommendedBaseFee || 0.0}
-              </span>
-            </a>
-          </div>
-        ) : null}
+    <div className="flex items-center justify-end gap-8 text-gray-400">
+      {account ? (
+        <a
+          href={GAS_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-2"
+        >
+          <GasIcon className="h-5 w-5" />
+          <span className="font-bold text-principalRoyalBlue">
+            {gasPrice?.recommendedBaseFee || 0.0}
+          </span>
+        </a>
+      ) : null}
 
-        <WalletProfileButton
-          account={account}
-          provider={library}
-          walletConnectionActive={active}
-        />
-      </div>
+      <WalletProfileButton
+        account={account}
+        provider={library}
+        walletConnectionActive={active}
+      />
     </div>
   );
 }

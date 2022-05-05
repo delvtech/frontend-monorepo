@@ -103,8 +103,8 @@ export function StakeDialog({
           </Tag>
         </div>
       </div>
-      <p className="mb-4 flex flex-wrap justify-between gap-x-1 px-1 align-baseline">
-        <span className="whitespace-nowrap text-principalRoyalBlue">{t`Available to stake`}</span>
+      <p className="mb-4 flex flex-wrap justify-between gap-x-1 px-1 align-baseline text-gray-500">
+        <span className="whitespace-nowrap">{t`Available to stake`}</span>
         <span>{commify((+availableAmount).toFixed(4))}</span>
       </p>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}

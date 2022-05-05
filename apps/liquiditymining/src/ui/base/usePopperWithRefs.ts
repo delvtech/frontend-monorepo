@@ -5,7 +5,7 @@ type UsePopper = typeof usePopper;
 type UsePopperArgs = Parameters<UsePopper>;
 type ReferenceElement = UsePopperArgs[0];
 type PopperElement = UsePopperArgs[1];
-type Options = UsePopperArgs[2];
+export type PopperOptions = UsePopperArgs[2];
 
 interface UsePopperWithRefs extends ReturnType<UsePopper> {
   setReferenceElement: Dispatch<SetStateAction<ReferenceElement>>;
@@ -13,7 +13,7 @@ interface UsePopperWithRefs extends ReturnType<UsePopper> {
 }
 
 export default function usePopperWithRefs(
-  options?: Options,
+  options?: PopperOptions,
 ): UsePopperWithRefs {
   const [referenceElement, setReferenceElement] = useState<ReferenceElement>();
   const [popperElement, setPopperElement] = useState<PopperElement>();

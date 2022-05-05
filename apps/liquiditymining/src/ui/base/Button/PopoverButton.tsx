@@ -6,12 +6,15 @@ import classNames from "classnames";
 
 import { ButtonProps } from "src/ui/base/Button/Button";
 import { getButtonClass } from "src/ui/base/Button/styles";
-import usePopperWithRefs from "src/ui/base/usePopperWithRefs";
+import usePopperWithRefs, {
+  PopperOptions,
+} from "src/ui/base/usePopperWithRefs";
 import isFunction from "lodash.isfunction";
 
 interface PopoverButtonProps extends ButtonProps {
   popover: ReactNode;
   popoverClassName?: string;
+  popoverOptions?: PopperOptions;
   children: ReactNode | ((open: boolean) => ReactElement);
 }
 
@@ -26,6 +29,7 @@ export default function PopoverButton({
   popover,
   className,
   popoverClassName,
+  popoverOptions,
 }: PopoverButtonProps): ReactElement {
   const buttonClass = getButtonClass({
     variant,
@@ -36,7 +40,7 @@ export default function PopoverButton({
     error,
   });
   const { setReferenceElement, setPopperElement, styles, attributes } =
-    usePopperWithRefs();
+    usePopperWithRefs(popoverOptions);
 
   return (
     <Popover>

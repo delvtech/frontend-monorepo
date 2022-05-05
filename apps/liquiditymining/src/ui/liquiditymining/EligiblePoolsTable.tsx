@@ -1,30 +1,44 @@
-import React, { ReactElement } from "react";
-import {
-  eligibleGoerliPoolTokenInfos,
-  poolIdsByPoolAddress,
-} from "src/elf/liquiditymining/eligiblepools";
-import Card from "src/ui/base/Card/Card";
-import { EligiblePoolCardRow } from "./EligiblePoolCardRow";
-import { EligiblePoolsTableHeader } from "./EligiblePoolsTableHeader";
+import classNames from "classnames";
+import { Signer } from "ethers";
+import { ReactElement } from "react";
+import { eligibleGoerliPoolTokenInfos } from "src/elf/liquiditymining/eligiblepools";
+import { t } from "ttag";
+import { EligiblePoolTableRow } from "./EligiblePoolTableRow";
 
-export function EligiblePoolsTable(props: {
+interface EligiblePoolsTableProps {
   account: string | null | undefined;
-}): ReactElement {
-  return (
-    <Card className="flex w-min flex-col space-y-6">
-      {/* Header */}
-      <EligiblePoolsTableHeader />
-      <hr />
+  signer: Signer | undefined;
+  className?: string;
+}
 
-      <div className="flex-col space-y-4">
-        {Object.keys(poolIdsByPoolAddress).map((pool) => (
-          <EligiblePoolCardRow
-            key={pool}
-            account={props.account}
-            pool={eligibleGoerliPoolTokenInfos[pool]}
+export function EligiblePoolsTable({
+  account,
+  signer,
+  className,
+}: EligiblePoolsTableProps): ReactElement {
+  return (
+    <div className={classNames("rounded-3xl bg-white shadow-xl", className)}>
+      <div className="border-b border-hackerSky-dark p-5">
+        <div className="grid grid-cols-[repeat(18,_minmax(0,_1fr))] items-center rounded-2xl bg-hackerSky p-5 text-sm font-semibold text-principalRoyalBlue">
+          <span className="col-span-3">{t`LP Token`}</span>
+          <span className="col-span-2 text-right">{t`Total Staked`}</span>
+          <span className="col-span-2 text-right">{t`Total ELFI / Week`}</span>
+          <span className="col-span-2 text-right">{t`Pool Share`}</span>
+          <span className="col-span-2 text-right">{t`ELFI / Week`}</span>
+          <span className="col-span-2 text-right">{t`Unclaimed ELFI`}</span>
+          <span className="col-span-2 text-right">{t`Staked Balance`}</span>
+        </div>
+      </div>
+      <div className="p-5">
+        {Object.values(eligibleGoerliPoolTokenInfos).map((pool) => (
+          <EligiblePoolTableRow
+            key={pool.address}
+            account={account}
+            signer={signer}
+            pool={pool}
           />
         ))}
       </div>
-    </Card>
+    </div>
   );
 }

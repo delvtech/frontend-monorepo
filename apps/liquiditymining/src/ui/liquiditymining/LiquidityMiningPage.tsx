@@ -7,15 +7,18 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
 import { useSigner } from "src/ui/signer/useSigner";
+import { EligiblePoolsTable } from "./EligiblePoolsTable";
 import { EligiblePoolCard } from "./EligiblePoolCard";
+import { useBreakpoint } from "src/ui/base/tailwindBreakpoints";
 
 export function LiquidityMiningPage(): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
   const signer = useSigner(account, library);
+  const isXLOrGreater = useBreakpoint("xl");
   return (
-    <div className="mt-8 h-full w-full max-w-7xl items-center">
+    <div className="mt-8 h-full w-full max-w-screen-2xl items-center">
       <Card
-        className="mb-6 flex flex-col items-center gap-4 !p-8 text-white lg:flex-row"
+        className="mb-6 flex flex-col items-center gap-4 !p-8 text-white lg:flex-row lg:justify-between"
         variant={CardVariant.GRADIENT}
       >
         <div>
@@ -29,16 +32,20 @@ export function LiquidityMiningPage(): ReactElement {
           className="block w-full shrink-0 justify-center lg:w-auto"
         >{t`Learn more`}</Button>
       </Card>
-      <div className="grid grid-cols-1 flex-wrap gap-8 xl:grid-cols-2 2xl:grid-cols-3">
-        {Object.values(eligibleGoerliPoolTokenInfos).map((pool) => (
-          <EligiblePoolCard
-            key={pool.address}
-            account={account}
-            signer={signer}
-            pool={pool}
-          />
-        ))}
-      </div>
+      {isXLOrGreater ? (
+        <EligiblePoolsTable account={account} signer={signer} />
+      ) : (
+        <div className="grid grid-cols-1 flex-wrap gap-8 lg:grid-cols-2">
+          {Object.values(eligibleGoerliPoolTokenInfos).map((pool) => (
+            <EligiblePoolCard
+              key={pool.address}
+              account={account}
+              signer={signer}
+              pool={pool}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
