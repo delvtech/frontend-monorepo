@@ -18,7 +18,7 @@ function ExternalLink({
     <a
       href={href}
       target="_blank"
-      rel="noreferrer"
+      rel="noreferrer noopener"
       className={classNames(
         className,
         "flex shrink-0 items-center gap-2 decoration-current underline-offset-2 hover:underline",
