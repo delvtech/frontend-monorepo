@@ -106,8 +106,8 @@ export function UnstakeDialog({
       </div>
       <div className="mb-4 space-y-1 px-1 text-gray-500">
         <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
-          <span className="whitespace-nowrap">{t`Staked balance`}</span>
-          <span>{commify((+depositedBalance).toFixed(4))}</span>
+          <span className="whitespace-nowrap">{t`Your staked balance`}</span>
+          <span>{`${commify((+depositedBalance).toFixed(4))} LP`}</span>
         </p>
         <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
           <span className="whitespace-nowrap">{t`Unclaimed ELFI`}</span>

@@ -26,7 +26,7 @@ export function EligiblePoolsTable({
           <span className="col-span-2 text-right">{t`Pool Share`}</span>
           <span className="col-span-2 text-right">{t`ELFI / Week`}</span>
           <span className="col-span-2 text-right">{t`Unclaimed ELFI`}</span>
-          <span className="col-span-2 text-right">{t`Staked Balance`}</span>
+          <span className="col-span-2 text-right">{t`Your Balance`}</span>
         </div>
       </div>
       <div className="p-5">
