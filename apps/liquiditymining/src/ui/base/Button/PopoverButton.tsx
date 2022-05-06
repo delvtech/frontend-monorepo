@@ -66,7 +66,7 @@ export default function PopoverButton({
             ref={setPopperElement as LegacyRef<HTMLDivElement>}
             className={classNames(popoverClassName, "absolute z-10")}
           >
-            <Popover.Button>{popover}</Popover.Button>
+            {popover}
           </Popover.Panel>
         </Fragment>
       )}
