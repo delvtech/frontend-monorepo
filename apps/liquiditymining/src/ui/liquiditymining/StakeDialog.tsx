@@ -108,20 +108,24 @@ export function StakeDialog({
         <span>{commify((+availableAmount).toFixed(4))}</span>
       </p>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label
-        htmlFor="stake-input"
-        className="mb-1 block px-1 text-lg text-principalRoyalBlue"
-      >{t`Amount`}</label>
-      <TokenInput
-        id="stake-input"
-        className="mb-6"
-        name="Stake Amount"
-        screenReaderLabel="Amount to stake"
-        value={stakeAmount}
-        onChange={setStakeAmount}
-        maxValue={availableAmount}
-        disabled={!isApproved}
-      />
+      {isApproved && (
+        <>
+          <label
+            htmlFor="stake-input"
+            className="mb-1 block px-1 text-lg text-principalRoyalBlue"
+          >{t`Amount`}</label>
+          <TokenInput
+            id="stake-input"
+            className="mb-6"
+            name="Stake Amount"
+            screenReaderLabel="Amount to stake"
+            value={stakeAmount}
+            onChange={setStakeAmount}
+            maxValue={availableAmount}
+            disabled={!isApproved}
+          />
+        </>
+      )}
       {!account ? (
         <ConnectWalletButton
           className="w-full justify-center"
@@ -134,7 +138,7 @@ export function StakeDialog({
           onClick={approve}
           loading={transactionIsPending}
         >
-          {t`Approve`}
+          {t`Approve Token`}
         </Button>
       ) : (
         <Button
