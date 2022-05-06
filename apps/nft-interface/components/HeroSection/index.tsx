@@ -1,5 +1,6 @@
 import { PrimaryButton } from "common/Button/styles";
 import { SectionContainer } from "common/Container";
+import { ExternalLink } from "common/ExternalLink";
 import { DesktopHeader, MobileHeader } from "components/Entrance/styles";
 import {
   ButtonWrapper,
@@ -12,6 +13,7 @@ import Link from "next/link";
 import { ReactElement } from "react";
 import { Fade } from "react-awesome-reveal";
 import { isFeatureEnabled } from "src/features";
+import { COUNCIL_URL } from "src/urls";
 
 export const HeroSection = (): ReactElement => {
   return (
@@ -34,7 +36,15 @@ export const HeroSection = (): ReactElement => {
                     <Link passHref href="/mint">
                       <PrimaryButton as="a">Start minting</PrimaryButton>
                     </Link>
-                    <PrimaryButton hasBorder>The Council</PrimaryButton>
+                    <a
+                      target="_blank"
+                      href={COUNCIL_URL}
+                      rel="noopener noreferrer"
+                    >
+                      <PrimaryButton hasBorder as="a">
+                        The Council
+                      </PrimaryButton>
+                    </a>
                   </ButtonWrapper>
                 )}
               </ContentCenter>
