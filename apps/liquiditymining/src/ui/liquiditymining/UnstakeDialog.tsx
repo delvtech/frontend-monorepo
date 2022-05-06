@@ -81,9 +81,9 @@ export function UnstakeDialog({
   };
 
   const amountIsInvalid =
-    isNaN(+unstakeAmount) ||
-    +unstakeAmount <= 0 ||
-    +unstakeAmount > +depositedBalance;
+    !+unstakeAmount ||
+    +unstakeAmount < 0 ||
+    parseEther(unstakeAmount).gt(parseEther(depositedBalance));
 
   return (
     <SimpleDialog
