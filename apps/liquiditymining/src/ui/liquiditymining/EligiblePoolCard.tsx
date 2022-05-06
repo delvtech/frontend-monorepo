@@ -29,7 +29,10 @@ import { commify } from "ethers/lib/utils";
 import { usePoolShare } from "src/ui/liquiditymining/hooks/usePoolShare";
 import { StakeDialog } from "src/ui/liquiditymining/StakeDialog";
 import { Signer } from "ethers";
-import { useTotalFiatStaked } from "src/ui/liquiditymining/hooks/useTotalFiatStaked";
+import {
+  useTotalFiatStaked,
+  useTotalFiatStakedForUser,
+} from "src/ui/liquiditymining/hooks/useTotalFiatStaked";
 import { UnstakeDialog } from "src/ui/liquiditymining/UnstakeDialog";
 import { useClaim } from "src/ui/liquiditymining/hooks/useClaim";
 import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
@@ -81,6 +84,7 @@ export function EligiblePoolCard({
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || "0";
   const depositedBalanceLabel = commify((+depositedBalance).toFixed(4));
+  const depositedFiatBalance = useTotalFiatStakedForUser(pool, account);
 
   const userElfiPerWeek = elfiPerWeek * +poolShare;
 
@@ -177,9 +181,12 @@ export function EligiblePoolCard({
               <hr className="border-hackerSky-dark" />
               <div className="mb-2 flex justify-between px-4 py-6">
                 <div>
-                  <span className="block text-principalRoyalBlue">{t`LP Staked`}</span>
-                  <span className="block text-2xl text-gray-800">
+                  <span className="mb-1 block text-principalRoyalBlue">{t`LP Staked`}</span>
+                  <span className="block h-7 text-2xl text-gray-800">
                     {depositedBalanceLabel}
+                  </span>
+                  <span className="text-sm text-gray-400">
+                    ${commify(depositedFiatBalance)}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">

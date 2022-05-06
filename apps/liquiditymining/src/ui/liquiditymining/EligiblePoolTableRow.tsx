@@ -29,7 +29,10 @@ import { commify } from "ethers/lib/utils";
 import { usePoolShare } from "src/ui/liquiditymining/hooks/usePoolShare";
 import { StakeDialog } from "src/ui/liquiditymining/StakeDialog";
 import { Signer } from "ethers";
-import { useTotalFiatStaked } from "src/ui/liquiditymining/hooks/useTotalFiatStaked";
+import {
+  useTotalFiatStaked,
+  useTotalFiatStakedForUser,
+} from "src/ui/liquiditymining/hooks/useTotalFiatStaked";
 import { UnstakeDialog } from "src/ui/liquiditymining/UnstakeDialog";
 import { useClaim } from "src/ui/liquiditymining/hooks/useClaim";
 import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
@@ -83,6 +86,7 @@ export function EligiblePoolTableRow({
   const { data: userInfo } = useUserInfo(account, poolAddress);
   const depositedBalance = userInfo?.amount || "0";
   const depositedBalanceLabel = commify((+depositedBalance).toFixed(4));
+  const depositedFiatBalance = useTotalFiatStakedForUser(pool, account);
 
   const userElfiPerWeek = elfiPerWeek * +poolShare;
 
@@ -123,9 +127,9 @@ export function EligiblePoolTableRow({
           className,
         )}
       >
-        <div className="col-span-3 flex items-center gap-3">
+        <span className="col-span-3 flex items-center gap-3">
           <AssetIcon symbol={baseAssetSymbol} className="h-10" />
-          <div>
+          <span>
             <H2 className="!text-base tracking-wide text-principalRoyalBlue">{t`${baseAssetSymbol} LP Token`}</H2>
             <ExternalLink href={POOL_HREF}>
               <Tag
@@ -135,8 +139,8 @@ export function EligiblePoolTableRow({
                 {formatAbbreviatedDate(unlockDate)}
               </Tag>
             </ExternalLink>
-          </div>
-        </div>
+          </span>
+        </span>
         <span className="col-span-2 flex items-center justify-end">
           ${commify(totalFiatStaked)}
         </span>
@@ -157,13 +161,19 @@ export function EligiblePoolTableRow({
             amount={pendingRewards}
           />
         </span>
-        <span
-          className={classNames(
-            "col-span-2 flex items-center justify-end",
-            +depositedBalance > 0 && "font-semibold text-gray-800",
+        <span className="col-span-2 flex flex-col items-end justify-center">
+          <span
+            className={classNames(
+              !hasNotStaked && "font-semibold text-gray-800",
+            )}
+          >
+            {depositedBalanceLabel}
+          </span>
+          {!hasNotStaked && (
+            <span className="-mb-4 h-4 text-xs text-gray-400">
+              ${commify(depositedFiatBalance)}
+            </span>
           )}
-        >
-          {depositedBalanceLabel}
         </span>
         <div className="col-span-3 flex pl-10">
           {hasNotStaked ? (
