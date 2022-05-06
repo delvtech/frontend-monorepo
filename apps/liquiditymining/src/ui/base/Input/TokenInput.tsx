@@ -22,9 +22,11 @@ export default function TokenInput({
   ...inputProps
 }: TokenInputProps): ReactElement {
   const onInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const newDepositAmount = event.target.value;
-      onChange(newDepositAmount);
+    ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+      const isOver18DecimalPlaces = /\..{18}./.test(value);
+      if (!isOver18DecimalPlaces) {
+        onChange(value.replace(/[^\d.]/g, ""));
+      }
     },
     [onChange],
   );
