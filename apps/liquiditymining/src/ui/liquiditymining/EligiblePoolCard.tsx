@@ -40,6 +40,7 @@ import H2 from "src/ui/base/H2/H2";
 import { Elfi } from "./Elfi";
 import classNames from "classnames";
 import { usePendingSushi } from "src/ui/liquiditymining/hooks/usePendingSushi";
+import { ConfirmDialog } from "./ConfirmDialog";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -59,6 +60,7 @@ export function EligiblePoolCard({
 }: EligiblePoolCardProps): ReactElement {
   const [stakeDialogIsShowing, setStakeDialogIsShowing] = useState(false);
   const [unstakeDialogIsShowing, setUnstakeDialogIsShowing] = useState(false);
+  const [claimDialogIsShowing, setClaimDialogIsShowing] = useState(false);
 
   const {
     extensions: { unlockTimestamp, underlying },
@@ -204,7 +206,7 @@ export function EligiblePoolCard({
               <Button
                 className="mt-auto w-full justify-center"
                 variant={ButtonVariant.GRADIENT}
-                onClick={handleClaim}
+                onClick={() => setClaimDialogIsShowing(true)}
                 loading={transactionIsPending}
                 disabled={hasNoRewards}
               >{t`Claim ELFI`}</Button>
@@ -230,6 +232,17 @@ export function EligiblePoolCard({
         isOpen={unstakeDialogIsShowing}
         onClose={() => setUnstakeDialogIsShowing(false)}
       />
+
+      <ConfirmDialog
+        className="!max-w-md !p-8"
+        onConfirm={handleClaim}
+        showAgain={false}
+        showAgainPrefId="lm-reward-claim-confirmation"
+        isOpen={claimDialogIsShowing}
+        onClose={() => setClaimDialogIsShowing(false)}
+      >
+        <p>{t`Your ELFI will automatically be delegated to your selected delegate. If you haven't chosen a delegate, it will be self-delegated.`}</p>
+      </ConfirmDialog>
     </>
   );
 }
