@@ -21,6 +21,7 @@ import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
+import { useGSCBallot } from "src/ui/voting/useGSCBallot";
 
 interface ProposalListItemProps {
   account: string | null | undefined;
@@ -28,6 +29,7 @@ interface ProposalListItemProps {
   proposal: Proposal;
   active: boolean;
   onClick: (proposalId: string | undefined) => void;
+  isGSCProposal?: boolean;
 }
 
 export function ProposalListItem({
@@ -36,6 +38,7 @@ export function ProposalListItem({
   proposal,
   active,
   onClick,
+  isGSCProposal,
 }: ProposalListItemProps): ReactElement {
   const { proposalId, snapshotId } = proposal;
   const { data: [snapshotProposal] = [] } = useSnapshotProposals([snapshotId]);
@@ -80,9 +83,17 @@ export function ProposalListItem({
             )}
             <div className="flex items-center space-x-4">
               <div className="pb-0.5">
-                <BallotIcon account={account} proposalId={proposalId} />
+                <BallotIcon
+                  isGSCProposal={isGSCProposal}
+                  account={account}
+                  proposalId={proposalId}
+                />
               </div>
-              <ProposalStatusIcon signer={signer} proposal={proposal} />
+              <ProposalStatusIcon
+                isGSCProposal={isGSCProposal}
+                signer={signer}
+                proposal={proposal}
+              />
             </div>
           </div>
         </div>
@@ -94,18 +105,31 @@ export function ProposalListItem({
 interface BallotIconProps {
   account: string | null | undefined;
   proposalId: string;
+  isGSCProposal?: boolean;
 }
 function BallotIcon({
   account,
   proposalId,
+  isGSCProposal,
 }: BallotIconProps): ReactElement | null {
   const { data: ballot } = useBallot(account, proposalId);
-  if (ballot === undefined) {
+  const { data: gscBallot } = useGSCBallot(account, proposalId);
+
+  if (!isGSCProposal && ballot === undefined) {
+    return null;
+  }
+  if (isGSCProposal && gscBallot === undefined) {
     return null;
   }
 
-  const [votingPowerBN, castBallot] = ballot;
-  const votingPower = Number(formatEther(votingPowerBN || 0));
+  const [votingPowerBN, coreCastBallot] = ballot ?? [];
+  const [gscVotingPowerBN, gscCastBallot] = gscBallot ?? [];
+  let castBallot = coreCastBallot;
+  let votingPower = Number(formatEther(votingPowerBN || 0));
+  if (isGSCProposal) {
+    votingPower = gscVotingPowerBN?.toNumber() || 0;
+    castBallot = gscCastBallot;
+  }
 
   if (votingPower && castBallot === Ballot.YES) {
     return (

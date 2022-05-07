@@ -2,7 +2,6 @@ import { ReactElement, useMemo } from "react";
 import { QueryObserverResult, useQuery } from "react-query";
 
 import { Provider } from "@ethersproject/providers";
-import { ethers } from "ethers";
 import zip from "lodash.zip";
 import { msgid, ngettext, t } from "ttag";
 
@@ -15,16 +14,16 @@ import { useResolvedEnsName } from "src/ui/ethereum/useResolvedEnsName";
 import { isValidAddress } from "src/base/isValidAddress";
 
 // keeping dead code so i can test UI
-const votes = [
-  ethers.Wallet.createRandom().address,
-  ethers.Wallet.createRandom().address,
-  ethers.Wallet.createRandom().address,
-  // ethers.Wallet.createRandom().address,
-  // ethers.Wallet.createRandom().address,
-  // ethers.Wallet.createRandom().address,
-  // ethers.Wallet.createRandom().address,
-  // ethers.Wallet.createRandom().address,
-];
+// const votes = [
+// ethers.Wallet.createRandom().address,
+// ethers.Wallet.createRandom().address,
+// ethers.Wallet.createRandom().address,
+// ethers.Wallet.createRandom().address,
+// ethers.Wallet.createRandom().address,
+// ethers.Wallet.createRandom().address,
+// ethers.Wallet.createRandom().address,
+// ethers.Wallet.createRandom().address,
+// ];
 
 interface GSCVoteTallysProps {
   provider: Provider;
@@ -32,7 +31,7 @@ interface GSCVoteTallysProps {
 }
 
 export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
-  const { provider, proposalId } = props;
+  const { proposalId } = props;
   const { data: members = [] } = useGSCMembers();
   const memberAddresses = members.map(({ address }) => address);
   const { data: votesByMember = {} } = useGSCVotesByMemberForProposal(
@@ -40,7 +39,7 @@ export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
     proposalId,
   );
   const tallys = useVoteTallys(memberAddresses, votesByMember);
-  const { forList, againstList, abstainList, noVoteList } = tallys;
+  const { forList, againstList, abstainList } = tallys;
   const allVotes = [...forList, ...againstList, ...abstainList];
 
   const firstThreeVotes = allVotes.slice(0, 3);

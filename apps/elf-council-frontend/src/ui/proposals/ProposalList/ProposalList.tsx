@@ -11,6 +11,7 @@ interface ProposalListProps {
   selectedProposalId: string | undefined;
   onClickItem: (proposalId: string | undefined) => void;
   isModalOpen: boolean;
+  isGSCProposal?: boolean;
 }
 export function ProposalList({
   account,
@@ -19,11 +20,13 @@ export function ProposalList({
   selectedProposalId,
   onClickItem,
   isModalOpen,
+  isGSCProposal,
 }: ProposalListProps): ReactElement {
   return (
     <div className="flex w-full flex-col space-y-4 pb-8">
       {proposals.map((proposal) => (
         <ProposalListItem
+          isGSCProposal={isGSCProposal}
           key={proposal.proposalId}
           active={isModalOpen && proposal.proposalId === selectedProposalId}
           proposal={proposal}

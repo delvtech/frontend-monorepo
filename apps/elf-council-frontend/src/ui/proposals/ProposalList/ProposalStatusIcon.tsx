@@ -9,10 +9,15 @@ import { Intent } from "src/ui/base/Intent";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
 
-import { getProposalStatus, ProposalStatus } from "./ProposalStatus";
+import {
+  getGSCProposalStatus,
+  getProposalStatus,
+  ProposalStatus,
+} from "./ProposalStatus";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import classNames from "classnames";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { useVotingPowerForGSCProposal } from "src/ui/proposals/useVotingPowerForGSCProposal";
 
 const StatusLabels: Record<ProposalStatus, string> = {
   [ProposalStatus.IN_PROGRESS]: t`In progress`,
@@ -34,24 +39,30 @@ interface ProposalStatusIconProps {
   signer: Signer | undefined;
   proposal: Proposal;
   disableTooltip?: boolean;
+  isGSCProposal?: boolean;
 }
 
 export function ProposalStatusIcon({
   proposal,
   disableTooltip = false,
+  isGSCProposal = false,
 }: ProposalStatusIconProps): ReactElement | null {
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const { proposalId, quorum } = proposal;
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
   const isExecuted = useProposalExecuted(proposalId);
   const votingPower = useVotingPowerForProposal(proposalId);
+  const gscVotingPower = useVotingPowerForGSCProposal(proposalId);
 
-  const status = getProposalStatus(
-    isVotingOpen,
-    isExecuted,
-    quorum,
-    votingPower,
-  );
+  let status = getProposalStatus(isVotingOpen, isExecuted, quorum, votingPower);
+  if (isGSCProposal) {
+    status = getGSCProposalStatus(
+      isVotingOpen,
+      isExecuted,
+      quorum,
+      gscVotingPower,
+    );
+  }
 
   if (!status) {
     return null;

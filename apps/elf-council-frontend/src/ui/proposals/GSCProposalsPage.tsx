@@ -208,6 +208,7 @@ export default function GSCProposalsPage({
             <NoProposalsList activeTabId={activeTabId} />
           ) : (
             <ProposalList
+              isGSCProposal
               account={account}
               signer={signer}
               proposals={
