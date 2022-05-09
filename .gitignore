@@ -4,6 +4,10 @@ tsconfig.tsbuildinfo
 yarn-error.log
 .env
 apps/**/tests/e2e/screenshots
+<<<<<<< HEAD
 apps/**/tests/e2e/videos
 # this is a safeguard since workspaces don't manage dependency versions, the top level yarn.lock does
 package-lock.json
+=======
+apps/**/tests/e2e/videos
+>>>>>>> 8f7005d (Ignore e2e testing screenshots & videos)
