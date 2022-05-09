@@ -55,8 +55,6 @@ export function useGSCStatus(account: string | null | undefined): GSCContext {
     };
   }
 
-  console.log(formatEther(parsedVotingPower), formatEther(threshold));
-
   // Account is eligible to join GSC
   if (aboveThreshold) {
     return {
