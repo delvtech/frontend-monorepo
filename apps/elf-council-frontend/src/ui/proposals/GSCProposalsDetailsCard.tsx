@@ -34,6 +34,7 @@ import H2 from "src/ui/base/H2/H2";
 import { Intent } from "src/ui/base/Intent";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
+import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 import { GSCMember } from "src/ui/proposals/GSCMember";
 import GSCVoteTallys from "src/ui/proposals/GSCVoteTally";
 import {
@@ -66,6 +67,8 @@ export function GSCProposalDetailsCard(
   const { proposalId, snapshotId, quorum } = proposal;
 
   const toastIdRef = useRef<string>();
+
+  const { data: isGSCMember = false } = useIsGSCMember(account);
 
   const [newBallot, setCurrentBallot] = useState<Ballot>();
   const [isChangingVote, setIsChangingVote] = useState(false);
@@ -257,7 +260,11 @@ export function GSCProposalDetailsCard(
         )}
 
         {/* Voting Related Stats / Action Buttons */}
-        <div className="mt-auto">
+        <div
+          className={classNames("mt-auto", {
+            invisible: !isGSCMember,
+          })}
+        >
           {/* Action Buttons */}
           <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
             <div className="flex w-full items-end justify-between">
