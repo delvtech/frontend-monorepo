@@ -8,8 +8,7 @@
     "plugin:testing-library/react",
     "plugin:jest-dom/recommended",
     "plugin:jsx-a11y/recommended",
-    "prettier",
-    "./node_modules/@synthetixio/synpress/.eslintrc.js"
+    "prettier"
   ],
   "plugins": ["tailwindcss", "jsx-a11y", "testing-library", "jest-dom"],
   "overrides": [
@@ -41,7 +40,7 @@
     }
   ],
   "rules": {
-    "@typescript-eslint/explicit-module-boundary-types": "off", // override to only apply to typescript files
+    "@typescript-eslint/explicit-module-boundary-types": "off", // actually 'error', overwritten above to apply to .ts & .tsx files only
     "@typescript-eslint/no-empty-function": "off", // empty arrow functions are fine for noops when passed to components
     "@typescript-eslint/no-empty-interface": "off", // empty interfaces for component props should be allowed
     "@typescript-eslint/no-unused-vars": [
@@ -70,7 +69,7 @@
     "react/no-unused-prop-types": 0
   },
   "settings": {
-    "import/resolver": {
+    "import/resolver": {          
       // always try to resolve types under `<root>@types` directory even it doesn't contain any
       // source code, like `@types/unist`
       "eslint-import-resolver-typescript": {
