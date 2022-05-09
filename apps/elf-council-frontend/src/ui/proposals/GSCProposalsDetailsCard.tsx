@@ -34,6 +34,7 @@ import H2 from "src/ui/base/H2/H2";
 import { Intent } from "src/ui/base/Intent";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
+import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 import { GSCMember } from "src/ui/proposals/GSCMember";
 import GSCVoteTallys from "src/ui/proposals/GSCVoteTally";
 import {
@@ -50,6 +51,7 @@ import { useBallot } from "src/ui/voting/useBallot";
 import { useGSCVote } from "src/ui/voting/useGSCVote";
 import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTransactionForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
+import { useIsGSCMemberIdle } from "src/ui/gsc/useIsGSCMemberIdle";
 
 interface GSCProposalDetailsCardProps {
   className?: string;
@@ -67,6 +69,8 @@ export function GSCProposalDetailsCard(
 
   const toastIdRef = useRef<string>();
 
+  const { data: isGSCMember = false } = useIsGSCMember(account);
+
   const [newBallot, setCurrentBallot] = useState<Ballot>();
   const [isChangingVote, setIsChangingVote] = useState(false);
   const [isVoteTxPending, setIsVoteTxPending] = useState(false);
@@ -78,6 +82,7 @@ export function GSCProposalDetailsCard(
 
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
+  const isMemberIdle = useIsGSCMemberIdle(account);
 
   const isExecuted = useProposalExecuted(proposalId);
 
@@ -257,7 +262,11 @@ export function GSCProposalDetailsCard(
         )}
 
         {/* Voting Related Stats / Action Buttons */}
-        <div className="mt-auto">
+        <div
+          className={classNames("mt-auto", {
+            invisible: !isGSCMember,
+          })}
+        >
           {/* Action Buttons */}
           <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
             <div className="flex w-full items-end justify-between">
@@ -275,7 +284,7 @@ export function GSCProposalDetailsCard(
                 currentBallot={newBallot}
                 onSelectBallot={setCurrentBallot}
                 variant={ButtonVariant.WHITE}
-                disabled={!isVotingOpen}
+                disabled={!isVotingOpen || isMemberIdle}
               />
               {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
                 <div className="ml-4 flex w-full items-center text-white ">
@@ -284,7 +293,7 @@ export function GSCProposalDetailsCard(
               )}
 
               <Button
-                disabled={submitButtonDisabled}
+                disabled={submitButtonDisabled || isMemberIdle}
                 onClick={handleVote}
                 loading={isVoteTxPending}
                 variant={ButtonVariant.PRIMARY}
