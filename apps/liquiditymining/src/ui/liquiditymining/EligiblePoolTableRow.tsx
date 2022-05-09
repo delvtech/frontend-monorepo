@@ -45,6 +45,7 @@ import classNames from "classnames";
 import { usePendingSushi } from "src/ui/liquiditymining/hooks/usePendingSushi";
 import PopoverButton from "src/ui/base/Button/PopoverButton";
 import { GiftIcon } from "@heroicons/react/outline";
+import { ConfirmDialog } from "./ConfirmDialog";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -64,6 +65,7 @@ export function EligiblePoolTableRow({
 }: EligiblePoolCardProps): ReactElement {
   const [stakeDialogIsShowing, setStakeDialogIsShowing] = useState(false);
   const [unstakeDialogIsShowing, setUnstakeDialogIsShowing] = useState(false);
+  const [claimDialogIsShowing, setClaimDialogIsShowing] = useState(false);
 
   const {
     extensions: { unlockTimestamp, underlying },
@@ -184,7 +186,6 @@ export function EligiblePoolTableRow({
               className="flex-1 justify-center"
               variant={ButtonVariant.GRADIENT}
               onClick={() => setStakeDialogIsShowing(true)}
-              loading={transactionIsPending}
               disabled={hasNoBalance}
             >{t`Stake`}</Button>
           ) : (
@@ -219,8 +220,7 @@ export function EligiblePoolTableRow({
                     <Button
                       disabled={hasNoRewards}
                       variant={ButtonVariant.MINIMAL}
-                      onClick={handleClaim}
-                      loading={transactionIsPending}
+                      onClick={() => setClaimDialogIsShowing(true)}
                       className="gap-2 !shadow-none"
                     >
                       <GiftIcon className="h-5 text-principalRoyalBlue" />
@@ -265,6 +265,17 @@ export function EligiblePoolTableRow({
         isOpen={unstakeDialogIsShowing}
         onClose={() => setUnstakeDialogIsShowing(false)}
       />
+
+      <ConfirmDialog
+        className="!max-w-md !p-8"
+        onConfirm={handleClaim}
+        showAgain={false}
+        showAgainPrefId="lm-reward-claim-confirmation"
+        isOpen={claimDialogIsShowing}
+        onClose={() => setClaimDialogIsShowing(false)}
+      >
+        <p className="text-gray-600">{t`Your ELFI will automatically be delegated to your selected delegate. If you haven't chosen a delegate, it will be self-delegated.`}</p>
+      </ConfirmDialog>
     </>
   );
 }
