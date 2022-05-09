@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
@@ -20,6 +20,17 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { GSCPortfolioCard } from "src/ui/gsc/GSCPortfolioCard";
 import { ChangeDelegateButton } from "src/ui/gsc/ChangeDelegationButton";
+import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
+import { useDelegate } from "src/ui/delegate/useDelegate";
+import { Delegate } from "src/elf-council-delegates/delegates";
+import { BigNumber } from "ethers";
+import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
+import { useLeaveGSC } from "src/ui/gsc/useLeaveGSC";
+import { buildToastTransactionConfig } from "src/ui/notifications/buildToastTransactionConfig";
+import {
+  useVotingPowerByDelegates,
+  VotePowerByDelegate,
+} from "src/ui/gsc/useVotingPowerByDelegates";
 
 const provider = defaultProvider;
 const NUM_CANDIDATES_TO_SHOW = 20;
@@ -34,16 +45,43 @@ export function GSCOverviewPage(): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
   const signer = library?.getSigner();
 
+  const currentDelegate = useDelegate(account);
+
+  // Fetch and sort current GSC members
   const { data: members = [] } = useGSCMembers();
+  const votingPowerByDelegate = useVotingPowerByDelegates();
+  const sortedMembers = sortMembersByVotingPower(
+    members,
+    votingPowerByDelegate,
+  );
+
+  // Fetch current GSC candidates
   const candidates = useGSCCandidates();
   const topTwentyCandidates = candidates.slice(0, NUM_CANDIDATES_TO_SHOW);
 
-  // TODO @cashd: Integrate real data
-  const selectedDelegate = candidates[0]?.address;
-  const delegateAddressOnChain = candidates[0]?.address;
+  // Find GSC members that are kickable
+  const { data: thresholdValue } = useGSCVotePowerThreshold();
+  const kickableMembers = getKickableMembers(
+    [...members],
+    votingPowerByDelegate,
+    thresholdValue ?? BigNumber.from(0),
+  );
 
+  // Tab state
   const [currentTab, setCurrentTab] = useState<TabOption>(TabOption.Overview);
   const handleChangeTab = (opt: TabOption) => setCurrentTab(opt);
+
+  const toastIdRef = useRef<string>();
+
+  // Change Delegation logic
+  const { mutate: changeDelegation, isLoading: changeDelegationLoading } =
+    useChangeDelegation(account, signer);
+  const handleDelegation = (address: string) => changeDelegation([address]);
+  const handleLeave = useLeaveGSC(
+    account,
+    signer,
+    buildToastTransactionConfig(toastIdRef),
+  );
 
   return (
     <div className="w-full max-w-7xl space-y-6">
@@ -154,40 +192,36 @@ export function GSCOverviewPage(): ReactElement {
           )}
 
           {currentTab === TabOption.Current &&
-            (members.length ? (
+            (sortedMembers.length ? (
               <div className="">
                 <ul className="space-y-2">
                   {members.map((member) => {
-                    const handleDelegation = () => {};
+                    const currentlyDelegated =
+                      currentDelegate === member.address;
 
-                    const currentlyDelegated = delegateAddressOnChain
-                      ? member.address === delegateAddressOnChain
-                      : false;
-
-                    const selected = member.address === selectedDelegate;
+                    const kickButton = kickableMembers.has(member.address) ? (
+                      <Button
+                        variant={ButtonVariant.DANGER}
+                        className="w-full text-center"
+                        onClick={handleLeave}
+                      >
+                        <div className="flex w-full justify-center">{t`Kick`}</div>
+                      </Button>
+                    ) : undefined;
 
                     return (
-                      <li key={`${member.address}`}>
+                      <li key={member.address}>
                         <GSCMemberProfileRow
-                          selected={selected}
+                          selected={false}
                           delegate={member}
-                          kickButton={
-                            // TODO: this is stubbed, add real logic
-                            member.address ===
-                            members[members.length - 1].address ? (
-                              <Button
-                                variant={ButtonVariant.DANGER}
-                                className="w-full text-center"
-                              >
-                                <div className="flex w-full justify-center">{t`Kick`}</div>
-                              </Button>
-                            ) : undefined
-                          }
+                          kickButton={kickButton}
                           delegateButton={
                             <ChangeDelegateButton
-                              onDelegationClick={handleDelegation}
+                              onDelegationClick={() =>
+                                handleDelegation(member.address)
+                              }
                               account={account}
-                              isLoading={false}
+                              isLoading={changeDelegationLoading}
                               isCurrentDelegate={currentlyDelegated}
                             />
                           }
@@ -205,36 +239,28 @@ export function GSCOverviewPage(): ReactElement {
             <div className="h-96 overflow-y-scroll">
               <ul className="space-y-2">
                 {topTwentyCandidates.map((delegate) => {
-                  const handleDelegation = () => {};
+                  const currentlyDelegated =
+                    currentDelegate === delegate.address;
 
-                  const currentlyDelegated = delegateAddressOnChain
-                    ? delegate.address === delegateAddressOnChain
-                    : false;
-
-                  const selected = delegate.address === selectedDelegate;
+                  const delegationButton = (
+                    <ChangeDelegateButton
+                      onDelegationClick={() =>
+                        handleDelegation(delegate.address)
+                      }
+                      account={account}
+                      isLoading={changeDelegationLoading}
+                      isCurrentDelegate={currentlyDelegated}
+                    />
+                  );
 
                   return (
                     <li key={`${delegate.address}`}>
                       <DelegateProfileRow
                         provider={provider}
-                        selected={selected}
+                        selected={false}
                         delegate={delegate}
-                        actionButton={
-                          <ChangeDelegateButton
-                            onDelegationClick={handleDelegation}
-                            account={account}
-                            isLoading={false}
-                            isCurrentDelegate={currentlyDelegated}
-                          />
-                        }
-                        profileActionButton={
-                          <ChangeDelegateButton
-                            onDelegationClick={handleDelegation}
-                            account={account}
-                            isLoading={false}
-                            isCurrentDelegate={currentlyDelegated}
-                          />
-                        }
+                        actionButton={delegationButton}
+                        profileActionButton={delegationButton}
                       />
                     </li>
                   );
@@ -246,6 +272,36 @@ export function GSCOverviewPage(): ReactElement {
       </Card>
     </div>
   );
+}
+
+function sortMembersByVotingPower(
+  members: Delegate[],
+  votingPowerByDelegate: VotePowerByDelegate,
+) {
+  return members.sort((memberA, memberB) => {
+    const votingPowerA: BigNumber = votingPowerByDelegate[memberA.address];
+    const votingPowerB: BigNumber = votingPowerByDelegate[memberB.address];
+    return +votingPowerB.sub(votingPowerA).toString();
+  });
+}
+
+function getKickableMembers(
+  members: Delegate[],
+  votePowerByDelegate: VotePowerByDelegate,
+  threshold: BigNumber,
+): Set<string> {
+  const validMembers: Set<string> = new Set();
+
+  members.forEach((member) => {
+    const address = member.address;
+    const votingPower = votePowerByDelegate[address];
+
+    if (votingPower && votingPower.lt(threshold)) {
+      validMembers.add(address);
+    }
+  });
+
+  return validMembers;
 }
 
 export default GSCOverviewPage;

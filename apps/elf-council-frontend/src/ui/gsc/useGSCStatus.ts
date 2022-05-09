@@ -26,9 +26,9 @@ const APPROACHING_THRESHOLD_PERCENTAGE = 0.9;
 export function useGSCStatus(account: string | null | undefined): GSCContext {
   const votingPower = useVotingPowerForAccountAtLatestBlock(account);
   const { data: thresholdValue } = useGSCVotePowerThreshold();
+  const threshold = thresholdValue ?? BigNumber.from(0);
   const { data: isOnGSC } = useIsGSCMember(account);
   const wasMemberKicked = useIsMemberKicked(account);
-  const threshold = thresholdValue ?? BigNumber.from(0);
 
   const parsedVotingPower = parseEther(votingPower);
   const aboveThreshold = parsedVotingPower.gte(threshold);
