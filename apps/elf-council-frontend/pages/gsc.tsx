@@ -5,7 +5,8 @@ import { ProposalsJson } from "@elementfi/elf-council-proposals";
 import { GSC_PROPOSALS_JSON_URL } from "src/elf-council-proposals";
 import PageView from "src/ui/app/PageView";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
-import GSCProposalsPage from "src/ui/proposals/GSCProposalsPage";
+import GSCProposalsPage from "src/ui/proposals/GSCProposalsSection";
+import GSCOverviewPage from "src/ui/gsc/GSCOverviewSection";
 
 interface GSCProposalsProps {
   proposalsJson: ProposalsJson;
@@ -18,7 +19,8 @@ export default function GSCProposals({
     return null;
   }
   return (
-    <PageView>
+    <PageView childrenContainerClassName="flex justify-center min-w-fit max-w-7xl flex-col space-y-20 items-center">
+      <GSCOverviewPage />
       <GSCProposalsPage
         proposalsJson={proposalsJson}
         currentBlockNumber={currentBlockNumber}

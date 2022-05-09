@@ -33,15 +33,15 @@ import { ProposalList } from "./ProposalList/ProposalList";
 
 type TabId = "active" | "past";
 
-interface ProposalsPageProps {
+interface ProposalsSectionProps {
   proposalsJson: ProposalsJson;
   currentBlockNumber: number;
 }
 
-export default function GSCProposalsPage({
+export default function GSCProposalsSection({
   proposalsJson,
   currentBlockNumber,
-}: ProposalsPageProps): ReactElement {
+}: ProposalsSectionProps): ReactElement {
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
 
@@ -179,12 +179,12 @@ export default function GSCProposalsPage({
     (activeTabId === "past" && !pastProposals.length);
 
   return (
-    <div className="flex h-full lg:justify-center">
+    <div className="flex h-full w-full lg:justify-center">
       <Head>
         <title>{t`Proposals | Element Council Protocol`}</title>
       </Head>
 
-      <div className="h-full w-full flex-1 space-y-8 pr-8 pt-8 lg:max-w-lg">
+      <div className="h-full w-full flex-1 space-y-8 pt-8 pr-8 lg:max-w-lg">
         <H1 className="text-principalRoyalBlue flex-1 text-center">{t`GSC On-chain Proposals`}</H1>
         <div className="flex justify-between">
           <Tabs aria-label={t`Filter proposals`}>
