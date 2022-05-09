@@ -38,7 +38,7 @@ import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 import { GSCMember } from "src/ui/proposals/GSCMember";
 import GSCVoteTallys from "src/ui/proposals/GSCVoteTally";
 import {
-  getProposalStatus,
+  getGSCProposalStatus,
   ProposalStatusLabels,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
@@ -47,11 +47,11 @@ import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForGSCProposal } from "src/ui/proposals/useVotingPowerForGSCProposal";
 import { Ballot } from "src/ui/voting/Ballot";
-import { useBallot } from "src/ui/voting/useBallot";
 import { useGSCVote } from "src/ui/voting/useGSCVote";
 import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTransactionForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { useIsGSCMemberIdle } from "src/ui/gsc/useIsGSCMemberIdle";
+import { useGSCBallot } from "src/ui/voting/useGSCBallot";
 
 interface GSCProposalDetailsCardProps {
   className?: string;
@@ -86,7 +86,7 @@ export function GSCProposalDetailsCard(
 
   const isExecuted = useProposalExecuted(proposalId);
 
-  const { data: currentBallot } = useBallot(account, proposalId);
+  const { data: currentBallot } = useGSCBallot(account, proposalId);
   const [ballotVotePower, ballotChoice] = currentBallot || [];
 
   const { data: lastVoteTransaction } = useLastVoteTransactionForAccount(
@@ -103,7 +103,8 @@ export function GSCProposalDetailsCard(
   }, [isChangingVote, lastVoteTransaction, newVoteTransaction]);
 
   const proposalVotingResults = useVotingPowerForGSCProposal(proposalId);
-  const proposalStatus = getProposalStatus(
+
+  const proposalStatus = getGSCProposalStatus(
     isVotingOpen,
     isExecuted,
     quorum,
@@ -179,7 +180,6 @@ export function GSCProposalDetailsCard(
               <H2 className="text-white lg:hidden">
                 {t`Proposal #${proposalId}`}
               </H2>
-              {/* <div className=""> */}
               <Tag className="w-min py-2 lg:hidden">
                 {proposalStatus && (
                   <div className="flex w-full items-center justify-end space-x-2 text-black">
@@ -190,11 +190,11 @@ export function GSCProposalDetailsCard(
                       signer={signer}
                       proposal={proposal}
                       disableTooltip
+                      isGSCProposal
                     />
                   </div>
                 )}
               </Tag>
-              {/* </div> */}
             </div>
             <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light !leading-6 text-white lg:mt-4">
               {snapshotProposal?.title}
@@ -211,6 +211,7 @@ export function GSCProposalDetailsCard(
                   signer={signer}
                   proposal={proposal}
                   disableTooltip
+                  isGSCProposal
                 />
               </div>
             )}

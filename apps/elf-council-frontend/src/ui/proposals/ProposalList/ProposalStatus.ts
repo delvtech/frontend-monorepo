@@ -6,7 +6,6 @@ export enum ProposalStatus {
   IN_PROGRESS = "IN_PROGRESS",
   PASSING = "PASSING",
   FAILING = "FAILING",
-
   PASSED = "PASSED",
   FAILED = "FAILIED",
 }
@@ -22,23 +21,59 @@ export const ProposalStatusLabels: Record<ProposalStatus, string> = {
 export function getProposalStatus(
   isVotingOpen: boolean,
   isExecuted: boolean,
-  quourum: string,
+  quourum: string, // in 18 decimal format: "1.0" = 1x10^18
   votingPower: VotingPower | undefined,
 ): ProposalStatus | undefined {
-  // TODO: add if voting power is loading and return undefined
+  // if there are enough yes votes to pass quorum
+  const hasEnoughYes =
+    votingPower?.[0]?.gte(parseEther(quourum || "0")) || false;
+  // if there are enough no votes to pass quorum
+  const hasEnoughNo =
+    votingPower?.[1]?.gte(parseEther(quourum || "0")) || false;
 
+  return proposalStatus(
+    !!votingPower,
+    isVotingOpen,
+    isExecuted,
+    hasEnoughYes,
+    hasEnoughNo,
+  );
+}
+
+export function getGSCProposalStatus(
+  isVotingOpen: boolean,
+  isExecuted: boolean,
+  quourum: string, // number format: "1" = 1.
+  votingPower: VotingPower | undefined,
+): ProposalStatus | undefined {
+  // if there are enough yes votes to pass quorum
+  const hasEnoughYes = votingPower?.[0]?.gte(+quourum || "0") || false;
+  // if there are enough no votes to pass quorum
+  const hasEnoughNo = votingPower?.[1]?.gte(+quourum || "0") || false;
+
+  return proposalStatus(
+    !!votingPower,
+    isVotingOpen,
+    isExecuted,
+    hasEnoughYes,
+    hasEnoughNo,
+  );
+}
+
+function proposalStatus(
+  hasVotingPowerResult: boolean,
+  isVotingOpen: boolean,
+  isExecuted: boolean,
+  hasEnoughYes: boolean,
+  hasEnoughNo: boolean,
+) {
   // special case here once a proposal is executed, it is deleted, so there is no votePower.
   // however, if it has NOT been executed, and there is no vote power, then it is probably still
   // loading, so we should show no status until it loads.
   // if the proposal is executed
-  if (!votingPower && !isExecuted) {
+  if (!hasVotingPowerResult && !isExecuted) {
     return undefined;
   }
-
-  // if there are enough yes votes to pass quorum
-  const hasEnoughYes = votingPower?.[0]?.gte(parseEther(quourum || "0"));
-  // if there are enough no votes to pass quorum
-  const hasEnoughNo = votingPower?.[1]?.gte(parseEther(quourum || "0"));
 
   if (!isVotingOpen) {
     if (isExecuted) {
