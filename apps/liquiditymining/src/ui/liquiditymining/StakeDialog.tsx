@@ -83,7 +83,9 @@ export function StakeDialog({
   };
 
   const amountIsInvalid =
-    isNaN(+stakeAmount) || +stakeAmount <= 0 || +stakeAmount > +availableAmount;
+    !+stakeAmount ||
+    +stakeAmount < 0 ||
+    parseEther(stakeAmount).gt(parseEther(availableAmount));
 
   return (
     <SimpleDialog
