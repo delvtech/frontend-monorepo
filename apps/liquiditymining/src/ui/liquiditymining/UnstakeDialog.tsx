@@ -68,6 +68,9 @@ export function UnstakeDialog({
         setTransactionIsPending(false);
         onClose();
       },
+      onError: () => {
+        setTransactionIsPending(false);
+      },
     },
   });
 

@@ -64,6 +64,9 @@ export function StakeDialog({
         setTransactionIsPending(false);
         onClose();
       },
+      onError: () => {
+        setTransactionIsPending(false);
+      },
     },
   });
 

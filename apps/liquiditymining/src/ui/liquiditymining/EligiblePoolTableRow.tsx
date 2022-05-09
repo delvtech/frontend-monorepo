@@ -106,6 +106,9 @@ export function EligiblePoolTableRow({
       onTransactionMined: () => {
         setTransactionIsPending(false);
       },
+      onError: () => {
+        setTransactionIsPending(false);
+      },
     },
   });
 

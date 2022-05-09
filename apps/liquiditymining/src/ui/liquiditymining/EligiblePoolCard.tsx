@@ -104,6 +104,9 @@ export function EligiblePoolCard({
       onTransactionMined: () => {
         setTransactionIsPending(false);
       },
+      onError: () => {
+        setTransactionIsPending(false);
+      },
     },
   });
 
