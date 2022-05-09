@@ -1,6 +1,7 @@
 import { CoreVoting } from "@elementfi/elf-council-typechain";
 import { useSmartContractEvents } from "@elementfi/react-query-typechain";
 import { QueryObserverResult, useQuery } from "react-query";
+import getFromBlock from "src/elf-council-addresses/getFromBlock";
 import { gscCoreVotingContract } from "src/elf/contracts";
 
 function useProposalAuthor(
@@ -10,6 +11,7 @@ function useProposalAuthor(
   const { data: events = [] } = useSmartContractEvents(
     contract,
     "ProposalCreated",
+    { fromBlock: getFromBlock() },
   );
   const proposalCreatedEvent = events.find((event) => {
     const propId = event?.args?.[0] as string;
