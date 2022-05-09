@@ -2,7 +2,7 @@ import { BigNumber, Event } from "ethers";
 import { useSmartContractEvents } from "@elementfi/react-query-typechain";
 import { lockingVaultContract } from "src/elf/contracts";
 import { useMemo } from "react";
-import getFromBlock from "src/elf-council-addresses/getFromBlock";
+import { getFromBlock } from "src/elf-council-addresses/getFromBlock";
 
 export type VotePowerByDelegate = Record<string, BigNumber>;
 
