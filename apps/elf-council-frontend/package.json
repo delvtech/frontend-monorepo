@@ -108,8 +108,9 @@
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -s public",
     "chromatic": "chromatic --exit-zero-on-changes --skip 'dependabot/**'",
-    "test": "jest",
-    "test-watch": "jest --watch"
+    "test:jest": "jest",
+    "test:jest-watch": "jest --watch",
+    "test:e2e": "env-cmd -f .env synpress run"
   },
   "version": "0.1.0"
 }
