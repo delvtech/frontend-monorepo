@@ -51,6 +51,7 @@ import { useBallot } from "src/ui/voting/useBallot";
 import { useGSCVote } from "src/ui/voting/useGSCVote";
 import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTransactionForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
+import { useIsGSCMemberIdle } from "src/ui/gsc/useIsGSCMemberIdle";
 
 interface GSCProposalDetailsCardProps {
   className?: string;
@@ -81,6 +82,7 @@ export function GSCProposalDetailsCard(
 
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
+  const isMemberIdle = useIsGSCMemberIdle(account);
 
   const isExecuted = useProposalExecuted(proposalId);
 
@@ -282,7 +284,7 @@ export function GSCProposalDetailsCard(
                 currentBallot={newBallot}
                 onSelectBallot={setCurrentBallot}
                 variant={ButtonVariant.WHITE}
-                disabled={!isVotingOpen}
+                disabled={!isVotingOpen || isMemberIdle}
               />
               {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
                 <div className="ml-4 flex w-full items-center text-white ">
@@ -291,7 +293,7 @@ export function GSCProposalDetailsCard(
               )}
 
               <Button
-                disabled={submitButtonDisabled}
+                disabled={submitButtonDisabled || isMemberIdle}
                 onClick={handleVote}
                 loading={isVoteTxPending}
                 variant={ButtonVariant.PRIMARY}
