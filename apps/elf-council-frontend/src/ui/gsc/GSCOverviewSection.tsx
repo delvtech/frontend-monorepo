@@ -41,7 +41,7 @@ enum TabOption {
   Rising,
 }
 
-export function GSCOverviewPage(): ReactElement {
+export function GSCOverviewSection(): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
   const signer = library?.getSigner();
 
@@ -84,7 +84,7 @@ export function GSCOverviewPage(): ReactElement {
   );
 
   return (
-    <div className="w-full max-w-7xl space-y-6">
+    <div className="w-full space-y-6">
       <Head>
         <title>{t`GSCOverview | Element Council Protocol`}</title>
       </Head>
@@ -304,4 +304,4 @@ function getKickableMembers(
   return validMembers;
 }
 
-export default GSCOverviewPage;
+export default GSCOverviewSection;
