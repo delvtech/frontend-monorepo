@@ -5,7 +5,7 @@ import { lockingVaultContract } from "src/elf/contracts";
 import { formatEther } from "ethers/lib/utils";
 import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
 import { useMemo } from "react";
-import getFromBlock from "src/elf-council-addresses/getFromBlock";
+import { getFromBlock } from "src/elf-council-addresses/getFromBlock";
 
 /**
  * Returns a list of candidates, sorted by highest to lowest voting power

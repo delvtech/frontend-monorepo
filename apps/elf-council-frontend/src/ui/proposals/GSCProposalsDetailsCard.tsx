@@ -16,7 +16,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/solid";
 import classNames from "classnames";
-import { ContractTransaction, ethers, Signer } from "ethers";
+import { ContractTransaction, Signer } from "ethers";
 import { isNumber } from "lodash";
 import { jt, t } from "ttag";
 
@@ -41,16 +41,15 @@ import {
   ProposalStatusLabels,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
+import { useGSCProposalAuthor } from "src/ui/proposals/useProposalAuthor";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForGSCProposal } from "src/ui/proposals/useVotingPowerForGSCProposal";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
+import { useGSCVote } from "src/ui/voting/useGSCVote";
 import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTransactionForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-import { useGSCVote } from "src/ui/voting/useGSCVote";
-
-const author = ethers.Wallet.createRandom().address;
 
 interface GSCProposalDetailsCardProps {
   className?: string;
@@ -216,8 +215,8 @@ export function GSCProposalDetailsCard(
         {/* Proposal Author */}
         <p className="my-3 shrink-0 overflow-hidden font-light text-white">
           {t`Author:`}
+          <GSCProposalAuthor proposalId={proposalId} />
         </p>
-        <GSCMember account={author} provider={defaultProvider} />
 
         {/* Proposal Description */}
         <p className="my-3 shrink-0 overflow-hidden font-light text-white">
@@ -331,4 +330,16 @@ function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
       assertNever(ballot);
       return null;
   }
+}
+
+interface GSCProposalAuthorProps {
+  proposalId: string;
+}
+function GSCProposalAuthor(props: GSCProposalAuthorProps): ReactElement | null {
+  const { proposalId } = props;
+  const { data: author } = useGSCProposalAuthor(proposalId);
+  if (!author) {
+    return null;
+  }
+  return <GSCMember account={author} provider={defaultProvider} />;
 }
