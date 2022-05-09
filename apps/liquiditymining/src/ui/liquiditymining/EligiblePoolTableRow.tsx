@@ -227,7 +227,7 @@ export function EligiblePoolTableRow({
                 }
               >
                 {(open: boolean) => (
-                  <div className="flex w-[90px] items-center justify-center">
+                  <span className="flex w-[90px] items-center justify-center">
                     {t`Actions`}
 
                     <ChevronDownIcon
@@ -237,7 +237,7 @@ export function EligiblePoolTableRow({
                       )}
                       aria-hidden="true"
                     />
-                  </div>
+                  </span>
                 )}
               </PopoverButton>
             </div>
