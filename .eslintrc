@@ -33,10 +33,22 @@
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }
+    },
+    {
+      // enable the rule specifically for TypeScript files
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-module-boundary-types": [
+          "error"
+        ]
+      }
     }
   ],
   "rules": {
-    "@typescript-eslint/explicit-module-boundary-types": "error", // exported functions must have return types
+    "@typescript-eslint/explicit-module-boundary-types": "off", // override to only apply to typescript files
     "@typescript-eslint/no-empty-function": "off", // empty arrow functions are fine for noops when passed to components
     "@typescript-eslint/no-empty-interface": "off", // empty interfaces for component props should be allowed
     "@typescript-eslint/no-unused-vars": [
