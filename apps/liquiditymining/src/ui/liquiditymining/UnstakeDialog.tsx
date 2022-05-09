@@ -67,6 +67,9 @@ export function UnstakeDialog({
       onTransactionMined: () => {
         setTransactionIsPending(false);
       },
+      onError: () => {
+        setTransactionIsPending(false);
+      },
     },
   });
 
