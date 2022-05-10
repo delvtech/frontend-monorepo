@@ -3,7 +3,7 @@ import { Contract } from "ethers";
 import toast from "react-hot-toast";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 
 export function buildToastTransactionConfig(
   toastIdRef: React.MutableRefObject<string | undefined>,
@@ -22,7 +22,7 @@ export function buildToastTransactionConfig(
       );
 
       const message = (
-        <div>{t`Confirming transaction... ${etherscanLink}`}</div>
+        <div>{jt`Confirming transaction... ${etherscanLink}`}</div>
       );
 
       toastIdRef.current = toast.loading(message);

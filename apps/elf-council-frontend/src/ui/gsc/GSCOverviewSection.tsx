@@ -281,7 +281,7 @@ function sortMembersByVotingPower(
   return members.sort((memberA, memberB) => {
     const votingPowerA: BigNumber = votingPowerByDelegate[memberA.address];
     const votingPowerB: BigNumber = votingPowerByDelegate[memberB.address];
-    return +votingPowerB.sub(votingPowerA).toString();
+    return +votingPowerB?.sub(votingPowerA).toString();
   });
 }
 
