@@ -2,7 +2,6 @@ import React, { ReactElement, useRef, useState } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
 import { t } from "ttag";
 
 import { defaultProvider } from "src/elf/providers/providers";
@@ -85,18 +84,14 @@ export function GSCOverviewSection(): ReactElement {
 
   return (
     <div className="w-full space-y-6">
-      <Head>
-        <title>{t`GSCOverview | Element Council Protocol`}</title>
-      </Head>
-
-      <H1 className="text-principalRoyalBlue text-center">
+      <H1 className="text-center text-principalRoyalBlue">
         {t`Governance GSC Overview`}
       </H1>
 
       <GSCPortfolioCard account={account} signer={signer} />
 
       <Card className="">
-        <div className="w-full flex-col justify-center space-y-6 ">
+        <div className="flex-col justify-center w-full space-y-6 ">
           {/* Nav buttons */}
           <div className="flex justify-center">
             <Tabs aria-label={t`Filter proposals`}>
@@ -121,11 +116,11 @@ export function GSCOverviewSection(): ReactElement {
           </div>
 
           {currentTab === TabOption.Overview && (
-            <div className="mt-4 flex flex-col space-y-10 overflow-y-scroll">
+            <div className="flex flex-col mt-4 space-y-10 overflow-y-scroll">
               <Disclosure as="div">
                 {({ open }) => (
                   <>
-                    <Disclosure.Button className="bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark flex w-full justify-between rounded-lg px-4 py-4 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                    <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                       <span>{t`What makes someone eligible to join the GSC?`}</span>
 
                       <ChevronDownIcon
@@ -136,7 +131,7 @@ export function GSCOverviewSection(): ReactElement {
                         aria-hidden="true"
                       />
                     </Disclosure.Button>
-                    <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
+                    <Disclosure.Panel className="flex flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500 max-w-fit">
                       <p>{t`Council is an on-chain decentralized governance system through which a community can manage a DAO. It gives the community total flexibility over how to distribute Voting Power and allows it to adapt its governance system to the continuously evolving needs of the DAO.`}</p>
                       <p>{t`The system also includes the optional structure of a Governance Steering Council (GSC) with added governance powers and responsibilities, all to be decided upon by the community.`}</p>
                       <p>{t`This flexibility is possible thanks to the use of Voting Vaults. Learn more in `}</p>
@@ -147,7 +142,7 @@ export function GSCOverviewSection(): ReactElement {
               <Disclosure as="div" className="mt-4">
                 {({ open }) => (
                   <>
-                    <Disclosure.Button className="bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark flex w-full justify-between rounded-lg px-4 py-4 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                    <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                       <span>{t`What are the day-to-day responsibilities of a GSC member?`}</span>
 
                       <ChevronDownIcon
@@ -158,7 +153,7 @@ export function GSCOverviewSection(): ReactElement {
                         aria-hidden="true"
                       />
                     </Disclosure.Button>
-                    <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
+                    <Disclosure.Panel className="flex flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500 max-w-fit">
                       <p>{t`Council is an on-chain decentralized governance system through which a community can manage a DAO. It gives the community total flexibility over how to distribute Voting Power and allows it to adapt its governance system to the continuously evolving needs of the DAO.`}</p>
                       <p>{t`The system also includes the optional structure of a Governance Steering Council (GSC) with added governance powers and responsibilities, all to be decided upon by the community.`}</p>
                       <p>{t`This flexibility is possible thanks to the use of Voting Vaults. Learn more in `}</p>
@@ -169,7 +164,7 @@ export function GSCOverviewSection(): ReactElement {
               <Disclosure as="div" className="mt-4">
                 {({ open }) => (
                   <>
-                    <Disclosure.Button className="bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark flex w-full justify-between rounded-lg px-4 py-4 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                    <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                       <span>{t`How are GSC members removed and/or added?`}</span>
 
                       <ChevronDownIcon
@@ -180,7 +175,7 @@ export function GSCOverviewSection(): ReactElement {
                         aria-hidden="true"
                       />
                     </Disclosure.Button>
-                    <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
+                    <Disclosure.Panel className="flex flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500 max-w-fit">
                       <p>{t`Council is an on-chain decentralized governance system through which a community can manage a DAO. It gives the community total flexibility over how to distribute Voting Power and allows it to adapt its governance system to the continuously evolving needs of the DAO.`}</p>
                       <p>{t`The system also includes the optional structure of a Governance Steering Council (GSC) with added governance powers and responsibilities, all to be decided upon by the community.`}</p>
                       <p>{t`This flexibility is possible thanks to the use of Voting Vaults. Learn more in `}</p>
@@ -205,7 +200,7 @@ export function GSCOverviewSection(): ReactElement {
                         className="w-full text-center"
                         onClick={handleLeave}
                       >
-                        <div className="flex w-full justify-center">{t`Kick`}</div>
+                        <div className="flex justify-center w-full">{t`Kick`}</div>
                       </Button>
                     ) : undefined;
 
@@ -232,11 +227,11 @@ export function GSCOverviewSection(): ReactElement {
                 </ul>
               </div>
             ) : (
-              <div className="text-principalRoyalBlue text-center font-bold">{t`No current GSC members.`}</div>
+              <div className="font-bold text-center text-principalRoyalBlue">{t`No current GSC members.`}</div>
             ))}
 
           {currentTab === TabOption.Rising && (
-            <div className="h-96 overflow-y-scroll">
+            <div className="overflow-y-scroll h-96">
               <ul className="space-y-2">
                 {topTwentyCandidates.map((delegate) => {
                   const currentlyDelegated =
