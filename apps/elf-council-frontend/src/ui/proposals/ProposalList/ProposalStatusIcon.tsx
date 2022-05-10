@@ -13,7 +13,7 @@ import {
   getGSCProposalStatus,
   getProposalStatus,
   ProposalStatus,
-} from "./ProposalStatus";
+} from "src/ui/proposals/ProposalList/ProposalStatus";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import classNames from "classnames";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
@@ -25,6 +25,7 @@ const StatusLabels: Record<ProposalStatus, string> = {
   [ProposalStatus.FAILING]: t`Failing`,
   [ProposalStatus.PASSED]: t`Passed`,
   [ProposalStatus.FAILED]: t`Failed`,
+  [ProposalStatus.UNVERIFIED]: t`Unverified`,
 };
 
 const StatusTagIntents: Record<ProposalStatus, Intent> = {
@@ -33,6 +34,7 @@ const StatusTagIntents: Record<ProposalStatus, Intent> = {
   [ProposalStatus.FAILING]: Intent.ERROR,
   [ProposalStatus.PASSED]: Intent.SUCCESS,
   [ProposalStatus.FAILED]: Intent.ERROR,
+  [ProposalStatus.UNVERIFIED]: Intent.BLANK,
 };
 
 interface ProposalStatusIconProps {
@@ -101,5 +103,5 @@ const intentTextColors: Record<Intent, string> = {
   [Intent.PRIMARY_SOLID]: classNames("text-white"),
   [Intent.SUCCESS]: classNames("text-green-500"),
   [Intent.ERROR]: classNames("text-red-500"),
-  [Intent.BLANK]: classNames("text-principalRoyalBlue"),
+  [Intent.BLANK]: classNames("text-gray-500"),
 };
