@@ -46,6 +46,11 @@ import { usePendingSushi } from "src/ui/liquiditymining/hooks/usePendingSushi";
 import PopoverButton from "src/ui/base/Button/PopoverButton";
 import { GiftIcon } from "@heroicons/react/outline";
 import { ConfirmDialog } from "./ConfirmDialog";
+import { Ticker } from "src/ui/base/Ticker";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -159,12 +164,16 @@ export function EligiblePoolTableRow({
           <Elfi amount={userElfiPerWeek} />
         </span>
         <span className="col-span-2 flex items-center justify-end">
-          <Elfi
-            className={classNames(
-              +pendingRewards > 0 && "font-semibold text-gray-800",
-            )}
-            amount={pendingRewards}
-          />
+          <span className="inline-flex items-center gap-1">
+            <ElementIconCircle inline size={IconSize.SMALL} />
+            <Ticker
+              value={+pendingRewards}
+              decimals={2}
+              className={classNames(
+                +pendingRewards > 0 && "font-semibold text-gray-800",
+              )}
+            />
+          </span>
         </span>
         <span className="col-span-2 flex flex-col items-end justify-center">
           <span

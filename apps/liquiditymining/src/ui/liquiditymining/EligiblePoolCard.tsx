@@ -44,6 +44,11 @@ import { Elfi } from "./Elfi";
 import classNames from "classnames";
 import { usePendingSushi } from "src/ui/liquiditymining/hooks/usePendingSushi";
 import { ConfirmDialog } from "./ConfirmDialog";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
+import { Ticker } from "src/ui/base/Ticker";
 
 interface EligiblePoolCardProps {
   account: string | null | undefined;
@@ -175,12 +180,17 @@ export function EligiblePoolCard({
                 </p>
                 <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
                   <span className="whitespace-nowrap text-principalRoyalBlue">{t`Unclaimed ELFI`}</span>
-                  <Elfi
-                    className={classNames(
-                      +pendingRewards > 0 && "font-semibold text-gray-800",
-                    )}
-                    amount={pendingRewards}
-                  />
+
+                  <span className="inline-flex items-center gap-1">
+                    <ElementIconCircle inline size={IconSize.SMALL} />
+                    <Ticker
+                      value={+pendingRewards}
+                      decimals={2}
+                      className={classNames(
+                        +pendingRewards > 0 && "font-semibold text-gray-800",
+                      )}
+                    />
+                  </span>
                 </p>
               </div>
               <hr className="border-hackerSky-dark" />
