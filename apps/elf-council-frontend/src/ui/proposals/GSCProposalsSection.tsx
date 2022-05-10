@@ -11,7 +11,6 @@ import { Proposal, ProposalsJson } from "@elementfi/elf-council-proposals";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
 import { t } from "ttag";
 
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
@@ -30,11 +29,7 @@ import { GSCProposalDetailsCard } from "src/ui/proposals/GSCProposalsDetailsCard
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
-import Button from "src/ui/base/Button/Button";
-import Dialog_ from "src/ui/base/Dialog/Dialog";
-import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
-import { ChangeDelegateButton } from "src/ui/gsc/ChangeDelegationButton";
-import { GSCMemberProfileRow } from "src/ui/gsc/GSCMemberProfileRow";
+import { GSCVoteTallyDialog } from "./GSCVoteTallyDialog";
 
 type TabId = "active" | "past";
 
@@ -54,8 +49,6 @@ export default function GSCProposalsSection({
 
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
   const isTailwindLargeScreen = useIsTailwindLargeScreen();
-
-  const { data: members = [] } = useGSCMembers();
 
   const activeProposals = useFilteredProposals(
     "active",
@@ -98,7 +91,6 @@ export default function GSCProposalsSection({
   };
 
   const [isModalOpen, setIsModalOpen] = useState(calculateModalOpenState());
-  const [isVoteTallyModalOpen, setIsVoteTallyModalOpen] = useState(false);
 
   // set the default to the first active proposal, since that's what filter is
   // on by default
@@ -188,10 +180,6 @@ export default function GSCProposalsSection({
 
   return (
     <div className="flex h-full w-full lg:justify-center">
-      <Head>
-        <title>{t`Proposals | Element Council Protocol`}</title>
-      </Head>
-
       <div className="h-full w-full flex-1 space-y-8 pt-8 pr-8 lg:max-w-lg">
         <H1 className="text-principalRoyalBlue flex-1 text-center">{t`GSC On-chain Proposals`}</H1>
         <div className="flex justify-between">
@@ -269,85 +257,8 @@ export default function GSCProposalsSection({
           </Dialog>
         </Transition.Root>
       )}
-      <Dialog_
-        // Using z-50 so that the dialog appears above the Sidebar, which is currently set to z-10
-        onClose={() => setIsVoteTallyModalOpen(false)}
-        isOpen={true}
-        className="min-w-fit"
-      >
-        <div className="flex min-w-full flex-col items-center space-y-4 p-4">
-          <div className="text-principalRoyalBlue mb-4 text-xl font-bold">
-            {t`Voting List`}
-          </div>
-          <div className="flex space-x-4">
-            <Button
-              className="w-24"
-              variant={ButtonVariant.PRIMARY}
-              onClick={() => {}}
-              round
-            >
-              <div className="w-full text-center">{t`All`}</div>
-            </Button>
 
-            <Button
-              className="w-24"
-              variant={ButtonVariant.OUTLINE_BLUE}
-              onClick={() => {}}
-              round
-            >
-              <div className="w-full text-center">{t`For`}</div>
-            </Button>
-
-            <Button
-              className="w-24"
-              variant={ButtonVariant.OUTLINE_BLUE}
-              onClick={() => {}}
-              round
-            >
-              <div className="w-full text-center">{t`Against`}</div>
-            </Button>
-
-            <Button
-              className="w-24"
-              variant={ButtonVariant.OUTLINE_BLUE}
-              onClick={() => {}}
-              round
-            >
-              <div className="w-full text-center">{t`Abstain`}</div>
-            </Button>
-          </div>
-          <div className="max-h-80 overflow-y-scroll">
-            <ul className="space-y-2">
-              {[...members, ...members, ...members, ...members].map(
-                (member) => {
-                  // const currentlyDelegated = currentDelegate === member.address;
-
-                  return (
-                    <li key={member.address}>
-                      <GSCMemberProfileRow
-                        selected={false}
-                        delegate={member}
-                        kickButton={undefined}
-                        delegateButton={
-                          <ChangeDelegateButton
-                            onDelegationClick={() =>
-                              //handleDelegation(member.address)
-                              {}
-                            }
-                            account={account}
-                            isLoading={false}
-                            isCurrentDelegate={false}
-                          />
-                        }
-                      />
-                    </li>
-                  );
-                },
-              )}
-            </ul>
-          </div>
-        </div>
-      </Dialog_>
+      <GSCVoteTallyDialog />
     </div>
   );
 }
