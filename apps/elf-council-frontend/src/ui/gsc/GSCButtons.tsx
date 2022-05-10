@@ -2,7 +2,7 @@ import React, { ReactElement, useRef, useState } from "react";
 
 import { Signer } from "ethers";
 
-import { t } from "ttag";
+import { jt, t } from "ttag";
 
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Button from "src/ui/base/Button/Button";
@@ -39,7 +39,7 @@ export function JoinGSCButton({
       );
 
       const message = (
-        <div>{t`Confirming transaction... ${etherscanLink}`}</div>
+        <div>{jt`Confirming transaction... ${etherscanLink}`}</div>
       );
 
       toastIdRef.current = toast.loading(message);
@@ -110,7 +110,7 @@ export function LeaveGSCButton({
       );
 
       const message = (
-        <div>{t`Confirming transaction... ${etherscanLink}`}</div>
+        <div>{jt`Confirming transaction... ${etherscanLink}`}</div>
       );
 
       toastIdRef.current = toast.loading(message);

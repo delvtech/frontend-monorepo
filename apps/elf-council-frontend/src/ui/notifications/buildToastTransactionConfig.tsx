@@ -22,7 +22,7 @@ export function buildToastTransactionConfig(
       );
 
       const message = (
-        <div>{t`Confirming transaction... ${etherscanLink}`}</div>
+        <div>{jt`Confirming transaction... ${etherscanLink}`}</div>
       );
 
       toastIdRef.current = toast.loading(message);
