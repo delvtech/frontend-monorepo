@@ -29,7 +29,6 @@ import { GSCProposalDetailsCard } from "src/ui/proposals/GSCProposalsDetailsCard
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
-import { GSCVoteTallyDialog } from "./GSCVoteTallyDialog";
 
 type TabId = "active" | "past";
 
