@@ -193,7 +193,7 @@ export function GSCOverviewSection(): ReactElement {
 
           {currentTab === TabOption.Current &&
             (sortedMembers.length ? (
-              <div className="">
+              <div>
                 <ul className="space-y-2">
                   {members.map((member) => {
                     const currentlyDelegated =
