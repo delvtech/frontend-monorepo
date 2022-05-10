@@ -1,5 +1,9 @@
+import { parseEther } from "ethers/lib/utils";
 /* eslint-disable no-console */
-import { getTokenList } from "@elementfi/elf-council-tokenlist";
+import {
+  getTokenList,
+  goerliAddressList,
+} from "@elementfi/elf-council-tokenlist";
 import fs from "fs";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ethers, providers } from "ethers";
@@ -9,10 +13,15 @@ import { createGoerliGscProposal } from "src/scripts/createGoerliGscProposal";
 import { createGoerliProposal } from "src/scripts/createGoerliProposal";
 import { createGscProposal } from "src/scripts/createGscProposal";
 import { createProposal } from "src/scripts/createProposal";
+import {
+  ERC20PermitWithMint__factory,
+  LockingVault__factory,
+} from "@elementfi/elf-council-typechain";
 
-const { PROPOSER_PRIVATE_KEY } = process.env;
+const { PROPOSER_PRIVATE_KEY, GOERLI_DEPLOYER_PRIVATE_KEY } = process.env;
 const LOCAL_RPC_HOST = "http://127.0.0.1:8545";
 const ALCHEMY_GOERLI_RPC_HOST = `https://eth-goerli.alchemyapi.io/v2/${process.env.ALCHEMY_GOERLI_API_KEY}`;
+const { elementToken, lockingVault } = goerliAddressList.addresses;
 
 task(
   "build-tokenlist",
@@ -225,4 +234,56 @@ task("createGoerliGscProposal", "Creates a new gsc proposal on goerli")
         expired,
       },
     );
+  });
+
+task("giveVotingPowerToAccount", "gives voting power to account")
+  .addParam(
+    "address",
+    "wallet address to give voting power to",
+    undefined,
+    types.string,
+  )
+  .addOptionalParam(
+    "amount",
+    "amount of voting power to give",
+    "110000",
+    types.string,
+  )
+  .setAction(async (taskArgs: { address: string; amount: string }) => {
+    const { address, amount } = taskArgs;
+    console.log("funding: ", address);
+    console.log("with: ", amount);
+
+    if (!GOERLI_DEPLOYER_PRIVATE_KEY) {
+      console.log("ERROR: no private key provided for proposer");
+      return;
+    }
+
+    const goerliProvider = new providers.JsonRpcProvider(
+      ALCHEMY_GOERLI_RPC_HOST,
+    );
+    const owner = new ethers.Wallet(
+      GOERLI_DEPLOYER_PRIVATE_KEY,
+      goerliProvider,
+    );
+
+    console.log("elementToken", elementToken);
+    console.log("lockingVault", lockingVault);
+    const tokenContract = ERC20PermitWithMint__factory.connect(
+      elementToken,
+      owner,
+    );
+    const lockingVaultContract = LockingVault__factory.connect(
+      lockingVault,
+      owner,
+    );
+
+    const amountBN = parseEther(amount);
+
+    console.log("minting");
+    await tokenContract.mint(address, amountBN);
+    console.log("depositing");
+    const tx = await lockingVaultContract.deposit(address, amountBN, address);
+    console.log("transaction: ", `https://goerli.etherscan.io/tx/${tx.hash}`);
+    console.log("done!");
   });
