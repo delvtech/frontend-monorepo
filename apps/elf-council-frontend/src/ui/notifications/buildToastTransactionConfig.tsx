@@ -3,7 +3,7 @@ import { Contract } from "ethers";
 import toast from "react-hot-toast";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 
 export function buildToastTransactionConfig(
   toastIdRef: React.MutableRefObject<string | undefined>,
