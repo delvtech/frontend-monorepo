@@ -29,6 +29,7 @@ import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
 import GradientCard from "src/ui/base/Card/GradientCard";
+import { useUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 
 type TabId = "active" | "past";
 
@@ -49,14 +50,17 @@ export default function ProposalsPage({
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
   const isTailwindLargeScreen = useIsTailwindLargeScreen();
 
+  const unverifiedProposals = useUnverifiedProposals(proposalsJson.proposals);
+  const allProposals = proposalsJson.proposals.concat(unverifiedProposals);
+
   const activeProposals = useFilteredProposals(
     "active",
-    proposalsJson.proposals,
+    allProposals,
     currentBlockNumber,
   );
   const pastProposals = useFilteredProposals(
     "past",
-    proposalsJson.proposals,
+    allProposals,
     currentBlockNumber,
   );
 
@@ -283,9 +287,10 @@ function OffChainProposalsLink() {
  * list of proposals hardcoded in the frontend.  The client grabs the snapshot information and we
  * link the on-chain proposal with the snapshot information.
  *
- * @param activeTabId
- * @param snapshotProposals
- * @returns
+ * @param activeTabId current proposal selected
+ * @param proposals list of proposals
+ * @param currentBlockNumber
+ * @returns filtered proposals based on activeTabId
  */
 function useFilteredProposals(
   activeTabId: TabId,
