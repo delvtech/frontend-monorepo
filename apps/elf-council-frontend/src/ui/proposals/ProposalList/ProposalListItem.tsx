@@ -61,7 +61,7 @@ export function ProposalListItem({
       <div className="flex w-full flex-col space-y-4">
         <div className="flex flex-col justify-between">
           <CardHeader
-            title={snapshotProposal?.title}
+            title={snapshotProposal?.title || proposal.title}
             description={t`Proposal #${proposalId}`}
           />
           <div
