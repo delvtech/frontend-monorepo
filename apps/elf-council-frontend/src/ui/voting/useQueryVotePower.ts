@@ -52,6 +52,7 @@ export function useQueryVotePower(
       }
     },
     queryKey: ["queryVotePower", account, vaultContract.address, atBlockNumber],
+    keepPreviousData: !!account,
     enabled: !!account && !!blockNumber && !!extraData,
   });
 
@@ -79,6 +80,7 @@ export function useQueryVotePowerView(
     "queryVotePowerView",
     {
       callArgs: [account as string, blockNumber as number],
+      keepPreviousData: !!account,
       enabled: !!account && !!blockNumber,
     },
   );
