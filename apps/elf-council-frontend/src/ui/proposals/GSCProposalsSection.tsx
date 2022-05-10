@@ -37,6 +37,7 @@ import Dialog_ from "src/ui/base/Dialog/Dialog";
 import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
 import { ChangeDelegateButton } from "src/ui/gsc/ChangeDelegationButton";
 import { GSCMemberProfileRow } from "src/ui/gsc/GSCMemberProfileRow";
+import { GSCVoteTallyDialog } from "./GSCVoteTallyDialog";
 
 type TabId = "active" | "past";
 
@@ -257,85 +258,8 @@ export default function GSCProposalsSection({
           </Dialog>
         </Transition.Root>
       )}
-      <Dialog_
-        // Using z-50 so that the dialog appears above the Sidebar, which is currently set to z-10
-        onClose={() => setIsVoteTallyModalOpen(false)}
-        isOpen={true}
-        className="min-w-fit"
-      >
-        <div className="flex min-w-full flex-col items-center space-y-4 p-4">
-          <div className="text-principalRoyalBlue mb-4 text-xl font-bold">
-            {t`Voting List`}
-          </div>
-          <div className="flex space-x-4">
-            <Button
-              className="w-24"
-              variant={ButtonVariant.PRIMARY}
-              onClick={() => {}}
-              round
-            >
-              <div className="w-full text-center">{t`All`}</div>
-            </Button>
 
-            <Button
-              className="w-24"
-              variant={ButtonVariant.OUTLINE_BLUE}
-              onClick={() => {}}
-              round
-            >
-              <div className="w-full text-center">{t`For`}</div>
-            </Button>
-
-            <Button
-              className="w-24"
-              variant={ButtonVariant.OUTLINE_BLUE}
-              onClick={() => {}}
-              round
-            >
-              <div className="w-full text-center">{t`Against`}</div>
-            </Button>
-
-            <Button
-              className="w-24"
-              variant={ButtonVariant.OUTLINE_BLUE}
-              onClick={() => {}}
-              round
-            >
-              <div className="w-full text-center">{t`Abstain`}</div>
-            </Button>
-          </div>
-          <div className="max-h-80 overflow-y-scroll">
-            <ul className="space-y-2">
-              {[...members, ...members, ...members, ...members].map(
-                (member) => {
-                  // const currentlyDelegated = currentDelegate === member.address;
-
-                  return (
-                    <li key={member.address}>
-                      <GSCMemberProfileRow
-                        selected={false}
-                        delegate={member}
-                        kickButton={undefined}
-                        delegateButton={
-                          <ChangeDelegateButton
-                            onDelegationClick={() =>
-                              //handleDelegation(member.address)
-                              {}
-                            }
-                            account={account}
-                            isLoading={false}
-                            isCurrentDelegate={false}
-                          />
-                        }
-                      />
-                    </li>
-                  );
-                },
-              )}
-            </ul>
-          </div>
-        </div>
-      </Dialog_>
+      <GSCVoteTallyDialog />
     </div>
   );
 }
