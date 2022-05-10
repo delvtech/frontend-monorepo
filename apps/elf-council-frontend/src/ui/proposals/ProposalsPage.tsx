@@ -230,8 +230,8 @@ export default function ProposalsPage({
       ) : (
         <Transition.Root show={isModalOpen} as={Fragment}>
           <Dialog
-            // Using z-50 so that the dialog appears above the Sidebar, which is currently set to z-10
-            className="fixed inset-0 z-50 overflow-y-auto"
+            // Using z-20 so that the dialog appears above the Sidebar, which is currently set to z-10
+            className="fixed inset-0 z-20 overflow-y-auto"
             onClose={handleOnClose}
           >
             <div className="fixed top-1/2 left-1/2">
