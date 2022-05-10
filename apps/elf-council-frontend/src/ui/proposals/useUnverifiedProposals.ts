@@ -3,24 +3,17 @@ import { useSmartContractEvents } from "@elementfi/react-query-typechain";
 import { Contract } from "ethers";
 import { getFromBlock } from "src/elf-council-addresses/getFromBlock";
 import { coreVotingContract, gscCoreVotingContract } from "src/elf/contracts";
-
-interface ProposalEventArgs {
-  proposalId: string;
-  created: string;
-  execution: string;
-  expiration: string;
-}
+import { t } from "ttag";
 
 /**
- * Returns a list of unverified proposals
- *
- * @param proposals List of proposals from the proposals JSON
- * @param contract optional: defaults to coreVotingContract, use useGSCUnverifiedProposals for its GSC counterpart
+ * @param {Proposal[]} proposals List of proposals from the proposals JSON
+ * @param {Contract} [contract = coreVotingContract] optional -- defaults to coreVotingContract, use useGSCUnverifiedProposals for its GSC counterpart
+ * @returns {Proposa[]} An array of unverified onchain proposals
  */
 export function useUnverifiedProposals(
   proposals: Proposal[],
   contract: Contract = coreVotingContract,
-): ProposalEventArgs[] {
+): Proposal[] {
   const { data: events = [] } = useSmartContractEvents(
     contract,
     "ProposalCreated",
@@ -37,19 +30,26 @@ export function useUnverifiedProposals(
   });
 
   return unverifiedProposalEvents.map((event) => {
-    const args = event?.args?.map((arg) => arg.toString());
+    const args = event?.args;
 
     return {
-      proposalId: args?.[0],
-      created: args?.[1],
-      execution: args?.[2],
-      expiration: args?.[3],
+      proposalHash: "",
+      proposalId: (args?.[0]).toString(),
+      created: (args?.[1]).toNumber(),
+      title: t`UNKNOWN PROPOSAL`,
+      description: t`WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.`,
+      createdTimestamp: 0,
+      expiration: (args?.[3]).toNumber(),
+      unlock: 0,
+      lastCall: 0,
+      quorum: "",
+      targets: [""],
+      calldatas: [""],
+      snapshotId: "",
     };
   });
 }
 
-export function useGSCUnverifiedProposals(
-  proposals: Proposal[],
-): ProposalEventArgs[] {
+export function useGSCUnverifiedProposals(proposals: Proposal[]): Proposal[] {
   return useUnverifiedProposals(proposals, gscCoreVotingContract);
 }
