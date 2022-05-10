@@ -136,9 +136,9 @@ export function LeaveGSCButton({
             {t`Leave Confirmation`}
           </div>
           <div className="text-principalRoyalBlue mb-8 text-sm">
-            {t`Are you sure you want to leave the the GSC? By leaving the GSC, you
+            {t`Are you sure you want to leave the GSC? By leaving the GSC, you
             will forfeit the benefits, roles, and responsibilities of GSC
-            membership, as outlined in the GSC Membership forum post.You will
+            membership, as outlined in the GSC Membership forum post. You will
             not be able to rejoin without becoming eligible. To learn more about
             what makes you eligible read more here.`}
           </div>
