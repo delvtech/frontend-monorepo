@@ -52,6 +52,7 @@
     "deploy-contracts": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/main.ts --network localhost --no-compile && npm run build-tokenlist",
     "test-claiming": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/testClaiming.ts --network localhost --no-compile",
     "test-proposal": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/createProposal.ts --network localhost --no-compile",
+    "create-goerli-gsc-proposal": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat createGoerliGscProposal --network goerli",
     "create-proposals": "bash scripts/create-proposals.sh",
     "create-gsc-proposals": "bash scripts/create-gsc-proposals.sh",
     "mine-auto": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat autoMine",
