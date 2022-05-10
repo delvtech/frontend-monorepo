@@ -32,7 +32,7 @@ interface GscProposalOptions {
   expired?: boolean;
 }
 
-export async function createGscProposal(
+export async function createGoerliGscProposal(
   owner: SignerWithAddress,
   provider: Provider,
   options: GscProposalOptions,
