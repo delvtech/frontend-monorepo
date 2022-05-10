@@ -30,8 +30,7 @@ export function GSCPortfolioCard({
 
   const { status, votingPower } = useGSCStatus(account);
   const canJoinGSC = status === EligibilityState.Eligible;
-  const canLeaveGSC =
-    status === EligibilityState.Expiring || status === EligibilityState.Current;
+  const canLeaveGSC = status === EligibilityState.Expiring;
 
   return (
     <Card variant={CardVariant.GRADIENT} className="w-fit shadow-md lg:w-full">
