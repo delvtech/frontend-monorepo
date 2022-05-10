@@ -258,8 +258,6 @@ export default function GSCProposalsSection({
           </Dialog>
         </Transition.Root>
       )}
-
-      <GSCVoteTallyDialog />
     </div>
   );
 }
