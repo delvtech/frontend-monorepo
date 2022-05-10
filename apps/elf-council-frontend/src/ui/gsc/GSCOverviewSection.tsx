@@ -30,6 +30,7 @@ import {
   useVotingPowerByDelegates,
   VotePowerByDelegate,
 } from "src/ui/gsc/useVotingPowerByDelegates";
+import { formatEther } from "ethers/lib/utils";
 
 const provider = defaultProvider;
 const NUM_CANDIDATES_TO_SHOW = 20;
@@ -50,7 +51,7 @@ export function GSCOverviewSection(): ReactElement {
   const { data: members = [] } = useGSCMembers();
   const votingPowerByDelegate = useVotingPowerByDelegates();
   const sortedMembers = sortMembersByVotingPower(
-    members,
+    [...members],
     votingPowerByDelegate,
   );
 
@@ -190,7 +191,7 @@ export function GSCOverviewSection(): ReactElement {
             (sortedMembers.length ? (
               <div>
                 <ul className="space-y-2">
-                  {members.map((member) => {
+                  {sortedMembers.map((member) => {
                     const currentlyDelegated =
                       currentDelegate === member.address;
 
@@ -274,6 +275,10 @@ function sortMembersByVotingPower(
   votingPowerByDelegate: VotePowerByDelegate,
 ) {
   return members.sort((memberA, memberB) => {
+    if (!memberA || !memberB) {
+      return 0;
+    }
+
     const votingPowerA: BigNumber = votingPowerByDelegate[memberA.address];
     const votingPowerB: BigNumber = votingPowerByDelegate[memberB.address];
     return +votingPowerB?.sub(votingPowerA).toString();
