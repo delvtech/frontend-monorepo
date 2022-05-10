@@ -106,14 +106,12 @@ export default function ProposalsPage({
 
   const handleSelectProposal = useCallback(
     (proposalId: string | undefined) => {
-      const proposal = proposalsJson.proposals.find(
-        (p) => p.proposalId === proposalId,
-      );
+      const proposal = allProposals.find((p) => p.proposalId === proposalId);
       setSelectedProposal(proposal);
       setSelectedProposalId(proposalId);
       setIsModalOpen(true);
     },
-    [proposalsJson.proposals],
+    [allProposals],
   );
 
   const handleActiveTabClick = () => {
@@ -174,6 +172,7 @@ export default function ProposalsPage({
       account={account}
       signer={signer}
       proposal={selectedProposal}
+      unverified={!selectedProposal.createdTimestamp}
     />
   ) : null;
 
