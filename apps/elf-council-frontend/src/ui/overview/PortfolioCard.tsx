@@ -15,7 +15,7 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
-import { JoinGSCButton } from "src/ui/gsc/GSCButtons";
+import { JoinGSCButton, LeaveGSCButton } from "src/ui/gsc/GSCButtons";
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
@@ -23,6 +23,7 @@ import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPo
 import { useFeatureFlag } from "src/elf/featureFlag/useFeatureFlag";
 import { FeatureFlag } from "src/elf/featureFlag/featureFlag";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
+import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
@@ -39,7 +40,11 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { data: merkleInfo } = useMerkleInfo(account, MerkleRewardType.RETRO);
   const unclaimedAirdrop = useUnclaimedAirdrop(account, merkleInfo);
   const votingPower = useVotingPowerForAccountAtLatestBlock(account);
-  const showJoinButton = useShowJoinButton(account);
+
+  const { status } = useGSCStatus(account);
+  const canJoinGSC = status === EligibilityState.Eligible;
+  const canLeaveGSC = status === EligibilityState.Expiring;
+  const hasGSCFlag = useFeatureFlag(FeatureFlag.GSC);
 
   return (
     <Card
@@ -86,10 +91,20 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
             >{t`Claim`}</LinkButton>
           </div>
         )}
-        {showJoinButton && (
+        {hasGSCFlag && (
           <div className="mt-4 flex items-center align-middle">
-            <ThresholdProgressBar account={account} />
-            <JoinGSCButton account={account} signer={signer} />
+            <div className="mr-8 basis-96">
+              <ThresholdProgressBar account={account} />
+            </div>
+            {canLeaveGSC ? (
+              <LeaveGSCButton account={account} signer={signer} />
+            ) : (
+              <JoinGSCButton
+                account={account}
+                signer={signer}
+                disabled={!canJoinGSC || !account}
+              />
+            )}
           </div>
         )}
       </div>
@@ -121,18 +136,4 @@ function ThresholdProgressBar(props: ThresholdProgressBarProps) {
       </div>
     </div>
   );
-}
-
-function useShowJoinButton(account: string | null | undefined) {
-  const hasGSCFlag = useFeatureFlag(FeatureFlag.GSC);
-  const votePower = useVotingPowerForAccountAtLatestBlock(account);
-  const { data: threshold, isSuccess } = useGSCVotePowerThreshold();
-  const { data: isOnGSC } = useIsGSCMember(account);
-
-  if (hasGSCFlag && isSuccess && !!Number(votePower) && !!threshold) {
-    const hasEnoughToJoinGSC = parseEther(votePower).gte(threshold);
-    const canLeaveGSC = isOnGSC && parseEther(votePower).lt(threshold);
-
-    return hasEnoughToJoinGSC || canLeaveGSC;
-  }
 }
