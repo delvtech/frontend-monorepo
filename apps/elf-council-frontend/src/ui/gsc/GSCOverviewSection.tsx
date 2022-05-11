@@ -116,7 +116,7 @@ export function GSCOverviewSection(): ReactElement {
           </div>
 
           {currentTab === TabOption.Overview && (
-            <div className="mt-4 flex flex-col space-y-10 overflow-y-scroll">
+            <div className="mt-4 flex flex-col space-y-10 overflow-y-auto">
               <Disclosure as="div">
                 {({ open }) => (
                   <>
@@ -231,7 +231,7 @@ export function GSCOverviewSection(): ReactElement {
             ))}
 
           {currentTab === TabOption.Rising && (
-            <div className="h-96 overflow-y-scroll">
+            <div className="h-96 overflow-y-auto">
               <ul className="space-y-2">
                 {topTwentyCandidates.map((delegate) => {
                   const currentlyDelegated =
