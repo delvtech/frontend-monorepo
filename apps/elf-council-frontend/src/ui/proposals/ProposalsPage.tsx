@@ -188,7 +188,7 @@ export default function ProposalsPage({
 
       <div className="h-full w-full flex-1 space-y-8 pr-8 pt-8 lg:max-w-lg">
         <H1 className="text-principalRoyalBlue flex-1 text-center">{t`On-chain Proposals`}</H1>
-        <div className="flex justify-between">
+        <div className="flex justify-between gap-2">
           <Tabs aria-label={t`Filter proposals`}>
             <Tab
               first
