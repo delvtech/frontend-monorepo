@@ -274,12 +274,11 @@ function sortMembersByVotingPower(
   votingPowerByDelegate: VotePowerByDelegate,
 ) {
   return [...members].sort((memberA, memberB) => {
-    if (!memberA || !memberB) {
-      return 0;
-    }
-
     const votingPowerA: BigNumber = votingPowerByDelegate[memberA.address];
     const votingPowerB: BigNumber = votingPowerByDelegate[memberB.address];
+    if (!votingPowerA && !votingPowerB) {
+      return 0;
+    }
     return +votingPowerB?.sub(votingPowerA).toString();
   });
 }
