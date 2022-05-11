@@ -54,7 +54,7 @@
     "@types/lodash.zip": "^4.2.6",
     "@types/lodash.zipobject": "^4.1.6",
     "@types/lodash.zipwith": "^4.2.6",
-    "@types/node": "^14.17.34",
+    "@types/node": "^17.0.32",
     "@types/react": "^17.0.39",
     "@types/react-blockies": "^1.4.1",
     "@types/react-dom": "^17.0.13",
