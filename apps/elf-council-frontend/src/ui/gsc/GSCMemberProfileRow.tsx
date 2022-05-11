@@ -12,6 +12,7 @@ import {
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
+import { useENSName } from "src/ui/ethereum/useEnsName";
 
 interface GSCMemberProfileRowProps {
   selected: boolean;
@@ -32,8 +33,9 @@ export function GSCMemberProfileRow(
     kickButton,
   } = props;
 
+  const { data: ensName } = useENSName(delegate.address);
   const formattedDelegateName =
-    delegate.ensName ||
+    ensName ||
     delegate.commonwealthName ||
     delegate.name ||
     formatWalletAddress(delegate.address);
