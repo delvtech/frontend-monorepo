@@ -1,3 +1,4 @@
+import { VestingVault__factory } from "./../../../packages/peripherals/typechain/factories/VestingVault__factory";
 import { parseEther } from "ethers/lib/utils";
 /* eslint-disable no-console */
 import {
@@ -21,7 +22,8 @@ import {
 const { PROPOSER_PRIVATE_KEY, GOERLI_DEPLOYER_PRIVATE_KEY } = process.env;
 const LOCAL_RPC_HOST = "http://127.0.0.1:8545";
 const ALCHEMY_GOERLI_RPC_HOST = `https://eth-goerli.alchemyapi.io/v2/${process.env.ALCHEMY_GOERLI_API_KEY}`;
-const { elementToken, lockingVault } = goerliAddressList.addresses;
+const { elementToken, lockingVault, vestingVault } =
+  goerliAddressList.addresses;
 
 task(
   "build-tokenlist",
@@ -284,6 +286,44 @@ task("giveVotingPowerToAccount", "gives voting power to account")
     await tokenContract.mint(address, amountBN);
     console.log("depositing");
     const tx = await lockingVaultContract.deposit(address, amountBN, address);
+    console.log("transaction: ", `https://goerli.etherscan.io/tx/${tx.hash}`);
+    console.log("done!");
+  });
+
+task("removeGrant", "removes a grant from the vesting vault")
+  .addParam(
+    "address",
+    "wallet address to give voting power to",
+    undefined,
+    types.string,
+  )
+  .setAction(async (taskArgs: { address: string }) => {
+    const { address } = taskArgs;
+
+    if (!GOERLI_DEPLOYER_PRIVATE_KEY) {
+      console.log("ERROR: no private key provided for proposer");
+      return;
+    }
+
+    const goerliProvider = new providers.JsonRpcProvider(
+      ALCHEMY_GOERLI_RPC_HOST,
+    );
+
+    const owner = new ethers.Wallet(
+      GOERLI_DEPLOYER_PRIVATE_KEY,
+      goerliProvider,
+    );
+
+    const vestingVaultContract = VestingVault__factory.connect(
+      vestingVault,
+      owner,
+    );
+
+    // const multiplier = await vestingVaultContract.unvestedMultiplier();
+    // console.log('multiplier', multiplier);
+
+    console.log("removing grant");
+    const tx = await vestingVaultContract.removeGrant(address);
     console.log("transaction: ", `https://goerli.etherscan.io/tx/${tx.hash}`);
     console.log("done!");
   });
