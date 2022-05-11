@@ -41,9 +41,15 @@ export function ProposalListItem({
       (proposal.expiration - currentBlockNumber) * SECONDS_PER_BLOCK * MS_PER_S,
   );
 
+  const pastProposal = now > votingPeriodEndsTimestampMS;
+
   const votingPeriodEndsDate = formatAbbreviatedDate(
     new Date(votingPeriodEndsTimestampMS),
   );
+
+  const votingPeriod = pastProposal
+    ? t`Voting ended ${votingPeriodEndsDate}`
+    : t`Voting ends ${votingPeriodEndsDate}`;
 
   const handleClick = useCallback(
     () => onClick(proposalId),
@@ -70,7 +76,7 @@ export function ProposalListItem({
             )}
           >
             {currentBlockNumber && (
-              <div className="text-sm">{t`Voting ends ${votingPeriodEndsDate}`}</div>
+              <div className="text-sm">{votingPeriod}</div>
             )}
             <div className="flex items-center space-x-4">
               <div className="pb-0.5">
