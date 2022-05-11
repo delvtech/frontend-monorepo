@@ -16,7 +16,7 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
       <Dialog
         as="div"
         // Using z-50 so that the dialog appears above the Sidebar, which is currently set to z-10
-        className={"fixed inset-0 z-50 overflow-y-auto"}
+        className="fixed inset-0 z-50 overflow-y-auto"
         onClose={onClose ? onClose : () => {}}
       >
         <div className="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
