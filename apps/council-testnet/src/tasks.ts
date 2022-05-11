@@ -1,23 +1,23 @@
-import { VestingVault__factory } from "./../../../packages/peripherals/typechain/factories/VestingVault__factory";
-import { parseEther } from "ethers/lib/utils";
 /* eslint-disable no-console */
 import {
   getTokenList,
   goerliAddressList,
 } from "@elementfi/elf-council-tokenlist";
-import fs from "fs";
+import {
+  ERC20PermitWithMint__factory,
+  LockingVault__factory,
+  VestingVault__factory,
+} from "@elementfi/elf-council-typechain";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ethers, providers } from "ethers";
+import { parseEther } from "ethers/lib/utils";
+import fs from "fs";
 import { task, types } from "hardhat/config";
 
 import { createGoerliGscProposal } from "src/scripts/createGoerliGscProposal";
 import { createGoerliProposal } from "src/scripts/createGoerliProposal";
 import { createGscProposal } from "src/scripts/createGscProposal";
 import { createProposal } from "src/scripts/createProposal";
-import {
-  ERC20PermitWithMint__factory,
-  LockingVault__factory,
-} from "@elementfi/elf-council-typechain";
 
 const { PROPOSER_PRIVATE_KEY, GOERLI_DEPLOYER_PRIVATE_KEY } = process.env;
 const LOCAL_RPC_HOST = "http://127.0.0.1:8545";
