@@ -2,7 +2,6 @@ import React, { ReactElement, useRef, useState } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
 import { t } from "ttag";
 
 import { defaultProvider } from "src/elf/providers/providers";
@@ -85,10 +84,6 @@ export function GSCOverviewSection(): ReactElement {
 
   return (
     <div className="w-full space-y-6">
-      <Head>
-        <title>{t`GSCOverview | Element Council Protocol`}</title>
-      </Head>
-
       <H1 className="text-principalRoyalBlue text-center">
         {t`Governance GSC Overview`}
       </H1>
@@ -193,9 +188,9 @@ export function GSCOverviewSection(): ReactElement {
 
           {currentTab === TabOption.Current &&
             (sortedMembers.length ? (
-              <div className="">
+              <div>
                 <ul className="space-y-2">
-                  {members.map((member) => {
+                  {sortedMembers.map((member) => {
                     const currentlyDelegated =
                       currentDelegate === member.address;
 
@@ -278,7 +273,11 @@ function sortMembersByVotingPower(
   members: Delegate[],
   votingPowerByDelegate: VotePowerByDelegate,
 ) {
-  return members.sort((memberA, memberB) => {
+  return [...members].sort((memberA, memberB) => {
+    if (!memberA || !memberB) {
+      return 0;
+    }
+
     const votingPowerA: BigNumber = votingPowerByDelegate[memberA.address];
     const votingPowerB: BigNumber = votingPowerByDelegate[memberB.address];
     return +votingPowerB?.sub(votingPowerA).toString();

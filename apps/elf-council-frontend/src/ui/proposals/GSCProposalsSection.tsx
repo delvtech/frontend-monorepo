@@ -11,7 +11,6 @@ import { Proposal, ProposalsJson } from "@elementfi/elf-council-proposals";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
 import { t } from "ttag";
 
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
@@ -180,10 +179,6 @@ export default function GSCProposalsSection({
 
   return (
     <div className="flex h-full w-full lg:justify-center">
-      <Head>
-        <title>{t`Proposals | Element Council Protocol`}</title>
-      </Head>
-
       <div className="h-full w-full flex-1 space-y-8 pt-8 pr-8 lg:max-w-lg">
         <H1 className="text-principalRoyalBlue flex-1 text-center">{t`GSC On-chain Proposals`}</H1>
         <div className="flex justify-between">

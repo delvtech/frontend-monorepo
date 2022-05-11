@@ -17,7 +17,7 @@ interface GSCMemberProfileRowProps {
   selected: boolean;
   highlightSelected?: boolean;
   delegate: Delegate;
-  delegateButton: ReactElement;
+  delegateButton?: ReactElement;
   kickButton?: ReactElement;
 }
 

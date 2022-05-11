@@ -1,14 +1,16 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, ReactElement, ReactNode } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import classNames from "classnames";
 
 interface SimpleDialogProps {
   isOpen: boolean;
   onClose?: () => void;
   children?: ReactNode;
+  className?: string;
 }
 export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
-  const { isOpen, onClose, children } = props;
+  const { isOpen, onClose, children, className } = props;
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
@@ -46,7 +48,12 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative inline-block transform-gpu overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
+            <div
+              className={classNames(
+                className,
+                "relative inline-block transform-gpu overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle",
+              )}
+            >
               {children}
             </div>
           </Transition.Child>

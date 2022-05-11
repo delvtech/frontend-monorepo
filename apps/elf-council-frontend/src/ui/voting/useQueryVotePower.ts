@@ -52,6 +52,9 @@ export function useQueryVotePower(
       }
     },
     queryKey: ["queryVotePower", account, vaultContract.address, atBlockNumber],
+    /* We want to cache the previous stale data until a refresh. 
+      This boolean prevents data from being kept when account is disconnected */
+    keepPreviousData: !!account,
     enabled: !!account && !!blockNumber && !!extraData,
   });
 
@@ -79,6 +82,9 @@ export function useQueryVotePowerView(
     "queryVotePowerView",
     {
       callArgs: [account as string, blockNumber as number],
+      /* We want to cache the previous stale data until a refresh. 
+      This boolean prevents data from being kept when account is disconnected */
+      keepPreviousData: !!account,
       enabled: !!account && !!blockNumber,
     },
   );
