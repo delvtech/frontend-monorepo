@@ -12,6 +12,7 @@ import {
   ThumbDownIcon,
   ThumbUpIcon,
   XCircleIcon,
+  ShieldExclamationIcon,
 } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "@elementfi/elf-council-proposals";
@@ -241,9 +242,13 @@ export function ProposalDetailsCard(
         </p>
         <div className="h-1/3 overflow-hidden rounded-lg bg-black bg-opacity-20">
           <div className="h-full overflow-auto break-words">
-            <p className="shrink-0 py-2 px-4 font-light text-white ">
-              {snapshotProposal?.body || proposal.description}
-            </p>
+            {unverified ? (
+              <UnverifiedProposalWarning />
+            ) : (
+              <p className="shrink-0 py-2 px-4 font-light text-white ">
+                {snapshotProposal?.body}
+              </p>
+            )}
           </div>
         </div>
 
@@ -413,4 +418,22 @@ function getVoteCount(votingPower: VotingPower | undefined): string {
   return votingPower[0].gt(votingPower[1])
     ? formatEther(votingPower[0])
     : formatEther(votingPower[1]);
+}
+
+function UnverifiedProposalWarning() {
+  return (
+    <div className="grid h-full place-items-center py-2 px-4">
+      <div className="flex flex-col items-center justify-center">
+        <ShieldExclamationIcon className="text-goldYellow mb-2 w-10" />
+        <p className="w-4/5 text-center font-bold leading-5 text-white">
+          <span className="mb-2 block">{t`WARNING: This proposal has not been${"\u00A0"}verified!`}</span>
+          <span className="block">
+            {t`It may contain malicious
+          code, please check the forums or Discord for guidance on how to vote
+          on this${"\u00A0"}proposal.`}
+          </span>
+        </p>
+      </div>
+    </div>
+  );
 }
