@@ -21,7 +21,7 @@ function Header(): ReactElement {
   const { account, active, library } = useWeb3React<Provider>();
   const { data: gasPrice } = useGasPrice();
   const amountDeposited = useDeposited(account) || "0";
-  const formattedDepositedAmount = parseFloat(amountDeposited).toFixed(2);
+  const formattedAmountDeposited = parseFloat(amountDeposited).toFixed(2);
 
   return (
     <div className="flex w-full justify-between">
@@ -52,7 +52,7 @@ function Header(): ReactElement {
               <span className="text-principalRoyalBlue mr-8 flex items-center gap-2 font-bold">
                 <ElementIconCircle size={IconSize.MEDIUM} />
                 <span>
-                  {formattedDepositedAmount}
+                  {formattedAmountDeposited}
                   <span className="hidden lg:inline"> ELFI</span>
                 </span>
               </span>
