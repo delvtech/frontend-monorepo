@@ -28,7 +28,7 @@ import {
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "src/ui/proposals/ProposalList/ProposalList";
-import { GSCProposalDetailsCard } from "src/ui/proposals/GSCProposalsDetailsCard";
+import { GSCProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/GSCProposalsDetailsCard";
 import { useGSCUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 
 type TabId = "active" | "past";

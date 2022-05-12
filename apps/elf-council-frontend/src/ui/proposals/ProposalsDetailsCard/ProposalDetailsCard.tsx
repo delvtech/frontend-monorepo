@@ -28,7 +28,7 @@ import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { VotingPower } from "src/elf/proposals/VotingPower";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
-import { TooltipDefinition } from "./tooltipDefinitions";
+import { TooltipDefinition } from "src/ui/proposals/ProposalsDetailsCard/tooltipDefinitions";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import CloseButton from "src/ui/base/Dialog/CloseButton";
@@ -52,10 +52,10 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
+import { StaleVotingPowerMessage } from "src/ui/proposals/ProposalsDetailsCard/StaleVotingPowerMessage";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { assertNever } from "@elementfi/base/utils/assertNever";
-import { UnverifiedProposalWarning } from "src/ui/proposals/UnverifiedProposalWarning";
+import { UnverifiedProposalWarning } from "src/ui/proposals/ProposalsDetailsCard/UnverifiedProposalWarning";
 
 interface ProposalDetailsCardProps {
   className?: string;

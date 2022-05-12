@@ -35,8 +35,8 @@ import { Intent } from "src/ui/base/Intent";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
-import { GSCMember } from "src/ui/proposals/GSCMember";
-import GSCVoteTallys from "src/ui/proposals/GSCVoteTally";
+import { GSCMember } from "src/ui/proposals/ProposalsDetailsCard/GSCMember";
+import GSCVoteTallys from "src/ui/proposals/ProposalsDetailsCard/GSCVoteTally";
 import {
   getGSCProposalStatus,
   ProposalStatusLabels,
@@ -52,7 +52,7 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { useIsGSCMemberIdle } from "src/ui/gsc/useIsGSCMemberIdle";
 import { useGSCBallot } from "src/ui/voting/useGSCBallot";
-import { UnverifiedProposalWarning } from "src/ui/proposals/UnverifiedProposalWarning";
+import { UnverifiedProposalWarning } from "src/ui/proposals/ProposalsDetailsCard/UnverifiedProposalWarning";
 
 interface GSCProposalDetailsCardProps {
   className?: string;

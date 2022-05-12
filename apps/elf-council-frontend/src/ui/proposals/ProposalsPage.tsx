@@ -24,7 +24,7 @@ import {
   useIsTailwindLargeScreen,
 } from "src/ui/base/tailwindBreakpoints";
 import EmptySpaceFace from "src/ui/base/svg/EmptySpaceFace";
-import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
+import { ProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
