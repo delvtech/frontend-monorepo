@@ -5,6 +5,7 @@ import {
   ThumbUpIcon,
   XCircleIcon,
 } from "@heroicons/react/solid";
+import { t } from "ttag";
 
 import { Intent } from "src/ui/base/Intent";
 import { Tag } from "src/ui/base/Tag/Tag";
