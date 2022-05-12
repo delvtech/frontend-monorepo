@@ -129,7 +129,7 @@ export function ProposalDetailsCard(
     onTransactionSubmitted: (pendingTransaction) => {
       const pendingEtherscanLink = (
         <ExternalLink
-          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${pendingTransaction.hash}}`}
+          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${pendingTransaction.hash}`}
           text={t`View on etherscan`}
           className="text-principalRoyalBlue"
         />
@@ -231,7 +231,7 @@ export function ProposalDetailsCard(
         </p>
         <div className="h-1/3 overflow-hidden rounded-lg bg-black bg-opacity-20">
           <div className="h-full overflow-auto break-words">
-            <p className="shrink-0 py-2 px-4 font-light text-white ">
+            <p className="shrink-0 px-4 py-2 font-light text-white ">
               {snapshotProposal?.body || ""}
             </p>
           </div>
