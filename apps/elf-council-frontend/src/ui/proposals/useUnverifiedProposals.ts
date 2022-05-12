@@ -50,6 +50,10 @@ export function useUnverifiedProposals(
   });
 }
 
+/**
+ * @param {Proposal[]} proposals List of proposals from the proposals JSON
+ * @returns {Proposa[]} An array of unverified onchain GSC proposals
+ */
 export function useGSCUnverifiedProposals(proposals: Proposal[]): Proposal[] {
   return useUnverifiedProposals(proposals, gscCoreVotingContract);
 }
