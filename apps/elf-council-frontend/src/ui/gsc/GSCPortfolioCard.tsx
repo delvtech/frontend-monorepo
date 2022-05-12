@@ -47,10 +47,10 @@ export function GSCPortfolioCard({
         )}
       </div>
 
-      <div className="mt-4 mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center space-y-3 lg:space-y-0">
+      <div className="mt-4 mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center space-y-6 lg:space-y-0">
         {/* Voting Power */}
         <BalanceWithLabel
-          className="mr-4 basis-40"
+          className="mr-4 basis-52"
           balance={votingPower}
           tooltipText={t`${TooltipDefinition.OWNED_VOTING_POWER}`}
           label={t`Voting Power`}
