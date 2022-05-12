@@ -50,7 +50,9 @@ export const GSCHistory = ({ status }: GSCHistoryProps): ReactElement => {
           </span>
           <Tooltip
             className="text-white"
-            content={t`Membership warning placeholder.`}
+            content={t`You’re currently under the 110,000 ELFI delegation threshold for the
+            Governance Steering Council (GSC). Please be advised this means that
+            community members are permitted to remove you from the Council.`}
           >
             <InformationCircleIcon className="h-4 cursor-help" />
           </Tooltip>
@@ -69,7 +71,10 @@ export const GSCHistory = ({ status }: GSCHistoryProps): ReactElement => {
           </span>
           <Tooltip
             className="text-white"
-            content={t`Membership warning placeholder.`}
+            content={t`You are currently no longer a member of the GSC as you have been
+            removed. As you fell under 110,000 ELFI threshold the community
+            chose to remove you from the Council. To appeal this decision please
+            follow protocol you can read here to do so.`}
           >
             <InformationCircleIcon className="h-4 cursor-help" />
           </Tooltip>
