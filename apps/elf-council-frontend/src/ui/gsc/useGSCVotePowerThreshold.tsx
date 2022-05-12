@@ -6,5 +6,7 @@ import { BigNumber } from "ethers";
 import { gscVaultContract } from "src/elf/contracts";
 
 export function useGSCVotePowerThreshold(): QueryObserverResult<BigNumber> {
-  return useSmartContractReadCall(gscVaultContract, "votingPowerBound");
+  return useSmartContractReadCall(gscVaultContract, "votingPowerBound", {
+    keepPreviousData: true,
+  });
 }
