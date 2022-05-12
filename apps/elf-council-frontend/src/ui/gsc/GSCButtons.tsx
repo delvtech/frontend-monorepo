@@ -41,7 +41,7 @@ export function JoinGSCButton({
       const message = (
         <div>{jt`Confirming transaction... ${etherscanLink}`}</div>
       );
-      setDialogOpen(false);
+
       toastIdRef.current = toast.loading(message);
     },
     onTransactionMined: () => {
@@ -81,7 +81,10 @@ export function JoinGSCButton({
             >{t`Cancel`}</Button>
             <Button
               variant={ButtonVariant.GRADIENT}
-              onClick={() => handleJoin()}
+              onClick={() => {
+                setDialogOpen(false);
+                handleJoin();
+              }}
             >{t`Join`}</Button>
           </div>
         </div>
@@ -114,7 +117,6 @@ export function LeaveGSCButton({
       );
 
       toastIdRef.current = toast.loading(message);
-      setDialogOpen(false);
     },
     onTransactionMined: () => {
       toast.success(t`Transaction successfully confirmed`, {
@@ -153,7 +155,10 @@ export function LeaveGSCButton({
             >{t`Cancel`}</Button>
             <Button
               variant={ButtonVariant.GRADIENT}
-              onClick={() => handleLeave()}
+              onClick={() => {
+                setDialogOpen(false);
+                handleLeave();
+              }}
             >{t`Confirm`}</Button>
           </div>
         </div>
