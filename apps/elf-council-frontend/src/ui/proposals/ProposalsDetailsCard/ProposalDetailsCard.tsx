@@ -8,12 +8,6 @@ import React, {
 import toast from "react-hot-toast";
 
 import { CheckCircleIcon } from "@heroicons/react/outline";
-import {
-  ThumbDownIcon,
-  ThumbUpIcon,
-  XCircleIcon,
-  ShieldExclamationIcon,
-} from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "@elementfi/elf-council-proposals";
 import { Signer, ContractTransaction } from "ethers";
@@ -54,9 +48,8 @@ import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPo
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { StaleVotingPowerMessage } from "src/ui/proposals/ProposalsDetailsCard/StaleVotingPowerMessage";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
-import { assertNever } from "@elementfi/base/utils/assertNever";
 import { UnverifiedProposalWarning } from "src/ui/proposals/ProposalsDetailsCard/UnverifiedProposalWarning";
-
+import { BallotLabel } from "src/ui/proposals/ProposalsDetailsCard/BallotLabel";
 interface ProposalDetailsCardProps {
   className?: string;
   account: string | null | undefined;
@@ -343,38 +336,6 @@ export function ProposalDetailsCard(
       </div>
     </GradientCard>
   );
-}
-
-interface BallotLabelProps {
-  ballot: Ballot;
-}
-function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
-  switch (ballot) {
-    case Ballot.YES:
-      return (
-        <Tag intent={Intent.SUCCESS}>
-          <ThumbUpIcon height="18" className={"mr-1 pb-0.5 text-green-700"} />
-          <span className={"font-bold text-green-700"}>{t`Yes`}</span>
-        </Tag>
-      );
-    case Ballot.NO:
-      return (
-        <Tag intent={Intent.ERROR}>
-          <ThumbDownIcon height="18" className={"mr-1 pb-0.5 text-red-500"} />
-          <span className={"font-bold text-red-500"}>{t`No`}</span>
-        </Tag>
-      );
-    case Ballot.MAYBE:
-      return (
-        <Tag>
-          <XCircleIcon height="18" className={"mr-1 pb-0.5 "} />
-          <span className={"font-bold"}>{t`Abstain`}</span>
-        </Tag>
-      );
-    default:
-      assertNever(ballot);
-      return null;
-  }
 }
 
 interface QuorumBarProps {
