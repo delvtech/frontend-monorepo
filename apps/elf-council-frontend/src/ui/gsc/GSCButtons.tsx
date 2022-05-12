@@ -41,14 +41,13 @@ export function JoinGSCButton({
       const message = (
         <div>{jt`Confirming transaction... ${etherscanLink}`}</div>
       );
-
+      setDialogOpen(false);
       toastIdRef.current = toast.loading(message);
     },
     onTransactionMined: () => {
       toast.success(t`Transaction successfully confirmed`, {
         id: toastIdRef.current,
       });
-
       setDialogOpen(false);
     },
   });
@@ -114,12 +113,12 @@ export function LeaveGSCButton({
       );
 
       toastIdRef.current = toast.loading(message);
+      setDialogOpen(false);
     },
     onTransactionMined: () => {
       toast.success(t`Transaction successfully confirmed`, {
         id: toastIdRef.current,
       });
-
       setDialogOpen(false);
     },
   });
