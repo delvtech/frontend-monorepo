@@ -131,7 +131,7 @@ export function GSCProposalDetailsCard(
     onTransactionSubmitted: (pendingTransaction) => {
       const pendingEtherscanLink = (
         <ExternalLink
-          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${pendingTransaction.hash}}`}
+          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${pendingTransaction.hash}`}
           text={t`View on etherscan`}
           className="text-principalRoyalBlue"
         />
