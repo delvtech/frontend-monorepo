@@ -52,6 +52,7 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { useIsGSCMemberIdle } from "src/ui/gsc/useIsGSCMemberIdle";
 import { useGSCBallot } from "src/ui/voting/useGSCBallot";
+import { UnverifiedProposalWarning } from "src/ui/proposals/UnverifiedProposalWarning";
 
 interface GSCProposalDetailsCardProps {
   className?: string;
@@ -59,12 +60,20 @@ interface GSCProposalDetailsCardProps {
   signer: Signer | undefined;
   proposal: Proposal;
   onClose: () => void;
+  unverified?: boolean;
 }
 
 export function GSCProposalDetailsCard(
   props: GSCProposalDetailsCardProps,
 ): ReactElement | null {
-  const { className, proposal, account, signer, onClose } = props;
+  const {
+    className,
+    proposal,
+    account,
+    signer,
+    onClose,
+    unverified = false,
+  } = props;
   const { proposalId, snapshotId, quorum } = proposal;
 
   const toastIdRef = useRef<string>();
@@ -197,7 +206,7 @@ export function GSCProposalDetailsCard(
               </Tag>
             </div>
             <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light !leading-6 text-white lg:mt-4">
-              {snapshotProposal?.title}
+              {snapshotProposal?.title || proposal.title}
             </H1>
           </div>
 
@@ -220,7 +229,7 @@ export function GSCProposalDetailsCard(
 
         {/* Proposal Author */}
         <p className="my-3 shrink-0 overflow-hidden font-light text-white">
-          {t`Author:`}
+          {t`Author: `}
           <GSCProposalAuthor proposalId={proposalId} />
         </p>
 
@@ -230,25 +239,34 @@ export function GSCProposalDetailsCard(
         </p>
         <div className="h-1/3 overflow-hidden rounded-lg bg-black bg-opacity-20">
           <div className="h-full overflow-auto break-words">
-            <p className="shrink-0 py-2 px-4 font-light text-white ">
-              {snapshotProposal?.body || ""}
-            </p>
+            {unverified ? (
+              <UnverifiedProposalWarning />
+            ) : (
+              <p className="shrink-0 py-2 px-4 font-light text-white ">
+                {snapshotProposal?.body || ""}
+              </p>
+            )}
           </div>
         </div>
 
         {/* External Links */}
-        <div className="my-4 flex justify-around">
-          <ExternalLink
-            href={snapshotProposal?.link || ""}
-            text={t`View proposal`}
-            className="overflow-hidden text-sm text-white"
-          />
-          <ExternalLink
-            href={ElementUrl.FORUM}
-            text={t`View discussion`}
-            className="overflow-hidden text-sm text-white"
-          />
-        </div>
+        {/* TODO: Add link unverified proposals */}
+        {!unverified ? (
+          <div className="my-4 flex justify-around">
+            <ExternalLink
+              href={snapshotProposal?.link || ""}
+              text={t`View proposal`}
+              className="overflow-hidden text-sm text-white"
+            />
+            <ExternalLink
+              href={ElementUrl.FORUM}
+              text={t`View discussion`}
+              className="overflow-hidden text-sm text-white"
+            />
+          </div>
+        ) : (
+          <div className="my-4"></div>
+        )}
 
         {/* Vote Tallys */}
         {isExecuted ? (
@@ -345,11 +363,11 @@ function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
 interface GSCProposalAuthorProps {
   proposalId: string;
 }
-function GSCProposalAuthor(props: GSCProposalAuthorProps): ReactElement | null {
+function GSCProposalAuthor(props: GSCProposalAuthorProps): ReactElement {
   const { proposalId } = props;
   const { data: author } = useGSCProposalAuthor(proposalId);
   if (!author) {
-    return null;
+    return <span>{t`Unknown`}</span>;
   }
   return <GSCMember account={author} provider={defaultProvider} />;
 }
