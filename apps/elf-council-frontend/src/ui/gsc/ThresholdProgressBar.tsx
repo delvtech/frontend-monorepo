@@ -28,12 +28,12 @@ export function ThresholdProgressBar({
         <span className="text-lg">{t`GSC Eligibility`}</span>
       </div>
       <ProgressBar progress={+votingPower / +threshold} />
-      <div>
-        <span className="text-sm">
+      <div className="text-sm leading-5">
+        <span>
           {`${votingPercent}%`} ({formatBalance2(votingPower, 4)} /{" "}
           {commify(threshold)} ){" "}
         </span>
-        <span className="text-sm">{t`required to join GSC`}</span>
+        <span className="whitespace-nowrap">{t`required to join GSC`}</span>
       </div>
     </div>
   );
