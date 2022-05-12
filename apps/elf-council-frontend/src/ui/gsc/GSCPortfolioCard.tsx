@@ -47,18 +47,17 @@ export function GSCPortfolioCard({
         )}
       </div>
 
-      <div className="mt-4 mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center space-y-6 lg:space-y-0">
-        {/* Voting Power */}
-        <BalanceWithLabel
-          className="mr-4 basis-52"
-          balance={votingPower}
-          tooltipText={t`${TooltipDefinition.OWNED_VOTING_POWER}`}
-          label={t`Voting Power`}
-        />
-
+      <div className="mt-4 mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center space-y-6 xl:space-y-0">
         {/* GSC eligibility progress bar */}
-        <div className="flex-shrink-0 grow-[2] basis-72">
-          <div className="mr-8 flex max-w-md items-center align-middle">
+        <div className="flex grow-[2] basis-[30rem] flex-wrap space-y-6 lg:space-y-0">
+          {/* Voting Power */}
+          <BalanceWithLabel
+            className="mr-4 basis-52"
+            balance={votingPower}
+            tooltipText={t`${TooltipDefinition.OWNED_VOTING_POWER}`}
+            label={t`Voting Power`}
+          />
+          <div className="mr-8 flex max-w-md grow items-center align-middle">
             <ThresholdProgressBar account={account} />
           </div>
         </div>
