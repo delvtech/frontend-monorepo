@@ -55,7 +55,7 @@ import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { assertNever } from "@elementfi/base/utils/assertNever";
-import { UnverifiedProposalWarning } from "./UnverifiedProposalWarning";
+import { UnverifiedProposalWarning } from "src/ui/proposals/UnverifiedProposalWarning";
 
 interface ProposalDetailsCardProps {
   className?: string;
@@ -247,7 +247,7 @@ export function ProposalDetailsCard(
               <UnverifiedProposalWarning />
             ) : (
               <p className="shrink-0 py-2 px-4 font-light text-white ">
-                {snapshotProposal?.body}
+                {snapshotProposal?.body || ""}
               </p>
             )}
           </div>
