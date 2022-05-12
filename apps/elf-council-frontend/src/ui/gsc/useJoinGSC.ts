@@ -23,8 +23,8 @@ export function useJoinGSC(
   account: string | null | undefined,
   signer?: Signer,
   options?: UseSmartContractTransactionOptions<GSCVault, "proveMembership">,
-): () => Promise<void> {
-  const { mutate: join } = useSmartContractTransaction(
+): { handleJoin: () => Promise<void>; isLoading: boolean } {
+  const { mutate: join, isLoading } = useSmartContractTransaction(
     gscVaultContract,
     "proveMembership",
     signer,
@@ -53,5 +53,5 @@ export function useJoinGSC(
     join([vaults, extraData]);
   }, [join, lockingVaultVotePower, vestingVaultVotePower]);
 
-  return handleJoin;
+  return { handleJoin, isLoading };
 }

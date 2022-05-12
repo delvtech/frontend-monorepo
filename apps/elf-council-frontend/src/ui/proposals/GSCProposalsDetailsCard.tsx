@@ -257,7 +257,7 @@ export function GSCProposalDetailsCard(
             <CheckCircleIcon className="ml-2" height="24" />
           </Tag>
         ) : (
-          <div className="max-h-72 w-full overflow-scroll">
+          <div className="max-h-72 w-full overflow-auto">
             <GSCVoteTallys provider={defaultProvider} proposalId={proposalId} />
           </div>
         )}

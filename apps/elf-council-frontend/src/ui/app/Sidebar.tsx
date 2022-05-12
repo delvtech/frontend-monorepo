@@ -93,20 +93,11 @@ export default function Sidebar(props: SidebarProps): ReactElement {
             />
             <SidebarLink
               className={hasGSCFlag ? "block" : "hidden"}
-              link="/gsc-overview"
-              label={t`GSC Overview`}
+              link="/gsc"
+              label={t`GSC`}
               router={router}
               icon={
                 <HomeIcon className="text-principalRoyalBlue h-4 w-4 flex-shrink-0" />
-              }
-            />
-            <SidebarLink
-              className={hasGSCFlag ? "block" : "hidden"}
-              link="/gsc-proposals"
-              label={t`GSC Proposals`}
-              router={router}
-              icon={
-                <PencilAltIcon className="text-principalRoyalBlue h-4 w-4 flex-shrink-0" />
               }
             />
             <SidebarLinkExternal link={ElementUrl.FORUM} label={t`Forum`} />

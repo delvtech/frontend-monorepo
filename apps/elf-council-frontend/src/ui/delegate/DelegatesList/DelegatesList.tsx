@@ -101,7 +101,7 @@ function DelegatesList({
         {/* Delegates */}
         <ul
           // 392px exactly matches 5 rows of the list
-          className="flex h-[40vh] min-h-[392px] flex-col gap-y-2 overflow-y-scroll pr-1"
+          className="flex h-[40vh] min-h-[392px] flex-col gap-y-2 overflow-y-auto pr-1"
         >
           {shuffledDelegates.map((delegate, idx) => {
             const handleDelegation = () => {

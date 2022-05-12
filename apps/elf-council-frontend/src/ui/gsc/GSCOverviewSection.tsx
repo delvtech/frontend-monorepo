@@ -2,7 +2,6 @@ import React, { ReactElement, useRef, useState } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
 import { t } from "ttag";
 
 import { defaultProvider } from "src/elf/providers/providers";
@@ -77,7 +76,7 @@ export function GSCOverviewSection(): ReactElement {
   const { mutate: changeDelegation, isLoading: changeDelegationLoading } =
     useChangeDelegation(account, signer);
   const handleDelegation = (address: string) => changeDelegation([address]);
-  const handleLeave = useLeaveGSC(
+  const { handleLeave, isLoading: isLeaveTxnLoading } = useLeaveGSC(
     account,
     signer,
     buildToastTransactionConfig(toastIdRef),
@@ -85,10 +84,6 @@ export function GSCOverviewSection(): ReactElement {
 
   return (
     <div className="w-full space-y-6">
-      <Head>
-        <title>{t`GSCOverview | Element Council Protocol`}</title>
-      </Head>
-
       <H1 className="text-principalRoyalBlue text-center">
         {t`Governance GSC Overview`}
       </H1>
@@ -121,7 +116,7 @@ export function GSCOverviewSection(): ReactElement {
           </div>
 
           {currentTab === TabOption.Overview && (
-            <div className="mt-4 flex flex-col space-y-10 overflow-y-scroll">
+            <div className="mt-4 flex flex-col space-y-10 overflow-y-auto">
               <Disclosure as="div">
                 {({ open }) => (
                   <>
@@ -193,9 +188,9 @@ export function GSCOverviewSection(): ReactElement {
 
           {currentTab === TabOption.Current &&
             (sortedMembers.length ? (
-              <div className="">
+              <div>
                 <ul className="space-y-2">
-                  {members.map((member) => {
+                  {sortedMembers.map((member) => {
                     const currentlyDelegated =
                       currentDelegate === member.address;
 
@@ -204,6 +199,7 @@ export function GSCOverviewSection(): ReactElement {
                         variant={ButtonVariant.DANGER}
                         className="w-full text-center"
                         onClick={handleLeave}
+                        loading={isLeaveTxnLoading}
                       >
                         <div className="flex w-full justify-center">{t`Kick`}</div>
                       </Button>
@@ -236,7 +232,7 @@ export function GSCOverviewSection(): ReactElement {
             ))}
 
           {currentTab === TabOption.Rising && (
-            <div className="h-96 overflow-y-scroll">
+            <div className="h-96 overflow-y-auto">
               <ul className="space-y-2">
                 {topTwentyCandidates.map((delegate) => {
                   const currentlyDelegated =
@@ -278,9 +274,12 @@ function sortMembersByVotingPower(
   members: Delegate[],
   votingPowerByDelegate: VotePowerByDelegate,
 ) {
-  return members.sort((memberA, memberB) => {
+  return [...members].sort((memberA, memberB) => {
     const votingPowerA: BigNumber = votingPowerByDelegate[memberA.address];
     const votingPowerB: BigNumber = votingPowerByDelegate[memberB.address];
+    if (!votingPowerA || !votingPowerB) {
+      return 0;
+    }
     return +votingPowerB?.sub(votingPowerA).toString();
   });
 }

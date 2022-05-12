@@ -14,6 +14,7 @@ import {
 import { Provider } from "@ethersproject/providers";
 import { formatWalletAddress } from "src/base/formatWalletAddress";
 import { getGSCCandidateUrl } from "src/commonwealth";
+import { useENSName } from "src/ui/ethereum/useEnsName";
 
 interface DelegateProfileRowProps {
   provider?: Provider;
@@ -34,8 +35,9 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
     profileActionButton,
   } = props;
 
+  const { data: ensName } = useENSName(delegate.address);
   const formattedDelegateName =
-    delegate.ensName ||
+    ensName ||
     delegate.commonwealthName ||
     delegate.name ||
     formatWalletAddress(delegate.address);

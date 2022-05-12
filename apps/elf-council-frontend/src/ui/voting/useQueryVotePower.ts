@@ -52,6 +52,9 @@ export function useQueryVotePower(
       }
     },
     queryKey: ["queryVotePower", account, vaultContract.address, atBlockNumber],
+    /* We want to cache the previous stale data until a refresh.
+      This boolean prevents data from being kept when account is disconnected */
+    keepPreviousData: !!account,
     enabled: !!account && !!blockNumber && !!extraData,
   });
 
@@ -69,6 +72,54 @@ export function useQueryVotePowerView(
   atBlockNumber?: number,
 ): string {
   const { data: latestBlockNumber } = useLatestBlockNumber();
+  const blockNumber = atBlockNumber || latestBlockNumber;
+
+  // TODO: use useSmartContractReadCall when onError is overridable and when we can disable ethers
+  // logging
+  const { data: votePower } = useQuery({
+    queryFn: async () => {
+      try {
+        // TODO: find a better solution for this.
+        // ethers.js will spit out an error message that we can't disable without turning off the
+        // logger.  because the smart contract code for queryVotePower returns an error if the
+        // account is not found, it can flood the console with errors.  this is a workaround until a
+        // better solution is found.
+        ethers.utils.Logger.setLogLevel(Logger.levels.OFF);
+        const votePower = await vaultContract.callStatic.queryVotePowerView(
+          account as string,
+          blockNumber as number,
+        );
+        ethers.utils.Logger.setLogLevel(Logger.levels.WARNING);
+        return votePower;
+      } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+          console.error(error);
+        }
+      }
+    },
+    queryKey: ["queryVotePower", account, vaultContract.address, atBlockNumber],
+    /* We want to cache the previous stale data until a refresh.
+      This boolean prevents data from being kept when account is disconnected */
+    keepPreviousData: !!account,
+    enabled: !!account && !!blockNumber,
+  });
+
+  return formatEther(votePower || 0);
+}
+
+/**
+ * @deprecated - this throws errors if there is no vote power found for an account.  because of this
+ * we wrote hooks with custom useQuery calls to block these errors.
+ * Use this to get the historical voting power.
+ *
+ * This does not take into account whether or not the voting power is stale.
+ */
+export function useQueryVotePowerViewOld(
+  account: string | undefined | null,
+  vaultContract: LockingVault | VestingVault,
+  atBlockNumber?: number,
+): string {
+  const { data: latestBlockNumber } = useLatestBlockNumber();
 
   const blockNumber = atBlockNumber || latestBlockNumber;
 
@@ -79,6 +130,9 @@ export function useQueryVotePowerView(
     "queryVotePowerView",
     {
       callArgs: [account as string, blockNumber as number],
+      /* We want to cache the previous stale data until a refresh.
+      This boolean prevents data from being kept when account is disconnected */
+      keepPreviousData: !!account,
       enabled: !!account && !!blockNumber,
     },
   );
