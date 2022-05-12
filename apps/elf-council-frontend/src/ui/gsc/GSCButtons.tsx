@@ -25,7 +25,7 @@ export function JoinGSCButton({
   disabled,
 }: GSCButtonProps): ReactElement {
   const toastIdRef = useRef<string>();
-  const handleJoin = useJoinGSC(account, signer, {
+  const { handleJoin, isLoading } = useJoinGSC(account, signer, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
     },
@@ -48,7 +48,6 @@ export function JoinGSCButton({
       toast.success(t`Transaction successfully confirmed`, {
         id: toastIdRef.current,
       });
-
       setDialogOpen(false);
     },
   });
@@ -60,6 +59,7 @@ export function JoinGSCButton({
       <Button
         variant={ButtonVariant.PRIMARY}
         disabled={disabled}
+        loading={isLoading}
         onClick={() => setDialogOpen(true)}
       >{t`Join`}</Button>
 
@@ -81,7 +81,10 @@ export function JoinGSCButton({
             >{t`Cancel`}</Button>
             <Button
               variant={ButtonVariant.GRADIENT}
-              onClick={() => handleJoin()}
+              onClick={() => {
+                setDialogOpen(false);
+                handleJoin();
+              }}
             >{t`Join`}</Button>
           </div>
         </div>
@@ -96,7 +99,7 @@ export function LeaveGSCButton({
 }: GSCButtonProps): ReactElement {
   const toastIdRef = useRef<string>();
 
-  const handleLeave = useLeaveGSC(account, signer, {
+  const { handleLeave, isLoading } = useLeaveGSC(account, signer, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
     },
@@ -119,7 +122,6 @@ export function LeaveGSCButton({
       toast.success(t`Transaction successfully confirmed`, {
         id: toastIdRef.current,
       });
-
       setDialogOpen(false);
     },
   });
@@ -128,7 +130,10 @@ export function LeaveGSCButton({
 
   return (
     <>
-      <Button onClick={() => setDialogOpen(true)}>{t`Leave`}</Button>
+      <Button
+        loading={isLoading}
+        onClick={() => setDialogOpen(true)}
+      >{t`Leave`}</Button>
 
       <Dialog isOpen={dialogOpen} onClose={() => setDialogOpen(false)}>
         <div>
@@ -150,7 +155,10 @@ export function LeaveGSCButton({
             >{t`Cancel`}</Button>
             <Button
               variant={ButtonVariant.GRADIENT}
-              onClick={() => handleLeave()}
+              onClick={() => {
+                setDialogOpen(false);
+                handleLeave();
+              }}
             >{t`Confirm`}</Button>
           </div>
         </div>

@@ -76,7 +76,7 @@ export function GSCOverviewSection(): ReactElement {
   const { mutate: changeDelegation, isLoading: changeDelegationLoading } =
     useChangeDelegation(account, signer);
   const handleDelegation = (address: string) => changeDelegation([address]);
-  const handleLeave = useLeaveGSC(
+  const { handleLeave, isLoading: isLeaveTxnLoading } = useLeaveGSC(
     account,
     signer,
     buildToastTransactionConfig(toastIdRef),
@@ -199,6 +199,7 @@ export function GSCOverviewSection(): ReactElement {
                         variant={ButtonVariant.DANGER}
                         className="w-full text-center"
                         onClick={handleLeave}
+                        loading={isLeaveTxnLoading}
                       >
                         <div className="flex w-full justify-center">{t`Kick`}</div>
                       </Button>

@@ -7,6 +7,8 @@ import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 
+import { formatBalance2 } from "@elementfi/base/utils/formatBalance/formatBalance";
+
 interface ThresholdProgressBarProps {
   account: string | null | undefined;
 }
@@ -28,7 +30,8 @@ export function ThresholdProgressBar({
       <ProgressBar progress={+votingPower / +threshold} />
       <div>
         <span className="text-sm">
-          {`${votingPercent}%`} ({commify(votingPower)} / {commify(threshold)} ){" "}
+          {`${votingPercent}%`} ({formatBalance2(votingPower, 4)} /{" "}
+          {commify(threshold)} ){" "}
         </span>
         <span className="text-sm">{t`required to join GSC`}</span>
       </div>

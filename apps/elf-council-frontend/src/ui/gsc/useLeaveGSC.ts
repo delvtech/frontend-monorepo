@@ -16,14 +16,14 @@ export function useLeaveGSC(
   account: string | null | undefined,
   signer?: Signer,
   options?: UseSmartContractTransactionOptions<GSCVault, "kick">,
-): () => void {
+): { handleLeave: () => void; isLoading: boolean } {
   const { data: userVaults } = useSmartContractReadCall(
     gscVaultContract,
     "getUserVaults",
     { callArgs: [account as string], enabled: !!account },
   );
 
-  const { mutate: kick } = useSmartContractTransaction(
+  const { mutate: kick, isLoading } = useSmartContractTransaction(
     gscVaultContract,
     "kick",
     signer,
@@ -40,5 +40,5 @@ export function useLeaveGSC(
     kick([account, extraData]);
   }, [account, kick, userVaults]);
 
-  return handleLeave;
+  return { handleLeave, isLoading };
 }
