@@ -30,9 +30,9 @@ import {
   useVotingPowerByDelegates,
   VotePowerByDelegate,
 } from "src/ui/gsc/useVotingPowerByDelegates";
+import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
 
 const provider = defaultProvider;
-const NUM_CANDIDATES_TO_SHOW = 20;
 
 enum TabOption {
   Overview,
@@ -45,6 +45,8 @@ export function GSCOverviewSection(): ReactElement {
   const signer = library?.getSigner();
 
   const currentDelegate = useDelegate(account);
+  const { status } = useGSCStatus(account);
+  const isGSC = status === EligibilityState.Current;
 
   // Fetch and sort current GSC members
   const { data: members = [] } = useGSCMembers();
@@ -54,16 +56,20 @@ export function GSCOverviewSection(): ReactElement {
     votingPowerByDelegate,
   );
 
-  // Fetch current GSC candidates
-  const candidates = useGSCCandidates();
-  const topTwentyCandidates = candidates.slice(0, NUM_CANDIDATES_TO_SHOW);
-
   // Find GSC members that are kickable
   const { data: thresholdValue } = useGSCVotePowerThreshold();
   const kickableMembers = getKickableMembers(
     [...members],
     votingPowerByDelegate,
     thresholdValue ?? BigNumber.from(0),
+  );
+
+  // Fetch current GSC candidates
+  const candidates = useGSCCandidates();
+  const topTwentyCandidates = getTopTwentyCandidates(
+    candidates,
+    votingPowerByDelegate,
+    thresholdValue,
   );
 
   // Tab state
@@ -110,13 +116,13 @@ export function GSCOverviewSection(): ReactElement {
                 last
                 current={currentTab === TabOption.Rising}
                 onClick={() => handleChangeTab(TabOption.Rising)}
-                name={t`Rising Members`}
+                name={t`Rising Delegates`}
               />
             </Tabs>
           </div>
 
           {currentTab === TabOption.Overview && (
-            <div className="mt-4 flex flex-col space-y-10 overflow-y-auto">
+            <div className="mt-4 flex flex-col overflow-y-auto">
               <Disclosure as="div">
                 {({ open }) => (
                   <>
@@ -216,6 +222,7 @@ export function GSCOverviewSection(): ReactElement {
                               onDelegationClick={() =>
                                 handleDelegation(member.address)
                               }
+                              disabled={isGSC}
                               account={account}
                               isLoading={changeDelegationLoading}
                               isCurrentDelegate={currentlyDelegated}
@@ -244,6 +251,7 @@ export function GSCOverviewSection(): ReactElement {
                         handleDelegation(delegate.address)
                       }
                       account={account}
+                      disabled={isGSC}
                       isLoading={changeDelegationLoading}
                       isCurrentDelegate={currentlyDelegated}
                     />
@@ -301,6 +309,23 @@ function getKickableMembers(
   });
 
   return validMembers;
+}
+
+const NUM_CANDIDATES_TO_SHOW = 20;
+
+function getTopTwentyCandidates(
+  candidates: Delegate[] = [],
+  votingPowerByDelegate: VotePowerByDelegate = {},
+  threshold?: BigNumber,
+) {
+  return candidates
+    .filter((candidate) => {
+      const votingPower =
+        votingPowerByDelegate[candidate.address] ?? BigNumber.from(0);
+
+      return !(votingPower && threshold && votingPower.gte(threshold));
+    })
+    .slice(0, NUM_CANDIDATES_TO_SHOW);
 }
 
 export default GSCOverviewSection;
