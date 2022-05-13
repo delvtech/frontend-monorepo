@@ -17,20 +17,21 @@ import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
-import H2 from "src/ui/base/H2/H2";
 import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
 import {
   useIsTailwindSmallScreen,
   useIsTailwindLargeScreen,
 } from "src/ui/base/tailwindBreakpoints";
-import EmptySpaceFace from "src/ui/base/svg/EmptySpaceFace";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
-import GradientCard from "src/ui/base/Card/GradientCard";
+import {
+  NoProposalsDetail,
+  NoProposalsList,
+} from "src/ui/proposals/NoProposals";
 
-type TabId = "active" | "past";
+export type TabId = "active" | "past";
 
 interface ProposalsPageProps {
   proposalsJson: ProposalsJson;
@@ -307,27 +308,4 @@ function useFilteredProposals(
 
     return [];
   }, [activeTabId, currentBlockNumber, proposals]);
-}
-
-function NoProposalsList(props: { activeTabId: TabId }) {
-  return (
-    <div className="text-blueGrey my-6 flex flex-1 flex-col items-center">
-      <EmptySpaceFace className="-mr-[27px] w-[90%] max-w-[327px]" />
-      <p className="mt-4 text-xl font-semibold leading-6">{t`no ${props.activeTabId} proposals`}</p>
-    </div>
-  );
-}
-
-function NoProposalsDetail() {
-  return (
-    <GradientCard
-      style={
-        // don't scroll app behind popover, makes a double scroll bar
-        { overscrollBehavior: "none" }
-      }
-      className="hidden h-[85vh] min-w-[403px] max-w-[48rem] flex-1 items-center justify-center rounded-xl opacity-90 lg:flex"
-    >
-      <H2 className="m-4 text-white">{t`Click on a proposal to view it here`}</H2>
-    </GradientCard>
-  );
 }
