@@ -12,13 +12,41 @@ interface GSCHistoryProps {
 function getGSCStatusText(status: EligibilityState): ReactElement {
   if (status === EligibilityState.Eligible) {
     return (
-      <span className="w-max text-sm text-white">{t`Currently eligible to join the GSC!`}</span>
+      <>
+        <span className="mt-1 flex items-center">
+          <span className="text-md mr-1 w-max text-white">
+            {t`Eligible to join GSC`}
+          </span>
+          <Tooltip
+            className="text-white"
+            content={t`To learn more about our GSC program, its role within the Element DAO’s
+            Governance, and how it affects your experience as a member read more
+            here.`}
+          >
+            <InformationCircleIcon className="h-4 cursor-help" />
+          </Tooltip>
+        </span>
+      </>
     );
   }
 
   if (status === EligibilityState.Current) {
     return (
-      <span className="w-max text-sm text-white">{t`Currently in the GSC!`}</span>
+      <>
+        <span className="mt-1 flex items-center">
+          <span className="text-md mr-1 w-max text-white">
+            {t`Current member of the GSC`}
+          </span>
+          <Tooltip
+            className="text-white"
+            content={t`To learn more about our GSC program, its role within the Element DAO’s
+            Governance, and how it affects your experience as a member read more
+            here.`}
+          >
+            <InformationCircleIcon className="h-4 cursor-help" />
+          </Tooltip>
+        </span>
+      </>
     );
   }
 
@@ -26,8 +54,8 @@ function getGSCStatusText(status: EligibilityState): ReactElement {
     return (
       <>
         <span className="mt-1 flex items-center">
-          <span className="mr-1 w-max text-sm text-white underline">
-            {t`Membership Warning`}
+          <span className="text-md mr-1 w-max text-white">
+            {t`Approaching eligibility`}
           </span>
           <Tooltip
             className="text-white"
@@ -46,8 +74,8 @@ function getGSCStatusText(status: EligibilityState): ReactElement {
     return (
       <>
         <span className="mt-1 flex items-center">
-          <span className="mr-1 w-max text-sm text-white underline">
-            {t`Membership Warning`}
+          <span className="text-md mr-1 w-max text-white">
+            {t`Membership expiring`}
           </span>
           <Tooltip
             className="text-white"
@@ -66,8 +94,8 @@ function getGSCStatusText(status: EligibilityState): ReactElement {
     return (
       <>
         <span className="mt-1 flex items-center">
-          <span className="mr-1 w-max text-sm text-white underline">
-            {t`Previously removed from GSC.`}
+          <span className="text-md mr-1 w-max text-white">
+            {t`Previously removed from GSC`}
           </span>
           <Tooltip
             className="text-white"
@@ -84,8 +112,8 @@ function getGSCStatusText(status: EligibilityState): ReactElement {
   }
 
   return (
-    <span className="w-max text-sm text-white">
-      {t`Not eligible for the GSC.`}
+    <span className="text-md w-max text-white">
+      {t`Not eligible for joining the GSC`}
     </span>
   );
 }
@@ -93,7 +121,7 @@ function getGSCStatusText(status: EligibilityState): ReactElement {
 export const GSCHistory = ({ status }: GSCHistoryProps): ReactElement => {
   return (
     <div className="rounded-lg bg-black bg-opacity-20 p-3">
-      <div className="text-xl text-white">{t`GSC History`}</div>
+      <div className="text-xl font-bold text-white">{t`GSC Status`}</div>
       <div className="whitespace-nowrap">{getGSCStatusText(status)}</div>
     </div>
   );
