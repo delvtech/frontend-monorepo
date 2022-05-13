@@ -140,7 +140,7 @@ function getBackground(
 function getTextColor(variant: ButtonVariant): string {
   switch (variant) {
     case ButtonVariant.DANGER:
-      return classNames("text-deepRed");
+      return classNames("text-deepRed", "hover:text-statusRed");
     case ButtonVariant.PRIMARY:
     case ButtonVariant.OUTLINE_WHITE:
     case ButtonVariant.GRADIENT:
