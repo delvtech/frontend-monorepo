@@ -17,12 +17,14 @@ interface GSCButtonProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   disabled?: boolean;
+  isGSC?: boolean;
 }
 
 export function JoinGSCButton({
   account,
   signer,
   disabled,
+  isGSC,
 }: GSCButtonProps): ReactElement {
   const toastIdRef = useRef<string>();
   const { handleJoin, isLoading } = useJoinGSC(account, signer, {
@@ -61,7 +63,7 @@ export function JoinGSCButton({
         disabled={disabled}
         loading={isLoading}
         onClick={() => setDialogOpen(true)}
-      >{t`Join`}</Button>
+      >{t`${isGSC ? "Joined" : "Join"}`}</Button>
 
       <Dialog isOpen={dialogOpen} onClose={() => setDialogOpen(false)}>
         <div>
