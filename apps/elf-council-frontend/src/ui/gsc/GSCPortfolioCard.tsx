@@ -31,6 +31,7 @@ export function GSCPortfolioCard({
   const { status, votingPower } = useGSCStatus(account);
   const canJoinGSC = status === EligibilityState.Eligible;
   const canLeaveGSC = status === EligibilityState.Expiring;
+  const isGSC = status === EligibilityState.Current;
 
   return (
     <Card variant={CardVariant.GRADIENT} className="w-fit shadow-md lg:w-full">
@@ -49,7 +50,7 @@ export function GSCPortfolioCard({
 
       <div className="mt-4 mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center space-y-6 xl:space-y-0">
         {/* GSC eligibility progress bar */}
-        <div className="flex grow-[2] basis-[30rem] flex-wrap space-y-6 lg:space-y-0">
+        <div className="flex grow-[2] basis-[34rem] flex-wrap space-y-6 lg:space-y-0">
           {/* Voting Power */}
           <BalanceWithLabel
             className="mr-4 basis-52"
@@ -58,24 +59,27 @@ export function GSCPortfolioCard({
             label={t`Voting Power`}
           />
           <div className="mr-8 flex max-w-md grow items-center align-middle">
-            <ThresholdProgressBar account={account} />
+            <ThresholdProgressBar account={account} gscStatus={status} />
           </div>
         </div>
 
-        <div className="mr-2 flex grow basis-72 flex-row items-center lg:ml-auto">
+        <div className="mr-4 flex grow basis-72 flex-row items-center lg:ml-auto">
           {/* GSC History */}
-          <div className="mr-auto flex w-fit flex-col">
+          <div className="w-min-max mr-auto flex flex-col">
             <GSCHistory status={status} />
           </div>
-          {canLeaveGSC ? (
-            <LeaveGSCButton account={account} signer={signer} />
-          ) : (
-            <JoinGSCButton
-              account={account}
-              signer={signer}
-              disabled={!canJoinGSC || !account}
-            />
-          )}
+          <div className="ml-12">
+            {canLeaveGSC ? (
+              <LeaveGSCButton account={account} signer={signer} />
+            ) : (
+              <JoinGSCButton
+                account={account}
+                signer={signer}
+                disabled={!canJoinGSC || !account}
+                isGSC={isGSC}
+              />
+            )}
+          </div>
         </div>
       </div>
     </Card>
