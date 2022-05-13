@@ -42,7 +42,11 @@ export function ThresholdProgressBar({
         <span className="text-lg">{t`GSC Eligibility`}</span>
       </div>
       <ProgressBar
-        progress={+votingPower / +threshold}
+        progress={
+          gscStatus === EligibilityState.Expiring
+            ? 100
+            : +votingPower / +threshold
+        }
         color={getProgressBarColor(gscStatus)}
       />
       <div>
