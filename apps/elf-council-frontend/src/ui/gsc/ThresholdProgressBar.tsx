@@ -37,7 +37,7 @@ export function ThresholdProgressBar({
   const votingPercent = Math.floor((+votingPower / +threshold) * 100);
 
   return (
-    <div className="w-full mr-3 space-y-1 text-white">
+    <div className="mr-3 w-full space-y-1 text-white">
       <div>
         <span className="text-lg">{t`GSC Eligibility`}</span>
       </div>
