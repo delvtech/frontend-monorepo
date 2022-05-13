@@ -8,13 +8,27 @@ import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPo
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 
 import { formatBalance2 } from "@elementfi/base/utils/formatBalance/formatBalance";
+import { EligibilityState } from "src/ui/gsc/useGSCStatus";
 
 interface ThresholdProgressBarProps {
   account: string | null | undefined;
+  gscStatus?: EligibilityState;
 }
+
+// Returns tailwind color for progress bar background
+const getProgressBarColor = (status?: EligibilityState) => {
+  if (status === EligibilityState.Current) {
+    return "bg-votingGreen";
+  }
+
+  if (status === EligibilityState.Expiring) {
+    return "bg-deepRed";
+  }
+};
 
 export function ThresholdProgressBar({
   account,
+  gscStatus,
 }: ThresholdProgressBarProps): ReactElement {
   const { data: thresholdValue } = useGSCVotePowerThreshold();
   const threshold = formatEther(thresholdValue || 0);
@@ -27,9 +41,16 @@ export function ThresholdProgressBar({
       <div>
         <span className="text-lg">{t`GSC Eligibility`}</span>
       </div>
-      <ProgressBar progress={+votingPower / +threshold} />
-      <div className="text-sm leading-5">
-        <span>
+      <ProgressBar
+        progress={
+          gscStatus === EligibilityState.Expiring
+            ? 100
+            : +votingPower / +threshold
+        }
+        color={getProgressBarColor(gscStatus)}
+      />
+      <div>
+        <span className="text-sm leading-5">
           {`${votingPercent}%`} ({formatBalance2(votingPower, 4)} /{" "}
           {commify(threshold)} ){" "}
         </span>

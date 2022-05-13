@@ -13,7 +13,8 @@ import { JoinGSCButton, LeaveGSCButton } from "src/ui/gsc/GSCButtons";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import { ThresholdProgressBar } from "src/ui/gsc/ThresholdProgressBar";
 import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
-import { GSCHistory } from "./GSCHistory";
+import { GSCHistory } from "src/ui/gsc/GSCHistory";
+import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
@@ -27,10 +28,11 @@ export function GSCPortfolioCard({
   signer,
 }: PortfolioCardProps): ReactElement {
   const formattedAddress = useFormattedWalletAddress(account, provider);
-
+  const { data: thresholdValue } = useGSCVotePowerThreshold();
   const { status, votingPower } = useGSCStatus(account);
   const canJoinGSC = status === EligibilityState.Eligible;
   const canLeaveGSC = status === EligibilityState.Expiring;
+  const isGSC = status === EligibilityState.Current;
 
   return (
     <Card variant={CardVariant.GRADIENT} className="w-fit shadow-md lg:w-full">
@@ -47,36 +49,41 @@ export function GSCPortfolioCard({
         )}
       </div>
 
-      <div className="mt-4 mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center space-y-6 lg:space-y-0">
-        {/* Voting Power */}
-        <BalanceWithLabel
-          className="mr-4 basis-52"
-          balance={votingPower}
-          tooltipText={t`${TooltipDefinition.OWNED_VOTING_POWER}`}
-          label={t`Voting Power`}
-        />
-
+      <div className="mt-4 mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center space-y-6 xl:space-y-0">
         {/* GSC eligibility progress bar */}
-        <div className="flex-shrink-0 grow-[2] basis-72">
-          <div className="mr-8 flex max-w-md items-center align-middle">
-            <ThresholdProgressBar account={account} />
+        <div className="flex grow-[2] basis-[34rem] flex-wrap space-y-6 lg:space-y-0">
+          {/* Voting Power */}
+          <BalanceWithLabel
+            className="mr-4 basis-52"
+            balance={votingPower}
+            tooltipText={t`${TooltipDefinition.OWNED_VOTING_POWER}`}
+            label={t`Voting Power`}
+          />
+          <div className="mr-8 flex max-w-md grow items-center align-middle">
+            <ThresholdProgressBar account={account} gscStatus={status} />
           </div>
         </div>
 
-        <div className="mr-2 flex grow basis-72 flex-row items-center lg:ml-auto">
+        <div className="mr-4 flex grow basis-72 flex-row items-center lg:ml-auto">
           {/* GSC History */}
-          <div className="mr-auto flex w-fit flex-col">
-            <GSCHistory status={status} />
-          </div>
-          {canLeaveGSC ? (
-            <LeaveGSCButton account={account} signer={signer} />
-          ) : (
-            <JoinGSCButton
-              account={account}
-              signer={signer}
-              disabled={!canJoinGSC || !account}
+          <div className="w-min-max mr-auto flex flex-col">
+            <GSCHistory
+              status={status}
+              threshold={thresholdValue?.toString() ?? "0"}
             />
-          )}
+          </div>
+          <div className="ml-12">
+            {canLeaveGSC ? (
+              <LeaveGSCButton account={account} signer={signer} />
+            ) : (
+              <JoinGSCButton
+                account={account}
+                signer={signer}
+                disabled={!canJoinGSC || !account}
+                isGSC={isGSC}
+              />
+            )}
+          </div>
         </div>
       </div>
     </Card>

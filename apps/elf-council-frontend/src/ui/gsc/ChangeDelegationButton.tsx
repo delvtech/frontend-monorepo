@@ -12,6 +12,7 @@ interface ChangeDelegateButtonProps {
   account: string | null | undefined;
   isLoading: boolean;
   isCurrentDelegate: boolean;
+  disabled?: boolean;
 }
 
 export function ChangeDelegateButton({
@@ -19,6 +20,7 @@ export function ChangeDelegateButton({
   account,
   isLoading,
   isCurrentDelegate,
+  disabled,
 }: ChangeDelegateButtonProps): ReactElement {
   if (isCurrentDelegate) {
     // !font-bold because Tag has font-medium which has cascade priority over font-bold
@@ -36,7 +38,7 @@ export function ChangeDelegateButton({
     <Button
       onClick={onDelegationClick}
       variant={ButtonVariant.GRADIENT}
-      disabled={!account || isLoading}
+      disabled={!account || isLoading || disabled}
       className="w-full justify-center"
       loading={isLoading}
     >

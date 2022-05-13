@@ -93,7 +93,7 @@ function getBackground(
       return classNames("bg-hackerSky", "hover:bg-hackerSky-dark");
 
     case ButtonVariant.DANGER:
-      return classNames("bg-red-500", "hover:bg-red-800");
+      return classNames("bg-statusRed", "hover:bg-red-800");
 
     case ButtonVariant.GRADIENT:
       return classNames(
@@ -139,13 +139,13 @@ function getBackground(
 
 function getTextColor(variant: ButtonVariant): string {
   switch (variant) {
-    case ButtonVariant.PRIMARY:
     case ButtonVariant.DANGER:
+      return classNames("text-deepRed", "hover:text-statusRed");
+    case ButtonVariant.PRIMARY:
     case ButtonVariant.OUTLINE_WHITE:
     case ButtonVariant.GRADIENT:
     case ButtonVariant.REWARD:
       return classNames("text-white");
-
     case ButtonVariant.SECONDARY:
     case ButtonVariant.MINIMAL:
     case ButtonVariant.OUTLINE_BLUE:
