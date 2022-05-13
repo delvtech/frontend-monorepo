@@ -63,7 +63,9 @@ export function JoinGSCButton({
         disabled={disabled}
         loading={isLoading}
         onClick={() => setDialogOpen(true)}
-      >{t`${isGSC ? "Joined" : "Join"}`}</Button>
+      >
+        {isGSC ? t`Joined` : t`Join`}
+      </Button>
 
       <Dialog isOpen={dialogOpen} onClose={() => setDialogOpen(false)}>
         <div>
