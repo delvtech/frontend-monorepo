@@ -4,12 +4,19 @@ import { InformationCircleIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
 import { EligibilityState } from "src/ui/gsc/useGSCStatus";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { commify, formatEther } from "ethers/lib/utils";
 
 interface GSCHistoryProps {
   status: EligibilityState;
+  threshold: string;
 }
 
-function getGSCStatusText(status: EligibilityState): ReactElement {
+function getGSCStatusText({
+  status,
+  threshold,
+}: GSCHistoryProps): ReactElement {
+  const formattedThreshold = commify(Math.round(+formatEther(threshold)));
+
   if (status === EligibilityState.Eligible) {
     return (
       <>
@@ -79,7 +86,7 @@ function getGSCStatusText(status: EligibilityState): ReactElement {
           </span>
           <Tooltip
             className="text-white"
-            content={t`You’re currently under the 110,000 ELFI delegation threshold for the
+            content={t`You’re currently under the ${formattedThreshold} ELFI delegation threshold for the
             Governance Steering Council (GSC). Please be advised this means that
             community members are permitted to remove you from the Council.`}
           >
@@ -100,7 +107,7 @@ function getGSCStatusText(status: EligibilityState): ReactElement {
           <Tooltip
             className="text-white"
             content={t`You are currently no longer a member of the GSC as you have been
-            removed. As you fell under 110,000 ELFI threshold the community
+            removed. As you fell under ${formattedThreshold} ELFI threshold the community
             chose to remove you from the Council. To appeal this decision please
             follow protocol you can read here to do so.`}
           >
@@ -118,11 +125,16 @@ function getGSCStatusText(status: EligibilityState): ReactElement {
   );
 }
 
-export const GSCHistory = ({ status }: GSCHistoryProps): ReactElement => {
+export const GSCHistory = ({
+  status,
+  threshold,
+}: GSCHistoryProps): ReactElement => {
   return (
     <div className="rounded-lg bg-black bg-opacity-20 p-3">
       <div className="text-xl font-bold text-white">{t`GSC Status`}</div>
-      <div className="whitespace-nowrap">{getGSCStatusText(status)}</div>
+      <div className="whitespace-nowrap">
+        {getGSCStatusText({ status, threshold })}
+      </div>
     </div>
   );
 };
