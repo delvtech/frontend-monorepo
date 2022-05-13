@@ -13,7 +13,8 @@ import { JoinGSCButton, LeaveGSCButton } from "src/ui/gsc/GSCButtons";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import { ThresholdProgressBar } from "src/ui/gsc/ThresholdProgressBar";
 import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
-import { GSCHistory } from "./GSCHistory";
+import { GSCHistory } from "src/ui/gsc/GSCHistory";
+import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
@@ -27,7 +28,7 @@ export function GSCPortfolioCard({
   signer,
 }: PortfolioCardProps): ReactElement {
   const formattedAddress = useFormattedWalletAddress(account, provider);
-
+  const { data: thresholdValue } = useGSCVotePowerThreshold();
   const { status, votingPower } = useGSCStatus(account);
   const canJoinGSC = status === EligibilityState.Eligible;
   const canLeaveGSC = status === EligibilityState.Expiring;
@@ -66,7 +67,10 @@ export function GSCPortfolioCard({
         <div className="mr-4 flex grow basis-72 flex-row items-center lg:ml-auto">
           {/* GSC History */}
           <div className="w-min-max mr-auto flex flex-col">
-            <GSCHistory status={status} />
+            <GSCHistory
+              status={status}
+              threshold={thresholdValue?.toString() ?? "0"}
+            />
           </div>
           <div className="ml-12">
             {canLeaveGSC ? (
