@@ -179,7 +179,7 @@ export default function GSCProposalsSection({
 
   return (
     <div className="flex h-full w-full lg:justify-center">
-      <div className="h-full w-full flex-1 space-y-8 pt-8 pr-8 lg:max-w-lg">
+      <div className="h-full w-full flex-1 space-y-8 pt-8 lg:max-w-lg lg:pr-8">
         <H1 className="text-principalRoyalBlue flex-1 text-center">{t`GSC On-chain Proposals`}</H1>
         <div className="flex justify-between">
           <Tabs aria-label={t`Filter proposals`}>
