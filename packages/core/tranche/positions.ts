@@ -1,10 +1,5 @@
 import { YVaultAssetProxy__factory } from "@elementfi/core-typechain/dist/v1";
-import {
-  AssetProxyTokenInfo,
-  PrincipalTokenInfo,
-  TokenInfo,
-  TokenTag,
-} from "@elementfi/tokenlist";
+import { AssetProxyTokenInfo, TokenInfo, TokenTag } from "@elementfi/tokenlist";
 // TODO: stuff under packages/ should not have a default provider
 import { defaultProvider } from "@elementfi/core/providers/providers";
 import { tokenListJson } from "@elementfi/core/tokenlists/tokenlists";
@@ -24,6 +19,6 @@ export const assetProxyContractsByAddress = keyBy(
   (position) => position.address,
 );
 
-function isAssetProxy(tokenInfo: TokenInfo): tokenInfo is PrincipalTokenInfo {
+function isAssetProxy(tokenInfo: TokenInfo): tokenInfo is AssetProxyTokenInfo {
   return !!tokenInfo.tags?.includes(TokenTag.ASSET_PROXY);
 }
