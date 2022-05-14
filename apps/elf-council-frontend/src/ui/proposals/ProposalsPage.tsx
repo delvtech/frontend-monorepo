@@ -184,7 +184,7 @@ export default function ProposalsPage({
         <title>{t`Proposals | Element Council Protocol`}</title>
       </Head>
 
-      <div className="h-full w-full flex-1 space-y-8 pr-8 pt-8 lg:max-w-lg">
+      <div className="h-full w-full flex-1 space-y-8 pt-8 lg:max-w-lg lg:pr-8">
         <H1 className="text-principalRoyalBlue flex-1 text-center">{t`On-chain Proposals`}</H1>
         <div className="flex justify-between">
           <Tabs aria-label={t`Filter proposals`}>
