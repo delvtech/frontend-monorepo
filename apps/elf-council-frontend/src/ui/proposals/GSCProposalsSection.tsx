@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 
-import { Proposal, ProposalsJson } from "@elementfi/elf-council-proposals";
+import { Proposal, ProposalsJson } from "@elementfi/council-proposals";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
