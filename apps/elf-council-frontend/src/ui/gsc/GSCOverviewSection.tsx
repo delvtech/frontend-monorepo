@@ -82,7 +82,7 @@ export function GSCOverviewSection(): ReactElement {
   const { mutate: changeDelegation, isLoading: changeDelegationLoading } =
     useChangeDelegation(account, signer);
   const handleDelegation = (address: string) => changeDelegation([address]);
-  const { handleLeave, isLoading: isLeaveTxnLoading } = useKick(
+  const { handleKick, isLoading: isLeaveTxnLoading } = useKick(
     signer,
     buildToastTransactionConfig(toastIdRef),
   );
@@ -203,7 +203,7 @@ export function GSCOverviewSection(): ReactElement {
                       <Button
                         variant={ButtonVariant.DANGER}
                         className="w-full text-center"
-                        onClick={() => handleLeave(member.address)}
+                        onClick={() => handleKick(member.address)}
                         loading={isLeaveTxnLoading}
                       >
                         <div className="flex w-full justify-center">{t`Kick`}</div>

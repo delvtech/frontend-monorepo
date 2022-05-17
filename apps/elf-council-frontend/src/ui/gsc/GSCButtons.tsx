@@ -103,7 +103,7 @@ export function LeaveGSCButton({
 }: GSCButtonProps): ReactElement {
   const toastIdRef = useRef<string>();
 
-  const { handleLeave, isLoading } = useKick(signer, {
+  const { handleKick, isLoading } = useKick(signer, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
     },
@@ -162,7 +162,7 @@ export function LeaveGSCButton({
               onClick={() => {
                 setDialogOpen(false);
                 if (account) {
-                  handleLeave(account);
+                  handleKick(account);
                 }
               }}
             >{t`Confirm`}</Button>

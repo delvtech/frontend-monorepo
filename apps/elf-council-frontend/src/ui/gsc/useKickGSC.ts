@@ -14,7 +14,7 @@ const EMPTY_BYTE = "0x00";
 export function useKick(
   signer?: Signer,
   options?: UseSmartContractTransactionOptions<GSCVault, "kick">,
-): { handleLeave: (account: string) => void; isLoading: boolean } {
+): { handleKick: (account: string) => void; isLoading: boolean } {
   const { mutate: kick, isLoading } = useSmartContractTransaction(
     gscVaultContract,
     "kick",
@@ -22,7 +22,7 @@ export function useKick(
     options,
   );
 
-  const handleLeave = useCallback(
+  const handleKick = useCallback(
     async (account: string) => {
       const userVaults = await gscVaultContract.getUserVaults(account);
       // Stub out extra data since neither locking vault nor vesting vault use it
@@ -32,5 +32,5 @@ export function useKick(
     [kick],
   );
 
-  return { handleLeave, isLoading };
+  return { handleKick, isLoading };
 }
