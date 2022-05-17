@@ -6,7 +6,6 @@
     "@elementfi/base": "^1.0.0",
     "@elementfi/core": "^1.0.0",
     "@elementfi/core-typechain": "^2.0.6",
-    "@elementfi/elf-council-proposals": "^1.0.2",
     "@elementfi/elf-council-tokenlist": "^1.0.2",
     "@elementfi/elf-council-typechain": "^1.0.2",
     "@elementfi/integrations": "^1.0.0",

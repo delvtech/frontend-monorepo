@@ -8,7 +8,7 @@ import React, {
 import toast from "react-hot-toast";
 
 import { assertNever } from "@elementfi/base/utils/assertNever";
-import { Proposal } from "@elementfi/elf-council-proposals";
+import { Proposal } from "@elementfi/council-proposals";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import {
   ThumbDownIcon,
