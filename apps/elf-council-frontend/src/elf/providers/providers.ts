@@ -9,16 +9,16 @@ import { ChainId } from "src/ethereum";
 const isBrowser = typeof window !== "undefined";
 
 const LOCAL_RPC_HOST = "http://127.0.0.1:8545";
-const ALCHEMY_GOERLI_KEY = process.env.NEXT_PUBLIC_GOERLI_ALCHEMY_KEY as string;
-const ALCHEMY_MAINNET_KEY = (
+const ALCHEMY_MAINNET_URI = (
   isBrowser
-    ? process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_KEY
-    : process.env.NEXT_PUBLIC_MAINNET_SERVER_ALCHEMY_KEY
+    ? process.env.NEXT_PUBLIC_MAINNET_URI
+    : process.env.NEXT_PUBLIC_SERVER_MAINNET_URI
 ) as string;
 
 const { chainId } = addressesJson;
-export const ALCHEMY_GOERLI_HTTP_URL = `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_GOERLI_KEY}`;
-export const ALCHEMY_MAINNET_HTTP_URL = `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_MAINNET_KEY}`;
+export const ALCHEMY_GOERLI_HTTP_URL = process.env
+  .NEXT_PUBLIC_GOERLI_URI as string;
+export const ALCHEMY_MAINNET_HTTP_URL = ALCHEMY_MAINNET_URI;
 
 // vercel can't create a production build with ethereum-waffle as a dependency.  ethereum-waffle
 // expects to run in a node environment and vercel builds for a broweser environment, so things like
