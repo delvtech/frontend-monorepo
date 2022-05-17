@@ -1,0 +1,44 @@
+{
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "importSorter.importStringConfiguration.quoteMark": "double",
+  "importSorter.importStringConfiguration.trailingComma": "multiLine",
+  "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "newLineEachExpressionAfterCountLimit",
+  "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 80,
+  "importSorter.importStringConfiguration.tabSize": 2,
+  "importSorter.sortConfiguration.customOrderingRules.rules": [
+    {
+      "type": "importMember",
+      "regex": "^$",
+      "orderLevel": 10
+    },
+    {
+      "regex": "^react",
+      "orderLevel": 10
+    },
+    {
+      "regex": "^src.types",
+      "orderLevel": 39
+    },
+    {
+      "regex": "^src",
+      "orderLevel": 40
+    },
+    {
+      "regex": "^[.]",
+      "orderLevel": 50
+    }
+  ],
+  "json.schemas": [
+    {
+      "fileMatch": ["*.tokenlist.json"],
+      "url": "https://uniswap.org/tokenlist.schema.json"
+    },
+    {
+      "fileMatch": ["*.addresses.json"],
+      "url": ""
+    }
+  ]
+}
