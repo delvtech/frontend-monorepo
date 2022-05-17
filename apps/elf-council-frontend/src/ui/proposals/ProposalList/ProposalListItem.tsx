@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback } from "react";
 
 import { Signer } from "@ethersproject/abstract-signer";
 import classNames from "classnames";
-import { Proposal } from "@elementfi/elf-council-proposals";
+import { Proposal } from "@elementfi/council-proposals";
 import { t } from "ttag";
 
 import { formatAbbreviatedDate } from "src/base/dates";

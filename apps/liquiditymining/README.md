@@ -1,27 +1,59 @@
-## Getting Started
+## Liquidity Mining UI
 
-First, some setup:
+Example UI for interacting with the peripherals contracts:
+https://github.com/element-foundation/peripherals
 
-```bash
-# install npm dependencies
-npm ci
-# copy the tokenlist and addresses jsons from the testnet
-npm run copy-testnet
-```
+This is a NextJS project and is intended to be deployed to Vercel.
 
-Then, run the development server:
+## Installation
 
 ```bash
-npm run dev
+ git clone git@github.com:element-fi/frontend-monorepo.git
+
+ # run yarn at the top level
+ cd frontend-monorepo
+ yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+NOTE: All commands are intended to be run with the monorepo's `yarn` and `node`
+verions, see: https://github.com/element-fi/frontend-monorepo#readme
 
-You'll also need to follow the README instructions for the [elf-council-merkle](https://github.com/element-fi/elf-council-merkle) and
-[elf-council-testnet](https://github.com/element-fi/elf-council-testnet) repos. In total you'll need 4 terminal windows running processes. Here is a
-diagram to help:
-![Deveopment Setup](./elf-council-dev-setup.png)
+## Environment variables
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Make sure you have the following environment variables set up in your `.env` file.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+**apps/liquiditymining/.env**
+
+```bash
+NEXT_PUBLIC_GOERLI_URI=your-goerli-uri
+NEXT_PUBLIC_MAINNET_URI=your-mainnet-uri
+NEXT_PUBLIC_CHAIN_NAME=goerli # or "mainnet"
+```
+
+NOTE: This was developed with [Alchemy](https://www.alchemy.com/) as a provider.
+
+## Development
+
+To run the development server you must first build the app, then run the start command:
+
+```
+# Build the app, you only need to do this once
+yarn workspace liquidity-mining-ui run build
+
+# Start the app server and point it at goerli
+yarn workspace liquidity-mining-ui run dev-goerli
+```
+
+## Deployment
+
+This is a NextJS app and intended to be deployed to Vercel. Make sure to set up
+all the same environment variables when you create your Vercel project.
+
+Also, since this app lives in a monorepo, you'll need to override the following
+settings in your Vercel project:
+
+Build Command: `yarn workspace liquidity-mining-ui run build`
+
+Output Directory: `apps/liquiditymining/.next`
+
+![image](https://user-images.githubusercontent.com/4524175/168927928-36c3f35b-7aab-4484-adea-61764011d253.png)

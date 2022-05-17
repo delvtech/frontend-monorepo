@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import toast from "react-hot-toast";
 
-import { Proposal } from "@elementfi/elf-council-proposals";
+import { Proposal } from "@elementfi/council-proposals";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 import { ContractTransaction, Signer } from "ethers";

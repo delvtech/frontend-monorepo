@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
-import { Proposal } from "@elementfi/elf-council-proposals";
+import { Proposal } from "@elementfi/council-proposals";
 import { Signer, ContractTransaction } from "ethers";
 import { commify, formatEther } from "ethers/lib/utils";
 import { isNumber } from "lodash";

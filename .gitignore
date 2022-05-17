@@ -3,3 +3,5 @@ node_modules
 tsconfig.tsbuildinfo
 yarn-error.log
 .env
+apps/**/tests/e2e/screenshots
+apps/**/tests/e2e/videos

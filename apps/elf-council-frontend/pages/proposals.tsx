@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 
-import { ProposalsJson } from "@elementfi/elf-council-proposals";
+import { ProposalsJson } from "@elementfi/council-proposals";
 
 import { PROPOSALS_JSON_URL } from "src/elf-council-proposals";
 import PageView from "src/ui/app/PageView";
@@ -34,7 +34,6 @@ export async function getStaticProps(): Promise<{
   // Fetch the proposals.json server side so that it's immediately available on
   // the client. This makes it easy to update the proposals.json as needed
   // without having to do a deploy.
-
   try {
     const res = await fetch(PROPOSALS_JSON_URL);
     const proposalsJson = await res.json();
