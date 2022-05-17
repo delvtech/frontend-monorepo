@@ -12,7 +12,7 @@
     "@uniswap/token-lists": "^1.0.0-beta.26",
     "dotenv": "^16.0.0",
     "ethernal": "^0.8.0",
-    "hardhat-ethernal": "^0.3.10",
+    "hardhat-ethernal": "^1.0.0",
     "merkletreejs": "^0.2.24",
     "tsc": "^2.0.3"
   },
