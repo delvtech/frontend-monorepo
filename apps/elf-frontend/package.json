@@ -121,7 +121,7 @@
     "react-test-renderer": "^17.0.2",
     "ts-node": "^10.4.0",
     "ttag-cli": "^1.9.3",
-    "typechain": "^5.2.0"
+    "typechain": "^8.0.0"
   },
   "name": "elf-frontend",
   "private": true,
