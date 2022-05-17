@@ -30,10 +30,21 @@ yarn add prettier
 
 # Install lodash for the packages/base workspace.
 # Note: specify the workspace by the name in its `package.json`, ie: `base` not `packages/base`
-yarn workspace base add lodash
+yarn workspace @elementfi/base add lodash
+```
 
-# Install peripherals workspace as dependency for the liquidity mining app
-# confirm this: yarn workspace liquidity-mining-ui add peripherals
+### Installing a workspace package
+
+To install a project in the packages/ directory as a dependency, copy it
+directly into your package.json like this, then run `yarn`.
+
+```json
+{
+  "dependencies": {
+    // Name comes from packages/core/package.json
+    "@elementfi/core": "^1.0.0"
+  }
+}
 ```
 
 ### Running workspace scripts
@@ -41,7 +52,7 @@ yarn workspace base add lodash
 To run scripts in workspaces, use the following command:
 
 ```bash
-yarn workspace <workspace-name> <packge.json script>
+yarn workspace <workspace-name> <package.json script>
 ```
 
 Example
