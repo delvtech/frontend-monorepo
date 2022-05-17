@@ -53,4 +53,7 @@ Also, since this app lives in a monorepo, you'll need to override the following
 settings in your Vercel project:
 
 Build Command: `yarn workspace liquidity-mining-ui run build`
+
 Output Directory: `apps/liquiditymining/.next`
+
+![image](https://user-images.githubusercontent.com/4524175/168927928-36c3f35b-7aab-4484-adea-61764011d253.png)
