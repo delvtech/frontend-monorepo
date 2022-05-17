@@ -24,7 +24,7 @@ import { useDelegate } from "src/ui/delegate/useDelegate";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { BigNumber } from "ethers";
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
-import { useLeaveGSC } from "src/ui/gsc/useLeaveGSC";
+import { useKick } from "src/ui/gsc/useKickGSC";
 import { buildToastTransactionConfig } from "src/ui/notifications/buildToastTransactionConfig";
 import {
   useVotingPowerByDelegates,
@@ -82,8 +82,7 @@ export function GSCOverviewSection(): ReactElement {
   const { mutate: changeDelegation, isLoading: changeDelegationLoading } =
     useChangeDelegation(account, signer);
   const handleDelegation = (address: string) => changeDelegation([address]);
-  const { handleLeave, isLoading: isLeaveTxnLoading } = useLeaveGSC(
-    account,
+  const { handleLeave, isLoading: isLeaveTxnLoading } = useKick(
     signer,
     buildToastTransactionConfig(toastIdRef),
   );
@@ -204,7 +203,7 @@ export function GSCOverviewSection(): ReactElement {
                       <Button
                         variant={ButtonVariant.DANGER}
                         className="w-full text-center"
-                        onClick={handleLeave}
+                        onClick={() => handleLeave(member.address)}
                         loading={isLeaveTxnLoading}
                       >
                         <div className="flex w-full justify-center">{t`Kick`}</div>

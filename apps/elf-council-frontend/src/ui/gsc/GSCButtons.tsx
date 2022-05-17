@@ -8,7 +8,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Button from "src/ui/base/Button/Button";
 import Dialog from "src/ui/base/Dialog/Dialog";
 import { useJoinGSC } from "./useJoinGSC";
-import { useLeaveGSC } from "./useLeaveGSC";
+import { useKick } from "./useKickGSC";
 import toast from "react-hot-toast";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
@@ -103,7 +103,7 @@ export function LeaveGSCButton({
 }: GSCButtonProps): ReactElement {
   const toastIdRef = useRef<string>();
 
-  const { handleLeave, isLoading } = useLeaveGSC(account, signer, {
+  const { handleLeave, isLoading } = useKick(signer, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
     },
@@ -161,7 +161,9 @@ export function LeaveGSCButton({
               variant={ButtonVariant.GRADIENT}
               onClick={() => {
                 setDialogOpen(false);
-                handleLeave();
+                if (account) {
+                  handleLeave(account);
+                }
               }}
             >{t`Confirm`}</Button>
           </div>
