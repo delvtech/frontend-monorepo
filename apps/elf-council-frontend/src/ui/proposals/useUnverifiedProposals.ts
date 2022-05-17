@@ -1,4 +1,4 @@
-import { Proposal } from "@elementfi/elf-council-proposals";
+import { Proposal } from "@elementfi/council-proposals";
 import { useSmartContractEvents } from "@elementfi/react-query-typechain";
 import { Contract } from "ethers";
 import { getFromBlock } from "src/elf-council-addresses/getFromBlock";
