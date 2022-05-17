@@ -50,7 +50,7 @@
     "build": "npm run build-goerli && npm run build-mainnet && npm run build-testnet && npm run _build-index && npm run _copy-files",
     "_build-index": "bash scripts/build-index.sh",
     "_copy-files": "bash scripts/copy-dist-files.sh",
-    "_copy-testnet-addresses": "cp ../elf-council-testnet/src/addresses/testnet.addresses.json src/addresses/testnet.addresses.json",
+    "_copy-testnet-addresses": "cp ../../apps/council-testnet/src/addresses/testnet.addresses.json src/addresses/testnet.addresses.json",
     "copy-testnet": "npm run _copy-testnet-addresses"
   }
 }
