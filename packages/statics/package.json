@@ -3,9 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "contracts": "sh ./scripts/contracts.sh"
+    "contracts": "sh ./scripts/contracts.sh",
+    "hardhat": "hardhat compile"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@openzeppelin/contracts": "4.3.2",
+    "@typechain/ethers-v5": "^10.0.0",
+    "@typechain/hardhat": "^6.0.0",
+    "hardhat": "^2.9.5"
+  }
 }
