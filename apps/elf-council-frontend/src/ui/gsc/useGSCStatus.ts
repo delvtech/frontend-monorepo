@@ -5,6 +5,7 @@ import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { useIsMemberKicked } from "src/ui/gsc/useIsMemberKicked";
+import { useIsGSCMemberIdle } from "./useIsGSCMemberIdle";
 
 export enum EligibilityState {
   NotEligible, // Account can not join GSC
@@ -13,6 +14,7 @@ export enum EligibilityState {
   Expiring, // Account is in GSC but can be kicked
   Kicked, // Account has previously been in GSC but has been kicked
   Current, // Account currently in GSC
+  Idle, // Account currently in GSC, but idle
 }
 
 export interface GSCContext {
@@ -29,6 +31,7 @@ export function useGSCStatus(account: string | null | undefined): GSCContext {
   const threshold = thresholdValue ?? BigNumber.from(0);
   const { data: isOnGSC } = useIsGSCMember(account);
   const wasMemberKicked = useIsMemberKicked(account);
+  const isIdle = useIsGSCMemberIdle(account);
 
   const parsedVotingPower = parseEther(votingPower);
   const aboveThreshold = parsedVotingPower.gte(threshold);
@@ -42,6 +45,14 @@ export function useGSCStatus(account: string | null | undefined): GSCContext {
   if (isOnGSC && !aboveThreshold) {
     return {
       status: EligibilityState.Expiring,
+      votingPower,
+      threshold,
+    };
+  }
+
+  if (isOnGSC && isIdle) {
+    return {
+      status: EligibilityState.Idle,
       votingPower,
       threshold,
     };
