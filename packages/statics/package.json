@@ -1,0 +1,11 @@
+{
+  "name": "@elementfi/statics",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "contracts": "sh ./scripts/contracts.sh"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}
