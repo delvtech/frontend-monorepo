@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from "react";
+import React, { ReactElement, useCallback, useRef, useState } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
@@ -24,13 +24,14 @@ import { useDelegate } from "src/ui/delegate/useDelegate";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { BigNumber } from "ethers";
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
-import { useLeaveGSC } from "src/ui/gsc/useLeaveGSC";
+import { useKick } from "src/ui/gsc/useKickGSC";
 import { buildToastTransactionConfig } from "src/ui/notifications/buildToastTransactionConfig";
 import {
   useVotingPowerByDelegates,
   VotePowerByDelegate,
 } from "src/ui/gsc/useVotingPowerByDelegates";
 import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
+import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
 
 const provider = defaultProvider;
 
@@ -82,10 +83,17 @@ export function GSCOverviewSection(): ReactElement {
   const { mutate: changeDelegation, isLoading: changeDelegationLoading } =
     useChangeDelegation(account, signer);
   const handleDelegation = (address: string) => changeDelegation([address]);
-  const { handleLeave, isLoading: isLeaveTxnLoading } = useLeaveGSC(
-    account,
+  const { mutate: kick, isLoading: isLeaveTxnLoading } = useKick(
     signer,
     buildToastTransactionConfig(toastIdRef),
+  );
+
+  const handleKick = useCallback(
+    async (account: string) => {
+      const extraData = await getUserVaultsExtraData(account);
+      kick([account, extraData]);
+    },
+    [kick],
   );
 
   return (
@@ -204,7 +212,7 @@ export function GSCOverviewSection(): ReactElement {
                       <Button
                         variant={ButtonVariant.DANGER}
                         className="w-full text-center"
-                        onClick={handleLeave}
+                        onClick={() => handleKick(member.address)}
                         loading={isLeaveTxnLoading}
                       >
                         <div className="flex w-full justify-center">{t`Kick`}</div>

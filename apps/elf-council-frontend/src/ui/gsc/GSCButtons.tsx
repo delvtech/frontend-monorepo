@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from "react";
+import React, { ReactElement, useCallback, useRef, useState } from "react";
 
 import { Signer } from "ethers";
 
@@ -8,10 +8,11 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Button from "src/ui/base/Button/Button";
 import Dialog from "src/ui/base/Dialog/Dialog";
 import { useJoinGSC } from "./useJoinGSC";
-import { useLeaveGSC } from "./useLeaveGSC";
+import { useKick } from "./useKickGSC";
 import toast from "react-hot-toast";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
+import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
 
 interface GSCButtonProps {
   account: string | null | undefined;
@@ -103,7 +104,7 @@ export function LeaveGSCButton({
 }: GSCButtonProps): ReactElement {
   const toastIdRef = useRef<string>();
 
-  const { handleLeave, isLoading } = useLeaveGSC(account, signer, {
+  const { mutate: kick, isLoading } = useKick(signer, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
     },
@@ -130,6 +131,13 @@ export function LeaveGSCButton({
     },
   });
 
+  const handleKick = useCallback(
+    async (account: string) => {
+      const extraData = await getUserVaultsExtraData(account);
+      kick([account, extraData]);
+    },
+    [kick],
+  );
   const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
@@ -161,7 +169,7 @@ export function LeaveGSCButton({
               variant={ButtonVariant.GRADIENT}
               onClick={() => {
                 setDialogOpen(false);
-                handleLeave();
+                account && handleKick(account);
               }}
             >{t`Confirm`}</Button>
           </div>
