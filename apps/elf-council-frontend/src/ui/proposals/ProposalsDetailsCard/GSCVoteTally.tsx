@@ -67,10 +67,11 @@ export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
           {t`Votes by `}
           {firstThreeVotes &&
             firstThreeVotes.map((address, index) => (
-              <>
-                <EnsNameOrFormattedAddress key={address} address={address} />
-                {index < firstThreeVotes.length - 1 ? ", " : " "}
-              </>
+              <EnsNameOrFormattedAddress
+                key={address}
+                address={address}
+                includeComma={index < firstThreeVotes.length - 1}
+              />
             ))}
           {!!remainingVotes.length &&
             ngettext(
@@ -150,9 +151,10 @@ function useVoteTallys(
 
 interface EnsNameProps {
   address: string;
+  includeComma: boolean;
 }
 function EnsNameOrFormattedAddress(props: EnsNameProps) {
-  const { address } = props;
+  const { address, includeComma } = props;
   const { data: ensName } = useResolvedEnsName(address);
 
   // useResolvedEnsName will return the full address if no ens found.  We use:
@@ -163,5 +165,9 @@ function EnsNameOrFormattedAddress(props: EnsNameProps) {
     formattedAddress = formatWalletAddress(address);
   }
 
-  return <>{formattedAddress ?? ensName}</>;
+  return (
+    <>
+      {formattedAddress ?? ensName} {includeComma ? ", " : " "}
+    </>
+  );
 }
