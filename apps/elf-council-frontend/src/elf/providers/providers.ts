@@ -46,22 +46,22 @@ function getProvider() {
   // this is only goerli.
   if (chainId === ChainId.GOERLI) {
     const web3Goerli = createAlchemyWeb3(ALCHEMY_GOERLI_HTTP_URL);
-    const alchemyWeb3GoerliWebSocketProvider = new providers.Web3Provider(
+    const alchemyWeb3GoerliProvider = new providers.Web3Provider(
       web3Goerli.currentProvider as ExternalProvider,
       ChainId.GOERLI,
     );
-    return alchemyWeb3GoerliWebSocketProvider as Provider;
+    return alchemyWeb3GoerliProvider as Provider;
   }
 
   if (chainId === ChainId.MAINNET) {
     const web3Mainnet = createAlchemyWeb3(ALCHEMY_MAINNET_HTTP_URL);
 
-    const alchemyWeb3MainnetWebSocketProvider = new providers.Web3Provider(
+    const alchemyWeb3MainnetProvider = new providers.Web3Provider(
       web3Mainnet.currentProvider as ExternalProvider,
       ChainId.MAINNET,
     );
 
-    return alchemyWeb3MainnetWebSocketProvider as Provider;
+    return alchemyWeb3MainnetProvider as Provider;
   }
 
   // default to localhost
