@@ -31,7 +31,10 @@ import {
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/ProposalDetailsCard";
 import { useUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 
-export type TabId = "active" | "past";
+export enum TabId {
+  ACTIVE = "active",
+  PAST = "past",
+}
 
 interface ProposalsPageProps {
   proposalsJson: ProposalsJson;
@@ -45,7 +48,7 @@ export default function ProposalsPage({
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
 
-  const [activeTabId, setActiveTabId] = useState<TabId>("active");
+  const [activeTabId, setActiveTabId] = useState<TabId>(TabId.ACTIVE);
 
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
   const isTailwindLargeScreen = useIsTailwindLargeScreen();
@@ -54,12 +57,12 @@ export default function ProposalsPage({
   const allProposals = proposalsJson.proposals.concat(unverifiedProposals);
 
   const activeProposals = useFilteredProposals(
-    "active",
+    TabId.ACTIVE,
     allProposals,
     currentBlockNumber,
   );
   const pastProposals = useFilteredProposals(
-    "past",
+    TabId.PAST,
     allProposals,
     currentBlockNumber,
   );
@@ -81,11 +84,11 @@ export default function ProposalsPage({
       return false;
     }
 
-    if (activeTabId === "active") {
+    if (activeTabId === TabId.ACTIVE) {
       return !!activeProposals.length;
     }
 
-    if (activeTabId === "past") {
+    if (activeTabId === TabId.PAST) {
       return !!pastProposals.length;
     }
 
@@ -115,8 +118,8 @@ export default function ProposalsPage({
   );
 
   const handleActiveTabClick = () => {
-    if (activeTabId !== "active") {
-      setActiveTabId("active");
+    if (activeTabId !== TabId.ACTIVE) {
+      setActiveTabId(TabId.ACTIVE);
       // select the first proposal when the user clicks to view the
       // active tab
       if (isTailwindSmallScreen) {
@@ -129,8 +132,8 @@ export default function ProposalsPage({
   };
 
   const handlePastTabClick = () => {
-    if (activeTabId !== "past") {
-      setActiveTabId("past");
+    if (activeTabId !== TabId.PAST) {
+      setActiveTabId(TabId.PAST);
       if (isTailwindSmallScreen) {
         setSelectedProposalId(undefined);
         setSelectedProposal(undefined);
@@ -149,7 +152,7 @@ export default function ProposalsPage({
   // Populates the default past/active proposal when moving from small -> big screen size
   useEffect(() => {
     if (isTailwindLargeScreen && !isModalOpen) {
-      if (activeTabId === "past") {
+      if (activeTabId === TabId.PAST) {
         setDefaultPastProposal();
       } else {
         setDefaultActiveProposal();
@@ -177,8 +180,8 @@ export default function ProposalsPage({
   ) : null;
 
   const showNoProposalsState =
-    (activeTabId === "active" && !activeProposals.length) ||
-    (activeTabId === "past" && !pastProposals.length);
+    (activeTabId === TabId.ACTIVE && !activeProposals.length) ||
+    (activeTabId === TabId.PAST && !pastProposals.length);
 
   return (
     <div className="flex h-full lg:justify-center">
@@ -192,13 +195,13 @@ export default function ProposalsPage({
           <Tabs aria-label={t`Filter proposals`}>
             <Tab
               first
-              current={activeTabId === "active"}
+              current={activeTabId === TabId.ACTIVE}
               onClick={handleActiveTabClick}
               name={t`Active`}
             />
             <Tab
               last
-              current={activeTabId === "past"}
+              current={activeTabId === TabId.PAST}
               onClick={handlePastTabClick}
               name={t`Past`}
             />
@@ -213,7 +216,7 @@ export default function ProposalsPage({
               account={account}
               signer={signer}
               proposals={
-                activeTabId === "active" ? activeProposals : pastProposals
+                activeTabId === TabId.ACTIVE ? activeProposals : pastProposals
               }
               selectedProposalId={selectedProposalId}
               onClickItem={handleSelectProposal}
@@ -297,13 +300,13 @@ function useFilteredProposals(
   currentBlockNumber: number,
 ): Proposal[] {
   return useMemo(() => {
-    if (activeTabId === "active") {
+    if (activeTabId === TabId.ACTIVE) {
       return proposals?.filter(
         (proposal) => proposal.expiration > currentBlockNumber,
       );
     }
 
-    if (activeTabId === "past") {
+    if (activeTabId === TabId.PAST) {
       return proposals?.filter(
         (proposal) => proposal.expiration <= currentBlockNumber,
       );
