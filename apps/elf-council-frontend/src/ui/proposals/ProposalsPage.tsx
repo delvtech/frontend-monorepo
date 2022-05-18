@@ -24,11 +24,12 @@ import {
   useIsTailwindLargeScreen,
 } from "src/ui/base/tailwindBreakpoints";
 import EmptySpaceFace from "src/ui/base/svg/EmptySpaceFace";
-import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
+import { ProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
 import GradientCard from "src/ui/base/Card/GradientCard";
+import { useUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 
 type TabId = "active" | "past";
 
@@ -49,14 +50,17 @@ export default function ProposalsPage({
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
   const isTailwindLargeScreen = useIsTailwindLargeScreen();
 
+  const unverifiedProposals = useUnverifiedProposals(proposalsJson.proposals);
+  const allProposals = proposalsJson.proposals.concat(unverifiedProposals);
+
   const activeProposals = useFilteredProposals(
     "active",
-    proposalsJson.proposals,
+    allProposals,
     currentBlockNumber,
   );
   const pastProposals = useFilteredProposals(
     "past",
-    proposalsJson.proposals,
+    allProposals,
     currentBlockNumber,
   );
 
@@ -102,14 +106,12 @@ export default function ProposalsPage({
 
   const handleSelectProposal = useCallback(
     (proposalId: string | undefined) => {
-      const proposal = proposalsJson.proposals.find(
-        (p) => p.proposalId === proposalId,
-      );
+      const proposal = allProposals.find((p) => p.proposalId === proposalId);
       setSelectedProposal(proposal);
       setSelectedProposalId(proposalId);
       setIsModalOpen(true);
     },
-    [proposalsJson.proposals],
+    [allProposals],
   );
 
   const handleActiveTabClick = () => {
@@ -170,6 +172,7 @@ export default function ProposalsPage({
       account={account}
       signer={signer}
       proposal={selectedProposal}
+      unverified={!selectedProposal.createdTimestamp}
     />
   ) : null;
 
@@ -185,7 +188,7 @@ export default function ProposalsPage({
 
       <div className="h-full w-full flex-1 space-y-8 pr-8 pt-8 lg:max-w-lg">
         <H1 className="text-principalRoyalBlue flex-1 text-center">{t`On-chain Proposals`}</H1>
-        <div className="flex justify-between">
+        <div className="flex justify-between gap-2">
           <Tabs aria-label={t`Filter proposals`}>
             <Tab
               first
@@ -227,8 +230,8 @@ export default function ProposalsPage({
       ) : (
         <Transition.Root show={isModalOpen} as={Fragment}>
           <Dialog
-            // Using z-50 so that the dialog appears above the Sidebar, which is currently set to z-10
-            className="fixed inset-0 z-50 overflow-y-auto"
+            // Using z-20 so that the dialog appears above the Sidebar, which is currently set to z-10
+            className="fixed inset-0 z-20 overflow-y-auto"
             onClose={handleOnClose}
           >
             <div className="fixed top-1/2 left-1/2">
@@ -283,9 +286,10 @@ function OffChainProposalsLink() {
  * list of proposals hardcoded in the frontend.  The client grabs the snapshot information and we
  * link the on-chain proposal with the snapshot information.
  *
- * @param activeTabId
- * @param snapshotProposals
- * @returns
+ * @param activeTabId current proposal selected
+ * @param proposals list of proposals
+ * @param currentBlockNumber
+ * @returns filtered proposals based on activeTabId
  */
 function useFilteredProposals(
   activeTabId: TabId,

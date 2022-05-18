@@ -7,7 +7,8 @@ export enum ProposalStatus {
   PASSING = "PASSING",
   FAILING = "FAILING",
   PASSED = "PASSED",
-  FAILED = "FAILIED",
+  FAILED = "FAILED",
+  UNVERIFIED = "UNVERIFIED",
 }
 
 export const ProposalStatusLabels: Record<ProposalStatus, string> = {
@@ -16,20 +17,24 @@ export const ProposalStatusLabels: Record<ProposalStatus, string> = {
   [ProposalStatus.FAILING]: t`Failing`,
   [ProposalStatus.PASSED]: t`Passed`,
   [ProposalStatus.FAILED]: t`Failed`,
+  [ProposalStatus.UNVERIFIED]: t`Unverified`,
 };
 
 export function getProposalStatus(
   isVotingOpen: boolean,
   isExecuted: boolean,
-  quourum: string, // in 18 decimal format: "1.0" = 1x10^18
+  quorum: string, // in 18 decimal format: "1.0" = 1x10^18
   votingPower: VotingPower | undefined,
 ): ProposalStatus | undefined {
   // if there are enough yes votes to pass quorum
   const hasEnoughYes =
-    votingPower?.[0]?.gte(parseEther(quourum || "0")) || false;
+    votingPower?.[0]?.gte(parseEther(quorum || "0")) || false;
   // if there are enough no votes to pass quorum
-  const hasEnoughNo =
-    votingPower?.[1]?.gte(parseEther(quourum || "0")) || false;
+  const hasEnoughNo = votingPower?.[1]?.gte(parseEther(quorum || "0")) || false;
+
+  if (!quorum) {
+    return ProposalStatus.UNVERIFIED;
+  }
 
   return proposalStatus(
     !!votingPower,
@@ -43,13 +48,17 @@ export function getProposalStatus(
 export function getGSCProposalStatus(
   isVotingOpen: boolean,
   isExecuted: boolean,
-  quourum: string, // number format: "1" = 1.
+  quorum: string, // number format: "1" = 1.
   votingPower: VotingPower | undefined,
 ): ProposalStatus | undefined {
   // if there are enough yes votes to pass quorum
-  const hasEnoughYes = votingPower?.[0]?.gte(+quourum || "0") || false;
+  const hasEnoughYes = votingPower?.[0]?.gte(+quorum || "0") || false;
   // if there are enough no votes to pass quorum
-  const hasEnoughNo = votingPower?.[1]?.gte(+quourum || "0") || false;
+  const hasEnoughNo = votingPower?.[1]?.gte(+quorum || "0") || false;
+
+  if (!quorum) {
+    return ProposalStatus.UNVERIFIED;
+  }
 
   return proposalStatus(
     !!votingPower,
