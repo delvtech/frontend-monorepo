@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from "react";
+import React, { ReactElement, useCallback, useRef, useState } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
@@ -31,6 +31,7 @@ import {
   VotePowerByDelegate,
 } from "src/ui/gsc/useVotingPowerByDelegates";
 import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
+import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
 
 const provider = defaultProvider;
 
@@ -82,9 +83,17 @@ export function GSCOverviewSection(): ReactElement {
   const { mutate: changeDelegation, isLoading: changeDelegationLoading } =
     useChangeDelegation(account, signer);
   const handleDelegation = (address: string) => changeDelegation([address]);
-  const { handleKick, isLoading: isLeaveTxnLoading } = useKick(
+  const { mutate: kick, isLoading: isLeaveTxnLoading } = useKick(
     signer,
     buildToastTransactionConfig(toastIdRef),
+  );
+
+  const handleKick = useCallback(
+    async (account: string) => {
+      const extraData = await getUserVaultsExtraData(account);
+      kick([account, extraData]);
+    },
+    [kick],
   );
 
   return (
