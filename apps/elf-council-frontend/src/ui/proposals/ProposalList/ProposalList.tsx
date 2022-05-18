@@ -10,7 +10,7 @@ interface ProposalListProps {
   proposals: Proposal[];
   selectedProposalId: string | undefined;
   onClickItem: (proposalId: string | undefined) => void;
-  isModalOpen: boolean;
+  isModalOpen?: boolean;
   isGSCProposal?: boolean;
 }
 export function ProposalList({
@@ -24,17 +24,24 @@ export function ProposalList({
 }: ProposalListProps): ReactElement {
   return (
     <div className="flex w-full flex-col space-y-4 pb-8">
-      {proposals.map((proposal) => (
-        <ProposalListItem
-          isGSCProposal={isGSCProposal}
-          key={proposal.proposalId}
-          active={isModalOpen && proposal.proposalId === selectedProposalId}
-          proposal={proposal}
-          onClick={onClickItem}
-          account={account}
-          signer={signer}
-        />
-      ))}
+      {proposals.map((proposal) => {
+        const activeModal =
+          isModalOpen !== undefined
+            ? isModalOpen && proposal.proposalId === selectedProposalId
+            : proposal.proposalId === selectedProposalId;
+
+        return (
+          <ProposalListItem
+            isGSCProposal={isGSCProposal}
+            key={proposal.proposalId}
+            active={activeModal}
+            proposal={proposal}
+            onClick={onClickItem}
+            account={account}
+            signer={signer}
+          />
+        );
+      })}
     </div>
   );
 }

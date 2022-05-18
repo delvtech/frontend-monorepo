@@ -45,7 +45,17 @@ export default function GSCProposalsSection({
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
 
+  // set the default to the first active proposal, since that's what filter is
+  // on by default
+  const [selectedProposalId, setSelectedProposalId] = useState<
+    string | undefined
+  >(undefined);
+
+  const [selectedProposal, setSelectedProposal] = useState<
+    Proposal | undefined
+  >(undefined);
   const [activeTabId, setActiveTabId] = useState<TabId>(TabId.ACTIVE);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
   const isTailwindLargeScreen = useIsTailwindLargeScreen();
@@ -69,43 +79,12 @@ export default function GSCProposalsSection({
   const setDefaultActiveProposal = useCallback(() => {
     setSelectedProposalId(activeProposals?.[0]?.proposalId);
     setSelectedProposal(activeProposals?.[0]);
-    activeProposals.length ? setIsModalOpen(true) : setIsModalOpen(false);
   }, [activeProposals]);
 
   const setDefaultPastProposal = useCallback(() => {
     setSelectedProposalId(pastProposals?.[0]?.proposalId);
     setSelectedProposal(pastProposals?.[0]);
-    pastProposals.length ? setIsModalOpen(true) : setIsModalOpen(false);
   }, [pastProposals]);
-
-  const calculateModalOpenState = () => {
-    if (!isTailwindLargeScreen) {
-      return false;
-    }
-
-    if (activeTabId === TabId.ACTIVE) {
-      return !!activeProposals.length;
-    }
-
-    if (activeTabId === TabId.PAST) {
-      return !!pastProposals.length;
-    }
-
-    // Will not reach this
-    return false;
-  };
-
-  const [isModalOpen, setIsModalOpen] = useState(calculateModalOpenState());
-
-  // set the default to the first active proposal, since that's what filter is
-  // on by default
-  const [selectedProposalId, setSelectedProposalId] = useState<
-    string | undefined
-  >(isTailwindSmallScreen ? undefined : activeProposals?.[0]?.proposalId);
-
-  const [selectedProposal, setSelectedProposal] = useState<
-    Proposal | undefined
-  >(isTailwindSmallScreen ? undefined : activeProposals?.[0]);
 
   const handleSelectProposal = useCallback(
     (proposalId: string | undefined) => {
@@ -168,6 +147,14 @@ export default function GSCProposalsSection({
     setDefaultPastProposal,
   ]);
 
+  useEffect(() => {
+    if (isTailwindSmallScreen) {
+      setSelectedProposal(undefined);
+      setSelectedProposalId(undefined);
+      setIsModalOpen(false);
+    }
+  }, [isTailwindSmallScreen]);
+
   const proposalDetail = !!selectedProposal ? (
     <GSCProposalDetailsCard
       key={selectedProposalId}
@@ -217,7 +204,6 @@ export default function GSCProposalsSection({
               }
               selectedProposalId={selectedProposalId}
               onClickItem={handleSelectProposal}
-              isModalOpen={isModalOpen}
             />
           )}
         </div>
