@@ -15,9 +15,8 @@
     "noEmit": true,
     "jsx": "preserve",
     "rootDir": ".",
-    "baseUrl": "../",
     "incremental": true
   },
-  "include": ["./hardhat.config.ts"],
+  "include": ["hardhat.config.ts", "sonra.config.ts", "src/**/*.ts"],
   "exclude": ["node_modules"]
 }

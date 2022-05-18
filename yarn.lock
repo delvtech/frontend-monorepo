@@ -14308,7 +14308,7 @@ ethers@^5.0.29, ethers@^5.0.31, ethers@^5.4.7, ethers@^5.5.4:
     "@ethersproject/web" "5.6.0"
     "@ethersproject/wordlists" "5.6.0"
 
-ethers@^5.4.1:
+ethers@^5.4.1, ethers@^5.6.5:
   version "5.6.6"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.6.6.tgz#a37aa7e265a484a1b4d2ef91d4d89d6b43808a57"
   integrity sha512-2B2ZmSGvRcJpHnFMBk58mkXP50njFipUBCgLK8jUTFbomhVs501cLzyMU6+Vx8YnUDQxywC3qkZvd33xWS+2FA==
@@ -24334,6 +24334,23 @@ solpp@^0.10.1:
     resolve "^1.10.0"
     semver "^5.6.0"
 
+sonra@^0.0.35:
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/sonra/-/sonra-0.0.35.tgz#e093545f5dab1fdec7abe4dc7789c774a63e1f44"
+  integrity sha512-4bXi/Ou/AAP9cu6JPXraKW8NdDeK5Bv2YHV1yTOzHLKENo4FfbBNMB1mau7SEEaz0JILcp5PouCJluXrPS1axg==
+  dependencies:
+    debug "^4.3.4"
+    ethers "^5.6.5"
+    lodash "^4.17.21"
+    prettier "^2.6.2"
+    rimraf "^3.0.2"
+    ts-command-line-args "^2.3.1"
+    ts-node "^10.7.0"
+    tsconfig-paths "^4.0.0"
+    typescript "^4.6.4"
+    zod "^3.14.4"
+    zod-to-ts "^1.0.1"
+
 sort-keys@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-1.1.2.tgz#441b6d4d346798f1b4e49e8920adfba0e543f9ad"
@@ -25947,6 +25964,16 @@ ts-command-line-args@^2.2.0:
     command-line-usage "^6.1.0"
     string-format "^2.0.0"
 
+ts-command-line-args@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/ts-command-line-args/-/ts-command-line-args-2.3.1.tgz#b6188e42efc6cf7a8898e438a873fbb15505ddd6"
+  integrity sha512-FR3y7pLl/fuUNSmnPhfLArGqRrpojQgIEEOVzYx9DhTmfIN7C9RWSfpkJEF4J+Gk7aVx5pak8I7vWZsaN4N84g==
+  dependencies:
+    chalk "^4.1.0"
+    command-line-args "^5.1.1"
+    command-line-usage "^6.1.0"
+    string-format "^2.0.0"
+
 ts-dedent@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/ts-dedent/-/ts-dedent-2.2.0.tgz#39e4bd297cd036292ae2394eb3412be63f563bb5"
@@ -26018,7 +26045,7 @@ ts-morph@^14.0.0:
     "@ts-morph/common" "~0.13.0"
     code-block-writer "^11.0.0"
 
-ts-node@^10.1.0, ts-node@^10.3.0, ts-node@^10.4.0:
+ts-node@^10.1.0, ts-node@^10.3.0, ts-node@^10.4.0, ts-node@^10.7.0:
   version "10.7.0"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.7.0.tgz#35d503d0fab3e2baa672a0e94f4b40653c2463f5"
   integrity sha512-TbIGS4xgJoX2i3do417KSaep1uRAW/Lu+WAL2doDHC0D6ummjirVOXU5/7aiZotbQ5p1Zp9tP7U6cYhA0O7M8A==
@@ -26063,6 +26090,15 @@ tsconfig-paths@^3.10.1, tsconfig-paths@^3.11.0, tsconfig-paths@^3.14.1, tsconfig
   dependencies:
     "@types/json5" "^0.0.29"
     json5 "^1.0.1"
+    minimist "^1.2.6"
+    strip-bom "^3.0.0"
+
+tsconfig-paths@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-4.0.0.tgz#1082f5d99fd127b72397eef4809e4dd06d229b64"
+  integrity sha512-SLBg2GBKlR6bVtMgJJlud/o3waplKtL7skmLkExomIiaAtLGtVsoXIqP3SYdjbcH9lq/KVv7pMZeCBpLYOit6Q==
+  dependencies:
+    json5 "^2.2.1"
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
@@ -26339,7 +26375,7 @@ typescript@^4.3.4, typescript@^4.3.5, typescript@^4.5.5:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
   integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
 
-typescript@^4.4.4, typescript@^4.5.2:
+typescript@^4.4.4, typescript@^4.5.2, typescript@^4.6.4:
   version "4.6.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
   integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
@@ -28983,6 +29019,16 @@ yocto-queue@^0.1.0:
   dependencies:
     circomlibjs "^0.0.8"
     snarkjs "^0.4.10"
+
+zod-to-ts@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/zod-to-ts/-/zod-to-ts-1.0.1.tgz#69a58c0c7aa97d427060dc5f11ea84bd32e62364"
+  integrity sha512-SoblitPNZo+Q+FK+sLfj8y4Q1HxgvO7F+0GbtArAMs/SLGCP6FuxTV+t5iKCo6qy5rq3X2t7i1djTU+NqJv5Cw==
+
+zod@^3.14.4:
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.16.0.tgz#edfdbf77fcc9a5af13a2630a44bdda5b90e759b7"
+  integrity sha512-szrIkryADbTM+xBt2a1KoS2CJQXec4f9xG78bj5MJeEH/XqmmHpnO+fG3IE115AKBJak+2HrbxLZkc9mhdbDKA==
 
 zwitch@^1.0.0:
   version "1.0.5"
