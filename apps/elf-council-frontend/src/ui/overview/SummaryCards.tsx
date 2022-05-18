@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 
-import { ProposalsJson } from "@elementfi/elf-council-proposals";
+import { ProposalsJson } from "@elementfi/council-proposals";
 import { t } from "ttag";
 
 import { abbreviateLargeValue } from "src/base/numbers";

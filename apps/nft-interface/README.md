@@ -16,8 +16,8 @@ yarn install
 Setting up .env in project root
 
 ```
-NEXT_PUBLIC_MAINNET_ALCHEMY_KEY=<insert_provider_key>
-NEXT_PUBLIC_GOERLI_ALCHEMY_KEY=<insert_provider_key>
+NEXT_PUBLIC_MAINNET_URI=<insert_provider_uri>
+NEXT_PUBLIC_GOERLI_URI=<insert_provider_uri>
 NEXT_PUBLIC_TARGET_CHAIN=1 #mainnet
 ```
 

@@ -3,6 +3,7 @@ import {
   MenuAlt4Icon,
   ExternalLinkIcon,
   HomeIcon,
+  LibraryIcon,
   PencilAltIcon,
   UserGroupIcon,
 } from "@heroicons/react/solid";
@@ -97,7 +98,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               label={t`GSC`}
               router={router}
               icon={
-                <HomeIcon className="text-principalRoyalBlue h-4 w-4 flex-shrink-0" />
+                <LibraryIcon className="text-principalRoyalBlue h-4 w-4 flex-shrink-0" />
               }
             />
             <SidebarLinkExternal link={ElementUrl.FORUM} label={t`Forum`} />

@@ -8,13 +8,8 @@ import React, {
 import toast from "react-hot-toast";
 
 import { CheckCircleIcon } from "@heroicons/react/outline";
-import {
-  ThumbDownIcon,
-  ThumbUpIcon,
-  XCircleIcon,
-} from "@heroicons/react/solid";
 import classNames from "classnames";
-import { Proposal } from "@elementfi/elf-council-proposals";
+import { Proposal } from "@elementfi/council-proposals";
 import { Signer, ContractTransaction } from "ethers";
 import { commify, formatEther } from "ethers/lib/utils";
 import { isNumber } from "lodash";
@@ -27,7 +22,7 @@ import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { VotingPower } from "src/elf/proposals/VotingPower";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
-import { TooltipDefinition } from "./tooltipDefinitions";
+import { TooltipDefinition } from "src/ui/proposals/ProposalsDetailsCard/tooltipDefinitions";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import CloseButton from "src/ui/base/Dialog/CloseButton";
@@ -51,22 +46,30 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
+import { StaleVotingPowerMessage } from "src/ui/proposals/ProposalsDetailsCard/StaleVotingPowerMessage";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
-import { assertNever } from "@elementfi/base/utils/assertNever";
-
+import { UnverifiedProposalWarning } from "src/ui/proposals/ProposalsDetailsCard/UnverifiedProposalWarning";
+import { BallotLabel } from "src/ui/proposals/ProposalsDetailsCard/BallotLabel";
 interface ProposalDetailsCardProps {
   className?: string;
   account: string | null | undefined;
   signer: Signer | undefined;
   proposal: Proposal;
   onClose: () => void;
+  unverified?: boolean;
 }
 
 export function ProposalDetailsCard(
   props: ProposalDetailsCardProps,
 ): ReactElement | null {
-  const { className, proposal, account, signer, onClose } = props;
+  const {
+    className,
+    proposal,
+    account,
+    signer,
+    onClose,
+    unverified = false,
+  } = props;
   const { proposalId, snapshotId, quorum } = proposal;
 
   const toastIdRef = useRef<string>();
@@ -114,7 +117,11 @@ export function ProposalDetailsCard(
     proposalVotingResults,
   );
 
+  const voteButtonDisabled =
+    unverified || !isVotingOpen || !+accountVotingPower;
+
   const submitButtonDisabled =
+    unverified ||
     !isNumber(newBallot) ||
     !account ||
     !isVotingOpen ||
@@ -187,7 +194,6 @@ export function ProposalDetailsCard(
               <H2 className="text-white lg:hidden">
                 {t`Proposal #${proposalId}`}
               </H2>
-              {/* <div className=""> */}
               <Tag className="w-min py-2 lg:hidden">
                 {proposalStatus && (
                   <div className="flex w-full items-center justify-end space-x-2 text-black">
@@ -202,10 +208,9 @@ export function ProposalDetailsCard(
                   </div>
                 )}
               </Tag>
-              {/* </div> */}
             </div>
             <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light !leading-6 text-white lg:mt-4">
-              {snapshotProposal?.title}
+              {snapshotProposal?.title || proposal.title}
             </H1>
           </div>
 
@@ -231,25 +236,34 @@ export function ProposalDetailsCard(
         </p>
         <div className="h-1/3 overflow-hidden rounded-lg bg-black bg-opacity-20">
           <div className="h-full overflow-auto break-words">
-            <p className="shrink-0 px-4 py-2 font-light text-white ">
-              {snapshotProposal?.body || ""}
-            </p>
+            {unverified ? (
+              <UnverifiedProposalWarning />
+            ) : (
+              <p className="shrink-0 py-2 px-4 font-light text-white ">
+                {snapshotProposal?.body || ""}
+              </p>
+            )}
           </div>
         </div>
 
         {/* External Links */}
-        <div className="my-4 flex justify-around">
-          <ExternalLink
-            href={snapshotProposal?.link || ""}
-            text={t`View proposal`}
-            className="overflow-hidden text-sm text-white"
-          />
-          <ExternalLink
-            href={ElementUrl.FORUM}
-            text={t`View discussion`}
-            className="overflow-hidden text-sm text-white"
-          />
-        </div>
+        {/* TODO: Add link unverified proposals */}
+        {!unverified ? (
+          <div className="my-4 flex justify-around">
+            <ExternalLink
+              href={snapshotProposal?.link || ""}
+              text={t`View proposal`}
+              className="overflow-hidden text-sm text-white"
+            />
+            <ExternalLink
+              href={ElementUrl.FORUM}
+              text={t`View discussion`}
+              className="overflow-hidden text-sm text-white"
+            />
+          </div>
+        ) : (
+          <div className="my-4"></div>
+        )}
 
         {/* Quorum Bar */}
         {isExecuted ? (
@@ -299,7 +313,7 @@ export function ProposalDetailsCard(
                 currentBallot={newBallot}
                 onSelectBallot={setCurrentBallot}
                 variant={ButtonVariant.WHITE}
-                disabled={!isVotingOpen || !+accountVotingPower}
+                disabled={voteButtonDisabled}
               />
               {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
                 <div className="ml-4 flex w-full items-center text-white ">
@@ -324,38 +338,6 @@ export function ProposalDetailsCard(
   );
 }
 
-interface BallotLabelProps {
-  ballot: Ballot;
-}
-function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
-  switch (ballot) {
-    case Ballot.YES:
-      return (
-        <Tag intent={Intent.SUCCESS}>
-          <ThumbUpIcon height="18" className={"mr-1 pb-0.5 text-green-700"} />
-          <span className={"font-bold text-green-700"}>{t`Yes`}</span>
-        </Tag>
-      );
-    case Ballot.NO:
-      return (
-        <Tag intent={Intent.ERROR}>
-          <ThumbDownIcon height="18" className={"mr-1 pb-0.5 text-red-500"} />
-          <span className={"font-bold text-red-500"}>{t`No`}</span>
-        </Tag>
-      );
-    case Ballot.MAYBE:
-      return (
-        <Tag>
-          <XCircleIcon height="18" className={"mr-1 pb-0.5 "} />
-          <span className={"font-bold"}>{t`Abstain`}</span>
-        </Tag>
-      );
-    default:
-      assertNever(ballot);
-      return null;
-  }
-}
-
 interface QuorumBarProps {
   proposalId: string;
 
@@ -370,6 +352,11 @@ function QuorumBar(props: QuorumBarProps) {
   const votes = getVoteCount(proposalVotingResults);
 
   const quorumPercent = Math.floor((+votes / +quorum) * 100);
+
+  if (!quorum) {
+    return null;
+  }
+
   return (
     <div className="w-full space-y-1 text-white">
       <div>

@@ -9,16 +9,16 @@ import { ChainId } from "src/ethereum";
 const isBrowser = typeof window !== "undefined";
 
 const LOCAL_RPC_HOST = "http://127.0.0.1:8545";
-const ALCHEMY_GOERLI_KEY = process.env.NEXT_PUBLIC_GOERLI_ALCHEMY_KEY as string;
-const ALCHEMY_MAINNET_KEY = (
+const ALCHEMY_MAINNET_URI = (
   isBrowser
-    ? process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_KEY
-    : process.env.NEXT_PUBLIC_MAINNET_SERVER_ALCHEMY_KEY
+    ? process.env.NEXT_PUBLIC_MAINNET_URI
+    : process.env.NEXT_PUBLIC_SERVER_MAINNET_URI
 ) as string;
 
 const { chainId } = addressesJson;
-export const ALCHEMY_GOERLI_HTTP_URL = `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_GOERLI_KEY}`;
-export const ALCHEMY_MAINNET_HTTP_URL = `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_MAINNET_KEY}`;
+export const ALCHEMY_GOERLI_HTTP_URL = process.env
+  .NEXT_PUBLIC_GOERLI_URI as string;
+export const ALCHEMY_MAINNET_HTTP_URL = ALCHEMY_MAINNET_URI;
 
 // vercel can't create a production build with ethereum-waffle as a dependency.  ethereum-waffle
 // expects to run in a node environment and vercel builds for a broweser environment, so things like
@@ -46,22 +46,22 @@ function getProvider() {
   // this is only goerli.
   if (chainId === ChainId.GOERLI) {
     const web3Goerli = createAlchemyWeb3(ALCHEMY_GOERLI_HTTP_URL);
-    const alchemyWeb3GoerliWebSocketProvider = new providers.Web3Provider(
+    const alchemyWeb3GoerliProvider = new providers.Web3Provider(
       web3Goerli.currentProvider as ExternalProvider,
       ChainId.GOERLI,
     );
-    return alchemyWeb3GoerliWebSocketProvider as Provider;
+    return alchemyWeb3GoerliProvider as Provider;
   }
 
   if (chainId === ChainId.MAINNET) {
     const web3Mainnet = createAlchemyWeb3(ALCHEMY_MAINNET_HTTP_URL);
 
-    const alchemyWeb3MainnetWebSocketProvider = new providers.Web3Provider(
+    const alchemyWeb3MainnetProvider = new providers.Web3Provider(
       web3Mainnet.currentProvider as ExternalProvider,
       ChainId.MAINNET,
     );
 
-    return alchemyWeb3MainnetWebSocketProvider as Provider;
+    return alchemyWeb3MainnetProvider as Provider;
   }
 
   // default to localhost

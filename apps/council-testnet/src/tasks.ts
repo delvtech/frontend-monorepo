@@ -21,7 +21,7 @@ import { createProposal } from "src/scripts/createProposal";
 
 const { PROPOSER_PRIVATE_KEY, GOERLI_DEPLOYER_PRIVATE_KEY } = process.env;
 const LOCAL_RPC_HOST = "http://127.0.0.1:8545";
-const ALCHEMY_GOERLI_RPC_HOST = `https://eth-goerli.alchemyapi.io/v2/${process.env.ALCHEMY_GOERLI_API_KEY}`;
+const ALCHEMY_GOERLI_RPC_HOST = process.env.GOERLI_URI as string;
 const { elementToken, lockingVault, vestingVault } =
   goerliAddressList.addresses;
 
