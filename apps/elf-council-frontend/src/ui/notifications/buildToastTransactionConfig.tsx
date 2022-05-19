@@ -1,4 +1,4 @@
-import { UseSmartContractTransactionOptions } from "@elementfi/react-query-typechain";
+import { UseSmartContractTransactionOptions } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { Contract } from "ethers";
 import toast from "react-hot-toast";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";

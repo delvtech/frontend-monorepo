@@ -1,5 +1,5 @@
 import { BigNumber, Event } from "ethers";
-import { useSmartContractEvents } from "@elementfi/react-query-typechain";
+import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
 import { lockingVaultContract, vestingContract } from "src/elf/contracts";
 import { useMemo } from "react";
 import { getFromBlock } from "src/elf-council-addresses/getFromBlock";

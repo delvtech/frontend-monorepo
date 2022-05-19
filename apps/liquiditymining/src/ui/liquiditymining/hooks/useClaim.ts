@@ -3,7 +3,7 @@ import { ContractReceipt, Signer } from "ethers";
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,
-} from "@elementfi/react-query-typechain";
+} from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { MCMod } from "@elementfi/peripherals";
 import { masterChef } from "src/elf/liquiditymining/masterChef";
 import { invalidateBalanceQueries } from "src/ui/liquiditymining/utils/invalidateBalanceQueries";

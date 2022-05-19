@@ -7,7 +7,7 @@ import {
   getCalcSwap,
   getTokenReserves,
 } from "@elementfi/integrations/balancer/hooks/useQueryBatchSwap/useQueryBatchSwap";
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { usePoolTokens } from "@elementfi/core/pools/hooks/usePoolTokens/usePoolTokens";
 import { SwapKind } from "@elementfi/integrations/balancer/SwapKind";
 import { getPoolTokenInfoFromContract } from "@elementfi/core/pools/getPoolInfo";

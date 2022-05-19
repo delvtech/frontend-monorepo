@@ -6,7 +6,7 @@ import { airdropContract } from "src/elf/contracts";
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,
-} from "@elementfi/react-query-typechain";
+} from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 
 export function useClaimAndDepositAirdrop(
   signer: Signer | undefined,

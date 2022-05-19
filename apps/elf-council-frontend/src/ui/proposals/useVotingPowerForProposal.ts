@@ -1,4 +1,4 @@
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 
 import { coreVotingContract } from "src/elf/contracts";
 import { VotingPower } from "src/elf/proposals/VotingPower";

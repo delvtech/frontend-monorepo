@@ -1,4 +1,4 @@
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { formatEther } from "ethers/lib/utils";
 import { QueryObserverResult } from "react-query";
 import { poolIdsByPoolAddress } from "src/elf/liquiditymining/eligiblepools";
