@@ -32,6 +32,7 @@ import {
 } from "src/ui/gsc/useVotingPowerByDelegates";
 import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
 import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
+import { commify, formatEther } from "ethers/lib/utils";
 
 const provider = defaultProvider;
 
@@ -60,6 +61,8 @@ export function GSCOverviewSection(): ReactElement {
   // Fetch current GSC candidates
   const candidates = useGSCCandidates();
   const { data: thresholdValue } = useGSCVotePowerThreshold();
+  const formattedThreshold =
+    thresholdValue && commify(Math.round(+formatEther(thresholdValue)));
   const topTwentyCandidates = getTopTwentyCandidates(
     candidates,
     votingPowerByDelegate,
@@ -144,7 +147,7 @@ export function GSCOverviewSection(): ReactElement {
                     </Disclosure.Button>
                     <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
                       <p>{t`Any delegate who has accumulated more delegated voting
-                      power than the current GSC Eligibility Threshold (110,000
+                      power than the current GSC Eligibility Threshold (${formattedThreshold}
                       ELFI) is eligible to join the GSC. `}</p>
                       <p>{t`To help reach this
                       threshold, delegates can post their vision, mission and
@@ -204,14 +207,16 @@ export function GSCOverviewSection(): ReactElement {
                           <span className="font-bold">{t`Joining: `}</span>
                           {t`If a delegate who isn’t part of the GSC
                           acquires more delegated Voting Power than the GSC
-                          Eligibility Threshold (110,000 ELFI), they can join
+                          Eligibility Threshold (${formattedThreshold}
+                            ELFI), they can join
                           the GSC by using the “Join” button that will become
                           enabled in the GSC’s Overview page.`}
                         </li>
                         <li>
                           <span className="font-bold">{t`Leaving: `}</span>
                           {t`If a GSC member falls below the GSC Eligibility
-                          Threshold (110,000 ELFI), anyone can execute the
+                          Threshold (${formattedThreshold}
+                            ELFI), anyone can execute the
                           necessary on-chain transaction to formally remove them
                           from the GSC by using the “Kick” button that will
                           become enabled in the GSC’s Overview page.`}
