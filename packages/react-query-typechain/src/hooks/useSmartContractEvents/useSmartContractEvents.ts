@@ -1,7 +1,10 @@
 import { QueryObserverResult, useQuery, UseQueryOptions } from "react-query";
 
 import { Contract, Event } from "ethers";
-import { ContractFilterName, ContractFilterArgs } from "src/types";
+import {
+  ContractFilterName,
+  ContractFilterArgs,
+} from "@elementfi/react-query-typechain/src/types";
 
 export interface UseSmartContractEventsCallOptions<
   TContract extends Contract,

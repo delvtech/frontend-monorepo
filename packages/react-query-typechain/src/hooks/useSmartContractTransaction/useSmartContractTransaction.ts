@@ -11,16 +11,16 @@ import {
   isTransactionFailedError,
   isTransactionReplacedError,
   TransactionError,
-} from "src/base/TransactionError";
-import { TransactionStatus } from "src/base/TransactionStatus";
+} from "@elementfi/react-query-typechain/src/base/TransactionError";
+import { TransactionStatus } from "@elementfi/react-query-typechain/src/base/TransactionStatus";
 import {
   ContractFunctionCall,
   ContractMethodArgs,
   ContractMethodName,
   EstimateGasContractCall,
   EstimateGasMethodName,
-} from "src/types";
-import { isOverridesObject } from "src/utils/isOverridesObject";
+} from "@elementfi/react-query-typechain/src/types";
+import { isOverridesObject } from "@elementfi/react-query-typechain/src/utils/isOverridesObject";
 
 export interface UseSmartContractTransactionOptions<
   TContract extends Contract,

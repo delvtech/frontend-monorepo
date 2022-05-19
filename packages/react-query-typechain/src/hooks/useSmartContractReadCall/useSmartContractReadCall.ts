@@ -1,11 +1,11 @@
 import { Contract } from "ethers";
 import { QueryObserverResult, useQuery, UseQueryOptions } from "react-query";
-import { Unpacked } from "src/base/Unpacked";
+import { Unpacked } from "@elementfi/react-query-typechain/src/base/Unpacked";
 import {
   ContractMethodArgs,
   ContractMethodName,
   StaticContractReturnType,
-} from "src/types";
+} from "@elementfi/react-query-typechain/src/types";
 
 export interface UseSmartContractReadCallOptions<
   TContract extends Contract,

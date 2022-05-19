@@ -6,8 +6,11 @@ import {
   makeSmartContractReadCallUseQueryOptions,
   UseSmartContractReadCallOptions,
 } from "src/hooks/useSmartContractReadCall/useSmartContractReadCall";
-import { ContractMethodName, StaticContractReturnType } from "src/types";
-import { Unpacked } from "src/base/Unpacked";
+import {
+  ContractMethodName,
+  StaticContractReturnType,
+} from "@elementfi/react-query-typechain/src/types";
+import { Unpacked } from "@elementfi/react-query-typechain/src/base/Unpacked";
 
 /**
  * A hook for calling the same method on a list of contracts.

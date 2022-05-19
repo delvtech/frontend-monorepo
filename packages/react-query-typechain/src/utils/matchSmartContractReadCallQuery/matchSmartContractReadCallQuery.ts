@@ -2,8 +2,8 @@ import { Query } from "react-query";
 
 import { Contract } from "@ethersproject/contracts";
 import isEqual from "lodash.isequal";
-import { ContractMethodName } from "src/types";
-import { makeSmartContractReadCallQueryKey } from "src/hooks/useSmartContractReadCall/useSmartContractReadCall";
+import { ContractMethodName } from "@elementfi/react-query-typechain/src/types";
+import { makeSmartContractReadCallQueryKey } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 
 /**
  * Utility for matching smart contract read call queries when busting the cache.
