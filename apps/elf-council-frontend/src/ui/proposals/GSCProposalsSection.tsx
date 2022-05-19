@@ -29,7 +29,6 @@ import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "src/ui/proposals/ProposalList/ProposalList";
 import { GSCProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/GSCProposalsDetailsCard";
-import { useGSCUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 
 type TabId = "active" | "past";
 
@@ -50,19 +49,14 @@ export default function GSCProposalsSection({
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
   const isTailwindLargeScreen = useIsTailwindLargeScreen();
 
-  const unverifiedProposals = useGSCUnverifiedProposals(
-    proposalsJson.proposals,
-  );
-  const allProposals = proposalsJson.proposals.concat(unverifiedProposals);
-
   const activeProposals = useFilteredProposals(
     "active",
-    allProposals,
+    proposalsJson.proposals,
     currentBlockNumber,
   );
   const pastProposals = useFilteredProposals(
     "past",
-    allProposals,
+    proposalsJson.proposals,
     currentBlockNumber,
   );
 
@@ -108,12 +102,14 @@ export default function GSCProposalsSection({
 
   const handleSelectProposal = useCallback(
     (proposalId: string | undefined) => {
-      const proposal = allProposals.find((p) => p.proposalId === proposalId);
+      const proposal = proposalsJson.proposals.find(
+        (p) => p.proposalId === proposalId,
+      );
       setSelectedProposal(proposal);
       setSelectedProposalId(proposalId);
       setIsModalOpen(true);
     },
-    [allProposals],
+    [proposalsJson.proposals],
   );
 
   const handleActiveTabClick = () => {

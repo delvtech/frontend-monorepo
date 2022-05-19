@@ -29,7 +29,6 @@ import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
 import GradientCard from "src/ui/base/Card/GradientCard";
-import { useUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 
 type TabId = "active" | "past";
 
