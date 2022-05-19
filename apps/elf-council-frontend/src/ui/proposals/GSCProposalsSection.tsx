@@ -174,7 +174,7 @@ export default function GSCProposalsSection({
       account={account}
       signer={signer}
       proposal={selectedProposal}
-      unverified={!selectedProposal.createdTimestamp}
+      unverified={selectedProposal.snapshotId === "-1"}
     />
   ) : null;
 
