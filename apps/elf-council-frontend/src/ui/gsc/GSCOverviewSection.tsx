@@ -50,7 +50,7 @@ export function GSCOverviewSection(): ReactElement {
   const isGSC = status === EligibilityState.Current;
 
   // Fetch and sort current GSC members
-  const { data: members = [] } = useGSCMembers();
+  const { data: members = [], refetch: refetchMembers } = useGSCMembers();
   const votingPowerByDelegate = useVotingPowerByDelegates();
   const sortedMembers = sortMembersByVotingPower(
     members,
@@ -91,9 +91,13 @@ export function GSCOverviewSection(): ReactElement {
   const handleKick = useCallback(
     async (account: string) => {
       const extraData = await getUserVaultsExtraData(account);
-      kick([account, extraData]);
+      kick([account, extraData], {
+        onSuccess: () => {
+          refetchMembers();
+        },
+      });
     },
-    [kick],
+    [kick, refetchMembers],
   );
 
   return (
