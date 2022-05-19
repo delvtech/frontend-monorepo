@@ -13,7 +13,8 @@ import toast from "react-hot-toast";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
-import { useGSCMembers } from "./useGSCMembers";
+import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
+import { useQueryClient } from "react-query";
 
 interface GSCButtonProps {
   account: string | null | undefined;
@@ -29,7 +30,7 @@ export function JoinGSCButton({
   isGSC,
 }: GSCButtonProps): ReactElement {
   const toastIdRef = useRef<string>();
-  const { refetch } = useGSCMembers();
+  const queryClient = useQueryClient();
   const { handleJoin, isLoading } = useJoinGSC(account, signer, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
@@ -54,7 +55,7 @@ export function JoinGSCButton({
         id: toastIdRef.current,
       });
       setDialogOpen(false);
-      refetch();
+      queryClient.invalidateQueries();
     },
   });
 
