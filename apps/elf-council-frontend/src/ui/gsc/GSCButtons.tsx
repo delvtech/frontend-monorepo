@@ -29,6 +29,7 @@ export function JoinGSCButton({
   isGSC,
 }: GSCButtonProps): ReactElement {
   const toastIdRef = useRef<string>();
+  const { refetch } = useGSCMembers();
   const { handleJoin, isLoading } = useJoinGSC(account, signer, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
@@ -53,6 +54,7 @@ export function JoinGSCButton({
         id: toastIdRef.current,
       });
       setDialogOpen(false);
+      refetch();
     },
   });
 

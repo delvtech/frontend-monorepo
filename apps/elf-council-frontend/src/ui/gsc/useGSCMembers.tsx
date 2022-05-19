@@ -45,5 +45,6 @@ export function useGSCMembers(): QueryObserverResult<Delegate[]> {
     },
     queryKey: ["gsc-members"],
     enabled: !!events?.length,
+    refetchInterval: 2000,
   });
 }
