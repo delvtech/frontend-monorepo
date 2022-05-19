@@ -1,5 +1,5 @@
 import { formatEther } from "ethers/lib/utils";
-import { Proposal, ProposalsJson } from "src/types";
+import { Proposal } from "src/types";
 import { fetchSnapshotProposalTitleAndBody } from "src/snapshot";
 import { providers } from "ethers";
 import { CoreVoting } from "@elementfi/elf-council-typechain";
@@ -23,14 +23,16 @@ export async function getProposals(
    * proposal's state will exist forever. To handle this, once you've scraped a
    * proposal, you can add it to the list of proposals to skip for future runs.
    */
-  const newOnChainProposals = onChainProposalCreatedEvents.filter((event) => {
-    const proposalId = event.args.proposalId.toString();
-    const isNewProposal = !proposalIdsToSkip.find((p) => p === proposalId);
-    const hasSnapshotMatch = !!snapshotIdsByProposalId[proposalId];
-    return isNewProposal && hasSnapshotMatch;
-  });
+  const newOnChainProposalsEvents = onChainProposalCreatedEvents.filter(
+    (event) => {
+      const proposalId = event.args.proposalId.toString();
+      const isNewProposal = !proposalIdsToSkip.find((p) => p === proposalId);
+      return isNewProposal;
+    },
+  );
 
-  const newProposalPromises = newOnChainProposals.map(
+  // Contains proposals with AND without a complimentary snapshot
+  const newProposalPromises = newOnChainProposalsEvents.map(
     async ({ args: { proposalId: proposalIdBN } }): Promise<Proposal> => {
       const { proposalHash, lastCall, quorum, unlock, created, expiration } =
         await coreVotingContract.functions.proposals(proposalIdBN);
@@ -42,15 +44,32 @@ export async function getProposals(
         snapshotIdsByProposalId[proposalId] ||
         // Temporary: default to the first one if more proposals exist
         // on-chain than are in the snapshot space,
-        snapshotIdsByProposalId[0];
+        "-1";
 
       // NOTE: this WILL break if the snapshot id is not found.  this is good though, we don't want
       // to add it if the snapshot id is wrong
-      const { body: description, title } =
-        await fetchSnapshotProposalTitleAndBody(snapshotId);
+      let description: string;
+      let title: string;
+      let targets: string[];
+      let calldatas: string[];
 
-      const targets = targetsByProposalId[proposalId];
-      const calldatas = callDatasByProposalId[proposalId];
+      if (snapshotId !== "-1") {
+        const { body: snapshotDescription, title: snapshotTitle } =
+          await fetchSnapshotProposalTitleAndBody(snapshotId);
+
+        description = snapshotDescription;
+        title = snapshotTitle;
+        targets = targetsByProposalId[proposalId];
+        calldatas = callDatasByProposalId[proposalId];
+      } else {
+        console.log(" IN HERE ");
+        // Proposals with no snapshot
+        description =
+          "WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.";
+        title = "UNKNOWN PROPOSAL";
+        targets = [""];
+        calldatas = [""];
+      }
 
       return {
         proposalId,
