@@ -57,6 +57,26 @@ function getGSCStatusText({
     );
   }
 
+  if (status === EligibilityState.Idle) {
+    return (
+      <>
+        <span className="mt-1 flex items-center">
+          <span className="text-md mr-1 w-max text-white">
+            {t`Current member of the GSC (Idle)`}
+          </span>
+          <Tooltip
+            className="text-white"
+            content={t`To learn more about our GSC program, its role within the Element DAO’s
+            Governance, and how it affects your experience as a member read more
+            here.`}
+          >
+            <InformationCircleIcon className="h-4 cursor-help" />
+          </Tooltip>
+        </span>
+      </>
+    );
+  }
+
   if (status === EligibilityState.Approaching) {
     return (
       <>
