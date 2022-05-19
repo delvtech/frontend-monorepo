@@ -57,16 +57,9 @@ export function GSCOverviewSection(): ReactElement {
     votingPowerByDelegate,
   );
 
-  // Find GSC members that are kickable
-  const { data: thresholdValue } = useGSCVotePowerThreshold();
-  const kickableMembers = getKickableMembers(
-    [...members],
-    votingPowerByDelegate,
-    thresholdValue ?? BigNumber.from(0),
-  );
-
   // Fetch current GSC candidates
   const candidates = useGSCCandidates();
+  const { data: thresholdValue } = useGSCVotePowerThreshold();
   const topTwentyCandidates = getTopTwentyCandidates(
     candidates,
     votingPowerByDelegate,
@@ -212,23 +205,21 @@ export function GSCOverviewSection(): ReactElement {
                     const currentlyDelegated =
                       currentDelegate === member.address;
 
-                    const kickButton = kickableMembers.has(member.address) ? (
-                      <Button
-                        variant={ButtonVariant.DANGER}
-                        className="w-full text-center"
-                        onClick={() => handleKick(member.address)}
-                        loading={isLeaveTxnLoading}
-                      >
-                        <div className="flex w-full justify-center">{t`Kick`}</div>
-                      </Button>
-                    ) : undefined;
-
                     return (
                       <li key={member.address}>
                         <GSCMemberProfileRow
                           selected={false}
                           delegate={member}
-                          kickButton={kickButton}
+                          kickButton={
+                            <Button
+                              variant={ButtonVariant.DANGER}
+                              className="w-full text-center"
+                              onClick={() => handleKick(member.address)}
+                              loading={isLeaveTxnLoading}
+                            >
+                              <div className="flex w-full justify-center">{t`Kick`}</div>
+                            </Button>
+                          }
                           delegateButton={
                             <ChangeDelegateButton
                               onDelegationClick={() =>

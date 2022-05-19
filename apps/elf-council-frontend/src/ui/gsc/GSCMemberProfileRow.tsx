@@ -13,6 +13,9 @@ import {
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { useENSName } from "src/ui/ethereum/useEnsName";
+import { useGSCVotePowerThreshold } from "./useGSCVotePowerThreshold";
+import { formatEther } from "ethers/lib/utils";
+import { BigNumber } from "ethers";
 
 interface GSCMemberProfileRowProps {
   selected: boolean;
@@ -32,6 +35,11 @@ export function GSCMemberProfileRow(
     delegateButton,
     kickButton,
   } = props;
+
+  const votePower = useVotingPowerForAccountAtLatestBlock(delegate.address);
+  const { data: thresholdValue } = useGSCVotePowerThreshold();
+  const formattedThreshold = thresholdValue && formatEther(thresholdValue);
+  const isKickable = formattedThreshold && +formattedThreshold > +votePower;
 
   const { data: ensName } = useENSName(delegate.address);
   const formattedDelegateName =
@@ -94,7 +102,9 @@ export function GSCMemberProfileRow(
       {/* Buttons */}
       <div className="col-span-4 flex justify-end gap-x-4">
         {/* Unique action event button */}
-        <div className="w-1/2 lg:pl-2">{kickButton}</div>
+        <div className="w-1/2 lg:pl-2">
+          {isKickable ? kickButton : undefined}
+        </div>
         <div className="w-1/2 lg:pl-2">{delegateButton}</div>
       </div>
     </div>
