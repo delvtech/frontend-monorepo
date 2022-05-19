@@ -32,6 +32,7 @@ import {
 } from "src/ui/gsc/useVotingPowerByDelegates";
 import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
 import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
+import { commify, formatEther } from "ethers/lib/utils";
 
 const provider = defaultProvider;
 
@@ -60,6 +61,8 @@ export function GSCOverviewSection(): ReactElement {
   // Fetch current GSC candidates
   const candidates = useGSCCandidates();
   const { data: thresholdValue } = useGSCVotePowerThreshold();
+  const formattedThreshold =
+    thresholdValue && commify(Math.round(+formatEther(thresholdValue)));
   const topTwentyCandidates = getTopTwentyCandidates(
     candidates,
     votingPowerByDelegate,
@@ -143,9 +146,14 @@ export function GSCOverviewSection(): ReactElement {
                       />
                     </Disclosure.Button>
                     <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
-                      <p>{t`Council is an on-chain decentralized governance system through which a community can manage a DAO. It gives the community total flexibility over how to distribute Voting Power and allows it to adapt its governance system to the continuously evolving needs of the DAO.`}</p>
-                      <p>{t`The system also includes the optional structure of a Governance Steering Council (GSC) with added governance powers and responsibilities, all to be decided upon by the community.`}</p>
-                      <p>{t`This flexibility is possible thanks to the use of Voting Vaults. Learn more in `}</p>
+                      <p>{t`Any delegate who has accumulated more delegated voting
+                      power than the current GSC Eligibility Threshold (${formattedThreshold}
+                      ELFI) is eligible to join the GSC. `}</p>
+                      <p>{t`To help reach this
+                      threshold, delegates can post their vision, mission and
+                      other relevant information in the forums, to make
+                      themselves known to the community and rally other members
+                      from which to gather more delegated voting power.`}</p>
                     </Disclosure.Panel>
                   </>
                 )}
@@ -165,9 +173,15 @@ export function GSCOverviewSection(): ReactElement {
                       />
                     </Disclosure.Button>
                     <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
-                      <p>{t`Council is an on-chain decentralized governance system through which a community can manage a DAO. It gives the community total flexibility over how to distribute Voting Power and allows it to adapt its governance system to the continuously evolving needs of the DAO.`}</p>
-                      <p>{t`The system also includes the optional structure of a Governance Steering Council (GSC) with added governance powers and responsibilities, all to be decided upon by the community.`}</p>
-                      <p>{t`This flexibility is possible thanks to the use of Voting Vaults. Learn more in `}</p>
+                      <p>{t`The formal responsibilities of the GSC are being actively discussed at this time, but they could include some of the following:`}</p>
+                      <ul className="list-disc">
+                        <li>{t`On-chain voting`}</li>
+                        <li>{t`Continued discussion about protocol improvements,
+                        partnerships, DAO structures`}</li>
+                        <li>{t`Security Management`}</li>
+                        <li>{t`Optimistic Grants distribution`}</li>
+                        <li>{t`Governance experimentation and incentives management`}</li>
+                      </ul>
                     </Disclosure.Panel>
                   </>
                 )}
@@ -187,9 +201,27 @@ export function GSCOverviewSection(): ReactElement {
                       />
                     </Disclosure.Button>
                     <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
-                      <p>{t`Council is an on-chain decentralized governance system through which a community can manage a DAO. It gives the community total flexibility over how to distribute Voting Power and allows it to adapt its governance system to the continuously evolving needs of the DAO.`}</p>
-                      <p>{t`The system also includes the optional structure of a Governance Steering Council (GSC) with added governance powers and responsibilities, all to be decided upon by the community.`}</p>
-                      <p>{t`This flexibility is possible thanks to the use of Voting Vaults. Learn more in `}</p>
+                      <p>{t`Joining and leaving the GSC are individual on-chain transactions.`}</p>
+                      <ul className="list-disc">
+                        <li>
+                          <span className="font-bold">{t`Joining: `}</span>
+                          {t`If a delegate who isn’t part of the GSC
+                          acquires more delegated Voting Power than the GSC
+                          Eligibility Threshold (${formattedThreshold}
+                            ELFI), they can join
+                          the GSC by using the “Join” button that will become
+                          enabled in the GSC’s Overview page.`}
+                        </li>
+                        <li>
+                          <span className="font-bold">{t`Leaving: `}</span>
+                          {t`If a GSC member falls below the GSC Eligibility
+                          Threshold (${formattedThreshold}
+                            ELFI), anyone can execute the
+                          necessary on-chain transaction to formally remove them
+                          from the GSC by using the “Kick” button that will
+                          become enabled in the GSC’s Overview page.`}
+                        </li>
+                      </ul>
                     </Disclosure.Panel>
                   </>
                 )}
