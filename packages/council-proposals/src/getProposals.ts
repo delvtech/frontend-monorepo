@@ -62,7 +62,6 @@ export async function getProposals(
         targets = targetsByProposalId[proposalId];
         calldatas = callDatasByProposalId[proposalId];
       } else {
-        console.log(" IN HERE ");
         // Proposals with no snapshot
         description =
           "WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.";
