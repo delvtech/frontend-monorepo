@@ -295,27 +295,7 @@ function sortMembersByVotingPower(
   });
 }
 
-function getKickableMembers(
-  members: Delegate[],
-  votePowerByDelegate: VotePowerByDelegate,
-  threshold: BigNumber,
-): Set<string> {
-  const validMembers: Set<string> = new Set();
-
-  members.forEach((member) => {
-    const address = member.address;
-    const votingPower = votePowerByDelegate[address];
-
-    if (votingPower && votingPower.lt(threshold)) {
-      validMembers.add(address);
-    }
-  });
-
-  return validMembers;
-}
-
 const NUM_CANDIDATES_TO_SHOW = 20;
-
 function getTopTwentyCandidates(
   candidates: Delegate[] = [],
   votingPowerByDelegate: VotePowerByDelegate = {},
