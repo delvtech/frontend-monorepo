@@ -15,8 +15,6 @@ import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { useENSName } from "src/ui/ethereum/useEnsName";
 import { useGSCVotePowerThreshold } from "./useGSCVotePowerThreshold";
 import { formatEther } from "ethers/lib/utils";
-import { BigNumber } from "ethers";
-import { defaultProvider } from "src/elf/providers/providers";
 
 interface GSCMemberProfileRowProps {
   selected: boolean;
