@@ -16,10 +16,7 @@ import { t } from "ttag";
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import GradientCard from "src/ui/base/Card/GradientCard";
 import H1 from "src/ui/base/H1/H1";
-import H2 from "src/ui/base/H2/H2";
-import EmptySpaceFace from "src/ui/base/svg/EmptySpaceFace";
 import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
 import {
   useIsTailwindLargeScreen,
@@ -28,10 +25,13 @@ import {
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "src/ui/proposals/ProposalList/ProposalList";
+import {
+  NoProposalsDetail,
+  NoProposalsList,
+} from "src/ui/proposals/NoProposals";
 import { GSCProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/GSCProposalsDetailsCard";
 import { useGSCUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
-
-type TabId = "active" | "past";
+import { TabId } from "src/ui/proposals/ProposalsPage";
 
 interface ProposalsSectionProps {
   proposalsJson: ProposalsJson;
@@ -45,7 +45,17 @@ export default function GSCProposalsSection({
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
 
-  const [activeTabId, setActiveTabId] = useState<TabId>("active");
+  // set the default to the first active proposal, since that's what filter is
+  // on by default
+  const [selectedProposalId, setSelectedProposalId] = useState<
+    string | undefined
+  >(undefined);
+
+  const [selectedProposal, setSelectedProposal] = useState<
+    Proposal | undefined
+  >(undefined);
+  const [activeTabId, setActiveTabId] = useState<TabId>(TabId.ACTIVE);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
   const isTailwindLargeScreen = useIsTailwindLargeScreen();
@@ -56,12 +66,12 @@ export default function GSCProposalsSection({
   const allProposals = proposalsJson.proposals.concat(unverifiedProposals);
 
   const activeProposals = useFilteredProposals(
-    "active",
+    TabId.ACTIVE,
     allProposals,
     currentBlockNumber,
   );
   const pastProposals = useFilteredProposals(
-    "past",
+    TabId.PAST,
     allProposals,
     currentBlockNumber,
   );
@@ -69,42 +79,12 @@ export default function GSCProposalsSection({
   const setDefaultActiveProposal = useCallback(() => {
     setSelectedProposalId(activeProposals?.[0]?.proposalId);
     setSelectedProposal(activeProposals?.[0]);
-    activeProposals.length ? setIsModalOpen(true) : setIsModalOpen(false);
   }, [activeProposals]);
 
   const setDefaultPastProposal = useCallback(() => {
     setSelectedProposalId(pastProposals?.[0]?.proposalId);
     setSelectedProposal(pastProposals?.[0]);
-    pastProposals.length ? setIsModalOpen(true) : setIsModalOpen(false);
   }, [pastProposals]);
-
-  const calculateModalOpenState = () => {
-    if (!isTailwindLargeScreen) {
-      return false;
-    }
-
-    if (activeTabId === "active") {
-      return !!activeProposals.length;
-    }
-
-    if (activeTabId === "past") {
-      return !!pastProposals.length;
-    }
-
-    // Will not reach this
-    return false;
-  };
-
-  const [isModalOpen, setIsModalOpen] = useState(calculateModalOpenState());
-
-  // set the default to the first active proposal, since that's what filter is
-  // on by default
-  const [selectedProposalId, setSelectedProposalId] = useState<
-    string | undefined
-  >(isTailwindSmallScreen ? undefined : activeProposals?.[0]?.proposalId);
-  const [selectedProposal, setSelectedProposal] = useState<
-    Proposal | undefined
-  >(isTailwindSmallScreen ? undefined : activeProposals?.[0]);
 
   const handleSelectProposal = useCallback(
     (proposalId: string | undefined) => {
@@ -117,8 +97,8 @@ export default function GSCProposalsSection({
   );
 
   const handleActiveTabClick = () => {
-    if (activeTabId !== "active") {
-      setActiveTabId("active");
+    if (activeTabId !== TabId.ACTIVE) {
+      setActiveTabId(TabId.ACTIVE);
       // select the first proposal when the user clicks to view the
       // active tab
       if (isTailwindSmallScreen) {
@@ -131,8 +111,8 @@ export default function GSCProposalsSection({
   };
 
   const handlePastTabClick = () => {
-    if (activeTabId !== "past") {
-      setActiveTabId("past");
+    if (activeTabId !== TabId.PAST) {
+      setActiveTabId(TabId.PAST);
       if (isTailwindSmallScreen) {
         setSelectedProposalId(undefined);
         setSelectedProposal(undefined);
@@ -151,7 +131,7 @@ export default function GSCProposalsSection({
   // Populates the default past/active proposal when moving from small -> big screen size
   useEffect(() => {
     if (isTailwindLargeScreen && !isModalOpen) {
-      if (activeTabId === "past") {
+      if (activeTabId === TabId.PAST) {
         setDefaultPastProposal();
       } else {
         setDefaultActiveProposal();
@@ -167,6 +147,14 @@ export default function GSCProposalsSection({
     setDefaultPastProposal,
   ]);
 
+  useEffect(() => {
+    if (isTailwindSmallScreen) {
+      setSelectedProposal(undefined);
+      setSelectedProposalId(undefined);
+      setIsModalOpen(false);
+    }
+  }, [isTailwindSmallScreen]);
+
   const proposalDetail = !!selectedProposal ? (
     <GSCProposalDetailsCard
       key={selectedProposalId}
@@ -179,24 +167,24 @@ export default function GSCProposalsSection({
   ) : null;
 
   const showNoProposalsState =
-    (activeTabId === "active" && !activeProposals.length) ||
-    (activeTabId === "past" && !pastProposals.length);
+    (activeTabId === TabId.ACTIVE && !activeProposals.length) ||
+    (activeTabId === TabId.PAST && !pastProposals.length);
 
   return (
     <div className="flex h-full w-full lg:justify-center">
-      <div className="h-full w-full flex-1 space-y-8 pt-8 pr-8 lg:max-w-lg">
+      <div className="h-full w-full flex-1 space-y-8 pt-8 lg:max-w-lg lg:pr-8">
         <H1 className="text-principalRoyalBlue flex-1 text-center">{t`GSC On-chain Proposals`}</H1>
         <div className="flex justify-between">
           <Tabs aria-label={t`Filter proposals`}>
             <Tab
               first
-              current={activeTabId === "active"}
+              current={activeTabId === TabId.ACTIVE}
               onClick={handleActiveTabClick}
               name={t`Active`}
             />
             <Tab
               last
-              current={activeTabId === "past"}
+              current={activeTabId === TabId.PAST}
               onClick={handlePastTabClick}
               name={t`Past`}
             />
@@ -212,11 +200,10 @@ export default function GSCProposalsSection({
               account={account}
               signer={signer}
               proposals={
-                activeTabId === "active" ? activeProposals : pastProposals
+                activeTabId === TabId.ACTIVE ? activeProposals : pastProposals
               }
               selectedProposalId={selectedProposalId}
               onClickItem={handleSelectProposal}
-              isModalOpen={isModalOpen}
             />
           )}
         </div>
@@ -229,8 +216,8 @@ export default function GSCProposalsSection({
       ) : (
         <Transition.Root show={isModalOpen} as={Fragment}>
           <Dialog
-            // Using z-50 so that the dialog appears above the Sidebar, which is currently set to z-10
-            className="fixed inset-0 z-50 overflow-y-auto"
+            // Using z-20 so that the dialog appears above the Sidebar, which is currently set to z-10
+            className="fixed inset-0 z-20 overflow-y-auto"
             onClose={handleOnClose}
           >
             <div className="fixed top-1/2 left-1/2">
@@ -296,13 +283,13 @@ function useFilteredProposals(
   currentBlockNumber: number,
 ): Proposal[] {
   return useMemo(() => {
-    if (activeTabId === "active") {
+    if (activeTabId === TabId.ACTIVE) {
       return proposals?.filter(
         (proposal) => proposal.expiration > currentBlockNumber,
       );
     }
 
-    if (activeTabId === "past") {
+    if (activeTabId === TabId.PAST) {
       return proposals?.filter(
         (proposal) => proposal.expiration <= currentBlockNumber,
       );
@@ -310,27 +297,4 @@ function useFilteredProposals(
 
     return [];
   }, [activeTabId, currentBlockNumber, proposals]);
-}
-
-function NoProposalsList(props: { activeTabId: TabId }) {
-  return (
-    <div className="text-blueGrey my-6 flex flex-1 flex-col items-center">
-      <EmptySpaceFace className="-mr-[27px] w-[90%] max-w-[327px]" />
-      <p className="mt-4 text-xl font-semibold leading-6">{t`no ${props.activeTabId} proposals`}</p>
-    </div>
-  );
-}
-
-function NoProposalsDetail() {
-  return (
-    <GradientCard
-      style={
-        // don't scroll app behind popover, makes a double scroll bar
-        { overscrollBehavior: "none" }
-      }
-      className="hidden h-[85vh] min-w-[403px] max-w-[48rem] flex-1 items-center justify-center rounded-xl opacity-90 lg:flex"
-    >
-      <H2 className="m-4 text-white">{t`Click on a proposal to view it here`}</H2>
-    </GradientCard>
-  );
 }

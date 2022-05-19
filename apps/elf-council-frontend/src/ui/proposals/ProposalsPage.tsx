@@ -17,21 +17,24 @@ import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
-import H2 from "src/ui/base/H2/H2";
 import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
 import {
   useIsTailwindSmallScreen,
   useIsTailwindLargeScreen,
 } from "src/ui/base/tailwindBreakpoints";
-import EmptySpaceFace from "src/ui/base/svg/EmptySpaceFace";
-import { ProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
-
 import { ProposalList } from "./ProposalList/ProposalList";
-import GradientCard from "src/ui/base/Card/GradientCard";
+import {
+  NoProposalsDetail,
+  NoProposalsList,
+} from "src/ui/proposals/NoProposals";
+import { ProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/ProposalDetailsCard";
 import { useUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 
-type TabId = "active" | "past";
+export enum TabId {
+  ACTIVE = "active",
+  PAST = "past",
+}
 
 interface ProposalsPageProps {
   proposalsJson: ProposalsJson;
@@ -45,7 +48,7 @@ export default function ProposalsPage({
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
 
-  const [activeTabId, setActiveTabId] = useState<TabId>("active");
+  const [activeTabId, setActiveTabId] = useState<TabId>(TabId.ACTIVE);
 
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
   const isTailwindLargeScreen = useIsTailwindLargeScreen();
@@ -54,12 +57,12 @@ export default function ProposalsPage({
   const allProposals = proposalsJson.proposals.concat(unverifiedProposals);
 
   const activeProposals = useFilteredProposals(
-    "active",
+    TabId.ACTIVE,
     allProposals,
     currentBlockNumber,
   );
   const pastProposals = useFilteredProposals(
-    "past",
+    TabId.PAST,
     allProposals,
     currentBlockNumber,
   );
@@ -81,11 +84,11 @@ export default function ProposalsPage({
       return false;
     }
 
-    if (activeTabId === "active") {
+    if (activeTabId === TabId.ACTIVE) {
       return !!activeProposals.length;
     }
 
-    if (activeTabId === "past") {
+    if (activeTabId === TabId.PAST) {
       return !!pastProposals.length;
     }
 
@@ -115,8 +118,8 @@ export default function ProposalsPage({
   );
 
   const handleActiveTabClick = () => {
-    if (activeTabId !== "active") {
-      setActiveTabId("active");
+    if (activeTabId !== TabId.ACTIVE) {
+      setActiveTabId(TabId.ACTIVE);
       // select the first proposal when the user clicks to view the
       // active tab
       if (isTailwindSmallScreen) {
@@ -129,8 +132,8 @@ export default function ProposalsPage({
   };
 
   const handlePastTabClick = () => {
-    if (activeTabId !== "past") {
-      setActiveTabId("past");
+    if (activeTabId !== TabId.PAST) {
+      setActiveTabId(TabId.PAST);
       if (isTailwindSmallScreen) {
         setSelectedProposalId(undefined);
         setSelectedProposal(undefined);
@@ -149,7 +152,7 @@ export default function ProposalsPage({
   // Populates the default past/active proposal when moving from small -> big screen size
   useEffect(() => {
     if (isTailwindLargeScreen && !isModalOpen) {
-      if (activeTabId === "past") {
+      if (activeTabId === TabId.PAST) {
         setDefaultPastProposal();
       } else {
         setDefaultActiveProposal();
@@ -177,8 +180,8 @@ export default function ProposalsPage({
   ) : null;
 
   const showNoProposalsState =
-    (activeTabId === "active" && !activeProposals.length) ||
-    (activeTabId === "past" && !pastProposals.length);
+    (activeTabId === TabId.ACTIVE && !activeProposals.length) ||
+    (activeTabId === TabId.PAST && !pastProposals.length);
 
   return (
     <div className="flex h-full lg:justify-center">
@@ -186,19 +189,19 @@ export default function ProposalsPage({
         <title>{t`Proposals | Element Council Protocol`}</title>
       </Head>
 
-      <div className="h-full w-full flex-1 space-y-8 pr-8 pt-8 lg:max-w-lg">
+      <div className="h-full w-full flex-1 space-y-8 pt-8 lg:max-w-lg lg:pr-8">
         <H1 className="text-principalRoyalBlue flex-1 text-center">{t`On-chain Proposals`}</H1>
         <div className="flex justify-between gap-2">
           <Tabs aria-label={t`Filter proposals`}>
             <Tab
               first
-              current={activeTabId === "active"}
+              current={activeTabId === TabId.ACTIVE}
               onClick={handleActiveTabClick}
               name={t`Active`}
             />
             <Tab
               last
-              current={activeTabId === "past"}
+              current={activeTabId === TabId.PAST}
               onClick={handlePastTabClick}
               name={t`Past`}
             />
@@ -213,7 +216,7 @@ export default function ProposalsPage({
               account={account}
               signer={signer}
               proposals={
-                activeTabId === "active" ? activeProposals : pastProposals
+                activeTabId === TabId.ACTIVE ? activeProposals : pastProposals
               }
               selectedProposalId={selectedProposalId}
               onClickItem={handleSelectProposal}
@@ -297,13 +300,13 @@ function useFilteredProposals(
   currentBlockNumber: number,
 ): Proposal[] {
   return useMemo(() => {
-    if (activeTabId === "active") {
+    if (activeTabId === TabId.ACTIVE) {
       return proposals?.filter(
         (proposal) => proposal.expiration > currentBlockNumber,
       );
     }
 
-    if (activeTabId === "past") {
+    if (activeTabId === TabId.PAST) {
       return proposals?.filter(
         (proposal) => proposal.expiration <= currentBlockNumber,
       );
@@ -311,27 +314,4 @@ function useFilteredProposals(
 
     return [];
   }, [activeTabId, currentBlockNumber, proposals]);
-}
-
-function NoProposalsList(props: { activeTabId: TabId }) {
-  return (
-    <div className="text-blueGrey my-6 flex flex-1 flex-col items-center">
-      <EmptySpaceFace className="-mr-[27px] w-[90%] max-w-[327px]" />
-      <p className="mt-4 text-xl font-semibold leading-6">{t`no ${props.activeTabId} proposals`}</p>
-    </div>
-  );
-}
-
-function NoProposalsDetail() {
-  return (
-    <GradientCard
-      style={
-        // don't scroll app behind popover, makes a double scroll bar
-        { overscrollBehavior: "none" }
-      }
-      className="hidden h-[85vh] min-w-[403px] max-w-[48rem] flex-1 items-center justify-center rounded-xl opacity-90 lg:flex"
-    >
-      <H2 className="m-4 text-white">{t`Click on a proposal to view it here`}</H2>
-    </GradientCard>
-  );
 }
