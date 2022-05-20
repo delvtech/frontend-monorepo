@@ -2,7 +2,7 @@ import {
   LockingVault__factory,
   SimpleProxy,
   SimpleProxy__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { BigNumberish, Signer } from "ethers";
 
 export async function deployLockingVault(

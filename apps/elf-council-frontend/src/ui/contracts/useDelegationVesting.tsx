@@ -2,7 +2,7 @@ import { vestingContract } from "src/elf/contracts";
 import { toast } from "react-hot-toast";
 import { ContractReceipt, Signer } from "ethers";
 import { UseMutationResult } from "react-query";
-import { VestingVault } from "@elementfi/elf-council-typechain";
+import { VestingVault } from "@elementfi/council-typechain";
 import { useSmartContractTransaction } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { makeSmartContractReadCallQueryKey } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { queryClient } from "src/elf/queryClient";

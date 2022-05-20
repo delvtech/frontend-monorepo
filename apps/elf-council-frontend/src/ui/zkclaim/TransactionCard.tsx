@@ -25,7 +25,7 @@ import { isValidAddress } from "src/base/isValidAddress";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
 import { pedersenHash, toHex } from "zkp-merkle-airdrop-lib";
 import useClaimableAmount from "./useClaimableAmount";
-import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
+import { PrivateAirdrop } from "@elementfi/council-typechain";
 
 interface TransactionCardProps {
   className?: string;

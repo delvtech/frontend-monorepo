@@ -4,7 +4,7 @@ import {
   LockingVault,
   OptimisticRewards,
   VestingVault,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { formatEther } from "@ethersproject/units";
 import { BytesLike, ethers } from "ethers";

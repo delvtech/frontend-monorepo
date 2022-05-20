@@ -3,7 +3,7 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2/H2";
 import ClaimAmountCard from "./ClaimAmountCard";
 import { t } from "ttag";
-import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
+import { PrivateAirdrop } from "@elementfi/council-typechain";
 
 interface AlreadyClaimedCardProps {
   className?: string;

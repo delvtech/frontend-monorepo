@@ -1,4 +1,4 @@
-import { CoreVoting } from "@elementfi/elf-council-typechain";
+import { CoreVoting } from "@elementfi/council-typechain";
 import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
 import { QueryObserverResult, useQuery } from "react-query";
 import { getFromBlock } from "src/elf-council-addresses/getFromBlock";

@@ -4,7 +4,7 @@
   "description": "",
   "dependencies": {
     "@elementfi/elf-council-tokenlist": "^1.0.2",
-    "@elementfi/elf-council-typechain": "^1.0.2",
+    "@elementfi/council-typechain": "^1.0.2",
     "@types/lodash.uniq": "^4.5.6",
     "@types/lodash.zip": "^4.2.6",
     "graphql": "^16.3.0",
