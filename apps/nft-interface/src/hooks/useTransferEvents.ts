@@ -1,7 +1,7 @@
 import {
   useSmartContractEvents,
   UseSmartContractEventsCallOptions,
-} from "@elementfi/react-query-typechain";
+} from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
 import { ElfNFT, ElfNFT__factory } from "contracts";
 import { BigNumber, Event } from "ethers";
 import { QueryObserverResult } from "react-query";

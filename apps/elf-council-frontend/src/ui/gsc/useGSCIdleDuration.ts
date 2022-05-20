@@ -1,5 +1,5 @@
 import { QueryObserverResult } from "react-query";
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { gscVaultContract } from "src/elf/contracts";
 
 export function useGSCIdleDuration(): QueryObserverResult<number> {

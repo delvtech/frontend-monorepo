@@ -5,7 +5,7 @@ import {
   ERC20Permit__factory,
 } from "@elementfi/elf-council-typechain";
 import { ContractReceipt, Signer } from "ethers";
-import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
+import { useSmartContractTransaction } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 
 export function useSetTokenAllowance(
   signer: Signer | undefined,

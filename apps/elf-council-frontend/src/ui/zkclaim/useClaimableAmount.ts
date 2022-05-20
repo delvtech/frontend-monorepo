@@ -1,5 +1,5 @@
 import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { formatEther } from "@ethersproject/units";
 
 export default function useClaimableAmount(

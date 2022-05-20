@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { useSmartContractEvents } from "@elementfi/react-query-typechain";
+import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
 import { BigNumber, ethers } from "ethers";
 import { formatEther } from "ethers/lib/utils";
 

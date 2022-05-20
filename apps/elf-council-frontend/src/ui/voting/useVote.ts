@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,
-} from "@elementfi/react-query-typechain";
+} from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { parseEther } from "@ethersproject/units";
 import { ethers, Signer } from "ethers";
 

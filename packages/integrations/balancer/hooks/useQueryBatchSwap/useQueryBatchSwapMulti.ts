@@ -3,10 +3,8 @@ import { SwapKind } from "@elementfi/integrations/balancer/SwapKind";
 import { balancerVaultContract } from "@elementfi/integrations/balancer/vault";
 import { makeQueryBatchSwapCallArgs } from "@elementfi/integrations/balancer/hooks/useQueryBatchSwap/makeQueryBatchSwapCallArgs";
 import { getQueriesData } from "@elementfi/base/queries/queryResults";
-import {
-  useSmartContractReadCalls,
-  UseSmartContractReadCallOptions,
-} from "@elementfi/react-query-typechain";
+import { useSmartContractReadCalls } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCalls/useSmartContractReadCalls";
+import { UseSmartContractReadCallOptions } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { PoolContract } from "@elementfi/core/pools/PoolContract";
 import { BigNumber } from "ethers";
 import zip from "lodash.zip";

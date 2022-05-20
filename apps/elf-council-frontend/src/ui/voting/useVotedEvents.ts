@@ -3,7 +3,7 @@ import { QueryObserverResult } from "react-query";
 import {
   useSmartContractEvents,
   UseSmartContractEventsCallOptions,
-} from "@elementfi/react-query-typechain";
+} from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
 import { CoreVoting } from "@elementfi/elf-council-typechain";
 import { BigNumber, Event } from "ethers";
 

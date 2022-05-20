@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import { Contract } from "ethers";
-import { UseSmartContractTransactionOptions } from "@elementfi/react-query-typechain";
+import { UseSmartContractTransactionOptions } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { jt, t } from "ttag";

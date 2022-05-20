@@ -1,5 +1,5 @@
 import { pedersenHash, toHex } from "zkp-merkle-airdrop-lib";
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
 import isValidKeyOrSecret from "./isValidKeyOrSecret";
 

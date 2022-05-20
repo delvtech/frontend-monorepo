@@ -2,7 +2,7 @@ import { QueryObserverResult } from "react-query";
 
 import { ERC20Permit } from "@elementfi/elf-council-typechain";
 import { BigNumber } from "ethers";
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 
 export function useTokenAllowance(
   contract: ERC20Permit | undefined,
