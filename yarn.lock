@@ -24334,10 +24334,10 @@ solpp@^0.10.1:
     resolve "^1.10.0"
     semver "^5.6.0"
 
-sonra@^0.0.35:
-  version "0.0.35"
-  resolved "https://registry.yarnpkg.com/sonra/-/sonra-0.0.35.tgz#e093545f5dab1fdec7abe4dc7789c774a63e1f44"
-  integrity sha512-4bXi/Ou/AAP9cu6JPXraKW8NdDeK5Bv2YHV1yTOzHLKENo4FfbBNMB1mau7SEEaz0JILcp5PouCJluXrPS1axg==
+sonra@^0.0.36:
+  version "0.0.36"
+  resolved "https://registry.yarnpkg.com/sonra/-/sonra-0.0.36.tgz#5ed54d9338d9e46a0ff4672b56d3241ac523b15b"
+  integrity sha512-eXxefPVuJA9dN3pUivc36Pv8zA958mvBodjmm0iNGkju62r357IkfcQj3tySNtChdEWNV7Oi6zw68WwFHwhEXg==
   dependencies:
     debug "^4.3.4"
     ethers "^5.6.5"
@@ -26013,6 +26013,13 @@ ts-generator@^0.1.1:
     prettier "^2.1.2"
     resolve "^1.8.1"
     ts-essentials "^1.0.0"
+
+ts-invariant@^0.10.3:
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/ts-invariant/-/ts-invariant-0.10.3.tgz#3e048ff96e91459ffca01304dbc7f61c1f642f6c"
+  integrity sha512-uivwYcQaxAucv1CzRp2n/QdYPo4ILf9VXgH19zEIjFx2EJufV16P0JtJVpYHy89DItG6Kwj2oIUjrcK5au+4tQ==
+  dependencies:
+    tslib "^2.1.0"
 
 ts-jest@^26.5.6:
   version "26.5.6"

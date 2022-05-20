@@ -1,25 +1,26 @@
+import uniq from "lodash.uniq";
 import { SonraCategoryInfo, zx } from "sonra";
 import { ElementModel } from ".";
-import { ERC20__factory } from "@contracts";
+import { ERC20__factory } from "../typechain";
 import { PrincipalTokenInfo } from "./principalToken";
 import { provider } from "./provider";
+import { log } from "./utils";
 
 type BaseTokenInfo = SonraCategoryInfo<ElementModel, "baseToken">;
 
 export const buildBaseTokenInfo = async (
   principalTokenInfo: PrincipalTokenInfo,
 ): Promise<BaseTokenInfo> => {
+  log("Building baseToken...");
   const addresses = zx
     .address()
     .conform()
     .array()
     .nonempty()
     .parse(
-      Array.from(
-        new Set(
-          Object.values(principalTokenInfo.metadata).map(
-            ({ underlying }) => underlying,
-          ),
+      uniq(
+        Object.values(principalTokenInfo.metadata).map(
+          ({ underlying }) => underlying,
         ),
       ),
     );
@@ -39,5 +40,6 @@ export const buildBaseTokenInfo = async (
     metadata[address] = { name, symbol, decimals, totalSupply };
   }
 
+  log("Finished building baseToken...");
   return { metadata, addresses };
 };

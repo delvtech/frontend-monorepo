@@ -5,6 +5,6 @@ git clone https://github.com/element-fi/elf-contracts.git contracts-tmp
 cd contracts-tmp
 yarn load-contracts
 mv contracts ..
-cd ../contracts
 cd ..
+cp extras/* contracts
 rm -rf contracts-tmp

@@ -1,8 +1,9 @@
 import { SonraCategoryInfo, zx } from "sonra";
 import { ElementModel } from ".";
-import { WrappedPosition__factory } from "@contracts";
+import { WrappedPosition__factory } from "../typechain";
 import { PrincipalTokenInfo } from "./principalToken";
 import { provider } from "./provider";
+import { log } from "./utils";
 
 export type WrappedPositionInfo = SonraCategoryInfo<
   ElementModel,
@@ -12,6 +13,7 @@ export type WrappedPositionInfo = SonraCategoryInfo<
 export const buildWrappedPositionInfo = async (
   principalTokenInfo: PrincipalTokenInfo,
 ): Promise<WrappedPositionInfo> => {
+  log("Building wrappedPosition...");
   const principalTokenAddressesByPosition: Record<
     zx.Address,
     zx.CategorisedAddress<"principalToken">[]
@@ -62,5 +64,6 @@ export const buildWrappedPositionInfo = async (
     metadata[address] = { name, symbol, decimals, tranches, token };
   }
 
+  log("Finished building wrappedPosition...");
   return { metadata, addresses };
 };

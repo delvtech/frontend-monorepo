@@ -16,11 +16,7 @@
     "jsx": "preserve",
     "rootDir": ".",
     "incremental": true,
-    "baseUrl": ".",
-    "paths": {
-      "@contracts": ["./typechain/index.ts"],
-      "@contracts/*": ["./typechain/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["hardhat.config.ts", "sonra.config.ts", "src/**/*.ts"],
   "exclude": ["node_modules"]
