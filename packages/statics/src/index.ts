@@ -84,6 +84,7 @@ export const elementModel = {
 
   baseToken: zx.erc20().extend({
     totalSupply: zx.bignumber(),
+    tranches: zx.address().category("principalToken").array(),
   }),
 
   yieldToken: zx.erc20().extend({

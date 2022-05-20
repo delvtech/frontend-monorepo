@@ -1,9 +1,9 @@
-import { YVaultAssetProxy__factory } from "../typechain";
 import { SonraCategoryInfo, zx } from "sonra";
-import { ElementModel } from ".";
+import { elementModel, ElementModel } from ".";
+import { YVaultAssetProxy__factory } from "../typechain";
 import { provider } from "./provider";
-import { WrappedPositionInfo } from "./wrappedPosition";
 import { log } from "./utils";
+import { WrappedPositionInfo } from "./wrappedPosition";
 
 export type YVaultAssetProxyInfo = SonraCategoryInfo<
   ElementModel,
@@ -16,18 +16,23 @@ export const buildYVaultAssetProxyInfo = async (
   log("Building yVaultAssetProxy...");
   // currently all wrapped positions are yearn based so these are 1:1 for now
   const addresses = wrappedPositionInfo.addresses;
-  const metadata: YVaultAssetProxyInfo["metadata"] = {};
 
-  for (const address of addresses) {
-    const yVaultAssetProxy = YVaultAssetProxy__factory.connect(
-      address,
-      provider,
-    );
-    const vault = await yVaultAssetProxy
-      .vault()
-      .then(zx.address().category("yearnVault").conform().parse);
-    metadata[address] = { vault };
-  }
+  const metadata = zx.addressRecord(elementModel.yVaultAssetProxy).parse(
+    Object.fromEntries(
+      await Promise.all(
+        addresses.map(async (address) => {
+          const yVaultAssetProxy = YVaultAssetProxy__factory.connect(
+            address,
+            provider,
+          );
+          const vault = await yVaultAssetProxy
+            .vault()
+            .then(zx.address().category("yearnVault").conform().parse);
+          return [address, { vault }];
+        }),
+      ),
+    ),
+  );
 
   log("Finished building yVaultAssetProxy...");
   return { metadata, addresses };

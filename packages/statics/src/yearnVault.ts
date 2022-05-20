@@ -1,6 +1,6 @@
 import uniq from "lodash.uniq";
 import { SonraCategoryInfo, zx } from "sonra";
-import { ElementModel } from ".";
+import { elementModel, ElementModel } from ".";
 import { ERC20__factory, IYearnVault__factory } from "../typechain";
 import { provider } from "./provider";
 import { log } from "./utils";
@@ -24,42 +24,49 @@ export const buildYearnVaultInfo = async (
       ),
     );
 
-  const metadata: YearnVaultInfo["metadata"] = {};
+  const metadata = zx.addressRecord(elementModel.yearnVault).parse(
+    Object.fromEntries(
+      await Promise.all(
+        addresses.map(async (address) => {
+          const yearnVault = IYearnVault__factory.connect(address, provider);
 
-  for (const address of addresses) {
-    const yearnVault = IYearnVault__factory.connect(address, provider);
+          const [
+            name,
+            symbol,
+            decimals,
+            totalSupply,
+            totalAssets,
+            pricePerShare,
+            governance,
+            apiVersion,
+          ] = await Promise.all([
+            ERC20__factory.connect(address, provider).name(),
+            yearnVault.symbol(),
+            yearnVault.decimals(),
+            yearnVault.totalSupply(),
+            yearnVault.totalAssets(),
+            yearnVault.pricePerShare(),
+            yearnVault.governance().then(zx.address().parse),
+            yearnVault.apiVersion(),
+          ]);
 
-    const [
-      name,
-      symbol,
-      decimals,
-      totalSupply,
-      totalAssets,
-      pricePerShare,
-      governance,
-      apiVersion,
-    ] = await Promise.all([
-      ERC20__factory.connect(address, provider).name(),
-      yearnVault.symbol(),
-      yearnVault.decimals(),
-      yearnVault.totalSupply(),
-      yearnVault.totalAssets(),
-      yearnVault.pricePerShare(),
-      yearnVault.governance().then(zx.address().parse),
-      yearnVault.apiVersion(),
-    ]);
-
-    metadata[address] = {
-      name,
-      symbol,
-      decimals,
-      totalSupply,
-      totalAssets,
-      pricePerShare,
-      governance,
-      apiVersion,
-    };
-  }
+          return [
+            address,
+            {
+              name,
+              symbol,
+              decimals,
+              totalSupply,
+              totalAssets,
+              pricePerShare,
+              governance,
+              apiVersion,
+            },
+          ];
+        }),
+      ),
+    ),
+  );
 
   log("Finished building yearnVault...");
   return { metadata, addresses };

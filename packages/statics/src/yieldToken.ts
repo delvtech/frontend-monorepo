@@ -9,18 +9,16 @@ export type YieldTokenInfo = SonraCategoryInfo<ElementModel, "yieldToken">;
 
 const buildYieldTokenMetadataEntry = async (
   address: zx.Address,
-  tranche: zx.CategorisedAddress<"principalToken">
+  tranche: zx.CategorisedAddress<"principalToken">,
 ): Promise<YieldTokenInfo["metadata"][zx.Address]> => {
+  const yieldToken = InterestToken__factory.connect(address, provider);
+  const [name, symbol, decimals] = await Promise.all([
+    yieldToken.name(),
+    yieldToken.symbol(),
+    yieldToken.decimals(),
+  ]);
 
-
-    const yieldToken = InterestToken__factory.connect(address, provider);
-    const [name, symbol, decimals,] = await Promise.all([
-      yieldToken.name(),
-      yieldToken.symbol(),
-      yieldToken.decimals(),
-    ]);
-
-return { name, symbol, decimals, tranche }
+  return { name, symbol, decimals, tranche };
 };
 
 export const buildYieldTokenInfo = async (
@@ -32,23 +30,35 @@ export const buildYieldTokenInfo = async (
     principalTokenInfo.addresses.map((principalTokenAddress) => {
       const yieldTokenAddress = zx
         .address()
-        .category("principalToken")
         .conform()
         .parse(
           principalTokenInfo.metadata[principalTokenAddress].interestToken,
         );
-      return [yieldTokenAddress, principalTokenAddress];
+      return [
+        yieldTokenAddress,
+        zx
+          .address()
+          .category("principalToken")
+          .conform()
+          .parse(principalTokenAddress),
+      ];
     }),
   ) as Record<zx.Address, zx.CategorisedAddress<"principalToken">>;
 
-  const addresses = zx.address().array().nonempty().parse(Object.keys(principalTokenAddressByYieldTokenAddress))
+  const addresses = zx
+    .address()
+    .array()
+    .nonempty()
+    .parse(Object.keys(principalTokenAddressByYieldTokenAddress));
 
   const metadata = zx.addressRecord(elementModel.yieldToken).parse(
     Object.fromEntries(
       await Promise.all(
         addresses.map(async (address) => {
-          const yieldTokenMetadataEntry =
-            await buildYieldTokenMetadataEntry(address, principalTokenAddressByYieldTokenAddress[address]);
+          const yieldTokenMetadataEntry = await buildYieldTokenMetadataEntry(
+            address,
+            principalTokenAddressByYieldTokenAddress[address],
+          );
           return [address, yieldTokenMetadataEntry];
         }),
       ),
