@@ -1,4 +1,4 @@
-import { Delegate } from "src/elf-council-delegates/delegates";
+import { Delegate, delegates } from "src/elf-council-delegates/delegates";
 import { formatEther } from "ethers/lib/utils";
 import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
 import { useMemo } from "react";
@@ -33,8 +33,15 @@ function sortVotingPower(
   votePowerByDelegates: VotePowerByDelegate,
   gscMembers: Array<string>,
 ) {
+  const knownDelegates = delegates;
+
   return Object.entries(votePowerByDelegates)
     .sort((a, b) => Number(formatEther(b[1])) - Number(formatEther(a[1])))
     .filter(([address]) => !gscMembers.includes(address))
-    .map(([address]) => ({ address }));
+    .map(([address]) => {
+      const knownDelegate = knownDelegates.find(
+        (delegate) => address === delegate.address,
+      );
+      return knownDelegate ?? { address };
+    });
 }

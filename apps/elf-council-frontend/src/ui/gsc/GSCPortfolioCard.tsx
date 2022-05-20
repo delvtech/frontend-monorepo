@@ -51,10 +51,10 @@ export function GSCPortfolioCard({
 
       <div className="mt-4 mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center space-y-6 xl:space-y-0">
         {/* GSC eligibility progress bar */}
-        <div className="flex grow-[2] basis-[34rem] flex-wrap space-y-6 lg:space-y-0">
+        <div className="flex grow-[2] basis-[34rem] flex-wrap md:flex-nowrap lg:space-y-0">
           {/* Voting Power */}
           <BalanceWithLabel
-            className="mr-4 basis-52"
+            className="mb-6 mr-4 basis-52 sm:mb-0"
             balance={votingPower}
             tooltipText={t`${TooltipDefinition.OWNED_VOTING_POWER}`}
             label={t`Voting Power`}

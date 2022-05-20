@@ -13,6 +13,8 @@ import toast from "react-hot-toast";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
+import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
+import { useQueryClient } from "react-query";
 
 interface GSCButtonProps {
   account: string | null | undefined;
@@ -28,6 +30,7 @@ export function JoinGSCButton({
   isGSC,
 }: GSCButtonProps): ReactElement {
   const toastIdRef = useRef<string>();
+  const queryClient = useQueryClient();
   const { handleJoin, isLoading } = useJoinGSC(account, signer, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
@@ -52,6 +55,7 @@ export function JoinGSCButton({
         id: toastIdRef.current,
       });
       setDialogOpen(false);
+      queryClient.invalidateQueries();
     },
   });
 
@@ -103,6 +107,7 @@ export function LeaveGSCButton({
   signer,
 }: GSCButtonProps): ReactElement {
   const toastIdRef = useRef<string>();
+  const { refetch } = useGSCMembers();
 
   const { mutate: kick, isLoading } = useKick(signer, {
     onError: (e) => {
@@ -134,9 +139,13 @@ export function LeaveGSCButton({
   const handleKick = useCallback(
     async (account: string) => {
       const extraData = await getUserVaultsExtraData(account);
-      kick([account, extraData]);
+      kick([account, extraData], {
+        onSuccess: () => {
+          refetch();
+        },
+      });
     },
-    [kick],
+    [kick, refetch],
   );
   const [dialogOpen, setDialogOpen] = useState(false);
 
