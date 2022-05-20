@@ -246,7 +246,9 @@ export function GSCProposalDetailsCard(
 
         {/* External Links */}
         {/* TODO: Add link unverified proposals */}
-        {!unverified ? (
+        {unverified ? (
+          <div className="my-4"></div>
+        ) : (
           <div className="my-4 flex justify-around">
             <ExternalLink
               href={snapshotProposal?.link || ""}
@@ -259,8 +261,6 @@ export function GSCProposalDetailsCard(
               className="overflow-hidden text-sm text-white"
             />
           </div>
-        ) : (
-          <div className="my-4"></div>
         )}
 
         {/* Vote Tallys */}

@@ -248,7 +248,10 @@ export function ProposalDetailsCard(
 
         {/* External Links */}
         {/* TODO: Add link unverified proposals */}
-        {!unverified ? (
+        {unverified ? (
+          // Empty placeholder to match my-4
+          <div className="my-4"></div>
+        ) : (
           <div className="my-4 flex justify-around">
             <ExternalLink
               href={snapshotProposal?.link || ""}
@@ -261,8 +264,6 @@ export function ProposalDetailsCard(
               className="overflow-hidden text-sm text-white"
             />
           </div>
-        ) : (
-          <div className="my-4"></div>
         )}
 
         {/* Quorum Bar */}
@@ -340,7 +341,6 @@ export function ProposalDetailsCard(
 
 interface QuorumBarProps {
   proposalId: string;
-
   // quorum in X * 1e18 format, i.e. '50' = 50 Eth
   quorum: string;
   status: ProposalStatus | undefined;
@@ -352,10 +352,6 @@ function QuorumBar(props: QuorumBarProps) {
   const votes = getVoteCount(proposalVotingResults);
 
   const quorumPercent = Math.floor((+votes / +quorum) * 100);
-
-  if (!quorum) {
-    return null;
-  }
 
   return (
     <div className="w-full space-y-1 text-white">
