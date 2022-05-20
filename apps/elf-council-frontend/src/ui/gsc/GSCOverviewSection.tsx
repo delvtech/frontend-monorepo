@@ -152,14 +152,14 @@ export function GSCOverviewSection(): ReactElement {
                       <p>
                         {t`To help reach this
                       threshold, delegates can post their vision, mission and
-                      other relevant information in the`}
+                      other relevant information in the`}{" "}
                         <a
+                          className="underline"
                           target="_blank"
                           rel="noopener noreferrer"
                           href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
                         >
-                          {" "}
-                          <span className="underline">{t`forums`}</span>
+                          {t`forums`}
                         </a>
                         {t`, to make
                         themselves known to the community and rally other members
@@ -187,11 +187,12 @@ export function GSCOverviewSection(): ReactElement {
                       <p>
                         {t`The formal responsibilities of the GSC are being`}{" "}
                         <a
+                          className="underline"
                           target="_blank"
                           rel="noopener noreferrer"
                           href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
                         >
-                          <span className="underline">{t`actively discussed at this time`}</span>
+                          {t`actively discussed at this time`}
                         </a>
                         {t`, but they could include some of the following:`}
                       </p>
