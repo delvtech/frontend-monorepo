@@ -1,14 +1,13 @@
 import { SonraFetch, z, zx } from "sonra";
 import { buildBaseTokenInfo } from "./baseToken";
+import { balancerVaultAddress } from "./constants";
 import {
-  balancerVaultAddress,
-  ccPoolFactoryV1Address,
-  ccPoolFactoryV1_1Address,
-  trancheFactoryAddress
-} from "./constants";
-import { buildConvergentCurvePoolV1Info, buildConvergentCurvePoolV1_1Info } from "./convergentCurvePool";
+  buildConvergentCurvePoolV1Info,
+  buildConvergentCurvePoolV1_1Info,
+} from "./convergentCurvePool";
+import { buildConvergentCurvePoolFactoryInfo } from "./convergentPoolFactory";
 import { buildPrincipalTokenInfo } from "./principalToken";
-import { buildTrancheAndPoolEventInfo } from "./trancheAndPool";
+import { buildFactoryInfo } from "./trancheFactory";
 import { log } from "./utils";
 import { buildWrappedPositionInfo } from "./wrappedPosition";
 import { buildYearnVaultInfo } from "./yearnVault";
@@ -25,8 +24,9 @@ const convergentCurvePoolSchema = z.object({
   poolId: z.string(),
   underlying: zx.address().category("baseToken"),
   governance: zx.address(),
-  bond: zx.address().category("principalToken"),
+  tranche: zx.address().category("principalToken"),
   term: termSchema,
+  factory: zx.address().category("convergentPoolFactory"),
 });
 
 const convergentCurvePoolSchemaFees = z.object({
@@ -36,19 +36,46 @@ const convergentCurvePoolSchemaFees = z.object({
   percentFeeGov: zx.bignumber(),
 });
 
+const convergentPoolFactoryEvents = z
+  .object({
+    convergentCurvePool: zx.address(),
+    bond: zx.address(),
+    factory: zx.address(),
+    blockNumber: z.number(),
+    blockTimestamp: z.date(),
+  })
+  .array();
+
+const trancheFactoryEvents = z
+  .object({
+    trancheAddress: zx.address(),
+    wrappedPositionAddress: zx.address(),
+    expiration: z.date(),
+    blockNumber: z.number(),
+    blockTimestamp: z.date(),
+  })
+  .array();
+
 export const elementModel = {
   balancerVault: z.object({}),
-  trancheFactory: z.object({}),
 
-  convergentCurvePoolFactoryV1: z.object({}),
-  convergentCurvePoolFactoryV1_1: z.object({}),
+  trancheFactory: z.object({
+    events: trancheFactoryEvents,
+    certifiedEvents: trancheFactoryEvents,
+    invalidEvents: trancheFactoryEvents,
+  }),
+
+  convergentPoolFactory: z.object({
+    events: convergentPoolFactoryEvents,
+    certifiedEvents: convergentPoolFactoryEvents,
+    invalidEvents: convergentPoolFactoryEvents,
+    version: z.literal("v1").or(z.literal("v1.1")),
+  }),
 
   convergentCurvePoolV1: convergentCurvePoolSchema.extend({
-    factory: zx.address().category("convergentCurvePoolFactoryV1"),
     fees: convergentCurvePoolSchemaFees,
   }),
   convergentCurvePoolV1_1: convergentCurvePoolSchema.extend({
-    factory: zx.address().category("convergentCurvePoolFactoryV1_1"),
     fees: convergentCurvePoolSchemaFees.extend({
       governanceFeesUnderlying: zx.bignumber(),
       governanceFeesBond: zx.bignumber(),
@@ -60,9 +87,7 @@ export const elementModel = {
   }),
 
   yieldToken: zx.erc20().extend({
-    underlying: zx.address().category("baseToken"),
     tranche: zx.address().category("principalToken"),
-    term: termSchema,
   }),
   yearnVault: zx.erc20().extend({
     totalSupply: zx.bignumber(),
@@ -92,17 +117,19 @@ export type ElementModel = typeof elementModel;
 export const elementFetch: SonraFetch<ElementModel> = async () => {
   log("Started fetching element data...");
 
-  const { convergentCurvePoolCreatedEvents, trancheCreatedEvents } =
-    await buildTrancheAndPoolEventInfo();
+  const [convergentPoolFactoryInfo, trancheFactoryInfo] = await Promise.all([
+    buildConvergentCurvePoolFactoryInfo(),
+    buildFactoryInfo(),
+  ]);
 
   const [
     principalTokenInfo,
     convergentCurvePoolV1Info,
-    convergentCurvePoolV1_1Info
+    convergentCurvePoolV1_1Info,
   ] = await Promise.all([
-    buildPrincipalTokenInfo(trancheCreatedEvents),
-    buildConvergentCurvePoolV1Info(convergentCurvePoolCreatedEvents),
-    buildConvergentCurvePoolV1_1Info(convergentCurvePoolCreatedEvents),
+    buildPrincipalTokenInfo(trancheFactoryInfo),
+    buildConvergentCurvePoolV1Info(convergentPoolFactoryInfo),
+    buildConvergentCurvePoolV1_1Info(convergentPoolFactoryInfo),
   ]);
 
   const [baseTokenInfo, yieldTokenInfo, wrappedPosition] = await Promise.all([
@@ -119,10 +146,9 @@ export const elementFetch: SonraFetch<ElementModel> = async () => {
   return {
     addresses: {
       balancerVault: [balancerVaultAddress],
-      trancheFactory: [trancheFactoryAddress],
+      trancheFactory: trancheFactoryInfo.addresses,
 
-      convergentCurvePoolFactoryV1: [ccPoolFactoryV1Address],
-      convergentCurvePoolFactoryV1_1: [ccPoolFactoryV1_1Address],
+      convergentPoolFactory: convergentPoolFactoryInfo.addresses,
       convergentCurvePoolV1: convergentCurvePoolV1Info.addresses,
       convergentCurvePoolV1_1: convergentCurvePoolV1_1Info.addresses,
 
@@ -137,8 +163,7 @@ export const elementFetch: SonraFetch<ElementModel> = async () => {
       balancerVault: "Vault.sol",
       trancheFactory: "TrancheFactory.sol",
 
-      convergentCurvePoolFactoryV1: "ConvergentPoolFactory.sol",
-      convergentCurvePoolFactoryV1_1: "ConvergentPoolFactory.sol",
+      convergentPoolFactory: "ConvergentPoolFactory.sol",
       convergentCurvePoolV1: "ConvergentCurvePoolV1.sol",
       convergentCurvePoolV1_1: "ConvergentCurvePool.sol",
 
@@ -153,8 +178,7 @@ export const elementFetch: SonraFetch<ElementModel> = async () => {
       balancerVault: {},
       trancheFactory: {},
 
-      convergentCurvePoolFactoryV1: {},
-      convergentCurvePoolFactoryV1_1: {},
+      convergentPoolFactory: convergentPoolFactoryInfo.metadata,
       convergentCurvePoolV1: convergentCurvePoolV1Info.metadata,
       convergentCurvePoolV1_1: convergentCurvePoolV1_1Info.metadata,
 
