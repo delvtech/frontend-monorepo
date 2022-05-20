@@ -4,7 +4,7 @@ import {
   useSmartContractEvents,
   UseSmartContractEventsCallOptions,
 } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
-import { CoreVoting } from "@elementfi/elf-council-typechain";
+import { CoreVoting } from "@elementfi/council-typechain";
 import { BigNumber, Event } from "ethers";
 
 import { coreVotingContract } from "src/elf/contracts";

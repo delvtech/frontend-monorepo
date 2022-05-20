@@ -5,7 +5,7 @@ import {
 import { ContractReceipt, Signer } from "ethers";
 
 import { gscVaultContract } from "src/elf/contracts";
-import { GSCVault } from "@elementfi/elf-council-typechain";
+import { GSCVault } from "@elementfi/council-typechain";
 import { UseMutationResult } from "react-query";
 
 export function useKick(

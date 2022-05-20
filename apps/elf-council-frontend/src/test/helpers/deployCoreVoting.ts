@@ -1,7 +1,4 @@
-import {
-  CoreVoting,
-  CoreVoting__factory,
-} from "@elementfi/elf-council-typechain";
+import { CoreVoting, CoreVoting__factory } from "@elementfi/council-typechain";
 import { BigNumberish, Wallet } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 

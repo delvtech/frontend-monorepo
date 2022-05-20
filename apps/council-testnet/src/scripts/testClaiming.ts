@@ -2,7 +2,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import {
   MockERC20__factory,
   OptimisticRewards__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import hre, { ethers } from "hardhat";
 import addressesJson from "src/addresses/testnet.addresses.json";

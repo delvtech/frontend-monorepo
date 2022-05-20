@@ -1,7 +1,7 @@
 import {
   OptimisticRewards,
   OptimisticRewards__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { Wallet } from "ethers";
 import MerkleTree from "merkletreejs";
 

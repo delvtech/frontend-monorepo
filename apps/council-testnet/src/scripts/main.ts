@@ -7,7 +7,7 @@ import {
   LockingVault__factory,
   MockERC20__factory,
   VestingVault__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { BigNumber, ethers, Signer } from "ethers";
 import { BytesLike, formatEther, parseEther } from "ethers/lib/utils";
 import fs from "fs";

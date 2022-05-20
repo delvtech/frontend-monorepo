@@ -7,7 +7,7 @@ import {
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import useClaimableAmount from "./useClaimableAmount";
-import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
+import { PrivateAirdrop } from "@elementfi/council-typechain";
 
 interface ClaimAmountCardProps {
   label?: string;

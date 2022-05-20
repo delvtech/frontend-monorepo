@@ -1,4 +1,4 @@
-import { GSCVault, GSCVault__factory } from "@elementfi/elf-council-typechain";
+import { GSCVault, GSCVault__factory } from "@elementfi/council-typechain";
 import { Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { HardhatRuntimeEnvironment } from "hardhat/types";

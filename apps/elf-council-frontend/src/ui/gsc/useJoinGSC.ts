@@ -13,7 +13,7 @@ import {
   vestingContract,
 } from "src/elf/contracts";
 import { useQueryVotePowerView } from "src/ui/voting/useQueryVotePower";
-import { GSCVault } from "@elementfi/elf-council-typechain";
+import { GSCVault } from "@elementfi/council-typechain";
 
 const { lockingVault, vestingVault } = addressesJson.addresses;
 

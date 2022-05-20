@@ -4,7 +4,7 @@ import { mainnetAddressList } from "@elementfi/elf-council-tokenlist";
 import {
   LockingVault__factory,
   VestingVault__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 
 const STARTING_BLOCK_NUMBER = 14496292;
 const MAX_WHITELIST = 10_000;

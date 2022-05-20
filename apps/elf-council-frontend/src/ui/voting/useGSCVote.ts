@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { CoreVoting } from "@elementfi/elf-council-typechain";
+import { CoreVoting } from "@elementfi/council-typechain";
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,

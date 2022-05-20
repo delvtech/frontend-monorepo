@@ -1,6 +1,6 @@
 import { UseMutationResult } from "react-query";
 
-import { Airdrop } from "@elementfi/elf-council-typechain";
+import { Airdrop } from "@elementfi/council-typechain";
 import { ContractReceipt, Signer } from "ethers";
 import { airdropContract } from "src/elf/contracts";
 import {

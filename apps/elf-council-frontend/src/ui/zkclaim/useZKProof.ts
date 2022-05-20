@@ -14,7 +14,7 @@ import {
   githubTier2PrivateAirdropContract,
   githubTier3PrivateAirdropContract,
 } from "src/elf/contracts";
-import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
+import { PrivateAirdrop } from "@elementfi/council-typechain";
 
 // TODO: Move cdn base url to environment variable
 const cdnUrl = `https://elementfi.s3.us-east-2.amazonaws.com/rewards/${
