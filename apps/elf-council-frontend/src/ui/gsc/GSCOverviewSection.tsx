@@ -152,16 +152,7 @@ export function GSCOverviewSection(): ReactElement {
                       <p>
                         {jt`To help reach this
                       threshold, delegates can post their vision, mission and
-                      other relevant information in the ${(
-                        <a
-                          className="underline"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
-                        >
-                          {t`forums`}
-                        </a>
-                      )}, to make
+                      other relevant information in the ${forumsLink}, to make
                       themselves known to the community and rally other members
                       from which to gather more delegated voting power.`}
                       </p>
@@ -185,16 +176,7 @@ export function GSCOverviewSection(): ReactElement {
                     </Disclosure.Button>
                     <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
                       <p>
-                        {jt`The formal responsibilities of the GSC are being ${(
-                          <a
-                            className="underline"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
-                          >
-                            {t`actively discussed at this time`}
-                          </a>
-                        )}, but they could include some of the following:`}
+                        {jt`The formal responsibilities of the GSC are being ${gscResponibilitiesLink}, but they could include some of the following:`}
                       </p>
                       <ul className="ml-8 list-disc">
                         <li>{t`On-chain voting`}</li>
@@ -334,6 +316,28 @@ export function GSCOverviewSection(): ReactElement {
     </div>
   );
 }
+
+const forumsLink = (
+  <a
+    className="underline"
+    target="_blank"
+    rel="noopener noreferrer"
+    href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
+  >
+    {t`forums`}
+  </a>
+);
+
+const gscResponibilitiesLink = (
+  <a
+    className="underline"
+    target="_blank"
+    rel="noopener noreferrer"
+    href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
+  >
+    {t`actively discussed at this time`}
+  </a>
+);
 
 function sortMembersByVotingPower(
   members: Delegate[],
