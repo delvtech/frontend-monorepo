@@ -7,7 +7,7 @@ import {
 } from "./convergentCurvePool";
 import { buildConvergentCurvePoolFactoryInfo } from "./convergentPoolFactory";
 import { buildPrincipalTokenInfo } from "./principalToken";
-import { buildFactoryInfo } from "./trancheFactory";
+import { buildTrancheFactoryInfo } from "./trancheFactory";
 import { log } from "./utils";
 import { buildWrappedPositionInfo } from "./wrappedPosition";
 import { buildYearnVaultInfo } from "./yearnVault";
@@ -109,6 +109,10 @@ export const elementModel = {
     underlying: zx.address().category("baseToken"),
     interestToken: zx.address().category("yieldToken"),
     position: zx.address().category("wrappedPosition"),
+    convergentCurvePool: zx
+      .address()
+      .category("convergentCurvePoolV1")
+      .or(zx.address().category("convergentCurvePoolV1_1")),
     term: termSchema,
   }),
 } as const;
@@ -120,7 +124,7 @@ export const elementFetch: SonraFetch<ElementModel> = async () => {
 
   const [convergentPoolFactoryInfo, trancheFactoryInfo] = await Promise.all([
     buildConvergentCurvePoolFactoryInfo(),
-    buildFactoryInfo(),
+    buildTrancheFactoryInfo(),
   ]);
 
   const [
@@ -128,7 +132,7 @@ export const elementFetch: SonraFetch<ElementModel> = async () => {
     convergentCurvePoolV1Info,
     convergentCurvePoolV1_1Info,
   ] = await Promise.all([
-    buildPrincipalTokenInfo(trancheFactoryInfo),
+    buildPrincipalTokenInfo(trancheFactoryInfo, convergentPoolFactoryInfo),
     buildConvergentCurvePoolV1Info(convergentPoolFactoryInfo),
     buildConvergentCurvePoolV1_1Info(convergentPoolFactoryInfo),
   ]);

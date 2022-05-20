@@ -116,7 +116,7 @@ export const buildConvergentCurvePoolV1Info = async (
     ),
   );
 
-  log("Finished building convergentCurvePoolV1...");
+  log("Building convergentCurvePoolV1_1...");
   return { metadata, addresses };
 };
 

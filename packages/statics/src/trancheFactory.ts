@@ -60,7 +60,7 @@ async function buildTrancheFactoryMetadataEntry(
   return { events, certifiedEvents, invalidEvents };
 }
 
-export async function buildFactoryInfo(): Promise<TrancheFactoryInfo> {
+export async function buildTrancheFactoryInfo(): Promise<TrancheFactoryInfo> {
   log("Building trancheFactory...");
   const addresses = zx
     .address()
