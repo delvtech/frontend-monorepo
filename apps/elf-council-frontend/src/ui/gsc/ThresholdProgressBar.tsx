@@ -17,7 +17,7 @@ interface ThresholdProgressBarProps {
 
 // Returns tailwind color for progress bar background
 const getProgressBarColor = (status?: EligibilityState) => {
-  if (status === EligibilityState.Current) {
+  if (status === EligibilityState.Current || status === EligibilityState.Idle) {
     return "bg-votingGreen";
   }
 
