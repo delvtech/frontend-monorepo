@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/element-fi/react-query-typechain#readme",
   "dependencies": {
-    "@ethersproject/contracts": "^5.5.0",
+    "@ethersproject/contracts": "^5.6.1",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.isplainobject": "^4.0.6",
     "@types/lodash.zip": "^4.2.6",
