@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useRef, useState } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 
 import { defaultProvider } from "src/elf/providers/providers";
 import Button from "src/ui/base/Button/Button";
@@ -150,9 +150,9 @@ export function GSCOverviewSection(): ReactElement {
                       power than the current GSC Eligibility Threshold (${formattedThreshold}
                       ELFI) is eligible to join the GSC. `}</p>
                       <p>
-                        {t`To help reach this
+                        {jt`To help reach this
                       threshold, delegates can post their vision, mission and
-                      other relevant information in the`}{" "}
+                      other relevant information in the ${(
                         <a
                           className="underline"
                           target="_blank"
@@ -161,9 +161,9 @@ export function GSCOverviewSection(): ReactElement {
                         >
                           {t`forums`}
                         </a>
-                        {t`, to make
-                        themselves known to the community and rally other members
-                        from which to gather more delegated voting power.`}{" "}
+                      )}, to make
+                      themselves known to the community and rally other members
+                      from which to gather more delegated voting power.`}
                       </p>
                     </Disclosure.Panel>
                   </>
@@ -185,16 +185,16 @@ export function GSCOverviewSection(): ReactElement {
                     </Disclosure.Button>
                     <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
                       <p>
-                        {t`The formal responsibilities of the GSC are being`}{" "}
-                        <a
-                          className="underline"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
-                        >
-                          {t`actively discussed at this time`}
-                        </a>
-                        {t`, but they could include some of the following:`}
+                        {jt`The formal responsibilities of the GSC are being ${(
+                          <a
+                            className="underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
+                          >
+                            {t`actively discussed at this time`}
+                          </a>
+                        )}, but they could include some of the following:`}
                       </p>
                       <ul className="ml-8 list-disc">
                         <li>{t`On-chain voting`}</li>
