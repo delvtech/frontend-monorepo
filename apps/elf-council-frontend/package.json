@@ -101,6 +101,7 @@
     "dev": "next dev",
     "dev-goerli": "cross-env NEXT_PUBLIC_CHAIN_NAME=goerli next dev",
     "dev-mainnet": "cross-env NEXT_PUBLIC_CHAIN_NAME=mainnet next dev",
+    "dev-mainnet-fork": "cross-env NEXT_PUBLIC_CHAIN_NAME=mainnet-fork next dev",
     "start": "next start",
     "_copy-testnet-addresses": "cp ../elf-council-testnet/src/addresses/testnet.addresses.json src/elf-council-addresses/testnet.addresses.json",
     "_copy-testnet-tokenlist": "cp ../elf-council-testnet/src/tokenlist/testnet.tokenlist.json src/elf-council-tokenlist/testnet.tokenlist.json",

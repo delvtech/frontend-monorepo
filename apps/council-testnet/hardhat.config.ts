@@ -53,10 +53,6 @@ const config: HardhatUserConfig = {
   mocha: { timeout: 0 },
   networks: {
     hardhat: {
-      // forking: {
-      //   url: process.env.MAINNET_URI,
-      //   blockNumber: 11853372,
-      // },
       accounts: {
         accountsBalance: "100000000000000000000000", // 100000 ETH
         count: 10,
@@ -70,5 +66,23 @@ const config: HardhatUserConfig = {
     },
   },
 };
+
+const CHAIN_NAME = process.env.NEXT_PUBLIC_CHAIN_NAME;
+
+if (CHAIN_NAME === "mainnet-fork") {
+  config.networks = {
+    ...config.networks,
+    hardhat: {
+      forking: {
+        url: process.env.MAINNET_URI || "",
+        blockNumber: 14688407,
+      },
+      accounts: {
+        accountsBalance: "100000000000000000000000", // 100000 ETH
+        count: 10,
+      },
+    },
+  };
+}
 
 export default config;

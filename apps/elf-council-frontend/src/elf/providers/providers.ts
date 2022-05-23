@@ -15,10 +15,11 @@ const ALCHEMY_MAINNET_URI = (
     : process.env.NEXT_PUBLIC_SERVER_MAINNET_URI
 ) as string;
 
-const { chainId } = addressesJson;
 export const ALCHEMY_GOERLI_HTTP_URL = process.env
   .NEXT_PUBLIC_GOERLI_URI as string;
 export const ALCHEMY_MAINNET_HTTP_URL = ALCHEMY_MAINNET_URI;
+
+const { chainId } = addressesJson;
 
 // vercel can't create a production build with ethereum-waffle as a dependency.  ethereum-waffle
 // expects to run in a node environment and vercel builds for a broweser environment, so things like
@@ -42,6 +43,10 @@ function getProvider() {
     return testProvider;
   }
 
+  if (process.env.NEXT_PUBLIC_CHAIN_NAME === "mainnet-fork") {
+    const localhostProvider = new providers.JsonRpcProvider(LOCAL_RPC_HOST);
+    return localhostProvider;
+  }
   // otherwise, if a chain id is provided, we'll use the corresponding alchemy provider.  right now
   // this is only goerli.
   if (chainId === ChainId.GOERLI) {
