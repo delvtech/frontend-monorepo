@@ -1,4 +1,4 @@
-import { AddressesJsonFile } from "@elementfi/elf-council-tokenlist";
+import { AddressesJsonFile } from "@elementfi/council-tokenlist";
 import {
   MockERC20__factory,
   OptimisticRewards__factory,

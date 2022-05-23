@@ -1887,22 +1887,6 @@
   dependencies:
     tsc "^2.0.4"
 
-"@elementfi/elf-council-tokenlist@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@elementfi/elf-council-tokenlist/-/elf-council-tokenlist-1.0.2.tgz#6571729a4bdfb286092c6480811dd73144be0037"
-  integrity sha512-uyUurOB9bGlCk0Tcc6d9Kf5DbsWfd92z7T0Kjx5iQUVtWt2+yqDj5kzARAEnm7TuB8Ifft6r73sIEel8pW6Otw==
-  dependencies:
-    "@elementfi/elf-council-typechain" "^1.0.2"
-    "@ethersproject/providers" "^5.4.0"
-    "@uniswap/token-lists" "^1.0.0-beta.26"
-
-"@elementfi/elf-council-typechain@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@elementfi/elf-council-typechain/-/elf-council-typechain-1.0.2.tgz#9ba918cb32b3ef26b36bd2ad8be332b356f14352"
-  integrity sha512-B/AT0Mr/o+ABbDzEPEk3F2s4OtVs7KKIDrsdHXMjswMP4VpVwhr2eQ6sr6w9agiT7vfNIiE2Xgum9w5Qzxmfdw==
-  dependencies:
-    tsc "^2.0.3"
-
 "@elementfi/tokenlist@^2.3.1", "@elementfi/tokenlist@^2.4.0":
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/@elementfi/tokenlist/-/tokenlist-2.5.0.tgz#f8740441c4799c243b523518002938d68f71dfa1"
@@ -6631,19 +6615,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@17.0.44", "@types/react@^17", "@types/react@^17.0.38", "@types/react@^17.0.39":
+"@types/react@*", "@types/react@17.0.38", "@types/react@17.0.44", "@types/react@^17", "@types/react@^17.0.38", "@types/react@^17.0.39":
   version "17.0.44"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.44.tgz#c3714bd34dd551ab20b8015d9d0dbec812a51ec7"
   integrity sha512-Ye0nlw09GeMp2Suh8qoOv0odfgCoowfM/9MG6WeRD60Gq9wS90bdkdRtYbRkNhXOpG4H+YXGvj4wOWhAC0LJ1g==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    csstype "^3.0.2"
-
-"@types/react@17.0.38":
-  version "17.0.38"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.38.tgz#f24249fefd89357d5fa71f739a686b8d7c7202bd"
-  integrity sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
