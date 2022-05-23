@@ -1,8 +1,5 @@
 /* eslint-disable no-console */
-import {
-  getTokenList,
-  goerliAddressList,
-} from "@elementfi/elf-council-tokenlist";
+import { getTokenList, goerliAddressList } from "@elementfi/council-tokenlist";
 import {
   ERC20PermitWithMint__factory,
   LockingVault__factory,

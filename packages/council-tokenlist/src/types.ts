@@ -17,9 +17,9 @@ export interface AirdropContractInfo extends TokenInfo {
 export interface CoreVotingContractInfo extends TokenInfo {
   extensions: {
     dayInBlocks: number;
-    baseQuorum: number;
+    baseQuorum: string;
     lockDuration: number;
-    minProposalPower: number;
+    minProposalPower: string;
     extraVoteTime: number;
   };
 }
@@ -60,8 +60,8 @@ export interface VestingVaultInfo extends TokenInfo {
 export interface GSCVaultInfo extends TokenInfo {
   extensions: {
     coreVoting: string;
-    votingPowerBound: number;
-    idleDuration: number;
+    votingPowerBound: string;
+    idleDuration: string;
   };
 }
 

@@ -1,7 +1,7 @@
 import "hardhat-ethernal";
 
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { AddressesJsonFile } from "@elementfi/elf-council-tokenlist";
+import { AddressesJsonFile } from "@elementfi/council-tokenlist";
 import {
   GSCVault__factory,
   LockingVault__factory,

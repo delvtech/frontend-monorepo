@@ -6,7 +6,7 @@
     "@elementfi/base": "*",
     "@elementfi/council-proposals": "*",
     "@elementfi/council-typechain": "*",
-    "@elementfi/elf-council-tokenlist": "^1.0.2",
+    "@elementfi/council-tokenlist": "*",
     "@elementfi/react-query-typechain": "*",
     "@ethersproject/providers": "^5.6.5",
     "@fontsource/roboto-mono": "^4.5.3",
