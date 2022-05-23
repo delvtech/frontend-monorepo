@@ -1,7 +1,7 @@
 {
   "name": "Council mainnet token list",
   "logoURI": "https://element.fi/logo.svg",
-  "timestamp": "2022-03-28T21:52:58.572Z",
+  "timestamp": "2022-05-23T20:25:03.972Z",
   "version": {
     "major": 0,
     "minor": 1,
@@ -73,7 +73,7 @@
       "symbol": "",
       "extensions": {
         "coreVoting": "0xEaCD577C3F6c44C3ffA398baaD97aE12CDCFed4a",
-        "votingPowerBound": "1000000000000000000000000",
+        "votingPowerBound": "110000000000000000000000",
         "idleDuration": "345600"
       }
     },
@@ -97,7 +97,7 @@
       "decimals": 0,
       "symbol": "",
       "extensions": {
-        "owner": "0x422494292e7a9Dda8778Bb4EA05C2779a3d60f5D"
+        "owner": "0x81758f3361A769016eae4844072FA6d7f828a651"
       }
     },
     {
@@ -107,7 +107,7 @@
       "decimals": 0,
       "symbol": "",
       "extensions": {
-        "waitTime": "10"
+        "waitTime": "604800"
       }
     }
   ]
