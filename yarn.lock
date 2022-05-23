@@ -1880,7 +1880,7 @@
     chance "^1.1.4"
     core-js "^3.6.4"
 
-"@elementfi/core-typechain@^2.0.6":
+"@elementfi/core-typechain@*", "@elementfi/core-typechain@^2.0.6":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@elementfi/core-typechain/-/core-typechain-2.0.6.tgz#b868323b97b47c08fc566ab88a1054cf3c65767c"
   integrity sha512-PaDbfJrdpPnHugRjdWD/OjBRzhUI+qjAwsoYEm414Z5Ari9fJQ43lZt8iBlIMpDYWf3zSipX1i1ESXLhsh8OOA==
@@ -6635,19 +6635,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@17.0.44", "@types/react@^17", "@types/react@^17.0.38", "@types/react@^17.0.39":
+"@types/react@*", "@types/react@17.0.38", "@types/react@17.0.44", "@types/react@^17", "@types/react@^17.0.38", "@types/react@^17.0.39":
   version "17.0.44"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.44.tgz#c3714bd34dd551ab20b8015d9d0dbec812a51ec7"
   integrity sha512-Ye0nlw09GeMp2Suh8qoOv0odfgCoowfM/9MG6WeRD60Gq9wS90bdkdRtYbRkNhXOpG4H+YXGvj4wOWhAC0LJ1g==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    csstype "^3.0.2"
-
-"@types/react@17.0.38":
-  version "17.0.38"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.38.tgz#f24249fefd89357d5fa71f739a686b8d7c7202bd"
-  integrity sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -14374,7 +14365,7 @@ ethers@^5.0.13:
     "@ethersproject/web" "5.6.0"
     "@ethersproject/wordlists" "5.6.0"
 
-ethers@^5.0.24, ethers@^5.4.7:
+ethers@^5.0.24, ethers@^5.4.7, ethers@^5.6.0:
   version "5.6.7"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.6.7.tgz#3e6257b2a0fdd5fc93e68e141cf2b9761900f374"
   integrity sha512-Q8pmMraUENK0cY6cy6IvIe3e9xL/+4kBvxmUvLXg1O7Abob0c7XzWI76E29j5em/HxWMl5hYiSClmOMW3jJmdg==
@@ -22935,7 +22926,7 @@ react-popper@^2.2.4, react-popper@^2.2.5:
     react-fast-compare "^3.0.1"
     warning "^4.0.2"
 
-react-query@3.39.0, react-query@^3.39.0:
+react-query@3.39.0, react-query@^3.34.16, react-query@^3.39.0:
   version "3.39.0"
   resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.39.0.tgz#0caca7b0da98e65008bbcd4df0d25618c2100050"
   integrity sha512-Od0IkSuS79WJOhzWBx/ys0x13+7wFqgnn64vBqqAAnZ9whocVhl/y1padD5uuZ6EIkXbFbInax0qvY7zGM0thA==
