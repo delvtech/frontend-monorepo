@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,
-} from "@elementfi/react-query-typechain";
+} from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { Signer } from "ethers";
 
 import { addressesJson } from "src/elf-council-addresses";
@@ -13,7 +13,7 @@ import {
   vestingContract,
 } from "src/elf/contracts";
 import { useQueryVotePowerView } from "src/ui/voting/useQueryVotePower";
-import { GSCVault } from "@elementfi/elf-council-typechain";
+import { GSCVault } from "@elementfi/council-typechain";
 
 const { lockingVault, vestingVault } = addressesJson.addresses;
 

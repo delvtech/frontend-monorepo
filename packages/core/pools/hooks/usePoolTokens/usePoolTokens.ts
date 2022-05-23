@@ -4,10 +4,9 @@ import {
   YieldPoolTokenInfo,
 } from "@elementfi/tokenlist";
 import { balancerVaultContract } from "@elementfi/integrations/balancer/vault";
-import {
-  useSmartContractReadCall,
-  ContractMethodArgs,
-} from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
+import { ContractMethodArgs } from "@elementfi/react-query-typechain/src/types";
+import {} from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { PoolContract } from "@elementfi/core/pools/PoolContract";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import { BigNumber } from "ethers";

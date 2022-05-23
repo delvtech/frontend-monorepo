@@ -1,4 +1,4 @@
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { QueryObserverResult } from "react-query";
 import { gscVaultContract } from "src/elf/contracts";
 

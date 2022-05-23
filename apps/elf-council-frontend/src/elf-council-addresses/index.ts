@@ -66,6 +66,10 @@ function getAddressesList(): AddressesJsonFile {
     return mainnetAddressList;
   }
 
+  if (chainName === "mainnet-fork") {
+    return { ...mainnetAddressList, chainId: 31337 };
+  }
+
   // Should not happen because of chainName has a default value set, regardless
   // we can just default to local hardhat
   return testnetAddressList;

@@ -1,4 +1,4 @@
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { BigNumber } from "ethers";
 import { QueryObserverResult } from "react-query";
 import { lockingVaultContract } from "src/elf/contracts";

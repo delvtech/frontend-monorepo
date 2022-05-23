@@ -19,8 +19,6 @@ import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import ElementUrl from "src/elf/urls";
 import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";
 import CloseButton from "src/ui/base/Dialog/CloseButton";
-import { useFeatureFlag } from "src/elf/featureFlag/useFeatureFlag";
-import { FeatureFlag } from "src/elf/featureFlag/featureFlag";
 
 interface SidebarProps {
   account: string | null | undefined;
@@ -41,8 +39,6 @@ export default function Sidebar(props: SidebarProps): ReactElement {
   const onClose = useCallback(() => {
     setIsOpen(false);
   }, []);
-
-  const hasGSCFlag = useFeatureFlag(FeatureFlag.GSC);
 
   return (
     <Fragment>
@@ -93,7 +89,6 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               }
             />
             <SidebarLink
-              className={hasGSCFlag ? "block" : "hidden"}
               link="/gsc"
               label={t`GSC`}
               router={router}

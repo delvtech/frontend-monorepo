@@ -14,11 +14,15 @@ import {
   githubTier2PrivateAirdropContract,
   githubTier3PrivateAirdropContract,
 } from "src/elf/contracts";
-import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
+import { PrivateAirdrop } from "@elementfi/council-typechain";
 
+let CHAIN_NAME = process.env.NEXT_PUBLIC_CHAIN_NAME || "testnet";
+if (CHAIN_NAME === "mainnet-fork") {
+  CHAIN_NAME = "mainnet";
+}
 // TODO: Move cdn base url to environment variable
 const cdnUrl = `https://elementfi.s3.us-east-2.amazonaws.com/rewards/${
-  process.env.NEXT_PUBLIC_CHAIN_NAME || "testnet"
+  CHAIN_NAME || "testnet"
 }/zkRetro`;
 
 interface ProofState {
@@ -257,6 +261,7 @@ export default function useZKProof({
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const cleanedSecret = secret.replace(/^0x0{1,2}/, "0x").slice(0, 64);
       dispatch({ type: "startGenerating" });
+
       return generateProofCallData(
         merkleTreeInfo?.merkleTree,
         BigInt(cleanedKey),

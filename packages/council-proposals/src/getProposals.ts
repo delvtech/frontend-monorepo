@@ -2,7 +2,7 @@ import { formatEther } from "ethers/lib/utils";
 import { Proposal } from "src/types";
 import { fetchSnapshotProposalTitleAndBody } from "src/snapshot";
 import { providers } from "ethers";
-import { CoreVoting } from "@elementfi/elf-council-typechain";
+import { CoreVoting } from "@elementfi/council-typechain";
 
 export async function getProposals(
   provider: providers.JsonRpcProvider,

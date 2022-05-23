@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { goerliAddressList } from "@elementfi/elf-council-tokenlist";
-import { CoreVoting__factory } from "@elementfi/elf-council-typechain";
+import { CoreVoting__factory } from "@elementfi/council-typechain";
 import fs from "fs";
 
 import { ProposalsJson } from "src/types";

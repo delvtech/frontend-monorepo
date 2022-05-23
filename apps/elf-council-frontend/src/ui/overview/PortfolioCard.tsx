@@ -17,8 +17,6 @@ import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAdd
 import { JoinGSCButton, LeaveGSCButton } from "src/ui/gsc/GSCButtons";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
-import { useFeatureFlag } from "src/elf/featureFlag/useFeatureFlag";
-import { FeatureFlag } from "src/elf/featureFlag/featureFlag";
 import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
 import { ThresholdProgressBar } from "src/ui/gsc/ThresholdProgressBar";
 
@@ -41,7 +39,6 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { status } = useGSCStatus(account);
   const canJoinGSC = status === EligibilityState.Eligible;
   const canLeaveGSC = status === EligibilityState.Expiring;
-  const hasGSCFlag = useFeatureFlag(FeatureFlag.GSC);
 
   return (
     <Card
@@ -88,22 +85,20 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
             >{t`Claim`}</LinkButton>
           </div>
         )}
-        {hasGSCFlag && (
-          <div className="mt-4 flex items-center align-middle">
-            <div className="mr-8 basis-96">
-              <ThresholdProgressBar account={account} />
-            </div>
-            {canLeaveGSC ? (
-              <LeaveGSCButton account={account} signer={signer} />
-            ) : (
-              <JoinGSCButton
-                account={account}
-                signer={signer}
-                disabled={!canJoinGSC || !account}
-              />
-            )}
+        <div className="mt-4 flex items-center align-middle">
+          <div className="mr-8 basis-96">
+            <ThresholdProgressBar account={account} />
           </div>
-        )}
+          {canLeaveGSC ? (
+            <LeaveGSCButton account={account} signer={signer} />
+          ) : (
+            <JoinGSCButton
+              account={account}
+              signer={signer}
+              disabled={!canJoinGSC || !account}
+            />
+          )}
+        </div>
       </div>
     </Card>
   );

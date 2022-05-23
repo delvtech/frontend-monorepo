@@ -5,6 +5,9 @@
     "yarn": "^1",
     "node": "^14"
   },
+  "eslintIgnore": [
+    "packages/council-typechain/dist"
+  ],
   "scripts": {
     "prepare": "husky install",
     "prettier:w": "prettier --write '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",

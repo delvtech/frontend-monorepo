@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "compiled/",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "src/*": ["./src/*"]
+    }
+  },
+  // Include/Exclude is for collections or groups of files or folders, etc..
+  "include": [
+    // We want to build the local factories as well as the typechain ones
+    "./src/localTypes/factories/*",
+    "./types/factories/*",
+    // Create the index.d.ts file
+    "./types/index.ts"
+  ],
+  // Specify separate files directly by their path
+  "files": ["./hardhat.config.ts"]
+}

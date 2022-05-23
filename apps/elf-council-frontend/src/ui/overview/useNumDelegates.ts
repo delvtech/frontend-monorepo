@@ -1,4 +1,4 @@
-import { useSmartContractEvents } from "@elementfi/react-query-typechain";
+import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
 import { BigNumber } from "ethers";
 import { lockingVaultContract } from "src/elf/contracts";
 

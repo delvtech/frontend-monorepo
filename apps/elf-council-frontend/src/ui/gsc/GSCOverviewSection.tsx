@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useRef, useState } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 
 import { defaultProvider } from "src/elf/providers/providers";
 import Button from "src/ui/base/Button/Button";
@@ -149,11 +149,13 @@ export function GSCOverviewSection(): ReactElement {
                       <p>{t`Any delegate who has accumulated more delegated voting
                       power than the current GSC Eligibility Threshold (${formattedThreshold}
                       ELFI) is eligible to join the GSC. `}</p>
-                      <p>{t`To help reach this
+                      <p>
+                        {jt`To help reach this
                       threshold, delegates can post their vision, mission and
-                      other relevant information in the forums, to make
+                      other relevant information in the ${forumsLink}, to make
                       themselves known to the community and rally other members
-                      from which to gather more delegated voting power.`}</p>
+                      from which to gather more delegated voting power.`}
+                      </p>
                     </Disclosure.Panel>
                   </>
                 )}
@@ -173,8 +175,10 @@ export function GSCOverviewSection(): ReactElement {
                       />
                     </Disclosure.Button>
                     <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
-                      <p>{t`The formal responsibilities of the GSC are being actively discussed at this time, but they could include some of the following:`}</p>
-                      <ul className="list-disc">
+                      <p>
+                        {jt`The formal responsibilities of the GSC are being ${gscResponibilitiesLink}, but they could include some of the following:`}
+                      </p>
+                      <ul className="ml-8 list-disc">
                         <li>{t`On-chain voting`}</li>
                         <li>{t`Continued discussion about protocol improvements,
                         partnerships, DAO structures`}</li>
@@ -202,7 +206,7 @@ export function GSCOverviewSection(): ReactElement {
                     </Disclosure.Button>
                     <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
                       <p>{t`Joining and leaving the GSC are individual on-chain transactions.`}</p>
-                      <ul className="list-disc">
+                      <ul className="ml-8 list-disc">
                         <li>
                           <span className="font-bold">{t`Joining: `}</span>
                           {t`If a delegate who isn’t part of the GSC
@@ -312,6 +316,28 @@ export function GSCOverviewSection(): ReactElement {
     </div>
   );
 }
+
+const forumsLink = (
+  <a
+    className="underline"
+    target="_blank"
+    rel="noopener noreferrer"
+    href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
+  >
+    {t`forums`}
+  </a>
+);
+
+const gscResponibilitiesLink = (
+  <a
+    className="underline"
+    target="_blank"
+    rel="noopener noreferrer"
+    href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
+  >
+    {t`actively discussed at this time`}
+  </a>
+);
 
 function sortMembersByVotingPower(
   members: Delegate[],

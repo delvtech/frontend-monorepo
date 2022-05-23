@@ -1,5 +1,5 @@
 import { QueryObserverResult, useQuery } from "react-query";
-import { useSmartContractEvents } from "@elementfi/react-query-typechain";
+import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
 import { BigNumber } from "ethers";
 import { gscVaultContract } from "src/elf/contracts";
 import zip from "lodash.zip";

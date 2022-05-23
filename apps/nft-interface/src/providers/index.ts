@@ -4,15 +4,15 @@ import { providers } from "ethers";
 import { memoize } from "lodash";
 import { ChainId, getTargetChain } from "wallets/chains";
 
-export const ALCHEMY_GOERLI_KEY = process.env
-  .NEXT_PUBLIC_GOERLI_ALCHEMY_KEY as string;
-export const ALCHEMY_MAINNET_KEY = process.env
-  .NEXT_PUBLIC_MAINNET_ALCHEMY_KEY as string;
-
 export const ALCHEMY_GOERLI_HTTP_URL = process.env
   .NEXT_PUBLIC_GOERLI_URI as string;
-export const ALCHEMY_MAINNET_HTTP_URL = process.env
-  .NEXT_PUBLIC_MAINNET_URI as string;
+
+const isBrowser = typeof window !== "undefined";
+export const ALCHEMY_MAINNET_HTTP_URL = (
+  isBrowser
+    ? process.env.NEXT_PUBLIC_MAINNET_URI
+    : process.env.NEXT_PUBLIC_SERVER_MAINNET_URI
+) as string;
 
 export const NEXT_ENV = process.env.NODE_ENV as string;
 const LOCAL_RPC_HOST = "http://127.0.0.1:8545";

@@ -1,11 +1,11 @@
 import { UseMutationResult } from "react-query";
 
-import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
+import { PrivateAirdrop } from "@elementfi/council-typechain";
 import { ContractReceipt, Signer } from "ethers";
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,
-} from "@elementfi/react-query-typechain";
+} from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 
 export function useClaimAndDelegate(
   signer: Signer | undefined,

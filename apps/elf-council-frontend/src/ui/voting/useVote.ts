@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,
-} from "@elementfi/react-query-typechain";
+} from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { parseEther } from "@ethersproject/units";
 import { ethers, Signer } from "ethers";
 
@@ -15,7 +15,7 @@ import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useLockingVaultVotingPower } from "src/ui/voting/useLockingVaultVotingPower";
 import { useVestingVaultVotingPower } from "src/ui/voting/useVestingVaultVotingPower";
-import { CoreVoting } from "@elementfi/elf-council-typechain";
+import { CoreVoting } from "@elementfi/council-typechain";
 
 const { lockingVault: lockingVaultAddress, vestingVault: vestingVaultAddress } =
   addressesJson.addresses;

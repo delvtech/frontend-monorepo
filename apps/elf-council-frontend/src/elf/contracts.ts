@@ -7,7 +7,7 @@ import {
   OptimisticRewards__factory,
   VestingVault__factory,
   GSCVault__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { addressesJson } from "src/elf-council-addresses";
 import { defaultProvider } from "src/elf/providers/providers";
 

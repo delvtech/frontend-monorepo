@@ -1,0 +1,7 @@
+.github
+.vscode
+scripts
+src
+.env
+*.env
+hardhat.config.js
