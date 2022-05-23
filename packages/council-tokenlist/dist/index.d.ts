@@ -1,15 +1,15 @@
 import { TokenList } from "@uniswap/token-lists";
 import { AddressesJsonFile } from "./addresses/AddressesJsonFile";
+/**
+ * Elf Council tokenlist type definitions.
+ */
+import { TokenInfo } from "@uniswap/token-lists";
 export { AddressesJsonFile } from "./addresses/AddressesJsonFile";
 export declare const goerliTokenList: TokenList;
 export declare const goerliAddressList: AddressesJsonFile;
 export declare const mainnetTokenList: TokenList;
 export declare const mainnetAddressList: AddressesJsonFile;
 export { getTokenList } from "./getTokenList";
-/**
- * Elf Council tokenlist type definitions.
- */
-import { TokenInfo } from "@uniswap/token-lists";
 export declare type ElementGovernanceTokenInfo = TokenInfo;
 export interface AirdropContractInfo extends TokenInfo {
   extensions: {
