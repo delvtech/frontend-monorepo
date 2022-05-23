@@ -70,7 +70,7 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {
       forking: {
-        url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_MAINNET_API_KEY}`,
+        url: process.env.MAINNET_URI as string,
         blockNumber: 11853372,
       },
       accounts: {
@@ -79,10 +79,10 @@ const config: HardhatUserConfig = {
       },
     },
     mainnet: {
-      url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_MAINNET_API_KEY}`,
+      url: process.env.MAINNET_URI,
     },
     goerli: {
-      url: `https://eth-goerli.alchemyapi.io/v2/${process.env.ALCHEMY_GOERLI_API_KEY}`,
+      url: process.env.GOERLI_URI,
     },
   },
 };
