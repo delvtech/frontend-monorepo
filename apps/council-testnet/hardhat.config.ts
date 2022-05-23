@@ -67,9 +67,9 @@ const config: HardhatUserConfig = {
   },
 };
 
-const CHAIN_NAME = process.env.NEXT_PUBLIC_CHAIN_NAME;
+const { USE_MAINNET_FORK } = process.env;
 
-if (CHAIN_NAME === "mainnet-fork") {
+if (USE_MAINNET_FORK) {
   config.networks = {
     ...config.networks,
     hardhat: {
