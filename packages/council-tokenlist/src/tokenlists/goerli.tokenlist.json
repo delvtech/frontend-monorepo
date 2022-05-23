@@ -1,7 +1,7 @@
 {
   "name": "Council goerli token list",
   "logoURI": "https://element.fi/logo.svg",
-  "timestamp": "2022-02-08T21:51:54.132Z",
+  "timestamp": "2022-05-23T17:54:15.067Z",
   "version": {
     "major": 0,
     "minor": 1,
@@ -26,7 +26,7 @@
         "baseQuorum": "1000000.0",
         "lockDuration": 19488,
         "minProposalPower": "0.000000000000000001",
-        "extraVoteTime": 32480
+        "extraVoteTime": 2371040
       }
     },
     {
@@ -74,7 +74,7 @@
       "extensions": {
         "coreVoting": "0x0CB8aa45068EE31e97B717b0B35e26A43884c84c",
         "votingPowerBound": "100000000000000000000000",
-        "idleDuration": "345600"
+        "idleDuration": "120"
       }
     },
     {

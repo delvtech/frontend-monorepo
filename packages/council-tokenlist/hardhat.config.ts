@@ -1,6 +1,7 @@
 // This adds support for typescript paths mappings
 import "@nomiclabs/hardhat-ethers";
 import "tsconfig-paths/register";
+import "dotenv/config";
 
 // This adds ethers to the hre which has dev utilities for local testnet like 'getSigners()'
 import fs from "fs";
