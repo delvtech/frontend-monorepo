@@ -1,0 +1,19 @@
+type Query {
+  token(address: ID!): Token!
+  tokens(addresses: [ID!]!): [Token!]!
+}
+
+type Token {
+  address: ID!
+  symbol: String
+  chainId: Int
+  name: String
+  decimals: Int
+  logoURI: String
+  tags: [String]
+}
+
+type Pool {
+  address: ID!
+  token: Token
+}

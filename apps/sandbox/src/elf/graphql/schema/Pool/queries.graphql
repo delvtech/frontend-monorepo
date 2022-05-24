@@ -1,0 +1,18 @@
+# fragment allPoolFields on Pool {
+#   address
+#   token {
+#     ...allTokenFields
+#   }
+# }
+
+# query GetPool($address: String!) {
+#   pool(address: $address) {
+#     ...allPoolFields
+#   }
+# }
+
+# query GetPools($addresses: [String!]!) {
+#   pools(addresses: $addresses) {
+#     ...allPoolFields
+#   }
+# }

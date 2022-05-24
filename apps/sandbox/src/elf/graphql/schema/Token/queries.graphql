@@ -1,0 +1,21 @@
+fragment allTokenFields on Token {
+  address
+  symbol
+  chainId
+  name
+  decimals
+  logoURI
+  tags
+}
+
+query GetToken($address: ID!) {
+  token(address: $address) {
+    ...allTokenFields
+  }
+}
+
+query GetTokens($addresses: [ID!]!) {
+  tokens(addresses: $addresses) {
+    ...allTokenFields
+  }
+}

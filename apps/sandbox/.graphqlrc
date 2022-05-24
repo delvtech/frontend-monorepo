@@ -1,0 +1,61 @@
+add: &generated_note
+  content:
+    - "/* eslint-disable */"
+    - "// NOTE: This is a generated file and should not be edited directly."
+    - "// To edit this file, modify /.graphqlrc and run the build:graphql npm script."
+
+schema:
+  - src/**/*.graphql
+  - src/elf/graphql/schema/merged.ts
+extensions:
+  codegen:
+    overwrite: true
+    hooks:
+      onError:
+        - node src/elf/graphql/generator/errorHandler.js
+    generates:
+      # module declarations
+      src/elf/graphql/module.d.ts:
+        documents: src/**/*.graphql
+        plugins:
+          - time
+          - add: *generated_note
+          - typescript-graphql-files-modules
+          # fallback declaration for graphql files that don't contain any operations
+          - add:
+              placement: "append"
+              content:
+                - "declare module '*.graphql' {"
+                - "  import { DocumentNode } from 'graphql';"
+                - "  const Schema: DocumentNode;"
+                - "  export default Schema;"
+                - "}"
+
+      # shared types and hooks
+      src/elf/graphql/index.ts:
+        documents: src/elf/graphql/**/*.graphql
+        plugins:
+          - time
+          - add: *generated_note
+          - typescript
+          - typescript-resolvers
+          - typescript-operations
+          - typescript-react-apollo
+
+      # operation types and hooks for graphql files outside of src/elf/graphql
+      # saved adjacent to the corresponding graphql file
+      # src/:
+      #   documents:
+      #     - "src/**/*.graphql"
+      #     - "!src/elf/graphql/**/*.graphql"
+      #   preset: near-operation-file
+      #   presetConfig:
+      #     extension: .generated.ts
+      #     baseTypesPath: elf/graphql/
+      #   plugins:
+      #     - time
+      #     - add: *generated_note
+      #     - typescript-operations
+      #     - typescript-react-apollo:
+      #         documentMode: external
+      #         importDocumentNodeExternallyFrom: near-operation-file

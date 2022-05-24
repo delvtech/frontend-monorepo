@@ -21,10 +21,21 @@
     },
     // js files in the root dir can use `const ... = require(...)`
     {
-      "files": ["./*.js", "apps/**/*.js"],
+      "files": ["./*.js", "apps/*/*.js"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }
+    },
+    {
+      "files": ["*.[jt]sx?"],
+      "processor": "@graphql-eslint/graphql"
+    },
+    {
+      "files": ["*.gql"],
+      "extends": [
+        "plugin:@graphql-eslint/schema-recommended",
+        "plugin:@graphql-eslint/operations-recommended"
+      ]
     }
   ],
   "rules": {

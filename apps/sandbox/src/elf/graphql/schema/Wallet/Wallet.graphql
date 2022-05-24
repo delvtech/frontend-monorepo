@@ -1,0 +1,23 @@
+type Query {
+  wallet(address: ID!): Wallet!
+  wallets(addresses: [ID!]!): [Wallet]!
+}
+
+type Wallet {
+  address: ID!
+  pool(address: ID!): Pool
+  pools(addresses: [ID!]!): [Pool]
+  token(address: ID!): Token
+  tokens(addresses: [ID!]!): [Token]
+}
+
+type Pool {
+  address: ID!
+  balance(walletAddress: ID!): String
+  stakedBalance(walletAddress: ID!): String
+}
+
+type Token {
+  address: ID!
+  balance(walletAddress: ID!): String
+}

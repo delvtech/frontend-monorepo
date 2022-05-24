@@ -1,0 +1,8 @@
+type Query {
+  pool(address: ID!): Pool!
+  pools(addresses: [ID!]!): [Pool!]!
+}
+
+type Pool {
+  address: ID!
+}
