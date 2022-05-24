@@ -5,12 +5,13 @@
 - send queries with observer [hooks](https://www.apollographql.com/docs/react/api/react/hooks)
 - manage [normalized query caching](https://www.apollographql.com/docs/react/caching/overview/#data-normalization)
 
-### [`@graphql-tools/schema`](https://www.graphql-tools.com/docs/api/modules/schema_src)
+### [`@graphql-tools`](https://www.graphql-tools.com/docs/introduction)
 
 - generate an [executable schema](https://www.graphql-tools.com/docs/generate-schema) with resolvers
+- [merge multiple schemas](https://www.graphql-tools.com/docs/schema-merging)
 - generate [mock resolvers](https://www.graphql-tools.com/docs/mocking)
 
-### [`@graphql-codegen/cli`](https://www.graphql-code-generator.com/docs/getting-started)
+### [`@graphql-codegen`](https://www.graphql-code-generator.com/docs/getting-started)
 
 - generate types from graphql files
 - generate apollo hooks from graphql files
