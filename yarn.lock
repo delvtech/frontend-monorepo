@@ -1880,13 +1880,6 @@
     chance "^1.1.4"
     core-js "^3.6.4"
 
-"@elementfi/core-typechain@*", "@elementfi/core-typechain@^2.0.6":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@elementfi/core-typechain/-/core-typechain-2.0.6.tgz#b868323b97b47c08fc566ab88a1054cf3c65767c"
-  integrity sha512-PaDbfJrdpPnHugRjdWD/OjBRzhUI+qjAwsoYEm414Z5Ari9fJQ43lZt8iBlIMpDYWf3zSipX1i1ESXLhsh8OOA==
-  dependencies:
-    tsc "^2.0.4"
-
 "@elementfi/tokenlist@*", "@elementfi/tokenlist@^2.0.0", "@elementfi/tokenlist@^2.8.0":
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/@elementfi/tokenlist/-/tokenlist-2.8.0.tgz#93f217ba0552823af9722b855a5dfd204f5f6ffb"
@@ -6403,10 +6396,10 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash.uniq@^4.5.6":
-  version "4.5.6"
-  resolved "https://registry.yarnpkg.com/@types/lodash.uniq/-/lodash.uniq-4.5.6.tgz#adb052f6c7eeb38b920c13166e7a972dd960b4c5"
-  integrity sha512-XHNMXBtiwsWZstZMyxOYjr0e8YYWv0RgPlzIHblTuwBBiWo2MzWVaTBihtBpslb5BglgAWIeBv69qt1+RTRW1A==
+"@types/lodash.uniq@^4.5.7":
+  version "4.5.7"
+  resolved "https://registry.yarnpkg.com/@types/lodash.uniq/-/lodash.uniq-4.5.7.tgz#0773960ec0148b29e6a54821a65b878a0ebb5c1a"
+  integrity sha512-qg7DeAbdZMi6DGvCxThlJycykLLhETrJrQZ6F2KaZ+o0sNK1qRHz46lgNA+nHHjwrmA2a91DyiZTp3ey3m1rEw==
   dependencies:
     "@types/lodash" "*"
 
@@ -14387,7 +14380,7 @@ ethers@^5.0.13:
     "@ethersproject/web" "5.6.0"
     "@ethersproject/wordlists" "5.6.0"
 
-ethers@^5.0.24, ethers@^5.4.7, ethers@^5.6.0:
+ethers@^5.0.24, ethers@^5.4.7, ethers@^5.5.3, ethers@^5.6.0:
   version "5.6.7"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.6.7.tgz#3e6257b2a0fdd5fc93e68e141cf2b9761900f374"
   integrity sha512-Q8pmMraUENK0cY6cy6IvIe3e9xL/+4kBvxmUvLXg1O7Abob0c7XzWI76E29j5em/HxWMl5hYiSClmOMW3jJmdg==
