@@ -24,7 +24,7 @@
 ### [`@graphql-yoga`](https://www.graphql-yoga.com/docs/quick-start)
 
 - execute server-side queries [using an API route](https://www.graphql-yoga.com/docs/integrations/integration-with-nextjs)
-- manage execution caching
+- serve [GraphiQL](https://github.com/graphql/graphiql)
 
 # TODO
 

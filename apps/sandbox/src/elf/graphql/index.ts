@@ -19,7 +19,7 @@ export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
 const defaultOptions = {} as const;
-// Generated on 2022-05-24T03:14:49-05:00
+// Generated on 2022-05-24T11:46:56-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -33,17 +33,7 @@ export type Scalars = {
 export type Pool = {
   __typename?: "Pool";
   address: Scalars["ID"];
-  balance?: Maybe<Scalars["String"]>;
-  stakedBalance?: Maybe<Scalars["String"]>;
   token?: Maybe<Token>;
-};
-
-export type PoolBalanceArgs = {
-  walletAddress: Scalars["ID"];
-};
-
-export type PoolStakedBalanceArgs = {
-  walletAddress: Scalars["ID"];
 };
 
 export type Query = {
@@ -53,8 +43,6 @@ export type Query = {
   pools: Array<Pool>;
   token: Token;
   tokens: Array<Token>;
-  wallet: Wallet;
-  wallets: Array<Maybe<Wallet>>;
 };
 
 export type QueryPoolArgs = {
@@ -73,59 +61,15 @@ export type QueryTokensArgs = {
   addresses: Array<Scalars["ID"]>;
 };
 
-export type QueryWalletArgs = {
-  address: Scalars["ID"];
-};
-
-export type QueryWalletsArgs = {
-  addresses: Array<Scalars["ID"]>;
-};
-
 export type Token = {
   __typename?: "Token";
   address: Scalars["ID"];
-  balance?: Maybe<Scalars["String"]>;
   chainId?: Maybe<Scalars["Int"]>;
   decimals?: Maybe<Scalars["Int"]>;
   logoURI?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
   symbol?: Maybe<Scalars["String"]>;
   tags?: Maybe<Array<Maybe<Scalars["String"]>>>;
-};
-
-export type TokenBalanceArgs = {
-  walletAddress: Scalars["ID"];
-};
-
-export type Wallet = {
-  __typename?: "Wallet";
-  address: Scalars["ID"];
-  pool?: Maybe<Pool>;
-  pools?: Maybe<Array<Maybe<Pool>>>;
-  token?: Maybe<Token>;
-  tokens?: Maybe<Array<Maybe<Token>>>;
-};
-
-export type WalletPoolArgs = {
-  address: Scalars["ID"];
-};
-
-export type WalletPoolsArgs = {
-  addresses: Array<Scalars["ID"]>;
-};
-
-export type WalletTokenArgs = {
-  address: Scalars["ID"];
-};
-
-export type WalletTokensArgs = {
-  addresses: Array<Scalars["ID"]>;
-};
-
-export type WalletPool = {
-  __typename?: "WalletPool";
-  address: Scalars["ID"];
-  pool?: Maybe<Pool>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -242,8 +186,6 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars["String"]>;
   Token: ResolverTypeWrapper<Token>;
-  Wallet: ResolverTypeWrapper<Wallet>;
-  WalletPool: ResolverTypeWrapper<WalletPool>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -255,8 +197,6 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars["String"];
   Token: Token;
-  Wallet: Wallet;
-  WalletPool: WalletPool;
 };
 
 export type PoolResolvers<
@@ -264,18 +204,6 @@ export type PoolResolvers<
   ParentType extends ResolversParentTypes["Pool"] = ResolversParentTypes["Pool"],
 > = {
   address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  balance?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType,
-    RequireFields<PoolBalanceArgs, "walletAddress">
-  >;
-  stakedBalance?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType,
-    RequireFields<PoolStakedBalanceArgs, "walletAddress">
-  >;
   token?: Resolver<Maybe<ResolversTypes["Token"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -309,18 +237,6 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryTokensArgs, "addresses">
   >;
-  wallet?: Resolver<
-    ResolversTypes["Wallet"],
-    ParentType,
-    ContextType,
-    RequireFields<QueryWalletArgs, "address">
-  >;
-  wallets?: Resolver<
-    Array<Maybe<ResolversTypes["Wallet"]>>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryWalletsArgs, "addresses">
-  >;
 };
 
 export type TokenResolvers<
@@ -328,12 +244,6 @@ export type TokenResolvers<
   ParentType extends ResolversParentTypes["Token"] = ResolversParentTypes["Token"],
 > = {
   address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  balance?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType,
-    RequireFields<TokenBalanceArgs, "walletAddress">
-  >;
   chainId?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   decimals?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   logoURI?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
@@ -347,53 +257,10 @@ export type TokenResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type WalletResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes["Wallet"] = ResolversParentTypes["Wallet"],
-> = {
-  address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  pool?: Resolver<
-    Maybe<ResolversTypes["Pool"]>,
-    ParentType,
-    ContextType,
-    RequireFields<WalletPoolArgs, "address">
-  >;
-  pools?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes["Pool"]>>>,
-    ParentType,
-    ContextType,
-    RequireFields<WalletPoolsArgs, "addresses">
-  >;
-  token?: Resolver<
-    Maybe<ResolversTypes["Token"]>,
-    ParentType,
-    ContextType,
-    RequireFields<WalletTokenArgs, "address">
-  >;
-  tokens?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes["Token"]>>>,
-    ParentType,
-    ContextType,
-    RequireFields<WalletTokensArgs, "addresses">
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type WalletPoolResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes["WalletPool"] = ResolversParentTypes["WalletPool"],
-> = {
-  address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  pool?: Resolver<Maybe<ResolversTypes["Pool"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type Resolvers<ContextType = any> = {
   Pool?: PoolResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Token?: TokenResolvers<ContextType>;
-  Wallet?: WalletResolvers<ContextType>;
-  WalletPool?: WalletPoolResolvers<ContextType>;
 };
 
 export type AllTokenFieldsFragment = {

@@ -23,7 +23,7 @@ export const baseEnvelope = envelop({
     useLog("baseEnvelope"),
     useParserCache(),
     useValidationCache(),
-    useResponseCache(),
+    useResponseCache(), // this may be redundant when using apollo client and executing client-side
     /* eslint-enable react-hooks/rules-of-hooks */
   ],
 });
