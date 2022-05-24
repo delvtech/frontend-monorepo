@@ -19,7 +19,7 @@ export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
 const defaultOptions = {} as const;
-// Generated on 2022-05-24T11:46:56-05:00
+// Generated on 2022-05-24T11:55:10-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -33,7 +33,12 @@ export type Scalars = {
 export type Pool = {
   __typename?: "Pool";
   address: Scalars["ID"];
+  stakedBalance?: Maybe<Scalars["String"]>;
   token?: Maybe<Token>;
+};
+
+export type PoolStakedBalanceArgs = {
+  walletAddress: Scalars["String"];
 };
 
 export type Query = {
@@ -64,12 +69,17 @@ export type QueryTokensArgs = {
 export type Token = {
   __typename?: "Token";
   address: Scalars["ID"];
+  balance?: Maybe<Scalars["String"]>;
   chainId?: Maybe<Scalars["Int"]>;
   decimals?: Maybe<Scalars["Int"]>;
   logoURI?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
   symbol?: Maybe<Scalars["String"]>;
   tags?: Maybe<Array<Maybe<Scalars["String"]>>>;
+};
+
+export type TokenBalanceArgs = {
+  walletAddress: Scalars["String"];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -204,6 +214,12 @@ export type PoolResolvers<
   ParentType extends ResolversParentTypes["Pool"] = ResolversParentTypes["Pool"],
 > = {
   address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  stakedBalance?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType,
+    RequireFields<PoolStakedBalanceArgs, "walletAddress">
+  >;
   token?: Resolver<Maybe<ResolversTypes["Token"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -244,6 +260,12 @@ export type TokenResolvers<
   ParentType extends ResolversParentTypes["Token"] = ResolversParentTypes["Token"],
 > = {
   address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  balance?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType,
+    RequireFields<TokenBalanceArgs, "walletAddress">
+  >;
   chainId?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   decimals?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   logoURI?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;

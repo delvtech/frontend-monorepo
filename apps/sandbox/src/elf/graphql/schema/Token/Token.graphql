@@ -11,6 +11,7 @@ type Token {
   decimals: Int
   logoURI: String
   tags: [String]
+  balance(walletAddress: ID!): String
 }
 
 type Pool {

@@ -1,7 +1,7 @@
 /* eslint-disable */
 // NOTE: This is a generated file and should not be edited directly.
 // To edit this file, modify /.graphqlrc and run the build:graphql npm script.
-// Generated on 2022-05-24T11:46:56-05:00
+// Generated on 2022-05-24T11:55:10-05:00
 
 declare module "*/queries.graphql" {
   import { DocumentNode } from "graphql";

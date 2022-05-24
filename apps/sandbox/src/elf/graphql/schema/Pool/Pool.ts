@@ -1,7 +1,7 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { formatEther } from "ethers/lib/utils";
-import { ConvergentCurvePool__factory } from "@elementfi/core-typechain/dist/v1.1";
-import { defaultProvider } from "src/elf/providers/providers";
+import { poolIdsByPoolAddress } from "src/elf/liquiditymining/eligiblepools";
+import { masterChef } from "src/elf/liquiditymining/masterChef";
 import { Resolvers } from "src/elf/graphql";
 import typeDefs from "./Pool.graphql";
 
@@ -11,12 +11,11 @@ const poolResolvers: Resolvers = {
     pools: (_, { addresses }) => addresses.map((address) => ({ address })),
   },
   Pool: {
-    balance: async ({ address }, { walletAddress }) => {
-      const poolContract = ConvergentCurvePool__factory.connect(
-        address,
-        defaultProvider,
+    stakedBalance: async ({ address }, { walletAddress }) => {
+      const [balance] = await masterChef.functions.userInfo(
+        poolIdsByPoolAddress[address],
+        walletAddress,
       );
-      const [balance] = await poolContract.functions.balanceOf(walletAddress);
       return formatEther(balance);
     },
   },
