@@ -6,8 +6,6 @@ import "@nomiclabs/hardhat-ethers";
 import "tsconfig-paths/register";
 import "dotenv/config";
 
-console.log("aaaaaaaaaaaaaaaaaaaaaaaaaa");
-
 const config: HardhatUserConfig = {
   paths: {
     sources: "src",
