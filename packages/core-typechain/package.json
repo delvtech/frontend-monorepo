@@ -3,13 +3,17 @@
   "version": "2.0.6",
   "description": "",
   "dependencies": {
+    "eslint-config-next": "^12.1.0",
+    "eslint-plugin-jest-dom": "^4.0.1",
+    "lint-staged": "^12.3.7",
+    "stylelint": "^14.8.1",
     "tsc": "^2.0.4"
   },
   "files": [
     "dist"
   ],
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.4",
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-vyper": "^3.0.0",
     "@openzeppelin/contracts": "^4.4.2",
     "@typechain/ethers-v5": "^8.0.5",
