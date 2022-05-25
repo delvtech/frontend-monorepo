@@ -44,7 +44,7 @@
     "build-tokenlist-goerli": "bash scripts/build-tokenlist.sh goerli",
     "build-tokenlist-mainnet": "bash scripts/build-tokenlist.sh mainnet",
     "_build-index": "bash scripts/build-index.sh",
-    "build": " npm run build-tokenlist-goerli && npm run build-tokenlist-mainnet && npm run _build-index && npm run _copy-files",
+    "build": "yarn run build-tokenlist-goerli && yarn run build-tokenlist-mainnet && yarn run _build-index && yarn run _copy-files",
     "_copy-files": "bash scripts/copy-dist-files.sh",
     "typecheck": "npx tsc --noEmit"
   }

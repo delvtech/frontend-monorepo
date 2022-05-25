@@ -7,6 +7,6 @@ curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/element-fi/e
 curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/element-fi/elf-deploy/main/addresses/AddressesJsonFile.d.ts > src/addresses/AddressesJsonFile.d.ts
 
 # Build the specified tokenlist.json file
-npx hardhat run src/main.ts --network $NETWORK --no-compile
+TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/main.ts --network $NETWORK --no-compile
 
 # compile index.ts template

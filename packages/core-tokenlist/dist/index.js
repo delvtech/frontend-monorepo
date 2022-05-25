@@ -19,12 +19,19 @@ var __createBinding =
   (Object.create
     ? function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
-        Object.defineProperty(o, k2, {
-          enumerable: true,
-          get: function () {
-            return m[k];
-          },
-        });
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (
+          !desc ||
+          ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)
+        ) {
+          desc = {
+            enumerable: true,
+            get: function () {
+              return m[k];
+            },
+          };
+        }
+        Object.defineProperty(o, k2, desc);
       }
     : function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
@@ -79,7 +86,7 @@ exports.mainnetTokenList = {
       description: "The yield position, ie: Yearn yvcrvLUSD",
     },
   },
-  timestamp: "2022-04-19T19:36:41.717Z",
+  timestamp: "2022-05-25T22:40:12.772Z",
   version: {
     major: 0,
     minor: 0,
@@ -468,6 +475,28 @@ exports.mainnetTokenList = {
     },
     {
       chainId: 1,
+      address: "0xA6b9c8947c4BBc355b01b73b7a90c910a8e7B7C8",
+      symbol: "yvCurve-3Crypto",
+      decimals: 18,
+      name: "element yvCurve-3Crypto",
+      tags: ["assetproxy"],
+      extensions: {
+        vault: "0xE537B5cc158EB71037D4125BDD7538421981E6AA",
+      },
+    },
+    {
+      chainId: 1,
+      address: "0x07fEdf9aDa613e909dbaA96697F56B8f832D6Ad8",
+      symbol: "yvCurve-alUSD",
+      decimals: 18,
+      name: "element yvCurve-alUSD",
+      tags: ["assetproxy"],
+      extensions: {
+        vault: "0xA74d4B67b3368E83797a35382AFB776bAAE4F5C8",
+      },
+    },
+    {
+      chainId: 1,
       address: "0x5fA5B62c8AF877CB37031e0a3B2f34A78e3C56A6",
       symbol: "yvCurve-LUSD",
       decimals: 18,
@@ -584,6 +613,22 @@ exports.mainnetTokenList = {
       symbol: "yvCurve-LUSD",
       decimals: 18,
       name: "Curve LUSD Pool yVault",
+      tags: ["vault"],
+    },
+    {
+      chainId: 1,
+      address: "0xE537B5cc158EB71037D4125BDD7538421981E6AA",
+      symbol: "yvCurve-3Crypto",
+      decimals: 18,
+      name: "Curve 3Crypto Pool yVault",
+      tags: ["vault"],
+    },
+    {
+      chainId: 1,
+      address: "0xA74d4B67b3368E83797a35382AFB776bAAE4F5C8",
+      symbol: "yvCurve-alUSD",
+      decimals: 18,
+      name: "Curve alUSD Pool yVault",
       tags: ["vault"],
     },
     {
@@ -1020,6 +1065,38 @@ exports.mainnetTokenList = {
     },
     {
       chainId: 1,
+      address: "0x097F9f108ee0Db2Cb266AA16Ccfb4831Ec4D770b",
+      symbol: "ePyvCurve-3Crypto-16SEP22",
+      decimals: 18,
+      extensions: {
+        underlying: "0xc4AD29ba4B3c580e6D59105FFf484999997675Ff",
+        position: "0xA6b9c8947c4BBc355b01b73b7a90c910a8e7B7C8",
+        interestToken: "0xF84c824f565E10470788D65FcE225b13b5328D81",
+        unlockTimestamp: 1663354791,
+        createdAtTimestamp: 1650481210,
+      },
+      name: "crv3crypto Principal Token",
+      tags: ["eP"],
+      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+    },
+    {
+      chainId: 1,
+      address: "0xc9B88361C09eC184bdd32Cf52CFFc79a1452F79D",
+      symbol: "ePyvCurve-alUSD-16SEP22",
+      decimals: 18,
+      extensions: {
+        underlying: "0x43b4FdFD4Ff969587185cDB6f0BD875c5Fc83f8c",
+        position: "0x07fEdf9aDa613e909dbaA96697F56B8f832D6Ad8",
+        interestToken: "0xc5585164AEDa185DD0FD412cD151A61E2436d61A",
+        unlockTimestamp: 1663336829,
+        createdAtTimestamp: 1651238498,
+      },
+      name: "alUSD3CRV-f Principal Token",
+      tags: ["eP"],
+      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+    },
+    {
+      chainId: 1,
       address: "0xBabD64a87881d8df7680907fcde176FF11Fa0292",
       symbol: "eYyvCurveLUSD-28SEP21",
       decimals: 18,
@@ -1392,6 +1469,34 @@ exports.mainnetTokenList = {
         tranche: "0x83d392a7be901892a8c861c96Ea430B8d9c2BD51",
         underlying: "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA",
         unlockTimestamp: 1663348630,
+      },
+      tags: ["eY"],
+      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+    },
+    {
+      chainId: 1,
+      address: "0xF84c824f565E10470788D65FcE225b13b5328D81",
+      symbol: "eYyvCurve-3Crypto-16SEP22",
+      decimals: 18,
+      name: "crv3crypto Yield Token",
+      extensions: {
+        tranche: "0x097F9f108ee0Db2Cb266AA16Ccfb4831Ec4D770b",
+        underlying: "0xc4AD29ba4B3c580e6D59105FFf484999997675Ff",
+        unlockTimestamp: 1663354791,
+      },
+      tags: ["eY"],
+      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+    },
+    {
+      chainId: 1,
+      address: "0xc5585164AEDa185DD0FD412cD151A61E2436d61A",
+      symbol: "eYyvCurve-alUSD-16SEP22",
+      decimals: 18,
+      name: "alUSD3CRV-f Yield Token",
+      extensions: {
+        tranche: "0xc9B88361C09eC184bdd32Cf52CFFc79a1452F79D",
+        underlying: "0x43b4FdFD4Ff969587185cDB6f0BD875c5Fc83f8c",
+        unlockTimestamp: 1663336829,
       },
       tags: ["eY"],
       logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
@@ -1884,6 +1989,42 @@ exports.mainnetTokenList = {
     },
     {
       chainId: 1,
+      address: "0xC80Fef22fCcc277aC0fFEA84D111888A767f717e",
+      symbol: "LPePyvCurve-3Crypto-16SEP22",
+      decimals: 18,
+      extensions: {
+        convergentPoolFactory: "0xE88628700eaE9213169D715148ac5A5F47B5dCd9",
+        bond: "0x097F9f108ee0Db2Cb266AA16Ccfb4831Ec4D770b",
+        underlying: "0xc4AD29ba4B3c580e6D59105FFf484999997675Ff",
+        poolId:
+          "0xc80fef22fccc277ac0ffea84d111888a767f717e0002000000000000000001b1",
+        unitSeconds: 717367023,
+        expiration: 1663354791,
+        createdAtTimestamp: 1650481728,
+      },
+      name: "LP Element Principal Token yvCurve-3Crypto-16SEP22",
+      tags: ["ccpool"],
+    },
+    {
+      chainId: 1,
+      address: "0x13cF9E8115F35828a26062b6C05A56c72f54e0C6",
+      symbol: "LPePyvCurve-alUSD-16SEP22",
+      decimals: 18,
+      extensions: {
+        convergentPoolFactory: "0xE88628700eaE9213169D715148ac5A5F47B5dCd9",
+        bond: "0xc9B88361C09eC184bdd32Cf52CFFc79a1452F79D",
+        underlying: "0x43b4FdFD4Ff969587185cDB6f0BD875c5Fc83f8c",
+        poolId:
+          "0x13cf9e8115f35828a26062b6c05a56c72f54e0c60002000000000000000001d9",
+        unitSeconds: 1326042057,
+        expiration: 1663336829,
+        createdAtTimestamp: 1651239183,
+      },
+      name: "LP Element Principal Token yvCurve-alUSD-16SEP22",
+      tags: ["ccpool"],
+    },
+    {
+      chainId: 1,
       address: "0xDe620bb8BE43ee54d7aa73f8E99A7409Fe511084",
       symbol: "LPeYyvCurveLUSD-28SEP21",
       decimals: 18,
@@ -2290,7 +2431,7 @@ exports.goerliTokenList = {
       description: "The yield position, ie: Yearn yvcrvLUSD",
     },
   },
-  timestamp: "2022-04-19T19:34:49.507Z",
+  timestamp: "2022-05-25T22:39:31.751Z",
   version: {
     major: 0,
     minor: 0,
@@ -2540,6 +2681,22 @@ exports.goerliTokenList = {
     },
     {
       chainId: 5,
+      address: "0x14f440d0f29e7902Bd1B2fCb317552EDC8837882",
+      symbol: "eP:eyDAI:03-NOV-22-GMT",
+      decimals: 18,
+      extensions: {
+        underlying: "0x5bD768CCE8C529CDF23B136bB486a81f64985B92",
+        position: "0x8dc82c95B8901Db35390Aa4096B643d7724F278D",
+        interestToken: "0x9145Aa8b4f4Fb2454473Ae5D216BF880E3071200",
+        unlockTimestamp: 1667464407,
+        createdAtTimestamp: 1651684422,
+      },
+      name: "DAI Principal Token",
+      tags: ["eP"],
+      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+    },
+    {
+      chainId: 5,
       address: "0x91dDF92af38Afac1B59F450dDb94ddab10a11490",
       symbol: "eYyvCurve-stETH",
       decimals: 18,
@@ -2660,6 +2817,20 @@ exports.goerliTokenList = {
         tranche: "0xbce711DfCD200b659f3f2715970207E719b8B273",
         underlying: "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
         unlockTimestamp: 1649364020,
+      },
+      tags: ["eY"],
+      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+    },
+    {
+      chainId: 5,
+      address: "0x9145Aa8b4f4Fb2454473Ae5D216BF880E3071200",
+      symbol: "eY:eyDAI:03-NOV-22-GMT",
+      decimals: 18,
+      name: "DAI Yield Token",
+      extensions: {
+        tranche: "0x14f440d0f29e7902Bd1B2fCb317552EDC8837882",
+        underlying: "0x5bD768CCE8C529CDF23B136bB486a81f64985B92",
+        unlockTimestamp: 1667464407,
       },
       tags: ["eY"],
       logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
@@ -2824,6 +2995,24 @@ exports.goerliTokenList = {
         createdAtTimestamp: 1646772620,
       },
       name: "LP Principal Token yUSDC:07-APR-22-GMT",
+      tags: ["ccpool"],
+    },
+    {
+      chainId: 5,
+      address: "0x6da82078Fb3dd48dB35cD46c4f2a7Daf7fD2964d",
+      symbol: "LPeP:eyDAI:03-NOV-22-GMT",
+      decimals: 18,
+      extensions: {
+        convergentPoolFactory: "0x662a5e11D5769A02E1b444F1952AC575fB8cBB87",
+        bond: "0x14f440d0f29e7902Bd1B2fCb317552EDC8837882",
+        underlying: "0x5bD768CCE8C529CDF23B136bB486a81f64985B92",
+        poolId:
+          "0x6da82078fb3dd48db35cd46c4f2a7daf7fd2964d0002000000000000000000b5",
+        unitSeconds: 2800679490,
+        expiration: 1667464407,
+        createdAtTimestamp: 1651692646,
+      },
+      name: "LP Principal Token eyDAI:03-NOV-22-GMT",
       tags: ["ccpool"],
     },
     {
