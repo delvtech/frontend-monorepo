@@ -72,13 +72,15 @@ export function useSmartContractTransaction<
       args: ContractMethodArgs<TContract, TMethodName>,
     ): Promise<ContractReceipt> => {
       if (!signer) {
-        console.warn(`Tried to call ${methodName} without a signer.`);
+        console.warn(`Tried to call ${methodName as string} without a signer.`);
         return undefined as unknown as ContractReceipt;
       }
 
       if (!contract) {
         // only for typesafety, this should never happen
-        console.warn(`Tried to call ${methodName} without contract instance.`);
+        console.warn(
+          `Tried to call ${methodName as string} without contract instance.`,
+        );
         return undefined as unknown as ContractReceipt;
       }
 
@@ -159,7 +161,9 @@ export function useSmartContractTransaction<
       }
 
       console.error(
-        `Error calling ${methodName} on: ${contract?.address} with arguments:`,
+        `Error calling ${methodName as string} on: ${
+          contract?.address
+        } with arguments:`,
         variables,
         error,
       );

@@ -85,7 +85,9 @@ export function makeSmartContractEventsUseQueryOptions<
     onError: () => {
       const addressesJsonKey = lookupAddressKey(contract?.address);
       console.error(
-        `Error calling ${filterName} on ${addressesJsonKey}: ${contract?.address} with arguments:`,
+        `Error calling ${filterName as string} on ${addressesJsonKey}: ${
+          contract?.address
+        } with arguments:`,
         callArgs,
       );
     },

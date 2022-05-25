@@ -85,7 +85,9 @@ export function makeSmartContractEventsUseQueryOptions<
     queryFn,
     onError: () => {
       console.error(
-        `Error calling ${filterName} on: ${contract?.address} with arguments:`,
+        `Error calling ${filterName as string} on: ${
+          contract?.address
+        } with arguments:`,
         callArgs,
       );
     },
