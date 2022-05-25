@@ -6,7 +6,7 @@
   },
   "private": true,
   "dependencies": {
-    "@elementfi/tokenlist": "^2.0.0",
+    "@elementfi/core-tokenlist": "*",
     "@typechain/hardhat": "^3.0.0",
     "@types/ethereumjs-abi": "^0.6.3",
     "@types/lodash.uniq": "^4.5.6",

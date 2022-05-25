@@ -1,4 +1,4 @@
-import { PrincipalTokenInfo, TokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, TokenInfo } from "@elementfi/core-tokenlist";
 import { useMarketPrice } from "ui/ccpools/useMarketPrice";
 import { useBaseTokenZapPrice } from "./useBaseTokenZapPrice";
 

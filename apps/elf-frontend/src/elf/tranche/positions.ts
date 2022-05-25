@@ -4,7 +4,7 @@ import {
   PrincipalTokenInfo,
   TokenInfo,
   TokenTag,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { defaultProvider } from "elf/providers/providers";
 import { tokenListJson } from "tokenlists/tokenlists";
 import keyBy from "lodash.keyby";

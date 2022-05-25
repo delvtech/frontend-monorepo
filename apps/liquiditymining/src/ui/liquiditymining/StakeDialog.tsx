@@ -17,7 +17,7 @@ import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransacti
 import {
   PrincipalPoolTokenInfo,
   PrincipalTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
 import { formatAbbreviatedDate } from "src/base/dates";

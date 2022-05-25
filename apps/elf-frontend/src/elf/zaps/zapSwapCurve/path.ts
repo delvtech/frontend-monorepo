@@ -2,7 +2,7 @@ import {
   CurveLpTokenInfo,
   PrincipalTokenInfo,
   TokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import {
   getCurvePoolTokensByCurveLpToken,
   isCurveLpToken,

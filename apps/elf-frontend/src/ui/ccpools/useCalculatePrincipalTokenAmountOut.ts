@@ -12,7 +12,7 @@ import {
   PrincipalPoolCalcSwapResult,
   SwapAsset,
 } from "elf/pools/calcSwapPrincipalPool";
-import { PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalPoolTokenInfo } from "@elementfi/core-tokenlist";
 
 export function useCalculatePrincipalTokenAmountOut(
   poolInfo: PrincipalPoolTokenInfo,

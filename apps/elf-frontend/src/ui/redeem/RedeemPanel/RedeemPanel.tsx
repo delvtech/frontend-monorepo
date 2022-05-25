@@ -22,7 +22,7 @@ import { getPoolTokens } from "elf/pools/getPoolTokens";
 import { PoolInfo } from "elf/pools/PoolInfo";
 import { formatPrincipalTokenShortSymbol } from "elf/tranche/format";
 import { isPrincipalToken } from "elf/tranche/tranches";
-import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/core-tokenlist";
 
 const { userProxyContractAddress } = ContractAddresses;
 

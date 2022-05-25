@@ -1,4 +1,4 @@
-import { YieldPoolTokenInfo } from "@elementfi/tokenlist";
+import { YieldPoolTokenInfo } from "@elementfi/core-tokenlist";
 import { useNowMs } from "ui/base/hooks/useNowMs/useNowMs";
 import { yieldPools } from "elf/pools/weightedPool";
 

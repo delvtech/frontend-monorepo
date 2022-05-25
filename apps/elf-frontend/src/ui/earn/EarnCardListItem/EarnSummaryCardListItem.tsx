@@ -17,7 +17,7 @@ import classNames from "classnames";
 import {
   PrincipalPoolTokenInfo,
   YieldPoolTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 
 interface EarnSummaryCardListItemProps {
   onToggleExpand: () => void;

@@ -12,7 +12,7 @@ import { IconNames } from "@blueprintjs/icons";
 import { Web3Provider } from "@ethersproject/providers";
 import Link from "next/link";
 import classNames from "classnames";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import { jt, t } from "ttag";
 
 import { getCoinGeckoId } from "integrations/coingecko";

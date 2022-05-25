@@ -14,7 +14,7 @@ import { formatAbbreviatedDate } from "base/dates/dates";
 import { formatPercent } from "base/formatPercent/formatPercent";
 import { ONE_DAY_IN_MILLISECONDS } from "base/time";
 import { getPoolInfoForPrincipalToken } from "elf/pools/ccpool";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 
 interface PrincipalTokenTermButtonLabel2Props {
   className?: string;

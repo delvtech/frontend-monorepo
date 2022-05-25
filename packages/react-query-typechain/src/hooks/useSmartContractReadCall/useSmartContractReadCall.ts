@@ -98,7 +98,9 @@ export function makeSmartContractReadCallUseQueryOptions<
     queryFn,
     onError: () => {
       console.error(
-        `Error calling ${methodName} on ${contract?.address} with arguments:`,
+        `Error calling ${methodName as string} on ${
+          contract?.address
+        } with arguments:`,
         callArgs,
       );
     },

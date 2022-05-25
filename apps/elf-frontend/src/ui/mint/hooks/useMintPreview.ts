@@ -6,7 +6,7 @@ import {
 import {
   AssetProxyTokenInfo,
   PrincipalTokenInfo as TrancheInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { useSmartContractReadCall } from "ui/contracts/useSmartContractReadCall/useSmartContractReadCall";
 import { getTokenInfo } from "tokenlists/tokenlists";
 import { assetProxyContractsByAddress } from "elf/tranche/positions";

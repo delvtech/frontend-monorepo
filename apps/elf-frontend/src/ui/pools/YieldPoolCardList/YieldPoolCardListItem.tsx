@@ -9,7 +9,7 @@ import {
 } from "@blueprintjs/core";
 import { useRouter } from "next/router";
 import classNames from "classnames";
-import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/core-tokenlist";
 import { t } from "ttag";
 
 import tw from "efi-tailwindcss-classnames";
@@ -35,7 +35,7 @@ import { useNowMs } from "ui/base/hooks/useNowMs/useNowMs";
 import { getTokenInfo } from "tokenlists/tokenlists";
 import { formatYieldTokenShortSymbol } from "elf/interestToken/formatYieldTokenShortSymbol";
 import { yieldPoolContractsByAddress } from "elf/pools/weightedPool";
-import { YieldPoolTokenInfo } from "@elementfi/tokenlist";
+import { YieldPoolTokenInfo } from "@elementfi/core-tokenlist";
 
 interface YieldPoolCardListItemProps {
   yieldPoolTokenInfo: YieldPoolTokenInfo;

@@ -14,7 +14,7 @@ import { Classes } from "@blueprintjs/core";
 import {
   PrincipalPoolTokenInfo,
   YieldPoolTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 
 interface EarnExpandedSummaryProps {
   yieldPoolInfo: YieldPoolTokenInfo | undefined;

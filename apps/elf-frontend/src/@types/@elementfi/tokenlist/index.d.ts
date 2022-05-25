@@ -1,7 +1,7 @@
 // TODO: Remove this declare module after uniswap publishes the latest
 // tokenlist, which includes the new `extensions` property type.
-import "@elementfi/tokenlist";
-declare module "@elementfi/tokenlist" {
+import "@elementfi/core-tokenlist";
+declare module "@elementfi/core-tokenlist" {
   export interface VaultTokenInfo extends TokenInfo {}
   export interface TokenInfo {
     readonly chainId: number;

@@ -2,7 +2,7 @@ import { Vault } from "@elementfi/core-typechain/dist/v1";
 import {
   PrincipalPoolTokenInfo,
   YieldPoolTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { balancerVaultContract } from "@elementfi/integrations/balancer/vault";
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { ContractMethodArgs } from "@elementfi/react-query-typechain/src/types";
