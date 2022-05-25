@@ -1,0 +1,35 @@
+{
+  "name": "@elementfi/core-typechain",
+  "version": "2.0.6",
+  "description": "",
+  "dependencies": {
+    "tsc": "^2.0.4"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.4",
+    "@nomiclabs/hardhat-vyper": "^3.0.0",
+    "@openzeppelin/contracts": "^4.4.2",
+    "@typechain/ethers-v5": "^8.0.5",
+    "@typechain/hardhat": "^4.0.0",
+    "@types/ethereumjs-abi": "^0.6.3",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^17.0.12",
+    "ethers": "^5.5.3",
+    "hardhat": "^2.8.3",
+    "ts-generator": "^0.1.1",
+    "ts-node": "^10.4.0",
+    "typechain": "^6.1.0",
+    "typechain-target-ethers-v5": "^5.0.1",
+    "typescript": "^4.5.5"
+  },
+  "scripts": {
+    "build-contracts": "sh scripts/build-contracts.sh",
+    "build-typescript": "sh scripts/build-typescript.sh",
+    "copy-dist-files": "sh scripts/copy-files-to-dist.sh",
+    "build": "npm run build-contracts && npm run build-typescript && npm run copy-dist-files",
+    "prepublish": "npm run build"
+  }
+}

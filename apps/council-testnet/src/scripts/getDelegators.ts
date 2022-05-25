@@ -1,6 +1,6 @@
 import fs from "fs";
 import hre from "hardhat";
-import { mainnetAddressList } from "@elementfi/elf-council-tokenlist";
+import { mainnetAddressList } from "@elementfi/council-tokenlist";
 import {
   LockingVault__factory,
   VestingVault__factory,

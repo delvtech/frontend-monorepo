@@ -1,0 +1,625 @@
+{
+  "name": "Mainnet token list",
+  "logoURI": "https://element.fi/logo.svg",
+  "tags": {
+    "underlying": {
+      "name": "Underlying asset",
+      "description": "The base asset of a principal or yield token"
+    },
+    "eP": {
+      "name": "Principal token",
+      "description": "Token that represents a deposit of principal into a yield position"
+    },
+    "eY": {
+      "name": "Yield token",
+      "description": "Token that represents the yield on a deposit into a yield position"
+    },
+    "ccpool": {
+      "name": "ConvergentCurve pool",
+      "description": "Token that represents the balancer pool for Principal tokens"
+    },
+    "wpool": {
+      "name": "Weighted pool",
+      "description": "Token that represents the balancer pool for Yield tokens"
+    },
+    "assetproxy": {
+      "name": "Vault asset proxy",
+      "description": "Token that wraps a yield position, ie: Yearn vault asset proxy"
+    },
+    "vault": {
+      "name": "Vault",
+      "description": "The yield position, ie: Yearn yvcrvLUSD"
+    }
+  },
+  "timestamp": "2021-08-12T23:29:20.224Z",
+  "version": {
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  },
+  "tokens": [
+    {
+      "chainId": 1,
+      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "symbol": "WETH",
+      "decimals": 18,
+      "name": "Wrapped Ether",
+      "tags": ["underlying"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "symbol": "USDC",
+      "decimals": 6,
+      "name": "USD Coin",
+      "tags": ["underlying"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      "symbol": "DAI",
+      "decimals": 18,
+      "name": "Dai Stablecoin",
+      "tags": ["underlying"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA",
+      "symbol": "LUSD3CRV-f",
+      "decimals": 18,
+      "name": "Curve.fi Factory USD Metapool: Liquity",
+      "tags": ["underlying"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xcA3d75aC011BF5aD07a98d02f18225F9bD9A6BDF",
+      "symbol": "crvTricrypto",
+      "decimals": 18,
+      "name": "Curve.fi USD-BTC-ETH",
+      "tags": ["underlying"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xc4AD29ba4B3c580e6D59105FFf484999997675Ff",
+      "symbol": "crv3crypto",
+      "decimals": 18,
+      "name": "Curve.fi USD-BTC-ETH",
+      "tags": ["underlying"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x06325440D014e39736583c165C2963BA99fAf14E",
+      "symbol": "steCRV",
+      "decimals": 18,
+      "name": "Curve.fi ETH/stETH",
+      "tags": ["underlying"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x53b1aEAa018da00b4F458Cc13d40eB3e8d1B85d6",
+      "symbol": "yvCurveLUSD",
+      "decimals": 18,
+      "name": "Element Wrapped Yearn Curve LUSD",
+      "tags": ["assetproxy"],
+      "extensions": {
+        "vault": "0x5fA5B62c8AF877CB37031e0a3B2f34A78e3C56A6"
+      }
+    },
+    {
+      "chainId": 1,
+      "address": "0x97278Ce17D4860f8f49afC6E4c1C5AcBf2584cE5",
+      "symbol": "yvCrvTriCrypto",
+      "decimals": 18,
+      "name": "Element Wrapped Yearn Curve TriCrypto",
+      "tags": ["assetproxy"],
+      "extensions": {
+        "vault": "0x3D980E50508CFd41a13837A60149927a11c03731"
+      }
+    },
+    {
+      "chainId": 1,
+      "address": "0xB3295e739380BD68de96802F7c4Dba4e54477206",
+      "symbol": "yvcrvSTETH",
+      "decimals": 18,
+      "name": "element yvcrvSTETH",
+      "tags": ["assetproxy"],
+      "extensions": {
+        "vault": "0xdCD90C7f6324cfa40d7169ef80b12031770B4325"
+      }
+    },
+    {
+      "chainId": 1,
+      "address": "0x21BbC083362022aB8D7e42C18c47D484cc95C193",
+      "symbol": "yvDAI",
+      "decimals": 18,
+      "name": "element yvDAI",
+      "tags": ["assetproxy"],
+      "extensions": {
+        "vault": "0xdA816459F1AB5631232FE5e97a05BBBb94970c95"
+      }
+    },
+    {
+      "chainId": 1,
+      "address": "0xdEa04Ffc66ECD7bf35782C70255852B34102C3b0",
+      "symbol": "yvUSDC",
+      "decimals": 6,
+      "name": "element yvDAI",
+      "tags": ["assetproxy"],
+      "extensions": {
+        "vault": "0x5f18C75AbDAe578b483E5F43f12a39cF75b973a9"
+      }
+    },
+    {
+      "chainId": 1,
+      "address": "0x4F424B26c7c659F198797Bd87282BF602F543521",
+      "symbol": "yvcrv3crypto",
+      "decimals": 18,
+      "name": "element yvcrv3crypto",
+      "tags": ["assetproxy"],
+      "extensions": {
+        "vault": "0xE537B5cc158EB71037D4125BDD7538421981E6AA"
+      }
+    },
+    {
+      "chainId": 1,
+      "address": "0x5fA5B62c8AF877CB37031e0a3B2f34A78e3C56A6",
+      "symbol": "yvCurve-LUSD",
+      "decimals": 18,
+      "name": "Curve LUSD Pool yVault",
+      "tags": ["vault"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x3D980E50508CFd41a13837A60149927a11c03731",
+      "symbol": "yvCurve-triCrypto",
+      "decimals": 18,
+      "name": "Curve triCrypto Pool yVault",
+      "tags": ["vault"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xdCD90C7f6324cfa40d7169ef80b12031770B4325",
+      "symbol": "yvCurve-stETH",
+      "decimals": 18,
+      "name": "Curve stETH Pool yVault",
+      "tags": ["vault"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xdA816459F1AB5631232FE5e97a05BBBb94970c95",
+      "symbol": "yvDAI",
+      "decimals": 18,
+      "name": "DAI yVault",
+      "tags": ["vault"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x5f18C75AbDAe578b483E5F43f12a39cF75b973a9",
+      "symbol": "yvUSDC",
+      "decimals": 6,
+      "name": "USDC yVault",
+      "tags": ["vault"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xE537B5cc158EB71037D4125BDD7538421981E6AA",
+      "symbol": "yvCurve-3Crypto",
+      "decimals": 18,
+      "name": "Curve 3Crypto Pool yVault",
+      "tags": ["vault"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x9b44Ed798a10Df31dee52C5256Dcb4754BCf097E",
+      "symbol": "ePyvCurveLUSD-28SEP21",
+      "decimals": 18,
+      "extensions": {
+        "underlying": "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA",
+        "position": "0x53b1aEAa018da00b4F458Cc13d40eB3e8d1B85d6",
+        "interestToken": "0xBabD64a87881d8df7680907fcde176FF11Fa0292",
+        "unlockTimestamp": 1632834462,
+        "createdAtTimestamp": 1625058479
+      },
+      "name": "LUSD3CRV-f Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xa2b3d083AA1eaa8453BfB477f062A208Ed85cBBF",
+      "symbol": "ePyvCurveLUSD-27DEC21",
+      "decimals": 18,
+      "extensions": {
+        "underlying": "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA",
+        "position": "0x53b1aEAa018da00b4F458Cc13d40eB3e8d1B85d6",
+        "interestToken": "0xBA8C8B50Ecd5b580f464f7611b8549fFeE4d8da2",
+        "unlockTimestamp": 1640620258,
+        "createdAtTimestamp": 1625068341
+      },
+      "name": "LUSD3CRV-f Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x237535Da7e2f0aBa1b68262ABCf7C4e60B42600C",
+      "symbol": "ePyvCrvTriCrypto-15AUG21",
+      "decimals": 18,
+      "extensions": {
+        "underlying": "0xcA3d75aC011BF5aD07a98d02f18225F9bD9A6BDF",
+        "position": "0x97278Ce17D4860f8f49afC6E4c1C5AcBf2584cE5",
+        "interestToken": "0xC080f19D9E7CCB6ef2096DFa08570e0057490940",
+        "unlockTimestamp": 1628997564,
+        "createdAtTimestamp": 1625571539
+      },
+      "name": "crvTricrypto Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x26941C63F4587796aBE199348ecd3d7C44F9aE0C",
+      "symbol": "ePyvcrvSTETH-15OCT21",
+      "decimals": 18,
+      "extensions": {
+        "underlying": "0x06325440D014e39736583c165C2963BA99fAf14E",
+        "position": "0xB3295e739380BD68de96802F7c4Dba4e54477206",
+        "interestToken": "0x94046274B5aA816aB236A9Eab42b5563B56E1931",
+        "unlockTimestamp": 1634325622,
+        "createdAtTimestamp": 1626117693
+      },
+      "name": "steCRV Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xb1cc77e701de60FE246607565CF7eDC9D9b6b963",
+      "symbol": "ePyvDAI-16OCT21",
+      "decimals": 18,
+      "extensions": {
+        "underlying": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "position": "0x21BbC083362022aB8D7e42C18c47D484cc95C193",
+        "interestToken": "0xA1Cc9BBcd3731A9fd43E1F1416f9B6Bf824F37D7",
+        "unlockTimestamp": 1634346845,
+        "createdAtTimestamp": 1626829159
+      },
+      "name": "DAI Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xf38c3E836Be9cD35072055Ff6a9Ba570e0B70797",
+      "symbol": "ePyvUSDC-29OCT21",
+      "decimals": 6,
+      "extensions": {
+        "underlying": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "position": "0xdEa04Ffc66ECD7bf35782C70255852B34102C3b0",
+        "interestToken": "0x5D67C1c829AB93867d865CF2008DEb45df67044f",
+        "unlockTimestamp": 1635528110,
+        "createdAtTimestamp": 1627924988
+      },
+      "name": "USDC Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x9CF2AB51aC93711Ec2fa32Ec861349568A16c729",
+      "symbol": "ePyvcrv3crypto-12NOV21",
+      "decimals": 18,
+      "extensions": {
+        "underlying": "0xc4AD29ba4B3c580e6D59105FFf484999997675Ff",
+        "position": "0x4F424B26c7c659F198797Bd87282BF602F543521",
+        "interestToken": "0x4f4500B3885bC72199373aBfE7aDEfd0366BAfeD",
+        "unlockTimestamp": 1636746083,
+        "createdAtTimestamp": 1628797282
+      },
+      "name": "crv3crypto Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xBabD64a87881d8df7680907fcde176FF11Fa0292",
+      "symbol": "eYyvCurveLUSD-28SEP21",
+      "decimals": 18,
+      "name": "LUSD3CRV-f Yield Token",
+      "extensions": {
+        "tranche": "0x9b44Ed798a10Df31dee52C5256Dcb4754BCf097E",
+        "underlying": "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA",
+        "unlockTimestamp": 1632834462
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xBA8C8B50Ecd5b580f464f7611b8549fFeE4d8da2",
+      "symbol": "eYyvCurveLUSD-27DEC21",
+      "decimals": 18,
+      "name": "LUSD3CRV-f Yield Token",
+      "extensions": {
+        "tranche": "0xa2b3d083AA1eaa8453BfB477f062A208Ed85cBBF",
+        "underlying": "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA",
+        "unlockTimestamp": 1640620258
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xC080f19D9E7CCB6ef2096DFa08570e0057490940",
+      "symbol": "eYyvCrvTriCrypto-15AUG21",
+      "decimals": 18,
+      "name": "crvTricrypto Yield Token",
+      "extensions": {
+        "tranche": "0x237535Da7e2f0aBa1b68262ABCf7C4e60B42600C",
+        "underlying": "0xcA3d75aC011BF5aD07a98d02f18225F9bD9A6BDF",
+        "unlockTimestamp": 1628997564
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x94046274B5aA816aB236A9Eab42b5563B56E1931",
+      "symbol": "eYyvcrvSTETH-15OCT21",
+      "decimals": 18,
+      "name": "steCRV Yield Token",
+      "extensions": {
+        "tranche": "0x26941C63F4587796aBE199348ecd3d7C44F9aE0C",
+        "underlying": "0x06325440D014e39736583c165C2963BA99fAf14E",
+        "unlockTimestamp": 1634325622
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xA1Cc9BBcd3731A9fd43E1F1416f9B6Bf824F37D7",
+      "symbol": "eYyvDAI-16OCT21",
+      "decimals": 18,
+      "name": "DAI Yield Token",
+      "extensions": {
+        "tranche": "0xb1cc77e701de60FE246607565CF7eDC9D9b6b963",
+        "underlying": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "unlockTimestamp": 1634346845
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x5D67C1c829AB93867d865CF2008DEb45df67044f",
+      "symbol": "eYyvUSDC-29OCT21",
+      "decimals": 6,
+      "name": "USDC Yield Token",
+      "extensions": {
+        "tranche": "0xf38c3E836Be9cD35072055Ff6a9Ba570e0B70797",
+        "underlying": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "unlockTimestamp": 1635528110
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x4f4500B3885bC72199373aBfE7aDEfd0366BAfeD",
+      "symbol": "eYyvcrv3crypto-12NOV21",
+      "decimals": 18,
+      "name": "crv3crypto Yield Token",
+      "extensions": {
+        "tranche": "0x9CF2AB51aC93711Ec2fa32Ec861349568A16c729",
+        "underlying": "0xc4AD29ba4B3c580e6D59105FFf484999997675Ff",
+        "unlockTimestamp": 1636746083
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xA8D4433BAdAa1A35506804B43657B0694deA928d",
+      "symbol": "LPePyvCurveLUSD-28SEP21",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0x9b44Ed798a10Df31dee52C5256Dcb4754BCf097E",
+        "underlying": "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA",
+        "poolId": "0xa8d4433badaa1a35506804b43657b0694dea928d00020000000000000000005e",
+        "unitSeconds": 504911232,
+        "expiration": 1632834462,
+        "createdAtTimestamp": 1625058716
+      },
+      "name": "LP Element Principal Token yvCurveLUSD-28SEP21",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x893B30574BF183d69413717f30b17062eC9DFD8b",
+      "symbol": "LPePyvCurveLUSD-27DEC21",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0xa2b3d083AA1eaa8453BfB477f062A208Ed85cBBF",
+        "underlying": "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA",
+        "poolId": "0x893b30574bf183d69413717f30b17062ec9dfd8b000200000000000000000061",
+        "unitSeconds": 757366848,
+        "expiration": 1640620258,
+        "createdAtTimestamp": 1625068680
+      },
+      "name": "LP Element Principal Token yvCurveLUSD-27DEC21",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x3A693EB97b500008d4Bb6258906f7Bbca1D09Cc5",
+      "symbol": "LPePyvCrvTriCrypto-15AUG21",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0x237535Da7e2f0aBa1b68262ABCf7C4e60B42600C",
+        "underlying": "0xcA3d75aC011BF5aD07a98d02f18225F9bD9A6BDF",
+        "poolId": "0x3a693eb97b500008d4bb6258906f7bbca1d09cc5000200000000000000000065",
+        "unitSeconds": 194390824,
+        "expiration": 1628997564,
+        "createdAtTimestamp": 1625578299
+      },
+      "name": "LP Element Principal Token yvCrvTriCrypto-15AUG21",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xce16E7ed7654a3453E8FaF748f2c82E57069278f",
+      "symbol": "LPePyvcrvSTETH-15OCT21",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0x26941C63F4587796aBE199348ecd3d7C44F9aE0C",
+        "underlying": "0x06325440D014e39736583c165C2963BA99fAf14E",
+        "poolId": "0xce16e7ed7654a3453e8faf748f2c82e57069278f00020000000000000000006d",
+        "unitSeconds": 823636447,
+        "expiration": 1634325622,
+        "createdAtTimestamp": 1626118091
+      },
+      "name": "LP Element Principal Token yvcrvSTETH-15OCT21",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x71628c66C502F988Fbb9e17081F2bD14e361FAF4",
+      "symbol": "LPePyvDAI-16OCT21",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0xb1cc77e701de60FE246607565CF7eDC9D9b6b963",
+        "underlying": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "poolId": "0x71628c66c502f988fbb9e17081f2bd14e361faf4000200000000000000000078",
+        "unitSeconds": 700248765,
+        "expiration": 1634346845,
+        "createdAtTimestamp": 1626829410
+      },
+      "name": "LP Element Principal Token yvDAI-16OCT21",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x787546Bf2c05e3e19e2b6BDE57A203da7f682efF",
+      "symbol": "LPePyvUSDC-29OCT21",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0xf38c3E836Be9cD35072055Ff6a9Ba570e0B70797",
+        "underlying": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "poolId": "0x787546bf2c05e3e19e2b6bde57a203da7f682eff00020000000000000000007c",
+        "unitSeconds": 583803612,
+        "expiration": 1635528110,
+        "createdAtTimestamp": 1627936276
+      },
+      "name": "LP Element Principal Token yvUSDC-29OCT21",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xF6dc4640D2783654BeF88E0dF3fb0F051f0DfC1A",
+      "symbol": "LPePyvcrv3crypto-12NOV21",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0x9CF2AB51aC93711Ec2fa32Ec861349568A16c729",
+        "underlying": "0xc4AD29ba4B3c580e6D59105FFf484999997675Ff",
+        "poolId": "0xf6dc4640d2783654bef88e0df3fb0f051f0dfc1a00020000000000000000007e",
+        "unitSeconds": 140112867,
+        "expiration": 1636746083,
+        "createdAtTimestamp": 1628797677
+      },
+      "name": "LP Element Principal Token yvcrv3crypto-12NOV21",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xDe620bb8BE43ee54d7aa73f8E99A7409Fe511084",
+      "symbol": "LPeYyvCurveLUSD-28SEP21",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0xde620bb8be43ee54d7aa73f8e99a7409fe51108400020000000000000000005d",
+        "underlying": "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA",
+        "interestToken": "0xBabD64a87881d8df7680907fcde176FF11Fa0292",
+        "createdAtTimestamp": 1625058649,
+        "expiration": 1632834462
+      },
+      "name": "LP Element Yield Token yvCurveLUSD-28SEP21",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x67F8FCb9D3c463da05DE1392EfDbB2A87F8599Ea",
+      "symbol": "LPeYyvCurveLUSD-27DEC21",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0x67f8fcb9d3c463da05de1392efdbb2a87f8599ea000200000000000000000060",
+        "underlying": "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA",
+        "interestToken": "0xBA8C8B50Ecd5b580f464f7611b8549fFeE4d8da2",
+        "createdAtTimestamp": 1625068623,
+        "expiration": 1640620258
+      },
+      "name": "LP Element Yield Token yvCurveLUSD-27DEC21",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xF94A7Df264A2ec8bCEef2cFE54d7cA3f6C6DFC7a",
+      "symbol": "LPeYyvCrvTriCrypto-15AUG21",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0xf94a7df264a2ec8bceef2cfe54d7ca3f6c6dfc7a000200000000000000000064",
+        "underlying": "0xcA3d75aC011BF5aD07a98d02f18225F9bD9A6BDF",
+        "interestToken": "0xC080f19D9E7CCB6ef2096DFa08570e0057490940",
+        "createdAtTimestamp": 1625577740,
+        "expiration": 1628997564
+      },
+      "name": "LP Element Yield Token yvCrvTriCrypto-15AUG21",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xD5D7bc115B32ad1449C6D0083E43C87be95F2809",
+      "symbol": "LPeYyvcrvSTETH-15OCT21",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0xd5d7bc115b32ad1449c6d0083e43c87be95f280900020000000000000000006c",
+        "underlying": "0x06325440D014e39736583c165C2963BA99fAf14E",
+        "interestToken": "0x94046274B5aA816aB236A9Eab42b5563B56E1931",
+        "createdAtTimestamp": 1626118013,
+        "expiration": 1634325622
+      },
+      "name": "LP Element Yield Token yvcrvSTETH-15OCT21",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xE54B3F5c444a801e61BECDCa93e74CdC1C4C1F90",
+      "symbol": "LPeYyvDAI-16OCT21",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0xe54b3f5c444a801e61becdca93e74cdc1c4c1f90000200000000000000000077",
+        "underlying": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "interestToken": "0xA1Cc9BBcd3731A9fd43E1F1416f9B6Bf824F37D7",
+        "createdAtTimestamp": 1626829372,
+        "expiration": 1634346845
+      },
+      "name": "LP Element Yield Token yvDAI-16OCT21",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x2D6e3515C8b47192Ca3913770fa741d3C4Dac354",
+      "symbol": "LPeYyvUSDC-29OCT21",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0x2d6e3515c8b47192ca3913770fa741d3c4dac35400020000000000000000007b",
+        "underlying": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "interestToken": "0x5D67C1c829AB93867d865CF2008DEb45df67044f",
+        "createdAtTimestamp": 1627928953,
+        "expiration": 1635528110
+      },
+      "name": "LP Element Yield Token yvUSDC-29OCT21",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 1,
+      "address": "0xd16847480D6bc218048CD31Ad98b63CC34e5c2bF",
+      "symbol": "LPeYyvcrv3crypto-12NOV21",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0xd16847480d6bc218048cd31ad98b63cc34e5c2bf00020000000000000000007d",
+        "underlying": "0xc4AD29ba4B3c580e6D59105FFf484999997675Ff",
+        "interestToken": "0x4f4500B3885bC72199373aBfE7aDEfd0366BAfeD",
+        "createdAtTimestamp": 1628797608,
+        "expiration": 1636746083
+      },
+      "name": "LP Element Yield Token yvcrv3crypto-12NOV21",
+      "tags": ["wpool"]
+    }
+  ]
+}

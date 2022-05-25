@@ -11,3 +11,7 @@ apps/elf-frontend/src/version.output.json
 apps/council-testnet/artifacts/
 apps/council-testnet/cache/
 apps/council-testnet/elf-council/
+
+# core-typchain
+packages/core-typechain/factories/
+packages/core-typechain/precompiled/

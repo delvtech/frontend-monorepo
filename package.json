@@ -6,7 +6,9 @@
     "node": "^14"
   },
   "eslintIgnore": [
-    "packages/council-typechain/dist"
+    "packages/council-typechain/dist",
+    "packages/core-typechain/dist",
+    "packages/council-tokenlist/dist"
   ],
   "scripts": {
     "prepare": "husky install",

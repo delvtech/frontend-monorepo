@@ -6,8 +6,8 @@
   "description": "",
   "dependencies": {
     "@alch/alchemy-web3": "^1.1.7",
-    "@elementfi/council-typechain": "^1.0.2",
-    "@elementfi/elf-council-tokenlist": "^1.0.2",
+    "@elementfi/council-typechain": "*",
+    "@elementfi/council-tokenlist": "*",
     "@ethersproject/providers": "^5.6.5",
     "@uniswap/token-lists": "^1.0.0-beta.26",
     "dotenv": "^16.0.0",
@@ -48,15 +48,15 @@
   "scripts": {
     "start": "npx hardhat node",
     "start-ethernal": "cross-env SYNC_ETHERNAL=1 npx hardhat node",
-    "build-tokenlist": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat build-tokenlist --network localhost",
-    "deploy-contracts": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/main.ts --network localhost --no-compile && npm run build-tokenlist",
-    "test-claiming": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/testClaiming.ts --network localhost --no-compile",
-    "test-proposal": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/createProposal.ts --network localhost --no-compile",
-    "create-goerli-gsc-proposal": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat createGoerliGscProposal --network goerli",
+    "build-tokenlist": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat build-tokenlist --network localhost",
+    "deploy-contracts": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/main.ts --network localhost --no-compile && npm run build-tokenlist",
+    "test-claiming": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/testClaiming.ts --network localhost --no-compile",
+    "test-proposal": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/createProposal.ts --network localhost --no-compile",
+    "create-goerli-gsc-proposal": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat createGoerliGscProposal --network goerli",
     "create-proposals": "bash scripts/create-proposals.sh",
     "create-gsc-proposals": "bash scripts/create-gsc-proposals.sh",
-    "mine-auto": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat autoMine",
-    "mine-interval": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat intervalMining",
+    "mine-auto": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat autoMine",
+    "mine-interval": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat intervalMining",
     "ethernal-listen": "npx ethernal listen -l",
     "ethernal-reset": "npx ethernal \"Hardhat Network\""
   }
