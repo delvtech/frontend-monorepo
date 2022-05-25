@@ -18,7 +18,7 @@
     "@blueprintjs/popover2": "^0.12.8",
     "@blueprintjs/select": "^3.18.11",
     "@elementfi/core-typechain": "*",
-    "@elementfi/tokenlist": "^2.8.0",
+    "@elementfi/core-tokenlist": "*",
     "@ethersproject/abi": "^5.5.0",
     "@ethersproject/abstract-signer": "^5.4.1",
     "@ethersproject/bytes": "^5.5.0",
