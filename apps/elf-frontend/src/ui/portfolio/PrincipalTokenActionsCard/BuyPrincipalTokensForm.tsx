@@ -26,7 +26,7 @@ import {
   getPoolInfoForPrincipalToken,
   getPrincipalPoolContractForTranche,
 } from "elf/pools/ccpool";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 
 interface BuyPrincipalTokensFormProps {
   library: Web3Provider | undefined;

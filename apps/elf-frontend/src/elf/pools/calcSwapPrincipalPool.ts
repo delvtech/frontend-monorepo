@@ -3,7 +3,7 @@ import { clipStringValueToDecimals } from "base/math/fixedPoint";
 import { calcSwapCCPoolUNSAFE } from "elf/pools/calcPoolSwap";
 import { QueryBatchSwapCalcResults } from "elf/pools/QueryBatchSwapCalcResults";
 import { assertNever } from "base/assertNever";
-import { PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalPoolTokenInfo } from "@elementfi/core-tokenlist";
 
 export enum PrincipalPoolCalcSwapError {
   INSUFFICENT_RESERVES = "INSUFFICIENT_RESERVES",

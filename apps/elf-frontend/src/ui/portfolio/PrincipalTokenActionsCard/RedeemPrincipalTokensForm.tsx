@@ -3,7 +3,7 @@ import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
 import {
   PrincipalPoolTokenInfo,
   PrincipalTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { Web3Provider } from "@ethersproject/providers";
 import { BALANCER_POOL_LP_TOKEN_DECIMALS } from "integrations/balancer/pools";
 import { SwapKind } from "integrations/balancer/SwapKind";

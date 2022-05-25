@@ -6,7 +6,7 @@ import {
   PrincipalPoolTokenInfo,
   TokenInfo,
   YieldPoolTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { sortAddresses } from "base/sortAddresses/sortAddresses";
 // TODO Replace
 import { getSmartContractFromRegistry } from "elf/contracts/SmartContractsRegistry";

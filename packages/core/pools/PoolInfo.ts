@@ -1,6 +1,6 @@
 import {
   YieldPoolTokenInfo,
   PrincipalPoolTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 
 export type PoolInfo = YieldPoolTokenInfo | PrincipalPoolTokenInfo;

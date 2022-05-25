@@ -1,4 +1,4 @@
-import { PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalPoolTokenInfo } from "@elementfi/core-tokenlist";
 import { useNowMs } from "ui/base/hooks/useNowMs/useNowMs";
 import { principalPools } from "elf/pools/ccpool";
 

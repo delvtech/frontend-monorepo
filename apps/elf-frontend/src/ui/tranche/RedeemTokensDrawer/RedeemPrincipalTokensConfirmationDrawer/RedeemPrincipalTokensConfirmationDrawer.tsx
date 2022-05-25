@@ -17,7 +17,7 @@ import { CryptoAssetType } from "elf/crypto/CryptoAsset";
 
 import { useRedeemTermAssetsToEth } from "ui/userProxy/useRedeemTermAssetsToEth";
 import { useWithdrawPrincipal } from "ui/tranche/RedeemTokensDrawer/useWithdrawPrincipal";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import { trancheContractsByAddress } from "elf/tranche/tranches";
 import { getBaseAssetForTranche } from "elf/tranche/baseAssets";
 

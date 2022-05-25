@@ -3,7 +3,7 @@ import {
   CurvePool2,
   CurvePool3,
 } from "@elementfi/core-typechain/dist/libraries";
-import { CurveLpTokenInfo, TokenInfo } from "@elementfi/tokenlist";
+import { CurveLpTokenInfo, TokenInfo } from "@elementfi/core-tokenlist";
 import { AddressesJson } from "addresses/addresses";
 import {
   isGoerli,

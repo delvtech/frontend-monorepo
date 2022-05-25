@@ -1,4 +1,4 @@
-import { PrincipalTokenInfo, TokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, TokenInfo } from "@elementfi/core-tokenlist";
 import {
   getZapSwapCurvePath,
   ZapSwapCurvePathKind,

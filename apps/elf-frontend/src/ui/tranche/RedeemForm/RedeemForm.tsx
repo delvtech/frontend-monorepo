@@ -6,7 +6,7 @@ import {
   Intent,
 } from "@blueprintjs/core";
 import { Tranche } from "@elementfi/core-typechain/dist/v1";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import classNames from "classnames";
 import tw from "efi-tailwindcss-classnames";
 import { useDarkMode } from "ui/prefs/useDarkMode/useDarkMode";

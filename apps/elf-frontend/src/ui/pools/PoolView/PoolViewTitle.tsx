@@ -8,7 +8,7 @@ import { getCryptoSymbol } from "elf/crypto/getCryptoSymbol";
 import { getPoolTokens } from "elf/pools/getPoolTokens";
 import { PoolInfo } from "elf/pools/PoolInfo";
 import { formatTermAssetShortSymbol } from "elf/tranche/format";
-import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/core-tokenlist";
 
 interface PoolViewTitleProps {
   poolInfo: PoolInfo;

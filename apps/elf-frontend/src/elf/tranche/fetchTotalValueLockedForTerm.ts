@@ -6,7 +6,7 @@ import { getPoolInfoForPrincipalToken } from "elf/pools/ccpool";
 import { fetchBaseAssetReservesInPool } from "elf/pools/fetchBaseAssetReservesInPool";
 import { getPoolInfoForYieldToken } from "elf/pools/weightedPool";
 import { trancheContractsByAddress } from "elf/tranche/tranches";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 
 export async function fetchTotalValueLockedForTerm(
   trancheInfo: PrincipalTokenInfo,

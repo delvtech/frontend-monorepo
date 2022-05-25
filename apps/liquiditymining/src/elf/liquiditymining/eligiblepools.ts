@@ -1,4 +1,7 @@
-import { goerliTokenList, PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
+import {
+  goerliTokenList,
+  PrincipalPoolTokenInfo,
+} from "@elementfi/core-tokenlist";
 // We aren't deploying v1 terms anymore, so we only need to support v1.1 for LM
 import {
   ConvergentCurvePool,

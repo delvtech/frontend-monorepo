@@ -1,6 +1,9 @@
 import { Button, Card, Elevation, Intent, Tag } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { AssetProxyTokenInfo, PrincipalTokenInfo } from "@elementfi/tokenlist";
+import {
+  AssetProxyTokenInfo,
+  PrincipalTokenInfo,
+} from "@elementfi/core-tokenlist";
 import { convertEpochSecondsToDate } from "base/convertEpochSecondsToDate/convertEpochSecondsToDate";
 import { formatAbbreviatedDate } from "base/dates/dates";
 import { formatPercent } from "base/formatPercent/formatPercent";

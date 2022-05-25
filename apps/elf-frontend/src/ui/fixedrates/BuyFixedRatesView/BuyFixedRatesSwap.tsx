@@ -2,7 +2,7 @@ import { Button, Classes, Intent } from "@blueprintjs/core";
 import {
   PrincipalPoolTokenInfo,
   PrincipalTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { formatBalance } from "base/formatBalance/formatBalance";

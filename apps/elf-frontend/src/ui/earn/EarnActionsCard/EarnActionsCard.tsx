@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import { Button, Callout, H4, Intent } from "@blueprintjs/core";
 import { Web3Provider } from "@ethersproject/providers";
 import { Signer } from "ethers";
-import { PrincipalTokenInfo as TrancheInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo as TrancheInfo } from "@elementfi/core-tokenlist";
 import { t } from "ttag";
 
 import tw from "efi-tailwindcss-classnames";

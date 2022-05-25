@@ -1,7 +1,7 @@
 import { Button, Callout, Intent, Switch } from "@blueprintjs/core";
 import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
 import { Tranche } from "@elementfi/core-typechain/dist/v1";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import { Web3Provider } from "@ethersproject/providers";
 import tw from "efi-tailwindcss-classnames";
 import { useNumericInput } from "ui/base/hooks/useNumericInput/useNumericInput";

@@ -1,5 +1,5 @@
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
-import { YieldTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
+import { YieldTokenInfo } from "@elementfi/core-tokenlist";
 import warning from "warning";
 
 import { formatYieldTokenShortSymbol } from "elf/interestToken/formatYieldTokenShortSymbol";

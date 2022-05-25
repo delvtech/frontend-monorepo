@@ -35,7 +35,7 @@ import { TermTag } from "ui/tranche/TermTag";
 import { format } from "date-fns";
 import { calculateProgress } from "base/calculateProgress/calculateProgress";
 import { useNowMs } from "ui/base/hooks/useNowMs/useNowMs";
-import { PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalPoolTokenInfo } from "@elementfi/core-tokenlist";
 
 interface PrincipalPoolCardListItemProps {
   principalPoolTokenInfo: PrincipalPoolTokenInfo;

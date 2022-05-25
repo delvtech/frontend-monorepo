@@ -7,7 +7,7 @@ import {
 import {
   PrincipalTokenInfo as TrancheInfo,
   YieldTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { ContractReceipt } from "@ethersproject/contracts";
 import { TransactionError } from "ui/contracts/TransactionError";
 import { useTokenApprovedForAmount } from "ui/token/hooks/useTokenApprovedForAmount";
