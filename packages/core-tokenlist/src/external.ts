@@ -41,7 +41,9 @@ async function getExternalTokenInfo(
    * the one on mainnet and in their place we stub with mocked versions. In the
    * future we could support it on other networks if we wish to build a stubbed
    * LP system of tokens */
-  if (!name.startsWith("Curve.fi") || chainId !== 1) {return basicTokenInfo;}
+  if (!name.startsWith("Curve.fi") || chainId !== 1) {
+    return basicTokenInfo;
+  }
 
   return await getCurveTokenInfo(basicTokenInfo);
 }

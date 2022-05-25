@@ -105,8 +105,9 @@ export async function getCurveTokenInfo({
   symbol,
   decimals,
 }: TokenInfo): Promise<CurveLpTokenInfo> {
-  if (chainId !== 1)
-    {throw new Error("can only retrieve curveToken info for mainnet");}
+  if (chainId !== 1) {
+    throw new Error("can only retrieve curveToken info for mainnet");
+  }
 
   let pool = await getCurvePoolFromTokenAddress(address);
 
