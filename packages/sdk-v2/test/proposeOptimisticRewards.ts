@@ -10,7 +10,7 @@ import MerkleTree from "merkletreejs";
 
 import { proposeOptimisticRewards } from "src/proposeOptimisticRewards";
 
-import { Account, getMerkleTree } from "./merkle";
+import { Account, getMerkleTree } from "@elementfi/base/merkle/merkle";
 
 import { MockERC20, MockERC20__factory } from "@elementfi/council-typechain";
 
