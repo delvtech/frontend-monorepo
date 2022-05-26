@@ -1,14 +1,14 @@
 {
-  "name": "sdk-v2",
+  "name": "sdk-council",
   "version": "1.0.0",
-  "description": "Element SDK for V2 contracts",
+  "description": "Element SDK for council contracts",
   "main": "index.js",
   "scripts": {
     "test": "TRANSPILE_ONLY=1 npx hardhat test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/element-fi/sdk-v2.git"
+    "url": "git+https://github.com/element-fi/frontend-monorepo.git"
   },
   "author": "Matthew Brown",
   "license": "Apache-2.0",

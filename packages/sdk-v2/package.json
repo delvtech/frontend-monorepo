@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/element-fi/sdk-v2.git"
+    "url": "git+https://github.com/element-fi/frontend-monorepo.git"
   },
   "author": "Matthew Brown",
   "license": "Apache-2.0",
