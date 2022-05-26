@@ -36,8 +36,12 @@ export function GSCMemberProfileRow(
   } = props;
   const votePower = useVotingPowerForAccountAtLatestBlock(delegate.address);
   const { data: thresholdValue } = useGSCVotePowerThreshold();
-  const formattedThreshold = thresholdValue && formatEther(thresholdValue);
-  const isKickable = formattedThreshold && +formattedThreshold > +votePower;
+  const formattedThreshold = thresholdValue && +formatEther(thresholdValue);
+  const formattedVotingPower: number = +votePower;
+  const isKickable =
+    formattedThreshold &&
+    !!formattedVotingPower &&
+    formattedThreshold > formattedVotingPower;
 
   const { data: ensName } = useENSName(delegate.address);
   const formattedDelegateName =
