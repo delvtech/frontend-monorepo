@@ -5,3 +5,4 @@ yarn-error.log
 .env
 apps/**/tests/e2e/screenshots
 apps/**/tests/e2e/videos
+package-lock.json
