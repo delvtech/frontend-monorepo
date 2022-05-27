@@ -1,7 +1,7 @@
 {
-  "name": "@elementfi/sdk-council",
+  "name": "@elementfi/core-sdk-v2",
   "version": "1.0.0",
-  "description": "Element SDK for council contracts",
+  "description": "Element SDK for V2 contracts",
   "main": "index.js",
   "scripts": {
     "test": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat test"
