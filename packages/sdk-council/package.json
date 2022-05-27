@@ -1,10 +1,10 @@
 {
-  "name": "sdk-council",
+  "name": "@elementfi/sdk-council",
   "version": "1.0.0",
   "description": "Element SDK for council contracts",
   "main": "index.js",
   "scripts": {
-    "test": "TRANSPILE_ONLY=1 npx hardhat test"
+    "test": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat test"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,6 @@
     "@typescript-eslint/parser": "^4.33.0",
     "chai": "^4.3.6",
     "dotenv": "^16.0.1",
-    "eslint": "^7.32.0",
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.6.7",
     "hardhat": "^2.9.6",

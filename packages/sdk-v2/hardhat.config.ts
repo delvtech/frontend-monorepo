@@ -13,6 +13,9 @@ dotenv.config();
 const config: HardhatUserConfig = {
   solidity: "0.8.4",
   mocha: { timeout: 0 },
+  paths: {
+    tests: "./src",
+  },
   networks: {
     hardhat: {
       allowUnlimitedContractSize: true,
