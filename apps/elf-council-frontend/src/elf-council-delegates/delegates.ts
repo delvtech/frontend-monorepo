@@ -17,7 +17,6 @@ export interface Delegate {
   commonwealthCommentId?: number;
   commonwealthName?: string | null;
   name?: string;
-  ensName?: string | null;
   description?: string;
 
   /**
