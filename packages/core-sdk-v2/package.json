@@ -1,0 +1,45 @@
+{
+  "name": "@elementfi/core-sdk-v2",
+  "version": "1.0.0",
+  "description": "Element SDK for V2 contracts",
+  "main": "index.js",
+  "scripts": {
+    "test": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/element-fi/frontend-monorepo.git"
+  },
+  "author": "Matthew Brown",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/element-fi/frontend-monorepo/issues"
+  },
+  "homepage": "https://github.com/element-fi/frontend-monorepo/apps/#readme",
+  "dependencies": {
+    "@elementfi/core-typechain": "*",
+    "@elementfi/council-typechain": "*"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@typechain/ethers-v5": "^7.2.0",
+    "@typechain/hardhat": "^2.3.1",
+    "@types/chai": "^4.3.1",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^12.20.52",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "chai": "^4.3.6",
+    "dotenv": "^16.0.1",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.7",
+    "hardhat": "^2.9.6",
+    "solhint": "^3.3.7",
+    "ts-node": "^10.8.0",
+    "tsconfig-paths": "^4.0.0",
+    "typechain": "^5.2.0",
+    "typescript": "^4.6.4"
+  }
+}
