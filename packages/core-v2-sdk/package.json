@@ -1,5 +1,5 @@
 {
-  "name": "@elementfi/core-sdk-v2",
+  "name": "@elementfi/core-v2-sdk",
   "version": "1.0.0",
   "description": "Element SDK for V2 contracts",
   "main": "index.js",
