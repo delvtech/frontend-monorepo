@@ -48,14 +48,14 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
     <Popover>
       <div
         className={classNames(
-          "grid grid-cols-10 items-center justify-between rounded-xl bg-white py-3 px-4",
+          "grid grid-cols-10 items-center justify-between rounded-xl bg-white py-3 sm:px-4",
           {
             "!bg-votingGreen": highlightSelected && selected,
           },
         )}
       >
         {/* Name */}
-        <div className="col-span-7 mr-4 items-start truncate text-left lg:col-span-4">
+        <div className="col-span-6 mr-4 items-start truncate text-left lg:col-span-4">
           <div className="flex flex-col">
             <div className="text-principalRoyalBlue flex items-center font-bold">
               <WalletJazzicon
@@ -104,9 +104,16 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         </div>
 
         {/* Buttons */}
-        <div className="col-span-3 flex justify-end gap-x-4 lg:col-span-4">
+        <div className="col-span-4 flex justify-end gap-x-2 sm:gap-x-4">
           {/* Button to expand a detailed view of delegate  */}
-          {/* <Popover.Button
+
+          {/* 
+              Added a placeholder for future buttons. This placeholder div
+              helps scale the button width to match the GSCMemberProfileRow 
+              button width within the 'CurrentMembers' tab
+          */}
+          <div className="w-4/12 sm:w-1/2 lg:pl-2">
+            {/* <Popover.Button
             className={classNames(
               getButtonClass({ variant: ButtonVariant.SECONDARY }),
               "w-full justify-center",
@@ -114,9 +121,10 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
           >
             {t`Profile`}
           </Popover.Button> */}
+          </div>
 
           {/* Unique action event button */}
-          <div className="w-full lg:w-1/2 lg:pl-2">{actionButton}</div>
+          <div className="w-8/12 sm:w-1/2 lg:pl-2">{actionButton}</div>
         </div>
       </div>
 

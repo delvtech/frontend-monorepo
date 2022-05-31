@@ -56,7 +56,7 @@ export function GSCMemberProfileRow(
   return (
     <div
       className={classNames(
-        "grid grid-cols-10 items-center justify-between rounded-xl bg-white py-3 px-4",
+        "grid grid-cols-10 items-center justify-between rounded-xl bg-white py-3 sm:px-4",
         {
           "!bg-votingGreen": highlightSelected && selected,
         },
@@ -102,12 +102,12 @@ export function GSCMemberProfileRow(
       </div>
 
       {/* Buttons */}
-      <div className="col-span-4 flex justify-end gap-x-4">
+      <div className="col-span-4 flex justify-end gap-x-2 sm:gap-x-4">
         {/* Unique action event button */}
-        <div className="w-1/2 lg:pl-2">
+        <div className="w-4/12 sm:w-1/2 lg:pl-2">
           {isKickable ? kickButton : undefined}
         </div>
-        <div className="w-1/2 lg:pl-2">{delegateButton}</div>
+        <div className="w-8/12 sm:w-1/2 lg:pl-2">{delegateButton}</div>
       </div>
     </div>
   );
