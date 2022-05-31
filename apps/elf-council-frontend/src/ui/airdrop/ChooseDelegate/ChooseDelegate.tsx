@@ -32,15 +32,17 @@ export function ChooseDelegate({
   onPrevStep,
 }: ChooseDelegateProps): ReactElement {
   // Holds state for the Featured delegate selection
-  const [selectedDelegateIndex, setSelectedDelegateIndex] =
-    useState<number | undefined>();
+  const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
+    number | undefined
+  >();
 
   // Holds state for self-delegate option
   const [isSelfDelegated, setIsSelfDelegated] = useState(false);
 
   // Holds state for the custom delegate input
-  const [customDelegateAddress, setCustomDelegateAddress] =
-    useState<string | undefined>();
+  const [customDelegateAddress, setCustomDelegateAddress] = useState<
+    string | undefined
+  >();
   const { data: resolvedCustomDelegateAddress } = useResolvedEnsName(
     customDelegateAddress,
     provider,
