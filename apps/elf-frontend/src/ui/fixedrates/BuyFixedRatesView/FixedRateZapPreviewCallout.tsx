@@ -1,5 +1,5 @@
 import { Callout } from "@blueprintjs/core";
-import { PrincipalTokenInfo, TokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, TokenInfo } from "@elementfi/core-tokenlist";
 import { getSafeFixedNumber } from "base/math/fixedPoint";
 import tw, { classnames } from "efi-tailwindcss-classnames";
 import { BigNumber } from "ethers";

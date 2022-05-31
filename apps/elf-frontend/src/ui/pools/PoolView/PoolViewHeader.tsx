@@ -20,7 +20,7 @@ import { PoolInfo } from "elf/pools/PoolInfo";
 import { isYieldPool } from "elf/pools/weightedPool";
 import { formatLengthOfTime } from "elf/time/formatLengthOfTime/formatLengthOfTime";
 import { formatTermAssetShortSymbol } from "elf/tranche/format";
-import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/core-tokenlist";
 
 interface PoolViewHeaderProps {
   poolInfo: PoolInfo;

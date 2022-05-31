@@ -8,6 +8,7 @@
   "eslintIgnore": [
     "packages/council-typechain/dist",
     "packages/core-typechain/dist",
+    "packages/core-tokenlist/dist",
     "packages/council-tokenlist/dist"
   ],
   "scripts": {
@@ -34,7 +35,6 @@
     ]
   },
   "dependencies": {
-    "@elementfi/tokenlist": "^2.8.0",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "eslint": "^7.32.0",

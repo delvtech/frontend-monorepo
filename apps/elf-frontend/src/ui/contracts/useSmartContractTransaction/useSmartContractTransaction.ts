@@ -47,13 +47,15 @@ export function useSmartContractTransaction<
       args: ContractMethodArgs<TContract, TMethodName>,
     ): Promise<ContractReceipt> => {
       if (!signer) {
-        console.warn(`Tried to call ${methodName} without a signer.`);
+        console.warn(`Tried to call ${methodName as string} without a signer.`);
         return undefined as unknown as ContractReceipt;
       }
 
       if (!contract) {
         // only for typesafety, this should never happen
-        console.warn(`Tried to call ${methodName} without contract instance.`);
+        console.warn(
+          `Tried to call ${methodName as string} without contract instance.`,
+        );
         return undefined as unknown as ContractReceipt;
       }
 
@@ -91,7 +93,9 @@ export function useSmartContractTransaction<
       // otherwise handle errors like reverts etc...
       const addressesJsonKey = lookupAddressKey(contract?.address);
       console.error(
-        `Error calling ${methodName} on ${addressesJsonKey}: ${contract?.address} with arguments:`,
+        `Error calling ${methodName as string} on ${addressesJsonKey}: ${
+          contract?.address
+        } with arguments:`,
         error,
       );
       await onError?.(error);

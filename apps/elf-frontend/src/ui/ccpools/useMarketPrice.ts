@@ -1,5 +1,5 @@
 import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import { usePoolTokenPrices } from "ui/pools/hooks/usePoolTokenPrices/usePoolTokenPrices";
 import { getPrincipalPoolContractForTranche } from "elf/pools/ccpool";
 import { underlyingContractsByAddress } from "elf/underlying/underlying";

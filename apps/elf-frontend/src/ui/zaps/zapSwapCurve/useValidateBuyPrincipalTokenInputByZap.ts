@@ -1,4 +1,4 @@
-import { PrincipalTokenInfo, TokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, TokenInfo } from "@elementfi/core-tokenlist";
 import { Web3Provider } from "@ethersproject/providers";
 import { getCryptoAssetForToken } from "elf/crypto/getCryptoAssetForToken";
 import { getPoolInfoForPrincipalToken } from "elf/pools/ccpool";

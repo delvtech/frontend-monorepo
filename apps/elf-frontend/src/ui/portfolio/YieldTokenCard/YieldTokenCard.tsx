@@ -12,7 +12,7 @@ import {
 import { IconNames } from "@blueprintjs/icons";
 import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
 import { InterestToken, WeightedPool } from "@elementfi/core-typechain/dist/v1";
-import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/core-tokenlist";
 import { Web3Provider } from "@ethersproject/providers";
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import { calculateProgress } from "base/calculateProgress/calculateProgress";

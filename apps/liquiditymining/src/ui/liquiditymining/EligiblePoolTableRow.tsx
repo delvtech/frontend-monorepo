@@ -1,7 +1,7 @@
 import {
   PrincipalPoolTokenInfo,
   PrincipalTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { ChevronDownIcon, MinusIcon, PlusIcon } from "@heroicons/react/solid";
 import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";

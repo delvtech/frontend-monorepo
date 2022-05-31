@@ -8,7 +8,7 @@ import { CurvePool3 } from "@elementfi/core-typechain/dist/libraries/CurvePool3"
 import { CurvePool1__factory } from "@elementfi/core-typechain/dist/libraries/factories/CurvePool1__factory";
 import { CurvePool2__factory } from "@elementfi/core-typechain/dist/libraries/factories/CurvePool2__factory";
 import { CurvePool3__factory } from "@elementfi/core-typechain/dist/libraries/factories/CurvePool3__factory";
-import { CurveLpTokenInfo } from "@elementfi/tokenlist";
+import { CurveLpTokenInfo } from "@elementfi/core-tokenlist";
 import { defaultProvider } from "elf/providers/providers";
 import { getTokenInfo } from "tokenlists/tokenlists";
 

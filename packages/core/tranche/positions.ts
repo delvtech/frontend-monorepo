@@ -4,7 +4,7 @@ import {
   PrincipalTokenInfo,
   TokenInfo,
   TokenTag,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 // TODO: stuff under packages/ should not have a default provider
 import { defaultProvider } from "@elementfi/core/providers/providers";
 import { tokenListJson } from "@elementfi/core/tokenlists/tokenlists";

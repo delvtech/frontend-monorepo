@@ -2,7 +2,7 @@ import tw from "efi-tailwindcss-classnames";
 import { useDarkMode } from "ui/prefs/useDarkMode/useDarkMode";
 import { t } from "ttag";
 import classNames from "classnames";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import { ReactElement } from "react";
 import { TermPicker2 } from "ui/tranche/TermPicker/TermPicker2";
 import { PrincipalTokenTermButtonLabel2 } from "ui/tranche/TermPicker/PrincipalTokenTermButtonLabel2";

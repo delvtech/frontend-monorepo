@@ -1,5 +1,5 @@
 import { ConvergentCurvePool, Vault } from "@elementfi/core-typechain/dist/v1";
-import { PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalPoolTokenInfo } from "@elementfi/core-tokenlist";
 import { ExitRequest } from "integrations/balancer/ExitRequest";
 import { BALANCER_POOL_LP_TOKEN_DECIMALS } from "integrations/balancer/pools";
 import { balancerVaultContract } from "elf/balancer/vault";

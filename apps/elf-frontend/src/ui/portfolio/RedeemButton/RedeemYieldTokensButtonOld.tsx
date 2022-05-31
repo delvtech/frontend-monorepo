@@ -4,7 +4,7 @@ import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
 import {
   PrincipalTokenInfo as TrancheInfo,
   YieldTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { Web3Provider } from "@ethersproject/providers";
 import tw from "efi-tailwindcss-classnames";
 import { useNowMs } from "ui/base/hooks/useNowMs/useNowMs";

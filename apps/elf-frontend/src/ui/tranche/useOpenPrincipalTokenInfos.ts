@@ -1,4 +1,4 @@
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import { useNowMs } from "ui/base/hooks/useNowMs/useNowMs";
 import { principalTokenInfos } from "elf/tranche/tranches";
 

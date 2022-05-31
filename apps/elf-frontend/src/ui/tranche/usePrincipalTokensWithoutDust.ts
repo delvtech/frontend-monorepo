@@ -1,5 +1,5 @@
 import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import { useTokensWithBalance } from "ui/token/hooks/useTokensWithBalance";
 import { isDust } from "elf/coins/isDust";
 import { getTokenInfo } from "tokenlists/tokenlists";
@@ -30,10 +30,14 @@ export function usePrincipalTokensWithoutDust(
     principalTokensWithBalanceResults,
     principalTokenInfosWithBalance,
   )
-    .filter((zipped): zipped is [
-      { token: ERC20; balanceOf: BigNumber },
-      PrincipalTokenInfo,
-    ] => zipped.every((v) => !!v))
+    .filter(
+      (
+        zipped,
+      ): zipped is [
+        { token: ERC20; balanceOf: BigNumber },
+        PrincipalTokenInfo,
+      ] => zipped.every((v) => !!v),
+    )
     .filter(
       ([{ balanceOf }, principalTokenInfo]) =>
         !isDust(balanceOf, principalTokenInfo.decimals),

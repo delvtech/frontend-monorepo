@@ -4,7 +4,7 @@ import { ExternalLinkIcon } from "@heroicons/react/outline";
 import {
   PrincipalPoolTokenInfo,
   PrincipalTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import USDCIcon from "src/ui/base/svg/USDCIcon";
 import { eligibleGoerliPoolContracts } from "src/elf/liquiditymining/eligiblepools";
 import { formatBalance } from "src/formatBalance";

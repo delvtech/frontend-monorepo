@@ -7,7 +7,7 @@ import { ONE_YEAR_IN_SECONDS } from "base/time";
 import {
   PrincipalPoolTokenInfo,
   PrincipalTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 
 /**
  * Returns the Fixed APR for a principal token

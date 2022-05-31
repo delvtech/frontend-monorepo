@@ -7,7 +7,7 @@ import tw from "efi-tailwindcss-classnames";
 import { useNewPrincipalTokensPendingTransaction } from "ui/portfolio/hooks/useNewPrincipalTokensPendingTransaction";
 import { PrincipalTokenCardOld } from "ui/portfolio/PrincipalTokenCard/PrincipalTokenCardOld";
 import { NoPrincipalTokensInWalletNonIdealState } from "ui/wallets/NoPrincipalTokensInWalletNonIdealState/NoPrincipalTokensInWalletNonIdealState";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import { usePrincipalTokensWithoutDust } from "ui/tranche/usePrincipalTokensWithoutDust";
 
 interface PrincipalTokenPortfolioOldProps {

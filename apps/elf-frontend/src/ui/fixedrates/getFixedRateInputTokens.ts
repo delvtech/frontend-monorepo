@@ -1,4 +1,4 @@
-import { PrincipalTokenInfo, TokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, TokenInfo } from "@elementfi/core-tokenlist";
 import { getCurvePoolTokensForPrincipalToken } from "elf/curve/tokens";
 import { getTokenInfo } from "tokenlists/tokenlists";
 

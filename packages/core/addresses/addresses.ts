@@ -1,6 +1,6 @@
-import { AddressesJsonFile } from "@elementfi/tokenlist/dist/AddressesJsonFile";
-import AddressesJsonFileGoerli from "@elementfi/tokenlist/dist/goerli.addresses.json";
-import AddressesJsonFileMainnet from "@elementfi/tokenlist/dist/mainnet.addresses.json";
+import { AddressesJsonFile } from "@elementfi/core-tokenlist/dist/AddressesJsonFile";
+import AddressesJsonFileGoerli from "@elementfi/core-tokenlist/dist/goerli.addresses.json";
+import AddressesJsonFileMainnet from "@elementfi/core-tokenlist/dist/mainnet.addresses.json";
 import AddressesJsonFileMock from "@elementfi/core/addresses/mock.addresses.json";
 import AddressesJsonFileTestnet from "@elementfi/core/addresses/testnet.addresses.json";
 

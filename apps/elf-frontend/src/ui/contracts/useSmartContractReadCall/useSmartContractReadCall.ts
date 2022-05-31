@@ -95,7 +95,11 @@ export function makeSmartContractReadCallUseQueryOptions<
     onError: () => {
       const addressesJsonKey = lookupAddressKey(contract?.address);
       console.error(
-        `Error calling ${methodName} on contract name: ${addressesJsonKey}: ${contract?.address} with arguments:`,
+        `Error calling ${
+          methodName as string
+        } on contract name: ${addressesJsonKey}: ${
+          contract?.address
+        } with arguments:`,
         callArgs,
       );
     },

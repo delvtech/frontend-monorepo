@@ -1,5 +1,5 @@
 import { ZapSwapCurve } from "@elementfi/core-typechain/dist/v1.1/ZapSwapCurve";
-import { PrincipalTokenInfo, TokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, TokenInfo } from "@elementfi/core-tokenlist";
 import { zapSwapCurveContract } from "elf/zaps/zapSwapCurve/contracts";
 import { createZapSwapCurveBuyInputs } from "elf/zaps/zapSwapCurve/createZapSwapCurveInputs";
 import { serializeError } from "eth-rpc-errors";

@@ -8,11 +8,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@elementfi/core-typechain": "^2.0.6",
-    "@elementfi/react-query-typechain": "^1.2.0",
-    "@elementfi/tokenlist": "^2.4.0",
+    "@elementfi/core-typechain": "*",
+    "@elementfi/react-query-typechain": "*",
+    "@elementfi/core-tokenlist": "*",
     "@types/lodash.keyby": "^4.6.6",
-    "@elementfi/base": "^1.0.0",
+    "@elementfi/base": "*",
     "lodash.keyby": "^4.6.0",
     "ts-money": "^0.4.7"
   }

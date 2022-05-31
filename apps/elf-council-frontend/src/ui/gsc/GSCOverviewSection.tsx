@@ -33,6 +33,7 @@ import {
 import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
 import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
 import { commify, formatEther } from "ethers/lib/utils";
+import { Spinner } from "src/ui/base/Spinner/Spinner";
 
 const provider = defaultProvider;
 
@@ -52,22 +53,15 @@ export function GSCOverviewSection(): ReactElement {
 
   // Fetch and sort current GSC members
   const { data: members = [], refetch: refetchMembers } = useGSCMembers();
-  const votingPowerByDelegate = useVotingPowerByDelegates();
-  const sortedMembers = sortMembersByVotingPower(
-    members,
-    votingPowerByDelegate,
-  );
+  const { data: votePowerByDelegates = {}, isLoading } =
+    useVotingPowerByDelegates();
+  const sortedMembers = sortMembersByVotingPower(members, votePowerByDelegates);
 
   // Fetch current GSC candidates
   const candidates = useGSCCandidates();
   const { data: thresholdValue } = useGSCVotePowerThreshold();
   const formattedThreshold =
     thresholdValue && commify(Math.round(+formatEther(thresholdValue)));
-  const topTwentyCandidates = getTopTwentyCandidates(
-    candidates,
-    votingPowerByDelegate,
-    thresholdValue,
-  );
 
   // Tab state
   const [currentTab, setCurrentTab] = useState<TabOption>(TabOption.Overview);
@@ -277,40 +271,45 @@ export function GSCOverviewSection(): ReactElement {
               <div className="text-principalRoyalBlue text-center font-bold">{t`No current GSC members.`}</div>
             ))}
 
-          {currentTab === TabOption.Rising && (
-            <div className="h-96 overflow-y-auto">
-              <ul className="space-y-2">
-                {topTwentyCandidates.map((delegate) => {
-                  const currentlyDelegated =
-                    currentDelegate === delegate.address;
+          {currentTab === TabOption.Rising &&
+            (isLoading ? (
+              <div>
+                <Spinner />
+              </div>
+            ) : (
+              <div className="h-96 overflow-y-auto">
+                <ul className="space-y-2">
+                  {candidates.map((delegate) => {
+                    const currentlyDelegated =
+                      currentDelegate === delegate.address;
 
-                  const delegationButton = (
-                    <ChangeDelegateButton
-                      onDelegationClick={() =>
-                        handleDelegation(delegate.address)
-                      }
-                      account={account}
-                      disabled={isGSC}
-                      isLoading={changeDelegationLoading}
-                      isCurrentDelegate={currentlyDelegated}
-                    />
-                  );
-
-                  return (
-                    <li key={`${delegate.address}`}>
-                      <DelegateProfileRow
-                        provider={provider}
-                        selected={false}
-                        delegate={delegate}
-                        actionButton={delegationButton}
-                        profileActionButton={delegationButton}
+                    const delegationButton = (
+                      <ChangeDelegateButton
+                        onDelegationClick={() =>
+                          handleDelegation(delegate.address)
+                        }
+                        account={account}
+                        disabled={isGSC}
+                        isLoading={changeDelegationLoading}
+                        isCurrentDelegate={currentlyDelegated}
                       />
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          )}
+                    );
+
+                    return (
+                      <li key={`${delegate.address}`}>
+                        <DelegateProfileRow
+                          provider={provider}
+                          selected={false}
+                          delegate={delegate}
+                          actionButton={delegationButton}
+                          profileActionButton={delegationButton}
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
         </div>
       </Card>
     </div>
@@ -351,22 +350,6 @@ function sortMembersByVotingPower(
     }
     return +votingPowerB?.sub(votingPowerA).toString();
   });
-}
-
-const NUM_CANDIDATES_TO_SHOW = 20;
-function getTopTwentyCandidates(
-  candidates: Delegate[] = [],
-  votingPowerByDelegate: VotePowerByDelegate = {},
-  threshold?: BigNumber,
-) {
-  return candidates
-    .filter((candidate) => {
-      const votingPower =
-        votingPowerByDelegate[candidate.address] ?? BigNumber.from(0);
-
-      return !(votingPower && threshold && votingPower.gte(threshold));
-    })
-    .slice(0, NUM_CANDIDATES_TO_SHOW);
 }
 
 export default GSCOverviewSection;

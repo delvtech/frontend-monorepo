@@ -11,7 +11,7 @@ import {
   validateTradeValues,
 } from "elf/trade/validateTradeValues";
 import { useCalculatePrincipalTokenAmountOut } from "ui/ccpools/useCalculatePrincipalTokenAmountOut";
-import { PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalPoolTokenInfo } from "@elementfi/core-tokenlist";
 
 export function useValidateBuyPrincipalTokenInput(
   library: Web3Provider | undefined,

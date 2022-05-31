@@ -10,7 +10,7 @@ import { PrincipalTokenActionTabs } from "ui/portfolio/PrincipalTokenActionTabs/
 import { PrincipalTokenInformation } from "ui/portfolio/PrincipalTokenInformation/PrincipalTokenInformation";
 import { SellPrincipalTokensForm } from "ui/portfolio/PrincipalTokenActionsCard/SellPrincipalTokensForm";
 import { RedeemPrincipalTokensForm } from "ui/portfolio/PrincipalTokenActionsCard/RedeemPrincipalTokensForm";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 
 interface PrincipalTokenActionsCardProps {
   library: Web3Provider | undefined;

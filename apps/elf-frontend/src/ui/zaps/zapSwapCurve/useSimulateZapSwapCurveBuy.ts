@@ -1,4 +1,4 @@
-import { PrincipalTokenInfo, TokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, TokenInfo } from "@elementfi/core-tokenlist";
 import { ONE_MINUTE_IN_MILLISECONDS } from "base/time";
 import { zapSwapCurveContract } from "elf/zaps/zapSwapCurve/contracts";
 import { createZapSwapCurveBuyInputs } from "elf/zaps/zapSwapCurve/createZapSwapCurveInputs";

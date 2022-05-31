@@ -1,6 +1,6 @@
 import { TestYVault__factory } from "@elementfi/core-typechain/dist/v1";
-import { TokenInfo, VaultTokenInfo } from "@elementfi/tokenlist";
-import { TokenTag } from "@elementfi/tokenlist/dist/tags";
+import { TokenInfo, VaultTokenInfo } from "@elementfi/core-tokenlist";
+import { TokenTag } from "@elementfi/core-tokenlist/dist/tags";
 // TODO: stuff under packages/ should not have a default provider
 import { defaultProvider } from "@elementfi/core/providers/providers";
 import { tokenListJson } from "@elementfi/core/tokenlists/tokenlists";
