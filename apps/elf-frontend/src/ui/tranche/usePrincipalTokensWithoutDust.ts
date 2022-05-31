@@ -30,10 +30,14 @@ export function usePrincipalTokensWithoutDust(
     principalTokensWithBalanceResults,
     principalTokenInfosWithBalance,
   )
-    .filter((zipped): zipped is [
-      { token: ERC20; balanceOf: BigNumber },
-      PrincipalTokenInfo,
-    ] => zipped.every((v) => !!v))
+    .filter(
+      (
+        zipped,
+      ): zipped is [
+        { token: ERC20; balanceOf: BigNumber },
+        PrincipalTokenInfo,
+      ] => zipped.every((v) => !!v),
+    )
     .filter(
       ([{ balanceOf }, principalTokenInfo]) =>
         !isDust(balanceOf, principalTokenInfo.decimals),

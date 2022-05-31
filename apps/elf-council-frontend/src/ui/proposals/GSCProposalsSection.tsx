@@ -47,11 +47,13 @@ export default function GSCProposalsSection({
 
   // set the default to the first active proposal, since that's what filter is
   // on by default
-  const [selectedProposalId, setSelectedProposalId] =
-    useState<string | undefined>(undefined);
+  const [selectedProposalId, setSelectedProposalId] = useState<
+    string | undefined
+  >(undefined);
 
-  const [selectedProposal, setSelectedProposal] =
-    useState<Proposal | undefined>(undefined);
+  const [selectedProposal, setSelectedProposal] = useState<
+    Proposal | undefined
+  >(undefined);
   const [activeTabId, setActiveTabId] = useState<TabId>(TabId.ACTIVE);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
