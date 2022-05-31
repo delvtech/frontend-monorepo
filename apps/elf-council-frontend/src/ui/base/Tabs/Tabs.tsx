@@ -84,7 +84,7 @@ export function Tab({
     getBorderRadius(first, last),
     getFocusRing(current),
     getBorderColor(current),
-    "border-b-2 text-lg px-4 py-2 font-semibold",
+    "border-b-2 text-lg px-2 sm:px-4 py-2 font-semibold leading-6",
   );
   if (href) {
     return (
