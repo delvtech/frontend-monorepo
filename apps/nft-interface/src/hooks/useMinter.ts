@@ -2,7 +2,7 @@
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,
-} from "@elementfi/react-query-typechain";
+} from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { Minter, Minter__factory } from "contracts";
 import { Signer } from "ethers";
 import { getAddresses } from "src/addresses";

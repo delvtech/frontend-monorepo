@@ -5,7 +5,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import H2 from "src/ui/base/H2/H2";
 import ClaimAmountCard from "./ClaimAmountCard";
 import { t } from "ttag";
-import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
+import { PrivateAirdrop } from "@elementfi/council-typechain";
 
 interface EligibleCardProps {
   className?: string;

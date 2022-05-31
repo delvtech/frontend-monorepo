@@ -1,6 +1,6 @@
 import { PoolInfo } from "@elementfi/core/pools/PoolInfo";
 import { useTotalFiatLiquidity } from "@elementfi/core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { formatEther, formatUnits } from "ethers/lib/utils";
 import { ConvergentCurvePool } from "@elementfi/core-typechain/dist/v1.1";
 

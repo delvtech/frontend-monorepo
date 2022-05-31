@@ -1,0 +1,622 @@
+{
+  "name": "Goerli token list",
+  "logoURI": "https://element.fi/logo.svg",
+  "tags": {
+    "underlying": {
+      "name": "Underlying asset",
+      "description": "The base asset of a principal or yield token"
+    },
+    "eP": {
+      "name": "Principal token",
+      "description": "Token that represents a deposit of principal into a yield position"
+    },
+    "eY": {
+      "name": "Yield token",
+      "description": "Token that represents the yield on a deposit into a yield position"
+    },
+    "ccpool": {
+      "name": "ConvergentCurve pool",
+      "description": "Token that represents the balancer pool for Principal tokens"
+    },
+    "wpool": {
+      "name": "Weighted pool",
+      "description": "Token that represents the balancer pool for Yield tokens"
+    },
+    "assetproxy": {
+      "name": "Vault asset proxy",
+      "description": "Token that wraps a yield position, ie: Yearn vault asset proxy"
+    },
+    "vault": {
+      "name": "Vault",
+      "description": "The yield position, ie: Yearn yvcrvLUSD"
+    }
+  },
+  "timestamp": "2021-08-11T14:13:11.428Z",
+  "version": {
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  },
+  "tokens": [
+    {
+      "chainId": 5,
+      "address": "0x9A1000D492d40bfccbc03f413A48F5B6516Ec0Fd",
+      "symbol": "WETH",
+      "decimals": 18,
+      "name": "Wrapped Ethereum",
+      "tags": ["underlying"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+      "symbol": "USDC",
+      "decimals": 6,
+      "name": "USD Coin",
+      "tags": ["underlying"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x5bD768CCE8C529CDF23B136bB486a81f64985B92",
+      "symbol": "DAI",
+      "decimals": 18,
+      "name": "DAI Stablecoin",
+      "tags": ["underlying"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x212d5c62e47CCFcB6005fCb7b4B834274374260d",
+      "symbol": "ALUSD",
+      "decimals": 18,
+      "name": "ALUSD Stablecoin",
+      "tags": ["underlying"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x6F643Ba6894D8C50c476A3539e1D1690B2194018",
+      "symbol": "eyvCurve-stETH",
+      "decimals": 18,
+      "name": "Element Yearn WETH",
+      "tags": ["assetproxy"],
+      "extensions": {
+        "vault": "0xdD82595F5eB0e7477D7432B24E44be7c0252bbf1"
+      }
+    },
+    {
+      "chainId": 5,
+      "address": "0x814C447a9F58A2b823504Fe2775bA48c843925B6",
+      "symbol": "eyvUSDC",
+      "decimals": 6,
+      "name": "Element Yearn USDC",
+      "tags": ["assetproxy"],
+      "extensions": {
+        "vault": "0x23c3C6C06d7684207fB09076914A15B16aba02c5"
+      }
+    },
+    {
+      "chainId": 5,
+      "address": "0x8dc82c95B8901Db35390Aa4096B643d7724F278D",
+      "symbol": "eyvDAI",
+      "decimals": 18,
+      "name": "Element Yearn DAI",
+      "tags": ["assetproxy"],
+      "extensions": {
+        "vault": "0x851A97B6520c582dAB33F722Bd9C5939Ea349546"
+      }
+    },
+    {
+      "chainId": 5,
+      "address": "0xC4a728e50e2D3f469c9503fA4BA6aBfA9dd6D2C7",
+      "symbol": "eyALUSD",
+      "decimals": 18,
+      "name": "Element Yearn ALUSD",
+      "tags": ["assetproxy"],
+      "extensions": {
+        "vault": "0xf92DD556f826779826b709F5E8f8e261b29e7E30"
+      }
+    },
+    {
+      "chainId": 5,
+      "address": "0xdD82595F5eB0e7477D7432B24E44be7c0252bbf1",
+      "symbol": "yvCurve-stETH",
+      "decimals": 18,
+      "name": "Yearn WETH",
+      "tags": ["vault"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x23c3C6C06d7684207fB09076914A15B16aba02c5",
+      "symbol": "yvUSDC",
+      "decimals": 6,
+      "name": "Yearn USDC",
+      "tags": ["vault"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x851A97B6520c582dAB33F722Bd9C5939Ea349546",
+      "symbol": "yvDAI",
+      "decimals": 18,
+      "name": "Yearn DAI",
+      "tags": ["vault"]
+    },
+    {
+      "chainId": 5,
+      "address": "0xf92DD556f826779826b709F5E8f8e261b29e7E30",
+      "symbol": "yvCurve-alUSD",
+      "decimals": 18,
+      "name": "Yearn ALUSD",
+      "tags": ["vault"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x44eecA004b2612d131EDA7dA2b9d986E7fED562e",
+      "symbol": "ePyvCurve-stETH",
+      "decimals": 18,
+      "extensions": {
+        "underlying": "0x9A1000D492d40bfccbc03f413A48F5B6516Ec0Fd",
+        "position": "0x6F643Ba6894D8C50c476A3539e1D1690B2194018",
+        "interestToken": "0x91dDF92af38Afac1B59F450dDb94ddab10a11490",
+        "unlockTimestamp": 1621010937,
+        "createdAtTimestamp": 1620385952
+      },
+      "name": "ETH Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x89d66Ad25F3A723D606B78170366d8da9870A879",
+      "symbol": "ePyvCurve-stETH",
+      "decimals": 18,
+      "extensions": {
+        "underlying": "0x9A1000D492d40bfccbc03f413A48F5B6516Ec0Fd",
+        "position": "0x6F643Ba6894D8C50c476A3539e1D1690B2194018",
+        "interestToken": "0xBf4B5cB5ca49B1eF6B02615a94980723f6484899",
+        "unlockTimestamp": 1628210937,
+        "createdAtTimestamp": 1620385967
+      },
+      "name": "ETH Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x80272c960b862B4d6542CDB7338Ad1f727E0D18d",
+      "symbol": "ePyvUSDC",
+      "decimals": 6,
+      "extensions": {
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "position": "0x814C447a9F58A2b823504Fe2775bA48c843925B6",
+        "interestToken": "0x2c637c5142eE4F31A1a78Ad3DF012fc242F6CAe6",
+        "unlockTimestamp": 1628211057,
+        "createdAtTimestamp": 1620386087
+      },
+      "name": "USDC Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x7D64aD2b83a62C0d02514a43E5B4582C671E5F72",
+      "symbol": "ePyvUSDC",
+      "decimals": 6,
+      "extensions": {
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "position": "0x814C447a9F58A2b823504Fe2775bA48c843925B6",
+        "interestToken": "0x8F28E7085882Ef6010a74Fa092C4eC519A0583B5",
+        "unlockTimestamp": 1622661612,
+        "createdAtTimestamp": 1621970472
+      },
+      "name": "USDC Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x8Bd721BB84a30c0078aF4a5a732c7169C5BE6eDB",
+      "symbol": "ePyvUSDC",
+      "decimals": 6,
+      "extensions": {
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "position": "0x814C447a9F58A2b823504Fe2775bA48c843925B6",
+        "interestToken": "0x51E7DF22DF4A391A5702D6a99a350cE3c55c02Ce",
+        "unlockTimestamp": 1623266597,
+        "createdAtTimestamp": 1622575457
+      },
+      "name": "USDC Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x6866dFc9A60e9dba922668b9b27931DCaCDF645A",
+      "symbol": "ePyvDAI",
+      "decimals": 18,
+      "extensions": {
+        "underlying": "0x5bD768CCE8C529CDF23B136bB486a81f64985B92",
+        "position": "0x8dc82c95B8901Db35390Aa4096B643d7724F278D",
+        "interestToken": "0x649b9a57cb8fbd01bE019bDBBed9768d2a457173",
+        "unlockTimestamp": 1624901889,
+        "createdAtTimestamp": 1624383504
+      },
+      "name": "DAI Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x6Aee2e1CA91C03b0BbFF419390774B590090782A",
+      "symbol": "eP:eyALUSD:01-JUL-21-GMT",
+      "decimals": 18,
+      "extensions": {
+        "underlying": "0x212d5c62e47CCFcB6005fCb7b4B834274374260d",
+        "position": "0xC4a728e50e2D3f469c9503fA4BA6aBfA9dd6D2C7",
+        "interestToken": "0x00Ba2444ffe68e3B9b38E3983196a9fF86001F0b",
+        "unlockTimestamp": 1625175036,
+        "createdAtTimestamp": 1625031051
+      },
+      "name": "ALUSD Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 5,
+      "address": "0xDCf80C068B7fFDF7273d8ADAE4B076BF384F711A",
+      "symbol": "eP:eyUSDC:10-AUG-22-GMT",
+      "decimals": 6,
+      "extensions": {
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "position": "0x814C447a9F58A2b823504Fe2775bA48c843925B6",
+        "interestToken": "0x419b57dE54F7F1E108C72d6E6b405A1E66Fc5895",
+        "unlockTimestamp": 1660165080,
+        "createdAtTimestamp": 1628608488
+      },
+      "name": "USDC Principal Token",
+      "tags": ["eP"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x91dDF92af38Afac1B59F450dDb94ddab10a11490",
+      "symbol": "eYyvCurve-stETH",
+      "decimals": 18,
+      "name": "ETH Yield Token",
+      "extensions": {
+        "tranche": "0x44eecA004b2612d131EDA7dA2b9d986E7fED562e",
+        "underlying": "0x9A1000D492d40bfccbc03f413A48F5B6516Ec0Fd",
+        "unlockTimestamp": 1621010937
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 5,
+      "address": "0xBf4B5cB5ca49B1eF6B02615a94980723f6484899",
+      "symbol": "eYyvCurve-stETH",
+      "decimals": 18,
+      "name": "ETH Yield Token",
+      "extensions": {
+        "tranche": "0x89d66Ad25F3A723D606B78170366d8da9870A879",
+        "underlying": "0x9A1000D492d40bfccbc03f413A48F5B6516Ec0Fd",
+        "unlockTimestamp": 1628210937
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x2c637c5142eE4F31A1a78Ad3DF012fc242F6CAe6",
+      "symbol": "eYyvUSDC",
+      "decimals": 6,
+      "name": "USDC Yield Token",
+      "extensions": {
+        "tranche": "0x80272c960b862B4d6542CDB7338Ad1f727E0D18d",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "unlockTimestamp": 1628211057
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x8F28E7085882Ef6010a74Fa092C4eC519A0583B5",
+      "symbol": "eYyvUSDC",
+      "decimals": 6,
+      "name": "USDC Yield Token",
+      "extensions": {
+        "tranche": "0x7D64aD2b83a62C0d02514a43E5B4582C671E5F72",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "unlockTimestamp": 1622661612
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x51E7DF22DF4A391A5702D6a99a350cE3c55c02Ce",
+      "symbol": "eYyvUSDC",
+      "decimals": 6,
+      "name": "USDC Yield Token",
+      "extensions": {
+        "tranche": "0x8Bd721BB84a30c0078aF4a5a732c7169C5BE6eDB",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "unlockTimestamp": 1623266597
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x649b9a57cb8fbd01bE019bDBBed9768d2a457173",
+      "symbol": "eYyvDAI",
+      "decimals": 18,
+      "name": "DAI Yield Token",
+      "extensions": {
+        "tranche": "0x6866dFc9A60e9dba922668b9b27931DCaCDF645A",
+        "underlying": "0x5bD768CCE8C529CDF23B136bB486a81f64985B92",
+        "unlockTimestamp": 1624901889
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x00Ba2444ffe68e3B9b38E3983196a9fF86001F0b",
+      "symbol": "eY:eyALUSD:01-JUL-21-GMT",
+      "decimals": 18,
+      "name": "ALUSD Yield Token",
+      "extensions": {
+        "tranche": "0x6Aee2e1CA91C03b0BbFF419390774B590090782A",
+        "underlying": "0x212d5c62e47CCFcB6005fCb7b4B834274374260d",
+        "unlockTimestamp": 1625175036
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x419b57dE54F7F1E108C72d6E6b405A1E66Fc5895",
+      "symbol": "eY:eyUSDC:10-AUG-22-GMT",
+      "decimals": 6,
+      "name": "USDC Yield Token",
+      "extensions": {
+        "tranche": "0xDCf80C068B7fFDF7273d8ADAE4B076BF384F711A",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "unlockTimestamp": 1660165080
+      },
+      "tags": ["eY"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x40bf8A2eCB62c6B880302b55a5552A4e315b5827",
+      "symbol": "USDC-fyUSDC",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0x80272c960b862B4d6542CDB7338Ad1f727E0D18d",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "poolId": "0x40bf8a2ecb62c6b880302b55a5552a4e315b5827000200000000000000000062",
+        "unitSeconds": 252480000,
+        "expiration": 1628211057,
+        "createdAtTimestamp": 1620435562
+      },
+      "name": "Element USDC - fyUSDC",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x5941DB4d6C500C4FFa57c359eE0C55c6b41D0b61",
+      "symbol": "WETH-fyWETH",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0x44eecA004b2612d131EDA7dA2b9d986E7fED562e",
+        "underlying": "0x9A1000D492d40bfccbc03f413A48F5B6516Ec0Fd",
+        "poolId": "0x5941db4d6c500c4ffa57c359ee0c55c6b41d0b61000200000000000000000064",
+        "unitSeconds": 284040000,
+        "expiration": 1621010937,
+        "createdAtTimestamp": 1620435682
+      },
+      "name": "Element WETH - fyWETH",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x9eB7F54C0eCc4d0D2dfF28a1276e36d598F2B0D1",
+      "symbol": "WETH-fyWETH",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0x89d66Ad25F3A723D606B78170366d8da9870A879",
+        "underlying": "0x9A1000D492d40bfccbc03f413A48F5B6516Ec0Fd",
+        "poolId": "0x9eb7f54c0ecc4d0d2dff28a1276e36d598f2b0d1000200000000000000000066",
+        "unitSeconds": 284040000,
+        "expiration": 1628210937,
+        "createdAtTimestamp": 1620435847
+      },
+      "name": "Element WETH - fyWETH",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x5e5D0F28D52eBC7dfe101542e3BfD32f09065F15",
+      "symbol": "LP:eP:eyUSDC:02-JUN-21-GMT",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0x7D64aD2b83a62C0d02514a43E5B4582C671E5F72",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "poolId": "0x5e5d0f28d52ebc7dfe101542e3bfd32f09065f15000200000000000000000072",
+        "unitSeconds": 347126472,
+        "expiration": 1622661612,
+        "createdAtTimestamp": 1622053097
+      },
+      "name": "LP Principal Token eyUSDC:02-JUN-21-GMT",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x680C7914E2CAE78A2ac94DABf6277692EF652353",
+      "symbol": "LP:eP:eyUSDC:09-JUN-21-GMT",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0x8Bd721BB84a30c0078aF4a5a732c7169C5BE6eDB",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "poolId": "0x680c7914e2cae78a2ac94dabf6277692ef652353000200000000000000000074",
+        "unitSeconds": 347126472,
+        "expiration": 1623266597,
+        "createdAtTimestamp": 1622575622
+      },
+      "name": "LP Principal Token eyUSDC:09-JUN-21-GMT",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x00655F8F287848f35538648A012e2cbd13016138",
+      "symbol": "LP:eP:eyDAI:28-JUN-21-GMT",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0x6866dFc9A60e9dba922668b9b27931DCaCDF645A",
+        "underlying": "0x5bD768CCE8C529CDF23B136bB486a81f64985B92",
+        "poolId": "0x00655f8f287848f35538648a012e2cbd13016138000200000000000000000079",
+        "unitSeconds": 820480752,
+        "expiration": 1624901889,
+        "createdAtTimestamp": 1624388830
+      },
+      "name": "LP Principal Token eyDAI:28-JUN-21-GMT",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0xB8C5fb5346B591A8dc6C6bE615d45e0820cdee76",
+      "symbol": "LpeP:eyALUSD:01-JUL-21-GMT",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0x6Aee2e1CA91C03b0BbFF419390774B590090782A",
+        "underlying": "0x212d5c62e47CCFcB6005fCb7b4B834274374260d",
+        "poolId": "0xb8c5fb5346b591a8dc6c6be615d45e0820cdee76000200000000000000000083",
+        "unitSeconds": 631139040,
+        "expiration": 1625175036,
+        "createdAtTimestamp": 1625038734
+      },
+      "name": "LP Principal Token eyALUSD:01-JUL-21-GMT",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x4294005520c453EB8Fa66F53042cfC79707855c4",
+      "symbol": "LPeP:eyUSDC:10-AUG-22-GMT",
+      "decimals": 18,
+      "extensions": {
+        "bond": "0xDCf80C068B7fFDF7273d8ADAE4B076BF384F711A",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "poolId": "0x4294005520c453eb8fa66f53042cfc79707855c400020000000000000000009a",
+        "unitSeconds": 284012568,
+        "expiration": 1660165080,
+        "createdAtTimestamp": 1628608758
+      },
+      "name": "LP Principal Token eyUSDC:10-AUG-22-GMT",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x252797e51F51631b6956545C45F9d3F9fFCb0940",
+      "symbol": "eY_USDC_BPT",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0x252797e51f51631b6956545c45f9d3f9ffcb0940000200000000000000000063",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "interestToken": "0x2c637c5142eE4F31A1a78Ad3DF012fc242F6CAe6",
+        "createdAtTimestamp": 1620435577,
+        "expiration": 1628211057
+      },
+      "name": "Ele BPT",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0xcF6894C48c2AF3ddD433CC1EDfEfC74e654cC9B4",
+      "symbol": "eY_WETH_BPT",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0xcf6894c48c2af3ddd433cc1edfefc74e654cc9b4000200000000000000000065",
+        "underlying": "0x9A1000D492d40bfccbc03f413A48F5B6516Ec0Fd",
+        "interestToken": "0x91dDF92af38Afac1B59F450dDb94ddab10a11490",
+        "createdAtTimestamp": 1620435742,
+        "expiration": 1621010937
+      },
+      "name": "Ele BPT",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0xD75bfF2444FF738d443066ff4688691e6852b217",
+      "symbol": "eY_WETH_BPT",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0xd75bff2444ff738d443066ff4688691e6852b217000200000000000000000067",
+        "underlying": "0x9A1000D492d40bfccbc03f413A48F5B6516Ec0Fd",
+        "interestToken": "0xBf4B5cB5ca49B1eF6B02615a94980723f6484899",
+        "createdAtTimestamp": 1620435862,
+        "expiration": 1628210937
+      },
+      "name": "Ele BPT",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x7dfD3ec2Dd0020b7F85E0555b6D499156420D796",
+      "symbol": "LP:Element Yield Token eyUSDC:02-JUN-21-GMT",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0x7dfd3ec2dd0020b7f85e0555b6d499156420d796000200000000000000000070",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "interestToken": "0x8F28E7085882Ef6010a74Fa092C4eC519A0583B5",
+        "createdAtTimestamp": 1621970877,
+        "expiration": 1622661612
+      },
+      "name": "LP Element Yield Token eyUSDC:02-JUN-21-GMT",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0xcdEe31456e502EF883316d4F6A3CF12027554afE",
+      "symbol": "LP:Element Yield Token eyUSDC:09-JUN-21-GMT",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0xcdee31456e502ef883316d4f6a3cf12027554afe000200000000000000000073",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "interestToken": "0x51E7DF22DF4A391A5702D6a99a350cE3c55c02Ce",
+        "createdAtTimestamp": 1622575577,
+        "expiration": 1623266597
+      },
+      "name": "LP Element Yield Token eyUSDC:09-JUN-21-GMT",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x4c3f56cC1ad2BC61293739C7f0550575c9DAf313",
+      "symbol": "LP:Element Yield Token eyDAI:28-JUN-21-GMT",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0x4c3f56cc1ad2bc61293739c7f0550575c9daf313000200000000000000000078",
+        "underlying": "0x5bD768CCE8C529CDF23B136bB486a81f64985B92",
+        "interestToken": "0x649b9a57cb8fbd01bE019bDBBed9768d2a457173",
+        "createdAtTimestamp": 1624388260,
+        "expiration": 1624901889
+      },
+      "name": "LP Element Yield Token eyDAI:28-JUN-21-GMT",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x343DFd982A956efD45c3e7436B285d98e96EcC89",
+      "symbol": "LpElement Yield Token eyALUSD:01-JUL-21-GMT",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0x343dfd982a956efd45c3e7436b285d98e96ecc89000200000000000000000082",
+        "underlying": "0x212d5c62e47CCFcB6005fCb7b4B834274374260d",
+        "interestToken": "0x00Ba2444ffe68e3B9b38E3983196a9fF86001F0b",
+        "createdAtTimestamp": 1625038584,
+        "expiration": 1625175036
+      },
+      "name": "Lp Element Yield Token eyALUSD:01-JUL-21-GMT",
+      "tags": ["wpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0xCE3dE100bA6B1fd0d078a938F2d698Ed08a6a54D",
+      "symbol": "LPeY:eyUSDC:10-AUG-22-GMT",
+      "decimals": 18,
+      "extensions": {
+        "poolId": "0xce3de100ba6b1fd0d078a938f2d698ed08a6a54d000200000000000000000099",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "interestToken": "0x419b57dE54F7F1E108C72d6E6b405A1E66Fc5895",
+        "createdAtTimestamp": 1628608608,
+        "expiration": 1660165080
+      },
+      "name": "LP Element Yield Token eyUSDC:10-AUG-22-GMT",
+      "tags": ["wpool"]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import { CSSProperties, ReactElement, useCallback, useState } from "react";
 
 import { Card, Collapse, Elevation } from "@blueprintjs/core";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import { Web3Provider } from "@ethersproject/providers";
 import { differenceInDays } from "date-fns";
 import { Signer } from "ethers";

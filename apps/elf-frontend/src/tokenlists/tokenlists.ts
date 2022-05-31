@@ -7,7 +7,7 @@ import {
   YieldTokenInfo,
   TokenInfo,
   TokenList,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import keyBy from "lodash.keyby";
 import TokenListJsonFileTestnet from "tokenlists/testnet.tokenlist.json";
 

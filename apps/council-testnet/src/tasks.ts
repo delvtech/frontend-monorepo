@@ -1,13 +1,10 @@
 /* eslint-disable no-console */
-import {
-  getTokenList,
-  goerliAddressList,
-} from "@elementfi/elf-council-tokenlist";
+import { getTokenList, goerliAddressList } from "@elementfi/council-tokenlist";
 import {
   ERC20PermitWithMint__factory,
   LockingVault__factory,
   VestingVault__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ethers, providers } from "ethers";
 import { parseEther } from "ethers/lib/utils";

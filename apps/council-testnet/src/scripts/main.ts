@@ -1,13 +1,13 @@
 import "hardhat-ethernal";
 
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { AddressesJsonFile } from "@elementfi/elf-council-tokenlist";
+import { AddressesJsonFile } from "@elementfi/council-tokenlist";
 import {
   GSCVault__factory,
   LockingVault__factory,
   MockERC20__factory,
   VestingVault__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { BigNumber, ethers, Signer } from "ethers";
 import { BytesLike, formatEther, parseEther } from "ethers/lib/utils";
 import fs from "fs";

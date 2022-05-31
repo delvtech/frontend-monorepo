@@ -9,7 +9,7 @@ import {
   VaultTokenInfo,
   YieldTokenInfo,
   TokenTag,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { EMPTY_ARRAY } from "base/emptyArray";
 import { defaultProvider } from "elf/providers/providers";
 import { getTokenInfo, tokenListJson } from "tokenlists/tokenlists";

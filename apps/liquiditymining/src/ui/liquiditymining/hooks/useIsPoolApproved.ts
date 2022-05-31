@@ -1,6 +1,6 @@
 import { QueryObserverResult } from "react-query";
 import { ConvergentCurvePool } from "@elementfi/core-typechain/dist/v1.1";
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { masterChef } from "src/elf/liquiditymining/masterChef";
 
 export function useIsPoolApproved(

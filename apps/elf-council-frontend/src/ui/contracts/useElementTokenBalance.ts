@@ -1,7 +1,7 @@
 import { elementTokenContract } from "src/elf/contracts";
 import { BigNumber } from "@ethersproject/bignumber";
 import { QueryObserverResult } from "react-query";
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 
 export function useElementTokenBalanceOf(
   account: string | null | undefined,

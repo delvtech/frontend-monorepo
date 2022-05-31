@@ -1,7 +1,7 @@
 import { Provider } from "@ethersproject/providers";
 import { parseEther } from "@ethersproject/units";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { CoreVoting__factory } from "@elementfi/elf-council-typechain";
+import { CoreVoting__factory } from "@elementfi/council-typechain";
 import { BytesLike, ethers } from "ethers";
 
 import addressesJson from "src/addresses";

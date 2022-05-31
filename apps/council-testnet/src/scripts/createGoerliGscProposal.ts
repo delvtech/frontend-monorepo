@@ -1,7 +1,7 @@
 import {
   CoreVoting__factory,
   GSCVault__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { Provider } from "@ethersproject/providers";
 import { parseEther } from "@ethersproject/units";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";

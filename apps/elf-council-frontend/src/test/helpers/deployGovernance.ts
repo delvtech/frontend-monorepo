@@ -2,7 +2,7 @@ import {
   MerkleRewards,
   MockERC20,
   MockERC20__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { BigNumber, ethers, Wallet } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { Account, getMerkleTree } from "src/base/merkle";

@@ -1,5 +1,5 @@
 import { InterestToken__factory } from "@elementfi/core-typechain/dist/v1";
-import { TokenInfo, TokenTag, YieldTokenInfo } from "@elementfi/tokenlist";
+import { TokenInfo, TokenTag, YieldTokenInfo } from "@elementfi/core-tokenlist";
 import { defaultProvider } from "elf/providers/providers";
 import { tokenListJson } from "tokenlists/tokenlists";
 import keyBy from "lodash.keyby";

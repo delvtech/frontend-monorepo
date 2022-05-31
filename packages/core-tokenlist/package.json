@@ -1,0 +1,51 @@
+{
+  "name": "@elementfi/core-tokenlist",
+  "version": "2.8.0",
+  "description": "",
+  "dependencies": {
+    "@uniswap/token-lists": "https://github.com/Uniswap/token-lists.git#add-array-extension-support",
+    "dotenv": "^16.0.0",
+    "tsc": "^2.0.3"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "@elementfi/core-typechain": "*",
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-vyper": "^2.0.1",
+    "@openzeppelin/contracts": "^3.4.0",
+    "@typechain/ethers-v5": "^7.0.1",
+    "@typechain/hardhat": "^2.2.0",
+    "@types/ethereumjs-abi": "^0.6.3",
+    "@types/lodash.uniq": "^4.5.6",
+    "@types/lodash.zip": "^4.2.6",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^14.14.22",
+    "@types/node-fetch": "^2.5.12",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "ethers": "^5.4.1",
+    "hardhat": "^2.5.0",
+    "lodash.uniq": "^4.5.0",
+    "lodash.zip": "^4.2.0",
+    "node-fetch": "^2.6.6",
+    "ts-generator": "^0.1.1",
+    "ts-node": "^10.1.0",
+    "ts-retry": "^2.3.9",
+    "tsconfig-paths": "^3.10.1",
+    "typechain": "^5.1.2",
+    "typechain-target-ethers-v5": "^5.0.1",
+    "typescript": "^4.3.5"
+  },
+  "scripts": {
+    "build-tokenlist-goerli": "bash scripts/build-tokenlist.sh goerli",
+    "build-tokenlist-mainnet": "bash scripts/build-tokenlist.sh mainnet",
+    "_build-index": "bash scripts/build-index.sh",
+    "build": "yarn run build-tokenlist-goerli && yarn run build-tokenlist-mainnet && yarn run _build-index && yarn run _copy-files",
+    "_copy-files": "bash scripts/copy-dist-files.sh",
+    "typecheck": "npx tsc --noEmit"
+  }
+}

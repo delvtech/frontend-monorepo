@@ -1,7 +1,7 @@
 import {
   VestingVault,
   VestingVault__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { BigNumberish, Wallet } from "ethers";
 
 export async function deployVestingVault(

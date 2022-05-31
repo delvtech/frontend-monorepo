@@ -1,5 +1,5 @@
 import { Proposal } from "@elementfi/council-proposals";
-import { useSmartContractEvents } from "@elementfi/react-query-typechain";
+import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
 import { Contract } from "ethers";
 import { getFromBlock } from "src/elf-council-addresses/getFromBlock";
 import { coreVotingContract, gscCoreVotingContract } from "src/elf/contracts";

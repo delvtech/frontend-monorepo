@@ -1,0 +1,51 @@
+{
+  "name": "core-testnet",
+  "version": "1.0.0",
+  "_moduleAliases": {
+    "src": "./src"
+  },
+  "private": true,
+  "dependencies": {
+    "@elementfi/core-tokenlist": "*",
+    "@typechain/hardhat": "^3.0.0",
+    "@types/ethereumjs-abi": "^0.6.3",
+    "@types/lodash.uniq": "^4.5.6",
+    "@uniswap/token-lists": "^1.0.0-beta.27",
+    "hardhat": "^2.8.0",
+    "lodash.uniq": "^4.5.0",
+    "lodash.zip": "^4.2.0",
+    "module-alias": "^2.2.2"
+  },
+  "devDependencies": {
+    "@ethersproject/providers": "^5.5.1",
+    "@nomiclabs/hardhat-ethers": "^2.0.3",
+    "@nomiclabs/hardhat-vyper": "^2.0.1",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts": "^3.4.0",
+    "@typechain/ethers-v5": "^8.0.5",
+    "@types/chai": "^4.2.22",
+    "@types/lodash.zip": "^4.2.6",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^14.17.34",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.5.2",
+    "hardhat-ethernal": "^0.3.11",
+    "hardhat-tracer": "^1.0.0-alpha.6",
+    "ts-generator": "^0.1.1",
+    "ts-node": "^10.4.0",
+    "typechain": "^6.0.5",
+    "typechain-target-ethers-v5": "^5.0.1",
+    "typescript": "^4.5.4"
+  },
+  "scripts": {
+    "build": "rm -rf artifacts src/types && npx hardhat compile",
+    "build:tokenlist-testnet": "npx hardhat run src/tokenlist/localhost.ts --network localhost --no-compile",
+    "deploy-contracts": "npx hardhat run src/scripts/deployLocalTestnet.ts --network localhost --no-compile && npm run build:tokenlist-testnet",
+    "deploy-local-mainnet": "npx hardhat run src/scripts/deployLocalMainnet.ts --network localhost --no-compile --config hardhat.mainnet.config.ts",
+    "load-contracts": "sh scripts/load-elf-contracts.sh",
+    "start": "npx hardhat node",
+    "start-mainnet": "npx hardhat node --config hardhat.mainnet.config.ts",
+    "start-mainnet:dev": "npx hardhat node --config hardhat.mainnet.dev.config.ts"
+  }
+}

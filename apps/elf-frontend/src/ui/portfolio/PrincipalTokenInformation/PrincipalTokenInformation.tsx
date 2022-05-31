@@ -14,7 +14,10 @@ import { isGoerli, isMainnet } from "base/ethereum/ethereum";
 import { getPoolInfoForPrincipalToken } from "elf/pools/ccpool";
 import { getTokenInfo } from "tokenlists/tokenlists";
 import { getBaseAssetForTranche } from "elf/tranche/baseAssets";
-import { AssetProxyTokenInfo, PrincipalTokenInfo } from "@elementfi/tokenlist";
+import {
+  AssetProxyTokenInfo,
+  PrincipalTokenInfo,
+} from "@elementfi/core-tokenlist";
 
 interface PrincipalTokenInformationProps {
   library: Web3Provider | undefined;

@@ -1,4 +1,4 @@
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import tw from "efi-tailwindcss-classnames";
 import { ReactElement } from "react";
 import { useIsTailwindLargeScreen } from "ui/base/mediaBreakpoints";

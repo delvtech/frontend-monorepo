@@ -1,4 +1,4 @@
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { AddressesJson } from "@elementfi/core/addresses/addresses";
 import { formatBalance } from "@elementfi/base/utils/formatBalance/formatBalance";
 import { ONE_MINUTE_IN_MILLISECONDS } from "@elementfi/base/time/time";

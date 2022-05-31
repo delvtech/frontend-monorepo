@@ -1,6 +1,6 @@
 import { Tranche, UserProxy } from "@elementfi/core-typechain/dist/v1";
 import { ERC20, ERC20Permit } from "@elementfi/core-typechain/dist/libraries";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import { useTokenAllowance } from "ui/token/hooks/useTokenAllowance";
 import { useSmartContractTransactionPersisted } from "ui/transactions/useSmartContractTransactionPersisted/useSmartContractTransactionPersisted";
 import { fetchPermitData, PermitCallData } from "base/fetchPermitData";

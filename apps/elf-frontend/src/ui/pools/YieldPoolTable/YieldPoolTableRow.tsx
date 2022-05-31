@@ -3,7 +3,7 @@ import { ReactElement, useCallback } from "react";
 import { Card, Classes, Elevation } from "@blueprintjs/core";
 import { useRouter } from "next/router";
 import classNames from "classnames";
-import { YieldTokenInfo } from "@elementfi/tokenlist";
+import { YieldTokenInfo } from "@elementfi/core-tokenlist";
 import { t } from "ttag";
 
 import tw from "efi-tailwindcss-classnames";
@@ -31,7 +31,7 @@ import { PoolAction } from "ui/pools/hooks/usePoolViewPoolActionsPref/usePoolVie
 import { useStakingAPY } from "ui/pools/hooks/useStakingAPY";
 import { useTotalFiatLiquidity } from "ui/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
 import { useDarkMode } from "ui/prefs/useDarkMode/useDarkMode";
-import { YieldPoolTokenInfo } from "@elementfi/tokenlist";
+import { YieldPoolTokenInfo } from "@elementfi/core-tokenlist";
 
 interface YieldPoolTableRowProps {
   yieldPoolInfo: YieldPoolTokenInfo;

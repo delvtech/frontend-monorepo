@@ -1,10 +1,10 @@
 import { UseMutationResult, useQueryClient } from "react-query";
 import { ContractReceipt, ethers, Signer } from "ethers";
+import { matchSmartContractReadCallQuery } from "@elementfi/react-query-typechain/src/utils/matchSmartContractReadCallQuery/matchSmartContractReadCallQuery";
 import {
-  matchSmartContractReadCallQuery,
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,
-} from "@elementfi/react-query-typechain";
+} from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { masterChef } from "src/elf/liquiditymining/masterChef";
 import { ConvergentCurvePool } from "@elementfi/core-typechain/dist/v1.1";
 

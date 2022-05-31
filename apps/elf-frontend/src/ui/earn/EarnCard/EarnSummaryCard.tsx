@@ -19,7 +19,7 @@ import { useDarkMode } from "ui/prefs/useDarkMode/useDarkMode";
 import {
   PrincipalPoolTokenInfo,
   YieldPoolTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { yieldPoolContractsByAddress } from "elf/pools/weightedPool";
 import { usePoolSpotPrice } from "ui/pools/hooks/usePoolSpotPrice/usePoolSpotPrice";
 

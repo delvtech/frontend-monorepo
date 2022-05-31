@@ -1,5 +1,5 @@
 import { ERC20, ERC20Permit } from "@elementfi/core-typechain/dist/libraries";
-import { TokenInfo } from "@elementfi/tokenlist";
+import { TokenInfo } from "@elementfi/core-tokenlist";
 import {
   CryptoAsset,
   CryptoAssetType,

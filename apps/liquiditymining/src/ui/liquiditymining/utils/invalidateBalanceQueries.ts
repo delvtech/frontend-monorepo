@@ -1,4 +1,4 @@
-import { matchSmartContractReadCallQuery } from "@elementfi/react-query-typechain";
+import { matchSmartContractReadCallQuery } from "@elementfi/react-query-typechain/src/utils/matchSmartContractReadCallQuery/matchSmartContractReadCallQuery";
 import { BigNumberish } from "ethers";
 import { poolIdsByPoolAddress } from "src/elf/liquiditymining/eligiblepools";
 import { masterChef } from "src/elf/liquiditymining/masterChef";

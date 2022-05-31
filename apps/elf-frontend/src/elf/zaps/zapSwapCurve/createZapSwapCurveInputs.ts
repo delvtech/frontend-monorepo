@@ -2,7 +2,7 @@ import {
   ZapCurveLpInStruct,
   ZapInInfoStruct,
 } from "@elementfi/core-typechain/dist/v1/ZapSwapCurve";
-import { PrincipalTokenInfo, TokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, TokenInfo } from "@elementfi/core-tokenlist";
 import { ONE_HOUR_IN_SECONDS } from "base/time";
 import { getPoolInfoForPrincipalToken } from "elf/pools/ccpool";
 import {

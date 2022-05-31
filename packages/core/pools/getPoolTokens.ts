@@ -3,7 +3,7 @@ import {
   PrincipalPoolTokenInfo,
   TokenInfo,
   YieldPoolTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { sortAddresses } from "@elementfi/base/utils/sortAddresses/sortAddresses";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import { underlyingContractsByAddress } from "@elementfi/core/underlying/underlying";

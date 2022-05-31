@@ -1,4 +1,4 @@
-import { YieldTokenInfo } from "@elementfi/tokenlist";
+import { YieldTokenInfo } from "@elementfi/core-tokenlist";
 
 export function formatYieldTokenShortSymbol(
   yieldToken: YieldTokenInfo,

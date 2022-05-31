@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useRef, useState } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 
 import { defaultProvider } from "src/elf/providers/providers";
 import Button from "src/ui/base/Button/Button";
@@ -32,6 +32,8 @@ import {
 } from "src/ui/gsc/useVotingPowerByDelegates";
 import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
 import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
+import { commify, formatEther } from "ethers/lib/utils";
+import { Spinner } from "src/ui/base/Spinner/Spinner";
 
 const provider = defaultProvider;
 
@@ -51,20 +53,15 @@ export function GSCOverviewSection(): ReactElement {
 
   // Fetch and sort current GSC members
   const { data: members = [], refetch: refetchMembers } = useGSCMembers();
-  const votingPowerByDelegate = useVotingPowerByDelegates();
-  const sortedMembers = sortMembersByVotingPower(
-    members,
-    votingPowerByDelegate,
-  );
+  const { data: votePowerByDelegates = {}, isLoading } =
+    useVotingPowerByDelegates();
+  const sortedMembers = sortMembersByVotingPower(members, votePowerByDelegates);
 
   // Fetch current GSC candidates
   const candidates = useGSCCandidates();
   const { data: thresholdValue } = useGSCVotePowerThreshold();
-  const topTwentyCandidates = getTopTwentyCandidates(
-    candidates,
-    votingPowerByDelegate,
-    thresholdValue,
-  );
+  const formattedThreshold =
+    thresholdValue && commify(Math.round(+formatEther(thresholdValue)));
 
   // Tab state
   const [currentTab, setCurrentTab] = useState<TabOption>(TabOption.Overview);
@@ -143,9 +140,16 @@ export function GSCOverviewSection(): ReactElement {
                       />
                     </Disclosure.Button>
                     <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
-                      <p>{t`Council is an on-chain decentralized governance system through which a community can manage a DAO. It gives the community total flexibility over how to distribute Voting Power and allows it to adapt its governance system to the continuously evolving needs of the DAO.`}</p>
-                      <p>{t`The system also includes the optional structure of a Governance Steering Council (GSC) with added governance powers and responsibilities, all to be decided upon by the community.`}</p>
-                      <p>{t`This flexibility is possible thanks to the use of Voting Vaults. Learn more in `}</p>
+                      <p>{t`Any delegate who has accumulated more delegated voting
+                      power than the current GSC Eligibility Threshold (${formattedThreshold}
+                      ELFI) is eligible to join the GSC. `}</p>
+                      <p>
+                        {jt`To help reach this
+                      threshold, delegates can post their vision, mission and
+                      other relevant information in the ${forumsLink}, to make
+                      themselves known to the community and rally other members
+                      from which to gather more delegated voting power.`}
+                      </p>
                     </Disclosure.Panel>
                   </>
                 )}
@@ -165,9 +169,17 @@ export function GSCOverviewSection(): ReactElement {
                       />
                     </Disclosure.Button>
                     <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
-                      <p>{t`Council is an on-chain decentralized governance system through which a community can manage a DAO. It gives the community total flexibility over how to distribute Voting Power and allows it to adapt its governance system to the continuously evolving needs of the DAO.`}</p>
-                      <p>{t`The system also includes the optional structure of a Governance Steering Council (GSC) with added governance powers and responsibilities, all to be decided upon by the community.`}</p>
-                      <p>{t`This flexibility is possible thanks to the use of Voting Vaults. Learn more in `}</p>
+                      <p>
+                        {jt`The formal responsibilities of the GSC are being ${gscResponibilitiesLink}, but they could include some of the following:`}
+                      </p>
+                      <ul className="ml-8 list-disc">
+                        <li>{t`On-chain voting`}</li>
+                        <li>{t`Continued discussion about protocol improvements,
+                        partnerships, DAO structures`}</li>
+                        <li>{t`Security Management`}</li>
+                        <li>{t`Optimistic Grants distribution`}</li>
+                        <li>{t`Governance experimentation and incentives management`}</li>
+                      </ul>
                     </Disclosure.Panel>
                   </>
                 )}
@@ -187,9 +199,27 @@ export function GSCOverviewSection(): ReactElement {
                       />
                     </Disclosure.Button>
                     <Disclosure.Panel className="flex max-w-fit flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
-                      <p>{t`Council is an on-chain decentralized governance system through which a community can manage a DAO. It gives the community total flexibility over how to distribute Voting Power and allows it to adapt its governance system to the continuously evolving needs of the DAO.`}</p>
-                      <p>{t`The system also includes the optional structure of a Governance Steering Council (GSC) with added governance powers and responsibilities, all to be decided upon by the community.`}</p>
-                      <p>{t`This flexibility is possible thanks to the use of Voting Vaults. Learn more in `}</p>
+                      <p>{t`Joining and leaving the GSC are individual on-chain transactions.`}</p>
+                      <ul className="ml-8 list-disc">
+                        <li>
+                          <span className="font-bold">{t`Joining: `}</span>
+                          {t`If a delegate who isn’t part of the GSC
+                          acquires more delegated Voting Power than the GSC
+                          Eligibility Threshold (${formattedThreshold}
+                            ELFI), they can join
+                          the GSC by using the “Join” button that will become
+                          enabled in the GSC’s Overview page.`}
+                        </li>
+                        <li>
+                          <span className="font-bold">{t`Leaving: `}</span>
+                          {t`If a GSC member falls below the GSC Eligibility
+                          Threshold (${formattedThreshold}
+                            ELFI), anyone can execute the
+                          necessary on-chain transaction to formally remove them
+                          from the GSC by using the “Kick” button that will
+                          become enabled in the GSC’s Overview page.`}
+                        </li>
+                      </ul>
                     </Disclosure.Panel>
                   </>
                 )}
@@ -241,45 +271,72 @@ export function GSCOverviewSection(): ReactElement {
               <div className="text-principalRoyalBlue text-center font-bold">{t`No current GSC members.`}</div>
             ))}
 
-          {currentTab === TabOption.Rising && (
-            <div className="h-96 overflow-y-auto">
-              <ul className="space-y-2">
-                {topTwentyCandidates.map((delegate) => {
-                  const currentlyDelegated =
-                    currentDelegate === delegate.address;
+          {currentTab === TabOption.Rising &&
+            (isLoading ? (
+              <div>
+                <Spinner />
+              </div>
+            ) : (
+              <div className="h-96 overflow-y-auto">
+                <ul className="space-y-2">
+                  {candidates.map((delegate) => {
+                    const currentlyDelegated =
+                      currentDelegate === delegate.address;
 
-                  const delegationButton = (
-                    <ChangeDelegateButton
-                      onDelegationClick={() =>
-                        handleDelegation(delegate.address)
-                      }
-                      account={account}
-                      disabled={isGSC}
-                      isLoading={changeDelegationLoading}
-                      isCurrentDelegate={currentlyDelegated}
-                    />
-                  );
-
-                  return (
-                    <li key={`${delegate.address}`}>
-                      <DelegateProfileRow
-                        provider={provider}
-                        selected={false}
-                        delegate={delegate}
-                        actionButton={delegationButton}
-                        profileActionButton={delegationButton}
+                    const delegationButton = (
+                      <ChangeDelegateButton
+                        onDelegationClick={() =>
+                          handleDelegation(delegate.address)
+                        }
+                        account={account}
+                        disabled={isGSC}
+                        isLoading={changeDelegationLoading}
+                        isCurrentDelegate={currentlyDelegated}
                       />
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          )}
+                    );
+
+                    return (
+                      <li key={`${delegate.address}`}>
+                        <DelegateProfileRow
+                          provider={provider}
+                          selected={false}
+                          delegate={delegate}
+                          actionButton={delegationButton}
+                          profileActionButton={delegationButton}
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
         </div>
       </Card>
     </div>
   );
 }
+
+const forumsLink = (
+  <a
+    className="underline"
+    target="_blank"
+    rel="noopener noreferrer"
+    href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
+  >
+    {t`forums`}
+  </a>
+);
+
+const gscResponibilitiesLink = (
+  <a
+    className="underline"
+    target="_blank"
+    rel="noopener noreferrer"
+    href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
+  >
+    {t`actively discussed at this time`}
+  </a>
+);
 
 function sortMembersByVotingPower(
   members: Delegate[],
@@ -293,22 +350,6 @@ function sortMembersByVotingPower(
     }
     return +votingPowerB?.sub(votingPowerA).toString();
   });
-}
-
-const NUM_CANDIDATES_TO_SHOW = 20;
-function getTopTwentyCandidates(
-  candidates: Delegate[] = [],
-  votingPowerByDelegate: VotePowerByDelegate = {},
-  threshold?: BigNumber,
-) {
-  return candidates
-    .filter((candidate) => {
-      const votingPower =
-        votingPowerByDelegate[candidate.address] ?? BigNumber.from(0);
-
-      return !(votingPower && threshold && votingPower.gte(threshold));
-    })
-    .slice(0, NUM_CANDIDATES_TO_SHOW);
 }
 
 export default GSCOverviewSection;

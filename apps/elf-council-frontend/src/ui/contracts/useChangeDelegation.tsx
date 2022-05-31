@@ -2,11 +2,9 @@ import { lockingVaultContract } from "src/elf/contracts";
 import { toast } from "react-hot-toast";
 import { ContractReceipt, Signer } from "ethers";
 import { UseMutationResult } from "react-query";
-import { LockingVault } from "@elementfi/elf-council-typechain";
-import {
-  makeSmartContractReadCallQueryKey,
-  useSmartContractTransaction,
-} from "@elementfi/react-query-typechain";
+import { LockingVault } from "@elementfi/council-typechain";
+import { makeSmartContractReadCallQueryKey } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
+import { useSmartContractTransaction } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { queryClient } from "src/elf/queryClient";
 import { useRef } from "react";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";

@@ -3,7 +3,7 @@ import {
   PrincipalTokenInfo,
   TokenInfo,
   TokenTag,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { getTokenInfo } from "tokenlists/tokenlists";
 export type CurvePoolTokenInfo = TokenInfo & {
   readonly CurvePoolToken: unique symbol;

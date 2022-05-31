@@ -23,7 +23,7 @@ import { getCryptoSymbol } from "elf/crypto/getCryptoSymbol";
 import { formatYieldTokenShortSymbol } from "elf/interestToken/formatYieldTokenShortSymbol";
 import { getTokenInfo } from "tokenlists/tokenlists";
 import { formatPrincipalTokenShortSymbol } from "elf/tranche/format";
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 
 interface MintFormProps {
   library: Web3Provider | undefined;

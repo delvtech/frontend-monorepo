@@ -1,4 +1,4 @@
-import { AddressesJsonFile } from "@elementfi/elf-council-tokenlist";
+import { AddressesJsonFile } from "@elementfi/council-tokenlist";
 
 // TODO: Add this env variable (ie: "mainnet") to .env file when we're ready
 const chainName = process.env.NEXT_PUBLIC_CHAIN_NAME || "testnet";

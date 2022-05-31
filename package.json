@@ -5,6 +5,12 @@
     "yarn": "^1",
     "node": "^14"
   },
+  "eslintIgnore": [
+    "packages/council-typechain/dist",
+    "packages/core-typechain/dist",
+    "packages/core-tokenlist/dist",
+    "packages/council-tokenlist/dist"
+  ],
   "scripts": {
     "prepare": "husky install",
     "prettier:w": "prettier --write '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",
@@ -29,7 +35,6 @@
     ]
   },
   "dependencies": {
-    "@elementfi/tokenlist": "^2.8.0",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "eslint": "^7.32.0",

@@ -1,11 +1,11 @@
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,
-} from "@elementfi/react-query-typechain";
+} from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { ContractReceipt, Signer } from "ethers";
 
 import { gscVaultContract } from "src/elf/contracts";
-import { GSCVault } from "@elementfi/elf-council-typechain";
+import { GSCVault } from "@elementfi/council-typechain";
 import { UseMutationResult } from "react-query";
 
 export function useKick(

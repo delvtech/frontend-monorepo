@@ -1,4 +1,4 @@
-import { PrincipalTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo } from "@elementfi/core-tokenlist";
 import { isPrincipalPool } from "elf/pools/ccpool";
 import { PoolInfo } from "elf/pools/PoolInfo";
 import { principalTokenInfos } from "elf/tranche/tranches";

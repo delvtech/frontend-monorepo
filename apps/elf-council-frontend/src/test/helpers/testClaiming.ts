@@ -1,8 +1,8 @@
-import { AddressesJsonFile } from "@elementfi/elf-council-tokenlist";
+import { AddressesJsonFile } from "@elementfi/council-tokenlist";
 import {
   MockERC20__factory,
   OptimisticRewards__factory,
-} from "@elementfi/elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { ethers, Wallet } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 

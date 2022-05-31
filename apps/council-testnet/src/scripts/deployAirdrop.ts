@@ -1,5 +1,5 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { Airdrop, Airdrop__factory } from "@elementfi/elf-council-typechain";
+import { Airdrop, Airdrop__factory } from "@elementfi/council-typechain";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import MerkleTree from "merkletreejs";
 import { syncContractWithEthernal } from "src/ethernal/syncContractWithEthernal";

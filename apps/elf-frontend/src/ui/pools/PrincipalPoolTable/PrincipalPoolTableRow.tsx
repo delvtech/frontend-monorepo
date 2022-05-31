@@ -29,7 +29,7 @@ import { principalPoolContractsByAddress } from "elf/pools/ccpool";
 import { getPrincipalTokenInfoForPool } from "elf/pools/getPrincipalTokenInfoForPool";
 import { formatPrincipalTokenShortSymbol } from "elf/tranche/format";
 import { getVaultTokenInfoForTranche } from "elf/tranche/tranches";
-import { PrincipalPoolTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalPoolTokenInfo } from "@elementfi/core-tokenlist";
 
 interface PrincipalPoolTableRowProps {
   className?: string;

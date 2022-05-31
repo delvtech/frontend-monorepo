@@ -2,7 +2,7 @@ import classNames from "classnames";
 import tw from "efi-tailwindcss-classnames";
 import { useDarkMode } from "ui/prefs/useDarkMode/useDarkMode";
 import { Select } from "@blueprintjs/select";
-import { TokenInfo } from "@elementfi/tokenlist";
+import { TokenInfo } from "@elementfi/core-tokenlist";
 import { t } from "ttag";
 import { LabeledText } from "ui/base/LabeledText/LabeledText";
 import { findAssetIconByAddress } from "ui/crypto/CryptoIcon";

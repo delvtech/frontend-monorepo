@@ -1,4 +1,4 @@
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { defaultProvider as provider } from "src/elf/providers/providers";
 import { BigNumber } from "ethers";
 import { QueryObserverResult } from "react-query";

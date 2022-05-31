@@ -21,7 +21,10 @@ import { getPoolInfoForPrincipalToken } from "elf/pools/ccpool";
 import { getTokenInfo } from "tokenlists/tokenlists";
 import { getIsMature } from "elf/tranche/getIsMature";
 import { usePrincipalTokenYield } from "ui/pools/hooks/usePrincipalTokenYield";
-import { AssetProxyTokenInfo, PrincipalTokenInfo } from "@elementfi/tokenlist";
+import {
+  AssetProxyTokenInfo,
+  PrincipalTokenInfo,
+} from "@elementfi/core-tokenlist";
 
 interface FixedRateCardProps {
   principalToken: PrincipalTokenInfo;

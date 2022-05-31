@@ -2,7 +2,7 @@ import {
   PrincipalTokenInfo,
   TokenInfo,
   YieldTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { Web3Provider } from "@ethersproject/providers";
 import { UnstakeConfirmationForm } from "ui/pools/UnstakeTokensConfirmationDrawer/UnstakeConfirmationForm";
 import { TransactionDrawer } from "ui/transactions/TransactionDrawer/TransactionDrawer";

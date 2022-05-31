@@ -1,5 +1,5 @@
 import { Card, Intent, Tab, Tabs } from "@blueprintjs/core";
-import { PrincipalTokenInfo, TokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, TokenInfo } from "@elementfi/core-tokenlist";
 import { Web3Provider } from "@ethersproject/providers";
 import tw from "efi-tailwindcss-classnames";
 import { PoolAction } from "ui/pools/hooks/usePoolViewPoolActionsPref/usePoolViewPoolActionsPref";

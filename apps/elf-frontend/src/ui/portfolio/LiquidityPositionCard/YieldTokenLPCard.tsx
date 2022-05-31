@@ -9,7 +9,7 @@ import {
 } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { WeightedPool } from "@elementfi/core-typechain/dist/v1";
-import { YieldPoolTokenInfo, YieldTokenInfo } from "@elementfi/tokenlist";
+import { YieldPoolTokenInfo, YieldTokenInfo } from "@elementfi/core-tokenlist";
 import classNames from "classnames";
 import tw from "efi-tailwindcss-classnames";
 import { LabeledText } from "ui/base/LabeledText/LabeledText";

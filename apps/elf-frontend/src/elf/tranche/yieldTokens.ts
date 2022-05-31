@@ -1,4 +1,4 @@
-import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/tokenlist";
+import { PrincipalTokenInfo, YieldTokenInfo } from "@elementfi/core-tokenlist";
 import { getTokenInfo } from "tokenlists/tokenlists";
 
 export function getPrincipalTokenForYieldToken(

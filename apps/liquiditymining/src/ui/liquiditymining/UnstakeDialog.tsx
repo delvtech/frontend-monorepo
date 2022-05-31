@@ -17,7 +17,7 @@ import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import {
   PrincipalPoolTokenInfo,
   PrincipalTokenInfo,
-} from "@elementfi/tokenlist";
+} from "@elementfi/core-tokenlist";
 import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
 import { formatAbbreviatedDate } from "src/base/dates";
 import { Tag } from "src/ui/base/Tag/Tag";
