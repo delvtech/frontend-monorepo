@@ -42,18 +42,16 @@ export async function getProposals(
 
       const snapshotId =
         snapshotIdsByProposalId[proposalId] ||
-        // Temporary: default to the first one if more proposals exist
-        // on-chain than are in the snapshot space,
+        // Set snapshotId to -1 for unverified proposals
         "-1";
 
-      // NOTE: this WILL break if the snapshot id is not found.  this is good though, we don't want
-      // to add it if the snapshot id is wrong
       let description: string;
       let title: string;
       let targets: string[];
       let calldatas: string[];
 
       if (snapshotId !== "-1") {
+        // Proposals with a snapshot
         const { body: snapshotDescription, title: snapshotTitle } =
           await fetchSnapshotProposalTitleAndBody(snapshotId);
 
