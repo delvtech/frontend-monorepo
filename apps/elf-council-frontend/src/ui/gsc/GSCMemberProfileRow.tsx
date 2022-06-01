@@ -5,16 +5,12 @@ import classNames from "classnames";
 import { formatWalletAddress } from "src/base/formatWalletAddress";
 import { getGSCCandidateUrl } from "src/commonwealth";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import { formatBalance } from "src/formatBalance";
-import {
-  ElementIconCircle,
-  IconSize,
-} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { useENSName } from "src/ui/ethereum/useEnsName";
 import { useGSCVotePowerThreshold } from "./useGSCVotePowerThreshold";
 import { formatEther } from "ethers/lib/utils";
+import { NumDelegatedVotes } from "src/ui/gsc/NumDelegatedVotes";
 
 interface GSCMemberProfileRowProps {
   selected: boolean;
@@ -109,30 +105,6 @@ export function GSCMemberProfileRow(
         </div>
         <div className="w-1/2 lg:pl-2">{delegateButton}</div>
       </div>
-    </div>
-  );
-}
-
-interface NumDelegatedVotesProps {
-  account: string | undefined | null;
-  highlightSelected: boolean;
-  selected: boolean;
-}
-
-function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
-  const { account, highlightSelected, selected } = props;
-  const votePower = useVotingPowerForAccountAtLatestBlock(account);
-
-  return (
-    <div
-      className={classNames(
-        highlightSelected && selected ? "text-gray-400" : "text-blueGrey",
-        "flex",
-        "items-center",
-      )}
-    >
-      <ElementIconCircle size={IconSize.SMALL} className="mr-1" />
-      <span>{formatBalance(votePower)}</span>
     </div>
   );
 }
