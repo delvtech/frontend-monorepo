@@ -32,14 +32,6 @@ import {
 import { GSCProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/GSCProposalsDetailsCard";
 import { useGSCUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 import { TabId } from "src/ui/proposals/ProposalsPage";
-import Button from "src/ui/base/Button/Button";
-import Dialog_ from "src/ui/base/Dialog/Dialog";
-import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
-import { ChangeDelegateButton } from "src/ui/gsc/ChangeDelegationButton";
-import { GSCMemberProfileRow } from "src/ui/gsc/GSCMemberProfileRow";
-import { GSCVoteTallyDialog } from "./GSCVoteTallyDialog";
-
-type TabId = "active" | "past";
 
 interface ProposalsSectionProps {
   proposalsJson: ProposalsJson;
@@ -71,8 +63,6 @@ export default function GSCProposalsSection({
   const unverifiedProposals = useGSCUnverifiedProposals(
     proposalsJson.proposals,
   );
-  const { data: members = [] } = useGSCMembers();
-
   const allProposals = proposalsJson.proposals.concat(unverifiedProposals);
 
   const activeProposals = useFilteredProposals(
