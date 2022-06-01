@@ -9,7 +9,7 @@ curl -s "https://forum.element.fi/api/viewComments?chain=element-finance&root_id
     | select(.deleted_at = null)
     | { 
 	commonwealthCommentId: .id,
-	"commonweathName": (.Address["name"] // "Anonymous"),
+	"commonwealthName": (.Address["name"] // "Anonymous"),
 	"commonwealthPostedFromAddress": .Address["address"],
 	"address": .plaintext | match("0x[a-fA-F0-9]{40}").string,
 	created_at,
