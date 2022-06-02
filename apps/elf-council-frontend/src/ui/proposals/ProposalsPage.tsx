@@ -173,7 +173,7 @@ export default function ProposalsPage({
       account={account}
       signer={signer}
       proposal={selectedProposal}
-      unverified={selectedProposal.snapshotId === "-1"}
+      unverified={!selectedProposal.snapshotId}
     />
   ) : null;
 

@@ -42,15 +42,15 @@ export async function getProposals(
 
       const snapshotId =
         snapshotIdsByProposalId[proposalId] ||
-        // Set snapshotId to -1 for unverified proposals
-        "-1";
+        // Set snapshotId to empty string for unverified proposals
+        "";
 
       let description: string;
       let title: string;
       let targets: string[];
       let calldatas: string[];
 
-      if (snapshotId !== "-1") {
+      if (!snapshotId) {
         // Proposals with a snapshot
         const { body: snapshotDescription, title: snapshotTitle } =
           await fetchSnapshotProposalTitleAndBody(snapshotId);
