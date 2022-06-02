@@ -36,14 +36,13 @@ export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
   const memberAddresses = members.map(({ address }) => address);
   const { data: votesByMember = {} } = useGSCVotes(memberAddresses, proposalId);
   const tallys = useVoteTallys(memberAddresses, votesByMember);
+
   const { forList, againstList, abstainList } = tallys;
   const allVotes = [...forList, ...againstList, ...abstainList];
-
-  const [isOpen, setIsOpen] = useState(false);
-
   const firstThreeVotes = allVotes.slice(0, 3);
   const remainingVotes = allVotes.slice(3);
 
+  const [isOpen, setIsOpen] = useState(false);
   const onDialogClose = () => setIsOpen(false);
 
   return (
@@ -83,9 +82,9 @@ export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
         </div>
       )}
       <Button
-        onClick={() => setIsOpen(true)}
-        disabled={allVotes.length === 0}
         className="ml-4"
+        disabled={!allVotes.length}
+        onClick={() => setIsOpen(true)}
         variant={ButtonVariant.OUTLINE_WHITE}
       >{t`View Votes`}</Button>
       <GSCVoteTallyDialog
