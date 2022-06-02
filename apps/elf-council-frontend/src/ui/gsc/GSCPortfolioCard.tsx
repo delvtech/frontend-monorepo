@@ -59,20 +59,20 @@ export function GSCPortfolioCard({
             tooltipText={t`${TooltipDefinition.OWNED_VOTING_POWER}`}
             label={t`Voting Power`}
           />
-          <div className="mr-8 flex max-w-md grow items-center align-middle">
+          <div className="flex max-w-md grow items-center align-middle sm:mr-8">
             <ThresholdProgressBar account={account} gscStatus={status} />
           </div>
         </div>
 
-        <div className="mr-4 flex grow basis-72 flex-row items-center lg:ml-auto">
+        <div className="flex grow basis-72 flex-row items-center sm:mr-4 lg:ml-auto">
           {/* GSC History */}
-          <div className="w-min-max mr-auto flex flex-col">
+          <div className="w-3/4gs flex flex-col sm:w-fit">
             <GSCHistory
               status={status}
               threshold={thresholdValue?.toString() ?? "0"}
             />
           </div>
-          <div className="ml-12">
+          <div className="ml-6">
             {canLeaveGSC ? (
               <LeaveGSCButton account={account} signer={signer} />
             ) : (

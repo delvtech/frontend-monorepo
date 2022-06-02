@@ -174,7 +174,7 @@ export const GSCHistory = ({
   return (
     <div className="rounded-lg bg-black bg-opacity-20 p-3">
       <div className="text-xl font-bold text-white">{t`GSC Status`}</div>
-      <div className="whitespace-nowrap">
+      <div className="sm:whitespace-nowrap">
         {getGSCStatusText(status, formattedThreshold, formattedIdleDuration)}
       </div>
     </div>
