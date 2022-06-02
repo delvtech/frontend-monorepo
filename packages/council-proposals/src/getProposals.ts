@@ -63,7 +63,7 @@ export async function getProposals(
         // Proposals with no snapshot
         description =
           "WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.";
-        title = "UNKNOWN PROPOSAL";
+        title = "Unknown Proposal";
         targets = [""];
         calldatas = [""];
       }
