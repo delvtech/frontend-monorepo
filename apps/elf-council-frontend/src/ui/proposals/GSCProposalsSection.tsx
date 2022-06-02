@@ -31,6 +31,7 @@ import {
 } from "src/ui/proposals/NoProposals";
 import { GSCProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/GSCProposalsDetailsCard";
 import { TabId } from "src/ui/proposals/ProposalsPage";
+import { useGSCUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 
 interface ProposalsSectionProps {
   proposalsJson: ProposalsJson;
@@ -59,14 +60,19 @@ export default function GSCProposalsSection({
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
   const isTailwindLargeScreen = useIsTailwindLargeScreen();
 
+  const unverifiedProposals = useGSCUnverifiedProposals(
+    proposalsJson.proposals,
+  );
+  const allProposals = proposalsJson.proposals.concat(unverifiedProposals);
+
   const activeProposals = useFilteredProposals(
     TabId.ACTIVE,
-    proposalsJson.proposals,
+    allProposals,
     currentBlockNumber,
   );
   const pastProposals = useFilteredProposals(
     TabId.PAST,
-    proposalsJson.proposals,
+    allProposals,
     currentBlockNumber,
   );
 
@@ -90,14 +96,12 @@ export default function GSCProposalsSection({
 
   const handleSelectProposal = useCallback(
     (proposalId: string | undefined) => {
-      const proposal = proposalsJson.proposals.find(
-        (p) => p.proposalId === proposalId,
-      );
+      const proposal = allProposals.find((p) => p.proposalId === proposalId);
       setSelectedProposal(proposal);
       setSelectedProposalId(proposalId);
       setIsModalOpen(true);
     },
-    [proposalsJson.proposals],
+    [allProposals],
   );
 
   const handleActiveTabClick = () => {

@@ -29,6 +29,7 @@ import {
   NoProposalsList,
 } from "src/ui/proposals/NoProposals";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/ProposalDetailsCard";
+import { useUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 
 export enum TabId {
   ACTIVE = "active",
@@ -52,14 +53,17 @@ export default function ProposalsPage({
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
   const isTailwindLargeScreen = useIsTailwindLargeScreen();
 
+  const unverifiedProposals = useUnverifiedProposals(proposalsJson.proposals);
+  const allProposals = proposalsJson.proposals.concat(unverifiedProposals);
+
   const activeProposals = useFilteredProposals(
     TabId.ACTIVE,
-    proposalsJson.proposals,
+    allProposals,
     currentBlockNumber,
   );
   const pastProposals = useFilteredProposals(
     TabId.PAST,
-    proposalsJson.proposals,
+    allProposals,
     currentBlockNumber,
   );
 
@@ -105,14 +109,12 @@ export default function ProposalsPage({
 
   const handleSelectProposal = useCallback(
     (proposalId: string | undefined) => {
-      const proposal = proposalsJson.proposals.find(
-        (p) => p.proposalId === proposalId,
-      );
+      const proposal = allProposals.find((p) => p.proposalId === proposalId);
       setSelectedProposal(proposal);
       setSelectedProposalId(proposalId);
       setIsModalOpen(true);
     },
-    [proposalsJson.proposals],
+    [allProposals],
   );
 
   const handleActiveTabClick = () => {
