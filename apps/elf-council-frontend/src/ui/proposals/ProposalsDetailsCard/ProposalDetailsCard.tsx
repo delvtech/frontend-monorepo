@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 import { Proposal } from "@elementfi/council-proposals";
+import { formatBalance2 } from "@elementfi/base/utils/formatBalance/formatBalance";
 import { Signer, ContractTransaction } from "ethers";
 import { commify, formatEther } from "ethers/lib/utils";
 import { isNumber } from "lodash";
@@ -277,6 +278,7 @@ export function ProposalDetailsCard(
             quorum={quorum}
             proposalId={proposalId}
             status={proposalStatus}
+            unverified={!proposal.snapshotId}
           />
         )}
 
@@ -344,19 +346,24 @@ interface QuorumBarProps {
   // quorum in X * 1e18 format, i.e. '50' = 50 Eth
   quorum: string;
   status: ProposalStatus | undefined;
+  unverified: boolean;
 }
 
 function QuorumBar(props: QuorumBarProps) {
-  const { proposalId, quorum } = props;
+  const { proposalId, quorum, unverified } = props;
   const proposalVotingResults = useVotingPowerForProposal(proposalId);
   const votes = getVoteCount(proposalVotingResults);
 
   const quorumPercent = Math.floor((+votes / +quorum) * 100);
 
+  if (unverified) {
+    return null;
+  }
+
   return (
     <div className="w-full space-y-1 text-white">
       <div>
-        {commify(votes)} / {commify(quorum)}{" "}
+        {formatBalance2(votes, 4)} / {commify(quorum)}{" "}
         <span className="text-sm">{t`total votes`}</span>
       </div>
       <ProgressBar progress={+votes / +quorum} />
