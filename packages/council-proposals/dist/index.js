@@ -257,6 +257,125 @@ exports.goerliProposals = {
       snapshotId:
         "0x71df6710e26894685f985ae303b4bd64eeaa080f3e91703dac6ae539f66b5dd0",
     },
+    {
+      proposalId: "1",
+      description:
+        "WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.",
+      title: "UNKNOWN PROPOSAL",
+      proposalHash:
+        "0xd10b00b9ee489761fe2be2637f5cc9a4fb1f8678aaa55f812ce122af3c13c458",
+      unlock: 6161449,
+      lastCall: 6261446,
+      created: 6161447,
+      createdTimestamp: 1641598413,
+      expiration: 6161450,
+      quorum: "100000.0",
+      targets: [""],
+      calldatas: [""],
+      snapshotId: "-1",
+    },
+    {
+      proposalId: "2",
+      description:
+        "WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.",
+      title: "UNKNOWN PROPOSAL",
+      proposalHash:
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+      unlock: 0,
+      lastCall: 0,
+      created: 0,
+      createdTimestamp: 1548854791,
+      expiration: 0,
+      quorum: "0.0",
+      targets: [""],
+      calldatas: [""],
+      snapshotId: "-1",
+    },
+    {
+      proposalId: "3",
+      description:
+        "WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.",
+      title: "UNKNOWN PROPOSAL",
+      proposalHash:
+        "0xbf35f67e89743d095cae3e2391c43e6fbddf27ff73e005821b669baa314ba8ae",
+      unlock: 6184449,
+      lastCall: 7164959,
+      created: 6164960,
+      createdTimestamp: 1641651114,
+      expiration: 6216929,
+      quorum: "1000000.0",
+      targets: [""],
+      calldatas: [""],
+      snapshotId: "-1",
+    },
+    {
+      proposalId: "4",
+      description:
+        "WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.",
+      title: "UNKNOWN PROPOSAL",
+      proposalHash:
+        "0x459a89007c89a1dc55693db5cc2ac0ef77faf73e6e7d821bedd89ba51cd5d4c4",
+      unlock: 6300056,
+      lastCall: 7280567,
+      created: 6280567,
+      createdTimestamp: 1643385402,
+      expiration: 6332536,
+      quorum: "1000000.0",
+      targets: [""],
+      calldatas: [""],
+      snapshotId: "-1",
+    },
+    {
+      proposalId: "5",
+      description:
+        "WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.",
+      title: "UNKNOWN PROPOSAL",
+      proposalHash:
+        "0x459a89007c89a1dc55693db5cc2ac0ef77faf73e6e7d821bedd89ba51cd5d4c4",
+      unlock: 6300097,
+      lastCall: 7280608,
+      created: 6280608,
+      createdTimestamp: 1643386017,
+      expiration: 6332577,
+      quorum: "1000000.0",
+      targets: [""],
+      calldatas: [""],
+      snapshotId: "-1",
+    },
+    {
+      proposalId: "7",
+      description:
+        "WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.",
+      title: "UNKNOWN PROPOSAL",
+      proposalHash:
+        "0xbf35f67e89743d095cae3e2391c43e6fbddf27ff73e005821b669baa314ba8ae",
+      unlock: 6371030,
+      lastCall: 8768053,
+      created: 6351541,
+      createdTimestamp: 1644450154,
+      expiration: 8742070,
+      quorum: "1000000.0",
+      targets: [""],
+      calldatas: [""],
+      snapshotId: "-1",
+    },
+    {
+      proposalId: "8",
+      description:
+        "WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.",
+      title: "UNKNOWN PROPOSAL",
+      proposalHash:
+        "0xbf35f67e89743d095cae3e2391c43e6fbddf27ff73e005821b669baa314ba8ae",
+      unlock: 6483142,
+      lastCall: 8880164,
+      created: 6463653,
+      createdTimestamp: 1646181871,
+      expiration: 8854182,
+      quorum: "1000000.0",
+      targets: [""],
+      calldatas: [""],
+      snapshotId: "-1",
+    },
   ],
 };
 exports.goerliGscProposals = {

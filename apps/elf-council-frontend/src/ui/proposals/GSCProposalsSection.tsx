@@ -30,8 +30,8 @@ import {
   NoProposalsList,
 } from "src/ui/proposals/NoProposals";
 import { GSCProposalDetailsCard } from "src/ui/proposals/ProposalsDetailsCard/GSCProposalsDetailsCard";
-import { useGSCUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 import { TabId } from "src/ui/proposals/ProposalsPage";
+import { useGSCUnverifiedProposals } from "src/ui/proposals/useUnverifiedProposals";
 
 interface ProposalsSectionProps {
   proposalsJson: ProposalsJson;
@@ -79,12 +79,20 @@ export default function GSCProposalsSection({
   const setDefaultActiveProposal = useCallback(() => {
     setSelectedProposalId(activeProposals?.[0]?.proposalId);
     setSelectedProposal(activeProposals?.[0]);
-  }, [activeProposals]);
+
+    if (isTailwindLargeScreen && activeProposals.length) {
+      setIsModalOpen(true);
+    }
+  }, [activeProposals, isTailwindLargeScreen]);
 
   const setDefaultPastProposal = useCallback(() => {
     setSelectedProposalId(pastProposals?.[0]?.proposalId);
     setSelectedProposal(pastProposals?.[0]);
-  }, [pastProposals]);
+
+    if (isTailwindLargeScreen && pastProposals.length) {
+      setIsModalOpen(true);
+    }
+  }, [pastProposals, isTailwindLargeScreen]);
 
   const handleSelectProposal = useCallback(
     (proposalId: string | undefined) => {
@@ -162,7 +170,7 @@ export default function GSCProposalsSection({
       account={account}
       signer={signer}
       proposal={selectedProposal}
-      unverified={!selectedProposal.createdTimestamp}
+      unverified={!selectedProposal.snapshotId}
     />
   ) : null;
 
@@ -204,6 +212,7 @@ export default function GSCProposalsSection({
               }
               selectedProposalId={selectedProposalId}
               onClickItem={handleSelectProposal}
+              isModalOpen={isModalOpen}
             />
           )}
         </div>

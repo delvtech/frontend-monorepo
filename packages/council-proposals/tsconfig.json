@@ -9,6 +9,7 @@
     "declaration": true,
     "outDir": "compiled/",
     "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
       "src/*": ["./src/*"]
     }

@@ -175,7 +175,7 @@ export default function ProposalsPage({
       account={account}
       signer={signer}
       proposal={selectedProposal}
-      unverified={!selectedProposal.createdTimestamp}
+      unverified={!selectedProposal.snapshotId}
     />
   ) : null;
 
