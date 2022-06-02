@@ -3,6 +3,8 @@ import { ChainId } from "src/ethereum";
 
 import testnetDelegatesJson from "src/elf-council-delegates/testnet.delegates.json";
 import mainnetDelegatesJson from "src/elf-council-delegates/mainnet.delegates.json";
+// extra delegates that weren't scrape-able by our current script, these had to be hardcoded :(
+import mainnetExtrasDelegatesJson from "src/elf-council-delegates/mainnet-extras.delegates.json";
 import goerliDelegatesJson from "src/elf-council-delegates/goerli.delegates.json";
 
 export interface DelegatesJson {
@@ -33,7 +35,10 @@ function getDelegates(): Delegate[] {
   }
 
   if (addressesJson.chainId === ChainId.MAINNET) {
-    return mainnetDelegatesJson.delegates;
+    return [
+      ...mainnetDelegatesJson.delegates,
+      ...mainnetExtrasDelegatesJson.delegates,
+    ];
   }
 
   if (addressesJson.chainId === ChainId.LOCAL) {
