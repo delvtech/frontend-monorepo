@@ -73,13 +73,19 @@ export default function GSCProposalsSection({
   const setDefaultActiveProposal = useCallback(() => {
     setSelectedProposalId(activeProposals?.[0]?.proposalId);
     setSelectedProposal(activeProposals?.[0]);
-    isTailwindLargeScreen && activeProposals.length && setIsModalOpen(true);
+
+    if (isTailwindLargeScreen && activeProposals.length) {
+      setIsModalOpen(true);
+    }
   }, [activeProposals, isTailwindLargeScreen]);
 
   const setDefaultPastProposal = useCallback(() => {
     setSelectedProposalId(pastProposals?.[0]?.proposalId);
     setSelectedProposal(pastProposals?.[0]);
-    isTailwindLargeScreen && pastProposals.length && setIsModalOpen(true);
+
+    if (isTailwindLargeScreen && pastProposals.length) {
+      setIsModalOpen(true);
+    }
   }, [pastProposals, isTailwindLargeScreen]);
 
   const handleSelectProposal = useCallback(
