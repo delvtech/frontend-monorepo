@@ -1,17 +1,17 @@
-import { ReactElement, useMemo } from "react";
-import { QueryObserverResult, useQuery } from "react-query";
-
+import { ReactElement, useMemo, useState } from "react";
 import { Provider } from "@ethersproject/providers";
-import zip from "lodash.zip";
 import { msgid, ngettext, t } from "ttag";
 
-import { gscCoreVotingContract } from "src/elf/contracts";
 import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
 import { Ballot } from "src/ui/voting/Ballot";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { formatWalletAddress } from "src/base/formatWalletAddress";
 import { useResolvedEnsName } from "src/ui/ethereum/useResolvedEnsName";
 import { isValidAddress } from "src/base/isValidAddress";
+import { useGSCVotes } from "src/ui/gsc/useGSCVotes";
+import Button from "src/ui/base/Button/Button";
+import { GSCVoteTallyDialog } from "src/ui/proposals/GSCVoteTallyDialog";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 // keeping dead code so i can test UI
 // const votes = [
@@ -34,16 +34,16 @@ export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
   const { proposalId } = props;
   const { data: members = [] } = useGSCMembers();
   const memberAddresses = members.map(({ address }) => address);
-  const { data: votesByMember = {} } = useGSCVotesByMemberForProposal(
-    memberAddresses,
-    proposalId,
-  );
+  const { data: votesByMember = {} } = useGSCVotes(memberAddresses, proposalId);
   const tallys = useVoteTallys(memberAddresses, votesByMember);
+
   const { forList, againstList, abstainList } = tallys;
   const allVotes = [...forList, ...againstList, ...abstainList];
-
   const firstThreeVotes = allVotes.slice(0, 3);
   const remainingVotes = allVotes.slice(3);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const onDialogClose = () => setIsOpen(false);
 
   return (
     <div className="items-middle flex text-white">
@@ -81,43 +81,27 @@ export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
             )}
         </div>
       )}
+      <Button
+        className="ml-4"
+        disabled={!allVotes.length}
+        onClick={() => setIsOpen(true)}
+        variant={ButtonVariant.OUTLINE_WHITE}
+      >{t`View Votes`}</Button>
+      <GSCVoteTallyDialog
+        isOpen={isOpen}
+        onClose={onDialogClose}
+        tallys={{
+          All: allVotes,
+          For: forList,
+          Against: againstList,
+          Abstained: abstainList,
+        }}
+      />
     </div>
   );
 }
 
 export default GSCVoteTallys;
-
-function useGSCVotesByMemberForProposal(
-  members: string[],
-  proposalId: string,
-): QueryObserverResult<Record<string, Ballot>> {
-  return useQuery({
-    queryFn: async () => {
-      const results = await Promise.all(
-        members.map((member) =>
-          gscCoreVotingContract.votes(member, proposalId),
-        ),
-      );
-
-      // if there is no entry found, the smart contract will return:
-      // {
-      //   votePower: 0, ballot: 0,
-      // }
-      // for the gsc, the vote power for each member is either 0 or 1, so setting the ballot to
-      // undefined indicates there was no ballot found, i.e. the member didn't vote on this
-      // proposal.
-      // voting power can also be zero if the member is still in idle mode.  need to make sure they
-      // have voting power before we allow them to vote!
-      const ballots = results.map(([votingPower, ballot]) =>
-        votingPower.isZero() ? undefined : ballot,
-      );
-      const entries = zip(members, ballots) as [string, Ballot | undefined][];
-      const ballotsByMember = Object.fromEntries(entries);
-      return ballotsByMember;
-    },
-    queryKey: ["gsc-member-votes", proposalId, members],
-  });
-}
 
 function useVoteTallys(
   members: string[],
