@@ -1,9 +1,13 @@
 import { HardhatUserConfig } from "hardhat/config";
+import "dotenv/config";
 
 import "@nomiclabs/hardhat-ethers";
 
 // This adds support for typescript paths mappings
 import "tsconfig-paths/register";
+
+const ALCHEMY_GOERLI_API_KEY = process.env.ALCHEMY_GOERLI_API_KEY as string;
+const ALCHEMY_MAINNET_API_KEY = process.env.ALCHEMY_MAINNET_API_KEY as string;
 
 const config: HardhatUserConfig = {
   paths: {
@@ -30,10 +34,10 @@ const config: HardhatUserConfig = {
       allowUnlimitedContractSize: true,
     },
     goerli: {
-      url: `https://eth-goerli.alchemyapi.io/v2/${process.env.ALCHEMY_GOERLI_API_KEY}`,
+      url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_GOERLI_API_KEY}`,
     },
     mainnet: {
-      url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_MAINNET_API_KEY}`,
+      url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_MAINNET_API_KEY}`,
     },
   },
 };
