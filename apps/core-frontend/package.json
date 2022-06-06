@@ -31,7 +31,7 @@
     "@nivo/axes": "^0.74.0",
     "@nivo/core": "^0.74.0",
     "@nivo/line": "^0.74.0",
-    "@nivo/scales": "^0.74.0",
+    "@nivo/scales": "^0.79.0",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
