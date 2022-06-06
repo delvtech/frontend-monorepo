@@ -7,12 +7,10 @@ import {
   Signer,
 } from "ethers";
 
-// this is likely to get a lot more complicated with swap kinds, exact in, exact out etc
-export async function tradePrincipalTokens(
-  tokenInAddress: string,
-  tokenOutAddress: string,
+export async function provideLiquidity(
+  tokensInAddresses: string[],
+  amounts: BigNumberish[],
   vaultAddress: string,
-  amount: BigNumberish,
   slippage: BigNumberish,
   signer: Signer,
   overrides: Overrides = {},
@@ -24,7 +22,7 @@ export async function tradePrincipalTokens(
     from: signerAddress,
     gasLimit: BigNumber.from(100),
     data: "0x",
-    value: BigNumber.from(amount),
+    value: BigNumber.from(amounts[0]),
     confirmations: 1,
     chainId: 1,
     nonce: 1,

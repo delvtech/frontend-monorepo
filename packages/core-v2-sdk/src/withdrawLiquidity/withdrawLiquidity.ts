@@ -7,13 +7,10 @@ import {
   Signer,
 } from "ethers";
 
-// this is likely to get a lot more complicated with swap kinds, exact in, exact out etc
-export async function tradePrincipalTokens(
-  tokenInAddress: string,
-  tokenOutAddress: string,
-  vaultAddress: string,
+// withdraw liquidity before the term is expired to underlying and pts
+export async function withdrawLiquidity(
   amount: BigNumberish,
-  slippage: BigNumberish,
+  poolAddress: string,
   signer: Signer,
   overrides: Overrides = {},
 ): Promise<ContractTransaction> {

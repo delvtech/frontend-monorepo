@@ -7,8 +7,7 @@ import { tradePrincipalTokens } from "src/tradePrincipalTokens/tradePrincipalTok
 const tokenInAddress = ethers.constants.AddressZero;
 const tokenOutAddress = ethers.constants.AddressZero;
 const vaultAddress = ethers.constants.AddressZero;
-
-describe("tradePrincipalTokens", () => {
+describe("provideLiquidity", () => {
   let signers: SignerWithAddress[];
   let signer: SignerWithAddress;
 

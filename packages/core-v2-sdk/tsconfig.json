@@ -11,9 +11,8 @@
     "declaration": true
   },
   "paths": {
-    "src/*": ["./src/*"],
-    "test/*": ["./test/*"]
+    "src/*": ["./src/*"]
   },
-  "include": ["./src", "./test"],
+  "include": ["./src"],
   "files": ["./hardhat.config.ts"]
 }
