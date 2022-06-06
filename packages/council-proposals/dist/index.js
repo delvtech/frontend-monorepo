@@ -1,3 +1,4 @@
+
 /**
  * 🚨🚨🚨 THIS FILE IS AUTO-GENERATED. DO NOT EDIT MANUALLY. 🚨🚨🚨
  * 🚨🚨🚨 THIS FILE IS AUTO-GENERATED. DO NOT EDIT MANUALLY. 🚨🚨🚨
@@ -407,10 +408,28 @@ exports.goerliGscProposals = {
 exports.mainnetProposals = {
   version: "0.0.0",
   snapshotSpace: "elfi.eth",
-  proposals: [],
+  proposals: [
+    {
+      proposalId: "0",
+      description:
+        "WARNING: This proposal has not been verified!  It may contain malicious code, please check the forums or Discord for guidance on how to vote on this proposal.",
+      title: "Unknown Proposal",
+      proposalHash:
+        "0x436680d131c5b533c28dff0c80e935fc1902dbd904acde2744a56db45f9b140a",
+      unlock: 14783089,
+      lastCall: 15378000,
+      created: 14763600,
+      createdTimestamp: 1652392980,
+      expiration: 14815569,
+      quorum: "1100000.0",
+      targets: [""],
+      calldatas: [""],
+      snapshotId: "",
+    },
+  ],
 };
 exports.mainnetGscProposals = {
   version: "0.0.0",
-  snapshotSpace: "elfi.eth",
+  snapshotSpace: "gsc-elfi.eth",
   proposals: [],
 };

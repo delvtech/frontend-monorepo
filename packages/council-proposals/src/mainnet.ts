@@ -33,9 +33,7 @@ const gscCoreVotingContract = CoreVoting__factory.connect(
  * The mapping of on-chain proposal ids to their corresponding snapshot proposal
  * id (off-chain).
  */
-const snapshotIdsByProposalId: Record<string, string> = {
-  "0": "0x46785a4b78a9d03aeb5cdeb1c3ca4ae02cf9e5aca508e59bef405d16a7c8b4a6",
-};
+const snapshotIdsByProposalId: Record<string, string> = {};
 
 const targetsByProposalId: Record<string, string[]> = {};
 

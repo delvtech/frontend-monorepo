@@ -39,6 +39,11 @@ export async function getProposals(
 
       const createdBlock = await provider.getBlock(created.toNumber());
       const proposalId = proposalIdBN.toString();
+      console.log(
+        "proposalId",
+        proposalId,
+        snapshotIdsByProposalId[proposalId],
+      );
 
       const snapshotId =
         snapshotIdsByProposalId[proposalId] ||
@@ -50,7 +55,7 @@ export async function getProposals(
       let targets: string[];
       let calldatas: string[];
 
-      if (!snapshotId) {
+      if (snapshotId) {
         // Proposals with a snapshot
         const { body: snapshotDescription, title: snapshotTitle } =
           await fetchSnapshotProposalTitleAndBody(snapshotId);
