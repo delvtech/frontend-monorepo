@@ -52,6 +52,7 @@
     "_build-index": "bash scripts/build-index.sh",
     "_copy-files": "bash scripts/copy-dist-files.sh",
     "_copy-testnet-addresses": "cp ../../apps/council-testnet/src/addresses/testnet.addresses.json src/addresses/testnet.addresses.json",
-    "copy-testnet": "npm run _copy-testnet-addresses"
+    "copy-testnet": "npm run _copy-testnet-addresses",
+    "push-to-aws": "bash scripts/push-to-aws.sh"
   }
 }
