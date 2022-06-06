@@ -33,7 +33,9 @@ const gscCoreVotingContract = CoreVoting__factory.connect(
  * The mapping of on-chain proposal ids to their corresponding snapshot proposal
  * id (off-chain).
  */
-const snapshotIdsByProposalId: Record<string, string> = {};
+const snapshotIdsByProposalId: Record<string, string> = {
+  "0": "0x46785a4b78a9d03aeb5cdeb1c3ca4ae02cf9e5aca508e59bef405d16a7c8b4a6",
+};
 
 const targetsByProposalId: Record<string, string[]> = {};
 
@@ -45,6 +47,16 @@ const gscTargetsByProposalId: Record<string, string[]> = {};
 
 const gscCallDatasByProposalId: Record<string, string[]> = {};
 
+// Proposals might be deleted from snapshot, so we need to store them
+// indefinitely once they are scraped. We can skip them once they exist in the
+// final json, hence these lists.
+const proposalsToSkip = currentProposalsJson.proposals.map(
+  (proposal) => proposal.proposalId,
+);
+const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
+  (proposal) => proposal.proposalId,
+);
+
 (async function () {
   try {
     const newProposals = await getProposals(
@@ -53,7 +65,7 @@ const gscCallDatasByProposalId: Record<string, string[]> = {};
       snapshotIdsByProposalId,
       targetsByProposalId,
       callDatasByProposalId,
-      currentProposalsJson.proposals.map((proposal) => proposal.proposalId),
+      proposalsToSkip,
     );
 
     const newGscProposals = await getProposals(
@@ -62,7 +74,7 @@ const gscCallDatasByProposalId: Record<string, string[]> = {};
       gscSnapshotIdsByProposalId,
       gscTargetsByProposalId,
       gscCallDatasByProposalId,
-      currentGscProposalsJson.proposals.map((proposal) => proposal.proposalId),
+      gscProposalsToSkip,
     );
 
     const proposalsJson: ProposalsJson = {
