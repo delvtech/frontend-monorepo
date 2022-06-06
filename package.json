@@ -54,6 +54,7 @@
     "stylelint-config-recommended": "^7.0.0"
   },
   "resolutions": {
-    "@types/react": "17.0.44"
+    "@types/react": "17.0.44",
+    "snarkjs": "0.4.10"
   }
 }
