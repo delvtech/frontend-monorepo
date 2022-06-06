@@ -1,14 +1,15 @@
 ## Building for production
 
-| Network          | Command                                             |
-| ---------------- | --------------------------------------------------- |
-| Hardhat          | `yarn workspace elf-frontend run build`             |
-| Goerli           | `yarn workspace elf-frontend run build:goerli-app`  |
-| Ethereum Mainnet | `yarn workspace elf-frontend run build:mainnet-app` |
+| Network          | Command                                              |
+| ---------------- | ---------------------------------------------------- |
+| Hardhat          | `yarn workspace core-frontend run build`             |
+| Goerli           | `yarn workspace core-frontend run build:goerli-app`  |
+| Ethereum Mainnet | `yarn workspace core-frontend run build:mainnet-app` |
 
 ### Running against a mainnet fork environment
 
-It may be useful for some to develop against a mainnet fork environment and we can use [elf-frontend-testnet](https://github.com/element-fi/elf-frontend-testnet) to do so. In a separate directory, clone the elf-frontend-testnet repository and install the dependencies as outlined.
+It may be useful for some to develop against a mainnet fork environment and we
+can use the frontend-testnet in this monorepo to do so.
 
 ##### Importing the developer address
 
@@ -23,10 +24,10 @@ The purpose of doing this is so we can finance a wallet with a basket of ERC20 t
 
 ##### Running the mainnet fork node
 
-In the elf-frontend-testnet directory, run:
+In the core-testnet directory, run:
 
 ```bash
-yarn workspace elf-frontend run start-mainnet:dev
+yarn workspace core-frontend run start-mainnet:dev
 ```
 
 ##### Developing against the Mainnet fork environment
@@ -34,7 +35,7 @@ yarn workspace elf-frontend run start-mainnet:dev
 In a separate terminal, `cd` into this repo's directory and run:
 
 ```bash
-yarn workspace elf-frontend run start:dev-mainnet-fork-app
+yarn workspace core-frontend run start:dev-mainnet-fork-app
 ```
 
 This will spin up the frontend as normal. It will be noticeably slower in initial instances as hardhat will have to first retrieve real state but will be cached in future instances. This will repeat itself when the target blocknumber is changed.
@@ -48,19 +49,19 @@ This will spin up the frontend as normal. It will be noticeably slower in initia
 
 This app is deployed to 3 different projects in [Vercel](https://vercel.com/element-finance).
 
-### 1. [elf-frontend-staging](https://vercel.com/element-finance/elf-frontend-staging)
+### 1. [core-v1-staging](https://vercel.com/element-finance/core-v1-staging)
 
 This is a password protected app accessible at [staging.element.fi][staging-app-url]. It uses `main` as its production branch and will create a new [preview deployment](https://vercel.com/docs/concepts/deployments/environments#preview) each time there's a push to _any_ branch or a deployment is made using the [`vercel` command](https://vercel.com/docs/concepts/deployments/overview#vercel-cli).
 
 Once a branch has been merged into `main`, it will be deployed to [staging.element.fi][staging-app-url].
 
-### 2. [elf-frontend-testnet](https://vercel.com/element-finance/elf-frontend-testnet)
+### 2. [core-v1-testnet](https://vercel.com/element-finance/core-v1-testnet)
 
 This is the Goerli app accessible at [testnet.element.fi][testnet-app-url] and uses `testnet` as its production branch.
 
 After merging a branch into `main`, merge `main` into `testnet` to deploy to [testnet.element.fi][testnet-app-url].
 
-### 3. [elf-frontend](https://vercel.com/element-finance/elf-frontend)
+### 3. [core-v1](https://vercel.com/element-finance/core-v1)
 
 This is the main app accessible at [app.element.fi][mainnet-app-url] and uses `mainnet` as its production branch.
 
