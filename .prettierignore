@@ -12,6 +12,9 @@ apps/council-testnet/artifacts/
 apps/council-testnet/cache/
 apps/council-testnet/elf-council/
 
+# council-proposals
+packages/council-proposals/dist/
+
 # core-typchain
 packages/core-typechain/factories/
 packages/core-typechain/precompiled/
