@@ -4,7 +4,7 @@ import { parseEther } from "ethers/lib/utils";
 import React, { ReactElement, useCallback, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { isValidAddress } from "src/base/isValidAddress";
-import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
+import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/integrations/etherscan";
 import { MerkleRewardType, useMerkleInfo } from "src/merkle/useMerkleInfo";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";

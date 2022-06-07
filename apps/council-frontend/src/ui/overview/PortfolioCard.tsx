@@ -4,7 +4,7 @@ import { Provider } from "@ethersproject/providers";
 import { Signer } from "ethers";
 import { t } from "ttag";
 
-import { getEtherscanAddress } from "src/elf-etherscan/domain";
+import { getEtherscanAddress } from "src/integrations/etherscan";
 import { MerkleRewardType, useMerkleInfo } from "src/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";

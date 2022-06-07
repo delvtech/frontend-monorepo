@@ -19,7 +19,7 @@ import { commify } from "ethers/lib/utils";
 import { jt, t } from "ttag";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
-import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
+import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/integrations/etherscan";
 import { useClaimAndDelegate } from "./useClaimAndDelegate";
 import { isValidAddress } from "src/base/isValidAddress";
 import { Spinner } from "src/ui/base/Spinner/Spinner";

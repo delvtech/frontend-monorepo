@@ -4,7 +4,7 @@ import { Provider } from "@ethersproject/providers";
 import { Signer } from "ethers";
 import { t } from "ttag";
 
-import { getEtherscanAddress } from "src/elf-etherscan/domain";
+import { getEtherscanAddress } from "src/integrations/etherscan";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";

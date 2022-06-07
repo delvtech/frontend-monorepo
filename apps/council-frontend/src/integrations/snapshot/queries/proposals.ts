@@ -1,5 +1,5 @@
 import { gql, request } from "graphql-request";
-import { SNAPSHOT_GRAPHQL_ENDPOINT } from "src/elf-snapshot/endpoints";
+import { SNAPSHOT_GRAPHQL_ENDPOINT } from "src/integrations/snapshot/endpoints";
 
 export interface SnapshotProposal {
   /**
