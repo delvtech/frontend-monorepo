@@ -6,7 +6,7 @@ import { formatEther } from "ethers/lib/utils";
 
 import { addressesJson } from "src/elf-council-addresses";
 import { elementTokenContract, vestingContract } from "src/contracts";
-import { useTokenBalanceOf } from "src/token/useTokenBalanceOf";
+import { useTokenBalanceOf } from "src/ui/token/useTokenBalanceOf";
 import { useLockingVaultBalance } from "src/ui/voting/useLockingVaultBalance";
 
 const { lockingVault } = addressesJson.addresses;
