@@ -1,7 +1,7 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 
-import { gscCoreVotingContract } from "src/elf/contracts";
-import { VotingPower } from "src/elf/proposals/VotingPower";
+import { gscCoreVotingContract } from "src/contracts";
+import { VotingPower } from "src/proposals/VotingPower";
 
 /**
  * Returns the voting power for a given proposal.

@@ -6,7 +6,7 @@ import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 import {
   ALCHEMY_GOERLI_HTTP_URL,
   ALCHEMY_MAINNET_HTTP_URL,
-} from "src/elf/providers/providers";
+} from "src/providers/providers";
 import { t } from "ttag";
 
 import { ChainId, ChainNames, DEFAULT_CHAIN_IDS } from "src/ethereum";

@@ -1,11 +1,11 @@
-import { vestingContract } from "src/elf/contracts";
+import { vestingContract } from "src/contracts";
 import { toast } from "react-hot-toast";
 import { ContractReceipt, Signer } from "ethers";
 import { UseMutationResult } from "react-query";
 import { VestingVault } from "@elementfi/council-typechain";
 import { useSmartContractTransaction } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { makeSmartContractReadCallQueryKey } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
-import { queryClient } from "src/elf/queryClient";
+import { queryClient } from "src/queryClient";
 import { useRef } from "react";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { t, jt } from "ttag";

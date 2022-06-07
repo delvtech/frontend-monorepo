@@ -8,9 +8,9 @@ import { parseEther } from "@ethersproject/units";
 import { ethers, Signer } from "ethers";
 
 import { addressesJson } from "src/elf-council-addresses";
-import { coreVotingContract } from "src/elf/contracts";
-import { MerkleProof } from "src/elf/merkle/MerkleProof";
-import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { coreVotingContract } from "src/contracts";
+import { MerkleProof } from "src/merkle/MerkleProof";
+import { MerkleRewardType, useMerkleInfo } from "src/merkle/useMerkleInfo";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useLockingVaultVotingPower } from "src/ui/voting/useLockingVaultVotingPower";

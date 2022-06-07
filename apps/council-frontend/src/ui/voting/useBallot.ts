@@ -3,7 +3,7 @@ import { QueryObserverResult } from "react-query";
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { BigNumber } from "ethers";
 
-import { coreVotingContract } from "src/elf/contracts";
+import { coreVotingContract } from "src/contracts";
 import { Ballot } from "src/ui/voting/Ballot";
 
 // TODO: get from typechain

@@ -5,7 +5,7 @@ import {
   ReactElement,
   MouseEvent,
 } from "react";
-import ElementUrl from "src/elf/urls";
+import ElementUrl from "src/urls";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";

@@ -9,7 +9,7 @@ import {
   GSCVault__factory,
 } from "@elementfi/council-typechain";
 import { addressesJson } from "src/elf-council-addresses";
-import { defaultProvider } from "src/elf/providers/providers";
+import { defaultProvider } from "src/providers/providers";
 
 export const elementTokenContract = ERC20Permit__factory.connect(
   addressesJson.addresses.elementToken,

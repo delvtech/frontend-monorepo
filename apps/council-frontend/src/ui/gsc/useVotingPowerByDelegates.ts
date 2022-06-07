@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { lockingVaultContract, vestingContract } from "src/elf/contracts";
+import { lockingVaultContract, vestingContract } from "src/contracts";
 import { getFromBlock } from "src/elf-council-addresses/getFromBlock";
 import { useQuery, UseQueryResult } from "react-query";
 

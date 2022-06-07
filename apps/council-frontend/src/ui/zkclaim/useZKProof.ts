@@ -13,7 +13,7 @@ import {
   githubTier1PrivateAirdropContract,
   githubTier2PrivateAirdropContract,
   githubTier3PrivateAirdropContract,
-} from "src/elf/contracts";
+} from "src/contracts";
 import { PrivateAirdrop } from "@elementfi/council-typechain";
 
 let CHAIN_NAME = process.env.NEXT_PUBLIC_CHAIN_NAME || "testnet";

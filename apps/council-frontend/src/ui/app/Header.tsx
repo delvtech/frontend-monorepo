@@ -3,7 +3,7 @@ import { useWeb3React } from "@web3-react/core";
 import { t } from "ttag";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
-import ElementUrl from "src/elf/urls";
+import ElementUrl from "src/urls";
 import GasIcon from "src/ui/base/svg/GasIcon";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import {

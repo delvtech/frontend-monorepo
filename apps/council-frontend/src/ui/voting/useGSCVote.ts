@@ -8,7 +8,7 @@ import {
 import { Signer } from "ethers";
 
 import { addressesJson } from "src/elf-council-addresses";
-import { gscCoreVotingContract } from "src/elf/contracts";
+import { gscCoreVotingContract } from "src/contracts";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { Ballot } from "src/ui/voting/Ballot";
 

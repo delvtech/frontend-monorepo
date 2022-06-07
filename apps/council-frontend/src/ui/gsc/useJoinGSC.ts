@@ -11,7 +11,7 @@ import {
   gscVaultContract,
   lockingVaultContract,
   vestingContract,
-} from "src/elf/contracts";
+} from "src/contracts";
 import { useQueryVotePowerView } from "src/ui/voting/useQueryVotePower";
 import { GSCVault } from "@elementfi/council-typechain";
 

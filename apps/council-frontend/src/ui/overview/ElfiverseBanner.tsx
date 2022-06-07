@@ -4,7 +4,7 @@ import Image from "next/image";
 import { t } from "ttag";
 import classNames from "classnames";
 
-import ElementUrls from "src/elf/urls";
+import ElementUrls from "src/urls";
 import Card from "src/ui/base/Card/Card";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import { useNFTTokenBalanceOf } from "src/ui/overview/useNFTTokenBalanceOf";

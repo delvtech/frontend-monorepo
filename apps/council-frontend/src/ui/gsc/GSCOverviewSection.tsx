@@ -4,7 +4,7 @@ import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { jt, t } from "ttag";
 
-import { defaultProvider } from "src/elf/providers/providers";
+import { defaultProvider } from "src/providers/providers";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";

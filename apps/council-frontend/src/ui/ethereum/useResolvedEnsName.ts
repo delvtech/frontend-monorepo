@@ -1,6 +1,6 @@
 import { Provider } from "@ethersproject/providers";
 import { QueryObserverResult, useQuery } from "react-query";
-import { defaultProvider } from "src/elf/providers/providers";
+import { defaultProvider } from "src/providers/providers";
 
 export function useResolvedEnsName(
   name: string | null | undefined,

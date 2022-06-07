@@ -1,5 +1,5 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
-import { defaultProvider as provider } from "src/elf/providers/providers";
+import { defaultProvider as provider } from "src/providers/providers";
 import { BigNumber } from "ethers";
 import { QueryObserverResult } from "react-query";
 import { ElfNFT__factory } from "src/typechain-types/factories/ElfNFT__factory";

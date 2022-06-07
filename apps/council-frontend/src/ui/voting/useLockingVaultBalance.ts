@@ -1,6 +1,6 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { formatEther } from "ethers/lib/utils";
-import { lockingVaultContract } from "src/elf/contracts";
+import { lockingVaultContract } from "src/contracts";
 import {} from "src/ui/voting/useQueryVotePower";
 
 /**

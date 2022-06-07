@@ -9,13 +9,13 @@ import classNames from "classnames";
 import { jt, t } from "ttag";
 
 import { ProposalsJson } from "@elementfi/council-proposals";
-import ElementUrls from "src/elf/urls";
+import ElementUrls from "src/urls";
 import Card from "src/ui/base/Card/Card";
 import H1 from "src/ui/base/H1/H1";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { PortfolioCard } from "src/ui/overview/PortfolioCard";
 import { SummaryCards } from "src/ui/overview/SummaryCards";
-import { defaultProvider } from "src/elf/providers/providers";
+import { defaultProvider } from "src/providers/providers";
 import { useSigner } from "src/ui/signer/useSigner";
 
 const provider = defaultProvider;

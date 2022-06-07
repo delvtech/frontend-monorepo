@@ -9,7 +9,7 @@ import {
   ElementIconCircle,
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
-import ElementUrl from "src/elf/urls";
+import ElementUrl from "src/urls";
 import Link from "next/link";
 import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 

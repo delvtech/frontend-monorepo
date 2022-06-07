@@ -2,7 +2,7 @@ import { BigNumber } from "ethers";
 import {
   lockingVaultContract as lockingVault,
   vestingContract as vestingVault,
-} from "src/elf/contracts";
+} from "src/contracts";
 import { TypedEvent } from "src/typechain-types/common";
 
 type Event = TypedEvent<

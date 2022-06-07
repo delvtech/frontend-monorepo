@@ -6,7 +6,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import useFile from "src/ui/base/useFile";
 import { ZKData } from "src/ui/zk/types";
 import { GITHUB_ZK_URL, HASH_LENGTH } from "src/ui/zk/constants";
-import ElementUrl from "src/elf/urls";
+import ElementUrl from "src/urls";
 import { t, jt } from "ttag";
 
 interface LookupCardProps {

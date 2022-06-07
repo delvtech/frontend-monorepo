@@ -1,5 +1,5 @@
 import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
-import { gscVaultContract } from "src/elf/contracts";
+import { gscVaultContract } from "src/contracts";
 import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 
 export function useIsMemberKicked(account: string | null | undefined): boolean {

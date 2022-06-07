@@ -7,7 +7,7 @@ import { ethers, Wallet } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 
 import { getMerkleTree } from "src/base/merkle";
-import { testProvider } from "src/elf/providers/providers";
+import { testProvider } from "src/providers/providers";
 
 const ONE_ETHER = ethers.utils.parseEther("1");
 export async function testClaiming(

@@ -5,7 +5,7 @@ import { Signer } from "ethers";
 import { t } from "ttag";
 
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
-import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import LinkButton from "src/ui/base/Button/LinkButton";

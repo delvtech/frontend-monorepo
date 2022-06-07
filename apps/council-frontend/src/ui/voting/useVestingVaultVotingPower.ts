@@ -1,4 +1,4 @@
-import { vestingContract } from "src/elf/contracts";
+import { vestingContract } from "src/contracts";
 import {
   useQueryVotePower,
   useQueryVotePowerView,
