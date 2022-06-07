@@ -89,7 +89,6 @@ const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
       proposals: [...currentProposalsJson.proposals, ...newProposals],
     };
     const proposalsJsonString = JSON.stringify(proposalsJson, null, 2);
-    console.log(proposalsJsonString);
 
     fs.writeFileSync(
       "src/proposals/mainnet.proposals.json",
@@ -102,7 +101,6 @@ const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
       proposals: [...currentGscProposalsJson.proposals, ...newGscProposals],
     };
     const gscProposalsJsonString = JSON.stringify(gscProposalsJson, null, 2);
-    console.log(gscProposalsJsonString);
 
     fs.writeFileSync(
       "src/proposals/mainnet-gsc.proposals.json",
