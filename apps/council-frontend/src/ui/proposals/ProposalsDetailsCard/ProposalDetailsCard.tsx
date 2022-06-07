@@ -240,7 +240,7 @@ export function ProposalDetailsCard(
             {unverified ? (
               <UnverifiedProposalWarning />
             ) : (
-              <p className="shrink-0 py-2 px-4 font-light text-white ">
+              <p className="shrink-0 whitespace-pre-line py-2 px-4 font-light text-white">
                 {snapshotProposal?.body || ""}
               </p>
             )}
