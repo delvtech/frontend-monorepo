@@ -7,6 +7,7 @@
     "@elementfi/council-typechain": "*",
     "@types/lodash.uniq": "^4.5.6",
     "@types/lodash.zip": "^4.2.6",
+    "dotenv": "^16.0.1",
     "graphql": "^16.3.0",
     "graphql-request": "^4.0.0",
     "lodash.uniq": "^4.5.0",
@@ -47,10 +48,11 @@
     "build-testnet": "bash scripts/build-testnet.sh && npm run _build-index && npm run _copy-files",
     "build-goerli": "bash scripts/build-goerli.sh && npm run _build-index && npm run _copy-files",
     "build-mainnet": "bash scripts/build-mainnet.sh",
-    "build": "npm run build-goerli && npm run build-mainnet && npm run build-testnet && npm run _build-index && npm run _copy-files",
+    "build": "npm run build-goerli && npm run build-mainnet && npm run _build-index && npm run _copy-files",
     "_build-index": "bash scripts/build-index.sh",
     "_copy-files": "bash scripts/copy-dist-files.sh",
     "_copy-testnet-addresses": "cp ../../apps/council-testnet/src/addresses/testnet.addresses.json src/addresses/testnet.addresses.json",
-    "copy-testnet": "npm run _copy-testnet-addresses"
+    "copy-testnet": "npm run _copy-testnet-addresses",
+    "push-to-aws": "bash scripts/push-to-aws.sh"
   }
 }

@@ -45,6 +45,16 @@ const gscTargetsByProposalId: Record<string, string[]> = {};
 
 const gscCallDatasByProposalId: Record<string, string[]> = {};
 
+// Proposals might be deleted from snapshot, so we need to store them
+// indefinitely once they are scraped. We can skip them once they exist in the
+// final json, hence these lists.
+const proposalsToSkip = currentProposalsJson.proposals.map(
+  (proposal) => proposal.proposalId,
+);
+const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
+  (proposal) => proposal.proposalId,
+);
+
 (async function () {
   try {
     const newProposals = await getProposals(
@@ -53,7 +63,7 @@ const gscCallDatasByProposalId: Record<string, string[]> = {};
       snapshotIdsByProposalId,
       targetsByProposalId,
       callDatasByProposalId,
-      currentProposalsJson.proposals.map((proposal) => proposal.proposalId),
+      proposalsToSkip,
     );
 
     const newGscProposals = await getProposals(
@@ -62,7 +72,7 @@ const gscCallDatasByProposalId: Record<string, string[]> = {};
       gscSnapshotIdsByProposalId,
       gscTargetsByProposalId,
       gscCallDatasByProposalId,
-      currentGscProposalsJson.proposals.map((proposal) => proposal.proposalId),
+      gscProposalsToSkip,
     );
 
     const proposalsJson: ProposalsJson = {
