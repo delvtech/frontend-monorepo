@@ -1,3 +1,10 @@
+import { formatBalance2 } from "@elementfi/base/utils/formatBalance/formatBalance";
+import { Proposal } from "@elementfi/council-proposals";
+import { CheckCircleIcon } from "@heroicons/react/outline";
+import classNames from "classnames";
+import { ContractTransaction, Signer } from "ethers";
+import { commify, formatEther } from "ethers/lib/utils";
+import { isNumber } from "lodash";
 import React, {
   ReactElement,
   useCallback,
@@ -6,28 +13,19 @@ import React, {
   useState,
 } from "react";
 import toast from "react-hot-toast";
-
-import { CheckCircleIcon } from "@heroicons/react/outline";
-import classNames from "classnames";
-import { Proposal } from "@elementfi/council-proposals";
-import { formatBalance2 } from "@elementfi/base/utils/formatBalance/formatBalance";
-import { Signer, ContractTransaction } from "ethers";
-import { commify, formatEther } from "ethers/lib/utils";
-import { isNumber } from "lodash";
-import { t, jt } from "ttag";
-
-import H1 from "src/ui/base/H1/H1";
-import H2 from "src/ui/base/H2/H2";
-import ElementUrl from "src/elf/urls";
+import ReactMarkdown from "react-markdown";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { VotingPower } from "src/elf/proposals/VotingPower";
+import ElementUrl from "src/elf/urls";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
-import { TooltipDefinition } from "src/ui/proposals/ProposalsDetailsCard/tooltipDefinitions";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import CloseButton from "src/ui/base/Dialog/CloseButton";
 import GradientCard from "src/ui/base/Card/GradientCard";
+import CloseButton from "src/ui/base/Dialog/CloseButton";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
+import H1 from "src/ui/base/H1/H1";
+import H2 from "src/ui/base/H2/H2";
 import { Intent } from "src/ui/base/Intent";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 import { Tag } from "src/ui/base/Tag/Tag";
@@ -38,6 +36,10 @@ import {
   ProposalStatusLabels,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
+import { BallotLabel } from "src/ui/proposals/ProposalsDetailsCard/BallotLabel";
+import { StaleVotingPowerMessage } from "src/ui/proposals/ProposalsDetailsCard/StaleVotingPowerMessage";
+import { TooltipDefinition } from "src/ui/proposals/ProposalsDetailsCard/tooltipDefinitions";
+import { UnverifiedProposalWarning } from "src/ui/proposals/ProposalsDetailsCard/UnverifiedProposalWarning";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
@@ -47,10 +49,9 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-import { StaleVotingPowerMessage } from "src/ui/proposals/ProposalsDetailsCard/StaleVotingPowerMessage";
-import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
-import { UnverifiedProposalWarning } from "src/ui/proposals/ProposalsDetailsCard/UnverifiedProposalWarning";
-import { BallotLabel } from "src/ui/proposals/ProposalsDetailsCard/BallotLabel";
+import { jt, t } from "ttag";
+import { ReactMarkdownOptions } from "react-markdown/lib/react-markdown";
+
 interface ProposalDetailsCardProps {
   className?: string;
   account: string | null | undefined;
@@ -59,6 +60,14 @@ interface ProposalDetailsCardProps {
   onClose: () => void;
   unverified?: boolean;
 }
+
+const markdownComponents: ReactMarkdownOptions["components"] = {
+  a: (props) => (
+    <a className="text-yellow-400 hover:underline" href={props.href}>
+      {props.children}
+    </a>
+  ),
+};
 
 export function ProposalDetailsCard(
   props: ProposalDetailsCardProps,
@@ -240,8 +249,10 @@ export function ProposalDetailsCard(
             {unverified ? (
               <UnverifiedProposalWarning />
             ) : (
-              <p className="shrink-0 py-2 px-4 font-light text-white ">
-                {snapshotProposal?.body || ""}
+              <p className="shrink-0 whitespace-pre-line py-2 px-4 font-light text-white">
+                <ReactMarkdown components={markdownComponents}>
+                  {proposal.description || ""}
+                </ReactMarkdown>
               </p>
             )}
           </div>

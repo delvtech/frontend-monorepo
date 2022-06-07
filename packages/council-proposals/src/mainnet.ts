@@ -33,11 +33,19 @@ const gscCoreVotingContract = CoreVoting__factory.connect(
  * The mapping of on-chain proposal ids to their corresponding snapshot proposal
  * id (off-chain).
  */
-const snapshotIdsByProposalId: Record<string, string> = {};
+const snapshotIdsByProposalId: Record<string, string> = {
+  "1": "0x46785a4b78a9d03aeb5cdeb1c3ca4ae02cf9e5aca508e59bef405d16a7c8b4a6",
+};
 
-const targetsByProposalId: Record<string, string[]> = {};
+const targetsByProposalId: Record<string, string[]> = {
+  "1": ["0x81758f3361A769016eae4844072FA6d7f828a651"],
+};
 
-const callDatasByProposalId: Record<string, string[]> = {};
+const callDatasByProposalId: Record<string, string[]> = {
+  "1": [
+    "0x88b49b8332b3be434fca12a37af693421116ab7c7682da00e7283c2530502de382b0464b",
+  ],
+};
 
 const gscSnapshotIdsByProposalId: Record<string, string> = {};
 
@@ -81,7 +89,6 @@ const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
       proposals: [...currentProposalsJson.proposals, ...newProposals],
     };
     const proposalsJsonString = JSON.stringify(proposalsJson, null, 2);
-    console.log(proposalsJsonString);
 
     fs.writeFileSync(
       "src/proposals/mainnet.proposals.json",
@@ -94,7 +101,6 @@ const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
       proposals: [...currentGscProposalsJson.proposals, ...newGscProposals],
     };
     const gscProposalsJsonString = JSON.stringify(gscProposalsJson, null, 2);
-    console.log(gscProposalsJsonString);
 
     fs.writeFileSync(
       "src/proposals/mainnet-gsc.proposals.json",

@@ -16,6 +16,23 @@
       "targets": [""],
       "calldatas": [""],
       "snapshotId": ""
+    },
+    {
+      "proposalId": "1",
+      "description": "Authors: @Gregory | ChainSafe\nType: Executable Proposal\nStatus: Snapshot Vote\nDate proposed: April 28th, 2022\nDate ratified:\nReferences\n\n    You can find the code snippet [here](https://gist.github.com/GregTheGreek/92d744c34dfe903fc69d3edd16c106af) \n\n### Sentence Summary\nIncrease the current GSC quroum threshold to 3.\n\n### Paragraph Summary\n\nThis proposal exist to increase the quorum threshold on the GSC from one to three.\n\n### Motivation\n\nWith great power comes great responsibility.\n\nAs of today (April 28, 2022) there has only been one delegate (myself) who has proven their membership to the GSC on-chain. In roughly five days I will be able to pass votes by myself with no further approval because the current quroum threshold on the GSC is one. I believe that no one person should be able to govern the GSC by themselves, and thus I am proposing to effectively lock the GSC until two other delegates join the GSC. Three was chosen as a starting point for one reason, to break a tie. As more delegates join, I'm sure this value will gradually increase but for the time being, a threshold of three will be adequate to ensure some level of participation.\n\n### Specification / Proposal Details\n\n    Option A [YES] is a vote to increase the quroum threshold to three.\n    Option B [NO] is a vote to do nothing. \n",
+      "title": "EGP-2 - Increase GSC quorum threshold ",
+      "proposalHash": "0xb0f22d54f1cc0fecd1cf098ca476903d507fbf9bf00836cb7fcb830c933e218e",
+      "unlock": 14942227,
+      "lastCall": 15378000,
+      "created": 14922738,
+      "createdTimestamp": 1654632842,
+      "expiration": 14974707,
+      "quorum": "1100000.0",
+      "targets": ["0x81758f3361A769016eae4844072FA6d7f828a651"],
+      "calldatas": [
+        "0x88b49b8332b3be434fca12a37af693421116ab7c7682da00e7283c2530502de382b0464b"
+      ],
+      "snapshotId": "0x46785a4b78a9d03aeb5cdeb1c3ca4ae02cf9e5aca508e59bef405d16a7c8b4a6"
     }
   ]
 }
