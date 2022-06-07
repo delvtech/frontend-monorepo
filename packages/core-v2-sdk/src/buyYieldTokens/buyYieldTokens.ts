@@ -7,6 +7,15 @@ import {
   Signer,
 } from "ethers";
 
+/**
+ * A method to buy yield tokens.  Unclear at this point if this is simply performing the internal flashloan to perform a YTC.
+ * @param tokenAddress
+ * @param vaultAddress
+ * @param amount
+ * @param signer
+ * @param overrides
+ * @returns
+ */
 export async function buyYieldTokens(
   tokenAddress: string,
   vaultAddress: string,

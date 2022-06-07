@@ -7,7 +7,14 @@ import {
   Signer,
 } from "ethers";
 
-// redeem liquidity after the term is mature to the underlying
+/**
+ * redeem liquidity after the term is mature to the underlying
+ * @param amount
+ * @param poolAddress
+ * @param signer
+ * @param overrides
+ * @returns
+ */
 export async function redeemLiquidity(
   amount: BigNumberish,
   poolAddress: string,

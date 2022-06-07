@@ -7,7 +7,14 @@ import {
   Signer,
 } from "ethers";
 
-// withdraw liquidity before the term is expired to underlying and pts
+/**
+ * withdraw liquidity before the term is expired to underlying and pts
+ * @param amount
+ * @param poolAddress
+ * @param signer
+ * @param overrides
+ * @returns
+ */
 export async function withdrawLiquidity(
   amount: BigNumberish,
   poolAddress: string,

@@ -7,7 +7,18 @@ import {
   Signer,
 } from "ethers";
 
-// this is likely to get a lot more complicated with swap kinds, exact in, exact out etc
+/**
+ * performs a trade of principal tokens on a v2 pool
+ * this is likely to get a lot more complicated with swap kinds, exact in, exact out etc
+ * @param tokenInAddress
+ * @param tokenOutAddress
+ * @param vaultAddress
+ * @param amount
+ * @param slippage
+ * @param signer
+ * @param overrides
+ * @returns
+ */
 export async function tradePrincipalTokens(
   tokenInAddress: string,
   tokenOutAddress: string,

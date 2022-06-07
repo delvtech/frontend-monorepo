@@ -7,6 +7,16 @@ import {
   Signer,
 } from "ethers";
 
+/**
+ * A function to provide liquidity to a v2 term
+ * @param tokensInAddresses
+ * @param amounts
+ * @param vaultAddress
+ * @param slippage
+ * @param signer
+ * @param overrides
+ * @returns
+ */
 export async function provideLiquidity(
   tokensInAddresses: string[],
   amounts: BigNumberish[],
