@@ -4,7 +4,7 @@ import { t } from "ttag";
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import LinkButton from "src/ui/base/Button/LinkButton";
-import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
+import { getFeaturedDelegate } from "src/delegate/isFeaturedDelegate";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
 import { Provider } from "@ethersproject/providers";
 

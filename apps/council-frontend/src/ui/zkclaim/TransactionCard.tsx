@@ -12,7 +12,7 @@ import { Intent } from "src/ui/base/Intent";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
+import { getFeaturedDelegate } from "src/delegate/isFeaturedDelegate";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { ConnectWalletDialog } from "src/ui/wallet/ConnectWalletDialog";
 import { commify } from "ethers/lib/utils";

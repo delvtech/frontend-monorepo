@@ -5,7 +5,7 @@ import { formatBalance } from "src/formatBalance";
 import classNames from "classnames";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
-import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
+import { getFeaturedDelegate } from "src/delegate/isFeaturedDelegate";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import {
