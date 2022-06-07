@@ -64,6 +64,7 @@ function Header(): ReactElement {
           account={account}
           provider={library}
           walletConnectionActive={active}
+          testId="wallet-btn"
         />
       </div>
     </div>

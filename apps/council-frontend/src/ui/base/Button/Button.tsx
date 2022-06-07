@@ -12,6 +12,7 @@ export interface ButtonProps extends ButtonStyles {
   className?: string;
   loading?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  testId?: string;
 }
 
 export default function Button({
@@ -25,6 +26,7 @@ export default function Button({
   children,
   error,
   className,
+  testId,
 }: ButtonProps): ReactElement {
   const buttonClassName = getButtonClass({
     variant,
@@ -37,6 +39,7 @@ export default function Button({
 
   return (
     <button
+      data-testid={testId}
       disabled={disabled}
       onClick={onClick}
       type="button"
