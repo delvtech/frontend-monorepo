@@ -14,7 +14,7 @@ import { t } from "ttag";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { MerkleRewardType, useMerkleInfo } from "src/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/ui/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import ElementUrl from "src/urls";
 import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";

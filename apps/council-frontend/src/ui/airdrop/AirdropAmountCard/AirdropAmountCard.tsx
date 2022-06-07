@@ -5,7 +5,7 @@ import {
   ElementIconCircle,
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
-import { MerkleRewardType, useMerkleInfo } from "src/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/ui/merkle/useMerkleInfo";
 import { commify } from "ethers/lib/utils";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { getFeaturedDelegate } from "src/delegate/isFeaturedDelegate";

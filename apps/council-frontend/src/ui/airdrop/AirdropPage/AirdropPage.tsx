@@ -9,7 +9,7 @@ import Steps from "src/ui/base/Steps/Steps";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 import { parseEther } from "ethers/lib/utils";
-import { MerkleRewardType, useMerkleInfo } from "src/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/ui/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { MerkleProof } from "src/merkle/MerkleProof";
 import {
