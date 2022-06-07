@@ -10,7 +10,7 @@ import { AppProps } from "next/app";
 import React, { ReactElement } from "react";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { getEthereumProviderLibrary } from "src/getEthereumProviderLibrary";
+import { getEthereumProviderLibrary } from "src/base/getEthereumProviderLibrary";
 import { queryClient } from "src/queryClient";
 import { addressesJson } from "src/elf-council-addresses";
 import { Notifications } from "src/ui/notifications/Notifications";

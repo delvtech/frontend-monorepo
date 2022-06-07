@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
-import { formatBalance } from "src/formatBalance";
+import { formatBalance } from "src/base/formatBalance";
 import classNames from "classnames";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";

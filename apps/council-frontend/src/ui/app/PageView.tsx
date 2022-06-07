@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import React, { Fragment, ReactElement, ReactNode } from "react";
 import { addressesJson } from "src/elf-council-addresses";
-import { ChainId, ChainNames } from "src/ethereum";
+import { ChainId, ChainNames } from "@elementfi/base/ethereum/ethereum";
 import Footer from "src/ui/app/Footer";
 import Header from "src/ui/app/Header";
 import Sidebar from "src/ui/app/Sidebar";

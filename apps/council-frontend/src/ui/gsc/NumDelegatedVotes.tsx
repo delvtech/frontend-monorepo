@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import classNames from "classnames";
 
-import { formatBalance } from "src/formatBalance";
+import { formatBalance } from "src/base/formatBalance";
 import {
   ElementIconCircle,
   IconSize,

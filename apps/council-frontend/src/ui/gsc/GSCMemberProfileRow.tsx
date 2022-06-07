@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import classNames from "classnames";
 
 import { formatWalletAddress } from "src/base/formatWalletAddress";
-import { getGSCCandidateUrl } from "src/commonwealth";
+import { getGSCCandidateUrl } from "src/integrations/commonwealth";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";

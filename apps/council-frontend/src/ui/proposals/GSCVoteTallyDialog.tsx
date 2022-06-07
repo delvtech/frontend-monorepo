@@ -8,7 +8,7 @@ import { Delegate } from "src/elf-council-delegates/delegates";
 import { NumDelegatedVotes } from "src/ui/gsc/NumDelegatedVotes";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { formatWalletAddress } from "src/base/formatWalletAddress";
-import { getGSCCandidateUrl } from "src/commonwealth";
+import { getGSCCandidateUrl } from "src/integrations/commonwealth";
 import { useENSName } from "src/ui/ethereum/useEnsName";
 
 const listOptions = [t`All`, t`For`, t`Against`, t`Abstained`] as const;

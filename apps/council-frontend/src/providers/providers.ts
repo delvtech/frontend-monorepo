@@ -4,7 +4,7 @@ import type { MockProvider } from "ethereum-waffle";
 import { providers } from "ethers";
 
 import { addressesJson } from "src/elf-council-addresses";
-import { ChainId } from "src/ethereum";
+import { ChainId } from "@elementfi/base/ethereum/ethereum";
 
 const isBrowser = typeof window !== "undefined";
 

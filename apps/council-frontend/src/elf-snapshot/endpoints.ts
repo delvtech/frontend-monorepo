@@ -1,5 +1,5 @@
 import { addressesJson } from "src/elf-council-addresses";
-import { ChainId } from "src/ethereum";
+import { ChainId } from "@elementfi/base/ethereum/ethereum";
 
 export const SNAPSHOT_GRAPHQL_ENDPOINT = "https://hub.snapshot.org/graphql";
 export const ELEMENT_FINANCE_SNAPSHOT_URL = getSnapshotUrl();
