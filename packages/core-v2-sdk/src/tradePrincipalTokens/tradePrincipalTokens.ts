@@ -20,10 +20,10 @@ import {
  * @returns
  */
 export async function tradePrincipalTokens(
+  amount: BigNumberish,
   tokenInAddress: string,
   tokenOutAddress: string,
   vaultAddress: string,
-  amount: BigNumberish,
   slippage: BigNumberish,
   signer: Signer,
   overrides: Overrides = {},

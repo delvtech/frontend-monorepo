@@ -18,8 +18,8 @@ import {
  * @returns
  */
 export async function provideLiquidity(
-  tokensInAddresses: string[],
   amounts: BigNumberish[],
+  tokensInAddresses: string[],
   vaultAddress: string,
   slippage: BigNumberish,
   signer: Signer,

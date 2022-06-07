@@ -14,7 +14,7 @@ import {
  * @param tokenReserves
  * @returns
  */
-export function calculateTradePrincipalTokens(
+export function calcSwapConvergentCurvePool(
   tokenAmountsIn: BigNumberish[],
   tokenReserves: BigNumberish[],
 ): string {
