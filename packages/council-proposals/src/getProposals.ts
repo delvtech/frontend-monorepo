@@ -10,6 +10,7 @@ export async function getProposals(
   snapshotIdsByProposalId: Record<string, string>,
   targetsByProposalId: Record<string, string[]>,
   callDatasByProposalId: Record<string, string[]>,
+  forumLinksByProposalId: Record<string, string>,
   proposalIdsToSkip: string[] = [],
 ): Promise<Proposal[]> {
   // Source all on-chain proposals from events
@@ -73,6 +74,8 @@ export async function getProposals(
         calldatas = [""];
       }
 
+      const forumLink = forumLinksByProposalId[proposalId] || "";
+
       return {
         proposalId,
         description,
@@ -87,6 +90,7 @@ export async function getProposals(
         targets,
         calldatas,
         snapshotId,
+        forumLink,
       };
     },
   );
