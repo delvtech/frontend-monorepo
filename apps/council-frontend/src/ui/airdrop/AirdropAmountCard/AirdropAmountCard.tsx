@@ -8,7 +8,7 @@ import {
 import { MerkleRewardType, useMerkleInfo } from "src/ui/merkle/useMerkleInfo";
 import { commify } from "ethers/lib/utils";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
-import { getFeaturedDelegate } from "src/delegate/isFeaturedDelegate";
+import { getFeaturedDelegate } from "src/delegates/isFeaturedDelegate";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
 import { Provider } from "@ethersproject/providers";

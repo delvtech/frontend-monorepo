@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 
 import { ProposalsJson } from "@elementfi/council-proposals";
 
-import { GSC_PROPOSALS_JSON_URL } from "src/elf-council-proposals";
+import { GSC_PROPOSALS_JSON_URL } from "src/proposals";
 import PageView from "src/ui/app/PageView";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import GSCProposalsPage from "src/ui/proposals/GSCProposalsSection";

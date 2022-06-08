@@ -14,7 +14,7 @@ import { ContractTransaction, Signer } from "ethers";
 import { isNumber } from "lodash";
 import { jt, t } from "ttag";
 
-import { getIsVotingOpen } from "src/elf-council-proposals";
+import { getIsVotingOpen } from "src/proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/integrations/etherscan";
 import { defaultProvider } from "src/providers/providers";
 import ElementUrl from "src/urls";

@@ -1,5 +1,5 @@
 import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
-import { getFromBlock } from "src/elf-council-addresses/getFromBlock";
+import { getFromBlock } from "src/addresses/getFromBlock";
 import { gscVaultContract } from "src/contracts";
 import { useBlockAtBlockHashOrBlockTag } from "src/ui/ethereum/useBlockAtBlockHashOrBlockTag";
 import { useGSCIdleDuration } from "./useGSCIdleDuration";

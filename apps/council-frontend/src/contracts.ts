@@ -8,7 +8,7 @@ import {
   VestingVault__factory,
   GSCVault__factory,
 } from "@elementfi/council-typechain";
-import { addressesJson } from "src/elf-council-addresses";
+import { addressesJson } from "src/addresses";
 import { defaultProvider } from "src/providers/providers";
 
 export const elementTokenContract = ERC20Permit__factory.connect(

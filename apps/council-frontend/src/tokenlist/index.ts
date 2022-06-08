@@ -5,7 +5,7 @@ import {
   goerliTokenList,
   mainnetTokenList,
 } from "@elementfi/council-tokenlist";
-import testnetTokenList from "src/council-tokenlist/testnet.tokenlist.json";
+import testnetTokenList from "src/tokenlist/testnet.tokenlist.json";
 
 // Default to the testnet in this repo so `npm start` Just Works without having
 // to specify it on the command line.

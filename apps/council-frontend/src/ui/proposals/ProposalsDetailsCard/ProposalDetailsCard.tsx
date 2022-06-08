@@ -14,7 +14,7 @@ import React, {
 } from "react";
 import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
-import { getIsVotingOpen } from "src/elf-council-proposals";
+import { getIsVotingOpen } from "src/proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/integrations/etherscan";
 import { VotingPower } from "src/proposals/VotingPower";
 import ElementUrl from "src/urls";

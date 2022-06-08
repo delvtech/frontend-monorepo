@@ -7,7 +7,7 @@ import {
 import { parseEther } from "@ethersproject/units";
 import { ethers, Signer } from "ethers";
 
-import { addressesJson } from "src/elf-council-addresses";
+import { addressesJson } from "src/addresses";
 import { coreVotingContract } from "src/contracts";
 import { MerkleProof } from "src/merkle/MerkleProof";
 import { MerkleRewardType, useMerkleInfo } from "src/ui/merkle/useMerkleInfo";

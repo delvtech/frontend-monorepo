@@ -14,7 +14,7 @@ import {
   ChainNames,
   DEFAULT_CHAIN_IDS,
 } from "@elementfi/base/ethereum/ethereum";
-import { addressesJson } from "src/elf-council-addresses";
+import { addressesJson } from "src/addresses";
 
 /**
  * The 'injected' connector refers to plugin-based wallets like MetaMask, which

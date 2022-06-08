@@ -4,7 +4,7 @@ import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hoo
 import { BigNumber, ethers } from "ethers";
 import { formatEther } from "ethers/lib/utils";
 
-import { addressesJson } from "src/elf-council-addresses";
+import { addressesJson } from "src/addresses";
 import { elementTokenContract, vestingContract } from "src/contracts";
 import { useTokenBalanceOf } from "src/ui/token/useTokenBalanceOf";
 import { useLockingVaultBalance } from "src/ui/voting/useLockingVaultBalance";

@@ -12,7 +12,7 @@ import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { getEthereumProviderLibrary } from "src/base/getEthereumProviderLibrary";
 import { queryClient } from "src/queryClient";
-import { addressesJson } from "src/elf-council-addresses";
+import { addressesJson } from "src/addresses";
 import { Notifications } from "src/ui/notifications/Notifications";
 
 // We want to log out addresses for sanity/debugging purposes

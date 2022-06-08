@@ -1,4 +1,4 @@
-import { addressesJson } from "src/elf-council-addresses";
+import { addressesJson } from "src/addresses";
 import { ChainId } from "@elementfi/base/ethereum/ethereum";
 
 export const ETHERSCAN_DOMAIN = getDomain();

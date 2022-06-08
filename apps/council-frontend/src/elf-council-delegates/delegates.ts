@@ -1,4 +1,4 @@
-import { addressesJson } from "src/elf-council-addresses";
+import { addressesJson } from "src/addresses";
 import { ChainId } from "@elementfi/base/ethereum/ethereum";
 
 import testnetDelegatesJson from "src/elf-council-delegates/testnet.delegates.json";
