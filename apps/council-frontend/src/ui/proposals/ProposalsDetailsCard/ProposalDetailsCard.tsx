@@ -67,6 +67,7 @@ const markdownComponents: ReactMarkdownOptions["components"] = {
       {props.children}
     </a>
   ),
+  pre: (props) => <pre className="whitespace-pre-line">{props.children}</pre>,
 };
 
 export function ProposalDetailsCard(
