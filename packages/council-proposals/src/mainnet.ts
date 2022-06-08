@@ -47,11 +47,16 @@ const callDatasByProposalId: Record<string, string[]> = {
   ],
 };
 
+const forumLinksByProposalId: Record<string, string> = {
+  "1": "https://forum.element.fi/discussion/4631-egp2-increase-gsc-quorum-threshold",
+};
+
 const gscSnapshotIdsByProposalId: Record<string, string> = {};
 
 const gscTargetsByProposalId: Record<string, string[]> = {};
 
 const gscCallDatasByProposalId: Record<string, string[]> = {};
+const gscForumLinksByProposalId: Record<string, string> = {};
 
 // Proposals might be deleted from snapshot, so we need to store them
 // indefinitely once they are scraped. We can skip them once they exist in the
@@ -71,6 +76,7 @@ const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
       snapshotIdsByProposalId,
       targetsByProposalId,
       callDatasByProposalId,
+      forumLinksByProposalId,
       proposalsToSkip,
     );
 
@@ -80,6 +86,7 @@ const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
       gscSnapshotIdsByProposalId,
       gscTargetsByProposalId,
       gscCallDatasByProposalId,
+      gscForumLinksByProposalId,
       gscProposalsToSkip,
     );
 

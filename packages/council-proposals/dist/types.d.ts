@@ -53,6 +53,11 @@ export interface Proposal {
      * id of the snapshot proposal
      */
     snapshotId: string;
+    /**
+     * A url to the forum post where the discussion lives, eg:
+     * https://forum.element.fi/discussion/4631-egp2-increase-gsc-quorum-threshold
+     * */
+    forumLink: string;
 }
 export interface ProposalsJson {
     version: "0.0.0";
