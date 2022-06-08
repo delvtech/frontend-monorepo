@@ -4,7 +4,7 @@ import {
 } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { ContractReceipt, Signer } from "ethers";
 
-import { gscVaultContract } from "src/elf/contracts";
+import { gscVaultContract } from "src/contracts";
 import { GSCVault } from "@elementfi/council-typechain";
 import { UseMutationResult } from "react-query";
 

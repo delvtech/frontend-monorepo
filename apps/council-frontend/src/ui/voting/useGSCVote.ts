@@ -7,8 +7,8 @@ import {
 } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { Signer } from "ethers";
 
-import { addressesJson } from "src/elf-council-addresses";
-import { gscCoreVotingContract } from "src/elf/contracts";
+import { addressesJson } from "src/addresses";
+import { gscCoreVotingContract } from "src/contracts";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { Ballot } from "src/ui/voting/Ballot";
 

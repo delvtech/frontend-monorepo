@@ -1,7 +1,7 @@
 import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
 import { useMemo } from "react";
 
-import { coreVotingContract } from "src/elf/contracts";
+import { coreVotingContract } from "src/contracts";
 
 /**
  * Returns whether a proposal has been executed

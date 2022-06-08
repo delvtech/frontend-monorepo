@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
-import { formatBalance } from "src/formatBalance";
+import { formatBalance } from "src/base/formatBalance";
 import classNames from "classnames";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
-import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
+import { getFeaturedDelegate } from "src/delegates/isFeaturedDelegate";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import {

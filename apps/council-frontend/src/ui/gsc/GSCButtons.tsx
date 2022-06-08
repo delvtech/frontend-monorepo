@@ -11,7 +11,7 @@ import { useJoinGSC } from "./useJoinGSC";
 import { useKick } from "./useKickGSC";
 import toast from "react-hot-toast";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
-import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
+import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/integrations/etherscan";
 import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
 import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
 import { useQueryClient } from "react-query";

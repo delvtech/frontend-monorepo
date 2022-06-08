@@ -14,10 +14,10 @@ import { ContractTransaction, Signer } from "ethers";
 import { isNumber } from "lodash";
 import { jt, t } from "ttag";
 
-import { getIsVotingOpen } from "src/elf-council-proposals";
-import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
-import { defaultProvider } from "src/elf/providers/providers";
-import ElementUrl from "src/elf/urls";
+import { getIsVotingOpen } from "src/proposals";
+import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/integrations/etherscan";
+import { defaultProvider } from "src/providers/providers";
+import ElementUrl from "src/urls";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";

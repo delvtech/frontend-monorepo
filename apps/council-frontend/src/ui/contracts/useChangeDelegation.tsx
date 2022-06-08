@@ -1,13 +1,13 @@
-import { lockingVaultContract } from "src/elf/contracts";
+import { lockingVaultContract } from "src/contracts";
 import { toast } from "react-hot-toast";
 import { ContractReceipt, Signer } from "ethers";
 import { UseMutationResult } from "react-query";
 import { LockingVault } from "@elementfi/council-typechain";
 import { makeSmartContractReadCallQueryKey } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { useSmartContractTransaction } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
-import { queryClient } from "src/elf/queryClient";
+import { queryClient } from "src/queryClient";
 import { useRef } from "react";
-import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
+import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/integrations/etherscan";
 import { t, jt } from "ttag";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 

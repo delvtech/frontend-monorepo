@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import AnchorButtonComponent from "./AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import ElementUrl from "src/elf/urls";
+import ElementUrl from "src/urls";
 
 export default {
   title: "Buttons/AnchorButton",

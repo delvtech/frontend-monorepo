@@ -1,6 +1,6 @@
 import { QueryObserverResult, useQuery } from "react-query";
 import { Block } from "@ethersproject/providers";
-import { defaultProvider } from "src/elf/providers/providers";
+import { defaultProvider } from "src/providers/providers";
 
 export function useBlockAtBlockHashOrBlockTag(
   blockHashOrBlockTag: string | number,

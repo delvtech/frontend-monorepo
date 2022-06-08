@@ -1,6 +1,6 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { ethers } from "ethers";
-import { vestingContract } from "src/elf/contracts";
+import { vestingContract } from "src/contracts";
 
 export function useDelegateVesting(
   address: string | undefined | null,

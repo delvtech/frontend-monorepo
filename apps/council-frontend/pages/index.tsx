@@ -2,7 +2,7 @@ import OverviewPage from "src/ui/overview/OverviewPage";
 import React, { ReactElement } from "react";
 import PageView from "src/ui/app/PageView";
 import { ProposalsJson } from "@elementfi/council-proposals";
-import { PROPOSALS_JSON_URL } from "src/elf-council-proposals";
+import { PROPOSALS_JSON_URL } from "src/proposals";
 import mainnetProposals from "@elementfi/council-proposals/dist/mainnet.proposals.json";
 
 interface HomeProps {

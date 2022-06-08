@@ -4,7 +4,7 @@ import { Signer } from "@ethersproject/abstract-signer";
 import { Proposal } from "@elementfi/council-proposals";
 import { t } from "ttag";
 
-import { getIsVotingOpen } from "src/elf-council-proposals";
+import { getIsVotingOpen } from "src/proposals";
 import { Intent } from "src/ui/base/Intent";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";

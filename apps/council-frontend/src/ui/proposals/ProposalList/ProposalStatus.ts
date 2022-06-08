@@ -1,5 +1,5 @@
 import { parseEther } from "ethers/lib/utils";
-import { VotingPower } from "src/elf/proposals/VotingPower";
+import { VotingPower } from "src/proposals/VotingPower";
 import { t } from "ttag";
 
 export enum ProposalStatus {

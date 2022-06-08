@@ -1,6 +1,6 @@
 import { QueryObserverResult, useQuery } from "react-query";
 import zip from "lodash.zip";
-import { gscCoreVotingContract } from "src/elf/contracts";
+import { gscCoreVotingContract } from "src/contracts";
 import { Ballot } from "src/ui/voting/Ballot";
 
 export function useGSCVotes(

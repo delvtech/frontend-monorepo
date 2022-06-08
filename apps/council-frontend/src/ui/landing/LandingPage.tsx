@@ -1,6 +1,6 @@
 import { PropsWithChildren, ReactElement } from "react";
 import Head from "next/head";
-import ElementUrl from "src/elf/urls";
+import ElementUrl from "src/urls";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { ArrowRightIcon } from "@heroicons/react/solid";

@@ -1,6 +1,6 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { formatEther } from "@ethersproject/units";
-import { lockingVaultContract } from "src/elf/contracts";
+import { lockingVaultContract } from "src/contracts";
 
 export function useDeposited(
   address: string | undefined | null,

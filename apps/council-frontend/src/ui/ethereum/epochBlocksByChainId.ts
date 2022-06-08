@@ -1,5 +1,5 @@
-import { addressesJson } from "src/elf-council-addresses";
-import { ChainId } from "src/ethereum";
+import { addressesJson } from "src/addresses";
+import { ChainId } from "@elementfi/base/ethereum/ethereum";
 
 const { chainId } = addressesJson;
 

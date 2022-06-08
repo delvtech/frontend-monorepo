@@ -1,4 +1,4 @@
-import { gscVaultContract } from "src/elf/contracts";
+import { gscVaultContract } from "src/contracts";
 
 export const EMPTY_BYTE = "0x00";
 

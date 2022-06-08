@@ -4,8 +4,8 @@ import { QueryClientProvider } from "react-query";
 import { renderHook } from "@testing-library/react-hooks";
 import { waitFor } from "@testing-library/react";
 
-import { testProvider } from "src/elf/providers/providers";
-import { queryClient } from "src/elf/queryClient";
+import { testProvider } from "src/providers/providers";
+import { queryClient } from "src/queryClient";
 import {
   deployGovernanace,
   GovernanceContracts,

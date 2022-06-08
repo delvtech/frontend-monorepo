@@ -7,7 +7,7 @@ import {
 import { CoreVoting } from "@elementfi/council-typechain";
 import { BigNumber, Event } from "ethers";
 
-import { coreVotingContract } from "src/elf/contracts";
+import { coreVotingContract } from "src/contracts";
 
 /**
  * Returns 'Voted' events, filterable by voterAddress and proposalId.  Block ranges can be provided

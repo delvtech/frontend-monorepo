@@ -10,9 +10,9 @@ import { AppProps } from "next/app";
 import React, { ReactElement } from "react";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { getEthereumProviderLibrary } from "src/elf/getEthereumProviderLibrary";
-import { queryClient } from "src/elf/queryClient";
-import { addressesJson } from "src/elf-council-addresses";
+import { getEthereumProviderLibrary } from "src/base/getEthereumProviderLibrary";
+import { queryClient } from "src/queryClient";
+import { addressesJson } from "src/addresses";
 import { Notifications } from "src/ui/notifications/Notifications";
 
 // We want to log out addresses for sanity/debugging purposes

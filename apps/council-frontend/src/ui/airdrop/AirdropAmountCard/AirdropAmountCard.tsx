@@ -5,10 +5,10 @@ import {
   ElementIconCircle,
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
-import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/ui/merkle/useMerkleInfo";
 import { commify } from "ethers/lib/utils";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
-import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
+import { getFeaturedDelegate } from "src/delegates/isFeaturedDelegate";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
 import { Provider } from "@ethersproject/providers";

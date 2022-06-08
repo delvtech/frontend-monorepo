@@ -1,5 +1,5 @@
 import { PropsWithChildren, ReactElement } from "react";
-import ElementUrl from "src/elf/urls";
+import ElementUrl from "src/urls";
 import TwitterIcon from "src/ui/base/svg/TwitterIcon";
 import DiscordIcon from "src/ui/base/svg/DiscordIcon";
 import CommonwealthIcon from "src/ui/base/svg/CommonwealthIcon";

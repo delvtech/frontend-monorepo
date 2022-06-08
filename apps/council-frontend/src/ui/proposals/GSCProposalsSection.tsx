@@ -13,7 +13,7 @@ import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
 import { t } from "ttag";
 
-import { ELEMENT_FINANCE_GSC_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
+import { ELEMENT_FINANCE_GSC_SNAPSHOT_URL } from "src/integrations/snapshot/endpoints";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";

@@ -1,4 +1,4 @@
-import { lockingVaultContract } from "src/elf/contracts";
+import { lockingVaultContract } from "src/contracts";
 import {
   useQueryVotePower,
   useQueryVotePowerView,

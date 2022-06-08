@@ -6,7 +6,7 @@ import {
   coinbaseConnector,
   getWalletConnectConnector,
   injectedConnector,
-} from "src/elf/wallets/connectors";
+} from "src/wallets/connectors";
 import Button from "src/ui/base/Button/Button";
 import { ButtonSize, ButtonVariant } from "src/ui/base/Button/styles";
 import H3 from "src/ui/base/H3/H3";

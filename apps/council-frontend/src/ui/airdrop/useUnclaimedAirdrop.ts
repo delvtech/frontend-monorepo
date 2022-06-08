@@ -1,5 +1,5 @@
 import { FixedNumber } from "ethers";
-import { MerkleProof } from "src/elf/merkle/MerkleProof";
+import { MerkleProof } from "src/merkle/MerkleProof";
 import { useClaimedAirdrop } from "src/ui/airdrop/useClaimedAirdrop";
 
 export function useUnclaimedAirdrop(

@@ -3,7 +3,7 @@ import { useQuery, UseQueryResult } from "react-query";
 import {
   fetchSnapshotProposals,
   SnapshotProposal,
-} from "src/elf-snapshot/queries/proposals";
+} from "src/integrations/snapshot/queries/proposals";
 
 export function useSnapshotProposals(
   snapshotIds: string[],

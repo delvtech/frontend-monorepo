@@ -6,12 +6,12 @@ import {
 } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { Signer } from "ethers";
 
-import { addressesJson } from "src/elf-council-addresses";
+import { addressesJson } from "src/addresses";
 import {
   gscVaultContract,
   lockingVaultContract,
   vestingContract,
-} from "src/elf/contracts";
+} from "src/contracts";
 import { useQueryVotePowerView } from "src/ui/voting/useQueryVotePower";
 import { GSCVault } from "@elementfi/council-typechain";
 

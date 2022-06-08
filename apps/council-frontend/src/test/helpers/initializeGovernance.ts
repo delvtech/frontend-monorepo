@@ -7,7 +7,7 @@ import { MockProvider } from "ethereum-waffle";
 import { ethers, Signer, Wallet } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 
-import { testProvider } from "src/elf/providers/providers";
+import { testProvider } from "src/providers/providers";
 
 import { GovernanceContracts } from "./deployGovernance";
 

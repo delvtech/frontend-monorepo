@@ -1,7 +1,7 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { BigNumber } from "ethers";
 import { QueryObserverResult } from "react-query";
-import { lockingVaultContract } from "src/elf/contracts";
+import { lockingVaultContract } from "src/contracts";
 
 export function useDeposits(
   account: string | null | undefined,

@@ -1,7 +1,7 @@
 import { QueryObserverResult, useQuery } from "react-query";
 import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
 import { BigNumber } from "ethers";
-import { gscVaultContract } from "src/elf/contracts";
+import { gscVaultContract } from "src/contracts";
 import zip from "lodash.zip";
 import { Delegate } from "src/elf-council-delegates/delegates";
 

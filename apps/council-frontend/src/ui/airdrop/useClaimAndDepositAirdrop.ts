@@ -2,7 +2,7 @@ import { UseMutationResult } from "react-query";
 
 import { Airdrop } from "@elementfi/council-typechain";
 import { ContractReceipt, Signer } from "ethers";
-import { airdropContract } from "src/elf/contracts";
+import { airdropContract } from "src/contracts";
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,

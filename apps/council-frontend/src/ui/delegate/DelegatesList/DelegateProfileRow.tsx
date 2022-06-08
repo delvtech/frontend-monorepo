@@ -1,5 +1,5 @@
 import { Fragment, ReactElement } from "react";
-import { formatBalance } from "src/formatBalance";
+import { formatBalance } from "src/base/formatBalance";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import classNames from "classnames";
@@ -13,7 +13,7 @@ import {
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import { Provider } from "@ethersproject/providers";
 import { formatWalletAddress } from "src/base/formatWalletAddress";
-import { getGSCCandidateUrl } from "src/commonwealth";
+import { getGSCCandidateUrl } from "src/integrations/commonwealth";
 import { useENSName } from "src/ui/ethereum/useEnsName";
 
 interface DelegateProfileRowProps {

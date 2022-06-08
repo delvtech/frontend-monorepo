@@ -1,6 +1,6 @@
 import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hooks/useSmartContractEvents/useSmartContractEvents";
 import { BigNumber } from "ethers";
-import { lockingVaultContract } from "src/elf/contracts";
+import { lockingVaultContract } from "src/contracts";
 
 export default function useNumDelegates(): number {
   const { data: events } = useSmartContractEvents(

@@ -2,7 +2,7 @@ import { QueryObserverResult, useQuery } from "react-query";
 
 import { BigNumber } from "ethers";
 import { formatEther } from "ethers/lib/utils";
-import { MerkleProof } from "src/elf/merkle/MerkleProof";
+import { MerkleProof } from "src/merkle/MerkleProof";
 
 const ELEMENT_REWARDS_URL =
   "https://elementfi.s3.us-east-2.amazonaws.com/rewards";
