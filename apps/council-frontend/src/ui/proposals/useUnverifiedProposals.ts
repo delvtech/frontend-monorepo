@@ -42,6 +42,7 @@ export function useUnverifiedProposals(
       expiration: (args?.[3]).toNumber(),
       unlock: 0,
       lastCall: 0,
+      forumLink: "",
       quorum: "",
       targets: [""],
       calldatas: [""],
