@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 
+import { CoreVoting } from "@elementfi/council-typechain";
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,
@@ -10,12 +11,11 @@ import { ethers, Signer } from "ethers";
 import { addressesJson } from "src/addresses";
 import { coreVotingContract } from "src/contracts";
 import { MerkleProof } from "src/merkle/MerkleProof";
-import { MerkleRewardType, useMerkleInfo } from "src/ui/merkle/useMerkleInfo";
+
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useLockingVaultVotingPower } from "src/ui/voting/useLockingVaultVotingPower";
 import { useVestingVaultVotingPower } from "src/ui/voting/useVestingVaultVotingPower";
-import { CoreVoting } from "@elementfi/council-typechain";
 
 const { lockingVault: lockingVaultAddress, vestingVault: vestingVaultAddress } =
   addressesJson.addresses;
@@ -32,7 +32,6 @@ export function useVote(
   isError: boolean;
 } {
   const { data: latestBlockNumber } = useLatestBlockNumber();
-  const { data: merkleInfo } = useMerkleInfo(account, MerkleRewardType.RETRO);
 
   const {
     mutate: vote,
@@ -55,7 +54,7 @@ export function useVote(
     (proposalId: string, ballot: Ballot) => {
       const blockNumber = proposalCreatedAtBlockNumber || latestBlockNumber;
 
-      if (!blockNumber || !merkleInfo || !account) {
+      if (!blockNumber || !account) {
         return;
       }
 
@@ -83,7 +82,6 @@ export function useVote(
       proposalCreatedAtBlockNumber,
       latestBlockNumber,
       lockingVaultVotingPower,
-      merkleInfo,
       vestingVaultVotingPower,
       vote,
     ],
