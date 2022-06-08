@@ -80,7 +80,7 @@ export function ProposalDetailsCard(
     onClose,
     unverified = false,
   } = props;
-  const { proposalId, snapshotId, quorum } = proposal;
+  const { proposalId, snapshotId, quorum, forumLink } = proposal;
 
   const toastIdRef = useRef<string>();
 
@@ -271,7 +271,7 @@ export function ProposalDetailsCard(
               className="overflow-hidden text-sm text-white"
             />
             <ExternalLink
-              href={ElementUrl.FORUM}
+              href={forumLink || ElementUrl.FORUM}
               text={t`View discussion`}
               className="overflow-hidden text-sm text-white"
             />
