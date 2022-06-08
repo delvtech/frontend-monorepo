@@ -28,6 +28,7 @@ exports.testnetProposals = {
             "unlock": 72,
             "lastCall": 58532,
             "created": 70,
+            "forumLink": "",
             "createdTimestamp": 1651940479,
             "expiration": 73,
             "quorum": "50.0",
@@ -40,6 +41,7 @@ exports.testnetProposals = {
         {
             "proposalId": "1",
             "description": "EFP#: <# to be assigned>\nTitle: <EFP title>\nAuthor(s): <list of authors' names and/or email addresses and GitHub handles>\nContributors:\nTags: template\nType: EFP Type\nStatus: <Assigned by GSC>\nDate Proposed: <yyyy-mm-dd>\nDate Ratified: <yyyy-mm-dd>\nDependencies: <List of dependent EFP>\nReplaces: <List of EFP it is replacing>\n\n## **References**\n\n## **Sentence Summary**\n\n## **Paragraph Summary**\n\n## **Motivation**\n\n## **Specification**\n\n### **Proposed Code**\n\n### **Test Cases**\n\n### **Security Considerations**\n\n### **Auditor Information and Report**\n\n### **Licensing**",
+            "forumLink": "",
             "title": "EFP-001 – Example Proposal ",
             "proposalHash": "0x6ab72e534ce2e8e7e4a0d0e9b026cdfc7ddd85d4afbc75a6ab8a83a3c9b846c4",
             "unlock": 77,
@@ -59,6 +61,7 @@ exports.testnetProposals = {
             "description": "EFP#: <# to be assigned>\nTitle: <EFP title>\nAuthor(s): <list of authors' names and/or email addresses and GitHub handles>\nContributors:\nTags: template\nType: EFP Type\nStatus: <Assigned by GSC>\nDate Proposed: <yyyy-mm-dd>\nDate Ratified: <yyyy-mm-dd>\nDependencies: <List of dependent EFP>\nReplaces: <List of EFP it is replacing>\n\n## **References**\n\n## **Sentence Summary**\n\n## **Paragraph Summary**\n\n## **Motivation**\n\n## **Specification**\n\n### **Proposed Code**\n\n### **Test Cases**\n\n### **Security Considerations**\n\n### **Auditor Information and Report**\n\n### **Licensing**",
             "title": "Example Proposal",
             "proposalHash": "0x6ab72e534ce2e8e7e4a0d0e9b026cdfc7ddd85d4afbc75a6ab8a83a3c9b846c4",
+            "forumLink": "",
             "unlock": 82,
             "lastCall": 58542,
             "created": 80,
@@ -74,6 +77,7 @@ exports.testnetProposals = {
         {
             "proposalId": "3",
             "description": "To be, or not to be: that is the question:\nWhether 'tis nobler in the mind to suffer\nThe slings and arrows of outrageous fortune,\nOr to take arms against a sea of troubles,\nAnd by opposing end them? To die: to sleep;\nNo more; and by a sleep to say we end\nThe heart-ache and the thousand natural shocks\nThat flesh is heir to, 'tis a consummation\nDevoutly to be wish'd. To die, to sleep;\nTo sleep: perchance to dream: ay, there's the rub;\nFor in that sleep of death what dreams may come\nWhen we have shuffled off this mortal coil,\nMust give us pause: there's the respect\nThat makes calamity of so long life;\nFor who would bear the whips and scorns of time,\nThe oppressor's wrong, the proud man's contumely,\nThe pangs of despised love, the law's delay,\nThe insolence of office and the spurns\nThat patient merit of the unworthy takes,\nWhen he himself might his quietus make\nWith a bare bodkin? who would fardels bear,\nTo grunt and sweat under a weary life,\nBut that the dread of something after death,\nThe undiscover'd country from whose bourn\nNo traveller returns, puzzles the will\nAnd makes us rather bear those ills we have\nThan fly to others that we know not of?\nThus conscience does make cowards of us all;\nAnd thus the native hue of resolution\nIs sicklied o'er with the pale cast of thought,\nAnd enterprises of great pith and moment\nWith this regard their currents turn awry,\nAnd lose the name of action.--Soft you now!\nThe fair Ophelia! Nymph, in thy orisons\nBe all my sins remember'd!\n\nTargets: [0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4]\nCallDatas: [0x88b49b8372416bb3ac6f3b340cccdbafbf60420e75bb439760acfe30a9078e52e60b6e79]\n",
+            "forumLink": "",
             "title": "EIP-001 - To be or not to be",
             "proposalHash": "0x6ab72e534ce2e8e7e4a0d0e9b026cdfc7ddd85d4afbc75a6ab8a83a3c9b846c4",
             "unlock": 94,
@@ -99,6 +103,7 @@ exports.testnetProposals = {
             "createdTimestamp": 1651940496,
             "expiration": 110,
             "quorum": "50.0",
+            "forumLink": "",
             "targets": ["0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1"],
             "calldatas": [
                 "0x88b49b834dbdd3e053743c5483a6f5f453200c2c9201e1330e5e5f99997aafcbe4389a2a"
@@ -119,6 +124,7 @@ exports.testnetGscProposals = {
             "unlock": 89,
             "lastCall": 58549,
             "created": 87,
+            "forumLink": "",
             "createdTimestamp": 1651940505,
             "expiration": 90,
             "quorum": "1.0",
@@ -133,6 +139,7 @@ exports.testnetGscProposals = {
             "description": "To be, or not to be: that is the question:\nWhether 'tis nobler in the mind to suffer\nThe slings and arrows of outrageous fortune,\nOr to take arms against a sea of troubles,\nAnd by opposing end them? To die: to sleep;\nNo more; and by a sleep to say we end\nThe heart-ache and the thousand natural shocks\nThat flesh is heir to, 'tis a consummation\nDevoutly to be wish'd. To die, to sleep;\nTo sleep: perchance to dream: ay, there's the rub;\nFor in that sleep of death what dreams may come\nWhen we have shuffled off this mortal coil,\nMust give us pause: there's the respect\nThat makes calamity of so long life;\nFor who would bear the whips and scorns of time,\nThe oppressor's wrong, the proud man's contumely,\nThe pangs of despised love, the law's delay,\nThe insolence of office and the spurns\nThat patient merit of the unworthy takes,\nWhen he himself might his quietus make\nWith a bare bodkin? who would fardels bear,\nTo grunt and sweat under a weary life,\nBut that the dread of something after death,\nThe undiscover'd country from whose bourn\nNo traveller returns, puzzles the will\nAnd makes us rather bear those ills we have\nThan fly to others that we know not of?\nThus conscience does make cowards of us all;\nAnd thus the native hue of resolution\nIs sicklied o'er with the pale cast of thought,\nAnd enterprises of great pith and moment\nWith this regard their currents turn awry,\nAnd lose the name of action.--Soft you now!\nThe fair Ophelia! Nymph, in thy orisons\nBe all my sins remember'd!\n\nTargets: [0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4]\nCallDatas: [0x88b49b8372416bb3ac6f3b340cccdbafbf60420e75bb439760acfe30a9078e52e60b6e79]\n",
             "title": "EIP-001 - To be or not to be",
             "proposalHash": "0x9e75e504d93664aa9cfce27ad93a0e6b2bba547236db783a941f628985edbb33",
+            "forumLink": "",
             "unlock": 94,
             "lastCall": 58554,
             "created": 92,
@@ -151,6 +158,7 @@ exports.testnetGscProposals = {
             "title": "EIP-002 - Add a Dogecoin Term",
             "proposalHash": "0x9e75e504d93664aa9cfce27ad93a0e6b2bba547236db783a941f628985edbb33",
             "unlock": 106,
+            "forumLink": "",
             "lastCall": 58559,
             "created": 95,
             "createdTimestamp": 1651940514,
@@ -178,6 +186,7 @@ exports.goerliProposals = {
             "created": 6161440,
             "createdTimestamp": 1641598308,
             "expiration": 6161442,
+            "forumLink": "",
             "quorum": "100000.0",
             "targets": [
                 "0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4"
@@ -194,6 +203,7 @@ exports.goerliProposals = {
             "proposalHash": "0xbf35f67e89743d095cae3e2391c43e6fbddf27ff73e005821b669baa314ba8ae",
             "unlock": 6371028,
             "lastCall": 8768051,
+            "forumLink": "",
             "created": 6351540,
             "createdTimestamp": 1644450139,
             "expiration": 8742068,
@@ -214,6 +224,7 @@ exports.goerliProposals = {
             "unlock": 6518953,
             "lastCall": 8915976,
             "created": 6499465,
+            "forumLink": "",
             "createdTimestamp": 1646719373,
             "expiration": 8889993,
             "quorum": "1000000.0",
@@ -236,6 +247,7 @@ exports.goerliProposals = {
             "createdTimestamp": 1641598413,
             "expiration": 6161450,
             "quorum": "100000.0",
+            "forumLink": "",
             "targets": [
                 ""
             ],
@@ -252,6 +264,7 @@ exports.goerliProposals = {
             "unlock": 0,
             "lastCall": 0,
             "created": 0,
+            "forumLink": "",
             "createdTimestamp": 1548854791,
             "expiration": 0,
             "quorum": "0.0",
@@ -271,6 +284,7 @@ exports.goerliProposals = {
             "unlock": 6184449,
             "lastCall": 7164959,
             "created": 6164960,
+            "forumLink": "",
             "createdTimestamp": 1641651114,
             "expiration": 6216929,
             "quorum": "1000000.0",
@@ -290,6 +304,7 @@ exports.goerliProposals = {
             "unlock": 6300056,
             "lastCall": 7280567,
             "created": 6280567,
+            "forumLink": "",
             "createdTimestamp": 1643385402,
             "expiration": 6332536,
             "quorum": "1000000.0",
@@ -310,6 +325,7 @@ exports.goerliProposals = {
             "lastCall": 7280608,
             "created": 6280608,
             "createdTimestamp": 1643386017,
+            "forumLink": "",
             "expiration": 6332577,
             "quorum": "1000000.0",
             "targets": [
@@ -329,6 +345,7 @@ exports.goerliProposals = {
             "lastCall": 8768053,
             "created": 6351541,
             "createdTimestamp": 1644450154,
+            "forumLink": "",
             "expiration": 8742070,
             "quorum": "1000000.0",
             "targets": [
@@ -346,6 +363,7 @@ exports.goerliProposals = {
             "proposalHash": "0xbf35f67e89743d095cae3e2391c43e6fbddf27ff73e005821b669baa314ba8ae",
             "unlock": 6483142,
             "lastCall": 8880164,
+            "forumLink": "",
             "created": 6463653,
             "createdTimestamp": 1646181871,
             "expiration": 8854182,
@@ -374,6 +392,7 @@ exports.goerliGscProposals = {
             "created": 6862383,
             "createdTimestamp": 1652220477,
             "expiration": 6914352,
+            "forumLink": "",
             "quorum": "0.000000000000000001",
             "targets": [
                 "0x0A575bFA79454112c37B9Af2a6362c9c68f7d2e3"
@@ -397,6 +416,7 @@ exports.mainnetProposals = {
             "unlock": 14783089,
             "lastCall": 15378000,
             "created": 14763600,
+            "forumLink": "",
             "createdTimestamp": 1652392980,
             "expiration": 14815569,
             "quorum": "1100000.0",
@@ -416,6 +436,7 @@ exports.mainnetProposals = {
             "unlock": 14942227,
             "lastCall": 15378000,
             "created": 14922738,
+            "forumLink": "https://forum.element.fi/discussion/4631-egp2-increase-gsc-quorum-threshold",
             "createdTimestamp": 1654632842,
             "expiration": 14974707,
             "quorum": "1100000.0",

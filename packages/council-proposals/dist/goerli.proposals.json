@@ -12,6 +12,7 @@
       "created": 6161440,
       "createdTimestamp": 1641598308,
       "expiration": 6161442,
+      "forumLink": "",
       "quorum": "100000.0",
       "targets": [
         "0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4"
@@ -28,6 +29,7 @@
       "proposalHash": "0xbf35f67e89743d095cae3e2391c43e6fbddf27ff73e005821b669baa314ba8ae",
       "unlock": 6371028,
       "lastCall": 8768051,
+      "forumLink": "",
       "created": 6351540,
       "createdTimestamp": 1644450139,
       "expiration": 8742068,
@@ -48,6 +50,7 @@
       "unlock": 6518953,
       "lastCall": 8915976,
       "created": 6499465,
+      "forumLink": "",
       "createdTimestamp": 1646719373,
       "expiration": 8889993,
       "quorum": "1000000.0",
@@ -70,6 +73,7 @@
       "createdTimestamp": 1641598413,
       "expiration": 6161450,
       "quorum": "100000.0",
+      "forumLink": "",
       "targets": [
         ""
       ],
@@ -86,6 +90,7 @@
       "unlock": 0,
       "lastCall": 0,
       "created": 0,
+      "forumLink": "",
       "createdTimestamp": 1548854791,
       "expiration": 0,
       "quorum": "0.0",
@@ -105,6 +110,7 @@
       "unlock": 6184449,
       "lastCall": 7164959,
       "created": 6164960,
+      "forumLink": "",
       "createdTimestamp": 1641651114,
       "expiration": 6216929,
       "quorum": "1000000.0",
@@ -124,6 +130,7 @@
       "unlock": 6300056,
       "lastCall": 7280567,
       "created": 6280567,
+      "forumLink": "",
       "createdTimestamp": 1643385402,
       "expiration": 6332536,
       "quorum": "1000000.0",
@@ -144,6 +151,7 @@
       "lastCall": 7280608,
       "created": 6280608,
       "createdTimestamp": 1643386017,
+      "forumLink": "",
       "expiration": 6332577,
       "quorum": "1000000.0",
       "targets": [
@@ -163,6 +171,7 @@
       "lastCall": 8768053,
       "created": 6351541,
       "createdTimestamp": 1644450154,
+      "forumLink": "",
       "expiration": 8742070,
       "quorum": "1000000.0",
       "targets": [
@@ -180,6 +189,7 @@
       "proposalHash": "0xbf35f67e89743d095cae3e2391c43e6fbddf27ff73e005821b669baa314ba8ae",
       "unlock": 6483142,
       "lastCall": 8880164,
+      "forumLink": "",
       "created": 6463653,
       "createdTimestamp": 1646181871,
       "expiration": 8854182,

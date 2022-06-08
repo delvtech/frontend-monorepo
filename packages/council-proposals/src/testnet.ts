@@ -68,6 +68,8 @@ const callDatasByProposalId: Record<string, string[]> = {
   ],
 };
 
+const forumLinksByProposalId: Record<string, string> = {};
+
 /**
  * A mapping of localhost CoreVoting Proposal IDs -> random Snapshot proposal
  * ids from Element Finance.  This is how we show titles/descriptions for
@@ -98,6 +100,7 @@ const gscCallDatasByProposalId: Record<string, string[]> = {
     "0x3eba045b000000000000000000000000000000000000000000000005f68e8131ecf80000",
   ],
 };
+const gscForumLinksByProposalId: Record<string, string> = {};
 
 (async function () {
   try {
@@ -108,6 +111,7 @@ const gscCallDatasByProposalId: Record<string, string[]> = {
       snapshotIdsByProposalId,
       targetsByProposalId,
       callDatasByProposalId,
+      forumLinksByProposalId,
     );
 
     // NOTE: this WILL break if the snapshot id is not found
@@ -117,6 +121,7 @@ const gscCallDatasByProposalId: Record<string, string[]> = {
       gscSnapshotIdsByProposalId,
       gscTargetsByProposalId,
       gscCallDatasByProposalId,
+      gscForumLinksByProposalId,
     );
 
     const proposalsJson: ProposalsJson = {
