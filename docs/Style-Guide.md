@@ -1,14 +1,26 @@
-# Elf Code Style Guide 🧝‍♂️
+# Elf Coding Practices Guide 🧝‍♂️
 
-An opintionated styling guide for React and other typescript based projects. The motivation behind this guide is to provide consenous to writing code that is readable, predictable, and reduces noise so it is easier to understand.
+An opintionated styling and best practices guide for React and other typescript based projects. The motivation behind this guide is to provide consenous to writing code that is readable, predictable, and reduces noise so it's easier to understand.
 
-The applications in this monorepo are primarly React and Hardhat projects written in TypeScript.
+_"Code is read 10x more than it's written."_ - Danny
 
-## Rules
+# Best practices
 
-Most rules should be enforcable by es-lint, prettier, or other developer tools.
+## Pull Requests
 
----
+- PRs should be small. The review process grows exponentially the larger the PR.
+- Large mechinal changes such as file or variable renaming should not be included in feature PRs.
+- Branches should be have the author name, example `cashd-voting-bug-fix`, to reduce collisions.
+- Since this repo is a monorepo, proper PR titles and flags are necassary.
+
+## Code
+
+- Avoid inline styles, use tailwind or whatever styling framework is chosen for the given project.
+- Avoid abberviations in variable names.
+- Sentance case for text in buttons and other actionable components.
+- Use ttag instead of plain text for any copy.
+
+# Styling
 
 ## Prettier
 
@@ -52,6 +64,8 @@ interface ExampleProps {}
 function Example(): React.Element {
   // hooks
   const [text, setText] = useState("");
+
+  // logic
 
   return (
     <div>
@@ -206,13 +220,12 @@ import { Signer } from "ethers";
 import { commify, parseEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
+import { ConvergentCurvePool } from "@elementfi/core-typechain/dist/v1.1";
+import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import {
   PrincipalPoolTokenInfo,
   PrincipalTokenInfo,
 } from "@elementfi/core-tokenlist";
-import { ConvergentCurvePool } from "@elementfi/core-typechain/dist/v1.1";
-import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
-import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
 
 import AssetIcon from "src/ui/base/svg/AssetIcon/AssetIcon";
 import Button from "src/ui/base/Button/Button";
@@ -224,10 +237,18 @@ import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton";
 import { Intent } from "src/ui/base/Intent";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { formatAbbreviatedDate } from "src/base/dates";
-import { useTransactionOptionsWithToast } from "src/ui/transactions/useTransactionOptionsWithToast";
 
 import { useApprovePool } from "./hooks/useApprovePool";
 import { useIsPoolApproved } from "./hooks/useIsPoolApproved";
 import { useLPTokenBalance } from "./hooks/useLPTokenBalance";
 import { useStake } from "./hooks/useStake";
 ```
+
+---
+
+## Comments
+
+- TODO comments should follow this standard ...
+- Inline comments are fine as long as line length does not exceed 80 chars.
+- Multiline comments should use a comment block.
+- Generally it is a good practice to leave a comment if a block raised questions during the review phase.
