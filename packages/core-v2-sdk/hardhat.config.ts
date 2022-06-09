@@ -1,3 +1,4 @@
+import "@typechain/hardhat";
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
@@ -11,7 +12,9 @@ dotenv.config();
 // Go to https://hardhat.org/config/ to learn more
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.4",
+  solidity: {
+    compilers: [{ version: "0.8.4" }, { version: "0.6.0" }],
+  },
   mocha: { timeout: 0 },
   paths: {
     tests: "./src",

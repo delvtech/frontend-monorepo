@@ -11,8 +11,9 @@
     "declaration": true
   },
   "paths": {
-    "src/*": ["./src/*"]
+    "src/*": ["./src/*"],
+    "typechain/*": ["./typechain/*"]
   },
-  "include": ["./src"],
+  "include": ["./src", "./typechain"],
   "files": ["./hardhat.config.ts"]
 }
