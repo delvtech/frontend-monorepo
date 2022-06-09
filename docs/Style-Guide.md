@@ -8,16 +8,25 @@ _"Code is read 10x more than it's written."_ - Danny
 
 ## Pull Requests
 
-- PRs should be small. The review process grows exponentially the larger the PR.
-- Large mechinal changes such as file or variable renaming should not be included in feature PRs.
-- Branches should be have the author name, example `cashd-voting-bug-fix`, to reduce collisions.
-- Since this repo is a monorepo, proper PR titles and flags are necassary.
+- PRs should be small. The review process grows exponentially the larger the PR. Many smaller PRs > one large PR.
+- Mechanical changes such as large-scale file or variable renaming should not be included in feature PRs.
+- Branch names should include the author name, example `cashd-voting-bug-fix`, to reduce collisions.
+- Since this repo is a monorepo, PR titles should include the app and type of PR. Example `[Gov][Feature] Bulk Voting Vault Delegation`
 
 ## Code
 
 - Avoid inline styles, use tailwind or whatever styling framework is chosen for the given project.
 - Avoid abberviations in variable names.
-- Sentance case for text in buttons and other actionable components.
+
+```ts
+// Good
+const fooBar = "0x1234";
+
+// Bad
+const fb = "0x1234";
+```
+
+- Use sentance case for text in buttons and other actionable components.
 - Use ttag instead of plain text for any copy.
 
 # Styling
@@ -33,7 +42,10 @@ Prettier takes care of most of our syntactical guidelines. This configuration wi
   "trailingComma": "all",
   "singleQuote": false,
   "semi": true,
-  "printWidth": 80
+  "printWidth": 80,
+  "importOrder": ["^@element/(.*)$", "^src/(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }
 ```
 
@@ -56,25 +68,33 @@ import logo from "./logo.svg";
 import "./App.css";
 
 // constants
+const DEFAULT_VALUE = 5;
 
 // props / types
-interface ExampleProps {}
+interface ExampleProps {
+  onChange: (n: number) => void;
+}
 
 // component
-function Example(): React.Element {
+function Counter(): React.Element {
   // hooks
-  const [text, setText] = useState("");
+  const [count, setCount] = useState(DEFAULT_VALUE);
 
   // logic
+  const onClickHandler = () => {
+    setCount(count + 1);
+  };
+
+  const isOdd = count % 2 !== 0;
 
   return (
     <div>
-      <input type="text" onChange={() => {}} />
+      <button onClick={onClickHandler}>{t`click to increment`}</button>
+      <div>{count}</div>
+      {isOdd && <div>{t`value is odd!`}</div>}
     </div>
   );
 }
-
-// utilties
 
 // export
 export default Example;
@@ -82,7 +102,7 @@ export default Example;
 
 ### Takeaways
 
-- Use the `function` keyworad declaration for components
+- Use the `function` keyword declaration for components
 - Prop interface should be defined above the component
 
 ### Good Examples
@@ -115,7 +135,7 @@ function Button(props: ButtonProps): React.Element {
 }
 ```
 
-Prop order should have nullables last.
+Prop order should have nullables sorted last.
 
 ```ts
 // Good
@@ -187,7 +207,7 @@ function Button(): React.Element {
 }
 ```
 
-Anonymous functions should be one line.
+Anonymous functions should be reduced down to one line.
 
 ```ts
 // Good
@@ -250,5 +270,5 @@ import { useStake } from "./hooks/useStake";
 
 - TODO comments should follow this standard ...
 - Inline comments are fine as long as line length does not exceed 80 chars.
-- Multiline comments should use a comment block.
+- Multi-line comments should use a comment block.
 - Generally it is a good practice to leave a comment if a block raised questions during the review phase.
