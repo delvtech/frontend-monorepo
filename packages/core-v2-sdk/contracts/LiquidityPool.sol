@@ -1,4 +1,5 @@
-pragma solidity ^0.6.0;
+// SPDX-License-Identifier: Apache-2.0
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
@@ -15,7 +16,7 @@ contract LiquidityPool {
   event BuyTokens(address user, uint256 value, uint256 tokenAmount);
   event SellTokens(address user, uint256 value, uint256 tokenAmount);
 
-  constructor(ERC20 _poolToken, ERC20 _token) public {
+  constructor(ERC20 _poolToken, ERC20 _token) {
     poolToken = _poolToken;
     token = _token;
   }
@@ -75,7 +76,7 @@ contract LiquidityPool {
     tokenBalance += tokenAmount;
     cryptoBalance -= amount;
 
-    msg.sender.transfer(amount);
+    payable(msg.sender).transfer(amount);
 
     emit SellTokens(msg.sender, amount, tokenAmount);
   }

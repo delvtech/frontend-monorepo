@@ -4,7 +4,8 @@
   "description": "Element SDK for V2 contracts",
   "main": "index.js",
   "scripts": {
-    "test": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat test"
+    "test": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat test",
+    "build": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat compile"
   },
   "repository": {
     "type": "git",
