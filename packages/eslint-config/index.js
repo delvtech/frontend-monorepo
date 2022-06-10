@@ -1,7 +1,6 @@
 module.exports = {
   ignorePatterns: ["*.json", "*.md"],
   extends: [
-    "next",
     "react-app",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
@@ -21,6 +20,7 @@ module.exports = {
     },
   ],
   rules: {
+    "@typescript-eslint/semi": "error",
     "@typescript-eslint/explicit-module-boundary-types": "error", // exported functions must have return types
     "@typescript-eslint/no-empty-function": "off", // empty arrow functions are fine for noops when passed to components
     "@typescript-eslint/no-empty-interface": "off", // empty interfaces for component props should be allowed
@@ -56,9 +56,6 @@ module.exports = {
       "eslint-import-resolver-typescript": {
         alwaysTryTypes: true,
       },
-    },
-    next: {
-      rootDir: "{apps,packages}/*",
     },
   },
 };

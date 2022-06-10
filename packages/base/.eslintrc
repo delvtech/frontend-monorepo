@@ -1,3 +1,5 @@
 {
-  
+  "extends": [
+    "@elementfi/eslint-config"
+  ]
 }
