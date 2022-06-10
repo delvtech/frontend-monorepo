@@ -21,10 +21,7 @@
     "stylelint:check": "stylelint '{apps,packages}/**/*.{css,scss}'"
   },
   "lint-staged": {
-    "{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
+    "{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}": [],
     "*.{js,css,md,json}": "prettier --write",
     "{apps,packages}/**/*.{css,scss}": "stylelint"
   },
