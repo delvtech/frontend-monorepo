@@ -19,13 +19,6 @@ module.exports = {
         "react-hooks/exhaustive-deps": "error",
       },
     },
-    // js files in the root dir can use `const ... = require(...)`
-    {
-      files: ["./*.js", "apps/**/*.js"],
-      rules: {
-        "@typescript-eslint/no-var-requires": "off",
-      },
-    },
   ],
   rules: {
     "@typescript-eslint/explicit-module-boundary-types": "error", // exported functions must have return types
