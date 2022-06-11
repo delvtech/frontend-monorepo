@@ -5,6 +5,9 @@
   "dependencies": {
     "eslint-config-next": "^12.1.0",
     "eslint-plugin-jest-dom": "^4.0.1",
+    "eslint": "^7.32.0",
+    "ethers": "^5.6.6",
+    "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "stylelint": "^14.8.1",
     "tsc": "^2.0.4"
@@ -34,6 +37,14 @@
     "build-typescript": "sh scripts/build-typescript.sh",
     "copy-dist-files": "sh scripts/copy-files-to-dist.sh",
     "build": "npm run build-contracts && npm run build-typescript && npm run copy-dist-files",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   }
 }
