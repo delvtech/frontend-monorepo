@@ -4,7 +4,15 @@
   "description": "Element SDK for council contracts",
   "main": "index.js",
   "scripts": {
-    "test": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat test"
+    "test": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat test",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   },
   "repository": {
     "type": "git",
@@ -18,7 +26,11 @@
   "homepage": "https://github.com/element-fi/frontend-monorepo/apps/#readme",
   "dependencies": {
     "@elementfi/core-typechain": "*",
-    "@elementfi/council-typechain": "*"
+    "@elementfi/council-typechain": "*",
+    "@elementfi/eslint-config": "*",
+    "eslint": "^7.32.0",
+    "ethers": "^5.6.6",
+    "husky": "^7.0.4"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
