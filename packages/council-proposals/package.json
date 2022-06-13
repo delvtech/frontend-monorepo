@@ -5,11 +5,15 @@
   "dependencies": {
     "@elementfi/council-tokenlist": "*",
     "@elementfi/council-typechain": "*",
+    "@elementfi/eslint-config": "*",
     "@types/lodash.uniq": "^4.5.6",
     "@types/lodash.zip": "^4.2.6",
     "dotenv": "^16.0.1",
+    "eslint": "^7.32.0",
+    "ethers": "^5.6.6",
     "graphql": "^16.3.0",
     "graphql-request": "^4.0.0",
+    "husky": "^7.0.4",
     "lodash.uniq": "^4.5.0",
     "lodash.zip": "^4.2.0",
     "tsc": "^2.0.3",
@@ -53,6 +57,14 @@
     "_copy-files": "bash scripts/copy-dist-files.sh",
     "_copy-testnet-addresses": "cp ../../apps/council-testnet/src/addresses/testnet.addresses.json src/addresses/testnet.addresses.json",
     "copy-testnet": "npm run _copy-testnet-addresses",
-    "push-to-aws": "bash scripts/push-to-aws.sh"
+    "push-to-aws": "bash scripts/push-to-aws.sh",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   }
 }
