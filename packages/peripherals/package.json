@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@elementfi/eslint-config": "*",
     "eslint": "^7.32.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7"
