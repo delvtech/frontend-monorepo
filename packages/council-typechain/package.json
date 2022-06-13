@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "description": "",
   "dependencies": {
+    "@elementfi/eslint-config": "*",
     "tsc": "^2.0.3"
   },
   "main": "dist/types/index.js",
