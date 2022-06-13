@@ -1,6 +1,6 @@
 # Elf Coding Practices Guide 🧝‍♂️
 
-An opintionated styling and best practices guide for React and other typescript based projects. The motivation behind this guide is to provide consenous to writing code that is readable, predictable, and reduces noise so it's easier to understand.
+An opinionated styling and best practices guide for React and other typescript based projects. The motivation behind this guide is to provide consensus to writing code that is readable, predictable, and reduces noise so it's easier to understand.
 
 _"Code is read 10x more than it's written."_ - Danny
 
@@ -11,12 +11,11 @@ _"Code is read 10x more than it's written."_ - Danny
 - PRs should be small. The review process grows exponentially the larger the PR. Many smaller PRs > one large PR.
 - Mechanical changes such as large-scale file or variable renaming should not be included in feature PRs.
 - Branch names should include the author name, example `cashd-voting-bug-fix`, to reduce collisions.
-- Since this repo is a monorepo, PR titles should include the app and type of PR. Example `[Gov][Feature] Bulk Voting Vault Delegation`
 
 ## Code
 
 - Avoid inline styles, use tailwind or whatever styling framework is chosen for the given project.
-- Avoid abberviations in variable names.
+- Avoid abbreviations in variable names. Abbreviations are often inconsistent and reduce code readability.
 
 ```ts
 // Good
@@ -27,7 +26,7 @@ const fb = "0x1234";
 ```
 
 - Use sentance case for text in buttons and other actionable components.
-- Use ttag instead of plain text for any copy.
+- Use ttag instead of plain text for any user-facing copy.
 
 # Styling
 
@@ -113,7 +112,7 @@ export default Example;
 - example
 - example
 
-Props should be spread in the function parameters
+Props should be deconstructed in the function's parameters.
 
 ```ts
 /* Button.tsx */
@@ -205,18 +204,6 @@ function Button(): React.Element {
     </button>
   );
 }
-```
-
-Anonymous functions should be reduced down to one line.
-
-```ts
-// Good
-const doStuff = () => doThing();
-
-// Bad
-const doStuff = () => {
-  doThing();
-};
 ```
 
 ---
