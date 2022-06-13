@@ -3,6 +3,7 @@
   "version": "2.0.6",
   "description": "",
   "dependencies": {
+    "@elementfi/eslint-config": "*",
     "eslint-config-next": "^12.1.0",
     "eslint-plugin-jest-dom": "^4.0.1",
     "eslint": "^7.32.0",
