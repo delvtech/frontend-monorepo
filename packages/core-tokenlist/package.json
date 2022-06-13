@@ -24,6 +24,7 @@
   },
   "types": "dist/index.d.ts",
   "dependencies": {
+    "@elementfi/eslint-config": "*",
     "@uniswap/token-lists": "https://github.com/Uniswap/token-lists.git#add-array-extension-support",
     "dotenv": "^16.0.0",
     "tsc": "^2.0.3",
