@@ -15,7 +15,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@elementfi/eslint-config": "*",
     "d3-time-format": "^4.1.0",
     "eslint": "^7.32.0",
     "ethers": "^5.6.6",
