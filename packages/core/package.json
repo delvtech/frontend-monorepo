@@ -16,8 +16,9 @@
   "license": "ISC",
   "dependencies": {
     "@elementfi/core-typechain": "*",
-    "@elementfi/react-query-typechain": "*",
     "@elementfi/core-tokenlist": "*",
+    "@elementfi/eslint-config": "*",
+    "@elementfi/react-query-typechain": "*",
     "@types/lodash.keyby": "^4.6.6",
     "@elementfi/base": "*",
     "eslint": "^7.32.0",
