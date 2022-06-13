@@ -3,16 +3,27 @@
   "version": "1.0.0",
   "description": "Frontend integration logic for core elf-contracts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@elementfi/core-typechain": "*",
-    "@elementfi/react-query-typechain": "*",
     "@elementfi/core-tokenlist": "*",
+    "@elementfi/eslint-config": "*",
+    "@elementfi/react-query-typechain": "*",
     "@types/lodash.keyby": "^4.6.6",
     "@elementfi/base": "*",
+    "eslint": "^7.32.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "lodash.keyby": "^4.6.0",
     "ts-money": "^0.4.7"
   }
