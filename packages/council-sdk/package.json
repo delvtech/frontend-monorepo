@@ -27,6 +27,7 @@
   "dependencies": {
     "@elementfi/core-typechain": "*",
     "@elementfi/council-typechain": "*",
+    "@elementfi/eslint-config": "*",
     "eslint": "^7.32.0",
     "ethers": "^5.6.6",
     "husky": "^7.0.4"
