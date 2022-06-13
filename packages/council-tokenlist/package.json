@@ -9,6 +9,7 @@
   ],
   "dependencies": {
     "@elementfi/council-typechain": "*",
+    "@elementfi/eslint-config": "*",
     "@ethersproject/providers": "^5.4.0",
     "@uniswap/token-lists": "^1.0.0-beta.26",
     "dotenv": "^16.0.1"
