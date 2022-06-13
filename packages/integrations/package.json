@@ -17,6 +17,7 @@
   "dependencies": {
     "@elementfi/base": "^1.0.0",
     "@elementfi/core-typechain": "^2.0.6",
+    "@elementfi/eslint-config": "*",
     "@elementfi/react-query-typechain": "^1.2.0",
     "@types/lodash.zip": "^4.2.6",
     "eslint": "^7.32.0",
