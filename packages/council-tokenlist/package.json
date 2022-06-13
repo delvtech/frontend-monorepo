@@ -9,6 +9,7 @@
   ],
   "dependencies": {
     "@elementfi/council-typechain": "*",
+    "@elementfi/eslint-config": "*",
     "@ethersproject/providers": "^5.4.0",
     "@uniswap/token-lists": "^1.0.0-beta.26",
     "dotenv": "^16.0.1"
@@ -26,6 +27,8 @@
     "eslint-config-prettier": "^8.3.0",
     "ethers": "^5.4.7",
     "hardhat": "^2.6.6",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "prettier": "^2.4.1",
     "rollup": "^2.61.0",
     "rollup-plugin-terser": "^7.0.2",
@@ -42,6 +45,14 @@
     "_build-tokenlist-mainnet": "bash scripts/build-tokenlist.sh mainnet",
     "build-tokenlist": "npm run _build-tokenlist-goerli && npm run _build-tokenlist-mainnet",
     "build-package": "rollup -c",
-    "build": "npm run build-tokenlist && npm run build-package"
+    "build": "npm run build-tokenlist && npm run build-package",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   }
 }
