@@ -3,8 +3,21 @@
   "version": "1.0.0",
   "main": "typechain/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@elementfi/eslint-config": "*",
+    "eslint": "^7.32.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7"
+  }
 }
