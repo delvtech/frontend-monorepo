@@ -4,7 +4,7 @@
 
 .next
 
-# elf-frontend 
+# core-frontend 
 apps/core-frontend/src/version.output.json
 
 # council-testnet
