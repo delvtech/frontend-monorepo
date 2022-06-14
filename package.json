@@ -9,7 +9,8 @@
     "packages/council-typechain/dist",
     "packages/core-typechain/dist",
     "packages/core-tokenlist/dist",
-    "packages/council-tokenlist/dist"
+    "packages/council-tokenlist/dist",
+    "packages/council-proposals/compiled"
   ],
   "scripts": {
     "prepare": "husky install",
