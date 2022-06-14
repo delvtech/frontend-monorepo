@@ -29,7 +29,6 @@ module.exports = {
   ],
   rules: {
     "tailwindcss/classnames-order": "off", // Disable ordering in favor of prettier plugin
-    "@typescript-eslint/semi": "error",
     "@typescript-eslint/explicit-module-boundary-types": "error", // exported functions must have return types
     "@typescript-eslint/no-empty-function": "off", // empty arrow functions are fine for noops when passed to components
     "@typescript-eslint/no-empty-interface": "off", // empty interfaces for component props should be allowed
