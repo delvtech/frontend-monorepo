@@ -7,6 +7,7 @@ module.exports = {
     "plugin:testing-library/react",
     "plugin:jest-dom/recommended",
     "plugin:jsx-a11y/recommended",
+    "plugin:tailwindcss/recommended",
     "prettier",
   ],
   plugins: ["tailwindcss", "jsx-a11y", "testing-library", "jest-dom"],
@@ -20,6 +21,7 @@ module.exports = {
     },
   ],
   rules: {
+    "tailwindcss/classnames-order": "off",
     "@typescript-eslint/semi": "error",
     "@typescript-eslint/explicit-module-boundary-types": "error", // exported functions must have return types
     "@typescript-eslint/no-empty-function": "off", // empty arrow functions are fine for noops when passed to components
