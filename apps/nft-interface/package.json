@@ -34,7 +34,7 @@
     "react-hot-toast": "^2.2.0",
     "react-query": "^3.39.0",
     "react-slick": "^0.29.0",
-    "react-text-transition": "^1.3.0",
+    "react-text-transition": "^2.0.0",
     "react-transition-group": "^4.4.2",
     "recharts": "^2.1.9",
     "slick-carousel": "^1.8.1",
