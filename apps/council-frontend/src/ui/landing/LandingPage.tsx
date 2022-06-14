@@ -16,7 +16,7 @@ export default function LandingPage(): ReactElement {
   return (
     // outer element is set to overflow: hidden to hide the overflowing
     // background glows
-    <div className="bg-principalRoyalBlue absolute top-0 left-0 right-0 bottom-0 overflow-hidden text-white">
+    <div className="bg-principalRoyalBlue absolute inset-0 overflow-hidden text-white">
       <Head>
         <title>{t`Welcome | Element Council Protocol`}</title>
         {/* TODO: Update to a favicon with a transparent background */}

@@ -227,7 +227,7 @@ export default function HashSlider({
               ))}
             </div>
             <Tooltip
-              className="absolute left-0 right-0 -top-3"
+              className="absolute inset-x-0 -top-3"
               content={t`Keep sliding`}
               isOpen={showTooltip}
             >

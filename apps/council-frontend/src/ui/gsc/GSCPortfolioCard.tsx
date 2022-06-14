@@ -49,7 +49,7 @@ export function GSCPortfolioCard({
         )}
       </div>
 
-      <div className="mt-4 mb-4 flex min-h-full min-w-fit flex-row flex-wrap items-center space-y-6 xl:space-y-0">
+      <div className="my-4 flex min-h-full min-w-fit flex-row flex-wrap items-center space-y-6 xl:space-y-0">
         {/* GSC eligibility progress bar */}
         <div className="flex grow-[2] basis-[34rem] flex-wrap md:flex-nowrap lg:space-y-0">
           {/* Voting Power */}

@@ -69,7 +69,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               label={t`Overview`}
               router={router}
               icon={
-                <HomeIcon className="text-principalRoyalBlue h-4 w-4 flex-shrink-0" />
+                <HomeIcon className="text-principalRoyalBlue h-4 w-4 shrink-0" />
               }
             />
             <SidebarLink
@@ -77,7 +77,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               label={t`Proposals`}
               router={router}
               icon={
-                <PencilAltIcon className="text-principalRoyalBlue h-4 w-4 flex-shrink-0" />
+                <PencilAltIcon className="text-principalRoyalBlue h-4 w-4 shrink-0" />
               }
             />
             <SidebarLink
@@ -85,7 +85,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               label={t`Delegate`}
               router={router}
               icon={
-                <UserGroupIcon className="text-principalRoyalBlue h-4 w-4 flex-shrink-0" />
+                <UserGroupIcon className="text-principalRoyalBlue h-4 w-4 shrink-0" />
               }
             />
             <SidebarLink
@@ -93,7 +93,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               label={t`GSC`}
               router={router}
               icon={
-                <LibraryIcon className="text-principalRoyalBlue h-4 w-4 flex-shrink-0" />
+                <LibraryIcon className="text-principalRoyalBlue h-4 w-4 shrink-0" />
               }
             />
             <SidebarLinkExternal link={ElementUrl.FORUM} label={t`Forum`} />
@@ -178,7 +178,7 @@ function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
         className=" hover:bg-blue-50 md:w-full"
       >
         <div className="text-brandDarkBlue-dark flex cursor-pointer items-center justify-start gap-2 px-2 py-3 md:relative md:left-[50%] md:translate-x-[-25%]">
-          <ExternalLinkIcon className="text-principalRoyalBlue h-4 w-4 flex-shrink-0" />
+          <ExternalLinkIcon className="text-principalRoyalBlue h-4 w-4 shrink-0" />
           <p>{label}</p>
         </div>
       </a>
