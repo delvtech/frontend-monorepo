@@ -1,6 +1,8 @@
 const path = require("path");
 
 /**
+ * Hacky way to get the absolute project root path:
+ *
  * process.cwd() (Current Working Directory)
  * Returns a different path depending on where the script that calls it is ran from
  *
@@ -12,7 +14,6 @@ if (ROOT_PATH.charAt(ROOT_PATH.length - 1) !== "o") {
 }
 
 const synpressPath = path.join(
-  // Hacky way to get the absolute project root path
   ROOT_PATH,
   "/node_modules/@synthetixio/synpress",
 );
