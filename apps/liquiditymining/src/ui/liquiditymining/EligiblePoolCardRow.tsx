@@ -43,7 +43,7 @@ export function EligiblePoolCardRow({
     extensions: { unlockTimestamp },
   } = getTokenInfo<PrincipalTokenInfo>(bond);
 
-  const poolIcon = <USDCIcon className="mr-4 inline h-8 w-8 flex-shrink-0" />;
+  const poolIcon = <USDCIcon className="mr-4 inline h-8 w-8 shrink-0" />;
   const ccPoolTVL = useTotalFiatLiquidity(pool);
   const unlockDate = convertEpochSecondsToDate(unlockTimestamp);
   const dateLabel = formatAbbreviatedDate(unlockDate);
@@ -94,7 +94,7 @@ export function EligiblePoolCardRow({
                 className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100"
               >
                 <PlusCircleIcon
-                  className="h-6 w-6 flex-shrink-0 text-principalRoyalBlue"
+                  className="h-6 w-6 shrink-0 text-principalRoyalBlue"
                   aria-hidden="true"
                 />
                 <div className="ml-4">
@@ -109,7 +109,7 @@ export function EligiblePoolCardRow({
                 className="-m-3 flex items-start rounded-lg p-3 transition duration-150 ease-in-out hover:bg-gray-50"
               >
                 <MinusCircleIcon
-                  className="h-6 w-6 flex-shrink-0 text-principalRoyalBlue"
+                  className="h-6 w-6 shrink-0 text-principalRoyalBlue"
                   aria-hidden="true"
                 />
                 <div className="ml-4">
