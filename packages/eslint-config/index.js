@@ -7,7 +7,6 @@ module.exports = {
     "plugin:testing-library/react",
     "plugin:jest-dom/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:tailwindcss/recommended",
     /**
      * Prettier must be the last extension in the list.
      * Prettier works best if you disable all other ESLint rules relating to
