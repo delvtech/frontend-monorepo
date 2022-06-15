@@ -8,11 +8,14 @@
     "@alch/alchemy-web3": "^1.1.7",
     "@elementfi/council-typechain": "*",
     "@elementfi/council-tokenlist": "*",
+    "@elementfi/eslint-config": "*",
     "@ethersproject/providers": "^5.6.5",
     "@uniswap/token-lists": "^1.0.0-beta.26",
     "dotenv": "^16.0.0",
     "ethernal": "^0.14.0",
     "hardhat-ethernal": "^0.3.10",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "merkletreejs": "^0.2.24",
     "tsc": "^2.0.3"
   },
@@ -27,12 +30,9 @@
     "@types/ethereumjs-abi": "^0.6.3",
     "@types/mocha": "^9.0.0",
     "@types/node": "^14.17.20",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
     "chai": "^4.3.4",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
     "ethers": "^5.6.6",
     "hardhat": "^2.6.6",
     "prettier": "^2.4.1",
@@ -58,6 +58,14 @@
     "mine-auto": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat autoMine",
     "mine-interval": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat intervalMining",
     "ethernal-listen": "npx ethernal listen -l",
-    "ethernal-reset": "npx ethernal \"Hardhat Network\""
+    "ethernal-reset": "npx ethernal \"Hardhat Network\"",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   }
 }
