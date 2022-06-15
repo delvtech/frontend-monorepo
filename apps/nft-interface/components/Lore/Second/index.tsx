@@ -10,7 +10,7 @@ export const Second: React.FC<{ isMeme: boolean }> = ({ isMeme }) => (
         <source src="/assets/video/Launch-clip.mp4" />
       </video>
     </VideoContainer>
-    <div>
+    <div className="flex-div max-width">
       <h2>
         {isMeme ? content.meme.partTwo.header : content.original.partTwo.header}
       </h2>

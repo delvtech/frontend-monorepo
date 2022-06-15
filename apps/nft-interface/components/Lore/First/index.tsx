@@ -6,7 +6,7 @@ import content from "components/Lore/content.json";
 
 export const First: React.FC<{ isMeme: boolean }> = ({ isMeme }) => (
   <LoreContainer>
-    <div>
+    <div className="flex-div">
       <h2>
         {isMeme ? content.meme.partOne.header : content.original.partOne.header}
       </h2>
@@ -18,7 +18,7 @@ export const First: React.FC<{ isMeme: boolean }> = ({ isMeme }) => (
             <p key={index}>{paragraph}</p>
           ))}
     </div>
-    <div>
+    <div className="flex-div max-width">
       <StyledSlider {...settings}>
         <div>
           <Image
@@ -82,6 +82,7 @@ const settings = {
       alt="current"
       height={100}
       width={109}
+      className="slider-paging"
     />
   ),
   dots: true,

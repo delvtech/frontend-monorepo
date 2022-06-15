@@ -4,7 +4,7 @@ import content from "components/Lore/content.json";
 
 export const Third: React.FC<{ isMeme: boolean }> = ({ isMeme }) => (
   <LoreContainer>
-    <div>
+    <div className="flex-div">
       <h2>
         {isMeme
           ? content.meme.partThree.header
@@ -18,7 +18,7 @@ export const Third: React.FC<{ isMeme: boolean }> = ({ isMeme }) => (
             <p key={index}>{paragraph}</p>
           ))}
     </div>
-    <div>
+    <div className="flex-div max-width">
       <Image
         src="/assets/png/Lore/Third/third.png"
         alt="third"
