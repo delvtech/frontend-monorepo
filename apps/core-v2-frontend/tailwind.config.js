@@ -3,7 +3,7 @@ module.exports = {
   // Use daisyui for now so we can prototype using predefined tailwind classes, eg: .daisy-btn
   daisyui: {
     // brutalist wireframing theme while we prototype
-    themes: ["wireframe"],
+    themes: ["cmyk"],
 
     // Prefix all daisy- classes so they are easy to search/find globally
     prefix: "daisy-",
