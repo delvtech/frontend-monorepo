@@ -1,7 +1,6 @@
-## Liquidity Mining UI
+## core-v2-frontend
 
-Example UI for interacting with the peripherals contracts:
-https://github.com/element-foundation/peripherals
+UI for interacting with the core-v2 contracts
 
 This is a NextJS project and is intended to be deployed to Vercel.
 
@@ -16,7 +15,7 @@ This is a NextJS project and is intended to be deployed to Vercel.
 ```
 
 NOTE: All commands are intended to be run with the monorepo's `yarn` and `node`
-verions, see: https://github.com/element-fi/frontend-monorepo#readme
+versions, see: https://github.com/element-fi/frontend-monorepo#readme
 
 ## Environment variables
 
@@ -25,9 +24,9 @@ Make sure you have the following environment variables set up in your `.env` fil
 **apps/liquiditymining/.env**
 
 ```bash
-NEXT_PUBLIC_GOERLI_URI=your-goerli-uri
-NEXT_PUBLIC_MAINNET_URI=your-mainnet-uri
-NEXT_PUBLIC_CHAIN_NAME=goerli # or "mainnet"
+NEXT_PUBLIC_GOERLI_ALCHEMY_ID=<your-alchemy-id-here>
+NEXT_PUBLIC_MAINNET_ALCHEMY_ID=<your-alchemy-id-here>
+NEXT_PUBLIC_CHAIN_ID=1 # 1 for mainnet, 5 for goerli
 ```
 
 NOTE: This was developed with [Alchemy](https://www.alchemy.com/) as a provider.
@@ -38,10 +37,10 @@ To run the development server you must first build the app, then run the start c
 
 ```
 # Build the app, you only need to do this once
-yarn workspace liquidity-mining-ui run build
+yarn workspace core-v2-frontend run build
 
 # Start the app server and point it at goerli
-yarn workspace liquidity-mining-ui run dev-goerli
+yarn workspace core-v2-frontend run dev-goerli
 ```
 
 ## Deployment
@@ -52,8 +51,6 @@ all the same environment variables when you create your Vercel project.
 Also, since this app lives in a monorepo, you'll need to override the following
 settings in your Vercel project:
 
-Build Command: `yarn workspace liquidity-mining-ui run build`
+Build Command: `yarn workspace core-v2-frontend run build`
 
-Output Directory: `apps/liquiditymining/.next`
-
-![image](https://user-images.githubusercontent.com/4524175/168927928-36c3f35b-7aab-4484-adea-61764011d253.png)
+Output Directory: `apps/core-v2-frontend/.next`
