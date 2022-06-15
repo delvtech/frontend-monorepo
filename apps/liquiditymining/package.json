@@ -8,6 +8,7 @@
     "@elementfi/core-typechain": "*",
     "@elementfi/council-typechain": "*",
     "@elementfi/council-tokenlist": "*",
+    "@elementfi/eslint-config": "*",
     "@elementfi/integrations": "*",
     "@elementfi/peripherals": "*",
     "@elementfi/react-query-typechain": "*",
@@ -46,9 +47,12 @@
     "d3-format": "^3.1.0",
     "d3-time-format": "^4.1.0",
     "date-fns": "^2.28.0",
+    "eslint": "^7.32.0",
     "ethers": "^5.6.6",
     "graphql": "^15.8.0",
     "graphql-request": "^3.7.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "lodash.isequal": "^4.5.0",
     "lodash.isfunction": "^3.0.9",
     "lodash.isnumber": "^3.0.3",
@@ -101,7 +105,15 @@
     "copy-testnet": "npm run _copy-testnet-addresses && npm run _copy-testnet-tokenlist",
     "chromatic": "chromatic --exit-zero-on-changes --skip 'dependabot/**'",
     "test": "jest",
-    "test-watch": "jest --watch"
+    "test-watch": "jest --watch",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   },
   "version": "0.1.0"
 }
