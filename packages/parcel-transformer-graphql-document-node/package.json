@@ -23,6 +23,8 @@
     "@parcel/plugin": "^2.6.0",
     "graphql": "^16.5.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@elementfi/eslint-config": "*"
+  },
   "peerDependencies": {}
 }
