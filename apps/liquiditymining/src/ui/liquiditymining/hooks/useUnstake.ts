@@ -19,7 +19,7 @@ export function useUnstake(
   return useSmartContractTransaction(masterChef, "withdraw", signer, {
     ...options,
     onTransactionMined: (...args) => {
-      const [poolId, _, account] = args[1];
+      const [poolId, unusedValue, account] = args[1];
       invalidateBalanceQueries(poolId, account);
       options?.onTransactionMined?.(...args);
     },

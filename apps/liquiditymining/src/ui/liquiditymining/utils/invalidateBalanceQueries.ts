@@ -9,7 +9,7 @@ export function invalidateBalanceQueries(
   account: string,
 ): void {
   const [poolAddress] = Object.entries(poolIdsByPoolAddress).find(
-    ([_, pid]) => pid === poolId,
+    ([unusedValue, pid]) => pid === poolId,
   ) || [""];
   queryClient.invalidateQueries({
     predicate: (query) =>

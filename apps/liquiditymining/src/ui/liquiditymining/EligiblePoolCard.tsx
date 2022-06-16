@@ -146,7 +146,7 @@ export function EligiblePoolCard({
         </div>
         <div className="flex flex-1 flex-col text-gray-500">
           <div className="space-y-1 px-4 py-6">
-            <p className="gap-x-1align-baseline flex flex-wrap justify-between">
+            <p className="flex flex-wrap justify-between gap-x-1 align-baseline">
               <span className="whitespace-nowrap text-principalRoyalBlue">{t`Total Staked`}</span>
               <span>${commify(totalFiatStaked)}</span>
             </p>
