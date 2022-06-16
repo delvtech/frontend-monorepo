@@ -6,22 +6,31 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "prettier": "prettier --write \"{pages,src}/**/*.ts{,x}\"",
     "prettier:check": "prettier --check \"{pages,src}/**/*.ts{,x}\"",
-    "update-elf-council-typechain": "yarn add git+https://github.com/element-fi/elf-council-typechain.git"
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@alch/alchemy-web3": "^1.4.2",
-    "@elementfi/react-query-typechain": "^1.2.0",
+    "@elementfi/react-query-typechain": "*",
+    "@elementfi/eslint-config": "*",
     "@fontsource/rubik": "^4.5.1",
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.13",
     "axios": "^0.26.0",
     "babel-preset-next": "^1.4.0",
-    "elf-council-typechain": "git+https://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:x-oauth-basic@github.com/element-fi/elf-council-typechain.git",
+    "eslint": "^7.32.0",
     "ethers": "^5.6.6",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "lodash.countby": "^4.6.0",
     "lodash.memoize": "^4.1.2",
     "lodash.topairs": "^4.3.0",

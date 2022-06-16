@@ -1,6 +1,5 @@
 import { PrimaryButton } from "common/Button/styles";
 import { SectionContainer } from "common/Container";
-import { ExternalLink } from "common/ExternalLink";
 import { DesktopHeader, MobileHeader } from "components/Entrance/styles";
 import {
   ButtonWrapper,

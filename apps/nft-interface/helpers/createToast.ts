@@ -40,6 +40,7 @@ export const createToastLoading = (
   message?: string,
   options?: ToastOptions,
 ): string => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { duration, ...restOptions } = toastStyleOptions;
   return toast.loading(message ?? "Loading", {
     ...options,
