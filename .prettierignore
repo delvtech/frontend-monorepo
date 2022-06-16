@@ -3,17 +3,18 @@
 # workspaces.
 
 .next
+*/**/dist/
+*/**/compiled/
+*/**/types/
+*/**/artifacts/
+*.generated.*
+*/**/cache/
 
 # core-frontend 
 apps/core-frontend/src/version.output.json
 
 # council-testnet
-apps/council-testnet/artifacts/
-apps/council-testnet/cache/
 apps/council-testnet/elf-council/
-
-# council-proposals
-packages/council-proposals/dist/
 
 # core-typchain
 packages/core-typechain/factories/
