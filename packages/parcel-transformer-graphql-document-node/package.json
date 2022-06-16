@@ -1,0 +1,32 @@
+{
+  "name": "@elementfi/parcel-transformer-graphql-document-node",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "source": "index.ts",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "watch": "parcel watch",
+    "build": "parcel build"
+  },
+  "alias": {
+    "src": "./src"
+  },
+  "engines": {
+    "parcel": "2.x"
+  },
+  "dependencies": {
+    "@parcel/plugin": "^2.6.0",
+    "eslint": "7",
+    "graphql": "^16.5.0",
+    "typescript": "^4.7.3"
+  },
+  "devDependencies": {
+    "@elementfi/eslint-config": "*"
+  },
+  "peerDependencies": {}
+}
