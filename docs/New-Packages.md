@@ -220,7 +220,17 @@ You should now have a package.json in packages/new-package that looks like:
 
 Now that the basics are set up, move any files you need into src/ from other packages or apps. Once
 the files are copied over, you can remove them from their original package(s) or apps(s). You'll
-then need to update the imports to something like:
+have to update those apps or packages package.json's dependencies with:
+
+```json
+{
+  "dependencies": {
+    "@elementfi/new-package": "*"
+  }
+}
+```
+
+You'll then need to update the imports to something like:
 
 ```ts
 import { method } from "@elementfi/new-package";
