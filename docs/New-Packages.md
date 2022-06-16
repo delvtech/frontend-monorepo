@@ -262,4 +262,5 @@ Finally, you can build the package by running:
 frontend-monorepo$ yarn workspace @elementfi/new-package build
 ```
 
-That's it!
+That's it! Note that we do want to commit the dist/ folder so that we can detect changes to it
+when we rebuild. Commit your changes and land your new package!
