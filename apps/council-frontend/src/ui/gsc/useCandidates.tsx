@@ -1,4 +1,4 @@
-import { Delegate, delegates } from "src/elf-council-delegates/delegates";
+import { Delegate, delegates } from "src/delegates/delegates";
 import { formatEther } from "ethers/lib/utils";
 import { useGSCMembers } from "src/ui/gsc/useGSCMembers";
 import { useMemo } from "react";

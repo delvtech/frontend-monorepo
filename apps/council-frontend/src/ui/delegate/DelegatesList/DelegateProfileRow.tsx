@@ -1,6 +1,6 @@
 import { Fragment, ReactElement } from "react";
 import { formatBalance } from "src/base/formatBalance";
-import { Delegate } from "src/elf-council-delegates/delegates";
+import { Delegate } from "src/delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import classNames from "classnames";
 import { Popover, Transition } from "@headlessui/react";

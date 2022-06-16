@@ -21,7 +21,7 @@ import { GSCPortfolioCard } from "src/ui/gsc/GSCPortfolioCard";
 import { ChangeDelegateButton } from "src/ui/gsc/ChangeDelegationButton";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { useDelegate } from "src/ui/delegate/useDelegate";
-import { Delegate } from "src/elf-council-delegates/delegates";
+import { Delegate } from "src/delegates/delegates";
 import { BigNumber } from "ethers";
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useKick } from "src/ui/gsc/useKickGSC";

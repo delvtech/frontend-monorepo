@@ -5,12 +5,11 @@ import {
   mainnetDelegates,
   goerliDelegates,
   testnetDelegates,
-  Delegate,
 } from "@elementfi/council-delegates";
 
 export const delegates = getDelegates();
 
-function getDelegates(): Delegate[] {
+function getDelegates() {
   if (addressesJson.chainId === ChainId.GOERLI) {
     return goerliDelegates;
   }

@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 import { formatWalletAddress } from "src/base/formatWalletAddress";
 import { getGSCCandidateUrl } from "src/integrations/commonwealth";
-import { Delegate } from "src/elf-council-delegates/delegates";
+import { Delegate } from "src/delegates/delegates";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { useENSName } from "src/ui/ethereum/useEnsName";

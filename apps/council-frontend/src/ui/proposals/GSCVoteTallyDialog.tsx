@@ -4,7 +4,7 @@ import { t } from "ttag";
 import Button from "src/ui/base/Button/Button";
 import Dialog from "src/ui/base/Dialog/Dialog";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { Delegate } from "src/elf-council-delegates/delegates";
+import { Delegate } from "src/delegates/delegates";
 import { NumDelegatedVotes } from "src/ui/gsc/NumDelegatedVotes";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { formatWalletAddress } from "src/base/formatWalletAddress";

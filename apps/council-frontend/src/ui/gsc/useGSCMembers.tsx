@@ -3,7 +3,7 @@ import { useSmartContractEvents } from "@elementfi/react-query-typechain/src/hoo
 import { BigNumber } from "ethers";
 import { gscVaultContract } from "src/contracts";
 import zip from "lodash.zip";
-import { Delegate } from "src/elf-council-delegates/delegates";
+import { Delegate } from "src/delegates/delegates";
 
 export function useGSCMembers(): QueryObserverResult<Delegate[]> {
   // grab membership approved events
