@@ -32,6 +32,10 @@
     "autoprefixer": "^10.4.4",
     "babel-loader": "^8.2.5",
     "cross-env": "^7.0.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-tailwindcss": "^3.4.4",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "postcss": "^8.4.8",
     "typescript": "^4.5.5"
   },
@@ -43,7 +47,15 @@
     "dev-goerli": "cross-env NEXT_PUBLIC_CHAIN_NAME=goerli next dev",
     "dev-mainnet": "cross-env NEXT_PUBLIC_CHAIN_NAME=mainnet next dev",
     "dev-mainnet-fork": "cross-env NEXT_PUBLIC_CHAIN_NAME=mainnet-fork next dev",
-    "start": "next start"
+    "start": "next start",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   },
   "version": "0.1.0"
 }
