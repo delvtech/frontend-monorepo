@@ -7,6 +7,7 @@
     - [Adding directories](#adding-directories)
     - [Creating the package.json](#creating-the-packagejson)
     - [Adding linting](#adding-linting)
+    - [Add tsconfig.json](#add-tsconfigjson)
     - [Setting up Parcel](#setting-up-parcel)
     - [Copying files, creating the index.ts and building the package ](#copying-files-creating-the-indexts-and-building-the-package)
 
@@ -65,7 +66,7 @@ This should create a package.json that looks something like:
 }
 ```
 
-### **`Adding Linting`**
+### **`Adding linting`**
 
 Next you need to set up linting:
 
@@ -109,6 +110,33 @@ Next, run `yarn` at the top level of the frontend-monorepo to install the `@elem
 ```bash
 cd ../../
 frontend-monorepo$ yarn
+```
+
+### **`Adding tsconfig.json`**
+
+Add a `tsconfig.json` file to the root of new-package/:
+
+```bash
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "esnext"],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "incremental": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
 ```
 
 ### **`Adding typescript`**
