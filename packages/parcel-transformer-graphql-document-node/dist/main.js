@@ -21,7 +21,8 @@ $parcel$export(
   () => $ccf926d2e52e99d1$export$2e2bcd8739ae039,
 );
 
-var /**
+var // https://parceljs.org/plugin-system/transformer/
+  /**
    * A custom Parcel transformer that converts GraphQL files into `DocumentNode`s
    *
    * This is needed because the plugin that is automatically installed by Parcel

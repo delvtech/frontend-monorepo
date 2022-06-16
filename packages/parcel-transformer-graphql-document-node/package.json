@@ -20,8 +20,6 @@
     "parcel": "2.x"
   },
   "dependencies": {
-    "@graphql-tools/graphql-file-loader": "^7.3.14",
-    "@graphql-tools/load": "^7.5.13",
     "@parcel/plugin": "^2.6.0",
     "graphql": "^16.5.0"
   },

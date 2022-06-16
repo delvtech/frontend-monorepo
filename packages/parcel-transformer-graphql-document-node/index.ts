@@ -1,6 +1,8 @@
 import { Transformer } from "@parcel/plugin";
 import { parse, Source } from "graphql";
 
+// https://parceljs.org/plugin-system/transformer/
+
 /**
  * A custom Parcel transformer that converts GraphQL files into `DocumentNode`s
  *
