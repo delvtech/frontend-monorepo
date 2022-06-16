@@ -4,12 +4,12 @@
   - [Motivation](#motivation)
   - [Migrating an Existing Repository](#migrating-an-existing-repository)
   - [Creating a new package from scratch](#fromscratch)
-    - [Adding directories](#adding-directories)
-    - [Creating the package.json](#creating-the-packagejson)
-    - [Adding linting](#adding-linting)
-    - [Add tsconfig.json](#add-tsconfigjson)
-    - [Setting up Parcel](#setting-up-parcel)
-    - [Copying files, creating the index.ts and building the package ](#copying-files-creating-the-indexts-and-building-the-package)
+    - [**`Adding directories`**](#adding-directories)
+    - [**`Creating the package.json`**](#creating-the-packagejson)
+    - [**`Adding linting`**](#adding-linting)
+    - [**`Add tsconfig.json`**](#add-tsconfigjson)
+    - [**`Setting up Parcel`**](#setting-up-parcel)
+    - [**`Copying files, creating the index.ts and building the package`**](#copying-files-creating-the-indexts-and-building-the-package)
 
 ## Motivation
 
@@ -71,18 +71,18 @@ This should create a package.json that looks something like:
 Next you need to set up linting:
 
 ```bash
-frontend-monorepo/packages/new-package$ yarn workspace @elementfi/new-pacakge add eslint@^7 husky lint-staged
+frontend-monorepo$ yarn workspace @elementfi/new-pacakge add eslint@^7 husky lint-staged
 ```
 
 Edit the package.json, under dev dependencies add:
 
 ```json
 {
-  devDependencies: "@elementfi/eslint-config": "*",
+  devDependencies: "@elementfi/eslint-config": "*"
 }
 ```
 
-Now we'll add a coupe useful scripts:
+Now we'll add a couple useful scripts:
 
 ```json
 {
@@ -173,6 +173,7 @@ Add some scripts and a few more things to the package.json to set up parcel:
     "src": "./src"
   },
 }
+```
 
 You should now have a package.json in packages/new-package that looks like:
 
