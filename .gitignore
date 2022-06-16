@@ -7,3 +7,4 @@ apps/**/tests/e2e/screenshots
 apps/**/tests/e2e/videos
 # this is a safeguard since workspaces don't manage dependency versions, the top level yarn.lock does
 package-lock.json
+.parcel-cache
