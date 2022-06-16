@@ -25,6 +25,17 @@ module.exports = {
         "react-hooks/exhaustive-deps": "error",
       },
     },
+    {
+      files: ["*.js", "*.jsx", ".ts", ".tsx"],
+      processor: "@graphql-eslint/graphql",
+    },
+    {
+      files: ["*.gql", "*.graphql"],
+      extends: [
+        "plugin:@graphql-eslint/schema-recommended",
+        "plugin:@graphql-eslint/operations-recommended",
+      ],
+    },
   ],
   rules: {
     "tailwindcss/classnames-order": "off", // Disable ordering in favor of prettier plugin

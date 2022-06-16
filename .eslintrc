@@ -25,17 +25,6 @@
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }
-    },
-    {
-      "files": ["*.js", "*.jsx", ".ts", ".tsx"],
-      "processor": "@graphql-eslint/graphql"
-    },
-    {
-      "files": ["*.gql", "*.graphql"],
-      "extends": [
-        "plugin:@graphql-eslint/schema-recommended",
-        "plugin:@graphql-eslint/operations-recommended"
-      ]
     }
   ],
   "rules": {
