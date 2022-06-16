@@ -79,7 +79,6 @@ export function ConfirmDialog({
               className="h-5 w-5 appearance-none rounded border-gray-300 text-brandDarkBlue-light"
               checked={dontShowAgain}
               onChange={({ target: { checked } }) => {
-                console.log({ checked });
                 setDontShowAgain(checked);
               }}
             />

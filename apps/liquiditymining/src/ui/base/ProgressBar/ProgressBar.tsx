@@ -16,7 +16,7 @@ export function ProgressBar(props: ProgressBarProps): ReactElement {
   }
 
   return (
-    <div className="relative h-2 w-full rounded-full bg-sky-300 bg-opacity-50 ">
+    <div className="relative h-2 w-full rounded-full bg-sky-300/50">
       <div
         style={{ width: `${percentComplete}%` }}
         className="h-full rounded-full bg-sky-100 text-center text-xs text-white"

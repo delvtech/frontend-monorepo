@@ -3,10 +3,9 @@ interface LabeledStatProps {
   data: string;
   topLabel?: string;
   bottomLabel?: string;
-  whiteText?: boolean;
 }
 export function LabeledStat(props: LabeledStatProps): ReactElement {
-  const { data, topLabel, bottomLabel, whiteText } = props;
+  const { data, topLabel, bottomLabel } = props;
 
   return (
     <div className="flex flex-col overflow-hidden px-4 py-5 sm:p-6">

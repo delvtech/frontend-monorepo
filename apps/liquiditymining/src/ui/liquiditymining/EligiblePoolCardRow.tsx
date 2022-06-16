@@ -10,9 +10,7 @@ import { eligibleGoerliPoolContracts } from "src/elf/liquiditymining/eligiblepoo
 import { formatBalance } from "src/formatBalance";
 import { useLPTokenBalance } from "./hooks/useLPTokenBalance";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
-import { useTotalFiatLiquidity } from "@elementfi/core/pools/hooks/useTotalFiatLiquidityForPool/useTotalFiatLiquidityForPool";
 import { useELFIPerBlock } from "./hooks/useELFIPerBlock";
-import { getVaultTokenInfoForTranche } from "@elementfi/core/tranche/tranches";
 import { formatAbbreviatedDate } from "src/base/dates";
 import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
@@ -30,21 +28,17 @@ interface EligiblePoolCardRowProps {
 
 export function EligiblePoolCardRow({
   account,
-  pool,
   pool: {
     address: poolAddress,
     symbol: poolSymbol,
     extensions: { bond },
   },
 }: EligiblePoolCardRowProps): ReactElement {
-  const vaultTokenInfo = getVaultTokenInfoForTranche(bond);
   const {
-    symbol,
     extensions: { unlockTimestamp },
   } = getTokenInfo<PrincipalTokenInfo>(bond);
 
-  const poolIcon = <USDCIcon className="mr-4 inline h-8 w-8 flex-shrink-0" />;
-  const ccPoolTVL = useTotalFiatLiquidity(pool);
+  const poolIcon = <USDCIcon className="mr-4 inline h-8 w-8 shrink-0" />;
   const unlockDate = convertEpochSecondsToDate(unlockTimestamp);
   const dateLabel = formatAbbreviatedDate(unlockDate);
 
@@ -94,7 +88,7 @@ export function EligiblePoolCardRow({
                 className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100"
               >
                 <PlusCircleIcon
-                  className="h-6 w-6 flex-shrink-0 text-principalRoyalBlue"
+                  className="h-6 w-6 shrink-0 text-principalRoyalBlue"
                   aria-hidden="true"
                 />
                 <div className="ml-4">
@@ -109,7 +103,7 @@ export function EligiblePoolCardRow({
                 className="-m-3 flex items-start rounded-lg p-3 transition duration-150 ease-in-out hover:bg-gray-50"
               >
                 <MinusCircleIcon
-                  className="h-6 w-6 flex-shrink-0 text-principalRoyalBlue"
+                  className="h-6 w-6 shrink-0 text-principalRoyalBlue"
                   aria-hidden="true"
                 />
                 <div className="ml-4">

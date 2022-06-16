@@ -1,7 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { ReactElement } from "react";
-import { Menu, Transition } from "@headlessui/react";
-import { DotsHorizontalIcon } from "@heroicons/react/solid";
+import { Menu } from "@headlessui/react";
 import classNames from "classnames";
 import { t } from "ttag";
 

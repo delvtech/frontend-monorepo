@@ -46,6 +46,7 @@ module.exports = {
       "warn",
       {
         argsIgnorePattern: "^unused",
+        varsIgnorePattern: "^unused",
       },
     ],
     "import/no-unused-modules": "error",
