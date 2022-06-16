@@ -4,7 +4,7 @@
 //   leaves: [
 //     {
 //       address: "0xASDF...ASDF",
-//       balances: [
+//       data: [
 //         { tokenAddress: "0xASDF...ASDF", balance: "100", "rewards": "1"},
 //         { tokenAddress: "0xASDF...ASDF", balance: undefined, rewards: undefined }
 //       ]

@@ -8,6 +8,7 @@ import { fetchValueChangesForERC20 } from "src/fetchValueChangesForERC20";
 import { mineBlocks } from "src/test/mineBlocks";
 import { createSnapshot, restoreSnapshot } from "src/test/snapshot";
 import { calculateRewards } from "src/examples/calculateRewards";
+import { fetchIPFSData } from "src/fetchIPFSData";
 
 const { provider } = waffle;
 
@@ -103,12 +104,21 @@ describe("calculateRewards", () => {
       await tokenContract.mint(signer.address, parseEther("10"));
     }
 
-    // we'll checking rewards at block 5, so all accounts have a starting value of 10 ETH
-    const balancesAtStartBlock = {
-      [signer1.address]: ONE_ETH * BigInt(10),
-      [signer2.address]: ONE_ETH * BigInt(10),
-      [signer3.address]: ONE_ETH * BigInt(10),
-    };
+    const ipfsData = await fetchIPFSData(
+      "QmNzHnUwXEkaFatmKACmJ9Uxnpv2rtyiJ1mAarK7n2Nep7",
+    );
+
+    // starting balances for signer 1,2,3 should be at 10 ETH
+    const balancesAtStartBlock = Object.fromEntries(
+      ipfsData.leaves.map((leaf) => {
+        const { address, data } = leaf;
+        const { balance } =
+          data.find(
+            ({ tokenAddress }) => tokenAddress === tokenContract.address,
+          ) || {};
+        return [address, BigInt(balance || 0)];
+      }),
+    );
 
     const block = await provider.getBlockNumber();
     expect(block).to.equal(4);

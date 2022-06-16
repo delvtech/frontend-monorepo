@@ -2,8 +2,7 @@ import { ValueOverPeriod } from "src/ValueOverPeriod";
 
 /**
  * Calculates a time-weighted value for an asset over a given window of time.
- * @param startingValue the starting value to weight over time, if any
- * @param valueChanges an array of objects that contain the amount transferred and when.
+ * @param valueTimeBlocks an array of objects that contain a value and the range for the value.
  * @param startBlock the eth block beginning the period for the weighted value.  timestamp in whole seconds.
  * must come before first value change.
  * @param endBlock the eth block ending the period for the weighted value.  timestamp in whole seconds.  must

@@ -1,0 +1,35 @@
+{
+  "block": 4,
+  "leaves": [
+    {
+      "address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "data": [
+        {
+          "tokenAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+          "balance": "10000000000000000000",
+          "rewards": "0"
+        }
+      ]
+    },
+    {
+      "address": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "data": [
+        {
+          "tokenAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+          "balance": "10000000000000000000",
+          "rewards": "0"
+        }
+      ]
+    },
+    {
+      "address": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+      "data": [
+        {
+          "tokenAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+          "balance": "10000000000000000000",
+          "rewards": "0"
+        }
+      ]
+    }
+  ]
+}
