@@ -14,7 +14,9 @@
   "scripts": {
     "prepare": "husky install",
     "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'",
+    "watch": "parcel watch",
+    "build": "parcel build"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx,json,md}": [
