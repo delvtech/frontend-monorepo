@@ -1,0 +1,20 @@
+{
+  "chainId": 1,
+  "delegates": [
+    {
+      "commonwealthCommentId": 17924,
+      "commonwealthName": "moshimo",
+      "commonwealthPostedFromAddress": "0x32C2741DC6621CcD32D868727bE74dCdC7aB332F",
+      "address": "0x32C2741DC6621CcD32D868727bE74dCdC7aB332F",
+      "created_at": "2022-03-29T02:16:21.531Z"
+    },
+    {
+      "commonwealthCommentId": 19561,
+      "commonwealthName": "simona pop",
+      "commonwealthPostedFromAddress": "0x54BeCc7560a7Be76d72ED76a1f5fee6C5a2A7Ab6",
+      "address": "0x54BeCc7560a7Be76d72ED76a1f5fee6C5a2A7Ab6",
+      "created_at": "2022-04-30T09:24:29.359Z"
+    }
+  ],
+  "version": "0.0.0"
+}

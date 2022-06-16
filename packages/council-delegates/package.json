@@ -1,0 +1,7 @@
+{
+  "name": "@elementfi/council-delegates",
+  "version": "1.0.0",
+  "description": "Source of truth for featured delegates in the council ui",
+  "main": "index.js",
+  "license": "MIT"
+}
