@@ -3,5 +3,11 @@
   "version": "1.0.0",
   "description": "Source of truth for featured delegates in the council ui",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@elementfi/eslint-config": "*",
+    "eslint": "^7",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.2"
+  }
 }
