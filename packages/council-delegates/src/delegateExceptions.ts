@@ -1,6 +1,6 @@
 import { Delegate } from "src/types";
 
-const mainnetDelegateExceptions: Delegate[] = [
+export const mainnetDelegateExceptions: Delegate[] = [
   {
     commonwealthCommentId: 17924,
     commonwealthName: "moshimo",
