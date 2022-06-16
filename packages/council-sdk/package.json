@@ -30,7 +30,8 @@
     "@elementfi/eslint-config": "*",
     "eslint": "^7.32.0",
     "ethers": "^5.6.6",
-    "husky": "^7.0.4"
+    "husky": "^7.0.4",
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
@@ -48,6 +49,7 @@
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.6.7",
     "hardhat": "^2.9.6",
+    "node-fetch": "2.6.1",
     "solhint": "^3.3.7",
     "ts-node": "^10.8.0",
     "tsconfig-paths": "^4.0.0",
