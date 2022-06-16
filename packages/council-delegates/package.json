@@ -8,6 +8,20 @@
     "@elementfi/eslint-config": "*",
     "eslint": "^7",
     "husky": "^8.0.1",
-    "lint-staged": "^13.0.2"
+    "lint-staged": "^13.0.2",
+    "parcel": "^2.6.0"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "typescript": "^4.7.3"
   }
 }
