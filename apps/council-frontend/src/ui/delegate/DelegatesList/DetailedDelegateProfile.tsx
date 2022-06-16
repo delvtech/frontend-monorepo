@@ -1,7 +1,6 @@
 import { ReactElement, useEffect, useRef } from "react";
 import { t } from "ttag";
 import H2 from "src/ui/base/H2/H2";
-import { Delegate } from "src/delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import classNames from "classnames";
 import Button from "src/ui/base/Button/Button";
@@ -11,6 +10,7 @@ import { useWeb3React } from "@web3-react/core";
 import CloseButton from "src/ui/base/Dialog/CloseButton";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
 import { Provider } from "@ethersproject/providers";
+import { Delegate } from "@elementfi/council-delegates";
 
 interface DetailedDelegateProfileProps {
   provider?: Provider;

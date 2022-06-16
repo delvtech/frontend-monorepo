@@ -4,12 +4,12 @@ import { t } from "ttag";
 import Button from "src/ui/base/Button/Button";
 import Dialog from "src/ui/base/Dialog/Dialog";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { Delegate } from "src/delegates/delegates";
 import { NumDelegatedVotes } from "src/ui/gsc/NumDelegatedVotes";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { formatWalletAddress } from "src/base/formatWalletAddress";
 import { getGSCCandidateUrl } from "src/integrations/commonwealth";
 import { useENSName } from "src/ui/ethereum/useEnsName";
+import { Delegate } from "@elementfi/council-delegates";
 
 const listOptions = [t`All`, t`For`, t`Against`, t`Abstained`] as const;
 type Option = typeof listOptions[number];
@@ -59,7 +59,7 @@ export const GSCVoteTallyDialog = ({
           <ul className="space-y-2">
             {filteredMembers.map((address) => (
               <li key={address}>
-                <VoterRow delegate={{ address }} />
+                <VoterRow delegate={{ address, createdAt: "" }} />
               </li>
             ))}
           </ul>
