@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "esnext"],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "incremental": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"]
+    }
+  },
+  "include": ["*.ts"],
+  "exclude": ["node_modules"]
+}
