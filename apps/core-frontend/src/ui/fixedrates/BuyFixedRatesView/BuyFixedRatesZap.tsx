@@ -193,7 +193,6 @@ export function BuyFixedRatesZap({
         library={library}
         buttonLabel={t`Buy`}
         amountIn={inputTokenValue}
-        estimatedAmountOut={principalTokensOut}
         principalToken={principalToken}
         inputToken={inputToken}
         isOpen={isDrawerOpen}
