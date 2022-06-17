@@ -1,1 +1,2 @@
-export default {};
+const object = {};
+export default object;
