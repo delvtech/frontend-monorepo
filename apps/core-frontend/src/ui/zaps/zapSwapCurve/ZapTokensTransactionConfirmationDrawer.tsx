@@ -15,7 +15,6 @@ interface ZapTokensTransactionConfirmationDrawerProps {
   library: Web3Provider | undefined;
   buttonLabel?: string;
   amountIn: string;
-  estimatedAmountOut: string;
   principalToken: PrincipalTokenInfo;
   inputToken: TokenInfo;
   isOpen: boolean;
@@ -27,7 +26,6 @@ export function ZapTokensTransactionConfirmationDrawer({
   account,
   buttonLabel = t`Trade`,
   amountIn,
-  estimatedAmountOut,
   principalToken,
   inputToken,
   isOpen,

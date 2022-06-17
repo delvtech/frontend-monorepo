@@ -10,7 +10,6 @@ import { CurvePool2__factory } from "@elementfi/core-typechain/dist/libraries/fa
 import { CurvePool3__factory } from "@elementfi/core-typechain/dist/libraries/factories/CurvePool3__factory";
 import { CurveLpTokenInfo } from "@elementfi/core-tokenlist";
 import { defaultProvider } from "elf/providers/providers";
-import { getTokenInfo } from "tokenlists/tokenlists";
 
 /*
  * Curve pools that aren't strictly stablecoins are architected such that the LP

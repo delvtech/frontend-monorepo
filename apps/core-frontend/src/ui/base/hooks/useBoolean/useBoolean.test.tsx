@@ -10,7 +10,7 @@ test("Default value is set correctly", () => {
     return <div>{value.toString()}</div>;
   };
 
-  const { getByText } = render(<SampleComponent />);
+  const { getByText: unusedGetByText } = render(<SampleComponent />);
   const value = screen.getByText(/true/);
   expect(value).toBeInTheDocument();
 });
@@ -21,7 +21,7 @@ test("Value can be set true", () => {
     return <button onClick={setTrue}>{value.toString()}</button>;
   };
 
-  const { getByText } = render(<SampleComponent />);
+  const { getByText: unusedGetByText } = render(<SampleComponent />);
   const button = screen.getByText(/false/);
 
   expect(button).toBeInTheDocument();
@@ -37,7 +37,7 @@ test("Value can be set false", () => {
     return <button onClick={setFalse}>{value.toString()}</button>;
   };
 
-  const { getByText } = render(<SampleComponent />);
+  const { getByText: unusedGetByText } = render(<SampleComponent />);
   const button = screen.getByText(/true/);
 
   expect(button).toBeInTheDocument();

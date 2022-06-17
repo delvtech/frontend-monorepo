@@ -1,4 +1,4 @@
-import { CSSProperties, FC, ReactElement, SVGProps } from "react";
+import { CSSProperties, ReactElement } from "react";
 
 interface SvgIconProps {
   height: number;
