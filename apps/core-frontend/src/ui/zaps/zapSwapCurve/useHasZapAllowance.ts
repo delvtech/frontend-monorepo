@@ -26,10 +26,10 @@ export function useHasZapAllowance(
 
   const result = useTokenAllowance(contract, account, ZapSwapCurveAddress);
 
-  if (inputAsset.type === CryptoAssetType.ETHEREUM) return true;
+  if (inputAsset.type === CryptoAssetType.ETHEREUM) {return true;}
 
   const { data: allowance } = result;
-  if (!allowance || amountIn === "" || amountIn === "0") return false;
+  if (!allowance || amountIn === "" || amountIn === "0") {return false;}
 
   const amountInBn = parseUnits(amountIn, inputToken.decimals);
 

@@ -52,12 +52,12 @@ export function createZapSwapCurveBuyInputs(
   };
 
   if (amountIn === "")
-    return {
+    {return {
       info,
       baseZap: emptyZapCurveIn,
       metaZap: emptyZapCurveIn,
       value: ethers.constants.Zero,
-    };
+    };}
 
   const amountInBn = ethers.utils.parseUnits(amountIn, inputToken.decimals);
 

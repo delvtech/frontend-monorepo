@@ -83,12 +83,12 @@ export function getZapSwapCurvePath(
     .includes(curvePoolToken.address);
 
   if (baseCurvePoolTokensContainsToken)
-    return {
+    {return {
       kind: ZapSwapCurvePathKind.SingleStep,
       curvePoolToken,
       principalToken,
       baseToken,
-    };
+    };}
 
   const metaToken = baseCurvePoolTokens
     .filter(isCurveLpToken)

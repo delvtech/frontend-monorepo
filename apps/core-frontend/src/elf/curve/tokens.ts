@@ -57,7 +57,7 @@ export function getCurvePoolTokensForPrincipalToken(
     principalTokenInfo.extensions.underlying,
   );
 
-  if (!isCurveLpToken(underlyingTokenInfo)) return [];
+  if (!isCurveLpToken(underlyingTokenInfo)) {return [];}
 
   const baseCurvePoolTokens =
     getCurvePoolTokensByCurveLpToken(underlyingTokenInfo);

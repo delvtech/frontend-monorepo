@@ -99,10 +99,10 @@ export function getCurvePoolContract(
   const isCrvTriCrypto = curveLpToken.symbol === "crvTricrypto";
 
   if (isCrv3Crypto)
-    return CurvePool3__factory.connect(CRV3CrytoPoolAddress, defaultProvider);
+    {return CurvePool3__factory.connect(CRV3CrytoPoolAddress, defaultProvider);}
 
   if (isCrvTriCrypto)
-    return CurvePool3__factory.connect(CRVTriCrytoPoolAddress, defaultProvider);
+    {return CurvePool3__factory.connect(CRVTriCrytoPoolAddress, defaultProvider);}
 
   return curveLpToken.extensions.poolAssets.length === 2
     ? CurvePool1__factory.connect(curveLpToken.extensions.pool, defaultProvider)

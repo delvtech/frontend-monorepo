@@ -34,7 +34,7 @@ export function useBaseTokenZapPrice(
   const curvePoolTokenPricePerBaseUnit =
     path.kind === ZapSwapCurvePathKind.DoubleStep ? price2 : price1;
 
-  if (curvePoolTokenPricePerBaseUnit === undefined) return "0";
+  if (curvePoolTokenPricePerBaseUnit === undefined) {return "0";}
 
   const baseCurveLpTokenPricePerCurvePoolTokenUnit =
     (+curvePoolTokenPricePerBaseUnit as number) ** -1;
