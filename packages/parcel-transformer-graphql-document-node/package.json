@@ -11,7 +11,15 @@
   ],
   "scripts": {
     "watch": "parcel watch",
-    "build": "parcel build"
+    "build": "parcel build",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   },
   "alias": {
     "src": "./src"
@@ -21,8 +29,10 @@
   },
   "dependencies": {
     "@parcel/plugin": "^2.6.0",
-    "eslint": "7",
+    "eslint": "^7.32.0",
     "graphql": "^16.5.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "typescript": "^4.7.3"
   },
   "devDependencies": {
