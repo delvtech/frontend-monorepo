@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "plugin:tailwindcss/recommended",
+    "@elementfi/eslint-config"
+  ]
+}
