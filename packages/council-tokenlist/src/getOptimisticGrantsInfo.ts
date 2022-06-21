@@ -2,7 +2,7 @@ import { Provider } from "@ethersproject/abstract-provider";
 import {
   ERC20Permit__factory,
   OptimisticGrants__factory,
-} from "elf-council-typechain";
+} from "@elementfi/council-typechain";
 import { ethers } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 import { OptimisticsGrantsContractInfo } from "src/types";

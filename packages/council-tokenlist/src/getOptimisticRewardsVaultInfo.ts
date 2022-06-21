@@ -1,5 +1,5 @@
 import { Provider } from "@ethersproject/abstract-provider";
-import { OptimisticRewards__factory } from "elf-council-typechain";
+import { OptimisticRewards__factory } from "@elementfi/council-typechain";
 import { ethers } from "ethers";
 
 import { OptimisticRewardsVaultInfo } from "src/types";

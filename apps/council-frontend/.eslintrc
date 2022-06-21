@@ -1,11 +1,12 @@
 {
   "extends": [
     "plugin:tailwindcss/recommended",
+    "plugin:@next/next/recommended",
     "@elementfi/eslint-config"
   ],
   "overrides": [
     // js files in the root dir can use `const ... = require(...)` 
-    { 
+    {
       "files": [
         "./*.js",
         "tests/**/.eslintrc.js"

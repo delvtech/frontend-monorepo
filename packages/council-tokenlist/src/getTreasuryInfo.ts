@@ -1,5 +1,5 @@
 import { Provider } from "@ethersproject/abstract-provider";
-import { Treasury__factory } from "elf-council-typechain";
+import { Treasury__factory } from "@elementfi/council-typechain";
 import { ethers } from "ethers";
 import { TreasuryInfo } from "src/types";
 

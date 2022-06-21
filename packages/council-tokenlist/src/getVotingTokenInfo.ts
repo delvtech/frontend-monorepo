@@ -1,6 +1,6 @@
 import { Provider } from "@ethersproject/abstract-provider";
 import { TokenInfo } from "@uniswap/token-lists";
-import { ERC20Permit__factory } from "elf-council-typechain";
+import { ERC20Permit__factory } from "@elementfi/council-typechain";
 import { ethers } from "ethers";
 
 export async function getVotingTokenInfo(
