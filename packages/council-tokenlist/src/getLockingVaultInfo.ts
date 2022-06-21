@@ -1,5 +1,5 @@
 import { Provider } from "@ethersproject/abstract-provider";
-import { LockingVault__factory } from "elf-council-typechain";
+import { LockingVault__factory } from "@elementfi/council-typechain";
 import { ethers } from "ethers";
 
 import { LockingVaultInfo } from "src/types";

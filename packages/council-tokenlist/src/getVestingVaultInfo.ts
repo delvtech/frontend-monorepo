@@ -1,5 +1,5 @@
 import { Provider } from "@ethersproject/abstract-provider";
-import { VestingVault__factory } from "elf-council-typechain";
+import { VestingVault__factory } from "@elementfi/council-typechain";
 
 import { VestingVaultInfo } from "./types";
 

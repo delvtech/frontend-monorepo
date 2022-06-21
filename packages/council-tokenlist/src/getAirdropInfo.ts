@@ -1,5 +1,5 @@
 import { Provider } from "@ethersproject/abstract-provider";
-import { Airdrop__factory } from "elf-council-typechain";
+import { Airdrop__factory } from "@elementfi/council-typechain";
 import { ethers } from "ethers";
 import { AirdropContractInfo } from "src/types";
 

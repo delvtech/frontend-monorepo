@@ -1,5 +1,5 @@
 import { Provider } from "@ethersproject/abstract-provider";
-import { GSCVault__factory } from "elf-council-typechain";
+import { GSCVault__factory } from "@elementfi/council-typechain";
 import { ethers } from "ethers";
 
 import { GSCVaultInfo } from "src/types";

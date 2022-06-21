@@ -1,5 +1,5 @@
 import { Provider } from "@ethersproject/abstract-provider";
-import { Timelock__factory } from "elf-council-typechain";
+import { Timelock__factory } from "@elementfi/council-typechain";
 import { ethers } from "ethers";
 
 import { TimelockInfo } from "src/types";
