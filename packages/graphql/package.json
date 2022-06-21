@@ -19,7 +19,15 @@
     "watch": "parcel watch",
     "build:lib": "parcel build",
     "build:cli": "ttsc src/bin/elf-graphql.ts src/codegen/schemaLoader.ts",
-    "build": "npm run build:lib && npm run build:cli"
+    "build": "npm run build:lib && npm run build:cli",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@envelop/core": "^2.3.2",
@@ -44,9 +52,13 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.6.5",
+    "@elementfi/eslint-config": "*",
     "@types/node": "^17.0.42",
     "@types/yargs": "^17.0.10",
+    "eslint": "^7.32.0",
     "graphql": "^16.5.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "parcel": "^2.6.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",

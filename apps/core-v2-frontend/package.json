@@ -54,13 +54,16 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
+    "@elementfi/eslint-config": "*",
     "@types/jest": "^26.0.24",
     "babel-loader": "^8.2.5",
     "cross-env": "^7.0.3",
+    "eslint": "^7.32.0",
+    "husky": "^7.0.4",
     "jest": "^26.6.3",
     "jest-css-modules-transform": "^4.3.0",
     "jest-environment-jsdom": "^26.6.2",
-    "lint-staged": "^12.3.5",
+    "lint-staged": "^12.3.7",
     "prettier": "^2.5.1",
     "prettier-plugin-tailwindcss": "^0.1.8",
     "ts-jest": "^26.5.6",
@@ -74,7 +77,15 @@
     "build:tailwind": "npx tailwindcss build -i styles/globals.css -o src/tailwind.output.css",
     "dev": "next dev",
     "dev-goerli": "cross-env NEXT_PUBLIC_CHAIN_NAME=goerli next dev",
-    "start": "next start"
+    "start": "next start",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   },
   "version": "0.1.0"
 }
