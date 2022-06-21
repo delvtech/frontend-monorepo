@@ -86,7 +86,6 @@
     "jest": "^26.6.3",
     "jest-css-modules-transform": "^4.3.0",
     "jest-environment-jsdom": "^26.6.2",
-    "lint-staged": "^12.3.5",
     "merkletreejs": "^0.2.31",
     "prettier": "^2.5.1",
     "prettier-plugin-tailwindcss": "^0.1.8",
