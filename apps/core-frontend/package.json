@@ -109,6 +109,7 @@
     "warning": "^4.0.3"
   },
   "devDependencies": {
+    "@elementfi/eslint-config": "*",
     "@jest/types": "^27.4.2",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/dom": "^8.11.1",
@@ -116,8 +117,12 @@
     "@typechain/ethers-v5": "^7.2.0",
     "@types/d3-format": "^3.0.1",
     "@types/d3-time-format": "^4.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-tailwindcss": "^3.4.4",
+    "husky": "^7.0.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
+    "lint-staged": "^12.3.7",
     "react-test-renderer": "^17.0.2",
     "ts-node": "^10.4.0",
     "ttag-cli": "^1.9.3",
@@ -156,7 +161,15 @@
     "update:language": "bash ./scripts/update-language.sh",
     "vercel-build-check": "bash ./scripts/vercel-build-check.sh",
     "typecheck": "node_modules/typescript/bin/tsc --noEmit",
-    "typecheck:watch": "node_modules/typescript/bin/tsc --noEmit --watch"
+    "typecheck:watch": "node_modules/typescript/bin/tsc --noEmit --watch",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
   },
   "version": "0.1.0"
 }

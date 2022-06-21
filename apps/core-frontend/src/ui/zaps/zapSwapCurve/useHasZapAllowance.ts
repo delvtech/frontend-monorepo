@@ -1,10 +1,6 @@
 import { ERC20, ERC20Permit } from "@elementfi/core-typechain/dist/libraries";
 import { TokenInfo } from "@elementfi/core-tokenlist";
-import {
-  CryptoAsset,
-  CryptoAssetType,
-  Erc20CryptoAsset,
-} from "elf/crypto/CryptoAsset";
+import { CryptoAssetType, Erc20CryptoAsset } from "elf/crypto/CryptoAsset";
 import { getCryptoAssetForToken } from "elf/crypto/getCryptoAssetForToken";
 import { ZapSwapCurveAddress } from "elf/zaps/zapSwapCurve/addresses";
 import { parseUnits } from "ethers/lib/utils";
@@ -26,10 +22,14 @@ export function useHasZapAllowance(
 
   const result = useTokenAllowance(contract, account, ZapSwapCurveAddress);
 
-  if (inputAsset.type === CryptoAssetType.ETHEREUM) return true;
+  if (inputAsset.type === CryptoAssetType.ETHEREUM) {
+    return true;
+  }
 
   const { data: allowance } = result;
-  if (!allowance || amountIn === "" || amountIn === "0") return false;
+  if (!allowance || amountIn === "" || amountIn === "0") {
+    return false;
+  }
 
   const amountInBn = parseUnits(amountIn, inputToken.decimals);
 

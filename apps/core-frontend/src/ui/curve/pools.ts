@@ -174,10 +174,10 @@ export function useCurveLpTokenPrice(
 
   const isPool1 =
     !["crv3crypto", "crvTricrypto"].includes(curveLpToken.symbol) &&
-    curveLpToken.extensions.poolAssets.length == 2;
+    curveLpToken.extensions.poolAssets.length === 2;
   const isPool2 =
     !["crv3crypto", "crvTricrypto"].includes(curveLpToken.symbol) &&
-    curveLpToken.extensions.poolAssets.length == 3;
+    curveLpToken.extensions.poolAssets.length === 3;
   const isPool3 = ["crv3crypto", "crvTricrypto"].includes(curveLpToken.symbol);
 
   const priceWhenCurvePool1 = useSmartContractReadCall(
@@ -220,7 +220,11 @@ export function useCurveLpTokenPrice(
     },
   );
 
-  if (isPool1) return priceWhenCurvePool1;
-  else if (isPool2) return priceWhenCurvePool2;
-  else return priceWhenCurvePool3;
+  if (isPool1) {
+    return priceWhenCurvePool1;
+  } else if (isPool2) {
+    return priceWhenCurvePool2;
+  } else {
+    return priceWhenCurvePool3;
+  }
 }

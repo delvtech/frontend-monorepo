@@ -82,13 +82,14 @@ export function getZapSwapCurvePath(
     .map(({ address }) => address)
     .includes(curvePoolToken.address);
 
-  if (baseCurvePoolTokensContainsToken)
+  if (baseCurvePoolTokensContainsToken) {
     return {
       kind: ZapSwapCurvePathKind.SingleStep,
       curvePoolToken,
       principalToken,
       baseToken,
     };
+  }
 
   const metaToken = baseCurvePoolTokens
     .filter(isCurveLpToken)

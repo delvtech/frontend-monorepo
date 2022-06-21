@@ -27,7 +27,11 @@ test.skip("Stored value is provided when a pref already exists", () => {
 });
 
 test.skip("Updating the pref triggers a rerender correctly", async () => {
-  const { findByText, queryByText, getByRole } = renderTestComponent();
+  const {
+    findByText: unusedFindByText,
+    queryByText: unusedQueryByText,
+    getByRole: unusedGetByRole,
+  } = renderTestComponent();
   expect(await screen.findByText("default value")).toBeVisible();
 
   userEvent.click(screen.getByRole("button"));

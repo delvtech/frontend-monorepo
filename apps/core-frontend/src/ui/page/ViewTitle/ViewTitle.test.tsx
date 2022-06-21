@@ -7,7 +7,7 @@ import { createQueryClient } from "elf/queryClient";
 
 test("should render normally", async () => {
   const queryClient = createQueryClient();
-  const { getByText } = await renderWithClient(
+  const { getByText: unusedGetByText } = await renderWithClient(
     queryClient,
     <ViewTitle title="sample title" subtitle="sample subtitle" />,
   );

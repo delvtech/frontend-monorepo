@@ -30,7 +30,7 @@ export const TermsBanner = (): ReactElement => {
 
   return (
     <div className="fixed bottom-0 z-10 mb-48 h-24 w-full sm:mb-24">
-      <div className="m-auto mb-4 ml-4 mr-4 flex max-w-3xl flex-col items-center justify-center rounded-lg border-2 border-white bg-gray-700 p-2 sm:m-auto sm:h-12 sm:min-w-min sm:flex-row sm:p-10">
+      <div className="m-auto mx-4 mb-4 flex max-w-3xl flex-col items-center justify-center rounded-lg border-2 border-white bg-gray-700 p-2 sm:m-auto sm:h-12 sm:min-w-min sm:flex-row sm:p-10">
         <ElementMinLogo
           className="mt-6 -ml-12 hidden sm:block"
           height={110}
@@ -44,7 +44,7 @@ export const TermsBanner = (): ReactElement => {
             setAcceptedTOS();
             setOpen(false);
           }}
-          className="whitespace-no-wrap mt-2 mb-2 cursor-pointer rounded-3xl bg-blue-500 p-3 text-xs font-bold text-white hover:bg-blue-600 sm:mt-0 sm:mb-0 sm:mr-4"
+          className="whitespace-no-wrap my-2 cursor-pointer rounded-3xl bg-blue-500 p-3 text-xs font-bold text-white hover:bg-blue-600 sm:my-0 sm:mr-4"
         >
           {t`Accept Terms`}
         </button>
