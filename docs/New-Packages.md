@@ -3,7 +3,7 @@
 - [Adding New Package](#adding-new-packages)
   - [Motivation](#motivation)
   - [Migrating an Existing Repository](#migrating-an-existing-repository)
-  - [Creating a new package from scratch](#fromscratch)
+  - [Creating a New Package From Scratch](#creating-a-new-package-from-scratch)
     - [**`Adding directories`**](#adding-directories)
     - [**`Creating the package.json`**](#creating-the-packagejson)
     - [**`Adding linting`**](#adding-linting)
@@ -26,7 +26,7 @@ create more focused packages.
 
 TODO: fill this out
 
-## From Scratch
+## Creating a New Package From Scratch
 
 If you want to create a new package from scratch the first thing you need to do is create a new
 folder under packages/:
@@ -209,9 +209,9 @@ You should now have a package.json in packages/new-package that looks like:
   },
   "devDependencies": {
     "@elementfi/eslint-config": "*",
-    "eslint": "^7",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.2",
+    "eslint": "^7.32.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "parcel": "^2.6.0"
   }
 }
