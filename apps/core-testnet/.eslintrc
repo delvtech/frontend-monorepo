@@ -1,0 +1,8 @@
+{
+  "extends": [
+    "@elementfi/eslint-config"
+  ],
+  "rules": {
+    "no-console": "off" // Testnet projects run in the terminal and are allowed to use console.log for showing output things
+  }
+}
