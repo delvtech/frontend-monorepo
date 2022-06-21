@@ -1,6 +1,5 @@
 import { Fragment, ReactElement } from "react";
 import { formatBalance } from "src/base/formatBalance";
-import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import classNames from "classnames";
 import { Popover, Transition } from "@headlessui/react";
@@ -15,6 +14,7 @@ import { Provider } from "@ethersproject/providers";
 import { formatWalletAddress } from "src/base/formatWalletAddress";
 import { getGSCCandidateUrl } from "src/integrations/commonwealth";
 import { useENSName } from "src/ui/ethereum/useEnsName";
+import { Delegate } from "@elementfi/council-delegates";
 
 interface DelegateProfileRowProps {
   provider?: Provider;

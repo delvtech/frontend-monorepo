@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
-import { delegates } from "src/elf-council-delegates/delegates";
+import { delegates } from "src/delegates/delegates";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";

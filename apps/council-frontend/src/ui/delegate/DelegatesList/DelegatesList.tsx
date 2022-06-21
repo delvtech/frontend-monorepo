@@ -3,7 +3,7 @@ import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import H2 from "src/ui/base/H2/H2";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
-import { delegates } from "src/elf-council-delegates/delegates";
+import { delegates } from "src/delegates/delegates";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { Overrides } from "ethers";

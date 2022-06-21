@@ -1,4 +1,5 @@
-import { Delegate, delegates } from "src/elf-council-delegates/delegates";
+import { Delegate } from "@elementfi/council-delegates";
+import { delegates } from "src/delegates/delegates";
 
 export function getFeaturedDelegate(
   delegateAddress: string,

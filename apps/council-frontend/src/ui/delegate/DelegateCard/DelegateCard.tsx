@@ -1,6 +1,6 @@
 import { ReactElement, useCallback, useEffect } from "react";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { delegates } from "src/elf-council-delegates/delegates";
+import { delegates } from "src/delegates/delegates";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
 import classNames from "classnames";

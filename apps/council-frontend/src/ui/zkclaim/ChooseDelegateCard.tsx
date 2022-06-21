@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
-import { delegates } from "src/elf-council-delegates/delegates";
+import { delegates } from "src/delegates/delegates";
 import TextInput from "src/ui/base/Input/TextInput";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";

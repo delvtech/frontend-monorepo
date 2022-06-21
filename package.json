@@ -6,8 +6,9 @@
     "node": "^14"
   },
   "eslintIgnore": [
-    "*/*/dist",
-    "*/*/compiled",
+    "*/**/dist",
+    "*/**/compiled",
+    "*/**/artifacts",
     "*.generated.*"
   ],
   "scripts": {

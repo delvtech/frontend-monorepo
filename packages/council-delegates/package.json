@@ -1,0 +1,37 @@
+{
+  "name": "@elementfi/council-delegates",
+  "version": "1.0.0",
+  "description": "Source of truth for featured delegates in the council ui",
+  "license": "MIT",
+  "source": "src/index.ts",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'",
+    "watch": "parcel watch",
+    "build": "parcel build"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
+  },
+  "alias": {
+    "src": "./src"
+  },
+  "dependencies": {
+    "typescript": "^4.7.3"
+  },
+  "devDependencies": {
+    "@elementfi/eslint-config": "*",
+    "eslint": "^7",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.2",
+    "parcel": "^2.6.0"
+  }
+}
