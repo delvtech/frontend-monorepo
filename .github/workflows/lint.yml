@@ -12,5 +12,5 @@ jobs:
         with:
           node-version: "14.x"
       - run: yarn
-      - run: yarn run eslint:check
+      - run: yarn workspaces run lint
       - run: yarn run stylelint:check
