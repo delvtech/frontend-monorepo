@@ -5,22 +5,27 @@
   "scripts": {
     "prepare": "husky install",
     "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'",
+    "prettier:w": "prettier --write '**/*.{js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json,md}": [
-      "eslint --fix"
+    "**/*.{css,graphql,js,jsx,ts,tsx,json,md}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@elementfi/eslint-config": "*",
+    "@elementfi/prettier-config": "*",
     "d3-time-format": "^4.1.0",
     "eslint": "^7.32.0",
     "ethers": "^5.6.6",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
+    "prettier": "^2.6.2",
     "react": "^17.0.2",
     "react-query": "^3.39.0",
     "ts-money": "^0.4.7"
