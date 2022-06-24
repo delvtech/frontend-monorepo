@@ -7,7 +7,7 @@ import H2 from "src/ui/base/H2/H2";
 
 export function NoProposalsList(props: { activeTabId: TabId }): ReactElement {
   return (
-    <div className="text-blueGrey my-6 flex flex-1 flex-col items-center">
+    <div className="my-6 flex flex-1 flex-col items-center text-blueGrey">
       <EmptySpaceFace className="-mr-[27px] w-[90%] max-w-[327px]" />
       <p className="mt-4 text-xl font-semibold leading-6">{t`no ${props.activeTabId} proposals`}</p>
     </div>

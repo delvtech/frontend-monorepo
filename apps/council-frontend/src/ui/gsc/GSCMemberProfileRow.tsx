@@ -60,11 +60,11 @@ export function GSCMemberProfileRow(
     >
       {/* Name */}
       <div className="col-span-6 mr-4 items-start truncate lg:col-span-4">
-        <div className="text-principalRoyalBlue flex items-center font-bold">
+        <div className="flex items-center font-bold text-principalRoyalBlue">
           <WalletJazzicon
             account={delegate.address}
             size={20}
-            className="bg-principalRoyalBlue mr-2 h-5 w-5 rounded-xl"
+            className="mr-2 h-5 w-5 rounded-xl bg-principalRoyalBlue"
           />
           {delegate.commonwealthPostedFromAddress ? (
             <a

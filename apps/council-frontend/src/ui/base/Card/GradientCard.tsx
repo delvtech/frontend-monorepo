@@ -14,7 +14,7 @@ export default function GradientCard(props: GradientCardProps): ReactElement {
   return (
     <div
       className={classNames(
-        "from-principalRoyalBlue via-principalRoyalBlue to-principalBlue overflow-hidden rounded-xl bg-gradient-to-br shadow",
+        "overflow-hidden rounded-xl bg-gradient-to-br from-principalRoyalBlue via-principalRoyalBlue to-principalBlue shadow",
         className,
       )}
       style={style}

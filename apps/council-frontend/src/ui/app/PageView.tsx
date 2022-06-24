@@ -35,7 +35,7 @@ export default function PageView(props: PageViewProps): ReactElement {
     <Fragment>
       <div
         className={classNames(
-          "bg-appBackgroundLight flex h-full w-full justify-between",
+          "flex h-full w-full justify-between bg-appBackgroundLight",
           {
             "md:pl-60": showSidebar,
           },

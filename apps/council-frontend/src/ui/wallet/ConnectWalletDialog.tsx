@@ -63,13 +63,13 @@ export function ConnectWalletDialog({
         data-testid="connect-wallet-buttons"
         className="flex flex-col justify-center overflow-auto p-2"
       >
-        <H3 className="text-brandDarkBlue-dark mb-8 text-center">{t`Select Wallet`}</H3>
+        <H3 className="mb-8 text-center text-brandDarkBlue-dark">{t`Select Wallet`}</H3>
         <div className="grid grid-cols-3 gap-2">
           <Button
             size={ButtonSize.AUTO}
             variant={ButtonVariant.MINIMAL}
             onClick={handleConnectToMetaMask}
-            className="hover:bg-yieldLightBlue grid w-full place-items-center shadow-none hover:bg-opacity-100 hover:text-white"
+            className="grid w-full place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
           >
             <div className="grid place-items-center">
               <MetaMaskIcon className="h-16 w-16" />
@@ -80,7 +80,7 @@ export function ConnectWalletDialog({
             size={ButtonSize.AUTO}
             variant={ButtonVariant.MINIMAL}
             onClick={handleConnectToWalletConnect}
-            className="hover:bg-yieldLightBlue grid w-full place-items-center shadow-none hover:bg-opacity-100 hover:text-white"
+            className="grid w-full place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
           >
             <div className="grid h-full w-full place-items-center">
               <WalletConnectIcon className="h-16 w-16" />
@@ -91,7 +91,7 @@ export function ConnectWalletDialog({
             size={ButtonSize.AUTO}
             variant={ButtonVariant.MINIMAL}
             onClick={handleConnectToCoinbase}
-            className="hover:bg-yieldLightBlue grid w-full place-items-center shadow-none hover:bg-opacity-100 hover:text-white"
+            className="grid w-full place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
           >
             <div className="grid h-full w-full place-items-center">
               <CoinbaseIcon className="h-16 w-16" />
@@ -100,7 +100,7 @@ export function ConnectWalletDialog({
           </Button>
         </div>
         <div className="mt-12">
-          <p className="text-principalRoyalBlue text-center">
+          <p className="text-center text-principalRoyalBlue">
             {t`Note: Some connectors can only disconnect wallets from their app. Some connectors may also cause a page refresh.`}
           </p>
         </div>

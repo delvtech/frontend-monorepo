@@ -12,7 +12,7 @@ export function InputValidationIcon({
   invalidToolipContent,
 }: InputValidationIconProps): ReactElement {
   if (isValid) {
-    return <CheckCircleIcon className="text-statusGreen h-8 w-8" />;
+    return <CheckCircleIcon className="h-8 w-8 text-statusGreen" />;
   }
 
   return (
@@ -20,7 +20,7 @@ export function InputValidationIcon({
       isOpen
       content={<span className="text-deepRed">{invalidToolipContent}</span>}
     >
-      <XCircleIcon className="text-deepRed h-8 w-8" />
+      <XCircleIcon className="h-8 w-8 text-deepRed" />
     </Tooltip>
   );
 }

@@ -55,7 +55,7 @@ export default function Header(): ReactElement {
             {/* full screen menu for smaller screens */}
             <PopoverNavPanel
               ref={setPopperElement}
-              className="bg-principalRoyalBlue !fixed !left-0 !bottom-[72px] flex !transform-none flex-col justify-center p-[10vw] text-center shadow-[0_4px_4px_#fff] lg:hidden"
+              className="!fixed !left-0 !bottom-[72px] flex !transform-none flex-col justify-center bg-principalRoyalBlue p-[10vw] text-center shadow-[0_4px_4px_#fff] lg:hidden"
               style={menuPopperStyles}
               popperProps={menuPopperProps}
               open={open}
@@ -63,7 +63,7 @@ export default function Header(): ReactElement {
             {/* small menu */}
             <PopoverNavPanel
               ref={setPopperElement}
-              className="bg-principalRoyalBlue -mt-2 -mr-2 hidden flex-col rounded-2xl px-9 pt-2 pb-9 shadow-[0_4px_4px_#fff] lg:flex"
+              className="-mt-2 -mr-2 hidden flex-col rounded-2xl bg-principalRoyalBlue px-9 pt-2 pb-9 shadow-[0_4px_4px_#fff] lg:flex"
               style={menuPopperStyles}
               popperProps={menuPopperProps}
               open={open}
@@ -130,7 +130,7 @@ function MenuLink({
     <li>
       <a
         href={href}
-        className="hover:text-principalBlue focus:text-principalBlue block py-4 text-xl leading-6 lg:py-2"
+        className="block py-4 text-xl leading-6 hover:text-principalBlue focus:text-principalBlue lg:py-2"
       >
         {children}
       </a>

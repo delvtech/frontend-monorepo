@@ -39,15 +39,15 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
     <div
       className={classNames(
         className,
-        "bg-hackerSky flex flex-col rounded-xl p-3",
+        "flex flex-col rounded-xl bg-hackerSky p-3",
       )}
     >
       <div className="flex flex-col">
-        <div className="text-principalRoyalBlue mb-1 flex  items-center">
+        <div className="mb-1 flex items-center  text-principalRoyalBlue">
           <WalletJazzicon
             account={currentDelegateAddress}
             size={20}
-            className="bg-principalRoyalBlue mr-1.5 inline-block h-5 w-5 rounded-xl"
+            className="mr-1.5 inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue"
           />
           <div className="flex items-center gap-2">
             <span className="max-w-max leading-4">

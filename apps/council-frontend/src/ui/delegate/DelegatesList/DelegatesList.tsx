@@ -56,7 +56,7 @@ function DelegatesList({
       <div className="mb-4 grid grid-cols-10 items-center pr-8">
         {/* Title */}
         <div className="col-span-7 lg:col-span-4">
-          <H2 className="text-principalRoyalBlue tracking-wide">
+          <H2 className="tracking-wide text-principalRoyalBlue">
             <div className="mr-4 text-2xl leading-7 lg:w-max">{t`Explore Featured Delegates`}</div>
           </H2>
         </div>
@@ -83,7 +83,7 @@ function DelegatesList({
       {/* List of delegates */}
       <div>
         {/* Header */}
-        <div className="text-principalRoyalBlue mb-4 grid grid-cols-10 items-center border-b-2 px-4 pb-2 font-bold">
+        <div className="mb-4 grid grid-cols-10 items-center border-b-2 px-4 pb-2 font-bold text-principalRoyalBlue">
           {/* Name */}
           <span className="col-span-7 hidden lg:col-span-4 lg:block">{t`Name`}</span>
           {/* Name & Vote Power */}

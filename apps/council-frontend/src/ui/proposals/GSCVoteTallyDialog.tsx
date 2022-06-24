@@ -32,7 +32,7 @@ export const GSCVoteTallyDialog = ({
   return (
     <Dialog onClose={onClose} isOpen={isOpen} className="min-w-fit">
       <div className="flex min-w-full flex-col items-center space-y-4 p-4">
-        <div className="text-principalRoyalBlue text-xl font-bold">
+        <div className="text-xl font-bold text-principalRoyalBlue">
           {t`Voting List`}
         </div>
         {/* Button List */}
@@ -87,14 +87,14 @@ export function VoterRow(props: GSCMemberProfileRowProps): ReactElement {
   );
 
   return (
-    <div className="bg-hackerSky flex w-full rounded-xl p-6">
+    <div className="flex w-full rounded-xl bg-hackerSky p-6">
       {/* Name */}
       <div className="mr-4 items-start ">
-        <div className="text-principalRoyalBlue flex items-center font-bold">
+        <div className="flex items-center font-bold text-principalRoyalBlue">
           <WalletJazzicon
             account={delegate.address}
             size={20}
-            className="bg-principalRoyalBlue mr-2 h-5 w-5 rounded-xl"
+            className="mr-2 h-5 w-5 rounded-xl bg-principalRoyalBlue"
           />
           {delegate.commonwealthPostedFromAddress ? (
             <a

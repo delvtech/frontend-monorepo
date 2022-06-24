@@ -62,7 +62,7 @@ export function BallotIcon({
 
   if (votingPower && castBallot === Ballot.MAYBE) {
     return (
-      <div className="text-principalRoyalBlue h-4 w-4">
+      <div className="h-4 w-4 text-principalRoyalBlue">
         <Tooltip content={t`Voted abstain`}>
           <XCircleIcon height="18" />
         </Tooltip>

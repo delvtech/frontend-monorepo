@@ -16,7 +16,7 @@ export default function LandingPage(): ReactElement {
   return (
     // outer element is set to overflow: hidden to hide the overflowing
     // background glows
-    <div className="bg-principalRoyalBlue absolute inset-0 overflow-hidden text-white">
+    <div className="absolute inset-0 overflow-hidden bg-principalRoyalBlue text-white">
       <Head>
         <title>{t`Welcome | Element Council Protocol`}</title>
         {/* TODO: Update to a favicon with a transparent background */}
@@ -35,8 +35,8 @@ export default function LandingPage(): ReactElement {
             {/* main left column */}
             <div className="flex-1 basis-[60%]">
               <div className="mb-10 mt-4 flex flex-col items-center text-center sm:mb-4 sm:flex-row-reverse sm:text-left lg:items-start">
-                <SparkleIcon className="fill-hackerSky ml-8 mr-5 lg:flex-1 xl:mr-0" />
-                <h1 className="text-hackerSky flex-1 text-5xl font-semibold leading-tight sm:text-7xl">{t`Introducing Council`}</h1>
+                <SparkleIcon className="ml-8 mr-5 fill-hackerSky lg:flex-1 xl:mr-0" />
+                <h1 className="flex-1 text-5xl font-semibold leading-tight text-hackerSky sm:text-7xl">{t`Introducing Council`}</h1>
               </div>
               <p className="mb-8 text-2xl leading-10">{t`Welcome to Element DAO's v0 Governance System. Explore below to learn more about the launch of the DAO.`}</p>
 
@@ -69,7 +69,7 @@ export default function LandingPage(): ReactElement {
 
                 {/* large card for large screens */}
                 <div className="mb-5 hidden w-full flex-col items-center rounded-2xl bg-white p-9 pt-11 xl:flex">
-                  <h2 className="from-principalBlue to-principalRoyalBlue mb-24 bg-gradient-to-b bg-clip-text text-left text-3xl font-semibold leading-10 text-transparent">{t`Explore Council Resources`}</h2>
+                  <h2 className="mb-24 bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-left text-3xl font-semibold leading-10 text-transparent">{t`Explore Council Resources`}</h2>
                   <CouncilLogo className="mb-16 h-auto w-56" />
                 </div>
 
@@ -154,11 +154,11 @@ function ClaimLink({
 }>) {
   const wrappedChildren = (
     <>
-      <span className="from-principalBlue to-principalRoyalBlue bg-gradient-to-b bg-clip-text text-2xl text-transparent">
+      <span className="bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-2xl text-transparent">
         {children}
       </span>
       <div className="ml-3 flex h-8 w-8 items-center justify-center">
-        <ArrowRightIcon className="fill-principalRoyalBlue h-5 w-5" />
+        <ArrowRightIcon className="h-5 w-5 fill-principalRoyalBlue" />
       </div>
     </>
   );

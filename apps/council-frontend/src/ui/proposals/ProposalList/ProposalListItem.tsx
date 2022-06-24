@@ -72,7 +72,7 @@ export function ProposalListItem({
           />
           <div
             className={classNames(
-              "text-principalRoyalBlue flex h-full items-center justify-between space-x-4",
+              "flex h-full items-center justify-between space-x-4 text-principalRoyalBlue",
             )}
           >
             {currentBlockNumber && (
