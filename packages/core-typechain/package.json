@@ -4,12 +4,14 @@
   "description": "",
   "dependencies": {
     "@elementfi/eslint-config": "*",
+    "@elementfi/prettier-config": "*",
+    "eslint": "^7.32.0",
     "eslint-config-next": "^12.1.0",
     "eslint-plugin-jest-dom": "^4.0.1",
-    "eslint": "^7.32.0",
     "ethers": "^5.6.6",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
+    "prettier": "^2.6.2",
     "stylelint": "^14.8.1",
     "tsc": "^2.0.4"
   },
@@ -40,12 +42,15 @@
     "build": "npm run build-contracts && npm run build-typescript && npm run copy-dist-files",
     "prepublish": "npm run build",
     "prepare": "husky install",
-    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+    "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json,md}": [
-      "eslint --fix"
+    "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }
