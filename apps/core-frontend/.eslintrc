@@ -3,6 +3,9 @@
     "plugin:tailwindcss/recommended",
     "@elementfi/eslint-config"
   ],
+  "plugins": [
+    "tailwindcss"
+  ],
   "rules": {
     "tailwindcss/no-custom-classname": "off" // core-frontend runs tailwind 1, and will have older classnames incompatible with this rule
   }

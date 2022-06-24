@@ -3,6 +3,9 @@
     "plugin:tailwindcss/recommended",
     "@elementfi/eslint-config"
   ],
+  "plugins": [
+    "tailwindcss"
+  ],
   "overrides": [
     // js files in the root dir can use `const ... = require(...)` 
     {
