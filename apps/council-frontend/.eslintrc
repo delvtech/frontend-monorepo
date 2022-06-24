@@ -4,6 +4,10 @@
     "plugin:@next/next/recommended",
     "@elementfi/eslint-config"
   ],
+  "plugins": [
+    "tailwindcss",
+    "@next/next"
+  ],
   "overrides": [
     // js files in the root dir can use `const ... = require(...)` 
     {

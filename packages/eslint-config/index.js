@@ -16,7 +16,7 @@ module.exports = {
      */
     "prettier",
   ],
-  plugins: ["tailwindcss", "jsx-a11y", "testing-library", "jest-dom"],
+  plugins: ["jsx-a11y", "testing-library", "jest-dom"],
   overrides: [
     {
       files: ["**/*.ts", "**/*.tsx"],
