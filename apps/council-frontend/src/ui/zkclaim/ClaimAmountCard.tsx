@@ -28,12 +28,12 @@ export default function ClaimAmountCard({
         className,
       )}
     >
-      <p className="text-principalRoyalBlue mb-1 text-lg font-bold text-opacity-60">
+      <p className="mb-1 text-lg font-bold text-principalRoyalBlue text-opacity-60">
         {label}
       </p>
       <div className="flex items-center justify-center gap-3">
         <ElementIconCircle className="bg-paleLily" size={IconSize.LARGE} />
-        <p className="text-principalRoyalBlue text-5xl font-semibold">
+        <p className="text-5xl font-semibold text-principalRoyalBlue">
           {t`${commify(claimableAmount)} ELFI`}
         </p>
       </div>

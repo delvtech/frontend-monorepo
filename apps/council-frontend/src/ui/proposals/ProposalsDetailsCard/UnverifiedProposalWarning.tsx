@@ -6,7 +6,7 @@ export function UnverifiedProposalWarning(): ReactElement {
   return (
     <div className="grid h-full place-items-center py-2 px-4">
       <div className="flex flex-col items-center justify-center">
-        <ShieldExclamationIcon className="text-goldYellow mb-2 w-10" />
+        <ShieldExclamationIcon className="mb-2 w-10 text-goldYellow" />
         <p className="w-4/5 text-center font-bold leading-5 text-white">
           <span className="mb-2 block">{t`WARNING: This proposal has not been${"\u00A0"}verified!`}</span>
           <span className="block">

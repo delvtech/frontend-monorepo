@@ -37,7 +37,7 @@ export function OverviewPage({
       </Head>
 
       <div className="px-8 py-1">
-        <H1 className="text-principalRoyalBlue text-center">
+        <H1 className="text-center text-principalRoyalBlue">
           {t`Governance Overview`}
         </H1>
       </div>
@@ -71,13 +71,13 @@ const faqDocsLink = (
 function FAQ() {
   return (
     <Card className="w-full shadow-md xl:max-w-[512px]">
-      <span className="text-principalRoyalBlue text-xl font-bold tracking-widest">{t`FAQ`}</span>
+      <span className="text-xl font-bold tracking-widest text-principalRoyalBlue">{t`FAQ`}</span>
       <div className="w-full pt-4">
         <div className="w-full rounded-2xl bg-white">
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark flex w-full justify-between rounded-lg p-4 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`What is Element Council?`}</span>
 
                   <ChevronDownIcon
@@ -99,7 +99,7 @@ function FAQ() {
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark flex w-full justify-between rounded-lg p-4 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`What is a voting vault?`}</span>
                   <ChevronDownIcon
                     className={classNames(
@@ -127,7 +127,7 @@ function FAQ() {
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark flex w-full justify-between rounded-lg p-4 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`How does delegated voting work?`}</span>
                   <ChevronDownIcon
                     className={classNames(
@@ -147,7 +147,7 @@ function FAQ() {
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark flex w-full justify-between rounded-lg p-4 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`Who are the GSC (Governance Steering Council)?`}</span>
                   <ChevronDownIcon
                     className={classNames(

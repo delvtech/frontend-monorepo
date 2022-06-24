@@ -57,11 +57,11 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         {/* Name */}
         <div className="col-span-6 mr-4 items-start truncate text-left lg:col-span-4">
           <div className="flex flex-col">
-            <div className="text-principalRoyalBlue flex items-center font-bold">
+            <div className="flex items-center font-bold text-principalRoyalBlue">
               <WalletJazzicon
                 account={delegate.address}
                 size={20}
-                className="bg-principalRoyalBlue mr-2 h-5 w-5 rounded-xl"
+                className="mr-2 h-5 w-5 rounded-xl bg-principalRoyalBlue"
               />
               {delegate.commonwealthPostedFromAddress ? (
                 <a
@@ -145,7 +145,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
           leaveTo="opacity-0 sm:scale-95"
         >
           <Popover.Panel
-            className="bg-hackerSky fixed inset-0 z-20 box-content sm:inset-[initial] sm:top-[50%] sm:left-[50%] sm:w-[400px] sm:translate-x-[-50%] sm:translate-y-[-50%] sm:rounded-xl md:w-[700px]
+            className="fixed inset-0 z-20 box-content bg-hackerSky sm:inset-[initial] sm:top-[50%] sm:left-[50%] sm:w-[400px] sm:translate-x-[-50%] sm:translate-y-[-50%] sm:rounded-xl md:w-[700px]
           lg:absolute lg:inset-x-0 lg:top-0 lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0"
           >
             {({ close }) => (

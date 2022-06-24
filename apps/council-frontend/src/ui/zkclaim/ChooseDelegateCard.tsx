@@ -174,7 +174,7 @@ export default function ChooseDelegateCard({
                 error={!!customAddress && !isValidSelectedAddress}
                 containerClassName="flex-1"
                 className={classNames(
-                  "text-principalRoyalBlue placeholder-principalRoyalBlue mb-4 h-12 flex-1 text-left",
+                  "mb-4 h-12 flex-1 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
                   {
                     "pr-12": !!customAddress && isValidSelectedAddress,
                   },

@@ -205,7 +205,7 @@ export default function HashSlider({
             aria-valuetext={hash}
             tabIndex={0}
             ref={trackerRef}
-            className="from-principalBlue to-principalRoyalBlue group absolute flex h-8 w-8 cursor-grab items-center rounded-full bg-gradient-to-b shadow active:cursor-grabbing"
+            className="group absolute flex h-8 w-8 cursor-grab items-center rounded-full bg-gradient-to-b from-principalBlue to-principalRoyalBlue shadow active:cursor-grabbing"
             style={{
               left: trackerCSSLeft,
             }}
@@ -223,7 +223,7 @@ export default function HashSlider({
               )}
             >
               {[...Array(8)].map((_, i) => (
-                <RightArrow key={i} className="stroke-blueGrey rotate-180" />
+                <RightArrow key={i} className="rotate-180 stroke-blueGrey" />
               ))}
             </div>
             <Tooltip
@@ -268,7 +268,7 @@ export default function HashSlider({
             {/* gradient bg */}
             <div
               className={classNames(
-                "from-deepRed via-goldYellow to-topaz absolute inset-0 bg-gradient-to-r transition-transform duration-700 ease-in",
+                "absolute inset-0 bg-gradient-to-r from-deepRed via-goldYellow to-topaz transition-transform duration-700 ease-in",
                 progress === 100 && "-translate-x-full",
               )}
               style={{
@@ -278,7 +278,7 @@ export default function HashSlider({
             {/* green bg */}
             <div
               className={classNames(
-                "bg-topaz absolute inset-0 translate-x-full transition-transform duration-700 ease-in",
+                "absolute inset-0 translate-x-full bg-topaz transition-transform duration-700 ease-in",
                 progress === 100 && "!translate-x-0",
               )}
             ></div>

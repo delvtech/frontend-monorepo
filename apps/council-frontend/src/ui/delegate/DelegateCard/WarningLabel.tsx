@@ -14,7 +14,7 @@ function WarningLabel({
     <div
       className={classNames(
         className,
-        "bg-alertOrange flex items-center rounded-md text-sm font-bold leading-5 text-white",
+        "flex items-center rounded-md bg-alertOrange text-sm font-bold leading-5 text-white",
       )}
     >
       {children}

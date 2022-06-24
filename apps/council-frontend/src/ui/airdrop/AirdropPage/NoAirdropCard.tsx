@@ -12,7 +12,7 @@ import { jt, t } from "ttag";
 const elementIconInBodyText = (
   <ElementIconCircle
     key="element-icon-in-body-text"
-    className="bg-paleLily ml-0.5 mr-1 inline-block"
+    className="ml-0.5 mr-1 inline-block bg-paleLily"
     inline
     size={IconSize.MEDIUM}
   />
@@ -39,10 +39,10 @@ export function NoAirdropCard(): ReactElement {
             className="h-64 w-72 text-center shadow-[0_0_52px_rgba(143,216,231,.7)] md:w-96"
           >
             <div className="flex h-full w-full flex-col items-center justify-center p-6">
-              <div className="text-principalRoyalBlue mb-3 text-lg font-bold text-opacity-60">{t`Airdrop amount`}</div>
-              <div className="text-principalRoyalBlue flex justify-center gap-2 text-center text-5xl font-bold">
+              <div className="mb-3 text-lg font-bold text-principalRoyalBlue text-opacity-60">{t`Airdrop amount`}</div>
+              <div className="flex justify-center gap-2 text-center text-5xl font-bold text-principalRoyalBlue">
                 <ElementIconCircle
-                  className="bg-paleLily mr-2"
+                  className="mr-2 bg-paleLily"
                   size={IconSize.LARGE}
                 />
                 <span>0</span>

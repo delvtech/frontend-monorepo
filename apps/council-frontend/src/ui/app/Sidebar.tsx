@@ -69,7 +69,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               label={t`Overview`}
               router={router}
               icon={
-                <HomeIcon className="text-principalRoyalBlue h-4 w-4 shrink-0" />
+                <HomeIcon className="h-4 w-4 shrink-0 text-principalRoyalBlue" />
               }
             />
             <SidebarLink
@@ -77,7 +77,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               label={t`Proposals`}
               router={router}
               icon={
-                <PencilAltIcon className="text-principalRoyalBlue h-4 w-4 shrink-0" />
+                <PencilAltIcon className="h-4 w-4 shrink-0 text-principalRoyalBlue" />
               }
             />
             <SidebarLink
@@ -85,7 +85,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               label={t`Delegate`}
               router={router}
               icon={
-                <UserGroupIcon className="text-principalRoyalBlue h-4 w-4 shrink-0" />
+                <UserGroupIcon className="h-4 w-4 shrink-0 text-principalRoyalBlue" />
               }
             />
             <SidebarLink
@@ -93,7 +93,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               label={t`GSC`}
               router={router}
               icon={
-                <LibraryIcon className="text-principalRoyalBlue h-4 w-4 shrink-0" />
+                <LibraryIcon className="h-4 w-4 shrink-0 text-principalRoyalBlue" />
               }
             />
             <SidebarLinkExternal link={ElementUrl.FORUM} label={t`Forum`} />
@@ -154,7 +154,7 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
         <a className="hover:bg-blue-50 md:w-full">
           <div
             className={classNames(
-              "text-brandDarkBlue-dark flex cursor-pointer items-center justify-start gap-2 px-2 py-3 md:relative md:left-[50%] md:translate-x-[-25%]",
+              "flex cursor-pointer items-center justify-start gap-2 px-2 py-3 text-brandDarkBlue-dark md:relative md:left-[50%] md:translate-x-[-25%]",
               { "font-bold": isActive },
             )}
           >
@@ -177,8 +177,8 @@ function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
         rel="noreferrer"
         className=" hover:bg-blue-50 md:w-full"
       >
-        <div className="text-brandDarkBlue-dark flex cursor-pointer items-center justify-start gap-2 px-2 py-3 md:relative md:left-[50%] md:translate-x-[-25%]">
-          <ExternalLinkIcon className="text-principalRoyalBlue h-4 w-4 shrink-0" />
+        <div className="flex cursor-pointer items-center justify-start gap-2 px-2 py-3 text-brandDarkBlue-dark md:relative md:left-[50%] md:translate-x-[-25%]">
+          <ExternalLinkIcon className="h-4 w-4 shrink-0 text-principalRoyalBlue" />
           <p>{label}</p>
         </div>
       </a>

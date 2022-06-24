@@ -92,7 +92,7 @@ export function GSCOverviewSection(): ReactElement {
 
   return (
     <div className="w-full space-y-6">
-      <H1 className="text-principalRoyalBlue text-center">
+      <H1 className="text-center text-principalRoyalBlue">
         {t`Governance GSC Overview`}
       </H1>
 
@@ -128,7 +128,7 @@ export function GSCOverviewSection(): ReactElement {
               <Disclosure as="div">
                 {({ open }) => (
                   <>
-                    <Disclosure.Button className="bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark flex w-full justify-between rounded-lg p-4 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                    <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                       <span>{t`What makes someone eligible to join the GSC?`}</span>
 
                       <ChevronDownIcon
@@ -157,7 +157,7 @@ export function GSCOverviewSection(): ReactElement {
               <Disclosure as="div" className="mt-4">
                 {({ open }) => (
                   <>
-                    <Disclosure.Button className="bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark flex w-full justify-between rounded-lg p-4 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                    <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                       <span>{t`What are the day-to-day responsibilities of a GSC member?`}</span>
 
                       <ChevronDownIcon
@@ -187,7 +187,7 @@ export function GSCOverviewSection(): ReactElement {
               <Disclosure as="div" className="mt-4">
                 {({ open }) => (
                   <>
-                    <Disclosure.Button className="bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark flex w-full justify-between rounded-lg p-4 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                    <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                       <span>{t`How are GSC members removed and/or added?`}</span>
 
                       <ChevronDownIcon
@@ -268,7 +268,7 @@ export function GSCOverviewSection(): ReactElement {
                 </ul>
               </div>
             ) : (
-              <div className="text-principalRoyalBlue text-center font-bold">{t`No current GSC members.`}</div>
+              <div className="text-center font-bold text-principalRoyalBlue">{t`No current GSC members.`}</div>
             ))}
 
           {currentTab === TabOption.Rising &&

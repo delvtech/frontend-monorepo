@@ -27,7 +27,7 @@ export default function CallToActionCard<C extends ElementType>({
       )}
       {...cardProps}
     >
-      <span className="text-principalRoyalBlue mb-2 text-lg font-bold">
+      <span className="mb-2 text-lg font-bold text-principalRoyalBlue">
         {label}
       </span>
       <span>{icon}</span>

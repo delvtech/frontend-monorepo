@@ -93,14 +93,14 @@ function BallotDropdownItem(props: BallotDropdownItemProps) {
 
   return (
     <button
-      className="hover:bg-principalRoyalBlue flex w-[125px] items-center justify-between rounded px-3 py-2 hover:bg-opacity-20"
+      className="flex w-[125px] items-center justify-between rounded px-3 py-2 hover:bg-principalRoyalBlue hover:bg-opacity-20"
       onClick={handleSelectItem}
     >
-      <span className="text-principalRoyalBlue mr-2">{ballotLabel}</span>
+      <span className="mr-2 text-principalRoyalBlue">{ballotLabel}</span>
       {active ? (
-        <CheckCircleIcon height={25} className="text-principalRoyalBlue ml-3" />
+        <CheckCircleIcon height={25} className="ml-3 text-principalRoyalBlue" />
       ) : (
-        <div className="border-principalRoyalBlue mr-0.5 h-5 w-5 rounded-full border-2 bg-transparent"></div>
+        <div className="mr-0.5 h-5 w-5 rounded-full border-2 border-principalRoyalBlue bg-transparent"></div>
       )}
     </button>
   );

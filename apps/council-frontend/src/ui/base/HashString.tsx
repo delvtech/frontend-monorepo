@@ -117,7 +117,7 @@ export default function HashString({
 
           <span
             className={classNames(
-              "bg-topaz pointer-events-none absolute inset-0 m-px flex items-center justify-center gap-1 rounded-full text-white opacity-0 transition-opacity",
+              "pointer-events-none absolute inset-0 m-px flex items-center justify-center gap-1 rounded-full bg-topaz text-white opacity-0 transition-opacity",
               copied && "opacity-100",
             )}
           >
@@ -129,7 +129,7 @@ export default function HashString({
           <Button
             round
             variant={ButtonVariant.WHITE}
-            className="text-principalRoyalBlue flex gap-2"
+            className="flex gap-2 text-principalRoyalBlue"
             disabled={!value}
             onClick={handleCopyClick}
           >

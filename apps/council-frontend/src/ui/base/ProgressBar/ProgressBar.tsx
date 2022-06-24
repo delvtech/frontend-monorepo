@@ -32,7 +32,7 @@ export function ProgressBar(props: ProgressBarProps): ReactElement {
             left: `${barPosition}%`,
             top: "-50%",
           }}
-          className="bg-principalRoyalBlue absolute top-0 h-full rounded border border-white"
+          className="absolute top-0 h-full rounded border border-white bg-principalRoyalBlue"
         ></div>
       )}
     </div>
