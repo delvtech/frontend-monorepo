@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@elementfi/eslint-config": "*",
+    "@elementfi/prettier-config": "*",
     "@ethersproject/providers": "^5.5.1",
     "@nomiclabs/hardhat-ethers": "^2.0.3",
     "@nomiclabs/hardhat-vyper": "^2.0.1",
@@ -36,6 +37,7 @@
     "hardhat-tracer": "^1.0.0-alpha.6",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
+    "prettier": "^2.6.2",
     "ts-generator": "^0.1.1",
     "ts-node": "^10.4.0",
     "typechain": "^6.0.5",
@@ -52,12 +54,15 @@
     "start-mainnet": "npx hardhat node --config hardhat.mainnet.config.ts",
     "start-mainnet:dev": "npx hardhat node --config hardhat.mainnet.dev.config.ts",
     "prepare": "husky install",
-    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+    "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json,md}": [
-      "eslint --fix"
+    "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }
