@@ -10,6 +10,7 @@
   "dependencies": {
     "@elementfi/council-typechain": "*",
     "@elementfi/eslint-config": "*",
+    "@elementfi/prettier-config": "*",
     "@ethersproject/providers": "^5.4.0",
     "@uniswap/token-lists": "^1.0.0-beta.26",
     "dotenv": "^16.0.1"
@@ -29,7 +30,7 @@
     "hardhat": "^2.6.6",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
-    "prettier": "^2.4.1",
+    "prettier": "^2.6.2",
     "rollup": "^2.61.0",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.31.1",
@@ -47,12 +48,15 @@
     "build-package": "rollup -c",
     "build": "npm run build-tokenlist && npm run build-package",
     "prepare": "husky install",
-    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+    "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json,md}": [
-      "eslint --fix"
+    "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }
