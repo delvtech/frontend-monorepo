@@ -1,7 +1,3 @@
-*.json
-*.js
-*.md
-*.yaml
 lib/
 src/contracts/balancer-core-v2/
 types/
@@ -10,4 +6,4 @@ artifacts/
 cache/
 elf-contracts/
 node_modules/
-
+dist/

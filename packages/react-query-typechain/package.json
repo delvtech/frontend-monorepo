@@ -10,12 +10,15 @@
   "scripts": {
     "build": "ttsc",
     "prepare": "husky install",
-    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+    "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json,md}": [
-      "eslint --fix"
+    "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   },
   "repository": {
@@ -30,6 +33,7 @@
   "homepage": "https://github.com/element-fi/react-query-typechain#readme",
   "dependencies": {
     "@elementfi/eslint-config": "*",
+    "@elementfi/prettier-config": "*",
     "@ethersproject/contracts": "^5.5.0",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.isplainobject": "^4.0.6",
@@ -43,6 +47,7 @@
     "lodash.isequal": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.zip": "^4.2.0",
+    "prettier": "2.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-query": "3.39.0",

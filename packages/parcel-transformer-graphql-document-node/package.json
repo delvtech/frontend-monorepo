@@ -13,12 +13,15 @@
     "watch": "parcel watch",
     "build": "parcel build",
     "prepare": "husky install",
-    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+    "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json,md}": [
-      "eslint --fix"
+    "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   },
   "alias": {
@@ -28,15 +31,15 @@
     "parcel": "2.x"
   },
   "dependencies": {
+    "@elementfi/eslint-config": "*",
+    "@elementfi/prettier-config": "*",
     "@parcel/plugin": "^2.6.0",
     "eslint": "^7.32.0",
     "graphql": "^16.5.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
+    "prettier": "2.6.2",
     "typescript": "^4.7.3"
-  },
-  "devDependencies": {
-    "@elementfi/eslint-config": "*"
   },
   "peerDependencies": {}
 }

@@ -4,12 +4,15 @@
   "description": "",
   "scripts": {
     "prepare": "husky install",
-    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+    "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json,md}": [
-      "eslint --fix"
+    "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   },
   "author": "",
@@ -18,6 +21,7 @@
     "@elementfi/base": "^1.0.0",
     "@elementfi/core-typechain": "^2.0.6",
     "@elementfi/eslint-config": "*",
+    "@elementfi/prettier-config": "*",
     "@elementfi/react-query-typechain": "^1.2.0",
     "@types/lodash.zip": "^4.2.6",
     "eslint": "^7.32.0",
@@ -25,6 +29,7 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "lodash.zip": "^4.2.0",
+    "prettier": "2.6.2",
     "react": "^17.0.2",
     "react-query": "^3.39.0"
   }
