@@ -78,7 +78,7 @@ Edit the `package.json`, under `devDependencies` add:
 
 ```json
 {
-  devDependencies: {
+  "devDependencies": {
     "@elementfi/eslint-config": "*",
     "@elementfi/prettier-config": "*"
   }
