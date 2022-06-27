@@ -7,16 +7,10 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "prettier:w": "prettier --write '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",
-    "prettier:check": "prettier --check '{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}'",
     "stylelint:w": "stylelint --fix '{apps,packages}/**/*.{css,scss}'",
     "stylelint:check": "stylelint '{apps,packages}/**/*.{css,scss}'"
   },
   "lint-staged": {
-    "{apps,packages}/**/*.{js,jsx,ts,tsx,json,md}": [
-      "prettier --write"
-    ],
-    "*.{js,css,md,json}": "prettier --write",
     "{apps,packages}/**/*.{css,scss}": "stylelint"
   },
   "workspaces": {
@@ -28,7 +22,6 @@
   "dependencies": {
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
-    "prettier": "2.6.2",
     "stylelint": "^14.8.1",
     "stylelint-config-recommended": "^7.0.0"
   },
