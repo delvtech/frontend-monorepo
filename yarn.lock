@@ -7608,19 +7608,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@17.0.44", "@types/react@^17", "@types/react@^17.0.38", "@types/react@^17.0.39":
+"@types/react@*", "@types/react@17.0.38", "@types/react@17.0.44", "@types/react@^17", "@types/react@^17.0.38", "@types/react@^17.0.39":
   version "17.0.44"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.44.tgz#c3714bd34dd551ab20b8015d9d0dbec812a51ec7"
   integrity sha512-Ye0nlw09GeMp2Suh8qoOv0odfgCoowfM/9MG6WeRD60Gq9wS90bdkdRtYbRkNhXOpG4H+YXGvj4wOWhAC0LJ1g==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    csstype "^3.0.2"
-
-"@types/react@17.0.38":
-  version "17.0.38"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.38.tgz#f24249fefd89357d5fa71f739a686b8d7c7202bd"
-  integrity sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -24256,7 +24247,7 @@ prettier-plugin-solidity@^1.0.0-alpha.58:
     solidity-comments-extractor "^0.0.7"
     string-width "^4.2.3"
 
-prettier-plugin-tailwindcss@^0.1.8:
+prettier-plugin-tailwindcss@^0.1.11:
   version "0.1.11"
   resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.1.11.tgz#6112da68d9d022b7f896d35c070464931c99c35f"
   integrity sha512-a28+1jvpIZQdZ/W97wOXb6VqI762MKE/TxMMuibMEHhyYsSxQA8Ek30KObd5kJI2HF1ldtSYprFayXJXi3pz8Q==
