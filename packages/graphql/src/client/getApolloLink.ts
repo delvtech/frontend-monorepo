@@ -21,6 +21,7 @@ export default function getApolloLink({
   schemas,
   provider,
 }: LinkOptions): ApolloLink {
+  // TODO: add chainid to context
   const getEnveloped = envelopWithSchema({
     schemas,
     context: { provider },

@@ -1,0 +1,46 @@
+{
+  "name": "@elementfi/council-graphql",
+  "version": "0.1.0",
+  "description": "",
+  "license": "ISC",
+  "source": "src/index.ts",
+  "main": "dist/main.js",
+  "targets": {
+    "main": {
+      "includeNodeModules": []
+    }
+  },
+  "types": "dist/main.d.ts",
+  "files": [
+    "dist"
+  ],
+  "alias": {
+    "src": "./src"
+  },
+  "scripts": {
+    "watch": "parcel watch",
+    "build:lib": "parcel build",
+    "build:graphql": "elf-graphql --package -o src/generated",
+    "build": "npm run build:graphql && npm run build:lib"
+  },
+  "dependencies": {
+    "@elementfi/council-typechain": "*",
+    "@elementfi/council-tokenlist": "*",
+    "@graphql-tools/schema": "^8.3.13",
+    "ethers": "^5.6.8"
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.6.6",
+    "@elementfi/graphql": "*",
+    "@elementfi/parcel-transformer-graphql-document-node": "*",
+    "graphql": "^16.5.0",
+    "parcel": "^2.6.0",
+    "typescript": "^4.5.5"
+  },
+  "peerDependencies": {
+    "@apollo/client": "^3.6.6",
+    "@elementfi/graphql": "*",
+    "graphql": ">=16.5",
+    "react": ">=16.8.0"
+  }
+}

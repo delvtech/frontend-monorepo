@@ -1,0 +1,64 @@
+
+"""
+
+ CoreVoting 
+ - holds the proposals
+ - allows you to create a proposal
+ - maintains a whitelist of approved voting vaults
+ - Has events for seeing the list of votes (voting power + ballot) that have been cast)
+ - has vote(votingVaults[], proposalId) method
+
+ GSCVoting 
+ - holds the proposals that gsc votes on
+ - allows you to create a proposal
+ - has a single approved voting vault, aka LockingVault
+ - Has events for seeing the list of votes (voting power + ballot) that have been cast)
+ - has vote(votingVaults[], proposalId) method
+
+
+ VotingVault
+ (ie: LockingVault, VestingVault)
+ - allows you to deposit your ELFI token, giving you voting power in the vault
+ - can define the behavior for calculating how much voting power the depositer into the vault receives
+     - eg, LockingVault defines delegation capabilities, where 1 ELFI = 1 Vote power
+     - eg, VestingVault defines delegation too, but 1 ELFI = 0.25 VP
+     
+ """
+type Query {
+  ping: String
+  coreVoting: VotingContract
+  gscVoting: VotingContract
+}
+
+type VotingContract {
+  address: ID!
+  proposal(id: ID!): Proposal
+  proposals(ids: [ID!], verified: Boolean): [Proposal]
+  votingVaults: [VotingVault]
+}
+
+type Proposal {
+  id: ID!
+  votingContract: ID!
+  verified: Boolean
+  title: String
+  description: String
+  quorum: String
+  vote(voter: ID!): Vote
+}
+
+type Vote {
+  votingPower: String
+  castBallot: Ballot
+}
+
+type VotingVault {
+  address: ID!
+  votePower(voter: ID!, blockNumber: Int): String
+}
+
+enum Ballot {
+  Yes,
+  No,
+  Abstain,
+}
