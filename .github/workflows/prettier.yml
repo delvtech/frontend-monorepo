@@ -12,4 +12,4 @@ jobs:
         with:
           node-version: "14.x"
       - run: yarn
-      - run: yarn run prettier:check
+      - run: yarn workspaces run prettier:check
