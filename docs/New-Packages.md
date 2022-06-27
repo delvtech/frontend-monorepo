@@ -128,7 +128,7 @@ Extending additional configurations will require you to add in those configurati
 
 `@elementfi/eslint-config` must be the last extended configuration. This configuration extends `eslint-plugin-prettier`, which then must be the last extended configuration in order to function correctly. See [this link](https://github.com/prettier/eslint-plugin-prettier#recommended-configuration) for more information. 
 
-Also add a `.prettierrc.js` file needs to be added to the root of the new-package to wrap up linting. We'll want to extend the base configurations, like so:
+Also a `.prettierrc.js` file needs to be added to the root of the new-package to wrap up linting. We'll want to extend the base configurations, like so:
 
 ```javascript
   module.exports = {
