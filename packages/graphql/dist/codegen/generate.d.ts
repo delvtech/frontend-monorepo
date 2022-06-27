@@ -23,5 +23,5 @@ export declare function generate({
   outDir,
   package: isPackage,
   schema,
-}: GenerateOptions): void;
+}: GenerateOptions): Promise<void>;
 export {};
