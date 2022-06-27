@@ -175,7 +175,7 @@ Add a `tsconfig.json` file to the root of new-package/:
 Assuming this is a Typescript package, we'll want to add Typescript.
 
 ```bash
-frontend-monorepo$ yarn workspace @elementfi/council-delegates add Typescript
+frontend-monorepo$ yarn workspace @elementfi/council-delegates add typescript
 ```
 
 ### **`Setting up Parcel`**
