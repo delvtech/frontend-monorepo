@@ -26,7 +26,7 @@ export function DelegatedCard({
       <div className="flex h-full w-full flex-col">
         <div className="mb-2 text-lg font-bold text-gray-500">{t`You delegated to`}</div>
         <div className="flex-1">
-          <div className="text-principalRoyalBlue text-lg font-bold">
+          <div className="text-lg font-bold text-principalRoyalBlue">
             {(featuredDelegate && featuredDelegate.name) || formattedAddress}
           </div>
           <div className="flex flex-col items-center text-gray-500">

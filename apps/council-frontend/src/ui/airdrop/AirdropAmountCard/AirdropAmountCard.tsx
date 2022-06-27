@@ -38,19 +38,19 @@ export function AirdropAmountCard({
       className="h-64 text-center shadow-[0_0_52px_rgba(143,216,231,.7)]"
     >
       <div className="flex h-full w-full flex-col justify-center px-8 ">
-        <div className="text-principalRoyalBlue font-bold text-opacity-60">{t`Your voting power`}</div>
+        <div className="font-bold text-principalRoyalBlue text-opacity-60">{t`Your voting power`}</div>
         <div className="mb-10">
-          <div className="text-principalRoyalBlue flex items-center justify-center gap-2 font-bold md:text-3xl">
+          <div className="flex items-center justify-center gap-2 font-bold text-principalRoyalBlue md:text-3xl">
             <ElementIconCircle
-              className="bg-paleLily ml-1"
+              className="ml-1 bg-paleLily"
               size={IconSize.MEDIUM}
             />
             {t`${claimableBalance ? commify(claimableBalance) : 0} ELFI`}
           </div>
         </div>
 
-        <div className="text-principalRoyalBlue font-bold text-opacity-60">{t`will be delegated to`}</div>
-        <div className="text-principalRoyalBlue flex items-center justify-center font-bold md:text-3xl">
+        <div className="font-bold text-principalRoyalBlue text-opacity-60">{t`will be delegated to`}</div>
+        <div className="flex items-center justify-center font-bold text-principalRoyalBlue md:text-3xl">
           <WalletJazzicon
             className="flex justify-center"
             account={delegateAddress}

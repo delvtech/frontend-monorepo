@@ -9,6 +9,7 @@
     "@elementfi/council-typechain": "*",
     "@elementfi/council-tokenlist": "*",
     "@elementfi/eslint-config": "*",
+    "@elementfi/prettier-config": "*",
     "@ethersproject/providers": "^5.6.5",
     "@uniswap/token-lists": "^1.0.0-beta.26",
     "dotenv": "^16.0.0",
@@ -35,7 +36,7 @@
     "eslint": "^7.32.0",
     "ethers": "^5.6.6",
     "hardhat": "^2.6.6",
-    "prettier": "^2.4.1",
+    "prettier": "2.6.2",
     "prettier-plugin-solidity": "^1.0.0-alpha.58",
     "solhint-plugin-prettier": "^0.0.5",
     "ts-generator": "^0.1.1",
@@ -60,12 +61,15 @@
     "ethernal-listen": "npx ethernal listen -l",
     "ethernal-reset": "npx ethernal \"Hardhat Network\"",
     "prepare": "husky install",
-    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'"
+    "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json,md}": [
-      "eslint --fix"
+    "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }

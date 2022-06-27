@@ -74,10 +74,10 @@ export function JoinGSCButton({
 
       <Dialog isOpen={dialogOpen} onClose={() => setDialogOpen(false)}>
         <div>
-          <div className="text-principalRoyalBlue mb-4 text-lg font-bold">
+          <div className="mb-4 text-lg font-bold text-principalRoyalBlue">
             {t`Join Confirmation`}
           </div>
-          <div className="text-principalRoyalBlue mb-8 text-sm">
+          <div className="mb-8 text-sm text-principalRoyalBlue">
             {t`Are you sure you want to join the the GSC? This means that you will
             be responsible for the rights and responsibilities of a GSC member
             and held accountable by Element DAO from this moment forward.`}
@@ -158,10 +158,10 @@ export function LeaveGSCButton({
 
       <Dialog isOpen={dialogOpen} onClose={() => setDialogOpen(false)}>
         <div>
-          <div className="text-principalRoyalBlue mb-4 text-lg font-bold">
+          <div className="mb-4 text-lg font-bold text-principalRoyalBlue">
             {t`Leave Confirmation`}
           </div>
-          <div className="text-principalRoyalBlue mb-8 text-sm">
+          <div className="mb-8 text-sm text-principalRoyalBlue">
             {t`Are you sure you want to leave the GSC? By leaving the GSC, you
             will forfeit the benefits, roles, and responsibilities of GSC
             membership, as outlined in the GSC Membership forum post. You will

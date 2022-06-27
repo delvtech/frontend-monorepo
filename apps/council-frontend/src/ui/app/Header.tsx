@@ -39,7 +39,7 @@ function Header(): ReactElement {
 
             <ExternalLink
               href={GAS_URL}
-              className="text-principalRoyalBlue mr-8 flex items-center"
+              className="mr-8 flex items-center text-principalRoyalBlue"
               showIcon={false}
             >
               <GasIcon className="h-5 w-5" />
@@ -49,7 +49,7 @@ function Header(): ReactElement {
             </ExternalLink>
 
             <Tooltip content={t`${TooltipDefinition.OWNED_ELFI}`}>
-              <span className="text-principalRoyalBlue mr-8 flex items-center gap-2 font-bold">
+              <span className="mr-8 flex items-center gap-2 font-bold text-principalRoyalBlue">
                 <ElementIconCircle size={IconSize.MEDIUM} />
                 <span>
                   {formattedAmountDeposited}

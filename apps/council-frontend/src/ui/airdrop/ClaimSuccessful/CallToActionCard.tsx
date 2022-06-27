@@ -17,7 +17,7 @@ export function CallToActionCard({
     >
       <div className="flex flex-col">
         <div className="flex-1">
-          <div className="text-principalRoyalBlue mb-2 text-lg font-bold">
+          <div className="mb-2 text-lg font-bold text-principalRoyalBlue">
             {label}
           </div>
           <div className="flex flex-col items-center">{icon}</div>

@@ -73,7 +73,7 @@ function ElfiverseBanner({
       {/* Header */}
       <div className="flex">
         <div className="mt-2 flex w-3/4 flex-col gap-2">
-          <span className="text-principalRoyalBlue font-bold">
+          <span className="font-bold text-principalRoyalBlue">
             {t`Our first minting drop is now live`}
           </span>
           <p className="text-sm leading-6 text-[#979797]">
@@ -104,8 +104,8 @@ function ElfiverseBanner({
 
         {/* CTA / Button */}
         <div className="flex items-center gap-4 rounded-xl p-4 shadow-[0_6px_23px_rgba(20,20,43,0.08)]">
-          <div className="bg-hackerSky grid h-[50px] w-[50px] shrink-0 place-items-center rounded-full">
-            <FireIcon className="text-principalRoyalBlue h-[28px]" />
+          <div className="grid h-[50px] w-[50px] shrink-0 place-items-center rounded-full bg-hackerSky">
+            <FireIcon className="h-[28px] text-principalRoyalBlue" />
           </div>
           <span className="text-sm leading-4">
             {t`${remainingElves} / ${TOTAL_ELVES} ELF NFTs Whitelist\u00A0Remaining`}
@@ -117,7 +117,7 @@ function ElfiverseBanner({
             rel="noreferrer"
             className={classNames(
               getButtonClass({ variant: ButtonVariant.GRADIENT }),
-              "focus:ring-brandDarkBlue ml-auto inline-flex w-1/2 max-w-[250px] items-center justify-center py-3 px-4 text-center font-bold leading-4 focus:outline-none focus:ring-2 focus:ring-offset-2",
+              "ml-auto inline-flex w-1/2 max-w-[250px] items-center justify-center py-3 px-4 text-center font-bold leading-4 focus:outline-none focus:ring-2 focus:ring-brandDarkBlue focus:ring-offset-2",
             )}
           >{t`Visit ELF Website`}</a>
         </div>

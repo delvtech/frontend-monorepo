@@ -15,7 +15,7 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
 
   return (
     <Card className="flex flex-col lg:flex-1">
-      <div className="text-principalRoyalBlue flex items-center justify-center">
+      <div className="flex items-center justify-center text-principalRoyalBlue">
         {title}
         {tooltipContent ? (
           <Tooltip content={tooltipContent}>
@@ -23,7 +23,7 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
           </Tooltip>
         ) : null}
       </div>
-      <div className="text-principalRoyalBlue flex flex-1 items-center justify-center py-4 text-center text-5xl font-extralight">
+      <div className="flex flex-1 items-center justify-center py-4 text-center text-5xl font-extralight text-principalRoyalBlue">
         {balance}
       </div>
       {children}

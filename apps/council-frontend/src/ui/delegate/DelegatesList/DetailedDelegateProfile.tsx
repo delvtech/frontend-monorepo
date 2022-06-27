@@ -82,7 +82,7 @@ function DetailedDelegateProfile({
             {/* Body */}
             <div className="mt-5">
               <h3 className="text-principalRoyalBlue">{t`Personal Delegate Mission`}</h3>
-              <p className="text-principalRoyalBlue mt-2 text-sm">
+              <p className="mt-2 text-sm text-principalRoyalBlue">
                 {delegate.description}
               </p>
             </div>
@@ -92,7 +92,7 @@ function DetailedDelegateProfile({
           <div className="flex w-full flex-col md:w-[27.5%]">
             {/* Some handle/username */}
             <div>
-              <span className="text-principalRoyalBlue text-xl font-bold">
+              <span className="text-xl font-bold text-principalRoyalBlue">
                 username.eth
               </span>
             </div>
@@ -107,7 +107,7 @@ function DetailedDelegateProfile({
             {/* Background */}
             <div className="mt-2">
               <h3 className="text-principalRoyalBlue">{t`Background`}</h3>
-              <p className="text-principalRoyalBlue text-sm">
+              <p className="text-sm text-principalRoyalBlue">
                 Ex. Matcha, DyDX, ENS, Full stack engineer and solidity engineer
               </p>
             </div>

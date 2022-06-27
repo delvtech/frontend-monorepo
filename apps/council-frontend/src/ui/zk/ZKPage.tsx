@@ -120,7 +120,7 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
         />
       )}
 
-      <div className="text-principalRoyalBlue mt-auto flex flex-1 flex-col items-center">
+      <div className="mt-auto flex flex-1 flex-col items-center text-principalRoyalBlue">
         <span className="text-sm">{t`Powered by`}</span>
         <ElementLogo height={"40"} />
       </div>
