@@ -239,7 +239,7 @@ You should now have a package.json in packages/new-package that looks like:
     "src": "./src"
   },
   "dependencies": {
-    "Typescript": "^4.7.3"
+    "typescript": "^4.7.3"
   },
   "devDependencies": {
     "@elementfi/eslint-config": "*",
