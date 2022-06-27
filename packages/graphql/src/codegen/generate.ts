@@ -49,9 +49,9 @@ export async function generate({
   // probably just log a warning, but continue generating what it can. If I
   // require the script to throw an error to prevent "broken" builds in a CI/CD
   // pipeline, then maybe that behavior should have a separate config setting I
-  // can use to disable/enable it.
+  // can disable/enable.
   try {
-    // this will fail if their are no documents (operations) found.
+    // this will fail if there are no documents (operations) found.
     await loadDocuments("./**/*.graphql", {
       loaders: [new GraphQLFileLoader()],
     });
