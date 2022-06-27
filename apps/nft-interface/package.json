@@ -39,7 +39,7 @@
     "moment": "^2.29.1",
     "next": "12.0.8",
     "next-seo": "^4.29.0",
-    "prettier": "^2.6.2",
+    "prettier": "2.6.2",
     "react": "17.0.2",
     "react-awesome-reveal": "^3.8.1",
     "react-dom": "17.0.2",
