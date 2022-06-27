@@ -172,10 +172,10 @@ Add a `tsconfig.json` file to the root of new-package/:
 
 ### **`Adding Typescript`**
 
-Assuming this is a Typescript package, we'll want to add typescript.
+Assuming this is a Typescript package, we'll want to add Typescript.
 
 ```bash
-frontend-monorepo$ yarn workspace @elementfi/council-delegates add typescript
+frontend-monorepo$ yarn workspace @elementfi/council-delegates add Typescript
 ```
 
 ### **`Setting up Parcel`**
@@ -189,7 +189,7 @@ frontend-monorepo$ yarn workspace @elementfi/council-delegates add --dev parcel
 
 Add some scripts and a few more things to the package.json to set up parcel:
 
-````json
+```json
 {
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
@@ -239,7 +239,7 @@ You should now have a package.json in packages/new-package that looks like:
     "src": "./src"
   },
   "dependencies": {
-    "typescript": "^4.7.3"
+    "Typescript": "^4.7.3"
   },
   "devDependencies": {
     "@elementfi/eslint-config": "*",
@@ -250,7 +250,7 @@ You should now have a package.json in packages/new-package that looks like:
     "prettier": "2.6.2",
   }
 }
-````
+```
 
 ### **`Copying files, creating the index.ts and building the package`**
 
