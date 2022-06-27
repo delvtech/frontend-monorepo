@@ -29,7 +29,7 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "lodash.keyby": "^4.6.0",
-    "prettier": "^2.6.2",
+    "prettier": "2.6.2",
     "ts-money": "^0.4.7"
   }
 }
