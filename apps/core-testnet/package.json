@@ -39,7 +39,7 @@
     "lint-staged": "^12.3.7",
     "prettier": "2.6.2",
     "ts-generator": "^0.1.1",
-    "ts-node": "^10.4.0",
+    "ts-node": "^10.8.1",
     "typechain": "^6.0.5",
     "typechain-target-ethers-v5": "^5.0.1",
     "typescript": "^4.5.4"
