@@ -47,14 +47,14 @@ frontend-monorepo/package/new-package$ mkdir src/
 
 ### **`Creating the package.json`**
 
-Then you'll want to run yarn init to create a package.json. Make sure to prefix the package name
+Then you'll want to run yarn init to create a `package.json`. Make sure to prefix the package name
 with `@elementfi/`
 
 ```bash
 frontend-monorepo/packages/new-package$ yarn init
 ```
 
-This should create a package.json that looks something like:
+This should create a `package.json` that looks something like:
 
 ```json
 {
@@ -74,7 +74,7 @@ Next you need to set up linting:
 frontend-monorepo$ yarn workspace @elementfi/new-package add eslint@^7.32.0 prettier@2.6.2 husky lint-staged
 ```
 
-Edit the package.json, under dev dependencies add:
+Edit the `package.json`, under `devDependencies` add:
 
 ```json
 {
@@ -187,7 +187,7 @@ for it.
 frontend-monorepo$ yarn workspace @elementfi/council-delegates add --dev parcel
 ```
 
-Add some scripts and a few more things to the package.json to set up parcel:
+Add some scripts and a few more things to the `package.json` to set up parcel:
 
 ```json
 {
@@ -206,7 +206,7 @@ Add some scripts and a few more things to the package.json to set up parcel:
 }
 ```
 
-You should now have a package.json in packages/new-package that looks like:
+You should now have a `package.json` in packages/new-package that looks like:
 
 ```json
 {
@@ -256,7 +256,7 @@ You should now have a package.json in packages/new-package that looks like:
 
 Now that the basics are set up, move any files you need into src/ from other packages or apps. Once
 the files are copied over, you can remove them from their original package(s) or apps(s). You'll
-have to update those apps or packages package.json's dependencies with:
+have to update those apps or packages `package.json`'s dependencies with:
 
 ```json
 {
