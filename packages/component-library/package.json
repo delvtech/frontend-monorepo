@@ -1,0 +1,61 @@
+{
+  "name": "@elementfi/component-library",
+  "version": "1.0.0",
+  "description": "React component library for Element Finance apps",
+  "license": "MIT",
+  "source": "src/index.ts",
+  "main": "dist/js/index.js",
+  "module": "dist/js/index.esm.js",
+  "targets": {
+    "js": {
+      "source": "src/index.ts"
+    },
+    "css": {
+      "source": "src/global.css"
+    },
+    "module": {
+      "source": "src/index.ts"
+    },
+    "types": {
+      "source": "src/index.ts"
+    }
+  },
+  "types": "dist/js/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "build:tailwind": "npx tailwindcss build -i src/index.css -o src/tailwind.output.css",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'",
+    "watch": "parcel watch",
+    "build": "parcel build"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix"
+    ]
+  },
+  "alias": {
+    "src": "./src"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.2",
+    "daisyui": "^2.17.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "typescript": "^4.7.3"
+  },
+  "devDependencies": {
+    "@elementfi/eslint-config": "*",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "eslint": "^7",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.2",
+    "parcel": "^2.6.0",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.1.4"
+  }
+}
