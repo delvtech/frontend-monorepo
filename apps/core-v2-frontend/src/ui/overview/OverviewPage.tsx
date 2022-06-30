@@ -2,15 +2,16 @@ import React, { ReactElement } from "react";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import { t } from "ttag";
-import toast from "react-hot-toast";
+import { toastTransactionSubmitted } from "src/ui/overview/toasts";
+import { Button } from "@elementfi/component-library";
 
 export function OverviewPage(): ReactElement {
-  const { data: account } = useAccount();
+  const { address: userAddress } = useAccount();
 
   return (
     <div className="daisy-hero min-h-screen bg-base-200">
       <div className="daisy-hero-content flex-col gap-8 text-center">
-        {account?.address ? <FakeTxButton /> : t`Connect wallet to continue`}
+        {userAddress ? <FakeTxButton /> : t`Connect wallet to continue`}
       </div>
     </div>
   );
@@ -18,26 +19,19 @@ export function OverviewPage(): ReactElement {
 
 export default OverviewPage;
 
-function FakeTxButton() {
+function FakeTxButton(): ReactElement {
   const addRecentTransaction = useAddRecentTransaction();
   return (
-    <button
-      className="daisy-btn daisy-btn-outline daisy-btn-info"
+    <Button
       onClick={() => {
         addRecentTransaction({
           hash: "0xeef10fc5170f669b86c4cd0444882a96087221325f8bf2f55d6188633aa7be7c",
-          description: "Bought 1,420 fixed rate usdc",
+          description: "Swap 1 ETH for 1,100 USDC",
         });
-        toast.custom(
-          <div className="daisy-alert max-w-md justify-center shadow-lg">
-            <span>
-              <span className="text-4xl">🧝‍♂️ 🪄</span> {t`Transaction submitted`}
-            </span>
-          </div>,
-        );
+        toastTransactionSubmitted();
       }}
     >
       Send fake transaction
-    </button>
+    </Button>
   );
 }
