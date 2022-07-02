@@ -2,16 +2,9 @@ import {
   createServer as createYogaServer,
   YogaNodeServerInstance,
 } from "@graphql-yoga/node";
-import { mergeSchemas } from "@graphql-tools/schema";
-import { GraphQLSchema } from "graphql";
-import { Provider } from "@ethersproject/providers";
-import { useEnvelop, useExtendContext } from "@envelop/core";
-import { getEnvelopedBase } from "src/client/envelop";
-
-interface ServerOptions {
-  schemas: GraphQLSchema[];
-  provider: Provider;
-}
+import { useEnvelop } from "@envelop/core";
+import init, { InitOptions } from "src/init";
+import { envelopWithSchema } from "src/client/envelop";
 
 /**
  * Create a Yoga Node Server instance with GraphiQL.
@@ -21,10 +14,9 @@ interface ServerOptions {
  *   execution context for schema resolvers.
  * @returns An `YogaNodeServerInstance` instance.
  */
-export default function createServer({
-  schemas,
-  provider,
-}: ServerOptions): YogaNodeServerInstance<
+export default function createServer(
+  options: InitOptions,
+): YogaNodeServerInstance<
   {
     req: Request;
     res: Response;
@@ -32,13 +24,11 @@ export default function createServer({
   Record<string, any>,
   void
 > {
-  const schema = mergeSchemas({ schemas });
+  const { schema, context } = init(options);
   return createYogaServer({
-    schema,
     plugins: [
       /* eslint-disable react-hooks/rules-of-hooks */
-      useExtendContext(() => ({ provider })),
-      useEnvelop(getEnvelopedBase),
+      useEnvelop(envelopWithSchema({ schema, context })),
       /* eslint-enable react-hooks/rules-of-hooks */
     ],
   });

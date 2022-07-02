@@ -6,13 +6,16 @@ This is the base GraphQL package for Element Finance apps and schema packages.
   - [Exports](#exports)
     - [**`getApolloLink`**](#getapollolink)
       - [**Signature**](#signature)
-      - [**`LinkOptions`**](#linkoptions)
+      - [**`InitOptions`**](#initoptions)
       - [**Example**](#example)
     - [**`createServer`**](#createserver)
       - [**Signature**](#signature-1)
-      - [**`ServerOptions`**](#serveroptions)
+      - [**`InitOptions`**](#initoptions-1)
       - [**Example**](#example-1)
     - [**`ResolverContext`**](#resolvercontext)
+      - [**Example**](#example-2)
+    - [**`Graph`**](#graph)
+      - [**Example**](#example-3)
   - [CLI](#cli)
     - [**`elf-graphql`**](#elf-graphql)
       - [**Signature**](#signature-2)
@@ -36,30 +39,30 @@ A helper function to create an [`ApolloLink`](https://www.apollographql.com/docs
 #### **Signature**
 
 ```ts
-getApolloLink(LinkOptions) => ApolloLink
+getApolloLink(InitOptions) => ApolloLink
 ```
 
-#### **`LinkOptions`**
+#### **`InitOptions`**
 
 An object for configuring the execution layer.
 
-| Option     | Type              | Description                                                                                                                               |
-| ---------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `schemas`  | `GraphQLSchema[]` | An array of [executable schemas with resolvers](https://www.graphql-tools.com/docs/generate-schema).                                      |
-| `provider` | `Provider`        | An [ethers.js `Provider`](https://docs.ethers.io/v5/api/providers/) instance that is added to the execution context for schema resolvers. |
+| Option     | Type       | Description                                                                                                                                                                                                                |
+| ---------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `graphs`   | `Graph[]`  | An array of graph objects which include an [executable schema with resolvers](https://www.graphql-tools.com/docs/generate-schema) and an `initContext` function which takes a context object, modifies it, and returns it. |
+| `provider` | `Provider` | An [ethers.js `Provider`](https://docs.ethers.io/v5/api/providers/) instance that is added to the execution context for schema resolvers.                                                                                  |
 
 #### **Example**
 
 ```ts
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { getApolloLink } from "@elementfi/graphql";
-import { coreSchema } from "@elementfi/core-graphql";
+import { councilGraph } from "@elementfi/core-graphql";
 import { defaultProvider } from "src/elf/providers/providers";
 
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
   link: getApolloLink({
-    schemas: [coreSchema],
+    graphs: [councilGraph],
     provider: defaultProvider,
   }),
 });
@@ -82,27 +85,27 @@ A helper function to create a [Yoga Node Server](https://www.graphql-yoga.com/do
 #### **Signature**
 
 ```ts
-createServer(ServerOptions) => YogaNodeServerInstance
+createServer(InitOptions) => YogaNodeServerInstance
 ```
 
-#### **`ServerOptions`**
+#### **`InitOptions`**
 
 An object for configuring the Yoga Server.
 
-| Option     | Type              | Description                                                                                                                               |
-| ---------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `schemas`  | `GraphQLSchema[]` | An array of [executable schemas with resolvers](https://www.graphql-tools.com/docs/generate-schema).                                      |
-| `provider` | `Provider`        | An [ethers.js `Provider`](https://docs.ethers.io/v5/api/providers/) instance that is added to the execution context for schema resolvers. |
+| Option     | Type       | Description                                                                                                                                                                                                                |
+| ---------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `graphs`   | `Graph[]`  | An array of graph objects which include an [executable schema with resolvers](https://www.graphql-tools.com/docs/generate-schema) and an `initContext` function which takes a context object, modifies it, and returns it. |
+| `provider` | `Provider` | An [ethers.js `Provider`](https://docs.ethers.io/v5/api/providers/) instance that is added to the execution context for schema resolvers.                                                                                  |
 
 #### **Example**
 
 ```ts
 import { createServer } from "@elementfi/graphql";
-import { coreSchema } from "@elementfi/core-graphql";
+import { councilGraph } from "@elementfi/council-graphql";
 import { defaultProvider } from "src/elf/providers/providers";
 
 const server = createServer({
-  schemas: [coreSchema],
+  schemas: [councilGraph],
   provider: defaultProvider,
 });
 
@@ -111,14 +114,74 @@ export default server;
 
 ### **`ResolverContext`**
 
-An interface containing the fields added to the execution context for resolvers by [`getApolloLink`](#getapollolink) and [`createServer`](#createserver).
+A generic type containing the default fields added to the execution context for resolvers which can accepts a generic object type to extend it's fields.
 
 ```ts
-import type { Provider } from "@ethersproject/providers";
-
-export interface ResolverContext extends Record<string | number | symbol, any> {
+export type ResolverContext<
+  T extends Record<string, any> = Record<string, any>,
+> = {
+  chainId: number;
   provider: Provider;
+} & T;
+```
+
+#### **Example**
+
+```ts
+export type CouncilResolverContext = ResolverContext<{
+  dataSources: {
+    coreVoting: CoreVotingContract;
+    gscVoting: CoreVotingContract;
+    lockingVault: LockingVaultContract;
+    vestingVault: VestingVaultContract;
+    gscVault: GSCVaultContract;
+    elementS3: AmazonS3API;
+  };
+}>;
+// type CouncilResolverContext = {
+//     chainId: number;
+//     provider: Provider;
+// } & {
+//     dataSources: {
+//         coreVoting: CoreVotingContract;
+//         gscVoting: CoreVotingContract;
+//         lockingVault: LockingVaultContract;
+//         vestingVault: VestingVaultContract;
+//         gscVault: GSCVaultContract;
+//         elementS3: AmazonS3API;
+//     };
+// }
+```
+
+### **`Graph`**
+
+An interface accepted by `getApolloClient` and `createServer` which contains an executable schema and an `initContext` function to initiate the context for the schema's resolvers.
+
+```ts
+export interface Graph {
+  schema: GraphQLSchema;
+  initContext?: (
+    initialContext: ResolverContext,
+  ) => ResolverContext | Promise<ResolverContext>;
 }
+```
+
+#### **Example**
+
+```ts
+type MyResolverContext = ResolverContext<{
+  foo: Foo;
+}>;
+
+export const myGraph: Graph = {
+  schema: mySchema,
+  initContext: (previousContext: ResolverContext): MyResolverContext => {
+    return {
+      ...previousContext,
+      foo: new Foo(),
+    };
+  },
+};
 ```
 
 ## CLI
@@ -160,13 +223,14 @@ export default schemas;
 Then, write operations in `.graphql` files.
 
 ```graphql
-# src/ui/overview/GetOverviewData.graphql
+# src/ui/overview/GetProposals.graphql
 
-query GetOverviewData($tokenAddresses: [ID!]!) {
-  tokens(addresses: $tokenAddresses) {
-    # ...
+query GetProposals($account: ID!) {
+  coreVoting {
+    proposals {
+
+    }
   }
-  # ...
 }
 ```
 
@@ -293,6 +357,19 @@ Now the `Resolvers` type can be imported to add types to resolvers.
 import { Resolvers } from "./generated";
 
 export const resolvers: Resolvers = {
+  // ...
+};
+```
+
+If the package's [`Graph`](#graph) includes an `initContext` which returns a modified [`ResolverContext`](#resolvercontext), pass it to the `Resolvers` generic to ensure the context argument is typed correctly.
+
+```ts
+// src/resolvers.ts
+
+import { Resolvers } from "./generated";
+import { MyResolverContext } from "./context";
+
+export const resolvers: Resolvers<MyResolverContext> = {
   // ...
 };
 ```

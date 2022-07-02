@@ -1,12 +1,6 @@
-import type { GraphQLSchema } from "graphql";
-import type { Provider } from "@ethersproject/providers";
 import { ApolloLink, Observable } from "@apollo/client";
+import init, { InitOptions } from "src/init";
 import { handleQuery, envelopWithSchema } from "./envelop";
-
-interface LinkOptions {
-  schemas: GraphQLSchema[];
-  provider: Provider;
-}
 
 /**
  * Create an `ApolloLink` instance for Apollo Client (specifically, a
@@ -17,14 +11,11 @@ interface LinkOptions {
  *   execution context for schema resolvers.
  * @returns An `ApolloLink` instance.
  */
-export default function getApolloLink({
-  schemas,
-  provider,
-}: LinkOptions): ApolloLink {
-  // TODO: add chainid to context
+export default function getApolloLink(options: InitOptions): ApolloLink {
+  const { schema, context } = init(options);
   const getEnveloped = envelopWithSchema({
-    schemas,
-    context: { provider },
+    schema,
+    context,
   });
   return new ApolloLink(
     ({ query, variables }) =>

@@ -13,8 +13,8 @@ import {
 } from "@envelop/core";
 import { useParserCache } from "@envelop/parser-cache";
 import { useValidationCache } from "@envelop/validation-cache";
-import { mergeSchemas } from "@graphql-tools/schema";
 import { ObjMap } from "graphql/jsutils/ObjMap";
+import { ResolverContext } from "src";
 
 // Adds a default generic plugin context to make using the type easier.
 export type GetEnvelopedFn<T = Record<string | number | symbol, any>> =
@@ -32,27 +32,27 @@ export const getEnvelopedBase = envelop({
   ],
 });
 
-interface EnvelopWithSchemaOptions {
-  schemas: GraphQLSchema[];
-  context?: Record<string, any>;
+interface envelopWithSchemaOptions {
+  schema: GraphQLSchema;
+  context?: ResolverContext | Promise<ResolverContext>;
 }
 
 /**
- * Create a GetEnvelopedFn that uses merged schemas.
+ * Create a GetEnvelopedFn that uses given schema and optional context.
  * @param options
- * @param options.schemas An array of `GraphQLSchema`s to merge and use.
+ * @param options.schema The `GraphQLSchema` to use.
  * @param options.context An optional object of properties to be added to the
  *   execution context.
  * @returns A `GetEnvelopedFn`
  */
 export function envelopWithSchema({
-  schemas,
+  schema,
   context,
-}: EnvelopWithSchemaOptions): GetEnvelopedFn {
+}: envelopWithSchemaOptions): GetEnvelopedFn {
   return envelop({
     plugins: [
       /* eslint-disable react-hooks/rules-of-hooks */
-      useSchema(mergeSchemas({ schemas })),
+      useSchema(schema),
       useExtendContext(() => context),
       useEnvelop(getEnvelopedBase),
       /* eslint-enable react-hooks/rules-of-hooks */
