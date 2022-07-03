@@ -2,15 +2,7 @@
 // NOTE: This is a generated file and should not be edited directly.
 // To edit this file, modify the @element/graphql codegen script.
 
-// Generated on 2022-06-17T16:06:29-07:00
-
-declare module "*/operations.graphql" {
-  import { DocumentNode } from "graphql";
-  const defaultDocument: DocumentNode;
-  export const Ping: DocumentNode;
-
-  export default defaultDocument;
-}
+// Generated on 2022-07-03T01:46:45-05:00
 
 declare module "*.graphql" {
   import { DocumentNode } from "graphql";

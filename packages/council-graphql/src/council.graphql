@@ -1,64 +1,88 @@
-
 """
+CoreVoting
+- holds the proposals
+- allows you to create a proposal
+- maintains a whitelist of approved voting vaults
+- Has events for seeing the list of votes (voting power + ballot) that have been cast)
+- has vote(votingVaults[], proposalId) method
 
- CoreVoting 
- - holds the proposals
- - allows you to create a proposal
- - maintains a whitelist of approved voting vaults
- - Has events for seeing the list of votes (voting power + ballot) that have been cast)
- - has vote(votingVaults[], proposalId) method
-
- GSCVoting 
- - holds the proposals that gsc votes on
- - allows you to create a proposal
- - has a single approved voting vault, aka LockingVault
- - Has events for seeing the list of votes (voting power + ballot) that have been cast)
- - has vote(votingVaults[], proposalId) method
+GSCVoting
+- holds the proposals that gsc votes on
+- allows you to create a proposal
+- has a single approved voting vault, aka LockingVault
+- Has events for seeing the list of votes (voting power + ballot) that have been cast)
+- has vote(votingVaults[], proposalId) method
 
 
- VotingVault
- (ie: LockingVault, VestingVault)
- - allows you to deposit your ELFI token, giving you voting power in the vault
- - can define the behavior for calculating how much voting power the depositer into the vault receives
-     - eg, LockingVault defines delegation capabilities, where 1 ELFI = 1 Vote power
-     - eg, VestingVault defines delegation too, but 1 ELFI = 0.25 VP
-     
- """
+VotingVault
+(ie: LockingVault, VestingVault)
+- allows you to deposit your ELFI token, giving you voting power in the vault
+- can define the behavior for calculating how much voting power the depositer into the vault receives
+    - eg, LockingVault defines delegation capabilities, where 1 ELFI = 1 Vote power
+    - eg, VestingVault defines delegation too, but 1 ELFI = 0.25 VP
+"""
 type Query {
-  ping: String
   coreVoting: VotingContract
   gscVoting: VotingContract
+  lockingVault: VotingVault
+  vestingVault: VotingVault
+  gscVault: VotingVault
 }
 
 type VotingContract {
   address: ID!
+  name: String!
+  votingVaults: [VotingVault!]!
   proposal(id: ID!): Proposal
-  proposals(ids: [ID!], verified: Boolean): [Proposal]
-  votingVaults: [VotingVault]
-}
-
-type Proposal {
-  id: ID!
-  votingContract: ID!
-  verified: Boolean
-  title: String
-  description: String
-  quorum: String
-  vote(voter: ID!): Vote
-}
-
-type Vote {
-  votingPower: String
-  castBallot: Ballot
+  proposals(ids: [ID!], isVerified: Boolean): [Proposal]
+  votingPower(voter: ID!, blockNumber: Int): VotingPower
+  votingPowers(voters: [ID!]!, blockNumber: Int): [VotingPower]
 }
 
 type VotingVault {
   address: ID!
-  votePower(voter: ID!, blockNumber: Int): String
+  name: String!
+  votingPower(voter: ID!, blockNumber: Int): VotingPower
+  votingPowers(voters: [ID!]!, blockNumber: Int): [VotingPower]
+}
+
+type Proposal {
+  id: ID!
+  votingContract: VotingContract!
+  # Block Number
+  created: Int
+  description: String
+  # Block Number
+  expiration: Int
+  isVerified: Boolean
+  # Block Number
+  lastCall: Int
+  quorum: String
+  title: String
+  # Block Number
+  unlock: Int
+  vote(voter: ID!): Vote
+  votes(voters: [ID!]!): [Vote]
+  votingPower(voter: ID!): VotingPower
+  votingPowers(voters: [ID!]!): [VotingPower]
+}
+
+type Vote {
+  voter: ID!
+  power: String!
+  castBallot: Ballot
+}
+
+type VotingPower {
+  value: String!
+  voter: ID!
+  votingVaults: [VotingVault!]!
+  blockNumber: Int!
+  isStale: Boolean
 }
 
 enum Ballot {
-  Yes,
-  No,
-  Abstain,
+  Yes
+  No
+  Abstain
 }

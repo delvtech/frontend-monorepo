@@ -3,16 +3,16 @@ import {
   goerliAddressList,
   mainnetAddressList,
 } from "@elementfi/council-tokenlist";
-export {
-  goerliAddressList,
-  mainnetAddressList,
-} from "@elementfi/council-tokenlist";
+import { LOCALHOST_CHAIN_ID } from "./contants";
 
-export const mainnetForkAddressList = { ...mainnetAddressList, chainId: 31337 };
+export const mainnetForkAddressList = {
+  ...mainnetAddressList,
+  chainId: LOCALHOST_CHAIN_ID,
+};
 
 // For local hardhat only, this is inlined as an object to preserve type safety
 export const testnetAddressList: AddressesJsonFile = {
-  chainId: 31337,
+  chainId: LOCALHOST_CHAIN_ID,
   addresses: {
     elementToken: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
     coreVoting: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
@@ -45,21 +45,35 @@ export const waffleAddressList: AddressesJsonFile = {
     vestingVault: "0x2061701b22095418514C0D4a28366C54B1464C17",
     spender: "0x0000000000000000000000000000000000000000",
   },
-  chainId: 31337,
+  chainId: LOCALHOST_CHAIN_ID,
 };
 
-const ALL_ADDRESSES = [
-  testnetAddressList,
-  waffleAddressList,
-  goerliAddressList,
-  mainnetAddressList,
-  mainnetForkAddressList,
-];
+export const addressListsByChainId = {
+  // TODO: When and how should mainnetForkAddressList be used?
+  [LOCALHOST_CHAIN_ID]:
+    process.env.NODE_ENV === "test" ? waffleAddressList : testnetAddressList,
+  [goerliAddressList.chainId]: goerliAddressList,
+  [mainnetAddressList.chainId]: mainnetAddressList,
+};
 
-export function getAddressList(chainId: number): AddressesJsonFile {
+type Addresses = AddressesJsonFile["addresses"];
+
+export function getAddresses(chainId: number): Addresses {
   return (
-    ALL_ADDRESSES.find((addressList) => {
-      return addressList.chainId === chainId;
-    }) || testnetAddressList
+    addressListsByChainId[chainId]?.addresses || testnetAddressList.addresses
   );
+}
+
+export type AddressType = keyof Addresses;
+
+export function getAddressType(
+  address: string,
+  chainId: number,
+): AddressType | undefined {
+  const addresses = getAddresses(chainId);
+  for (const [type, typeAddress] of Object.entries(addresses)) {
+    if (address === typeAddress) {
+      return type as AddressType;
+    }
+  }
 }
