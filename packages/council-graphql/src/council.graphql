@@ -1,26 +1,3 @@
-"""
-CoreVoting
-- holds the proposals
-- allows you to create a proposal
-- maintains a whitelist of approved voting vaults
-- Has events for seeing the list of votes (voting power + ballot) that have been cast)
-- has vote(votingVaults[], proposalId) method
-
-GSCVoting
-- holds the proposals that gsc votes on
-- allows you to create a proposal
-- has a single approved voting vault, aka LockingVault
-- Has events for seeing the list of votes (voting power + ballot) that have been cast)
-- has vote(votingVaults[], proposalId) method
-
-
-VotingVault
-(ie: LockingVault, VestingVault)
-- allows you to deposit your ELFI token, giving you voting power in the vault
-- can define the behavior for calculating how much voting power the depositer into the vault receives
-    - eg, LockingVault defines delegation capabilities, where 1 ELFI = 1 Vote power
-    - eg, VestingVault defines delegation too, but 1 ELFI = 0.25 VP
-"""
 type Query {
   coreVoting: VotingContract
   gscVoting: VotingContract
@@ -35,36 +12,38 @@ type VotingContract {
   votingVaults: [VotingVault!]!
   proposal(id: ID!): Proposal
   proposals(ids: [ID!], isVerified: Boolean): [Proposal]
-  votingPower(voter: ID!, blockNumber: Int): VotingPower
-  votingPowers(voters: [ID!]!, blockNumber: Int): [VotingPower]
+  totalVotingPower(blockNumber: Int): TotalVotingPower
+  voterPower(voter: ID!, blockNumber: Int): VoterPower
+  voterPowers(voters: [ID!]!, blockNumber: Int): [VoterPower]
 }
 
 type VotingVault {
   address: ID!
   name: String!
-  votingPower(voter: ID!, blockNumber: Int): VotingPower
-  votingPowers(voters: [ID!]!, blockNumber: Int): [VotingPower]
+  totalVotingPower(blockNumber: Int): TotalVotingPower
+  voterPower(voter: ID!, blockNumber: Int): VoterPower
+  voterPowers(voters: [ID!]!, blockNumber: Int): [VoterPower]
 }
 
 type Proposal {
   id: ID!
   votingContract: VotingContract!
-  # Block Number
+  "Block Number"
   created: Int
   description: String
-  # Block Number
+  "Block Number"
   expiration: Int
   isVerified: Boolean
-  # Block Number
+  "Block Number"
   lastCall: Int
   quorum: String
   title: String
-  # Block Number
+  "Block Number"
   unlock: Int
   vote(voter: ID!): Vote
   votes(voters: [ID!]!): [Vote]
-  votingPower(voter: ID!): VotingPower
-  votingPowers(voters: [ID!]!): [VotingPower]
+  voterPower(voter: ID!): VoterPower
+  voterPowers(voters: [ID!]!): [VoterPower]
 }
 
 type Vote {
@@ -73,12 +52,18 @@ type Vote {
   castBallot: Ballot
 }
 
-type VotingPower {
+type VoterPower {
+  blockNumber: Int!
   value: String!
   voter: ID!
   votingVaults: [VotingVault!]!
-  blockNumber: Int!
   isStale: Boolean
+}
+
+type TotalVotingPower {
+  blockNumber: Int!
+  value: String!
+  votingVaults: [VotingVault!]!
 }
 
 enum Ballot {

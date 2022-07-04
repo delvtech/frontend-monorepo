@@ -1,10 +1,10 @@
+import { ethers } from "ethers";
+import { Logger } from "ethers/lib/utils";
+import { Provider } from "@ethersproject/providers";
 import {
   VestingVault,
   VestingVault__factory,
 } from "@elementfi/council-typechain";
-import { Provider } from "@ethersproject/providers";
-import { ethers } from "ethers";
-import { Logger } from "ethers/lib/utils";
 import VotingVaultContract from "./VotingVaultContract";
 
 // TODO: implement Dataloader (https://github.com/graphql/dataloader)
@@ -15,6 +15,24 @@ export default class VestingVaultContract extends VotingVaultContract {
     const contract = VestingVault__factory.connect(address, provider);
     super(address, contract);
     this.contract = contract;
+  }
+
+  async getVoteChangeEventArgs(
+    fromBlock?: string | number,
+    toBlock?: string | number,
+  ) {
+    const voteChangeEvents = await this.contract.queryFilter(
+      this.contract.filters.VoteChange(),
+      fromBlock,
+      toBlock,
+    );
+    return voteChangeEvents.map(({ args: { from, to, amount } }) => {
+      return {
+        from,
+        to,
+        amount: amount.toString(),
+      };
+    });
   }
 
   async getVotingPowerView(voter: string, blockNumber: number) {

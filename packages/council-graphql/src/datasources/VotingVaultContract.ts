@@ -1,11 +1,11 @@
+import { ethers } from "ethers";
+import { Logger } from "ethers/lib/utils";
 import {
   GSCVault,
   IVotingVault,
   LockingVault,
   VestingVault,
 } from "@elementfi/council-typechain";
-import { ethers } from "ethers";
-import { Logger } from "ethers/lib/utils";
 
 type VotingVault = IVotingVault | VestingVault | LockingVault | GSCVault;
 

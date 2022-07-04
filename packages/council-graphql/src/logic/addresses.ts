@@ -5,6 +5,12 @@ import {
 } from "@elementfi/council-tokenlist";
 import { LOCALHOST_CHAIN_ID } from "./contants";
 
+// foundation non voting contract
+export const foundationAddress = "0xFEaDB1F18386d0225a38E9c4bD1E9Ac52243dE99";
+
+// team non voting contract
+export const teamAddress = "0xcC46775f1dB1d697c176ed66698BA3C15394C3D4";
+
 export const mainnetForkAddressList = {
   ...mainnetAddressList,
   chainId: LOCALHOST_CHAIN_ID,
@@ -48,20 +54,20 @@ export const waffleAddressList: AddressesJsonFile = {
   chainId: LOCALHOST_CHAIN_ID,
 };
 
-export const addressListsByChainId = {
-  // TODO: When and how should mainnetForkAddressList be used?
-  [LOCALHOST_CHAIN_ID]:
-    process.env.NODE_ENV === "test" ? waffleAddressList : testnetAddressList,
-  [goerliAddressList.chainId]: goerliAddressList,
-  [mainnetAddressList.chainId]: mainnetAddressList,
-};
-
 type Addresses = AddressesJsonFile["addresses"];
 
 export function getAddresses(chainId: number): Addresses {
-  return (
-    addressListsByChainId[chainId]?.addresses || testnetAddressList.addresses
-  );
+  switch (chainId) {
+    case mainnetAddressList.chainId:
+      return mainnetAddressList.addresses;
+    case goerliAddressList.chainId:
+      return goerliAddressList.addresses;
+    default:
+      // TODO: When and how should mainnetForkAddressList be used?
+      return process.env.NODE_ENV === "test"
+        ? waffleAddressList.addresses
+        : testnetAddressList.addresses;
+  }
 }
 
 export type AddressType = keyof Addresses;

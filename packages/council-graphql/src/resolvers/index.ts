@@ -45,7 +45,14 @@ export const resolvers: Resolvers<CouncilResolverContext> = {
         (proposal) => proposal.isVerified === isVerified,
       );
     },
-    votingPower: ({ votingVaults }, { voter, blockNumber }, context) => {
+    totalVotingPower: ({ votingVaults }, { blockNumber }, context) => {
+      return VotingPowerModel.getByVotingVaults(
+        votingVaults,
+        blockNumber,
+        context,
+      );
+    },
+    voterPower: ({ votingVaults }, { voter, blockNumber }, context) => {
       return VotingPowerModel.getByVoter(
         voter,
         votingVaults,
@@ -53,7 +60,7 @@ export const resolvers: Resolvers<CouncilResolverContext> = {
         context,
       );
     },
-    votingPowers: ({ votingVaults }, { voters, blockNumber }, context) => {
+    voterPowers: ({ votingVaults }, { voters, blockNumber }, context) => {
       return VotingPowerModel.getByVoters(
         voters,
         votingVaults,
@@ -63,7 +70,14 @@ export const resolvers: Resolvers<CouncilResolverContext> = {
     },
   },
   VotingVault: {
-    votingPower: (votingVault, { voter, blockNumber }, context) => {
+    totalVotingPower: (votingVault, { blockNumber }, context) => {
+      return VotingPowerModel.getByVotingVault(
+        votingVault,
+        blockNumber,
+        context,
+      );
+    },
+    voterPower: (votingVault, { voter, blockNumber }, context) => {
       return VotingPowerModel.getByVoter(
         voter,
         [votingVault],
@@ -71,7 +85,7 @@ export const resolvers: Resolvers<CouncilResolverContext> = {
         context,
       );
     },
-    votingPowers: (votingVault, { voters, blockNumber }, context) => {
+    voterPowers: (votingVault, { voters, blockNumber }, context) => {
       return VotingPowerModel.getByVoters(
         voters,
         [votingVault],
@@ -87,7 +101,7 @@ export const resolvers: Resolvers<CouncilResolverContext> = {
     votes: (proposal, { voters }, context) => {
       return VoteModel.getByVoters(voters, proposal, context);
     },
-    votingPower: ({ votingContract, created }, { voter }, context) => {
+    voterPower: ({ votingContract, created }, { voter }, context) => {
       return VotingPowerModel.getByVoter(
         voter,
         votingContract.votingVaults,
@@ -95,7 +109,7 @@ export const resolvers: Resolvers<CouncilResolverContext> = {
         context,
       );
     },
-    votingPowers: ({ votingContract, created }, { voters }, context) => {
+    voterPowers: ({ votingContract, created }, { voters }, context) => {
       return VotingPowerModel.getByVoters(
         voters,
         votingContract.votingVaults,
@@ -104,9 +118,9 @@ export const resolvers: Resolvers<CouncilResolverContext> = {
       );
     },
   },
-  VotingPower: {
-    isStale: (votingPower, _, context) => {
-      return VotingPowerModel.getIsStale(votingPower, context);
+  VoterPower: {
+    isStale: (voterPower, _, context) => {
+      return VotingPowerModel.getIsStale(voterPower, context);
     },
   },
 };

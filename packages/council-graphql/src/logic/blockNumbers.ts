@@ -1,20 +1,13 @@
-import {
-  goerliAddressList,
-  mainnetAddressList,
-} from "@elementfi/council-tokenlist";
 import { Provider } from "@ethersproject/providers";
-import { LOCALHOST_CHAIN_ID } from "./contants";
-
-const fromBlockNumbersByChainId = {
-  [LOCALHOST_CHAIN_ID]: 0,
-  [goerliAddressList.chainId]: 0,
-  [mainnetAddressList.chainId]: 14496292,
-};
+import { mainnetAddressList } from "@elementfi/council-tokenlist";
 
 export function getFromBlock(chainId: number) {
-  return fromBlockNumbersByChainId[
-    chainId as keyof typeof fromBlockNumbersByChainId
-  ];
+  switch (chainId) {
+    case mainnetAddressList.chainId:
+      return 14496292;
+    default:
+      return 0;
+  }
 }
 
 // The result is cached for 10 seconds to ensure the block number is the same

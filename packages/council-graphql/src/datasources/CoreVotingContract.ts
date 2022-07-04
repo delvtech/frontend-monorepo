@@ -1,5 +1,5 @@
-import { CoreVoting__factory, CoreVoting } from "@elementfi/council-typechain";
 import { Provider } from "@ethersproject/providers";
+import { CoreVoting__factory, CoreVoting } from "@elementfi/council-typechain";
 
 // TODO: implement Dataloader (https://github.com/graphql/dataloader)
 export default class CoreVotingContract {
@@ -21,7 +21,7 @@ export default class CoreVotingContract {
       toBlock,
     );
     return proposalCreatedEvents.map(
-      ({ args: { proposalId, created, execution, expiration }, ...rest }) => {
+      ({ args: { proposalId, created, execution, expiration } }) => {
         return {
           proposalId: proposalId.toString(),
           created: created.toNumber(),

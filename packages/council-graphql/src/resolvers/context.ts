@@ -1,10 +1,10 @@
 import { ResolverContext } from "@elementfi/graphql";
-import CoreVotingContract from "src/datasources/CoreVotingContract";
 import AmazonS3API from "src/datasources/AmazonS3API";
-import { getAddresses } from "src/logic/addresses";
+import CoreVotingContract from "src/datasources/CoreVotingContract";
+import GSCVaultContract from "src/datasources/GSCVaultContract";
 import LockingVaultContract from "src/datasources/LockingVaultContract";
 import VestingVaultContract from "src/datasources/VestingVaultContract";
-import GSCVaultContract from "src/datasources/GSCVaultContract";
+import { getAddresses } from "src/logic/addresses";
 
 export type CouncilResolverContext = ResolverContext<{
   dataSources: {

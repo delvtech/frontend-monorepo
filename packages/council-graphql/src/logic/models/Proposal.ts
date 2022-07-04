@@ -2,10 +2,14 @@ import {
   ProposalsJson,
   Proposal as ProposalInfo,
 } from "@elementfi/council-proposals";
+import {
+  goerliAddressList,
+  mainnetAddressList,
+} from "@elementfi/council-tokenlist";
 import { Proposal, VotingContract } from "src/generated";
-import { CouncilResolverContext } from "src/resolvers/context";
 import { AddressType } from "src/logic/addresses";
 import { getFromBlock } from "src/logic/blockNumbers";
+import { CouncilResolverContext } from "src/resolvers/context";
 
 export const ProposalModel = {
   async getByIds(
@@ -14,7 +18,7 @@ export const ProposalModel = {
     context: CouncilResolverContext,
   ): Promise<Proposal[]> {
     const infos = await getInfos(votingContract, context);
-    const infosById: Record<string, Partial<ProposalInfo> | undefined> = {};
+    const infosById: Record<string, Partial<ProposalInfo>> = {};
     for (const info of infos) {
       infosById[info.proposalId] = info;
     }
@@ -107,9 +111,9 @@ async function getInfos(
 
 function getInfoFileName(chainId: number) {
   switch (chainId) {
-    case 1:
+    case mainnetAddressList.chainId:
       return "mainnet.proposals.json";
-    case 5:
+    case goerliAddressList.chainId:
       return "goerli.proposals.json";
     default:
       "testnet.proposals.json";
@@ -118,9 +122,9 @@ function getInfoFileName(chainId: number) {
 
 function getGSCInfoFileName(chainId: number) {
   switch (chainId) {
-    case 1:
+    case mainnetAddressList.chainId:
       return "mainnet-gsc.proposals.json";
-    case 5:
+    case goerliAddressList.chainId:
       return "goerli-gsc.proposals.json";
     default:
       "testnet-gsc.proposals.json";

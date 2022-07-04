@@ -25,7 +25,7 @@ export interface InitOptions {
 }
 
 /**
- * Initialize the schema and context from an array of `Graph`s`.
+ * Initialize the schema and context from an array of `Graph`s.
  * @param options An object for configuring the execution layer.
  * @param options.graphs An array of `Graph`s which contain executable schemas
  *  and `initContext` functions.
