@@ -1,4 +1,4 @@
-import { formatEther } from "ethers/lib/utils";
+import { formatEther, parseEther } from "ethers/lib/utils";
 import { TotalVotingPower, VoterPower, VotingVault } from "src/generated";
 import {
   AddressType,
@@ -46,7 +46,7 @@ export const VotingPowerModel = {
     }
     return {
       blockNumber,
-      value: value.toString(),
+      value: formatEther(value),
       votingVaults: [votingVault],
     };
   },
@@ -65,12 +65,12 @@ export const VotingPowerModel = {
           blockNumber,
           context,
         );
-        aggregateValue += BigInt(vaultVotingPower.value);
+        aggregateValue += parseEther(vaultVotingPower.value).toBigInt();
       }),
     );
     return {
       blockNumber,
-      value: aggregateValue.toString(),
+      value: formatEther(aggregateValue),
       votingVaults,
     };
   },

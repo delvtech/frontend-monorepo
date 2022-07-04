@@ -296,6 +296,7 @@ class $a0cf45371a696709$export$2e2bcd8739ae039 {
             (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
             return votePower.toString();
         } catch (error) {
+            console.error(error);
             return "0";
         }
     }
@@ -329,7 +330,9 @@ class $a1c706d406f5708a$export$2e2bcd8739ae039 extends (0, $a0cf45371a696709$exp
             const votePower = await this.contract.callStatic.queryVotePowerView(voter, blockNumber);
             (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
             return votePower.toString();
-        } catch (error) {}
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
@@ -365,7 +368,9 @@ class $e0e2802e459d88e3$export$2e2bcd8739ae039 extends (0, $a0cf45371a696709$exp
             const votePower = await this.contract.callStatic.queryVotePowerView(voter, blockNumber);
             (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
             return votePower.toString();
-        } catch (error) {}
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
@@ -387,7 +392,7 @@ const $889645ffb5e37d8c$export$a0cbbdeeb12308cd = {
         }
         return {
             blockNumber: blockNumber,
-            value: value.toString(),
+            value: (0, $1RIJT$etherslibutils.formatEther)(value),
             votingVaults: [
                 votingVault
             ]
@@ -398,11 +403,11 @@ const $889645ffb5e37d8c$export$a0cbbdeeb12308cd = {
         let aggregateValue = BigInt(0);
         await Promise.all(votingVaults.map(async (votingVault)=>{
             const vaultVotingPower = await this.getByVotingVault(votingVault, blockNumber, context);
-            aggregateValue += BigInt(vaultVotingPower.value);
+            aggregateValue += (0, $1RIJT$etherslibutils.parseEther)(vaultVotingPower.value).toBigInt();
         }));
         return {
             blockNumber: blockNumber,
-            value: aggregateValue.toString(),
+            value: (0, $1RIJT$etherslibutils.formatEther)(aggregateValue),
             votingVaults: votingVaults
         };
     },
@@ -537,6 +542,16 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
 };
 
 
+class $1372f0480bdde47b$export$2e2bcd8739ae039 {
+    constructor(baseUrl){
+        this.baseUrl = baseUrl;
+    }
+    getFile(fileName, transformation) {
+        return fetch(`${this.baseUrl}${fileName}`).then((res)=>res[transformation || "text"]());
+    }
+}
+
+
 
 class $41844f56d22dc55e$export$2e2bcd8739ae039 {
     constructor(address, provider){
@@ -571,19 +586,6 @@ class $41844f56d22dc55e$export$2e2bcd8739ae039 {
 }
 
 
-class $1372f0480bdde47b$export$2e2bcd8739ae039 {
-    constructor(baseUrl){
-        this.baseUrl = baseUrl;
-    }
-    getFile(fileName, transformation) {
-        return fetch(`${this.baseUrl}${fileName}`).then((res)=>res[transformation || "text"]());
-    }
-}
-
-
-
-
-
 
 
 class $492df70f1218e6f0$export$2e2bcd8739ae039 extends (0, $a0cf45371a696709$export$2e2bcd8739ae039) {
@@ -593,6 +595,9 @@ class $492df70f1218e6f0$export$2e2bcd8739ae039 extends (0, $a0cf45371a696709$exp
         this.contract = contract;
     }
 }
+
+
+
 
 
 async function $362c94e84882e5ac$export$54fae1269cb9a9e0(context) {
