@@ -1,9 +1,16 @@
 # Council GraphQL
 
+An Element Finance GraphQL package designed to be used with [@elementfi/graphql](https://github.com/element-fi/frontend-monorepo/tree/main/packages/graphql) to interact with the [Council](https://github.com/element-fi/council) contracts using GraphQL.
+
 ## TODO
 
-- Implement Dataloaders
-- Separate business logic and data access (storage) layers
+- [ ] Implement Dataloaders
+- [x] Separate business logic and data access (storage) layers
+- [ ] Measure efficiency gains from switching to GraphQL (+DataLoaders)
+  - [ ] Alchemy request volume
+  - [ ] Page data load time
+    - [ ] Initial
+    - [ ] Navigating
 
 ## Notes
 
