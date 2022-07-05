@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "skipLibCheck": true,
     "esModuleInterop": true,
     "strict": true,
@@ -18,12 +15,8 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "src/*": [
-        "./src/*"
-      ]
+      "src/*": ["./src/*"]
     }
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
