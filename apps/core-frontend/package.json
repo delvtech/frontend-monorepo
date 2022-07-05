@@ -127,7 +127,7 @@
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
     "react-test-renderer": "^17.0.2",
-    "ts-node": "^10.4.0",
+    "ts-node": "^10.8.1",
     "ttag-cli": "^1.9.3",
     "typechain": "^5.2.0"
   },
