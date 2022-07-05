@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "esnext"],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "module": "commonjs",
+    // Use "react-jsx" option so we don't have to import React
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "incremental": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

@@ -1,6 +1,6 @@
 {
   "extends": "stylelint-config-recommended",
-  "ignoreFiles": ["**/tailwind.output.css"],
+  "ignoreFiles": ["**/tailwind.output.css", "**/dist/**/*.css"],
   "rules": {
     "declaration-empty-line-before": "never",
     "at-rule-no-unknown": [

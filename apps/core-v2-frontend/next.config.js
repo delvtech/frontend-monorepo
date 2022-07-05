@@ -1,5 +1,8 @@
 const svgrTemplate = require("./svgr-template");
 
+/**
+ * @type {import("next").NextConfig}
+ */
 const nextConfig = {
   eslint: {
     dirs: ["pages", "src"],
@@ -7,6 +10,7 @@ const nextConfig = {
   experimental: {
     externalDir: true,
   },
+
   webpack: (config) => {
     // https://github.com/a16z/zkp-merkle-airdrop-fe-ex#notes
     config.resolve.fallback = {
