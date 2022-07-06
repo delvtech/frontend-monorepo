@@ -37,6 +37,7 @@ export type Proposal = {
     expiration: Scalars['Int'];
     id: Scalars['ID'];
     /** Block Number */
+    isActive?: Maybe<Scalars['Boolean']>;
     lastCall?: Maybe<Scalars['Int']>;
     quorum?: Maybe<Scalars['String']>;
     /** Block Number */
@@ -116,7 +117,6 @@ export type VoterVotingPowersArgs = {
 export type VotingContract = {
     __typename?: 'VotingContract';
     address: Scalars['ID'];
-    name: Scalars['String'];
     proposal?: Maybe<Proposal>;
     proposals?: Maybe<Array<Maybe<Proposal>>>;
     totalVotingPower?: Maybe<TotalVotingPower>;
@@ -153,7 +153,6 @@ export type VotingPower = {
 export type VotingVault = {
     __typename?: 'VotingVault';
     address: Scalars['ID'];
-    name: Scalars['String'];
     totalVotingPower?: Maybe<TotalVotingPower>;
     voters?: Maybe<Array<Maybe<Voter>>>;
     votingPower?: Maybe<VotingPower>;
@@ -231,6 +230,7 @@ export type ProposalResolvers<ContextType = ResolverContext, ParentType extends 
     created?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
     expiration?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
     id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+    isActive?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
     lastCall?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
     quorum?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     unlock?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -274,7 +274,6 @@ export type VoterResolvers<ContextType = ResolverContext, ParentType extends Res
 };
 export type VotingContractResolvers<ContextType = ResolverContext, ParentType extends ResolversParentTypes['VotingContract'] = ResolversParentTypes['VotingContract']> = {
     address?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-    name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     proposal?: Resolver<Maybe<ResolversTypes['Proposal']>, ParentType, ContextType, RequireFields<VotingContractProposalArgs, 'id'>>;
     proposals?: Resolver<Maybe<Array<Maybe<ResolversTypes['Proposal']>>>, ParentType, ContextType, Partial<VotingContractProposalsArgs>>;
     totalVotingPower?: Resolver<Maybe<ResolversTypes['TotalVotingPower']>, ParentType, ContextType, Partial<VotingContractTotalVotingPowerArgs>>;
@@ -294,7 +293,6 @@ export type VotingPowerResolvers<ContextType = ResolverContext, ParentType exten
 };
 export type VotingVaultResolvers<ContextType = ResolverContext, ParentType extends ResolversParentTypes['VotingVault'] = ResolversParentTypes['VotingVault']> = {
     address?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-    name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     totalVotingPower?: Resolver<Maybe<ResolversTypes['TotalVotingPower']>, ParentType, ContextType, Partial<VotingVaultTotalVotingPowerArgs>>;
     voters?: Resolver<Maybe<Array<Maybe<ResolversTypes['Voter']>>>, ParentType, ContextType>;
     votingPower?: Resolver<Maybe<ResolversTypes['VotingPower']>, ParentType, ContextType, RequireFields<VotingVaultVotingPowerArgs, 'voter'>>;

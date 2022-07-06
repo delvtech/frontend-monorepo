@@ -31,12 +31,12 @@ export const VotingPowerModel: VotingPowerModel = {
     voter,
     blockNumber,
     votingVaults,
-    context: { dataSources, provider },
+    context: { councilDataSources, provider },
   }) {
     blockNumber = blockNumber || (await getLatestBlockNumber(provider));
     let aggregateValue = BigInt(0);
     for (const { address } of votingVaults) {
-      const dataSource = getDataSourceByAddress(address, dataSources);
+      const dataSource = getDataSourceByAddress(address, councilDataSources);
       if (dataSource instanceof VotingVaultContract) {
         const vaultPower = await dataSource.getVotingPowerView(
           voter.address,
@@ -63,7 +63,7 @@ export const VotingPowerModel: VotingPowerModel = {
 
   async getIsStale({
     votingPower: { value, voter, votingVaults, blockNumber },
-    context: { dataSources, provider },
+    context: { councilDataSources, provider },
   }) {
     const latestBlock = await getLatestBlockNumber(provider);
     if (blockNumber === latestBlock) {
@@ -71,7 +71,7 @@ export const VotingPowerModel: VotingPowerModel = {
     } else {
       let isStale;
       for (const { address } of votingVaults) {
-        const dataSource = getDataSourceByAddress(address, dataSources);
+        const dataSource = getDataSourceByAddress(address, councilDataSources);
 
         if (dataSource instanceof VotingVaultContract) {
           const valueAtBlock = await dataSource?.getVotingPower(

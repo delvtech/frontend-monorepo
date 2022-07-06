@@ -19,11 +19,11 @@ interface VoteModel {
 }
 
 export const VoteModel: VoteModel = {
-  async getByVoter({ voter, proposal, context: { dataSources } }) {
+  async getByVoter({ voter, proposal, context: { councilDataSources } }) {
     const { id, votingContract } = proposal;
     let dataSource = getDataSourceByAddress(
       votingContract.address,
-      dataSources,
+      councilDataSources,
     ) as CoreVotingContract;
     const { votingPower, castBallot } = await dataSource.getVote(
       voter.address,

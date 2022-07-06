@@ -35,14 +35,14 @@ export const VoterModel: VoterModel = {
   async getByVotingVaults({
     votingVaults,
     blockNumber,
-    context: { dataSources },
+    context: { councilDataSources },
   }) {
     const voterPowers: Record<string, bigint> = {};
 
     for (const votingVault of votingVaults) {
       const dataSource = getDataSourceByAddress(
         votingVault.address,
-        dataSources,
+        councilDataSources,
       ) as VotingVaultContract;
       const powerChanges = await dataSource.getVoteChangeEventArgs(
         undefined,

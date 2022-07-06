@@ -15,34 +15,33 @@ import {
 // TODO: What's the right way to prevent collisions with other packages.
 // Namespace?
 export async function initContext(
-  context: ResolverContext,
+  context: ResolverContext
 ): Promise<CouncilContext> {
-  const { addresses, chainId, dataSources, provider } = context;
+  const { chainId, provider } = context;
   const councilAddresses = getAddresses(chainId);
   const lockingVault = new LockingVaultContract(
-    addresses.lockingVault,
-    provider,
+    councilAddresses.lockingVault,
+    provider
   );
   const vestingVault = new VestingVaultContract(
-    addresses.vestingVault,
-    provider,
+    councilAddresses.vestingVault,
+    provider
   );
-  const gscVault = new GSCVaultContract(addresses.gscVault, provider);
+  const gscVault = new GSCVaultContract(councilAddresses.gscVault, provider);
   return {
     ...context,
-    addresses: {
-      ...addresses,
-      ...councilAddresses,
-    },
-    dataSources: {
-      ...dataSources,
-      coreVoting: new CoreVotingContract(addresses.coreVoting, provider, [
-        lockingVault,
-        vestingVault,
-      ]),
-      gscVoting: new CoreVotingContract(addresses.gscCoreVoting, provider, [
-        gscVault,
-      ]),
+    councilAddresses,
+    councilDataSources: {
+      coreVoting: new CoreVotingContract(
+        councilAddresses.coreVoting,
+        provider,
+        [lockingVault, vestingVault]
+      ),
+      gscVoting: new CoreVotingContract(
+        councilAddresses.gscCoreVoting,
+        provider,
+        [gscVault]
+      ),
       lockingVault,
       vestingVault,
       gscVault,

@@ -65,7 +65,7 @@ export const ProposalModel: ProposalModel = {
   async getIsActive({ proposal, context }) {
     const dataSource = getDataSourceByAddress(
       proposal.votingContract.address,
-      context.dataSources,
+      context.councilDataSources,
     ) as CoreVotingContract;
     const { proposalHash } = await dataSource.getProposalById(proposal.id);
     return proposalHash !== EXECUTED_PROPOSAL_HASH;
@@ -74,7 +74,7 @@ export const ProposalModel: ProposalModel = {
   async getLastCall({ proposal, context }) {
     const dataSource = getDataSourceByAddress(
       proposal.votingContract.address,
-      context.dataSources,
+      context.councilDataSources,
     ) as CoreVotingContract;
 
     const { proposalHash, lastCall } = await dataSource.getProposalById(
@@ -89,7 +89,7 @@ export const ProposalModel: ProposalModel = {
   async getQuorum({ proposal, context }) {
     const dataSource = getDataSourceByAddress(
       proposal.votingContract.address,
-      context.dataSources,
+      context.councilDataSources,
     ) as CoreVotingContract;
 
     const { proposalHash, quorum } = await dataSource.getProposalById(
@@ -104,7 +104,7 @@ export const ProposalModel: ProposalModel = {
   async getByVotingContract({ votingContract, context }) {
     const dataSource = getDataSourceByAddress(
       votingContract.address,
-      context.dataSources,
+      context.councilDataSources,
     ) as CoreVotingContract;
 
     if (!dataSource) {

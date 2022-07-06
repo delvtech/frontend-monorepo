@@ -17,7 +17,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     coreVoting: (_, __, context) => {
       return (
         VotingContractModel.getByAddress({
-          address: context.dataSources.coreVoting.address,
+          address: context.councilDataSources.coreVoting.address,
           context,
         }) || null
       );
@@ -25,7 +25,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     gscVoting: (_, __, context) => {
       return (
         VotingContractModel.getByAddress({
-          address: context.dataSources.gscVoting.address,
+          address: context.councilDataSources.gscVoting.address,
           context,
         }) || null
       );
@@ -33,7 +33,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     lockingVault: (_, __, context) => {
       return (
         VotingVaultModel.getByAddress({
-          address: context.dataSources.lockingVault.address,
+          address: context.councilDataSources.lockingVault.address,
           context,
         }) || null
       );
@@ -41,7 +41,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     vestingVault: (_, __, context) => {
       return (
         VotingVaultModel.getByAddress({
-          address: context.dataSources.vestingVault.address,
+          address: context.councilDataSources.vestingVault.address,
           context,
         }) || null
       );
@@ -49,7 +49,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     gscVault: (_, __, context) => {
       return (
         VotingVaultModel.getByAddress({
-          address: context.dataSources.gscVault.address,
+          address: context.councilDataSources.gscVault.address,
           context,
         }) || null
       );
@@ -63,15 +63,15 @@ export const resolvers: Resolvers<CouncilContext> = {
       } else {
         const votingVaults = VotingVaultModel.getByAddresses({
           addresses: [
-            context.dataSources.lockingVault.address,
-            context.dataSources.vestingVault.address,
-            context.dataSources.gscVault.address,
+            context.councilDataSources.lockingVault.address,
+            context.councilDataSources.vestingVault.address,
+            context.councilDataSources.gscVault.address,
           ],
           context,
         });
         return VoterModel.getByVotingVaults({
           votingVaults: votingVaults.filter(
-            (vault) => !!vault,
+            (vault) => !!vault
           ) as VotingVaultContract[],
           context,
         });
@@ -127,7 +127,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     votingPowers: async (
       { votingVaults },
       { voters: addresses, blockNumber },
-      context,
+      context
     ) => {
       const voters = addresses
         ? VoterModel.getByAddresses({ addresses })
@@ -164,7 +164,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     votingPowers: async (
       votingVault,
       { voters: addresses, blockNumber },
-      context,
+      context
     ) => {
       const voters = addresses
         ? VoterModel.getByAddresses({ addresses })
@@ -215,7 +215,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     votingPowers: async (
       { votingContract, created },
       { voters: addresses },
-      context,
+      context
     ) => {
       const { votingVaults } = votingContract;
       const voters = addresses
@@ -265,7 +265,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     votes: async (
       voter,
       { proposals: ids, votingContract: address },
-      context,
+      context
     ) => {
       const votingContract = VotingContractModel.getByAddress({
         address,
@@ -289,7 +289,7 @@ export const resolvers: Resolvers<CouncilContext> = {
             proposal,
             context,
           });
-        }),
+        })
       );
     },
   },

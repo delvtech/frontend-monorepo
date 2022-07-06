@@ -12,7 +12,7 @@ interface VotingContractModel {
 
 export const VotingContractModel: VotingContractModel = {
   getByAddress({ address, context }) {
-    const dataSource = getDataSourceByAddress(address, context.dataSources);
+    const dataSource = getDataSourceByAddress(address, context.councilDataSources);
     if (dataSource instanceof CoreVotingContract) {
       return {
         address: dataSource.address,

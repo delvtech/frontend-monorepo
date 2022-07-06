@@ -27500,7 +27500,7 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-snarkjs@0.4.10, snarkjs@^0.4.10:
+snarkjs@0.4.10:
   version "0.4.10"
   resolved "https://registry.yarnpkg.com/snarkjs/-/snarkjs-0.4.10.tgz#5a8048e691af8f3e6016014ba2cb0e916f508be1"
   integrity sha512-YWgxso7CGcSfkyDGraVjPuBJtq6GEsZ16YBJj2eD0TFum2D5BxnawvyTo4p/7UpctAT0r05DoHo80zgaWnbIKA==

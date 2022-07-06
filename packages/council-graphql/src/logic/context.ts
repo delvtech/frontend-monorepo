@@ -5,8 +5,8 @@ import { LockingVaultContract } from "src/datasources/LockingVaultContract";
 import { VestingVaultContract } from "src/datasources/VestingVaultContract";
 
 export type CouncilContext = ResolverContext<{
-  addresses: Record<string, string>;
-  dataSources: {
+  councilAddresses: Record<string, string>;
+  councilDataSources: {
     coreVoting: CoreVotingContract;
     gscVoting: CoreVotingContract;
     lockingVault: LockingVaultContract;

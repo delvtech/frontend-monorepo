@@ -40,8 +40,8 @@ type Proposal {
   expiration: Int!
   "Block Number"
   unlock: Int!
-  "Block Number"
   isActive: Boolean
+  "Block Number"
   lastCall: Int
   quorum: String
   vote(voter: ID!): Vote

@@ -1,15 +1,16 @@
 import {
   AddressesJsonFile,
-  goerliAddressList,
-  mainnetAddressList,
+  goerliAddressList as originalGoerliAddressList,
+  mainnetAddressList as originalMainnetAddressList,
 } from "@elementfi/council-tokenlist";
 
-export { goerliAddressList, mainnetAddressList };
+export const goerliAddressList = originalGoerliAddressList;
+export const mainnetAddressList = originalMainnetAddressList;
 
 const LOCALHOST_CHAIN_ID = 31337;
 
 export const mainnetForkAddressList = {
-  ...mainnetAddressList,
+  ...originalMainnetAddressList,
   chainId: LOCALHOST_CHAIN_ID,
 };
 

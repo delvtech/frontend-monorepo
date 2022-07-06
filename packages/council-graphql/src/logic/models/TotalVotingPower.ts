@@ -28,10 +28,10 @@ interface TotalVotingPowerModel {
 
 export const TotalVotingPowerModel: TotalVotingPowerModel = {
   async getByVotingVault({ votingVault, blockNumber, context }) {
-    const { chainId, dataSources, provider } = context;
+    const { chainId, councilDataSources, provider } = context;
     const dataSource = getDataSourceByAddress(
       votingVault.address,
-      dataSources,
+      councilDataSources,
     ) as VotingVaultContract;
 
     blockNumber = blockNumber || (await getLatestBlockNumber(provider));
