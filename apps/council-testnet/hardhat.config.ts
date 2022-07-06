@@ -58,12 +58,12 @@ const config: HardhatUserConfig = {
         count: 10,
       },
     },
-    mainnet: {
-      url: process.env.MAINNET_URI,
-    },
-    goerli: {
-      url: process.env.GOERLI_URI,
-    },
+    // mainnet: {
+    //   url: process.env.MAINNET_URI,
+    // },
+    // goerli: {
+    //   url: process.env.GOERLI_URI,
+    // },
   },
 };
 
