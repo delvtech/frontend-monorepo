@@ -29,19 +29,19 @@ export interface GreeterInterface extends utils.Interface {
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "greet" | "setGreeting"
+    nameOrSignatureOrTopic: "greet" | "setGreeting",
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "greet", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "setGreeting",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(functionFragment: "greet", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setGreeting",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
 
   events: {};
@@ -57,15 +57,15 @@ export interface Greeter extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -78,7 +78,7 @@ export interface Greeter extends BaseContract {
 
     setGreeting(
       _greeting: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -86,7 +86,7 @@ export interface Greeter extends BaseContract {
 
   setGreeting(
     _greeting: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -94,7 +94,7 @@ export interface Greeter extends BaseContract {
 
     setGreeting(
       _greeting: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
@@ -105,7 +105,7 @@ export interface Greeter extends BaseContract {
 
     setGreeting(
       _greeting: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -114,7 +114,7 @@ export interface Greeter extends BaseContract {
 
     setGreeting(
       _greeting: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

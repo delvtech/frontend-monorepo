@@ -54,7 +54,7 @@ type GreeterConstructorParams =
   | ConstructorParameters<typeof ContractFactory>;
 
 const isSuperArgs = (
-  xs: GreeterConstructorParams
+  xs: GreeterConstructorParams,
 ): xs is ConstructorParameters<typeof ContractFactory> => xs.length > 1;
 
 export class Greeter__factory extends ContractFactory {
@@ -68,13 +68,13 @@ export class Greeter__factory extends ContractFactory {
 
   override deploy(
     _greeting: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<Greeter> {
     return super.deploy(_greeting, overrides || {}) as Promise<Greeter>;
   }
   override getDeployTransaction(
     _greeting: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): TransactionRequest {
     return super.getDeployTransaction(_greeting, overrides || {});
   }
@@ -92,7 +92,7 @@ export class Greeter__factory extends ContractFactory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    signerOrProvider: Signer | Provider,
   ): Greeter {
     return new Contract(address, _abi, signerOrProvider) as Greeter;
   }
