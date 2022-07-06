@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-07-04T13:31:36-05:00
+// Generated on 2022-07-06T05:43:42-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -40,39 +40,38 @@ export enum Ballot {
 export type Proposal = {
   __typename?: "Proposal";
   /** Block Number */
-  created?: Maybe<Scalars["Int"]>;
-  description?: Maybe<Scalars["String"]>;
+  created: Scalars["Int"];
   /** Block Number */
-  expiration?: Maybe<Scalars["Int"]>;
+  expiration: Scalars["Int"];
   id: Scalars["ID"];
-  isVerified?: Maybe<Scalars["Boolean"]>;
   /** Block Number */
+  isActive?: Maybe<Scalars["Boolean"]>;
   lastCall?: Maybe<Scalars["Int"]>;
   quorum?: Maybe<Scalars["String"]>;
-  title?: Maybe<Scalars["String"]>;
   /** Block Number */
-  unlock?: Maybe<Scalars["Int"]>;
+  unlock: Scalars["Int"];
   vote?: Maybe<Vote>;
-  voterPower?: Maybe<VoterPower>;
-  voterPowers?: Maybe<Array<Maybe<VoterPower>>>;
+  voters?: Maybe<Array<Maybe<Voter>>>;
   votes?: Maybe<Array<Maybe<Vote>>>;
   votingContract: VotingContract;
+  votingPower?: Maybe<VotingPower>;
+  votingPowers?: Maybe<Array<Maybe<VotingPower>>>;
 };
 
 export type ProposalVoteArgs = {
   voter: Scalars["ID"];
 };
 
-export type ProposalVoterPowerArgs = {
+export type ProposalVotesArgs = {
+  voters: Array<Scalars["ID"]>;
+};
+
+export type ProposalVotingPowerArgs = {
   voter: Scalars["ID"];
 };
 
-export type ProposalVoterPowersArgs = {
-  voters: Array<Scalars["ID"]>;
-};
-
-export type ProposalVotesArgs = {
-  voters: Array<Scalars["ID"]>;
+export type ProposalVotingPowersArgs = {
+  voters?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export type Query = {
@@ -82,6 +81,16 @@ export type Query = {
   gscVoting?: Maybe<VotingContract>;
   lockingVault?: Maybe<VotingVault>;
   vestingVault?: Maybe<VotingVault>;
+  voter?: Maybe<Voter>;
+  voters?: Maybe<Array<Maybe<Voter>>>;
+};
+
+export type QueryVoterArgs = {
+  address: Scalars["ID"];
+};
+
+export type QueryVotersArgs = {
+  addresses?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export type TotalVotingPower = {
@@ -95,27 +104,48 @@ export type Vote = {
   __typename?: "Vote";
   castBallot?: Maybe<Ballot>;
   power: Scalars["String"];
-  voter: Scalars["ID"];
+  proposal: Proposal;
+  voter: Voter;
 };
 
-export type VoterPower = {
-  __typename?: "VoterPower";
-  blockNumber: Scalars["Int"];
-  isStale?: Maybe<Scalars["Boolean"]>;
-  value: Scalars["String"];
-  voter: Scalars["ID"];
-  votingVaults: Array<VotingVault>;
+export type Voter = {
+  __typename?: "Voter";
+  address: Scalars["ID"];
+  vote?: Maybe<Vote>;
+  votes?: Maybe<Array<Maybe<Vote>>>;
+  votingPower?: Maybe<VotingPower>;
+  votingPowers?: Maybe<Array<Maybe<VotingPower>>>;
+};
+
+export type VoterVoteArgs = {
+  proposal: Scalars["ID"];
+  votingContract: Scalars["ID"];
+};
+
+export type VoterVotesArgs = {
+  proposals: Array<Scalars["ID"]>;
+  votingContract: Scalars["ID"];
+};
+
+export type VoterVotingPowerArgs = {
+  blockNumber?: InputMaybe<Scalars["Int"]>;
+  votingVault: Scalars["ID"];
+};
+
+export type VoterVotingPowersArgs = {
+  blockNumber?: InputMaybe<Scalars["Int"]>;
+  votingVaults: Array<Scalars["ID"]>;
 };
 
 export type VotingContract = {
   __typename?: "VotingContract";
   address: Scalars["ID"];
-  name: Scalars["String"];
   proposal?: Maybe<Proposal>;
   proposals?: Maybe<Array<Maybe<Proposal>>>;
   totalVotingPower?: Maybe<TotalVotingPower>;
-  voterPower?: Maybe<VoterPower>;
-  voterPowers?: Maybe<Array<Maybe<VoterPower>>>;
+  voters?: Maybe<Array<Maybe<Voter>>>;
+  votingPower?: Maybe<VotingPower>;
+  votingPowers?: Maybe<Array<Maybe<VotingPower>>>;
   votingVaults: Array<VotingVault>;
 };
 
@@ -125,44 +155,52 @@ export type VotingContractProposalArgs = {
 
 export type VotingContractProposalsArgs = {
   ids?: InputMaybe<Array<Scalars["ID"]>>;
-  isVerified?: InputMaybe<Scalars["Boolean"]>;
 };
 
 export type VotingContractTotalVotingPowerArgs = {
   blockNumber?: InputMaybe<Scalars["Int"]>;
 };
 
-export type VotingContractVoterPowerArgs = {
+export type VotingContractVotingPowerArgs = {
   blockNumber?: InputMaybe<Scalars["Int"]>;
   voter: Scalars["ID"];
 };
 
-export type VotingContractVoterPowersArgs = {
+export type VotingContractVotingPowersArgs = {
   blockNumber?: InputMaybe<Scalars["Int"]>;
-  voters: Array<Scalars["ID"]>;
+  voters?: InputMaybe<Array<Scalars["ID"]>>;
+};
+
+export type VotingPower = {
+  __typename?: "VotingPower";
+  blockNumber: Scalars["Int"];
+  isStale?: Maybe<Scalars["Boolean"]>;
+  value: Scalars["String"];
+  voter: Voter;
+  votingVaults: Array<VotingVault>;
 };
 
 export type VotingVault = {
   __typename?: "VotingVault";
   address: Scalars["ID"];
-  name: Scalars["String"];
   totalVotingPower?: Maybe<TotalVotingPower>;
-  voterPower?: Maybe<VoterPower>;
-  voterPowers?: Maybe<Array<Maybe<VoterPower>>>;
+  voters?: Maybe<Array<Maybe<Voter>>>;
+  votingPower?: Maybe<VotingPower>;
+  votingPowers?: Maybe<Array<Maybe<VotingPower>>>;
 };
 
 export type VotingVaultTotalVotingPowerArgs = {
   blockNumber?: InputMaybe<Scalars["Int"]>;
 };
 
-export type VotingVaultVoterPowerArgs = {
+export type VotingVaultVotingPowerArgs = {
   blockNumber?: InputMaybe<Scalars["Int"]>;
   voter: Scalars["ID"];
 };
 
-export type VotingVaultVoterPowersArgs = {
+export type VotingVaultVotingPowersArgs = {
   blockNumber?: InputMaybe<Scalars["Int"]>;
-  voters: Array<Scalars["ID"]>;
+  voters?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -281,8 +319,9 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars["String"]>;
   TotalVotingPower: ResolverTypeWrapper<TotalVotingPower>;
   Vote: ResolverTypeWrapper<Vote>;
-  VoterPower: ResolverTypeWrapper<VoterPower>;
+  Voter: ResolverTypeWrapper<Voter>;
   VotingContract: ResolverTypeWrapper<VotingContract>;
+  VotingPower: ResolverTypeWrapper<VotingPower>;
   VotingVault: ResolverTypeWrapper<VotingVault>;
 };
 
@@ -296,8 +335,9 @@ export type ResolversParentTypes = {
   String: Scalars["String"];
   TotalVotingPower: TotalVotingPower;
   Vote: Vote;
-  VoterPower: VoterPower;
+  Voter: Voter;
   VotingContract: VotingContract;
+  VotingPower: VotingPower;
   VotingVault: VotingVault;
 };
 
@@ -305,40 +345,27 @@ export type ProposalResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["Proposal"] = ResolversParentTypes["Proposal"],
 > = {
-  created?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
-  description?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
-  expiration?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  created?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  expiration?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  isVerified?: Resolver<
+  isActive?: Resolver<
     Maybe<ResolversTypes["Boolean"]>,
     ParentType,
     ContextType
   >;
   lastCall?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   quorum?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  title?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  unlock?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  unlock?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   vote?: Resolver<
     Maybe<ResolversTypes["Vote"]>,
     ParentType,
     ContextType,
     RequireFields<ProposalVoteArgs, "voter">
   >;
-  voterPower?: Resolver<
-    Maybe<ResolversTypes["VoterPower"]>,
+  voters?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Voter"]>>>,
     ParentType,
-    ContextType,
-    RequireFields<ProposalVoterPowerArgs, "voter">
-  >;
-  voterPowers?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes["VoterPower"]>>>,
-    ParentType,
-    ContextType,
-    RequireFields<ProposalVoterPowersArgs, "voters">
+    ContextType
   >;
   votes?: Resolver<
     Maybe<Array<Maybe<ResolversTypes["Vote"]>>>,
@@ -350,6 +377,18 @@ export type ProposalResolvers<
     ResolversTypes["VotingContract"],
     ParentType,
     ContextType
+  >;
+  votingPower?: Resolver<
+    Maybe<ResolversTypes["VotingPower"]>,
+    ParentType,
+    ContextType,
+    RequireFields<ProposalVotingPowerArgs, "voter">
+  >;
+  votingPowers?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["VotingPower"]>>>,
+    ParentType,
+    ContextType,
+    Partial<ProposalVotingPowersArgs>
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -383,6 +422,18 @@ export type QueryResolvers<
     ParentType,
     ContextType
   >;
+  voter?: Resolver<
+    Maybe<ResolversTypes["Voter"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryVoterArgs, "address">
+  >;
+  voters?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Voter"]>>>,
+    ParentType,
+    ContextType,
+    Partial<QueryVotersArgs>
+  >;
 };
 
 export type TotalVotingPowerResolvers<
@@ -409,22 +460,39 @@ export type VoteResolvers<
     ContextType
   >;
   power?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  voter?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  proposal?: Resolver<ResolversTypes["Proposal"], ParentType, ContextType>;
+  voter?: Resolver<ResolversTypes["Voter"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type VoterPowerResolvers<
+export type VoterResolvers<
   ContextType = ResolverContext,
-  ParentType extends ResolversParentTypes["VoterPower"] = ResolversParentTypes["VoterPower"],
+  ParentType extends ResolversParentTypes["Voter"] = ResolversParentTypes["Voter"],
 > = {
-  blockNumber?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  isStale?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType>;
-  value?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  voter?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  votingVaults?: Resolver<
-    Array<ResolversTypes["VotingVault"]>,
+  address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  vote?: Resolver<
+    Maybe<ResolversTypes["Vote"]>,
     ParentType,
-    ContextType
+    ContextType,
+    RequireFields<VoterVoteArgs, "proposal" | "votingContract">
+  >;
+  votes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Vote"]>>>,
+    ParentType,
+    ContextType,
+    RequireFields<VoterVotesArgs, "proposals" | "votingContract">
+  >;
+  votingPower?: Resolver<
+    Maybe<ResolversTypes["VotingPower"]>,
+    ParentType,
+    ContextType,
+    RequireFields<VoterVotingPowerArgs, "votingVault">
+  >;
+  votingPowers?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["VotingPower"]>>>,
+    ParentType,
+    ContextType,
+    RequireFields<VoterVotingPowersArgs, "votingVaults">
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -434,7 +502,6 @@ export type VotingContractResolvers<
   ParentType extends ResolversParentTypes["VotingContract"] = ResolversParentTypes["VotingContract"],
 > = {
   address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   proposal?: Resolver<
     Maybe<ResolversTypes["Proposal"]>,
     ParentType,
@@ -453,18 +520,39 @@ export type VotingContractResolvers<
     ContextType,
     Partial<VotingContractTotalVotingPowerArgs>
   >;
-  voterPower?: Resolver<
-    Maybe<ResolversTypes["VoterPower"]>,
+  voters?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Voter"]>>>,
+    ParentType,
+    ContextType
+  >;
+  votingPower?: Resolver<
+    Maybe<ResolversTypes["VotingPower"]>,
     ParentType,
     ContextType,
-    RequireFields<VotingContractVoterPowerArgs, "voter">
+    RequireFields<VotingContractVotingPowerArgs, "voter">
   >;
-  voterPowers?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes["VoterPower"]>>>,
+  votingPowers?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["VotingPower"]>>>,
     ParentType,
     ContextType,
-    RequireFields<VotingContractVoterPowersArgs, "voters">
+    Partial<VotingContractVotingPowersArgs>
   >;
+  votingVaults?: Resolver<
+    Array<ResolversTypes["VotingVault"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type VotingPowerResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["VotingPower"] = ResolversParentTypes["VotingPower"],
+> = {
+  blockNumber?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  isStale?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType>;
+  value?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  voter?: Resolver<ResolversTypes["Voter"], ParentType, ContextType>;
   votingVaults?: Resolver<
     Array<ResolversTypes["VotingVault"]>,
     ParentType,
@@ -478,24 +566,28 @@ export type VotingVaultResolvers<
   ParentType extends ResolversParentTypes["VotingVault"] = ResolversParentTypes["VotingVault"],
 > = {
   address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   totalVotingPower?: Resolver<
     Maybe<ResolversTypes["TotalVotingPower"]>,
     ParentType,
     ContextType,
     Partial<VotingVaultTotalVotingPowerArgs>
   >;
-  voterPower?: Resolver<
-    Maybe<ResolversTypes["VoterPower"]>,
+  voters?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Voter"]>>>,
     ParentType,
-    ContextType,
-    RequireFields<VotingVaultVoterPowerArgs, "voter">
+    ContextType
   >;
-  voterPowers?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes["VoterPower"]>>>,
+  votingPower?: Resolver<
+    Maybe<ResolversTypes["VotingPower"]>,
     ParentType,
     ContextType,
-    RequireFields<VotingVaultVoterPowersArgs, "voters">
+    RequireFields<VotingVaultVotingPowerArgs, "voter">
+  >;
+  votingPowers?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["VotingPower"]>>>,
+    ParentType,
+    ContextType,
+    Partial<VotingVaultVotingPowersArgs>
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -505,7 +597,8 @@ export type Resolvers<ContextType = ResolverContext> = {
   Query?: QueryResolvers<ContextType>;
   TotalVotingPower?: TotalVotingPowerResolvers<ContextType>;
   Vote?: VoteResolvers<ContextType>;
-  VoterPower?: VoterPowerResolvers<ContextType>;
+  Voter?: VoterResolvers<ContextType>;
   VotingContract?: VotingContractResolvers<ContextType>;
+  VotingPower?: VotingPowerResolvers<ContextType>;
   VotingVault?: VotingVaultResolvers<ContextType>;
 };

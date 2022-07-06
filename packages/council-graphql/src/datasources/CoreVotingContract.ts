@@ -1,14 +1,21 @@
 import { Provider } from "@ethersproject/providers";
 import { CoreVoting__factory, CoreVoting } from "@elementfi/council-typechain";
+import { VotingVaultContract } from "./VotingVaultContract";
 
 // TODO: implement Dataloader (https://github.com/graphql/dataloader)
-export default class CoreVotingContract {
+export class CoreVotingContract {
   address: string;
   contract: CoreVoting;
+  votingVaults: VotingVaultContract[];
 
-  constructor(address: string, provider: Provider) {
+  constructor(
+    address: string,
+    provider: Provider,
+    votingVaults: VotingVaultContract[],
+  ) {
     this.address = address;
     this.contract = CoreVoting__factory.connect(address, provider);
+    this.votingVaults = votingVaults || [];
   }
 
   async getProposalCreatedEventArgs(

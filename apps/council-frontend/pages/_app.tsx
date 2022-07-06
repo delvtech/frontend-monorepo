@@ -11,9 +11,14 @@ import React, { ReactElement } from "react";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { getEthereumProviderLibrary } from "src/base/getEthereumProviderLibrary";
-import { ApolloProvider, ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  ApolloLink,
+} from "@apollo/client";
 import { getApolloLink } from "@elementfi/graphql";
-import { councilSchema } from "@elementfi/council-graphql";
+import { councilGraph } from "@elementfi/council-graphql";
 import { defaultProvider } from "src/providers/providers";
 import { queryClient } from "src/queryClient";
 import { addressesJson } from "src/addresses";
@@ -22,7 +27,7 @@ import { Notifications } from "src/ui/notifications/Notifications";
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
   link: getApolloLink({
-    schemas: [councilSchema],
+    graphs: [councilGraph],
     provider: defaultProvider,
   }) as unknown as ApolloLink, // TODO: Find a better solution
 });

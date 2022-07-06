@@ -1,9 +1,0 @@
-query GetGSCBallot($account: ID!, $proposalId: ID!) {
-  proposal(proposalId: $proposalId) {
-    proposalId
-    votes(walletAddress: $account) {
-      votingPower
-      castBallot
-    }
-  }
-}

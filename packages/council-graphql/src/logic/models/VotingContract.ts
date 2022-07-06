@@ -1,27 +1,25 @@
+import { CoreVotingContract } from "src/datasources/CoreVotingContract";
 import { VotingContract } from "src/generated";
-import { AddressType, getAddresses } from "src/logic/addresses";
-import { CouncilResolverContext } from "src/resolvers/context";
-import { VotingVaultModel } from "./VotingVault";
+import { CouncilContext } from "src/logic/context";
+import { getDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
 
-export const VotingContractModel = {
-  getByName(
-    name: AddressType,
-    context: CouncilResolverContext,
-  ): VotingContract {
-    const addresses = getAddresses(context.chainId);
-    return {
-      address: addresses[name],
-      name,
-      votingVaults:
-        vaultNamesByVotingContract[name]?.map((name) =>
-          VotingVaultModel.getByName(name, context),
-        ) || [],
-    };
+interface VotingContractModel {
+  getByAddress: (options: {
+    address: string;
+    context: CouncilContext;
+  }) => VotingContract | undefined;
+}
+
+export const VotingContractModel: VotingContractModel = {
+  getByAddress({ address, context }) {
+    const dataSource = getDataSourceByAddress(address, context.dataSources);
+    if (dataSource instanceof CoreVotingContract) {
+      return {
+        address: dataSource.address,
+        votingVaults: dataSource.votingVaults.map(({ address }) => ({
+          address,
+        })),
+      };
+    }
   },
 };
-
-const vaultNamesByVotingContract: Partial<Record<AddressType, AddressType[]>> =
-  {
-    coreVoting: ["lockingVault", "vestingVault"],
-    gscCoreVoting: ["gscVault"],
-  };

@@ -1,108 +1,49 @@
-import { formatEther, parseEther } from "ethers/lib/utils";
-import { TotalVotingPower, VoterPower, VotingVault } from "src/generated";
-import {
-  AddressType,
-  foundationAddress,
-  teamAddress,
-} from "src/logic/addresses";
-import { getFromBlock, getLatestBlock } from "src/logic/blockNumbers";
-import LockingVaultContract from "src/datasources/LockingVaultContract";
-import VestingVaultContract from "src/datasources/VestingVaultContract";
-import { CouncilResolverContext } from "src/resolvers/context";
+import { formatEther } from "ethers/lib/utils";
+import { VotingVaultContract } from "src/datasources/VotingVaultContract";
+import { Voter, VotingPower, VotingVault } from "src/generated";
+import { getLatestBlockNumber } from "src/logic/utils/getLatestBlockNumber";
+import { CouncilContext } from "../context";
+import { getDataSourceByAddress } from "../utils/getDataSourceByAddress";
 
-// VoterPower & TotalVotingPower
-export const VotingPowerModel = {
-  async getByVotingVault(
-    votingVault: VotingVault,
-    blockNumber: number | undefined | null,
-    { chainId, dataSources, provider }: CouncilResolverContext,
-  ): Promise<TotalVotingPower> {
-    blockNumber = blockNumber || (await getLatestBlock(provider));
-    let value = BigInt(0);
-    const dataSource = getDataSourceByName(
-      votingVault.name as AddressType,
-      dataSources,
-    );
-    const hasVoteChangeEvents =
-      dataSource instanceof LockingVaultContract ||
-      dataSource instanceof VestingVaultContract;
-    if (hasVoteChangeEvents) {
-      const powerChanges = await dataSource.getVoteChangeEventArgs(
-        getFromBlock(chainId),
-        blockNumber,
-      );
-      for (const { to, amount } of powerChanges) {
-        // The foundation an team deposits are delegated to the 0x0000...0001
-        // address so they can't vote.
-        const isVoter = to !== teamAddress && to !== foundationAddress;
-        if (isVoter) {
-          value += BigInt(amount);
-        }
-      }
-    } else {
-      // TODO: how to get TVP for other vaults that don't have a `voteChange`
-      // event? GSC voterPowers are a fixed number except for the owner, so a
-      // contract call could probably be avoided.
-    }
-    return {
-      blockNumber,
-      value: formatEther(value),
-      votingVaults: [votingVault],
-    };
-  },
+interface VotingPowerModel {
+  getByVoter: (options: {
+    voter: Voter;
+    blockNumber?: number | undefined | null;
+    votingVaults: VotingVault[];
+    context: CouncilContext;
+  }) => Promise<VotingPower>;
 
-  async getByVotingVaults(
-    votingVaults: VotingVault[],
-    blockNumber: number | undefined | null,
-    context: CouncilResolverContext,
-  ): Promise<TotalVotingPower> {
-    blockNumber = blockNumber || (await getLatestBlock(context.provider));
+  getByVoters: (options: {
+    voters: Voter[];
+    votingVaults: VotingVault[];
+    blockNumber: number | undefined | null;
+    context: CouncilContext;
+  }) => Promise<VotingPower[]>;
+
+  getIsStale: (options: {
+    votingPower: VotingPower;
+    context: CouncilContext;
+  }) => Promise<boolean | undefined>;
+}
+
+export const VotingPowerModel: VotingPowerModel = {
+  async getByVoter({
+    voter,
+    blockNumber,
+    votingVaults,
+    context: { dataSources, provider },
+  }) {
+    blockNumber = blockNumber || (await getLatestBlockNumber(provider));
     let aggregateValue = BigInt(0);
-    await Promise.all(
-      votingVaults.map(async (votingVault) => {
-        const vaultVotingPower = await this.getByVotingVault(
-          votingVault,
+    for (const { address } of votingVaults) {
+      const dataSource = getDataSourceByAddress(address, dataSources);
+      if (dataSource instanceof VotingVaultContract) {
+        const vaultPower = await dataSource.getVotingPowerView(
+          voter.address,
           blockNumber,
-          context,
         );
-        aggregateValue += parseEther(vaultVotingPower.value).toBigInt();
-      }),
-    );
-    return {
-      blockNumber,
-      value: formatEther(aggregateValue),
-      votingVaults,
-    };
-  },
-
-  async getByVoter(
-    voter: string,
-    votingVaults: VotingVault[],
-    blockNumber: number | undefined | null,
-    { dataSources, provider }: CouncilResolverContext,
-  ): Promise<VoterPower> {
-    blockNumber = blockNumber || (await getLatestBlock(provider));
-    let aggregateValue = BigInt(0);
-    for (const { name } of votingVaults) {
-      let value;
-      switch (name) {
-        case "lockingVault":
-          value = await dataSources.lockingVault.getVotingPowerView(
-            voter,
-            blockNumber,
-          );
-          break;
-        case "vestingVault":
-          value = await dataSources.vestingVault.getVotingPowerView(
-            voter,
-            blockNumber,
-          );
-          break;
-        case "gscVault":
-          value = await dataSources.gscVault.getVotingPower(voter, blockNumber);
-          break;
+        aggregateValue += BigInt(vaultPower);
       }
-      aggregateValue += BigInt(value || 0);
     }
     return {
       value: formatEther(aggregateValue),
@@ -112,56 +53,39 @@ export const VotingPowerModel = {
     };
   },
 
-  getByVoters(
-    voters: string[],
-    votingVaults: VotingVault[],
-    blockNumber: number | undefined | null,
-    context: CouncilResolverContext,
-  ): Promise<VoterPower[]> {
+  getByVoters({ voters, votingVaults, blockNumber, context }) {
     return Promise.all(
       voters.map((voter) =>
-        this.getByVoter(voter, votingVaults, blockNumber, context),
+        this.getByVoter({ voter, votingVaults, blockNumber, context }),
       ),
     );
   },
 
-  async getIsStale(
-    { value, voter, votingVaults, blockNumber }: VoterPower,
-    { dataSources, provider }: CouncilResolverContext,
-  ): Promise<boolean | null> {
-    const latestBlock = await getLatestBlock(provider);
+  async getIsStale({
+    votingPower: { value, voter, votingVaults, blockNumber },
+    context: { dataSources, provider },
+  }) {
+    const latestBlock = await getLatestBlockNumber(provider);
     if (blockNumber === latestBlock) {
       return false;
     } else {
-      for (const { name } of votingVaults) {
-        const dataSource = getDataSourceByName(
-          name as AddressType,
-          dataSources,
-        );
-        const valueAtBlock = await dataSource?.getVotingPower(
-          voter,
-          blockNumber,
-        );
-        if (Number(valueAtBlock) === 0 && Number(value) > 0) {
-          return true;
+      let isStale;
+      for (const { address } of votingVaults) {
+        const dataSource = getDataSourceByAddress(address, dataSources);
+
+        if (dataSource instanceof VotingVaultContract) {
+          const valueAtBlock = await dataSource?.getVotingPower(
+            voter.address,
+            blockNumber,
+          );
+          if (!Number(valueAtBlock) && Number(value) > 0) {
+            return true;
+          } else {
+            isStale = false;
+          }
         }
-        return false;
       }
-      return null;
+      return isStale;
     }
   },
 };
-
-function getDataSourceByName(
-  name: AddressType,
-  dataSources: CouncilResolverContext["dataSources"],
-) {
-  switch (name) {
-    case "lockingVault":
-      return dataSources.lockingVault;
-    case "vestingVault":
-      return dataSources.vestingVault;
-    case "gscVault":
-      return dataSources.gscVault;
-  }
-}

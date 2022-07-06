@@ -10,7 +10,6 @@ import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
 import { useGSCBallot } from "src/ui/voting/useGSCBallot";
-import { useGetGscBallotQuery } from "src/ui/voting/GetGSCBallet.generated";
 
 interface BallotIconProps {
   account: string | null | undefined;
@@ -24,20 +23,6 @@ export function BallotIcon({
 }: BallotIconProps): ReactElement | null {
   const { data: ballot } = useBallot(account, proposalId);
   const { data: gscBallot } = useGSCBallot(account, proposalId);
-  const { data: gscBallotData } = useGetGscBallotQuery({
-    variables: {
-      account: account as string,
-      proposalId,
-    },
-    skip: !account,
-  });
-
-  const gscBallot = gscBallotData?.proposal?.votes;
-  console.log("voteArray: ", gscBallot);
-
-  console.log("ProposalID", proposalId);
-  console.log("account: ", account);
-  console.log("GSCBallot: ", { gscBallot });
 
   if (!isGSCProposal && ballot === undefined) {
     return null;
@@ -47,7 +32,7 @@ export function BallotIcon({
   }
 
   const [votingPowerBN, coreCastBallot] = ballot ?? [];
-  // const [gscVotingPowerBN, gscCastBallot] = gscBallot ?? [];
+  const [gscVotingPowerBN, gscCastBallot] = gscBallot ?? [];
   let castBallot = coreCastBallot;
   let votingPower = Number(formatEther(votingPowerBN || 0));
   if (isGSCProposal) {

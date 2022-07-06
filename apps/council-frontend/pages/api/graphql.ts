@@ -1,9 +1,9 @@
 import { createServer } from "@elementfi/graphql";
-import { councilSchema } from "@elementfi/council-graphql";
+import { councilGraph } from "@elementfi/council-graphql";
 import { defaultProvider } from "src/providers/providers";
 
 const server = createServer({
-  schemas: [councilSchema],
+  graphs: [councilGraph],
   provider: defaultProvider,
 });
 

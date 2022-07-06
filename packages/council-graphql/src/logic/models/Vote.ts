@@ -1,22 +1,37 @@
 import { formatEther } from "ethers/lib/utils";
-import { Ballot, Proposal, Vote } from "src/generated";
-import { AddressType } from "src/logic/addresses";
-import { CouncilResolverContext } from "src/resolvers/context";
+import { CoreVotingContract } from "src/datasources/CoreVotingContract";
+import { Ballot, Proposal, Vote, Voter } from "src/generated";
+import { CouncilContext } from "src/logic/context";
+import { getDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
 
-export const VoteModel = {
-  async getByVoter(
-    voter: string,
-    { id, votingContract }: Proposal,
-    { dataSources }: CouncilResolverContext,
-  ): Promise<Vote> {
-    let dataSource = getDataSourceByName(
-      votingContract.name as AddressType,
+interface VoteModel {
+  getByVoter: (options: {
+    voter: Voter;
+    proposal: Proposal;
+    context: CouncilContext;
+  }) => Promise<Vote>;
+
+  getByVoters: (options: {
+    voters: Voter[];
+    proposal: Proposal;
+    context: CouncilContext;
+  }) => Promise<Vote[]>;
+}
+
+export const VoteModel: VoteModel = {
+  async getByVoter({ voter, proposal, context: { dataSources } }) {
+    const { id, votingContract } = proposal;
+    let dataSource = getDataSourceByAddress(
+      votingContract.address,
       dataSources,
+    ) as CoreVotingContract;
+    const { votingPower, castBallot } = await dataSource.getVote(
+      voter.address,
+      id,
     );
-
-    const { votingPower, castBallot } = await dataSource.getVote(voter, id);
     return {
       voter,
+      proposal,
       power: formatEther(votingPower),
       castBallot:
         votingPower.toBigInt() > 0
@@ -25,26 +40,9 @@ export const VoteModel = {
     };
   },
 
-  getByVoters(
-    voters: string[],
-    proposal: Proposal,
-    context: CouncilResolverContext,
-  ): Promise<Vote[]> {
+  getByVoters({ voters, proposal, context }) {
     return Promise.all(
-      voters.map((voter) => this.getByVoter(voter, proposal, context)),
+      voters.map((voter) => this.getByVoter({ voter, proposal, context })),
     );
   },
 };
-
-function getDataSourceByName(
-  name: AddressType,
-  dataSources: CouncilResolverContext["dataSources"],
-) {
-  switch (name) {
-    case "gscCoreVoting":
-      return dataSources.gscVoting;
-    case "coreVoting":
-    default:
-      return dataSources.coreVoting;
-  }
-}

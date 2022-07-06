@@ -1,145 +1,126 @@
-import {
-  ProposalsJson,
-  Proposal as ProposalInfo,
-} from "@elementfi/council-proposals";
-import {
-  goerliAddressList,
-  mainnetAddressList,
-} from "@elementfi/council-tokenlist";
+import { CoreVotingContract } from "src/datasources/CoreVotingContract";
 import { Proposal, VotingContract } from "src/generated";
-import { AddressType } from "src/logic/addresses";
-import { getFromBlock } from "src/logic/blockNumbers";
-import { CouncilResolverContext } from "src/resolvers/context";
+import { CouncilContext } from "src/logic/context";
+import { getDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
+import { getFromBlockNumber } from "src/logic/utils/getFromBlockNumber";
 
-export const ProposalModel = {
-  async getByIds(
-    ids: string[],
-    votingContract: VotingContract,
-    context: CouncilResolverContext,
-  ): Promise<Proposal[]> {
-    const infos = await getInfos(votingContract, context);
-    const infosById: Record<string, Partial<ProposalInfo>> = {};
-    for (const info of infos) {
-      infosById[info.proposalId] = info;
-    }
+const EXECUTED_PROPOSAL_HASH =
+  "0x0000000000000000000000000000000000000000000000000000000000000000";
 
-    const idsWithMissingInfo = ids.filter((id) => !infosById[id]);
-    if (idsWithMissingInfo.length) {
-      const dataSource = getDataSourceByName(
-        votingContract.name as AddressType,
-        context.dataSources,
-      );
-      for (const id of idsWithMissingInfo) {
-        const { created, expiration, lastCall, quorum, unlock } =
-          await dataSource.getProposalById(id);
-        infosById[id] = {
-          proposalId: id,
-          created,
-          expiration,
-          lastCall,
-          quorum,
-          unlock,
-        };
-      }
-    }
+// type GetByIdsOptions =
 
-    return ids.map((id) => {
-      const info = infosById[id];
-      return {
-        id,
-        votingContract,
-        created: info?.created,
-        description: info?.description,
-        expiration: info?.expiration,
-        isVerified: !!info?.snapshotId,
-        lastCall: info?.lastCall,
-        quorum: info?.quorum,
-        title: info?.title,
-        unlock: info?.unlock,
-      };
+interface ProposalModel {
+  getByIds: (options: {
+    ids: string[];
+    votingContract: VotingContract;
+    context: CouncilContext;
+  }) => Promise<(Proposal | undefined)[]>;
+
+  getById: (options: {
+    id: string;
+    votingContract: VotingContract;
+    context: CouncilContext;
+  }) => Promise<Proposal | undefined>;
+
+  getByVotingContract: (options: {
+    votingContract: VotingContract;
+    context: CouncilContext;
+  }) => Promise<Proposal[]>;
+
+  getIsActive: (options: {
+    proposal: Proposal;
+    context: CouncilContext;
+  }) => Promise<boolean>;
+
+  getLastCall: (options: {
+    proposal: Proposal;
+    context: CouncilContext;
+  }) => Promise<Proposal["lastCall"]>;
+
+  getQuorum: (options: {
+    proposal: Proposal;
+    context: CouncilContext;
+  }) => Promise<Proposal["quorum"]>;
+}
+
+export const ProposalModel: ProposalModel = {
+  async getByIds({ ids, votingContract, context }) {
+    const allProposals = await this.getByVotingContract({
+      votingContract,
+      context,
     });
+
+    return ids.map((id) => allProposals.find((proposal) => proposal.id === id));
   },
-  async getById(
-    id: string,
-    votingContract: VotingContract,
-    context: CouncilResolverContext,
-  ) {
-    const proposals = await this.getByIds([id], votingContract, context);
+
+  async getById({ id, votingContract, context }) {
+    const proposals = await this.getByIds({
+      ids: [id],
+      votingContract,
+      context,
+    });
     return proposals[0];
   },
-  async getByVotingContract(
-    votingContract: VotingContract,
-    context: CouncilResolverContext,
-  ): Promise<Proposal[]> {
-    const dataSource = getDataSourceByName(
-      votingContract.name as AddressType,
+
+  async getIsActive({ proposal, context }) {
+    const dataSource = getDataSourceByAddress(
+      proposal.votingContract.address,
       context.dataSources,
+    ) as CoreVotingContract;
+    const { proposalHash } = await dataSource.getProposalById(proposal.id);
+    return proposalHash !== EXECUTED_PROPOSAL_HASH;
+  },
+
+  async getLastCall({ proposal, context }) {
+    const dataSource = getDataSourceByAddress(
+      proposal.votingContract.address,
+      context.dataSources,
+    ) as CoreVotingContract;
+
+    const { proposalHash, lastCall } = await dataSource.getProposalById(
+      proposal.id,
     );
+
+    if (proposalHash === EXECUTED_PROPOSAL_HASH) {
+      return lastCall;
+    }
+  },
+
+  async getQuorum({ proposal, context }) {
+    const dataSource = getDataSourceByAddress(
+      proposal.votingContract.address,
+      context.dataSources,
+    ) as CoreVotingContract;
+
+    const { proposalHash, quorum } = await dataSource.getProposalById(
+      proposal.id,
+    );
+
+    if (proposalHash === EXECUTED_PROPOSAL_HASH) {
+      return quorum;
+    }
+  },
+
+  async getByVotingContract({ votingContract, context }) {
+    const dataSource = getDataSourceByAddress(
+      votingContract.address,
+      context.dataSources,
+    ) as CoreVotingContract;
 
     if (!dataSource) {
       return [];
     }
     const args = await dataSource.getProposalCreatedEventArgs(
-      getFromBlock(context.chainId),
+      getFromBlockNumber(context.chainId),
     );
-    const ids = args.map(({ proposalId }) => proposalId);
-    return this.getByIds(ids, votingContract, context);
+    return args.map(({ created, execution, expiration, proposalId }) => {
+      return {
+        id: proposalId,
+        votingContract,
+        created,
+        expiration,
+        unlock: execution,
+      };
+    });
   },
 };
-
-async function getInfos(
-  { name }: VotingContract,
-  { chainId, dataSources }: CouncilResolverContext,
-): Promise<ProposalInfo[]> {
-  let fileName;
-  if (name === "coreVoting") {
-    fileName = getInfoFileName(chainId);
-  } else if (name === "gscCoreVoting") {
-    fileName = getGSCInfoFileName(chainId);
-  }
-
-  if (!fileName) {
-    return [];
-  }
-
-  const json: ProposalsJson = await dataSources.elementS3.getFile(
-    fileName,
-    "json",
-  );
-  return json.proposals;
-}
-
-function getInfoFileName(chainId: number) {
-  switch (chainId) {
-    case mainnetAddressList.chainId:
-      return "mainnet.proposals.json";
-    case goerliAddressList.chainId:
-      return "goerli.proposals.json";
-    default:
-      "testnet.proposals.json";
-  }
-}
-
-function getGSCInfoFileName(chainId: number) {
-  switch (chainId) {
-    case mainnetAddressList.chainId:
-      return "mainnet-gsc.proposals.json";
-    case goerliAddressList.chainId:
-      return "goerli-gsc.proposals.json";
-    default:
-      "testnet-gsc.proposals.json";
-  }
-}
-
-function getDataSourceByName(
-  name: AddressType,
-  dataSources: CouncilResolverContext["dataSources"],
-) {
-  switch (name) {
-    case "gscCoreVoting":
-      return dataSources.gscVoting;
-    case "coreVoting":
-    default:
-      return dataSources.coreVoting;
-  }
-}

@@ -24,8 +24,8 @@
     "build": "npm run build:graphql && npm run build:lib"
   },
   "dependencies": {
-    "@elementfi/council-typechain": "*",
     "@elementfi/council-tokenlist": "*",
+    "@elementfi/council-typechain": "*",
     "@graphql-tools/schema": "^8.3.13",
     "ethers": "^5.6.8"
   },
@@ -33,6 +33,7 @@
     "@apollo/client": "^3.6.6",
     "@elementfi/graphql": "*",
     "@elementfi/parcel-transformer-graphql-document-node": "*",
+    "@ethersproject/providers": "^5.6.8",
     "graphql": "^16.5.0",
     "parcel": "^2.6.0",
     "typescript": "^4.5.5"
