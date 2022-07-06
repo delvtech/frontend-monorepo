@@ -1,7 +1,7 @@
 import { VotingVaultContract } from "src/datasources/VotingVaultContract";
 import { Voter, VotingVault } from "src/generated";
 import { CouncilContext } from "src/logic/context";
-import { getDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
+import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
 
 interface VoterModel {
   getByAddress: (options: { address: string }) => Voter;
@@ -32,6 +32,8 @@ export const VoterModel: VoterModel = {
       context,
     });
   },
+  // TODO: Revisit logic for calculating voting power based on vault type, eg:
+  // disambiguate the list of vaults, instead of falling through
   async getByVotingVaults({
     votingVaults,
     blockNumber,
@@ -40,17 +42,35 @@ export const VoterModel: VoterModel = {
     const voterPowers: Record<string, bigint> = {};
 
     for (const votingVault of votingVaults) {
-      const dataSource = getDataSourceByAddress(
+      const dataSource = getVotingVaultDataSourceByAddress(
         votingVault.address,
-        councilDataSources,
+        councilDataSources
       ) as VotingVaultContract;
+
+      // any change of voting power (delegating, depositing more ELFI, etc..)
+      // will trigger this event on certain voting vaults.
       const powerChanges = await dataSource.getVoteChangeEventArgs(
         undefined,
-        blockNumber,
+        blockNumber
       );
-      for (const { to, amount } of powerChanges) {
-        voterPowers[to] = voterPowers[0] || BigInt(0);
-        voterPowers[to] += BigInt(amount);
+      if (powerChanges) {
+        for (const { to, amount } of powerChanges) {
+          voterPowers[to] = voterPowers[to] || BigInt(0);
+          voterPowers[to] += BigInt(amount);
+        }
+      }
+
+      // voting power can be calculated on voting vaults that don't have a
+      // VoteChange event by looking at membershipProved events.
+      const members = await dataSource.getMembershipProvedEventArgs(
+        undefined,
+        blockNumber
+      );
+      if (members) {
+        for (const { who } of members) {
+          voterPowers[who] = voterPowers[who] || BigInt(0);
+          voterPowers[who] += BigInt(1);
+        }
       }
     }
 

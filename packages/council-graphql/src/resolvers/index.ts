@@ -14,45 +14,37 @@ import { VotingVaultModel } from "src/logic/models/VotingVault";
 
 export const resolvers: Resolvers<CouncilContext> = {
   Query: {
-    coreVoting: (_, __, context) => {
-      return (
-        VotingContractModel.getByAddress({
-          address: context.councilDataSources.coreVoting.address,
-          context,
-        }) || null
+    votingContract: (_, { address }, context) => {
+      return VotingContractModel.getByAddress({ address, context }) || null;
+    },
+    votingContracts: (_, { addresses }, context) => {
+      // Get all the votingContracts by default if no addresses arg is provided
+      if (!addresses) {
+        return VotingContractModel.getAll({ context }).map(
+          (votingContract) => votingContract || null
+        );
+      }
+
+      return addresses.map(
+        (address) =>
+          VotingContractModel.getByAddress({ address, context }) || null
       );
     },
-    gscVoting: (_, __, context) => {
-      return (
-        VotingContractModel.getByAddress({
-          address: context.councilDataSources.gscVoting.address,
-          context,
-        }) || null
+    votingVaults: (_, { addresses }, context) => {
+      // Get all the votingVaults by default if no addresses arg is provided
+      if (!addresses) {
+        return VotingVaultModel.getAll({ context }).map(
+          (votingVault) => votingVault || null
+        );
+      }
+
+      return addresses.map(
+        (address) => VotingVaultModel.getByAddress({ address, context }) || null
       );
     },
-    lockingVault: (_, __, context) => {
-      return (
-        VotingVaultModel.getByAddress({
-          address: context.councilDataSources.lockingVault.address,
-          context,
-        }) || null
-      );
-    },
-    vestingVault: (_, __, context) => {
-      return (
-        VotingVaultModel.getByAddress({
-          address: context.councilDataSources.vestingVault.address,
-          context,
-        }) || null
-      );
-    },
-    gscVault: (_, __, context) => {
-      return (
-        VotingVaultModel.getByAddress({
-          address: context.councilDataSources.gscVault.address,
-          context,
-        }) || null
-      );
+    votingVault: (_, { address }, context) => {
+      const result = VotingVaultModel.getByAddress({ address, context }) || null;
+      return result;
     },
     voter: (_, { address }) => {
       return VoterModel.getByAddress({ address });
@@ -62,11 +54,9 @@ export const resolvers: Resolvers<CouncilContext> = {
         return VoterModel.getByAddresses({ addresses });
       } else {
         const votingVaults = VotingVaultModel.getByAddresses({
-          addresses: [
-            context.councilDataSources.lockingVault.address,
-            context.councilDataSources.vestingVault.address,
-            context.councilDataSources.gscVault.address,
-          ],
+          addresses: context.councilDataSources.votingVaults.map(
+            ({ address }) => address
+          ),
           context,
         });
         return VoterModel.getByVotingVaults({

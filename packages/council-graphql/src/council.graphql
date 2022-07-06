@@ -1,13 +1,13 @@
 type Query {
-  coreVoting: VotingContract
-  gscVault: VotingVault
-  gscVoting: VotingContract
-  lockingVault: VotingVault
-  vestingVault: VotingVault
-  # votingContract(address: ID!): VotingContract
-  # votingContracts(addresses: [ID!]): [VotingContract]
-  # votingVault(address: ID!): VotingVault
-  # votingVaults(addresses: [ID!]): [VotingVault]
+  # coreVoting: VotingContract
+  # gscVault: VotingVault
+  # gscVoting: VotingContract
+  # lockingVault: VotingVault
+  # vestingVault: VotingVault
+  votingContract(address: ID!): VotingContract
+  votingContracts(addresses: [ID!]): [VotingContract]
+  votingVault(address: ID!): VotingVault
+  votingVaults(addresses: [ID!]): [VotingVault]
   voter(address: ID!): Voter
   voters(addresses: [ID!]): [Voter]
 }

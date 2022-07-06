@@ -28,23 +28,22 @@ export async function initContext(
     provider
   );
   const gscVault = new GSCVaultContract(councilAddresses.gscVault, provider);
+  const coreVoting = new CoreVotingContract(
+    councilAddresses.coreVoting,
+    provider,
+    [lockingVault, vestingVault]
+  );
+  const gscCoreVoting = new CoreVotingContract(
+    councilAddresses.gscCoreVoting,
+    provider,
+    [gscVault]
+  );
   return {
     ...context,
     councilAddresses,
     councilDataSources: {
-      coreVoting: new CoreVotingContract(
-        councilAddresses.coreVoting,
-        provider,
-        [lockingVault, vestingVault]
-      ),
-      gscVoting: new CoreVotingContract(
-        councilAddresses.gscCoreVoting,
-        provider,
-        [gscVault]
-      ),
-      lockingVault,
-      vestingVault,
-      gscVault,
+      votingContracts: [coreVoting, gscCoreVoting],
+      votingVaults: [lockingVault, vestingVault, gscVault],
     },
   };
 }

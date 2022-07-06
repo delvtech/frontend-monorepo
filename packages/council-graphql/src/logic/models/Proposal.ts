@@ -1,7 +1,6 @@
 import { CoreVotingContract } from "src/datasources/CoreVotingContract";
 import { Proposal, VotingContract } from "src/generated";
 import { CouncilContext } from "src/logic/context";
-import { getDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
 import { getFromBlockNumber } from "src/logic/utils/getFromBlockNumber";
 
 const EXECUTED_PROPOSAL_HASH =
@@ -63,22 +62,22 @@ export const ProposalModel: ProposalModel = {
   },
 
   async getIsActive({ proposal, context }) {
-    const dataSource = getDataSourceByAddress(
+    const dataSource = getVotingContractDataSourceByAddress(
       proposal.votingContract.address,
-      context.councilDataSources,
+      context.councilDataSources
     ) as CoreVotingContract;
     const { proposalHash } = await dataSource.getProposalById(proposal.id);
     return proposalHash !== EXECUTED_PROPOSAL_HASH;
   },
 
   async getLastCall({ proposal, context }) {
-    const dataSource = getDataSourceByAddress(
+    const dataSource = getVotingContractDataSourceByAddress(
       proposal.votingContract.address,
-      context.councilDataSources,
+      context.councilDataSources
     ) as CoreVotingContract;
 
     const { proposalHash, lastCall } = await dataSource.getProposalById(
-      proposal.id,
+      proposal.id
     );
 
     if (proposalHash === EXECUTED_PROPOSAL_HASH) {
@@ -87,13 +86,13 @@ export const ProposalModel: ProposalModel = {
   },
 
   async getQuorum({ proposal, context }) {
-    const dataSource = getDataSourceByAddress(
+    const dataSource = getVotingContractDataSourceByAddress(
       proposal.votingContract.address,
-      context.councilDataSources,
+      context.councilDataSources
     ) as CoreVotingContract;
 
     const { proposalHash, quorum } = await dataSource.getProposalById(
-      proposal.id,
+      proposal.id
     );
 
     if (proposalHash === EXECUTED_PROPOSAL_HASH) {
@@ -102,16 +101,16 @@ export const ProposalModel: ProposalModel = {
   },
 
   async getByVotingContract({ votingContract, context }) {
-    const dataSource = getDataSourceByAddress(
+    const dataSource = getVotingContractDataSourceByAddress(
       votingContract.address,
-      context.councilDataSources,
+      context.councilDataSources
     ) as CoreVotingContract;
 
     if (!dataSource) {
       return [];
     }
     const args = await dataSource.getProposalCreatedEventArgs(
-      getFromBlockNumber(context.chainId),
+      getFromBlockNumber(context.chainId)
     );
     return args.map(({ created, execution, expiration, proposalId }) => {
       return {
@@ -124,3 +123,13 @@ export const ProposalModel: ProposalModel = {
     });
   },
 };
+function getVotingContractDataSourceByAddress(
+  address: string,
+  councilDataSources: {
+    votingContracts: CoreVotingContract[];
+    // type GetByIdsOptions =
+    votingVaults: import("../../datasources/VotingVaultContract").VotingVaultContract[];
+  }
+): CoreVotingContract {
+  throw new Error("Function not implemented.");
+}

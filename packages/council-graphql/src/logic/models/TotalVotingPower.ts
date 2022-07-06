@@ -2,7 +2,7 @@ import { formatEther, parseEther } from "ethers/lib/utils";
 import { VotingVaultContract } from "src/datasources/VotingVaultContract";
 import { TotalVotingPower, VotingVault } from "src/generated";
 import { CouncilContext } from "src/logic/context";
-import { getDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
+import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
 import { getFromBlockNumber } from "src/logic/utils/getFromBlockNumber";
 import { getLatestBlockNumber } from "src/logic/utils/getLatestBlockNumber";
 
@@ -29,7 +29,7 @@ interface TotalVotingPowerModel {
 export const TotalVotingPowerModel: TotalVotingPowerModel = {
   async getByVotingVault({ votingVault, blockNumber, context }) {
     const { chainId, councilDataSources, provider } = context;
-    const dataSource = getDataSourceByAddress(
+    const dataSource = getVotingVaultDataSourceByAddress(
       votingVault.address,
       councilDataSources,
     ) as VotingVaultContract;

@@ -2,7 +2,7 @@ import { formatEther } from "ethers/lib/utils";
 import { CoreVotingContract } from "src/datasources/CoreVotingContract";
 import { Ballot, Proposal, Vote, Voter } from "src/generated";
 import { CouncilContext } from "src/logic/context";
-import { getDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
+import { getVotingContractDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
 
 interface VoteModel {
   getByVoter: (options: {
@@ -21,13 +21,13 @@ interface VoteModel {
 export const VoteModel: VoteModel = {
   async getByVoter({ voter, proposal, context: { councilDataSources } }) {
     const { id, votingContract } = proposal;
-    let dataSource = getDataSourceByAddress(
+    let dataSource = getVotingContractDataSourceByAddress(
       votingContract.address,
-      councilDataSources,
+      councilDataSources
     ) as CoreVotingContract;
     const { votingPower, castBallot } = await dataSource.getVote(
       voter.address,
-      id,
+      id
     );
     return {
       voter,
@@ -42,7 +42,7 @@ export const VoteModel: VoteModel = {
 
   getByVoters({ voters, proposal, context }) {
     return Promise.all(
-      voters.map((voter) => this.getByVoter({ voter, proposal, context })),
+      voters.map((voter) => this.getByVoter({ voter, proposal, context }))
     );
   },
 };

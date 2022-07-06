@@ -1,9 +1,9 @@
 import { formatEther } from "ethers/lib/utils";
 import { VotingVaultContract } from "src/datasources/VotingVaultContract";
 import { Voter, VotingPower, VotingVault } from "src/generated";
+import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
 import { getLatestBlockNumber } from "src/logic/utils/getLatestBlockNumber";
 import { CouncilContext } from "../context";
-import { getDataSourceByAddress } from "../utils/getDataSourceByAddress";
 
 interface VotingPowerModel {
   getByVoter: (options: {
@@ -36,11 +36,14 @@ export const VotingPowerModel: VotingPowerModel = {
     blockNumber = blockNumber || (await getLatestBlockNumber(provider));
     let aggregateValue = BigInt(0);
     for (const { address } of votingVaults) {
-      const dataSource = getDataSourceByAddress(address, councilDataSources);
-      if (dataSource instanceof VotingVaultContract) {
+      const dataSource = getVotingVaultDataSourceByAddress(
+        address,
+        councilDataSources
+      );
+      if (dataSource) {
         const vaultPower = await dataSource.getVotingPowerView(
           voter.address,
-          blockNumber,
+          blockNumber
         );
         aggregateValue += BigInt(vaultPower);
       }
@@ -56,8 +59,8 @@ export const VotingPowerModel: VotingPowerModel = {
   getByVoters({ voters, votingVaults, blockNumber, context }) {
     return Promise.all(
       voters.map((voter) =>
-        this.getByVoter({ voter, votingVaults, blockNumber, context }),
-      ),
+        this.getByVoter({ voter, votingVaults, blockNumber, context })
+      )
     );
   },
 
@@ -71,12 +74,15 @@ export const VotingPowerModel: VotingPowerModel = {
     } else {
       let isStale;
       for (const { address } of votingVaults) {
-        const dataSource = getDataSourceByAddress(address, councilDataSources);
+        const dataSource = getVotingVaultDataSourceByAddress(
+          address,
+          councilDataSources
+        );
 
-        if (dataSource instanceof VotingVaultContract) {
+        if (dataSource) {
           const valueAtBlock = await dataSource?.getVotingPower(
             voter.address,
-            blockNumber,
+            blockNumber
           );
           if (!Number(valueAtBlock) && Number(value) > 0) {
             return true;
