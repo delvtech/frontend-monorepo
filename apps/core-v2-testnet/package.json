@@ -6,6 +6,8 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
+    "@elementfi/eslint-config": "*",
+    "@elementfi/prettier-config": "*",
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
@@ -37,8 +39,21 @@
     "typechain": "^8.1.0",
     "typescript": "^4.7.4"
   },
+  "workspaces": {
+    "nohoist": [
+      "**/@nomiclabs/**",
+      "**/typescript",
+      "**/ts-node",
+      "hardhat"
+    ]
+  },
   "scripts": {
     "test": "npx hardhat test",
-    "compile": "npx hardhat compile"
+    "compile": "npx hardhat compile",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'",
+    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,md}'"
   }
 }

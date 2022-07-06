@@ -10,6 +10,7 @@ module.exports = {
     "standard",
     "plugin:prettier/recommended",
     "plugin:node/recommended",
+    "@elementfi/eslint-config",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
