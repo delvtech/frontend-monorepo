@@ -34,15 +34,18 @@ export const TotalVotingPowerModel: TotalVotingPowerModel = {
       councilDataSources,
     ) as VotingVaultContract;
 
+    let total = BigInt(0);
     blockNumber = blockNumber || (await getLatestBlockNumber(provider));
+
     const powerChanges = await dataSource.getVoteChangeEventArgs(
       getFromBlockNumber(chainId),
       blockNumber,
     );
-    let total = BigInt(0);
-    for (const { to, amount } of powerChanges) {
-      if (!nonVoters.includes(to)) {
-        total += BigInt(amount);
+    if (powerChanges) {
+      for (const { to, amount } of powerChanges) {
+        if (!nonVoters.includes(to)) {
+          total += BigInt(amount);
+        }
       }
     }
     return {

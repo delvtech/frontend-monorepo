@@ -128,13 +128,11 @@ const $ac266e1a17cc8ea7$export$40a03fbff71f56d3 = {
     async getByVotingVault ({ votingVault: votingVault , blockNumber: blockNumber , context: context  }) {
         const { chainId: chainId , councilDataSources: councilDataSources , provider: provider  } = context;
         const dataSource = (0, $a9d8dc444614e877$export$2c8942c776a655d1)(votingVault.address, councilDataSources);
+        let total = BigInt(0);
         blockNumber = blockNumber || await (0, $730705444d2faf33$export$24d97b9dae72698)(provider);
         const powerChanges = await dataSource.getVoteChangeEventArgs((0, $97c17b3f7f480abc$export$472b2ff001c2cfbf)(chainId), blockNumber);
-        let total = BigInt(0);
         if (powerChanges) {
             for (const { to: to , amount: amount  } of powerChanges)if (!$ac266e1a17cc8ea7$var$nonVoters.includes(to)) total += BigInt(amount);
-        } else {
-            const joinEvents = await dataSource.getMembershipProvedEventArgs((0, $97c17b3f7f480abc$export$472b2ff001c2cfbf)(chainId), blockNumber);
         }
         return {
             blockNumber: blockNumber,
@@ -680,6 +678,17 @@ class $a0cf45371a696709$export$2b7e06d96cf7f075 {
         this.address = address;
         this.contract = contract;
     }
+    async getKickedEventArgs(fromBlock, toBlock) {
+        if ("Kicked" in this.contract.filters) {
+            const membershipProvedEvents = await this.contract.queryFilter(this.contract.filters.Kicked(), fromBlock, toBlock);
+            return membershipProvedEvents.map(({ args: { when: when , who: who  }  })=>{
+                return {
+                    who: who,
+                    when: when.toNumber()
+                };
+            });
+        }
+    }
     async getMembershipProvedEventArgs(fromBlock, toBlock) {
         if ("MembershipProved" in this.contract.filters) {
             const membershipProvedEvents = await this.contract.queryFilter(this.contract.filters.MembershipProved(), fromBlock, toBlock);
@@ -715,9 +724,7 @@ class $a0cf45371a696709$export$2b7e06d96cf7f075 {
             const votePower = await this.contract.callStatic.queryVotePower(voter, blockNumber, "0x00");
             (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
             return votePower.toString();
-        } catch (error) {
-            console.error(error);
-        }
+        } catch (error) {}
         return "0";
     }
     async getVotingPowerView(voter, blockNumber) {
@@ -732,7 +739,6 @@ class $a0cf45371a696709$export$2b7e06d96cf7f075 {
             (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
             return votePower.toString();
         } catch (error) {
-            console.error(error);
             return "0";
         }
         return this.getVotingPower(voter, blockNumber);
