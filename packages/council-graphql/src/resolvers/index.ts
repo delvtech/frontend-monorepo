@@ -179,8 +179,11 @@ export const resolvers: Resolvers<CouncilContext> = {
       });
     },
     votes: (proposal, { voters: addresses }, context) => {
-      const voters = VoterModel.getByAddresses({ addresses });
-      return VoteModel.getByVoters({ voters, proposal, context });
+      if (addresses) {
+        const voters = VoterModel.getByAddresses({ addresses });
+        return VoteModel.getByVoters({ voters, proposal, context });
+      }
+      return VoteModel.getByProposal({ proposal, context });
     },
     votingPower: ({ votingContract, created }, { voter: address }, context) => {
       const voter = VoterModel.getByAddress({ address });
