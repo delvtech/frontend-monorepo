@@ -19,6 +19,31 @@ export class VotingVaultContract {
     this.contract = contract;
   }
 
+  async getKickedEventArgs(
+    fromBlock?: string | number,
+    toBlock?: string | number,
+  ): Promise<
+    | {
+        when: number;
+        who: string;
+      }[]
+    | undefined
+  > {
+    if ("Kicked" in this.contract.filters) {
+      const membershipProvedEvents = await this.contract.queryFilter(
+        this.contract.filters.Kicked(),
+        fromBlock,
+        toBlock,
+      );
+      return membershipProvedEvents.map(({ args: { when, who } }) => {
+        return {
+          who,
+          when: when.toNumber(),
+        };
+      });
+    }
+  }
+
   async getMembershipProvedEventArgs(
     fromBlock?: string | number,
     toBlock?: string | number,
