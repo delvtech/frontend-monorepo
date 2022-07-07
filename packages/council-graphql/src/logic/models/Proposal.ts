@@ -6,8 +6,6 @@ import { getFromBlockNumber } from "src/logic/utils/getFromBlockNumber";
 const EXECUTED_PROPOSAL_HASH =
   "0x0000000000000000000000000000000000000000000000000000000000000000";
 
-// type GetByIdsOptions =
-
 interface ProposalModel {
   getByIds: (options: {
     ids: string[];

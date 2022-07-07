@@ -1,5 +1,4 @@
 import { formatEther } from "ethers/lib/utils";
-import { VotingVaultContract } from "src/datasources/VotingVaultContract";
 import { Voter, VotingPower, VotingVault } from "src/generated";
 import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
 import { getLatestBlockNumber } from "src/logic/utils/getLatestBlockNumber";

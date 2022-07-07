@@ -1,4 +1,3 @@
-import { CoreVotingContract } from "src/datasources/CoreVotingContract";
 import { VotingContract } from "src/generated";
 import { CouncilContext } from "src/logic/context";
 import { getVotingContractDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";

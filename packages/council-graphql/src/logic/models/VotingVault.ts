@@ -1,4 +1,3 @@
-import { VotingVaultContract } from "src/datasources/VotingVaultContract";
 import { VotingVault } from "src/generated";
 import { CouncilContext } from "../context";
 

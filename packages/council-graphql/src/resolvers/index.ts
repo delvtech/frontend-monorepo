@@ -1,4 +1,3 @@
-import { VotingVaultContract } from "src/datasources/VotingVaultContract";
 import { Resolvers } from "src/generated";
 import { CouncilContext } from "src/logic/context";
 import { ProposalModel } from "src/logic/models/Proposal";
@@ -8,9 +7,6 @@ import { VoterModel } from "src/logic/models/Voter";
 import { VotingContractModel } from "src/logic/models/VotingContract";
 import { VotingPowerModel } from "src/logic/models/VotingPower";
 import { VotingVaultModel } from "src/logic/models/VotingVault";
-
-// TODO: revisit use of name field vs address and potentially remove name fields
-// from typeDefs.
 
 export const resolvers: Resolvers<CouncilContext> = {
   Query: {
