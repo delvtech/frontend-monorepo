@@ -3,19 +3,19 @@ module.exports = {
     browser: false,
     es2021: true,
     mocha: true,
-    node: true
+    node: true,
   },
-  plugins: ['@typescript-eslint'],
-  extends: ['plugin:node/recommended', '@elementfi/eslint-config', 'standard'],
-  parser: '@typescript-eslint/parser',
+  extends: ["plugin:node/recommended", "@elementfi/eslint-config"],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 12
+    ecmaVersion: 12,
   },
   rules: {
-    'node/no-unsupported-features/es-syntax': [
-      'error',
-      { ignores: ['modules'] }
+    "node/no-unsupported-features/es-syntax": [
+      "error",
+      { ignores: ["modules"] },
     ],
-    'no-console': 'off'
-  }
-}
+    // disabling this rule because the testnet will need to output to log frequently
+    "no-console": "off",
+  },
+};
