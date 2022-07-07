@@ -61,39 +61,25 @@ export const ProposalModel: ProposalModel = {
   },
 
   async getIsActive({ proposal, context }) {
-    const dataSource = getVotingContractDataSourceByAddress(
-      proposal.votingContract.address,
-      context.councilDataSources
-    ) as CoreVotingContract;
-    const { proposalHash } = await dataSource.getProposalById(proposal.id);
+    const { proposalHash } = await getByIdFromDataSource(proposal, context);
     return proposalHash !== EXECUTED_PROPOSAL_HASH;
   },
 
   async getLastCall({ proposal, context }) {
-    const dataSource = getVotingContractDataSourceByAddress(
-      proposal.votingContract.address,
-      context.councilDataSources
-    ) as CoreVotingContract;
-
-    const { proposalHash, lastCall } = await dataSource.getProposalById(
-      proposal.id
+    const { proposalHash, lastCall } = await getByIdFromDataSource(
+      proposal,
+      context,
     );
-
     if (proposalHash === EXECUTED_PROPOSAL_HASH) {
       return lastCall;
     }
   },
 
   async getQuorum({ proposal, context }) {
-    const dataSource = getVotingContractDataSourceByAddress(
-      proposal.votingContract.address,
-      context.councilDataSources
-    ) as CoreVotingContract;
-
-    const { proposalHash, quorum } = await dataSource.getProposalById(
-      proposal.id
+    const { proposalHash, quorum } = await getByIdFromDataSource(
+      proposal,
+      context,
     );
-
     if (proposalHash === EXECUTED_PROPOSAL_HASH) {
       return quorum;
     }
@@ -102,14 +88,14 @@ export const ProposalModel: ProposalModel = {
   async getByVotingContract({ votingContract, context }) {
     const dataSource = getVotingContractDataSourceByAddress(
       votingContract.address,
-      context.councilDataSources
+      context.councilDataSources,
     ) as CoreVotingContract;
 
     if (!dataSource) {
       return [];
     }
     const args = await dataSource.getProposalCreatedEventArgs(
-      getFromBlockNumber(context.chainId)
+      getFromBlockNumber(context.chainId),
     );
     return args.map(({ created, execution, expiration, proposalId }) => {
       return {
@@ -122,3 +108,12 @@ export const ProposalModel: ProposalModel = {
     });
   },
 };
+
+function getByIdFromDataSource(proposal: Proposal, context: CouncilContext) {
+  const dataSource = getVotingContractDataSourceByAddress(
+    proposal.votingContract.address,
+    context.councilDataSources,
+  ) as CoreVotingContract;
+
+  return dataSource.getProposalById(proposal.id);
+}
