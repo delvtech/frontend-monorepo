@@ -1,9 +1,4 @@
 type Query {
-  # coreVoting: VotingContract
-  # gscVault: VotingVault
-  # gscVoting: VotingContract
-  # lockingVault: VotingVault
-  # vestingVault: VotingVault
   votingContract(address: ID!): VotingContract
   votingContracts(addresses: [ID!]): [VotingContract]
   votingVault(address: ID!): VotingVault
@@ -46,7 +41,7 @@ type Proposal {
   quorum: String
   vote(voter: ID!): Vote
   voters: [Voter]
-  votes(voters: [ID!]!): [Vote]
+  votes(voters: [ID!]): [Vote]
   votingPower(voter: ID!): VotingPower
   votingPowers(voters: [ID!]): [VotingPower]
 }
