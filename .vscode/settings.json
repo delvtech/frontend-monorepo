@@ -8,5 +8,11 @@
     "semibold",
     "ttag",
     "unstake"
-  ]
+  ],
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.trailingComma": "all",
+  "prettier.singleQuote": false,
+  "prettier.semi": true,
+  "prettier.printWidth": 80
 }
