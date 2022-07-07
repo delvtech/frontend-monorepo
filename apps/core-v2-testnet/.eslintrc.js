@@ -6,12 +6,7 @@ module.exports = {
     node: true,
   },
   plugins: ["@typescript-eslint"],
-  extends: [
-    "standard",
-    "plugin:prettier/recommended",
-    "plugin:node/recommended",
-    "@elementfi/eslint-config",
-  ],
+  extends: ["standard", "plugin:node/recommended", "@elementfi/eslint-config"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 12,
