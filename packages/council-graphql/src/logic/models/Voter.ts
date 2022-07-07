@@ -2,8 +2,10 @@ import { VotingVaultContract } from "src/datasources/VotingVaultContract";
 import { Voter, VotingVault } from "src/generated";
 import { CouncilContext } from "src/logic/context";
 import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
+import { VotingVaultModel } from "./VotingVault";
 
 interface VoterModel {
+  getAll: (options: { context: CouncilContext }) => Promise<Voter[]>;
   getByAddress: (options: { address: string }) => Voter;
   getByAddresses: (options: { addresses: string[] }) => Voter[];
   getByVotingVault: (options: {
@@ -19,6 +21,10 @@ interface VoterModel {
 }
 
 export const VoterModel: VoterModel = {
+  getAll({ context }) {
+    const votingVaults = VotingVaultModel.getAll({ context });
+    return this.getByVotingVaults({ votingVaults, context });
+  },
   getByAddress({ address }) {
     return { address };
   },
@@ -44,14 +50,14 @@ export const VoterModel: VoterModel = {
     for (const votingVault of votingVaults) {
       const dataSource = getVotingVaultDataSourceByAddress(
         votingVault.address,
-        councilDataSources
+        councilDataSources,
       ) as VotingVaultContract;
 
       // any change of voting power (delegating, depositing more ELFI, etc..)
       // will trigger this event on certain voting vaults.
       const powerChanges = await dataSource.getVoteChangeEventArgs(
         undefined,
-        blockNumber
+        blockNumber,
       );
       if (powerChanges) {
         for (const { to, amount } of powerChanges) {
@@ -64,7 +70,7 @@ export const VoterModel: VoterModel = {
       // VoteChange event by looking at membershipProved events.
       const members = await dataSource.getMembershipProvedEventArgs(
         undefined,
-        blockNumber
+        blockNumber,
       );
       if (members) {
         for (const { who } of members) {

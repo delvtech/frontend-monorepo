@@ -3,6 +3,7 @@ import { CoreVotingContract } from "src/datasources/CoreVotingContract";
 import { Ballot, Proposal, Vote, Voter } from "src/generated";
 import { CouncilContext } from "src/logic/context";
 import { getVotingContractDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
+import { VoterModel } from "./Voter";
 
 interface VoteModel {
   getByVoter: (options: {
@@ -16,6 +17,11 @@ interface VoteModel {
     proposal: Proposal;
     context: CouncilContext;
   }) => Promise<Vote[]>;
+
+  getByProposal: (options: {
+    proposal: Proposal,
+    context: CouncilContext
+  }) => Promise<Vote[]>
 }
 
 export const VoteModel: VoteModel = {
@@ -45,4 +51,16 @@ export const VoteModel: VoteModel = {
       voters.map((voter) => this.getByVoter({ voter, proposal, context }))
     );
   },
+
+  async getByProposal({ proposal, context }) {
+    const voters = await VoterModel.getByVotingVaults({
+      votingVaults: proposal.votingContract.votingVaults,
+      context
+    })
+    return this.getByVoters({
+      voters,
+      proposal,
+      context
+    })
+  }
 };

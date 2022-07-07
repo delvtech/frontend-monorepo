@@ -17,29 +17,33 @@ export const resolvers: Resolvers<CouncilContext> = {
       // Get all the votingContracts by default if no addresses arg is provided
       if (!addresses) {
         return VotingContractModel.getAll({ context }).map(
-          (votingContract) => votingContract || null
+          (votingContract) => votingContract || null,
         );
       }
 
+      // TODO: VotingContractModel.getByAddresses
       return addresses.map(
         (address) =>
-          VotingContractModel.getByAddress({ address, context }) || null
+          VotingContractModel.getByAddress({ address, context }) || null,
       );
     },
     votingVaults: (_, { addresses }, context) => {
       // Get all the votingVaults by default if no addresses arg is provided
       if (!addresses) {
         return VotingVaultModel.getAll({ context }).map(
-          (votingVault) => votingVault || null
+          (votingVault) => votingVault || null,
         );
       }
 
+      // TODO: VotingVaultModel.getByAddresses
       return addresses.map(
-        (address) => VotingVaultModel.getByAddress({ address, context }) || null
+        (address) =>
+          VotingVaultModel.getByAddress({ address, context }) || null,
       );
     },
     votingVault: (_, { address }, context) => {
-      const result = VotingVaultModel.getByAddress({ address, context }) || null;
+      const result =
+        VotingVaultModel.getByAddress({ address, context }) || null;
       return result;
     },
     voter: (_, { address }) => {
@@ -49,18 +53,7 @@ export const resolvers: Resolvers<CouncilContext> = {
       if (addresses) {
         return VoterModel.getByAddresses({ addresses });
       } else {
-        const votingVaults = VotingVaultModel.getByAddresses({
-          addresses: context.councilDataSources.votingVaults.map(
-            ({ address }) => address
-          ),
-          context,
-        });
-        return VoterModel.getByVotingVaults({
-          votingVaults: votingVaults.filter(
-            (vault) => !!vault
-          ) as VotingVaultContract[],
-          context,
-        });
+        return VoterModel.getAll({ context });
       }
     },
   },
@@ -113,7 +106,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     votingPowers: async (
       { votingVaults },
       { voters: addresses, blockNumber },
-      context
+      context,
     ) => {
       const voters = addresses
         ? VoterModel.getByAddresses({ addresses })
@@ -150,7 +143,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     votingPowers: async (
       votingVault,
       { voters: addresses, blockNumber },
-      context
+      context,
     ) => {
       const voters = addresses
         ? VoterModel.getByAddresses({ addresses })
@@ -201,7 +194,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     votingPowers: async (
       { votingContract, created },
       { voters: addresses },
-      context
+      context,
     ) => {
       const { votingVaults } = votingContract;
       const voters = addresses
@@ -251,7 +244,7 @@ export const resolvers: Resolvers<CouncilContext> = {
     votes: async (
       voter,
       { proposals: ids, votingContract: address },
-      context
+      context,
     ) => {
       const votingContract = VotingContractModel.getByAddress({
         address,
@@ -275,7 +268,7 @@ export const resolvers: Resolvers<CouncilContext> = {
             proposal,
             context,
           });
-        })
+        }),
       );
     },
   },
