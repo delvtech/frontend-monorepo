@@ -1,6 +1,7 @@
 import { CoreVotingContract } from "src/datasources/CoreVotingContract";
 import { Proposal, VotingContract } from "src/generated";
 import { CouncilContext } from "src/logic/context";
+import { getVotingContractDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
 import { getFromBlockNumber } from "src/logic/utils/getFromBlockNumber";
 
 const EXECUTED_PROPOSAL_HASH =
@@ -121,13 +122,3 @@ export const ProposalModel: ProposalModel = {
     });
   },
 };
-function getVotingContractDataSourceByAddress(
-  address: string,
-  councilDataSources: {
-    votingContracts: CoreVotingContract[];
-    // type GetByIdsOptions =
-    votingVaults: import("../../datasources/VotingVaultContract").VotingVaultContract[];
-  }
-): CoreVotingContract {
-  throw new Error("Function not implemented.");
-}
