@@ -12,7 +12,7 @@ export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K]
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
-// Generated on 2022-07-06T14:11:55-07:00
+// Generated on 2022-07-07T01:25:23-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -57,7 +57,7 @@ export type ProposalVoteArgs = {
 
 
 export type ProposalVotesArgs = {
-  voters: Array<Scalars['ID']>;
+  voters?: InputMaybe<Array<Scalars['ID']>>;
 };
 
 
@@ -342,7 +342,7 @@ export type ProposalResolvers<ContextType = ResolverContext, ParentType extends 
   unlock?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   vote?: Resolver<Maybe<ResolversTypes['Vote']>, ParentType, ContextType, RequireFields<ProposalVoteArgs, 'voter'>>;
   voters?: Resolver<Maybe<Array<Maybe<ResolversTypes['Voter']>>>, ParentType, ContextType>;
-  votes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Vote']>>>, ParentType, ContextType, RequireFields<ProposalVotesArgs, 'voters'>>;
+  votes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Vote']>>>, ParentType, ContextType, Partial<ProposalVotesArgs>>;
   votingContract?: Resolver<ResolversTypes['VotingContract'], ParentType, ContextType>;
   votingPower?: Resolver<Maybe<ResolversTypes['VotingPower']>, ParentType, ContextType, RequireFields<ProposalVotingPowerArgs, 'voter'>>;
   votingPowers?: Resolver<Maybe<Array<Maybe<ResolversTypes['VotingPower']>>>, ParentType, ContextType, Partial<ProposalVotingPowersArgs>>;

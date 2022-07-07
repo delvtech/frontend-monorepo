@@ -53,7 +53,7 @@ export type ProposalVoteArgs = {
     voter: Scalars['ID'];
 };
 export type ProposalVotesArgs = {
-    voters: Array<Scalars['ID']>;
+    voters?: InputMaybe<Array<Scalars['ID']>>;
 };
 export type ProposalVotingPowerArgs = {
     voter: Scalars['ID'];
@@ -247,7 +247,7 @@ export type ProposalResolvers<ContextType = ResolverContext, ParentType extends 
     unlock?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
     vote?: Resolver<Maybe<ResolversTypes['Vote']>, ParentType, ContextType, RequireFields<ProposalVoteArgs, 'voter'>>;
     voters?: Resolver<Maybe<Array<Maybe<ResolversTypes['Voter']>>>, ParentType, ContextType>;
-    votes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Vote']>>>, ParentType, ContextType, RequireFields<ProposalVotesArgs, 'voters'>>;
+    votes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Vote']>>>, ParentType, ContextType, Partial<ProposalVotesArgs>>;
     votingContract?: Resolver<ResolversTypes['VotingContract'], ParentType, ContextType>;
     votingPower?: Resolver<Maybe<ResolversTypes['VotingPower']>, ParentType, ContextType, RequireFields<ProposalVotingPowerArgs, 'voter'>>;
     votingPowers?: Resolver<Maybe<Array<Maybe<ResolversTypes['VotingPower']>>>, ParentType, ContextType, Partial<ProposalVotingPowersArgs>>;

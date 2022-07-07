@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers, BigNumber } from "ethers";
 import { Logger } from "ethers/lib/utils";
 import {
   GSCVault,
@@ -19,10 +19,34 @@ export class VotingVaultContract {
     this.contract = contract;
   }
 
-  // TODO: Should this be replaced with a more generalized `getEventArgs`
+  async getMembershipProvedEventArgs(
+    fromBlock?: string | number,
+    toBlock?: string | number,
+  ): Promise<
+    | {
+        when: number;
+        who: string;
+      }[]
+    | undefined
+  > {
+    if ("MembershipProved" in this.contract.filters) {
+      const membershipProvedEvents = await this.contract.queryFilter(
+        this.contract.filters.MembershipProved(),
+        fromBlock,
+        toBlock,
+      );
+      return membershipProvedEvents.map(({ args: { when, who } }) => {
+        return {
+          who,
+          when: when.toNumber(),
+        };
+      });
+    }
+  }
+
   async getVoteChangeEventArgs(
     fromBlock?: string | number,
-    toBlock?: string | number
+    toBlock?: string | number,
   ): Promise<
     | {
         from: string;
@@ -35,37 +59,13 @@ export class VotingVaultContract {
       const voteChangeEvents = await this.contract.queryFilter(
         this.contract.filters.VoteChange(),
         fromBlock,
-        toBlock
+        toBlock,
       );
       return voteChangeEvents.map(({ args: { from, to, amount } }) => {
         return {
           from,
           to,
           amount: amount.toString(),
-        };
-      });
-    }
-  }
-  async getMembershipProvedEventArgs(
-    fromBlock?: string | number,
-    toBlock?: string | number
-  ): Promise<
-    | {
-        when: number;
-        who: string;
-      }[]
-    | undefined
-  > {
-    if ("MembershipProved" in this.contract.filters) {
-      const membershipProvedEvents = await this.contract.queryFilter(
-        this.contract.filters.MembershipProved(),
-        fromBlock,
-        toBlock
-      );
-      return membershipProvedEvents.map(({ args: { when, who } }) => {
-        return {
-          who,
-          when: when.toNumber(),
         };
       });
     }
@@ -83,7 +83,7 @@ export class VotingVaultContract {
       const votePower = await this.contract.callStatic.queryVotePower(
         voter,
         blockNumber,
-        "0x00"
+        "0x00",
       );
       ethers.utils.Logger.setLogLevel(Logger.levels.WARNING);
       return votePower.toString();
@@ -107,7 +107,7 @@ export class VotingVaultContract {
         ethers.utils.Logger.setLogLevel(Logger.levels.OFF);
         const votePower = await this.contract.callStatic.queryVotePowerView(
           voter,
-          blockNumber
+          blockNumber,
         );
         ethers.utils.Logger.setLogLevel(Logger.levels.WARNING);
         return votePower.toString();
