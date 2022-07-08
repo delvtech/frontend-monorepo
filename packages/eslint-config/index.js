@@ -1,10 +1,9 @@
 module.exports = {
-  ignorePatterns: ["*.json", "*.md"],
+  ignorePatterns: ["*.json", "*.md", "*.gql", "*.graphql"],
   extends: [
     "react-app",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:testing-library/react",
     "plugin:jest-dom/recommended",
     "plugin:jsx-a11y/recommended",
     /**
@@ -26,15 +25,8 @@ module.exports = {
       },
     },
     {
-      files: ["*.js", "*.jsx", ".ts", ".tsx"],
-      processor: "@graphql-eslint/graphql",
-    },
-    {
-      files: ["*.gql", "*.graphql"],
-      extends: [
-        "plugin:@graphql-eslint/schema-recommended",
-        "plugin:@graphql-eslint/operations-recommended",
-      ],
+      files: ["**/*.test.ts", "**/*.test.tsx"],
+      extends: ["plugin:testing-library/react"],
     },
   ],
   rules: {

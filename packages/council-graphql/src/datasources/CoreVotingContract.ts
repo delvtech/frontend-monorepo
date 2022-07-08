@@ -21,7 +21,14 @@ export class CoreVotingContract {
   async getProposalCreatedEventArgs(
     fromBlock?: string | number,
     toBlock?: string | number,
-  ) {
+  ): Promise<
+    {
+      proposalId: string;
+      created: number;
+      execution: number;
+      expiration: number;
+    }[]
+  > {
     const proposalCreatedEvents = await this.contract.queryFilter(
       this.contract.filters.ProposalCreated(),
       fromBlock,
@@ -39,7 +46,14 @@ export class CoreVotingContract {
     );
   }
 
-  async getProposalById(id: string) {
+  async getProposalById(id: string): Promise<{
+    proposalHash: string;
+    created: number;
+    unlock: number;
+    expiration: number;
+    lastCall: number;
+    quorum: string;
+  }> {
     const { proposalHash, created, unlock, expiration, quorum, lastCall } =
       await this.contract.functions.proposals(id);
     return {
@@ -52,7 +66,20 @@ export class CoreVotingContract {
     };
   }
 
-  async getVote(voter: string, proposalId: string) {
-    return this.contract.functions.votes(voter, proposalId);
+  async getVote(
+    voter: string,
+    proposalId: string,
+  ): Promise<{
+    votingPower: string;
+    castBallot: number;
+  }> {
+    const { votingPower, castBallot } = await this.contract.functions.votes(
+      voter,
+      proposalId,
+    );
+    return {
+      votingPower: votingPower.toString(),
+      castBallot,
+    };
   }
 }

@@ -1,4 +1,4 @@
-import { ethers, BigNumber } from "ethers";
+import { ethers } from "ethers";
 import { Logger } from "ethers/lib/utils";
 import {
   GSCVault,
@@ -121,7 +121,10 @@ export class VotingVaultContract {
     return "0";
   }
 
-  async getVotingPowerView(voter: string, blockNumber: number) {
+  async getVotingPowerView(
+    voter: string,
+    blockNumber: number,
+  ): Promise<string> {
     if ("queryVotePowerView" in this.contract.callStatic) {
       try {
         // TODO: find a better solution for this.

@@ -1,8 +1,8 @@
 import { formatEther } from "ethers/lib/utils";
 import { Voter, VotingPower, VotingVault } from "src/generated";
+import { CouncilContext } from "src/logic/context";
 import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
 import { getLatestBlockNumber } from "src/logic/utils/getLatestBlockNumber";
-import { CouncilContext } from "../context";
 
 interface VotingPowerModel {
   getByVoter: (options: {
@@ -37,12 +37,12 @@ export const VotingPowerModel: VotingPowerModel = {
     for (const { address } of votingVaults) {
       const dataSource = getVotingVaultDataSourceByAddress(
         address,
-        councilDataSources
+        councilDataSources,
       );
       if (dataSource) {
         const vaultPower = await dataSource.getVotingPowerView(
           voter.address,
-          blockNumber
+          blockNumber,
         );
         aggregateValue += BigInt(vaultPower);
       }
@@ -58,8 +58,8 @@ export const VotingPowerModel: VotingPowerModel = {
   getByVoters({ voters, votingVaults, blockNumber, context }) {
     return Promise.all(
       voters.map((voter) =>
-        this.getByVoter({ voter, votingVaults, blockNumber, context })
-      )
+        this.getByVoter({ voter, votingVaults, blockNumber, context }),
+      ),
     );
   },
 
@@ -75,13 +75,13 @@ export const VotingPowerModel: VotingPowerModel = {
       for (const { address } of votingVaults) {
         const dataSource = getVotingVaultDataSourceByAddress(
           address,
-          councilDataSources
+          councilDataSources,
         );
 
         if (dataSource) {
           const valueAtBlock = await dataSource?.getVotingPower(
             voter.address,
-            blockNumber
+            blockNumber,
           );
           if (!Number(valueAtBlock) && Number(value) > 0) {
             return true;
