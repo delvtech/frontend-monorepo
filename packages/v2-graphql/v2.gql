@@ -1,0 +1,80 @@
+type Query {
+  term(address: String!): Term
+  terms(addresses: [String!], created: Int, maturity: Int): [Term]
+  yieldSource(address: ID!): YieldSource
+  yieldSources(addresses: [ID!]): [YieldSource]
+  protocols(names: [ID!]): Protocol
+}
+
+type Term {
+  address: ID!
+  name: String!
+  principalToken: Token
+  yieldToken: Token
+  baseAsset: Token
+  pool: Pool
+  "Timestamp in milliseconds since unix epoch"
+  createdTimestamp: Int
+  "Block number the term was created at"
+  createdAtBlock: Int
+  "Timestamp in milliseconds since unix epoch"
+  maturity: String
+  "Dollar amount of deposits into the term"
+  tvl: String
+  yieldSource: YieldSource
+}
+
+type Token {
+  address: ID!
+  symbol: String!
+  decimals: Int
+  price: String
+}
+
+type Pool {
+  yieldSource: YieldSource!
+
+  "Dollar amount traded in the pool"
+  tradingVolume(fromBlock: Int, toBlock: Int): String
+
+  "Dollar amount in fees accumulated on trades"
+  fees(fromBlock: Int, toBlock: Int): String
+  "Price of bond asset in terms of share asset, eg: 0.95 USDC for 1 ptUSDC"
+  spotPrice(atBlock: Int): String
+
+  "Num of principal tokens"
+  bondReserves: Int!
+  "Num of base asset tokens"
+  shareReserves: Int!
+  timeStretch: String!
+
+  "num milliseconds until term maturity"
+  timeUntilMaturity: Int!
+
+  totalSupply: String!
+  initialPricePerShare: String!
+  currentPricePerShare: String!
+}
+
+"TODO: Review 4626 standard"
+type YieldSource {
+  address: ID!
+  "Name of the yield source, eg: Yearn Vault Dai v2"
+  name: String!
+  protocol: Protocol
+  "APY of the underlying yield source"
+  apy: number
+  "TVL of the yield source (in dollars)"
+  tvl: number
+  "Get the price of a vault token in terms of any of the base assets"
+  pricePerShare(tokenOut: String!): String
+  pricePerShares(tokensOut: [String!]): [String]
+  baseAssets: [Token]
+  terms: [ Term ]
+}
+
+type Protocol {
+  "Yearn"
+  name: ID!
+  yieldSources: [ YieldSource ]
+}
