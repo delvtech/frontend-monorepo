@@ -42,7 +42,7 @@ directly into your package.json like this, then run `yarn`.
 {
   "dependencies": {
     // Name comes from packages/core/package.json
-    "@elementfi/core": "^1.0.0"
+    "@elementfi/core": "*"
   }
 }
 ```
