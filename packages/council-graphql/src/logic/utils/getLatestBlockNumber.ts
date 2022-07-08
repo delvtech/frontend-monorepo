@@ -4,7 +4,7 @@ import { Provider } from "@ethersproject/providers";
 // throughout a single execution context.
 export const getLatestBlockNumber = (function () {
   let savedResult: number | undefined;
-  const TIME_TO_LIVE = 10000; // 10 seconds
+  const TIME_TO_LIVE = 12000; // 12 seconds
 
   return async function (provider: Provider) {
     if (!savedResult) {
