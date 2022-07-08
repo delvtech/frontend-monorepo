@@ -7,10 +7,5 @@ export type CouncilContext = ResolverContext<{
   councilDataSources: {
     votingContracts: CoreVotingContract[];
     votingVaults: VotingVaultContract[];
-    // coreVoting: CoreVotingContract;
-    // gscVoting: CoreVotingContract;
-    // lockingVault: LockingVaultContract;
-    // vestingVault: VestingVaultContract;
-    // gscVault: GSCVaultContract;
   };
 }>;
