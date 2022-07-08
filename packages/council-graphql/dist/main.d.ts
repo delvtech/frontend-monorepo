@@ -36,7 +36,7 @@ export type Proposal = {
     /** Block Number */
     expiration: Scalars['Int'];
     id: Scalars['ID'];
-    isActive?: Maybe<Scalars['Boolean']>;
+    isExecuted?: Maybe<Scalars['Boolean']>;
     /** Block Number */
     lastCall?: Maybe<Scalars['Int']>;
     quorum?: Maybe<Scalars['String']>;
@@ -241,7 +241,7 @@ export type ProposalResolvers<ContextType = ResolverContext, ParentType extends 
     created?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
     expiration?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
     id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-    isActive?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+    isExecuted?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
     lastCall?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
     quorum?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     unlock?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;

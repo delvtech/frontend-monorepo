@@ -25,7 +25,7 @@ interface ProposalModel {
     context: CouncilContext;
   }) => Promise<Proposal[]>;
 
-  getIsActive: (options: {
+  getIsExecuted: (options: {
     proposal: Proposal;
     context: CouncilContext;
   }) => Promise<boolean>;
@@ -60,9 +60,9 @@ export const ProposalModel: ProposalModel = {
     return proposals[0];
   },
 
-  async getIsActive({ proposal, context }) {
+  async getIsExecuted({ proposal, context }) {
     const { proposalHash } = await getByIdFromDataSource(proposal, context);
-    return proposalHash !== EXECUTED_PROPOSAL_HASH;
+    return proposalHash === EXECUTED_PROPOSAL_HASH;
   },
 
   async getLastCall({ proposal, context }) {
@@ -70,7 +70,7 @@ export const ProposalModel: ProposalModel = {
       proposal,
       context,
     );
-    if (proposalHash === EXECUTED_PROPOSAL_HASH) {
+    if (proposalHash !== EXECUTED_PROPOSAL_HASH) {
       return lastCall;
     }
   },
@@ -80,7 +80,7 @@ export const ProposalModel: ProposalModel = {
       proposal,
       context,
     );
-    if (proposalHash === EXECUTED_PROPOSAL_HASH) {
+    if (proposalHash !== EXECUTED_PROPOSAL_HASH) {
       return quorum;
     }
   },

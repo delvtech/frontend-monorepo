@@ -158,8 +158,8 @@ export const resolvers: Resolvers<CouncilContext> = {
     },
   },
   Proposal: {
-    isActive: (proposal, _, context) => {
-      return ProposalModel.getIsActive({ proposal, context });
+    isExecuted: (proposal, _, context) => {
+      return ProposalModel.getIsExecuted({ proposal, context });
     },
     lastCall: async (proposal, _, context) => {
       return (await ProposalModel.getLastCall({ proposal, context })) || null;

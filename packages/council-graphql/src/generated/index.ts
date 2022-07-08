@@ -12,7 +12,7 @@ export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K]
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
-// Generated on 2022-07-07T01:25:23-05:00
+// Generated on 2022-07-08T12:43:09-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -36,7 +36,7 @@ export type Proposal = {
   /** Block Number */
   expiration: Scalars['Int'];
   id: Scalars['ID'];
-  isActive?: Maybe<Scalars['Boolean']>;
+  isExecuted?: Maybe<Scalars['Boolean']>;
   /** Block Number */
   lastCall?: Maybe<Scalars['Int']>;
   quorum?: Maybe<Scalars['String']>;
@@ -336,7 +336,7 @@ export type ProposalResolvers<ContextType = ResolverContext, ParentType extends 
   created?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   expiration?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  isActive?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  isExecuted?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   lastCall?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   quorum?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   unlock?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
