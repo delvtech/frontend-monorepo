@@ -5,7 +5,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "x": "npx hardhat",
     "test": "npx hardhat test",
     "compile": "npx hardhat compile",
     "prepare": "husky install",
