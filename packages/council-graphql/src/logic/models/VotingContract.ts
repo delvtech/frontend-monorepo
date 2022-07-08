@@ -15,13 +15,13 @@ interface VotingContractModel {
 export const VotingContractModel: VotingContractModel = {
   getAll({ context }) {
     return context.councilDataSources.votingContracts.map(({ address }) =>
-      this.getByAddress({ address, context })
+      this.getByAddress({ address, context }),
     );
   },
   getByAddress({ address, context }) {
     const dataSource = getVotingContractDataSourceByAddress(
       address,
-      context.councilDataSources
+      context.councilDataSources,
     );
     if (dataSource) {
       return {
