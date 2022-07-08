@@ -17,8 +17,8 @@ import {
   InMemoryCache,
   ApolloLink,
 } from "@apollo/client";
-import { getApolloLink } from "@elementfi/graphql";
-import { councilGraph } from "@elementfi/council-graphql";
+import { getApolloLink, Graph } from "@elementfi/graphql";
+import { councilGraph, councilSchema } from "@elementfi/council-graphql";
 import { defaultProvider } from "src/providers/providers";
 import { queryClient } from "src/queryClient";
 import { addressesJson } from "src/addresses";
