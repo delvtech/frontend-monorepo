@@ -9,18 +9,18 @@ interface VoteModel {
     voter: Voter;
     proposal: Proposal;
     context: CouncilContext;
-  }) => Promise<Vote>;
+  }) => Promise<Vote | undefined>;
 
   getByVoters: (options: {
     voters: Voter[];
     proposal: Proposal;
     context: CouncilContext;
-  }) => Promise<Vote[]>;
+  }) => Promise<(Vote | undefined)[]>;
 
   getByProposal: (options: {
     proposal: Proposal;
     context: CouncilContext;
-  }) => Promise<Vote[]>;
+  }) => Promise<(Vote | undefined)[]>;
 }
 
 export const VoteModel: VoteModel = {
@@ -30,6 +30,9 @@ export const VoteModel: VoteModel = {
       votingContract.address,
       councilDataSources,
     );
+    if (!dataSource) {
+      return;
+    }
     const { votingPower, castBallot } = await dataSource.getVote(
       voter.address,
       id,

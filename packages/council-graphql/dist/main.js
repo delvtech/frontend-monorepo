@@ -246,13 +246,14 @@ const $74d4fdf5b0550f40$export$e424928527fab42f = {
 const $d10dcacbcc0ff0c7$export$81fb29a3b5045c76 = {
     async getByVoter ({ voter: voter , proposal: proposal , context: { councilDataSources: councilDataSources  }  }) {
         const { id: id , votingContract: votingContract  } = proposal;
-        let dataSource = (0, $a9d8dc444614e877$export$8f465fcd5ae4b18c)(votingContract.address, councilDataSources);
+        const dataSource = (0, $a9d8dc444614e877$export$8f465fcd5ae4b18c)(votingContract.address, councilDataSources);
+        if (!dataSource) return;
         const { votingPower: votingPower , castBallot: castBallot  } = await dataSource.getVote(voter.address, id);
         return {
             voter: voter,
             proposal: proposal,
             power: (0, $1RIJT$etherslibutils.formatEther)(votingPower),
-            castBallot: votingPower.toBigInt() > 0 ? [
+            castBallot: BigInt(votingPower) > 0 ? [
                 "Yes",
                 "No",
                 "Abstain"
@@ -524,15 +525,16 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
                 context: context
             }) || null;
         },
-        vote: (proposal, { voter: address  }, context)=>{
+        vote: async (proposal, { voter: address  }, context)=>{
             const voter = (0, $74d4fdf5b0550f40$export$e424928527fab42f).getByAddress({
                 address: address
             });
-            return (0, $d10dcacbcc0ff0c7$export$81fb29a3b5045c76).getByVoter({
+            const vote = await (0, $d10dcacbcc0ff0c7$export$81fb29a3b5045c76).getByVoter({
                 voter: voter,
                 proposal: proposal,
                 context: context
             });
+            return vote || null;
         },
         voters: ({ created: created , votingContract: votingContract  }, _, context)=>{
             return (0, $74d4fdf5b0550f40$export$e424928527fab42f).getByVotingVaults({
@@ -541,21 +543,22 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
                 context: context
             });
         },
-        votes: (proposal, { voters: addresses  }, context)=>{
+        votes: async (proposal, { voters: addresses  }, context)=>{
+            let votes;
             if (addresses) {
                 const voters = (0, $74d4fdf5b0550f40$export$e424928527fab42f).getByAddresses({
                     addresses: addresses
                 });
-                return (0, $d10dcacbcc0ff0c7$export$81fb29a3b5045c76).getByVoters({
+                votes = await (0, $d10dcacbcc0ff0c7$export$81fb29a3b5045c76).getByVoters({
                     voters: voters,
                     proposal: proposal,
                     context: context
                 });
-            }
-            return (0, $d10dcacbcc0ff0c7$export$81fb29a3b5045c76).getByProposal({
+            } else votes = await (0, $d10dcacbcc0ff0c7$export$81fb29a3b5045c76).getByProposal({
                 proposal: proposal,
                 context: context
             });
+            return votes.map((vote)=>vote || null);
         },
         votingPower: ({ votingContract: votingContract , created: created  }, { voter: address  }, context)=>{
             const voter = (0, $74d4fdf5b0550f40$export$e424928527fab42f).getByAddress({
@@ -605,11 +608,12 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
                 context: context
             });
             if (!proposal) return null;
-            return (0, $d10dcacbcc0ff0c7$export$81fb29a3b5045c76).getByVoter({
+            const vote = await (0, $d10dcacbcc0ff0c7$export$81fb29a3b5045c76).getByVoter({
                 voter: voter,
                 proposal: proposal,
                 context: context
             });
+            return vote || null;
         },
         votes: async (voter, { proposals: ids , votingContract: address  }, context)=>{
             const votingContract = (0, $1f368d119f63f485$export$4c0b87851cbe4e3f).getByAddress({
@@ -622,14 +626,16 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
                 votingContract: votingContract,
                 context: context
             });
-            return Promise.all(proposals.map((proposal)=>{
+            const votes = proposals.map(async (proposal)=>{
                 if (!proposal) return null;
-                return (0, $d10dcacbcc0ff0c7$export$81fb29a3b5045c76).getByVoter({
+                const vote = await (0, $d10dcacbcc0ff0c7$export$81fb29a3b5045c76).getByVoter({
                     voter: voter,
                     proposal: proposal,
                     context: context
                 });
-            }));
+                return vote || null;
+            });
+            return Promise.all(votes);
         }
     }
 };
@@ -665,7 +671,11 @@ class $41844f56d22dc55e$export$ca33481ae8bfff02 {
         };
     }
     async getVote(voter, proposalId) {
-        return this.contract.functions.votes(voter, proposalId);
+        const { votingPower: votingPower , castBallot: castBallot  } = await this.contract.functions.votes(voter, proposalId);
+        return {
+            votingPower: votingPower.toString(),
+            castBallot: castBallot
+        };
     }
 }
 
@@ -724,9 +734,7 @@ class $a0cf45371a696709$export$2b7e06d96cf7f075 {
             const votePower = await this.contract.callStatic.queryVotePower(voter, blockNumber, "0x00");
             (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
             return votePower.toString();
-        } catch (error) {
-            console.error(error);
-        }
+        } catch (error) {}
         return "0";
     }
     async getVotingPowerView(voter, blockNumber) {
@@ -741,7 +749,6 @@ class $a0cf45371a696709$export$2b7e06d96cf7f075 {
             (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
             return votePower.toString();
         } catch (error) {
-            console.error(error);
             return "0";
         }
         return this.getVotingPower(voter, blockNumber);
@@ -824,8 +831,7 @@ const $a40966fa5fbf0fb2$export$c9b69c213f456a9c = {
 };
 
 
-async function $e2ca106c4b0edc69$export$54fae1269cb9a9e0(context) {
-    const { chainId: chainId , provider: provider  } = context;
+async function $e2ca106c4b0edc69$export$54fae1269cb9a9e0({ chainId: chainId , provider: provider  }) {
     const councilAddresses = $e2ca106c4b0edc69$export$17d5f00cfd692b8a(chainId);
     const lockingVault = new (0, $a1c706d406f5708a$export$93f46c2abf3fc254)(councilAddresses.lockingVault, provider);
     const vestingVault = new (0, $e0e2802e459d88e3$export$a37e73beca8c1698)(councilAddresses.vestingVault, provider);
@@ -838,8 +844,8 @@ async function $e2ca106c4b0edc69$export$54fae1269cb9a9e0(context) {
         gscVault
     ]);
     return {
-        ...context,
-        councilAddresses: councilAddresses,
+        chainId: chainId,
+        provider: provider,
         councilDataSources: {
             votingContracts: [
                 coreVoting,
@@ -4151,7 +4157,7 @@ $430a85f9dbbc5964$exports = {
     ],
     "loc": {
         "start": 0,
-        "end": 1925
+        "end": 1927
     }
 };
 
