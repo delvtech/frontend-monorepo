@@ -1,4 +1,3 @@
-import { VotingVaultContract } from "src/datasources/VotingVaultContract";
 import { Voter, VotingVault } from "src/generated";
 import { CouncilContext } from "src/logic/context";
 import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
@@ -51,7 +50,10 @@ export const VoterModel: VoterModel = {
       const dataSource = getVotingVaultDataSourceByAddress(
         votingVault.address,
         councilDataSources,
-      ) as VotingVaultContract;
+      );
+      if (!dataSource) {
+        return [];
+      }
 
       // any change of voting power (delegating, depositing more ELFI, etc..)
       // will trigger this event on certain voting vaults.
