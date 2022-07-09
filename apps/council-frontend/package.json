@@ -1,14 +1,17 @@
 {
   "dependencies": {
     "@alch/alchemy-web3": "^1.4.2",
+    "@apollo/client": "^3.6.8",
     "@babel/types": "^7.17.0",
     "@blueprintjs/popover2": "^1.0.0",
     "@elementfi/base": "*",
     "@elementfi/council-delegates": "*",
+    "@elementfi/council-graphql": "*",
     "@elementfi/council-proposals": "*",
     "@elementfi/council-tokenlist": "*",
     "@elementfi/council-typechain": "*",
     "@elementfi/eslint-config": "*",
+    "@elementfi/graphql": "*",
     "@elementfi/react-query-typechain": "*",
     "@ethersproject/providers": "^5.6.5",
     "@fontsource/roboto-mono": "^4.5.3",
@@ -50,7 +53,7 @@
     "eslint-plugin-prettier": "^4.1.0",
     "eslint-plugin-tailwindcss": "^3.4.4",
     "ethers": "^5.6.6",
-    "graphql": "^15.8.0",
+    "graphql": "^16.5.0",
     "graphql-request": "^3.7.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
@@ -120,15 +123,16 @@
     "copy-testnet": "npm run _copy-testnet-addresses && npm run _copy-testnet-tokenlist",
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -s public",
-    "chromatic": "chromatic --exit-zero-on-changes --skip 'dependabot/**'",
+    "chromatic": "chromatic --exit-zero-on-changes --skip dependabot/**",
     "test:jest": "jest",
     "test:jest-watch": "jest --watch",
     "test:e2e": "env-cmd -f .env synpress run",
     "prepare": "husky install",
-    "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "prettier:check": "prettier --check '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'"
+    "lint:w": "eslint --fix **/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
+    "lint": "eslint **/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
+    "prettier:w": "prettier --write **/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
+    "prettier:check": "prettier --check **/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
+    "build:graphql": "elf-graphql -s src/graphql/schemas.ts -o src/graphql/generated"
   },
   "lint-staged": {
     "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [

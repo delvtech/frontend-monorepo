@@ -1,0 +1,82 @@
+type Query {
+  votingContract(address: ID!): VotingContract
+  votingContracts(addresses: [ID!]): [VotingContract]
+  votingVault(address: ID!): VotingVault
+  votingVaults(addresses: [ID!]): [VotingVault]
+  voter(address: ID!): Voter
+  voters(addresses: [ID!]): [Voter]
+}
+
+type VotingContract {
+  address: ID!
+  votingVaults: [VotingVault!]!
+  proposal(id: ID!): Proposal
+  proposals(ids: [ID!]): [Proposal]
+  totalVotingPower(blockNumber: Int): TotalVotingPower
+  voters: [Voter]
+  votingPower(voter: ID!, blockNumber: Int): VotingPower
+  votingPowers(voters: [ID!], blockNumber: Int): [VotingPower]
+}
+
+type VotingVault {
+  address: ID!
+  totalVotingPower(blockNumber: Int): TotalVotingPower
+  voters: [Voter]
+  votingPower(voter: ID!, blockNumber: Int): VotingPower
+  votingPowers(voters: [ID!], blockNumber: Int): [VotingPower]
+}
+
+type Proposal {
+  id: ID!
+  votingContract: VotingContract!
+  "Block Number"
+  created: Int!
+  "Block Number"
+  expiration: Int!
+  "Block Number"
+  unlock: Int!
+  isExecuted: Boolean
+  "Block Number"
+  lastCall: Int
+  quorum: String
+  vote(voter: ID!): Vote
+  voters: [Voter]
+  votes(voters: [ID!]): [Vote]
+  votingPower(voter: ID!): VotingPower
+  votingPowers(voters: [ID!]): [VotingPower]
+}
+
+type Vote {
+  voter: Voter!
+  power: String!
+  proposal: Proposal!
+  castBallot: Ballot
+}
+
+enum Ballot {
+  Yes
+  No
+  Abstain
+}
+
+type VotingPower {
+  blockNumber: Int!
+  value: String!
+  voter: Voter!
+  votingVaults: [VotingVault!]!
+  isStale: Boolean
+}
+
+type TotalVotingPower {
+  blockNumber: Int!
+  value: String!
+  votingVaults: [VotingVault!]!
+}
+
+type Voter {
+  address: ID!
+  vote(proposal: ID!, votingContract: ID!): Vote
+  votes(proposals: [ID!]!, votingContract: ID!): [Vote]
+  votingPower(votingVault: ID!, blockNumber: Int): VotingPower
+  votingPowers(votingVaults: [ID!]!, blockNumber: Int): [VotingPower]
+}

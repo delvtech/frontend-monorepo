@@ -1,0 +1,12 @@
+{
+  "extends": ["@elementfi/eslint-config"],
+  // "overrides": [
+  //   {
+  //     "files": ["*.gql", "*.graphql"],
+  //     "extends": ["plugin:@graphql-eslint/schema-recommended"]
+  //   }
+  // ],
+  // "parserOptions": {
+  //   "schema": "./src/council.graphql",
+  // }
+}

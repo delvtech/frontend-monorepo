@@ -260,6 +260,24 @@
     tslib "^2.3.0"
     zen-observable-ts "^1.2.5"
 
+"@apollo/client@^3.6.6", "@apollo/client@^3.6.8":
+  version "3.6.8"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.6.8.tgz#97e876fdbc4c287652a61895fd2b6f0b157a7667"
+  integrity sha512-p/J6KRHZZPGX0bZtMLvRFAIcReYsRYGg+Jz9MkgabWPy0L8rwgyolq9fvKsNqkH888Tj9Yvwrxz9V84KfcORJA==
+  dependencies:
+    "@graphql-typed-document-node/core" "^3.1.1"
+    "@wry/context" "^0.6.0"
+    "@wry/equality" "^0.5.0"
+    "@wry/trie" "^0.3.0"
+    graphql-tag "^2.12.6"
+    hoist-non-react-statics "^3.3.2"
+    optimism "^0.16.1"
+    prop-types "^15.7.2"
+    symbol-observable "^4.0.0"
+    ts-invariant "^0.10.3"
+    tslib "^2.3.0"
+    zen-observable-ts "^1.2.5"
+
 "@babel/cli@^7.14.5":
   version "7.17.10"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.17.10.tgz#5ea0bf6298bb78f3b59c7c06954f9bd1c79d5943"
@@ -15906,7 +15924,7 @@ ethers@5.0.7:
     "@ethersproject/web" "^5.0.0"
     "@ethersproject/wordlists" "^5.0.0"
 
-ethers@5.6.8, ethers@^5.0.1, ethers@^5.0.13, ethers@^5.0.2, ethers@^5.0.24, ethers@^5.0.29, ethers@^5.0.31, ethers@^5.4.1, ethers@^5.4.7, ethers@^5.5.2, ethers@^5.6.0, ethers@^5.6.6:
+ethers@5.6.8, ethers@^5.0.1, ethers@^5.0.13, ethers@^5.0.2, ethers@^5.0.24, ethers@^5.0.29, ethers@^5.0.31, ethers@^5.4.1, ethers@^5.4.7, ethers@^5.5.2, ethers@^5.6.0, ethers@^5.6.6, ethers@^5.6.8:
   version "5.6.8"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.6.8.tgz#d36b816b4896341a80a8bbd2a44e8cb6e9b98dd4"
   integrity sha512-YxIGaltAOdvBFPZwIkyHnXbW40f1r8mHUgapW6dxkO+6t7H6wY8POUn0Kbxrd/N7I4hHxyi7YCddMAH/wmho2w==
@@ -27482,7 +27500,7 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-snarkjs@0.4.10, snarkjs@^0.4.10:
+snarkjs@0.4.10:
   version "0.4.10"
   resolved "https://registry.yarnpkg.com/snarkjs/-/snarkjs-0.4.10.tgz#5a8048e691af8f3e6016014ba2cb0e916f508be1"
   integrity sha512-YWgxso7CGcSfkyDGraVjPuBJtq6GEsZ16YBJj2eD0TFum2D5BxnawvyTo4p/7UpctAT0r05DoHo80zgaWnbIKA==

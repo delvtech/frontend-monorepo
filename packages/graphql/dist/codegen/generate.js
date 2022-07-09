@@ -172,16 +172,15 @@ function generate(_a) {
           _e.label = 1;
         case 1:
           _e.trys.push([1, 3, , 4]);
-          // this will fail if their are no documents (operations) found.
+          // this will fail if there are no documents (operations) found.
           return [
             4 /*yield*/,
             (0, load_1.loadDocuments)("./**/*.graphql", {
               loaders: [new graphql_file_loader_1.GraphQLFileLoader()],
             }),
-            // if it doesn't fail, include the documents field
           ];
         case 2:
-          // this will fail if their are no documents (operations) found.
+          // this will fail if there are no documents (operations) found.
           _e.sent();
           // if it doesn't fail, include the documents field
           config.documents = "./**/*.graphql";

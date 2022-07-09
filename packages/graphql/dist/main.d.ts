@@ -1,10 +1,22 @@
-import { GraphQLSchema } from "graphql";
 import { Provider } from "@ethersproject/providers";
+import { GraphQLSchema } from "graphql";
 import { ApolloLink } from "@apollo/client";
 import { YogaNodeServerInstance } from "@graphql-yoga/node";
-interface LinkOptions {
-  schemas: GraphQLSchema[];
+export interface InitOptions {
+  graphs: Graph[];
   provider: Provider;
+}
+export type ResolverContext<
+  T extends Record<string, any> = Record<string, any>,
+> = {
+  chainId: number;
+  provider: Provider;
+} & T;
+export interface Graph {
+  schema: GraphQLSchema;
+  initContext?: (
+    initialContext: ResolverContext,
+  ) => ResolverContext | Promise<ResolverContext>;
 }
 /**
  * Create an `ApolloLink` instance for Apollo Client (specifically, a
@@ -15,11 +27,7 @@ interface LinkOptions {
  *   execution context for schema resolvers.
  * @returns An `ApolloLink` instance.
  */
-export function getApolloLink({ schemas, provider }: LinkOptions): ApolloLink;
-interface ServerOptions {
-  schemas: GraphQLSchema[];
-  provider: Provider;
-}
+export function getApolloLink(options: InitOptions): ApolloLink;
 /**
  * Create a Yoga Node Server instance with GraphiQL.
  * @param options An object for configuring the Yoga Server.
@@ -28,10 +36,7 @@ interface ServerOptions {
  *   execution context for schema resolvers.
  * @returns An `YogaNodeServerInstance` instance.
  */
-export function createServer({
-  schemas,
-  provider,
-}: ServerOptions): YogaNodeServerInstance<
+export function createServer(options: InitOptions): YogaNodeServerInstance<
   {
     req: Request;
     res: Response;
@@ -39,8 +44,5 @@ export function createServer({
   Record<string, any>,
   void
 >;
-export interface ResolverContext extends Record<string | number | symbol, any> {
-  provider: Provider;
-}
 
 //# sourceMappingURL=main.d.ts.map
