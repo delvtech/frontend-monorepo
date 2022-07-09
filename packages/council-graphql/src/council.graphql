@@ -35,6 +35,7 @@ type Proposal {
   expiration: Int!
   "Block Number"
   unlock: Int!
+  isActive: Boolean!
   isExecuted: Boolean
   "Block Number"
   lastCall: Int

@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-07-09T09:47:55-05:00
+// Generated on 2022-07-09T11:00:01-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -44,6 +44,7 @@ export type Proposal = {
   /** Block Number */
   expiration: Scalars["Int"];
   id: Scalars["ID"];
+  isActive: Scalars["Boolean"];
   isExecuted?: Maybe<Scalars["Boolean"]>;
   /** Block Number */
   lastCall?: Maybe<Scalars["Int"]>;
@@ -363,6 +364,7 @@ export type ProposalResolvers<
   created?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   expiration?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  isActive?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
   isExecuted?: Resolver<
     Maybe<ResolversTypes["Boolean"]>,
     ParentType,
