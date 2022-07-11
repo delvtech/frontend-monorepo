@@ -48,7 +48,7 @@
     "@graphql-codegen/typescript-graphql-files-modules": "^2.1.1",
     "@graphql-codegen/typescript-operations": "^2.4.0",
     "@graphql-codegen/typescript-react-apollo": "^3.2.14",
-    "@graphql-codegen/typescript-resolvers": "^2.6.4",
+    "@graphql-codegen/typescript-resolvers": "^2.7.1",
     "@graphql-tools/graphql-file-loader": "^7.3.15",
     "@graphql-tools/load": "^7.5.14",
     "@graphql-tools/schema": "^8.3.13",
