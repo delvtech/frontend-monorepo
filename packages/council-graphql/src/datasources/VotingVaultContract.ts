@@ -1,14 +1,13 @@
 import { BaseContract, ethers } from "ethers";
 import { Logger } from "ethers/lib/utils";
-import { IVotingVault } from "@elementfi/council-typechain";
 import { VoterWithPower, VotingVaultDataSource } from "./VotingVaultDataSource";
 
 // TODO: implement Dataloader (https://github.com/graphql/dataloader)
 export class VotingVaultContract implements VotingVaultDataSource {
   address: string;
-  contract: IVotingVault | BaseContract;
+  contract: BaseContract;
 
-  constructor(address: string, contract: IVotingVault | BaseContract) {
+  constructor(address: string, contract: BaseContract) {
     this.address = address;
     this.contract = contract;
   }
