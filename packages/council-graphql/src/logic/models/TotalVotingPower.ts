@@ -1,5 +1,4 @@
 import { formatEther, parseEther } from "ethers/lib/utils";
-import { VotingVaultContract } from "src/datasources/VotingVaultContract";
 import { TotalVotingPower, VotingVault } from "src/generated";
 import { CouncilContext } from "src/logic/context";
 import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
@@ -29,25 +28,26 @@ interface TotalVotingPowerModel {
 export const TotalVotingPowerModel: TotalVotingPowerModel = {
   async getByVotingVault({ votingVault, blockNumber, context }) {
     const { chainId, councilDataSources, provider } = context;
-    const dataSource = getVotingVaultDataSourceByAddress(
-      votingVault.address,
-      councilDataSources,
-    ) as VotingVaultContract;
 
     let total = BigInt(0);
     blockNumber = blockNumber || (await getLatestBlockNumber(provider));
 
-    const powerChanges = await dataSource.getVoteChangeEventArgs(
-      getFromBlockNumber(chainId),
-      blockNumber,
+    const dataSource = getVotingVaultDataSourceByAddress(
+      votingVault.address,
+      councilDataSources,
     );
-    if (powerChanges) {
-      for (const { to, amount } of powerChanges) {
-        if (!nonVoters.includes(to)) {
-          total += BigInt(amount);
+    if (dataSource) {
+      const allVotersWithPower = await dataSource.getAllVotersWithPower(
+        getFromBlockNumber(chainId),
+        blockNumber,
+      );
+      for (const { voter, power } of allVotersWithPower) {
+        if (!nonVoters.includes(voter)) {
+          total += BigInt(power);
         }
       }
     }
+
     return {
       blockNumber,
       value: formatEther(total),
@@ -60,12 +60,12 @@ export const TotalVotingPowerModel: TotalVotingPowerModel = {
     let aggregateValue = BigInt(0);
     await Promise.all(
       votingVaults.map(async (votingVault) => {
-        const vaultVotingPower = await this.getByVotingVault({
+        const { value } = await this.getByVotingVault({
           votingVault,
           blockNumber,
           context,
         });
-        aggregateValue += parseEther(vaultVotingPower.value).toBigInt();
+        aggregateValue += parseEther(value).toBigInt();
       }),
     );
     return {

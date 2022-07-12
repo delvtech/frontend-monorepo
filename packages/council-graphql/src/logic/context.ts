@@ -1,12 +1,12 @@
 import { Provider } from "@ethersproject/providers";
 import { CoreVotingContract } from "src/datasources/CoreVotingContract";
-import { VotingVaultContract } from "src/datasources/VotingVaultContract";
+import { VotingVaultDataSource } from "src/datasources/VotingVaultDataSource";
 
-export type CouncilContext = {
+export interface CouncilContext {
   chainId: number;
   provider: Provider;
   councilDataSources: {
     votingContracts: CoreVotingContract[];
-    votingVaults: VotingVaultContract[];
+    votingVaults: VotingVaultDataSource[];
   };
-};
+}
