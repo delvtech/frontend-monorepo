@@ -14,5 +14,6 @@
   "prettier.trailingComma": "all",
   "prettier.singleQuote": false,
   "prettier.semi": true,
-  "prettier.printWidth": 80
+  "prettier.printWidth": 80,
+  "eslint.workingDirectories": ["packages/council-tokenlist"]
 }
