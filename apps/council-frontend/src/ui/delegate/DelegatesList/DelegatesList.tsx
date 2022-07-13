@@ -1,7 +1,8 @@
-import React, { ReactElement, useCallback, useMemo } from "react";
+import { Fragment, ReactElement, useCallback, useMemo, useRef } from "react";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import H2 from "src/ui/base/H2/H2";
+import DelegateSearchBar from "src/ui/delegate/DelegatesList/DelegateSearchBar";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { delegates } from "src/delegates/delegates";
 import Button from "src/ui/base/Button/Button";
@@ -33,6 +34,10 @@ function DelegatesList({
   selectedDelegate,
   setDelegateAddressInput,
 }: DelegatesListProps): ReactElement {
+  const delegateSearchBarInputRef = useRef<string>("");
+  const updateInputRef = (value: string) => {
+    delegateSearchBarInputRef.current = value;
+  };
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
     return shuffle(delegates);
@@ -79,6 +84,8 @@ function DelegatesList({
           </div>
         </div>
       </div>
+
+      <DelegateSearchBar onDelegateSearchInputUpdate={updateInputRef} />
 
       {/* List of delegates */}
       <div>
@@ -169,7 +176,7 @@ function ChangeDelegateButton({
   currentlyDelegated,
 }: ChangeDelegateButtonProps): ReactElement {
   return (
-    <React.Fragment>
+    <Fragment>
       {currentlyDelegated ? (
         <Tag
           intent={Intent.SUCCESS}
@@ -188,7 +195,7 @@ function ChangeDelegateButton({
           {t`Delegate`}
         </Button>
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }
 
