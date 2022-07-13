@@ -29,7 +29,7 @@
     "prettier:check": "prettier --check src/**/*.{gql,graphql,js,jsx,ts,tsx,json,md}"
   },
   "lint-staged": {
-    "src/**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
+    "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
       "eslint --fix",
       "prettier --write"
     ]
