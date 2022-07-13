@@ -87,7 +87,3 @@ So, along with the proposal id and voter address, I also need to have the voting
 ### Emerging SDK
 
 The logic and data sources are shaping up to be a stand alone SDK which is only tied to GraphQL by the generated types. A separate set of types could be created to completely separate the SDK from the GraphQL API.
-
-### null vs empty array
-
-Should a nullable array field return an empty array or null if it has no entries?

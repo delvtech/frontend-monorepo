@@ -35,6 +35,11 @@ type Proposal {
   expiration: Int!
   "Block Number"
   unlock: Int!
+  """
+  Proposals are active during their voting period, i.e., from creation block up
+  to expiration block. This will be false if the current block is later than the
+  proposal's expiration.
+  """
   isActive: Boolean!
   isExecuted: Boolean
   "Block Number"
