@@ -23,7 +23,7 @@ export function watch(path: string, handler: (filename: string) => void): void {
   const pathMatchers = new minimatch.Minimatch(path).set;
 
   for (const pathMatcher of pathMatchers) {
-    const dir = [];
+    const dirParts = [];
     for (const part of pathMatcher) {
       // wildcard parts will be converted to RegExp objects or globstar symbols,
       // so we break the loop once we've reached the first non-string part to
@@ -31,9 +31,9 @@ export function watch(path: string, handler: (filename: string) => void): void {
       if (typeof part !== "string") {
         break;
       }
-      dir.push(part);
+      dirParts.push(part);
     }
-    watchDirs.add(Path.join(...dir));
+    watchDirs.add(Path.join(...dirParts));
   }
 
   for (const watchDir of Array.from(watchDirs)) {

@@ -27,7 +27,7 @@ function watch(path, handler) {
     var pathMatchers = new minimatch_1.default.Minimatch(path).set;
     for (var _i = 0, pathMatchers_1 = pathMatchers; _i < pathMatchers_1.length; _i++) {
         var pathMatcher = pathMatchers_1[_i];
-        var dir = [];
+        var dirParts = [];
         for (var _a = 0, pathMatcher_1 = pathMatcher; _a < pathMatcher_1.length; _a++) {
             var part = pathMatcher_1[_a];
             // wildcard parts will be converted to RegExp objects or globstar symbols,
@@ -36,9 +36,9 @@ function watch(path, handler) {
             if (typeof part !== "string") {
                 break;
             }
-            dir.push(part);
+            dirParts.push(part);
         }
-        watchDirs.add(path_1.default.join.apply(path_1.default, dir));
+        watchDirs.add(path_1.default.join.apply(path_1.default, dirParts));
     }
     var _loop_1 = function (watchDir) {
         var previousMD5 = "";
