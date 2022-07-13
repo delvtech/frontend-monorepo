@@ -16,6 +16,8 @@ import { getGSCCandidateUrl } from "src/integrations/commonwealth";
 import { useENSName } from "src/ui/ethereum/useEnsName";
 import { Delegate } from "@elementfi/council-delegates";
 
+import { filter } from "fuzzaldrin";
+
 interface DelegateProfileRowProps {
   delegateListFilter: string;
   provider?: Provider;
@@ -52,8 +54,10 @@ function DelegateProfileRow(
 
   const showProfileRow =
     !delegateListFilter ||
-    ensName?.toLowerCase().includes(delegateListFilter) ||
-    delegate.address.toLowerCase().includes(delegateListFilter);
+    filter(
+      [ensName?.toLowerCase() || "", delegate.address.toLowerCase()],
+      delegateListFilter,
+    ).length > 0;
 
   if (!showProfileRow) {
     return null;
