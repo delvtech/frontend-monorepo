@@ -55,7 +55,10 @@ function DelegateSearchBar({
         </button>
       </div>
 
-      <Button className="mt-2 justify-center" onClick={onDelegateListFiltering}>
+      <Button
+        className="ml-auto mt-2 w-28 justify-center"
+        onClick={onDelegateListFiltering}
+      >
         <span>{t`Search`}</span>
       </Button>
     </Card>
