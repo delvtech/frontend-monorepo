@@ -1,11 +1,4 @@
-import {
-  Fragment,
-  ReactElement,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { Fragment, ReactElement, useCallback, useMemo, useState } from "react";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import H2 from "src/ui/base/H2/H2";
@@ -41,16 +34,7 @@ function DelegatesList({
   selectedDelegate,
   setDelegateAddressInput,
 }: DelegatesListProps): ReactElement {
-  const delegateSearchBarInputRef = useRef<string>("");
-  const updateInputRef = (value: string) => {
-    delegateSearchBarInputRef.current = value;
-  };
-
   const [delegateListFilter, setDelegateListFilter] = useState("");
-
-  const handleDelegateListFiltering = () => {
-    setDelegateListFilter(delegateSearchBarInputRef.current.toLowerCase());
-  };
 
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
@@ -100,8 +84,8 @@ function DelegatesList({
       </div>
 
       <DelegateSearchBar
-        onDelegateSearchInputUpdate={updateInputRef}
-        onDelegateListFiltering={handleDelegateListFiltering}
+        onDelegateSearchInputUpdate={setDelegateListFilter}
+        value={delegateListFilter}
       />
 
       {/* List of delegates */}

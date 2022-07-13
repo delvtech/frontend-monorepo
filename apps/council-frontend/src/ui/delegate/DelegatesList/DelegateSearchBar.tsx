@@ -1,5 +1,4 @@
-import { ChangeEventHandler, ReactElement, useState } from "react";
-import Button from "src/ui/base/Button/Button";
+import { ChangeEventHandler, ReactElement } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2/H2";
 import TextInput from "src/ui/base/Input/TextInput";
@@ -7,26 +6,21 @@ import { t } from "ttag";
 
 interface DelegateSearchBarProps {
   onDelegateSearchInputUpdate: (value: string) => void;
-  onDelegateListFiltering: () => void;
+  value: string;
 }
 
 function DelegateSearchBar({
   onDelegateSearchInputUpdate,
-  onDelegateListFiltering,
+  value,
 }: DelegateSearchBarProps): ReactElement {
-  const [delegateSearchInput, setDelegateSearchInput] = useState("");
-
   const handleDelegateSearchInputChange: ChangeEventHandler<
     HTMLInputElement
   > = (event) => {
-    setDelegateSearchInput(event.target.value);
     onDelegateSearchInputUpdate(event.target.value);
   };
 
   const handleClearDelegateSearchInput = () => {
-    setDelegateSearchInput("");
     onDelegateSearchInputUpdate("");
-    onDelegateListFiltering();
   };
 
   return (
@@ -42,7 +36,7 @@ function DelegateSearchBar({
           id="delegate-search-address"
           name={t`Search delegate address`}
           placeholder={t`Enter ENS or address`}
-          value={delegateSearchInput}
+          value={value}
           onChange={handleDelegateSearchInputChange}
           spellCheck={false}
           autoComplete="off"
@@ -54,13 +48,6 @@ function DelegateSearchBar({
           {t`clear`}
         </button>
       </div>
-
-      <Button
-        className="ml-auto mt-2 w-28 justify-center"
-        onClick={onDelegateListFiltering}
-      >
-        <span>{t`Search`}</span>
-      </Button>
     </Card>
   );
 }
