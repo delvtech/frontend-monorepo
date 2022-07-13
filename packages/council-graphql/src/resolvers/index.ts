@@ -95,6 +95,13 @@ export const resolvers: Resolvers<CouncilContext> = {
         context,
       });
     },
+    voterCount: async ({ votingVaults }, _, context) => {
+      const allVoters = await VoterModel.getByVotingVaults({
+        votingVaults: votingVaults,
+        context,
+      });
+      return allVoters.length;
+    },
     votingPower: ({ votingVaults }, { voter, blockNumber }, context) => {
       return VotingPowerModel.getByVoter({
         voter: VoterModel.getByAddress({ address: voter }),
@@ -130,6 +137,13 @@ export const resolvers: Resolvers<CouncilContext> = {
     },
     voters: (votingVault, _, context) => {
       return VoterModel.getByVotingVault({ votingVault, context });
+    },
+    voterCount: async (votingVault, _, context) => {
+      const allVoters = await VoterModel.getByVotingVault({
+        votingVault: votingVault,
+        context,
+      });
+      return allVoters.length;
     },
     votingPower: (votingVault, { voter: address, blockNumber }, context) => {
       const voter = VoterModel.getByAddress({ address });
@@ -178,6 +192,13 @@ export const resolvers: Resolvers<CouncilContext> = {
         blockNumber: created,
         context,
       });
+    },
+    voterCount: async ({ votingContract }, _, context) => {
+      const allVoters = await VoterModel.getByVotingVaults({
+        votingVaults: votingContract.votingVaults,
+        context,
+      });
+      return allVoters.length;
     },
     votes: async (proposal, { voters: addresses }, context) => {
       let votes;

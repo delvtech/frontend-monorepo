@@ -11,9 +11,11 @@ type VotingContract {
   address: ID!
   votingVaults: [VotingVault!]!
   proposal(id: ID!): Proposal
-  proposals(ids: [ID!]): [Proposal]
+  proposals(ids: [ID!], isActive: Boolean): [Proposal]
+  proposalCount(isActive: Boolean): Int
   totalVotingPower(blockNumber: Int): TotalVotingPower
   voters: [Voter]
+  voterCount: Int
   votingPower(voter: ID!, blockNumber: Int): VotingPower
   votingPowers(voters: [ID!], blockNumber: Int): [VotingPower]
 }
@@ -22,6 +24,7 @@ type VotingVault {
   address: ID!
   totalVotingPower(blockNumber: Int): TotalVotingPower
   voters: [Voter]
+  voterCount: Int
   votingPower(voter: ID!, blockNumber: Int): VotingPower
   votingPowers(voters: [ID!], blockNumber: Int): [VotingPower]
 }
@@ -47,6 +50,7 @@ type Proposal {
   quorum: String
   vote(voter: ID!): Vote
   voters: [Voter]
+  voterCount: Int
   votes(voters: [ID!]): [Vote]
   votingPower(voter: ID!): VotingPower
   votingPowers(voters: [ID!]): [VotingPower]

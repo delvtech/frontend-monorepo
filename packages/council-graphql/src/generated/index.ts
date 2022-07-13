@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-07-12T01:57:40-05:00
+// Generated on 2022-07-13T18:24:41-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -44,6 +44,11 @@ export type Proposal = {
   /** Block Number */
   expiration: Scalars["Int"];
   id: Scalars["ID"];
+  /**
+   * Proposals are active during their voting period, i.e., from creation block up
+   * to expiration block. This will be false if the current block is later than the
+   * proposal's expiration.
+   */
   isActive: Scalars["Boolean"];
   isExecuted?: Maybe<Scalars["Boolean"]>;
   /** Block Number */
@@ -52,6 +57,7 @@ export type Proposal = {
   /** Block Number */
   unlock: Scalars["Int"];
   vote?: Maybe<Vote>;
+  voterCount?: Maybe<Scalars["Int"]>;
   voters?: Maybe<Array<Maybe<Voter>>>;
   votes?: Maybe<Array<Maybe<Vote>>>;
   votingContract: VotingContract;
@@ -157,8 +163,10 @@ export type VotingContract = {
   __typename?: "VotingContract";
   address: Scalars["ID"];
   proposal?: Maybe<Proposal>;
+  proposalCount?: Maybe<Scalars["Int"]>;
   proposals?: Maybe<Array<Maybe<Proposal>>>;
   totalVotingPower?: Maybe<TotalVotingPower>;
+  voterCount?: Maybe<Scalars["Int"]>;
   voters?: Maybe<Array<Maybe<Voter>>>;
   votingPower?: Maybe<VotingPower>;
   votingPowers?: Maybe<Array<Maybe<VotingPower>>>;
@@ -169,8 +177,13 @@ export type VotingContractProposalArgs = {
   id: Scalars["ID"];
 };
 
+export type VotingContractProposalCountArgs = {
+  isActive?: InputMaybe<Scalars["Boolean"]>;
+};
+
 export type VotingContractProposalsArgs = {
   ids?: InputMaybe<Array<Scalars["ID"]>>;
+  isActive?: InputMaybe<Scalars["Boolean"]>;
 };
 
 export type VotingContractTotalVotingPowerArgs = {
@@ -200,6 +213,7 @@ export type VotingVault = {
   __typename?: "VotingVault";
   address: Scalars["ID"];
   totalVotingPower?: Maybe<TotalVotingPower>;
+  voterCount?: Maybe<Scalars["Int"]>;
   voters?: Maybe<Array<Maybe<Voter>>>;
   votingPower?: Maybe<VotingPower>;
   votingPowers?: Maybe<Array<Maybe<VotingPower>>>;
@@ -379,6 +393,7 @@ export type ProposalResolvers<
     ContextType,
     RequireFields<ProposalVoteArgs, "voter">
   >;
+  voterCount?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   voters?: Resolver<
     Maybe<Array<Maybe<ResolversTypes["Voter"]>>>,
     ParentType,
@@ -524,6 +539,12 @@ export type VotingContractResolvers<
     ContextType,
     RequireFields<VotingContractProposalArgs, "id">
   >;
+  proposalCount?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType,
+    Partial<VotingContractProposalCountArgs>
+  >;
   proposals?: Resolver<
     Maybe<Array<Maybe<ResolversTypes["Proposal"]>>>,
     ParentType,
@@ -536,6 +557,7 @@ export type VotingContractResolvers<
     ContextType,
     Partial<VotingContractTotalVotingPowerArgs>
   >;
+  voterCount?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   voters?: Resolver<
     Maybe<Array<Maybe<ResolversTypes["Voter"]>>>,
     ParentType,
@@ -588,6 +610,7 @@ export type VotingVaultResolvers<
     ContextType,
     Partial<VotingVaultTotalVotingPowerArgs>
   >;
+  voterCount?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   voters?: Resolver<
     Maybe<Array<Maybe<ResolversTypes["Voter"]>>>,
     ParentType,
