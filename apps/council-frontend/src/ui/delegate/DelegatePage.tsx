@@ -77,6 +77,7 @@ export default function DelegatePage(): ReactElement {
             </WarningLabel>
           </div>
         ) : null}
+
         {/* Delegates */}
         <div className="flex flex-col">
           {/* Delegates List */}

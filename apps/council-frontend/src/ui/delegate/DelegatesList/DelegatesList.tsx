@@ -1,4 +1,11 @@
-import { Fragment, ReactElement, useCallback, useMemo, useRef } from "react";
+import {
+  Fragment,
+  ReactElement,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import H2 from "src/ui/base/H2/H2";
@@ -38,6 +45,13 @@ function DelegatesList({
   const updateInputRef = (value: string) => {
     delegateSearchBarInputRef.current = value;
   };
+
+  const [delegateListFilter, setDelegateListFilter] = useState("");
+
+  const handleDelegateListFiltering = () => {
+    setDelegateListFilter(delegateSearchBarInputRef.current.toLowerCase());
+  };
+
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
     return shuffle(delegates);
@@ -85,7 +99,10 @@ function DelegatesList({
         </div>
       </div>
 
-      <DelegateSearchBar onDelegateSearchInputUpdate={updateInputRef} />
+      <DelegateSearchBar
+        onDelegateSearchInputUpdate={updateInputRef}
+        onDelegateListFiltering={handleDelegateListFiltering}
+      />
 
       {/* List of delegates */}
       <div>
@@ -110,7 +127,7 @@ function DelegatesList({
           // 392px exactly matches 5 rows of the list
           className="flex h-[40vh] min-h-[392px] flex-col gap-y-2 overflow-y-auto pr-1"
         >
-          {shuffledDelegates.map((delegate, idx) => {
+          {shuffledDelegates.map((delegate) => {
             const handleDelegation = () => {
               changeDelegation([delegate.address]);
               setDelegateAddressInput("");
@@ -122,34 +139,32 @@ function DelegatesList({
 
             const selected = delegate.address === selectedDelegate;
 
-            // TODO: Remove -${idx} for production since addresses are always unique
             return (
-              <li key={`${delegate.address}-${idx}}`}>
-                <DelegateProfileRow
-                  provider={provider}
-                  selected={selected}
-                  delegate={delegate}
-                  actionButton={
-                    <ChangeDelegateButton
-                      tagClassName="block"
-                      buttonClassName="inline-flex"
-                      onDelegationClick={handleDelegation}
-                      account={account}
-                      isLoading={isLoading}
-                      currentlyDelegated={currentlyDelegated}
-                    />
-                  }
-                  profileActionButton={
-                    <ChangeDelegateButton
-                      buttonClassName="inline-flex"
-                      onDelegationClick={handleDelegation}
-                      account={account}
-                      isLoading={isLoading}
-                      currentlyDelegated={currentlyDelegated}
-                    />
-                  }
-                />
-              </li>
+              <DelegateProfileRow
+                delegateListFilter={delegateListFilter}
+                provider={provider}
+                selected={selected}
+                delegate={delegate}
+                actionButton={
+                  <ChangeDelegateButton
+                    tagClassName="block"
+                    buttonClassName="inline-flex"
+                    onDelegationClick={handleDelegation}
+                    account={account}
+                    isLoading={isLoading}
+                    currentlyDelegated={currentlyDelegated}
+                  />
+                }
+                profileActionButton={
+                  <ChangeDelegateButton
+                    buttonClassName="inline-flex"
+                    onDelegationClick={handleDelegation}
+                    account={account}
+                    isLoading={isLoading}
+                    currentlyDelegated={currentlyDelegated}
+                  />
+                }
+              />
             );
           })}
         </ul>
