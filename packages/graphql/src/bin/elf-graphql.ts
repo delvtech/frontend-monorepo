@@ -23,6 +23,12 @@ const argv = yargs(hideBin(process.argv))
     describe: "Specify the path to your schema.",
     type: "string",
   })
+  .option("watch", {
+    alias: "w",
+    describe:
+      "Watch for changes to .graphql files and rerun when changes are found.",
+    type: "boolean",
+  })
   .help().argv;
 
 argv instanceof Promise ? argv.then(generate) : generate(argv);
