@@ -1,4 +1,3 @@
-import { VotingVaultContract } from "src/datasources/VotingVaultContract";
 import { Voter, VotingVault } from "src/generated";
 import { CouncilContext } from "src/logic/context";
 import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
@@ -38,52 +37,29 @@ export const VoterModel: VoterModel = {
       context,
     });
   },
-  // TODO: Revisit logic for calculating voting power based on vault type, eg:
-  // disambiguate the list of vaults, instead of falling through
   async getByVotingVaults({
     votingVaults,
     blockNumber,
     context: { councilDataSources },
   }) {
-    const voterPowers: Record<string, bigint> = {};
+    const addresses: string[] = [];
 
     for (const votingVault of votingVaults) {
       const dataSource = getVotingVaultDataSourceByAddress(
         votingVault.address,
         councilDataSources,
-      ) as VotingVaultContract;
-
-      // any change of voting power (delegating, depositing more ELFI, etc..)
-      // will trigger this event on certain voting vaults.
-      const powerChanges = await dataSource.getVoteChangeEventArgs(
-        undefined,
-        blockNumber,
       );
-      if (powerChanges) {
-        for (const { to, amount } of powerChanges) {
-          voterPowers[to] = voterPowers[to] || BigInt(0);
-          voterPowers[to] += BigInt(amount);
-        }
-      }
-
-      // voting power can be calculated on voting vaults that don't have a
-      // VoteChange event by looking at membershipProved events.
-      const members = await dataSource.getMembershipProvedEventArgs(
-        undefined,
-        blockNumber,
-      );
-      if (members) {
-        for (const { who } of members) {
-          voterPowers[who] = voterPowers[who] || BigInt(0);
-          voterPowers[who] += BigInt(1);
+      if (dataSource) {
+        const allVotersWithPower = await dataSource.getAllVotersWithPower(
+          undefined,
+          blockNumber,
+        );
+        for (const { voter } of allVotersWithPower) {
+          addresses.push(voter);
         }
       }
     }
 
-    const voterAddressesWithPower = Object.entries(voterPowers)
-      .filter(([, power]) => power > 0)
-      .map(([address]) => address);
-
-    return this.getByAddresses({ addresses: voterAddressesWithPower });
+    return this.getByAddresses({ addresses });
   },
 };

@@ -1,11 +1,12 @@
-import { ResolverContext } from "@elementfi/graphql";
+import { Provider } from "@ethersproject/providers";
 import { CoreVotingContract } from "src/datasources/CoreVotingContract";
-import { VotingVaultContract } from "src/datasources/VotingVaultContract";
+import { VotingVaultDataSource } from "src/datasources/VotingVaultDataSource";
 
-export type CouncilContext = ResolverContext<{
-  councilAddresses: Record<string, string>;
+export interface CouncilContext {
+  chainId: number;
+  provider: Provider;
   councilDataSources: {
     votingContracts: CoreVotingContract[];
-    votingVaults: VotingVaultContract[];
+    votingVaults: VotingVaultDataSource[];
   };
-}>;
+}

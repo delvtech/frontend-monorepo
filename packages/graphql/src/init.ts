@@ -16,7 +16,7 @@ export interface Graph {
   schema: GraphQLSchema;
   initContext?: (
     initialContext: ResolverContext,
-  ) => ResolverContext | Promise<ResolverContext>;
+  ) => Record<string, any> | Record<string, any>;
 }
 
 export interface InitOptions {
@@ -42,12 +42,16 @@ export default function init({ graphs, provider }: InitOptions): {
     schema: mergeSchemas({ schemas }),
     context: new Promise<ResolverContext>(async (resolve) => {
       const { chainId } = await provider.getNetwork();
-      let context = {
+      const initialContext = {
         chainId,
         provider,
       };
+      let context = initialContext;
       for (const { initContext } of graphs) {
-        context = (await initContext?.(context)) || context;
+        context = {
+          ...context,
+          ...(await initContext?.(initialContext)),
+        };
       }
       resolve(context);
     }),

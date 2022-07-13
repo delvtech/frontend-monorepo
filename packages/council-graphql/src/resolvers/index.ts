@@ -167,9 +167,10 @@ export const resolvers: Resolvers<CouncilContext> = {
     quorum: async (proposal, _, context) => {
       return (await ProposalModel.getQuorum({ proposal, context })) || null;
     },
-    vote: (proposal, { voter: address }, context) => {
+    vote: async (proposal, { voter: address }, context) => {
       const voter = VoterModel.getByAddress({ address });
-      return VoteModel.getByVoter({ voter, proposal, context });
+      const vote = await VoteModel.getByVoter({ voter, proposal, context });
+      return vote || null;
     },
     voters: ({ created, votingContract }, _, context) => {
       return VoterModel.getByVotingVaults({
@@ -178,12 +179,15 @@ export const resolvers: Resolvers<CouncilContext> = {
         context,
       });
     },
-    votes: (proposal, { voters: addresses }, context) => {
+    votes: async (proposal, { voters: addresses }, context) => {
+      let votes;
       if (addresses) {
         const voters = VoterModel.getByAddresses({ addresses });
-        return VoteModel.getByVoters({ voters, proposal, context });
+        votes = await VoteModel.getByVoters({ voters, proposal, context });
+      } else {
+        votes = await VoteModel.getByProposal({ proposal, context });
       }
-      return VoteModel.getByProposal({ proposal, context });
+      return votes.map((vote) => vote || null);
     },
     votingPower: ({ votingContract, created }, { voter: address }, context) => {
       const voter = VoterModel.getByAddress({ address });
@@ -238,11 +242,12 @@ export const resolvers: Resolvers<CouncilContext> = {
       if (!proposal) {
         return null;
       }
-      return VoteModel.getByVoter({
+      const vote = await VoteModel.getByVoter({
         voter,
         proposal,
         context,
       });
+      return vote || null;
     },
     votes: async (
       voter,
@@ -261,18 +266,18 @@ export const resolvers: Resolvers<CouncilContext> = {
         votingContract,
         context,
       });
-      return Promise.all(
-        proposals.map((proposal) => {
-          if (!proposal) {
-            return null;
-          }
-          return VoteModel.getByVoter({
-            voter,
-            proposal,
-            context,
-          });
-        }),
-      );
+      const votes = proposals.map(async (proposal) => {
+        if (!proposal) {
+          return null;
+        }
+        const vote = await VoteModel.getByVoter({
+          voter,
+          proposal,
+          context,
+        });
+        return vote || null;
+      });
+      return Promise.all(votes);
     },
   },
 };

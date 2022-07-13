@@ -14,10 +14,10 @@ import {
 
 // TODO: What's the right way to prevent collisions with other packages.
 // Namespace?
-export async function initContext(
-  context: ResolverContext,
-): Promise<CouncilContext> {
-  const { chainId, provider } = context;
+export async function initContext({
+  chainId,
+  provider,
+}: ResolverContext): Promise<CouncilContext> {
   const councilAddresses = getAddresses(chainId);
   const lockingVault = new LockingVaultContract(
     councilAddresses.lockingVault,
@@ -39,8 +39,8 @@ export async function initContext(
     [gscVault],
   );
   return {
-    ...context,
-    councilAddresses,
+    chainId,
+    provider,
     councilDataSources: {
       votingContracts: [coreVoting, gscCoreVoting],
       votingVaults: [lockingVault, vestingVault, gscVault],

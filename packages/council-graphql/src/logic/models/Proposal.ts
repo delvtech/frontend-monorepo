@@ -3,6 +3,7 @@ import { Proposal, VotingContract } from "src/generated";
 import { CouncilContext } from "src/logic/context";
 import { getVotingContractDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
 import { getFromBlockNumber } from "src/logic/utils/getFromBlockNumber";
+import { getLatestBlockNumber } from "src/logic/utils/getLatestBlockNumber";
 
 const EXECUTED_PROPOSAL_HASH =
   "0x0000000000000000000000000000000000000000000000000000000000000000";
@@ -60,6 +61,31 @@ export const ProposalModel: ProposalModel = {
     return proposals[0];
   },
 
+  async getByVotingContract({ votingContract, context }) {
+    const dataSource = getVotingContractDataSourceByAddress(
+      votingContract.address,
+      context.councilDataSources,
+    );
+
+    if (!dataSource) {
+      return [];
+    }
+    const latestBlock = await getLatestBlockNumber(context.provider);
+    const args = await dataSource.getProposalCreatedEventArgs(
+      getFromBlockNumber(context.chainId),
+    );
+    return args.map(({ created, execution, expiration, proposalId }) => {
+      return {
+        id: proposalId,
+        votingContract,
+        created,
+        expiration,
+        unlock: execution,
+        isActive: latestBlock >= expiration,
+      };
+    });
+  },
+
   async getIsExecuted({ proposal, context }) {
     const { proposalHash } = await getByIdFromDataSource(proposal, context);
     return proposalHash === EXECUTED_PROPOSAL_HASH;
@@ -83,29 +109,6 @@ export const ProposalModel: ProposalModel = {
     if (proposalHash !== EXECUTED_PROPOSAL_HASH) {
       return quorum;
     }
-  },
-
-  async getByVotingContract({ votingContract, context }) {
-    const dataSource = getVotingContractDataSourceByAddress(
-      votingContract.address,
-      context.councilDataSources,
-    ) as CoreVotingContract;
-
-    if (!dataSource) {
-      return [];
-    }
-    const args = await dataSource.getProposalCreatedEventArgs(
-      getFromBlockNumber(context.chainId),
-    );
-    return args.map(({ created, execution, expiration, proposalId }) => {
-      return {
-        id: proposalId,
-        votingContract,
-        created,
-        expiration,
-        unlock: execution,
-      };
-    });
   },
 };
 
