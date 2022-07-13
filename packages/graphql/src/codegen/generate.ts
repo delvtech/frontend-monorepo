@@ -1,5 +1,3 @@
-import { loadDocuments } from "@graphql-tools/load";
-import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
 import { generate as graphqlCodegen } from "@graphql-codegen/cli";
 import type { Types } from "@graphql-codegen/plugin-helpers";
 import {
@@ -40,27 +38,10 @@ export async function generate({
 }: GenerateOptions): Promise<void> {
   const config: Partial<Types.Config> = {
     schema: "./**/*.graphql",
+    documents: "./**/*.graphql",
+    ignoreNoDocuments: true,
     overwrite: true,
   };
-
-  // TODO: Create a PR on the @graphql-codegen/cli repo to handle missing
-  // schemas and documents more gracefully so you're not forced to edit your
-  // config for each scenario. If it can't find a schema or document, it should
-  // probably just log a warning, but continue generating what it can. If I
-  // require the script to throw an error to prevent "broken" builds in a CI/CD
-  // pipeline, then maybe that behavior should have a separate config setting I
-  // can disable/enable.
-  try {
-    // this will fail if there are no documents (operations) found.
-    await loadDocuments("./**/*.graphql", {
-      loaders: [new GraphQLFileLoader()],
-    });
-    // if it doesn't fail, include the documents field
-    config.documents = "./**/*.graphql";
-  } catch (err) {
-    // If no operations are found, don't include the documents field since it
-    // would cause the codegen to fail.
-  }
 
   if (isPackage) {
     config.generates = {
