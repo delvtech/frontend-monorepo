@@ -1,16 +1,28 @@
-import { TokenList } from "@uniswap/token-lists";
-import { AddressesJsonFile } from "./addresses/AddressesJsonFile";
-/**
- * Elf Council tokenlist type definitions.
- */
-import { TokenInfo } from "@uniswap/token-lists";
-export { AddressesJsonFile } from "./addresses/AddressesJsonFile";
-export declare const goerliTokenList: TokenList;
-export declare const goerliAddressList: AddressesJsonFile;
-export declare const mainnetTokenList: TokenList;
-export declare const mainnetAddressList: AddressesJsonFile;
-export { getTokenList } from "./getTokenList";
-export declare type ElementGovernanceTokenInfo = TokenInfo;
+import { Provider } from "@ethersproject/abstract-provider";
+import { TokenList, TokenInfo } from "@uniswap/token-lists";
+export interface AddressesJsonFile {
+    chainId: number;
+    addresses: {
+        elementToken: string;
+        coreVoting: string;
+        gscCoreVoting: string;
+        gscVault: string;
+        timeLock: string;
+        lockingVault: string;
+        vestingVault: string;
+        optimisticRewardsVault: string;
+        optimisticGrants: string;
+        spender: string;
+        airdrop: string;
+        treasury: string;
+    };
+}
+export function getTokenList(provider: Provider, addressesJson: AddressesJsonFile, name: string): Promise<TokenList>;
+export const goerliTokenList: TokenList;
+export const goerliAddressList: AddressesJsonFile;
+export const mainnetTokenList: TokenList;
+export const mainnetAddressList: AddressesJsonFile;
+export type ElementGovernanceTokenInfo = TokenInfo;
 export interface AirdropContractInfo extends TokenInfo {
     extensions: {
         rewardsRoot: string;
@@ -74,4 +86,6 @@ export interface TreasuryInfo extends TokenInfo {
         owner: string;
     };
 }
-export declare type AnyTokenListInfo = TokenInfo | ElementGovernanceTokenInfo | AirdropContractInfo | CoreVotingContractInfo | LockingVaultInfo | OptimisticRewardsVaultInfo | OptimisticsGrantsContractInfo | VestingVaultInfo | GSCVaultInfo | TimelockInfo | TreasuryInfo;
+export type AnyTokenListInfo = TokenInfo | ElementGovernanceTokenInfo | AirdropContractInfo | CoreVotingContractInfo | LockingVaultInfo | OptimisticRewardsVaultInfo | OptimisticsGrantsContractInfo | VestingVaultInfo | GSCVaultInfo | TimelockInfo | TreasuryInfo;
+
+//# sourceMappingURL=index.d.ts.map

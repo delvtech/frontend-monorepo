@@ -4,8 +4,8 @@ import {
   OptimisticGrants__factory,
 } from "@elementfi/council-typechain";
 import { ethers } from "ethers";
-import { formatUnits } from "ethers/lib/utils";
 import { OptimisticsGrantsContractInfo } from "src/types";
+import { formatUnits } from "ethers/lib/utils";
 
 export async function getOptimisticGrantsInfo(
   provider: Provider,
@@ -26,7 +26,7 @@ export async function getOptimisticGrantsInfo(
   const solvencyPromise = optimisticGrantsContract.solvency();
 
   const [token, solvency] = await Promise.all([tokenPromise, solvencyPromise]);
-  const tokenContract = ERC20Permit__factory.connect(tokenAddress, provider);
+  const tokenContract = ERC20Permit__factory.connect(token, provider);
   const tokenDecimals = await tokenContract.decimals();
 
   return {

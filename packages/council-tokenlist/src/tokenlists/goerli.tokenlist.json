@@ -1,7 +1,7 @@
 {
   "name": "Council goerli token list",
   "logoURI": "https://element.fi/logo.svg",
-  "timestamp": "2022-06-21T17:41:43.970Z",
+  "timestamp": "2022-07-13T01:34:59.250Z",
   "version": {
     "major": 0,
     "minor": 1,
@@ -75,6 +75,17 @@
         "coreVoting": "0x0CB8aa45068EE31e97B717b0B35e26A43884c84c",
         "votingPowerBound": "100000000000000000000000",
         "idleDuration": "120"
+      }
+    },
+    {
+      "chainId": 5,
+      "address": "0x092B49777CB45dc4939FBc4029ce7a116D63D29D",
+      "name": "Element Optimistic Grants Vault",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "token": "0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601",
+        "solvency": "0.0"
       }
     },
     {

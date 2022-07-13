@@ -11,7 +11,7 @@ import mainnetTokenListJson from "src/tokenlists/mainnet.tokenlist.json";
 import { TokenInfo } from "@uniswap/token-lists";
 
 // export addresses json file definition
-export { AddressesJsonFile } from "src/addresses/AddressesJsonFile";
+export type { AddressesJsonFile } from "src/addresses/AddressesJsonFile";
 
 // export goerli jsons
 export const goerliTokenList: TokenList = goerliTokenListJson as TokenList;
