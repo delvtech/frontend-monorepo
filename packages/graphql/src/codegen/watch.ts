@@ -42,19 +42,21 @@ export function watch(path: string, handler: (filename: string) => void): void {
 
     // fs.watch uses underlying OS events to be notified asynchronously.
     fs.watch(watchDir, { recursive: true }, (event, filename) => {
+      // The underlying event may be fired multiple times in the process of
+      // saving the file so we debounce.
+      if (timeout) {
+        return;
+      }
+
       // string concatenation is used instead of path.join() here because
       // path.join strips out the leading `./` which causes patterns starting
       // with `./` to fail. So we can either strip the leading `./` from the
       // pattern or string concat.
       const changedPath = `${watchDir}/${filename}`;
       const isMatch = minimatch(changedPath, path);
-      // ignore renames
+
+      // event === 'change' to ignore file renames
       if (isMatch && event === "change") {
-        // The underlying event may be fired multiple times in the process of
-        // saving the file so we debounce.
-        if (timeout) {
-          return;
-        }
         timeout = setTimeout(() => {
           timeout = null;
         }, 100);

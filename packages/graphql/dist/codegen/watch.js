@@ -45,19 +45,19 @@ function watch(path, handler) {
         var timeout = null;
         // fs.watch uses underlying OS events to be notified asynchronously.
         fs_1.default.watch(watchDir, { recursive: true }, function (event, filename) {
+            // The underlying event may be fired multiple times in the process of
+            // saving the file so we debounce.
+            if (timeout) {
+                return;
+            }
             // string concatenation is used instead of path.join() here because
             // path.join strips out the leading `./` which causes patterns starting
             // with `./` to fail. So we can either strip the leading `./` from the
             // pattern or string concat.
             var changedPath = "".concat(watchDir, "/").concat(filename);
             var isMatch = (0, minimatch_1.default)(changedPath, path);
-            // ignore renames
+            // event === 'change' to ignore file renames
             if (isMatch && event === "change") {
-                // The underlying event may be fired multiple times in the process of
-                // saving the file so we debounce.
-                if (timeout) {
-                    return;
-                }
                 timeout = setTimeout(function () {
                     timeout = null;
                 }, 100);
