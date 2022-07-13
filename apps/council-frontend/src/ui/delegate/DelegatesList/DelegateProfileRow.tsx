@@ -19,7 +19,7 @@ import { Delegate } from "@elementfi/council-delegates";
 import { filter } from "fuzzaldrin";
 
 interface DelegateProfileRowProps {
-  delegateListFilter: string;
+  delegateListFilter?: string;
   provider?: Provider;
   selected: boolean;
   highlightSelected?: boolean;
