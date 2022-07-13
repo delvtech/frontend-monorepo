@@ -16,10 +16,8 @@ import { getGSCCandidateUrl } from "src/integrations/commonwealth";
 import { useENSName } from "src/ui/ethereum/useEnsName";
 import { Delegate } from "@elementfi/council-delegates";
 
-import { filter } from "fuzzaldrin";
-
 interface DelegateProfileRowProps {
-  delegateListFilter?: string;
+  renderPredicate?: (delegateAddress: string, delegateENS: string) => boolean;
   provider?: Provider;
   selected: boolean;
   highlightSelected?: boolean;
@@ -32,7 +30,7 @@ function DelegateProfileRow(
   props: DelegateProfileRowProps,
 ): ReactElement | null {
   const {
-    delegateListFilter,
+    renderPredicate,
     provider,
     selected = false,
     highlightSelected = false,
@@ -52,14 +50,7 @@ function DelegateProfileRow(
     <span className="truncate">{formattedDelegateName}</span>
   );
 
-  const showProfileRow =
-    !delegateListFilter ||
-    filter(
-      [ensName?.toLowerCase() || "", delegate.address.toLowerCase()],
-      delegateListFilter,
-    ).length > 0;
-
-  if (!showProfileRow) {
+  if (renderPredicate && !renderPredicate(delegate.address, ensName || "")) {
     return null;
   }
 

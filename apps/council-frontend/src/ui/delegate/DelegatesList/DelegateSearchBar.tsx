@@ -5,22 +5,20 @@ import TextInput from "src/ui/base/Input/TextInput";
 import { t } from "ttag";
 
 interface DelegateSearchBarProps {
-  onDelegateSearchInputUpdate: (value: string) => void;
+  onInputChange: (value: string) => void;
   value: string;
 }
 
 function DelegateSearchBar({
-  onDelegateSearchInputUpdate,
+  onInputChange,
   value,
 }: DelegateSearchBarProps): ReactElement {
-  const handleDelegateSearchInputChange: ChangeEventHandler<
-    HTMLInputElement
-  > = (event) => {
-    onDelegateSearchInputUpdate(event.target.value);
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    onInputChange(event.target.value);
   };
 
-  const handleClearDelegateSearchInput = () => {
-    onDelegateSearchInputUpdate("");
+  const handleClearInput = () => {
+    onInputChange("");
   };
 
   return (
@@ -37,13 +35,13 @@ function DelegateSearchBar({
           name={t`Search delegate address`}
           placeholder={t`Enter ENS or address`}
           value={value}
-          onChange={handleDelegateSearchInputChange}
+          onChange={handleInputChange}
           spellCheck={false}
           autoComplete="off"
         />
         <button
           className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md bg-principalRoyalBlue px-2 py-1 text-xs uppercase text-white hover:bg-brandDarkBlue-dark focus:outline-none focus:ring-2 focus:ring-brandDarkBlue focus:ring-offset-2"
-          onClick={handleClearDelegateSearchInput}
+          onClick={handleClearInput}
         >
           {t`clear`}
         </button>

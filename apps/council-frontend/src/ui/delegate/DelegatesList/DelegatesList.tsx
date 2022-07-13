@@ -1,4 +1,4 @@
-import { Fragment, ReactElement, useCallback, useMemo, useState } from "react";
+import { ReactElement, useCallback, useMemo, useState } from "react";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import H2 from "src/ui/base/H2/H2";
@@ -12,6 +12,7 @@ import classNames from "classnames";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import { Provider } from "@ethersproject/providers";
+import { filter } from "fuzzaldrin";
 
 interface DelegatesListProps {
   account: string | null | undefined;
@@ -54,6 +55,16 @@ function DelegatesList({
     setDelegateAddressInput("");
   }, [account, changeDelegation, setDelegateAddressInput]);
 
+  const renderPredicate = (delegateAddress: string, delegateENS: string) => {
+    return (
+      !delegateListFilter ||
+      filter(
+        [delegateENS.toLowerCase(), delegateAddress.toLowerCase()],
+        delegateListFilter,
+      ).length > 0
+    );
+  };
+
   return (
     <div className="relative mb-8">
       <div className="mb-4 grid grid-cols-10 items-center pr-8">
@@ -84,7 +95,7 @@ function DelegatesList({
       </div>
 
       <DelegateSearchBar
-        onDelegateSearchInputUpdate={setDelegateListFilter}
+        onInputChange={setDelegateListFilter}
         value={delegateListFilter}
       />
 
@@ -125,7 +136,7 @@ function DelegatesList({
 
             return (
               <DelegateProfileRow
-                delegateListFilter={delegateListFilter}
+                renderPredicate={renderPredicate}
                 provider={provider}
                 selected={selected}
                 delegate={delegate}
@@ -175,7 +186,7 @@ function ChangeDelegateButton({
   currentlyDelegated,
 }: ChangeDelegateButtonProps): ReactElement {
   return (
-    <Fragment>
+    <>
       {currentlyDelegated ? (
         <Tag
           intent={Intent.SUCCESS}
@@ -194,7 +205,7 @@ function ChangeDelegateButton({
           {t`Delegate`}
         </Button>
       )}
-    </Fragment>
+    </>
   );
 }
 
