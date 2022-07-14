@@ -15,7 +15,7 @@ type Term {
   pool: Pool
   "Timestamp in milliseconds since unix epoch"
   createdTimestamp: Int
-  "Block number the term was created at"
+  "Block Int the term was created at"
   createdAtBlock: Int
   "Timestamp in milliseconds since unix epoch"
   maturity: String
@@ -63,9 +63,9 @@ type YieldSource {
   name: String!
   protocol: Protocol
   "APY of the underlying yield source"
-  apy: number
+  apy: Int
   "TVL of the yield source (in dollars)"
-  tvl: number
+  tvl: Int
   "Get the price of a vault token in terms of any of the base assets"
   pricePerShare(tokenOut: String!): String
   pricePerShares(tokensOut: [String!]): [String]
