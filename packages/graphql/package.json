@@ -38,7 +38,7 @@
     "@envelop/response-cache": "^2.3.2",
     "@envelop/validation-cache": "^4.3.2",
     "@ethersproject/providers": "^5.6.8",
-    "@graphql-codegen/add": "^3.1.1",
+    "@graphql-codegen/add": "^3.2.0",
     "@graphql-codegen/cli": "^2.8.1",
     "@graphql-codegen/introspection": "^2.1.1",
     "@graphql-codegen/near-operation-file-preset": "^2.2.12",
