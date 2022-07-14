@@ -39,6 +39,8 @@ export async function generate({
   const config: Partial<Types.Config> = {
     schema: "./**/*.graphql",
     documents: "./**/*.graphql",
+    // documents are files with graphql operations (queries and mutations). This
+    // option prevents the codegen from throwing an error if none are found.
     ignoreNoDocuments: true,
     overwrite: true,
   };
