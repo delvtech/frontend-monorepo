@@ -5,5 +5,6 @@ export function initContext({ chainId, provider }: ResolverContext): V2Context {
   return {
     chainId,
     provider,
+    elementDataSources: {},
   };
 }
