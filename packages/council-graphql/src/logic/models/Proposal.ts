@@ -81,7 +81,7 @@ export const ProposalModel: ProposalModel = {
         created,
         expiration,
         unlock: execution,
-        isActive: latestBlock >= expiration,
+        isActive: expiration >= latestBlock,
       };
     });
   },

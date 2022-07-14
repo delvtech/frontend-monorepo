@@ -95,7 +95,7 @@ const $e35651dc583d7dca$export$b327309c2fad1272 = {
                 created: created,
                 expiration: expiration,
                 unlock: execution,
-                isActive: latestBlock >= expiration
+                isActive: expiration >= latestBlock
             };
         });
     },
@@ -401,7 +401,7 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
             });
             return proposal || null;
         },
-        proposals: async (votingContract, { ids: ids  }, context)=>{
+        proposals: async (votingContract, { ids: ids , isActive: isActive  }, context)=>{
             let proposals = [];
             if (ids) proposals = await (0, $e35651dc583d7dca$export$b327309c2fad1272).getByIds({
                 ids: ids,
@@ -412,13 +412,15 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
                 votingContract: votingContract,
                 context: context
             });
+            if (typeof isActive !== "undefined") proposals = proposals.filter((proposal)=>proposal?.isActive === isActive);
             return proposals.map((proposal)=>proposal || null);
         },
-        proposalCount: async (votingContract, _, context)=>{
+        proposalCount: async (votingContract, { isActive: isActive  }, context)=>{
             const allProposals = await (0, $e35651dc583d7dca$export$b327309c2fad1272).getByVotingContract({
                 votingContract: votingContract,
                 context: context
             });
+            if (typeof isActive !== "undefined") return allProposals.filter((proposal)=>proposal.isActive === isActive).length;
             return allProposals.length;
         },
         totalVotingPower: ({ votingVaults: votingVaults  }, { blockNumber: blockNumber  }, context)=>{

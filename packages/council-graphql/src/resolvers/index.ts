@@ -66,7 +66,7 @@ export const resolvers: Resolvers<CouncilContext> = {
       });
       return proposal || null;
     },
-    proposals: async (votingContract, { ids }, context) => {
+    proposals: async (votingContract, { ids, isActive }, context) => {
       let proposals = [];
       if (ids) {
         proposals = await ProposalModel.getByIds({
@@ -80,13 +80,22 @@ export const resolvers: Resolvers<CouncilContext> = {
           context,
         });
       }
+      if (typeof isActive !== "undefined") {
+        proposals = proposals.filter(
+          (proposal) => proposal?.isActive === isActive,
+        );
+      }
       return proposals.map((proposal) => proposal || null);
     },
-    proposalCount: async (votingContract, _, context) => {
+    proposalCount: async (votingContract, { isActive }, context) => {
       const allProposals = await ProposalModel.getByVotingContract({
         votingContract,
         context,
       });
+      if (typeof isActive !== "undefined") {
+        return allProposals.filter((proposal) => proposal.isActive === isActive)
+          .length;
+      }
       return allProposals.length;
     },
     totalVotingPower: ({ votingVaults }, { blockNumber }, context) => {
