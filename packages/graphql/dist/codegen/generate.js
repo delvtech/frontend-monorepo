@@ -134,8 +134,6 @@ var __generator =
   };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generate = void 0;
-var load_1 = require("@graphql-tools/load");
-var graphql_file_loader_1 = require("@graphql-tools/graphql-file-loader");
 var cli_1 = require("@graphql-codegen/cli");
 var configs_js_1 = require("./configs.js");
 // https://www.graphql-code-generator.com/docs/advanced/programmatic-usage
@@ -160,63 +158,42 @@ function generate(_a) {
     isPackage = _a.package,
     schema = _a.schema;
   return __awaiter(this, void 0, void 0, function () {
-    var config, err_1, baseTypesPath;
+    var config, baseTypesPath;
     var _b, _c, _d;
     return __generator(this, function (_e) {
-      switch (_e.label) {
-        case 0:
-          config = {
-            schema: "./**/*.graphql",
-            overwrite: true,
-          };
-          _e.label = 1;
-        case 1:
-          _e.trys.push([1, 3, , 4]);
-          // this will fail if there are no documents (operations) found.
-          return [
-            4 /*yield*/,
-            (0, load_1.loadDocuments)("./**/*.graphql", {
-              loaders: [new graphql_file_loader_1.GraphQLFileLoader()],
+      config = {
+        schema: "./**/*.graphql",
+        documents: "./**/*.graphql",
+        ignoreNoDocuments: true,
+        overwrite: true,
+      };
+      if (isPackage) {
+        config.generates =
+          ((_b = {}),
+          (_b["".concat(outDir, "/module.d.ts")] =
+            configs_js_1.moduleDefinitions),
+          (_b["".concat(outDir, "/index.ts")] = configs_js_1.packageMain),
+          _b);
+      } else {
+        if (schema) {
+          config.schema =
+            ((_c = {}),
+            (_c[schema] = {
+              loader: "@elementfi/graphql/dist/codegen/schemaLoader",
             }),
-          ];
-        case 2:
-          // this will fail if there are no documents (operations) found.
-          _e.sent();
-          // if it doesn't fail, include the documents field
-          config.documents = "./**/*.graphql";
-          return [3 /*break*/, 4];
-        case 3:
-          err_1 = _e.sent();
-          return [3 /*break*/, 4];
-        case 4:
-          if (isPackage) {
-            config.generates =
-              ((_b = {}),
-              (_b["".concat(outDir, "/module.d.ts")] =
-                configs_js_1.moduleDefinitions),
-              (_b["".concat(outDir, "/index.ts")] = configs_js_1.packageMain),
-              _b);
-          } else {
-            if (schema) {
-              config.schema =
-                ((_c = {}),
-                (_c[schema] = {
-                  loader: "@elementfi/graphql/dist/codegen/schemaLoader",
-                }),
-                _c);
-            }
-            baseTypesPath = "".concat(outDir, "/graphql.d.ts");
-            config.generates =
-              ((_d = {}),
-              (_d["".concat(outDir, "/graphql-modules.d.ts")] =
-                configs_js_1.moduleDefinitions),
-              (_d[baseTypesPath] = configs_js_1.types),
-              (_d["."] = (0, configs_js_1.getCollocatedHooks)(baseTypesPath)),
-              _d);
-          }
-          (0, cli_1.generate)(config);
-          return [2 /*return*/];
+            _c);
+        }
+        baseTypesPath = "".concat(outDir, "/graphql.d.ts");
+        config.generates =
+          ((_d = {}),
+          (_d["".concat(outDir, "/graphql-modules.d.ts")] =
+            configs_js_1.moduleDefinitions),
+          (_d[baseTypesPath] = configs_js_1.types),
+          (_d["."] = (0, configs_js_1.getCollocatedHooks)(baseTypesPath)),
+          _d);
       }
+      (0, cli_1.generate)(config);
+      return [2 /*return*/];
     });
   });
 }
