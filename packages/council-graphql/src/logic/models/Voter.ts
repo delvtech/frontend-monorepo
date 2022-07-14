@@ -42,7 +42,7 @@ export const VoterModel: VoterModel = {
     blockNumber,
     context: { councilDataSources },
   }) {
-    const addresses: string[] = [];
+    const addresses = new Set<string>();
 
     for (const votingVault of votingVaults) {
       const dataSource = getVotingVaultDataSourceByAddress(
@@ -55,11 +55,11 @@ export const VoterModel: VoterModel = {
           blockNumber,
         );
         for (const { voter } of allVotersWithPower) {
-          addresses.push(voter);
+          addresses.add(voter);
         }
       }
     }
 
-    return this.getByAddresses({ addresses });
+    return this.getByAddresses({ addresses: Array.from(addresses) });
   },
 };

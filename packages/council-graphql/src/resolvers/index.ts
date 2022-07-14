@@ -66,7 +66,7 @@ export const resolvers: Resolvers<CouncilContext> = {
       });
       return proposal || null;
     },
-    proposals: async (votingContract, { ids }, context) => {
+    proposals: async (votingContract, { ids, isActive }, context) => {
       let proposals = [];
       if (ids) {
         proposals = await ProposalModel.getByIds({
@@ -80,7 +80,23 @@ export const resolvers: Resolvers<CouncilContext> = {
           context,
         });
       }
+      if (typeof isActive !== "undefined") {
+        proposals = proposals.filter(
+          (proposal) => proposal?.isActive === isActive,
+        );
+      }
       return proposals.map((proposal) => proposal || null);
+    },
+    proposalCount: async (votingContract, { isActive }, context) => {
+      const allProposals = await ProposalModel.getByVotingContract({
+        votingContract,
+        context,
+      });
+      if (typeof isActive !== "undefined") {
+        return allProposals.filter((proposal) => proposal.isActive === isActive)
+          .length;
+      }
+      return allProposals.length;
     },
     totalVotingPower: ({ votingVaults }, { blockNumber }, context) => {
       return TotalVotingPowerModel.getByVotingVaults({
@@ -94,6 +110,13 @@ export const resolvers: Resolvers<CouncilContext> = {
         votingVaults: votingVaults,
         context,
       });
+    },
+    voterCount: async ({ votingVaults }, _, context) => {
+      const allVoters = await VoterModel.getByVotingVaults({
+        votingVaults: votingVaults,
+        context,
+      });
+      return allVoters.length;
     },
     votingPower: ({ votingVaults }, { voter, blockNumber }, context) => {
       return VotingPowerModel.getByVoter({
@@ -130,6 +153,13 @@ export const resolvers: Resolvers<CouncilContext> = {
     },
     voters: (votingVault, _, context) => {
       return VoterModel.getByVotingVault({ votingVault, context });
+    },
+    voterCount: async (votingVault, _, context) => {
+      const allVoters = await VoterModel.getByVotingVault({
+        votingVault: votingVault,
+        context,
+      });
+      return allVoters.length;
     },
     votingPower: (votingVault, { voter: address, blockNumber }, context) => {
       const voter = VoterModel.getByAddress({ address });
@@ -178,6 +208,13 @@ export const resolvers: Resolvers<CouncilContext> = {
         blockNumber: created,
         context,
       });
+    },
+    voterCount: async ({ votingContract }, _, context) => {
+      const allVoters = await VoterModel.getByVotingVaults({
+        votingVaults: votingContract.votingVaults,
+        context,
+      });
+      return allVoters.length;
     },
     votes: async (proposal, { voters: addresses }, context) => {
       let votes;
