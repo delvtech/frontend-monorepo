@@ -70,11 +70,11 @@ type YieldSource {
   pricePerShare(tokenOut: String!): String
   pricePerShares(tokensOut: [String!]): [String]
   baseAssets: [Token]
-  terms: [ Term ]
+  terms: [Term]
 }
 
 type Protocol {
   "Yearn"
   name: ID!
-  yieldSources: [ YieldSource ]
+  yieldSources: [YieldSource]
 }
