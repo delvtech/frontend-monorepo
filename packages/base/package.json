@@ -27,7 +27,7 @@
     "lint-staged": "^12.3.7",
     "prettier": "2.6.2",
     "react": "^17.0.2",
-    "react-query": "^3.39.0",
+    "react-query": "^3.39.1",
     "ts-money": "^0.4.7"
   }
 }
