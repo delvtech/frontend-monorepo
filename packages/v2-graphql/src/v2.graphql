@@ -1,27 +1,66 @@
 type Query {
   term(address: String!): Term
   terms(addresses: [String!], created: Int, maturity: Int): [Term]
-  yieldSource(address: ID!): YieldSource
-  yieldSources(addresses: [ID!]): [YieldSource]
+  position(address: ID!): YieldSource
+  positions(addresses: [ID!]): [YieldSource]
   protocols(names: [ID!]): Protocol
+  pool(address: ID!): Pool
+  pools(addresses: [ID!]): [Pool]
+  umbrella(address: ID!): UmbrellaTerm
+  umbrellas(addresses: [ID!]): [UmbrellaTerm]
+}
+
+# type MultiTerm {
+#   address: ID!
+#   position: YieldSource
+#   terms: [Term]
+# }
+
+"TODO: Review 4626 standard"
+type PositionMultiTerm {
+  "MultiTerm address"
+  address: ID!
+  "address of the underlying position, eg: yearn vault usdc"
+  position: ID!
+  "Name of the yield source, eg: Yearn Vault Dai v2"
+  name: String!
+  protocol: Protocol
+  "APY of the underlying yield source"
+  apy: Int
+  "TVL of the yield source (in dollars)"
+  tvl: Int
+  "Get the price of a vault token in terms of any of the base assets"
+  pricePerShare(tokenOut: String!): String
+  pricePerShares(tokensOut: [String!]): [String]
+  baseAsset: Token
+  terms: [Term]
 }
 
 type Term {
-  address: ID!
+  id: ID!
   name: String!
-  principalToken: Token
-  yieldToken: Token
   baseAsset: Token
-  pool: Pool
+  "Dollar amount of deposits into the term"
+  tvl: String
+  position: YieldSource
   "Timestamp in milliseconds since unix epoch"
   createdTimestamp: Int
   "Block Int the term was created at"
   createdAtBlock: Int
   "Timestamp in milliseconds since unix epoch"
   maturity: String
-  "Dollar amount of deposits into the term"
+  pool: Pool
+  principalToken: Token
+  yieldToken: Token
+}
+
+type UmbrellaTerm {
+  address: ID!
+  name: String!
+  terms: [Term]
+  baseAsset: Token
+  "Dollar amount of deposits into all terms"
   tvl: String
-  yieldSource: YieldSource
 }
 
 type Token {
@@ -32,7 +71,8 @@ type Token {
 }
 
 type Pool {
-  yieldSource: YieldSource!
+  address: ID!
+  position: YieldSource!
 
   "Dollar amount traded in the pool"
   tradingVolume(fromBlock: Int, toBlock: Int): String
@@ -42,7 +82,7 @@ type Pool {
   "Price of bond asset in terms of share asset, eg: 0.95 USDC for 1 ptUSDC"
   spotPrice(atBlock: Int): String
 
-  "Num of principal tokens"
+  "Num of principal or umbrella tokens"
   bondReserves: Int!
   "Num of base asset tokens"
   shareReserves: Int!
@@ -56,25 +96,8 @@ type Pool {
   currentPricePerShare: String!
 }
 
-"TODO: Review 4626 standard"
-type YieldSource {
-  address: ID!
-  "Name of the yield source, eg: Yearn Vault Dai v2"
-  name: String!
-  protocol: Protocol
-  "APY of the underlying yield source"
-  apy: Int
-  "TVL of the yield source (in dollars)"
-  tvl: Int
-  "Get the price of a vault token in terms of any of the base assets"
-  pricePerShare(tokenOut: String!): String
-  pricePerShares(tokensOut: [String!]): [String]
-  baseAssets: [Token]
-  terms: [Term]
-}
-
 type Protocol {
   "Yearn"
   name: ID!
-  yieldSources: [YieldSource]
+  positions: [YieldSource]
 }

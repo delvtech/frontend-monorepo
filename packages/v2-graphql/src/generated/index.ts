@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-07-14T09:48:21-05:00
+// Generated on 2022-07-14T15:15:30-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -33,7 +33,8 @@ export type Scalars = {
 
 export type Pool = {
   __typename?: "Pool";
-  /** Num of principal tokens */
+  address: Scalars["ID"];
+  /** Num of principal or umbrella tokens */
   bondReserves: Scalars["Int"];
   currentPricePerShare: Scalars["String"];
   /** Dollar amount in fees accumulated on trades */
@@ -75,11 +76,23 @@ export type Protocol = {
 
 export type Query = {
   __typename?: "Query";
+  pool?: Maybe<Pool>;
+  pools?: Maybe<Array<Maybe<Pool>>>;
   protocols?: Maybe<Protocol>;
   term?: Maybe<Term>;
   terms?: Maybe<Array<Maybe<Term>>>;
+  umbrella?: Maybe<UmbrellaTerm>;
+  umbrellas?: Maybe<Array<Maybe<UmbrellaTerm>>>;
   yieldSource?: Maybe<YieldSource>;
   yieldSources?: Maybe<Array<Maybe<YieldSource>>>;
+};
+
+export type QueryPoolArgs = {
+  address: Scalars["ID"];
+};
+
+export type QueryPoolsArgs = {
+  addresses?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export type QueryProtocolsArgs = {
@@ -94,6 +107,14 @@ export type QueryTermsArgs = {
   addresses?: InputMaybe<Array<Scalars["String"]>>;
   created?: InputMaybe<Scalars["Int"]>;
   maturity?: InputMaybe<Scalars["Int"]>;
+};
+
+export type QueryUmbrellaArgs = {
+  address: Scalars["ID"];
+};
+
+export type QueryUmbrellasArgs = {
+  addresses?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export type QueryYieldSourceArgs = {
@@ -129,6 +150,16 @@ export type Token = {
   decimals?: Maybe<Scalars["Int"]>;
   price?: Maybe<Scalars["String"]>;
   symbol: Scalars["String"];
+};
+
+export type UmbrellaTerm = {
+  __typename?: "UmbrellaTerm";
+  address: Scalars["ID"];
+  baseAsset?: Maybe<Token>;
+  name: Scalars["String"];
+  terms?: Maybe<Array<Maybe<Term>>>;
+  /** Dollar amount of deposits into all terms */
+  tvl?: Maybe<Scalars["String"]>;
 };
 
 /** TODO: Review 4626 standard */
@@ -275,6 +306,7 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars["String"]>;
   Term: ResolverTypeWrapper<Term>;
   Token: ResolverTypeWrapper<Token>;
+  UmbrellaTerm: ResolverTypeWrapper<UmbrellaTerm>;
   YieldSource: ResolverTypeWrapper<YieldSource>;
 };
 
@@ -289,6 +321,7 @@ export type ResolversParentTypes = {
   String: Scalars["String"];
   Term: Term;
   Token: Token;
+  UmbrellaTerm: UmbrellaTerm;
   YieldSource: YieldSource;
 };
 
@@ -296,6 +329,7 @@ export type PoolResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["Pool"] = ResolversParentTypes["Pool"],
 > = {
+  address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   bondReserves?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   currentPricePerShare?: Resolver<
     ResolversTypes["String"],
@@ -354,6 +388,18 @@ export type QueryResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = {
+  pool?: Resolver<
+    Maybe<ResolversTypes["Pool"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryPoolArgs, "address">
+  >;
+  pools?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Pool"]>>>,
+    ParentType,
+    ContextType,
+    Partial<QueryPoolsArgs>
+  >;
   protocols?: Resolver<
     Maybe<ResolversTypes["Protocol"]>,
     ParentType,
@@ -371,6 +417,18 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     Partial<QueryTermsArgs>
+  >;
+  umbrella?: Resolver<
+    Maybe<ResolversTypes["UmbrellaTerm"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryUmbrellaArgs, "address">
+  >;
+  umbrellas?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["UmbrellaTerm"]>>>,
+    ParentType,
+    ContextType,
+    Partial<QueryUmbrellasArgs>
   >;
   yieldSource?: Resolver<
     Maybe<ResolversTypes["YieldSource"]>,
@@ -435,6 +493,22 @@ export type TokenResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UmbrellaTermResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["UmbrellaTerm"] = ResolversParentTypes["UmbrellaTerm"],
+> = {
+  address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  baseAsset?: Resolver<Maybe<ResolversTypes["Token"]>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  terms?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["Term"]>>>,
+    ParentType,
+    ContextType
+  >;
+  tvl?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type YieldSourceResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["YieldSource"] = ResolversParentTypes["YieldSource"],
@@ -479,5 +553,6 @@ export type Resolvers<ContextType = ResolverContext> = {
   Query?: QueryResolvers<ContextType>;
   Term?: TermResolvers<ContextType>;
   Token?: TokenResolvers<ContextType>;
+  UmbrellaTerm?: UmbrellaTermResolvers<ContextType>;
   YieldSource?: YieldSourceResolvers<ContextType>;
 };
