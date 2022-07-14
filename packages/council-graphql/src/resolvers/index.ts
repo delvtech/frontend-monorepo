@@ -82,6 +82,13 @@ export const resolvers: Resolvers<CouncilContext> = {
       }
       return proposals.map((proposal) => proposal || null);
     },
+    proposalCount: async (votingContract, _, context) => {
+      const allProposals = await ProposalModel.getByVotingContract({
+        votingContract,
+        context,
+      });
+      return allProposals.length;
+    },
     totalVotingPower: ({ votingVaults }, { blockNumber }, context) => {
       return TotalVotingPowerModel.getByVotingVaults({
         votingVaults,

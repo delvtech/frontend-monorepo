@@ -414,6 +414,13 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
             });
             return proposals.map((proposal)=>proposal || null);
         },
+        proposalCount: async (votingContract, _, context)=>{
+            const allProposals = await (0, $e35651dc583d7dca$export$b327309c2fad1272).getByVotingContract({
+                votingContract: votingContract,
+                context: context
+            });
+            return allProposals.length;
+        },
         totalVotingPower: ({ votingVaults: votingVaults  }, { blockNumber: blockNumber  }, context)=>{
             return (0, $ac266e1a17cc8ea7$export$40a03fbff71f56d3).getByVotingVaults({
                 votingVaults: votingVaults,

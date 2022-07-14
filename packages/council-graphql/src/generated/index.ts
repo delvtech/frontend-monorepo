@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-07-13T18:24:41-05:00
+// Generated on 2022-07-14T12:44:42-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
