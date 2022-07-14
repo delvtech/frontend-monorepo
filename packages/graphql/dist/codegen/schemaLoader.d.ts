@@ -5,6 +5,4 @@ import { GraphQLSchema } from "graphql";
  *   export is a `GraphQLSchema` or an array of `GraphQLSchema`s
  * @returns A `Promise` that resolves to a `GraphQLSchema`.
  */
-export default function schemaLoader(
-  schemaPath: string,
-): Promise<GraphQLSchema>;
+export default function schemaLoader(schemaPath: string): Promise<GraphQLSchema>;

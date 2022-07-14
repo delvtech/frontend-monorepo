@@ -2,10 +2,6 @@ import { Provider } from "@ethersproject/providers";
 import { GraphQLSchema } from "graphql";
 import { ApolloLink } from "@apollo/client";
 import { YogaNodeServerInstance } from "@graphql-yoga/node";
-export interface InitOptions {
-  graphs: Graph[];
-  provider: Provider;
-}
 export type ResolverContext<
   T extends Record<string, any> = Record<string, any>,
 > = {
@@ -16,7 +12,11 @@ export interface Graph {
   schema: GraphQLSchema;
   initContext?: (
     initialContext: ResolverContext,
-  ) => ResolverContext | Promise<ResolverContext>;
+  ) => Record<string, any> | Record<string, any>;
+}
+export interface InitOptions {
+  graphs: Graph[];
+  provider: Provider;
 }
 /**
  * Create an `ApolloLink` instance for Apollo Client (specifically, a

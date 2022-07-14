@@ -1,5 +1,6 @@
 import { generate as graphqlCodegen } from "@graphql-codegen/cli";
 import type { Types } from "@graphql-codegen/plugin-helpers";
+import { watch as watchFiles } from "./watch";
 import {
   types,
   moduleDefinitions,
@@ -11,6 +12,7 @@ interface GenerateOptions {
   outDir: string;
   package?: boolean;
   schema?: string;
+  watch?: boolean;
 }
 
 // https://www.graphql-code-generator.com/docs/advanced/programmatic-usage
@@ -35,7 +37,9 @@ export async function generate({
   outDir,
   package: isPackage,
   schema,
+  watch,
 }: GenerateOptions): Promise<void> {
+  const graphqlFilesPath = "./**/*.graphql";
   const config: Partial<Types.Config> = {
     schema: "./**/*.graphql",
     documents: "./**/*.graphql",
@@ -66,5 +70,10 @@ export async function generate({
     };
   }
 
-  graphqlCodegen(config as Types.Config);
+  await graphqlCodegen(config as Types.Config);
+  if (watch) {
+    watchFiles(graphqlFilesPath, () => {
+      graphqlCodegen(config as Types.Config);
+    });
+  }
 }

@@ -1,9 +1,9 @@
 var $67x1W$apolloclient = require("@apollo/client");
+var $67x1W$graphqltoolsschema = require("@graphql-tools/schema");
 var $67x1W$graphql = require("graphql");
 var $67x1W$envelopcore = require("@envelop/core");
 var $67x1W$envelopparsercache = require("@envelop/parser-cache");
 var $67x1W$envelopvalidationcache = require("@envelop/validation-cache");
-var $67x1W$graphqltoolsschema = require("@graphql-tools/schema");
 var $67x1W$graphqlyoganode = require("@graphql-yoga/node");
 
 function $parcel$export(e, n, v, s) {
@@ -54,24 +54,30 @@ $parcel$export(
   "default",
   () => $de787cb6c706765e$export$2e2bcd8739ae039,
 );
+
 function $de787cb6c706765e$export$2e2bcd8739ae039({
   graphs: graphs,
   provider: provider,
 }) {
   const schemas = graphs.map(({ schema: schema }) => schema);
-  const context1 = new Promise(async (resolve) => {
-    const { chainId: chainId } = await provider.getNetwork();
-    let context = {
-      chainId: chainId,
-      provider: provider,
-    };
-    for (const { initContext: initContext } of graphs)
-      context = (await initContext?.(context)) || context;
-    resolve(context);
-  });
   return {
-    schemas: schemas,
-    context: context1,
+    schema: (0, $67x1W$graphqltoolsschema.mergeSchemas)({
+      schemas: schemas,
+    }),
+    context: new Promise(async (resolve) => {
+      const { chainId: chainId } = await provider.getNetwork();
+      const initialContext = {
+        chainId: chainId,
+        provider: provider,
+      };
+      let context = initialContext;
+      for (const { initContext: initContext } of graphs)
+        context = {
+          ...context,
+          ...(await initContext?.(initialContext)),
+        };
+      resolve(context);
+    }),
   };
 }
 
@@ -84,17 +90,13 @@ $67x1W$envelopcore.envelop)({
   ],
 });
 function $f03430a1724f7e16$export$68b3c18766fa4f41({
-  schemas: schemas,
+  schema: schema,
   context: context,
 }) {
   return (0, $67x1W$envelopcore.envelop)({
     plugins: [
       /* eslint-disable react-hooks/rules-of-hooks */ (0,
-      $67x1W$envelopcore.useSchema)(
-        (0, $67x1W$graphqltoolsschema.mergeSchemas)({
-          schemas: schemas,
-        }),
-      ),
+      $67x1W$envelopcore.useSchema)(schema),
       (0, $67x1W$envelopcore.useExtendContext)(() => context),
       (0, $67x1W$envelopcore.useEnvelop)(
         $f03430a1724f7e16$export$73f4ce2d285195f3,
@@ -146,10 +148,10 @@ async function $f03430a1724f7e16$export$b3e1bb245abcf336({
 }
 
 function $6bfc6bc53be094f8$export$2e2bcd8739ae039(options) {
-  const { schemas: schemas, context: context } = (0,
+  const { schema: schema, context: context } = (0,
   $de787cb6c706765e$export$2e2bcd8739ae039)(options);
   const getEnveloped = (0, $f03430a1724f7e16$export$68b3c18766fa4f41)({
-    schemas: schemas,
+    schema: schema,
     context: context,
   });
   return new (0, $67x1W$apolloclient.ApolloLink)(
@@ -173,14 +175,14 @@ function $6bfc6bc53be094f8$export$2e2bcd8739ae039(options) {
 }
 
 function $a31874b7049347f3$export$2e2bcd8739ae039(options) {
-  const { schemas: schemas, context: context } = (0,
+  const { schema: schema, context: context } = (0,
   $de787cb6c706765e$export$2e2bcd8739ae039)(options);
   return (0, $67x1W$graphqlyoganode.createServer)({
     plugins: [
       /* eslint-disable react-hooks/rules-of-hooks */ (0,
       $67x1W$envelopcore.useEnvelop)(
         (0, $f03430a1724f7e16$export$68b3c18766fa4f41)({
-          schemas: schemas,
+          schema: schema,
           context: context,
         }),
       ),

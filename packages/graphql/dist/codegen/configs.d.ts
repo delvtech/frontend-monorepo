@@ -20,6 +20,4 @@ export declare const packageMain: Types.ConfiguredOutput;
  * @param baseTypesPath The path to the base types.
  * @returns `ConfiguredOutput` to included in codegen.
  */
-export declare function getCollocatedHooks(
-  baseTypesPath: string,
-): Types.ConfiguredOutput;
+export declare function getCollocatedHooks(baseTypesPath: string): Types.ConfiguredOutput;
