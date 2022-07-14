@@ -1,773 +1,365 @@
-'use strict';
+var $juIFp$elementficounciltypechain = require("@elementfi/council-typechain");
+var $juIFp$ethers = require("ethers");
+var $juIFp$etherslibutils = require("ethers/lib/utils");
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var councilTypechain = require('@elementfi/council-typechain');
-var ethers = require('ethers');
-var utils = require('ethers/lib/utils');
-
-var addresses$1 = {
-	airdrop: "0xb7920477F7A39c3DffA925076857eB1585503e1B",
-	coreVoting: "0x0CB8aa45068EE31e97B717b0B35e26A43884c84c",
-	elementToken: "0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601",
-	gscCoreVoting: "0x600c4926c9F88beCE3533ceaAA36804d6E23F1c1",
-	gscVault: "0x0A575bFA79454112c37B9Af2a6362c9c68f7d2e3",
-	lockingVault: "0xb5E8AF575Ee302A24c6C7746a99D895BeF67cb5D",
-	optimisticGrants: "0x092B49777CB45dc4939FBc4029ce7a116D63D29D",
-	optimisticRewardsVault: "0x0000000000000000000000000000000000000000",
-	spender: "0x722289C399e6f4AbCE80FaFbABC9a9876432834C",
-	timeLock: "0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4",
-	treasury: "0xd46dDb33A33FD3D352d08cc7022Ce1f5c6ccFF1a",
-	vestingVault: "0xe69D2F8DeD2924e0845118E7E467Fc97F7994ef6"
-};
-var chainId$1 = 5;
-var goerliAddressListJson = {
-	addresses: addresses$1,
-	chainId: chainId$1
-};
-
-var name$1 = "Council goerli token list";
-var logoURI$1 = "https://element.fi/logo.svg";
-var timestamp$1 = "2022-06-21T17:41:43.970Z";
-var version$1 = {
-	major: 0,
-	minor: 1,
-	patch: 0
-};
-var tokens$1 = [
-	{
-		chainId: 5,
-		address: "0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601",
-		symbol: "🧝",
-		decimals: 18,
-		name: "Definitely Not Element Token"
-	},
-	{
-		chainId: 5,
-		address: "0x0CB8aa45068EE31e97B717b0B35e26A43884c84c",
-		name: "Element Core Voting Contract",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			dayInBlocks: 6496,
-			baseQuorum: "1000000.0",
-			lockDuration: 19488,
-			minProposalPower: "0.000000000000000001",
-			extraVoteTime: 2371040
-		}
-	},
-	{
-		chainId: 5,
-		address: "0x600c4926c9F88beCE3533ceaAA36804d6E23F1c1",
-		name: "Element GSC Core Voting Contract",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			dayInBlocks: 6496,
-			baseQuorum: "0.000000000000000001",
-			lockDuration: 19488,
-			minProposalPower: "0.000000000000000001",
-			extraVoteTime: 32480
-		}
-	},
-	{
-		chainId: 5,
-		address: "0xb5E8AF575Ee302A24c6C7746a99D895BeF67cb5D",
-		name: "Element Locking Vault",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			token: "0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601",
-			staleBlockLag: 30000
-		}
-	},
-	{
-		chainId: 5,
-		address: "0xe69D2F8DeD2924e0845118E7E467Fc97F7994ef6",
-		name: "Element Vesting Vault",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			token: "0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601",
-			staleBlockLag: 20000
-		}
-	},
-	{
-		chainId: 5,
-		address: "0x0A575bFA79454112c37B9Af2a6362c9c68f7d2e3",
-		name: "Element Governance Steering Committee Vault",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			coreVoting: "0x0CB8aa45068EE31e97B717b0B35e26A43884c84c",
-			votingPowerBound: "100000000000000000000000",
-			idleDuration: "120"
-		}
-	},
-	{
-		chainId: 5,
-		address: "0xb7920477F7A39c3DffA925076857eB1585503e1B",
-		name: "Element Airdrop Contract",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			rewardsRoot: "0x9aafc9b1d8798b80c68d556519e69c64fbe5a4b205bbdccec12375353a1bf784",
-			lockingVault: "0xb5E8AF575Ee302A24c6C7746a99D895BeF67cb5D",
-			expiration: "9999999999",
-			token: "0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601"
-		}
-	},
-	{
-		chainId: 5,
-		address: "0xd46dDb33A33FD3D352d08cc7022Ce1f5c6ccFF1a",
-		name: "Element Treasury",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			owner: "0xcF3b7bcBbcEFF836F81f6EAd914706E699267bca"
-		}
-	},
-	{
-		chainId: 5,
-		address: "0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4",
-		name: "Element Timelock",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			waitTime: "1"
-		}
-	}
-];
-var goerliTokenListJson = {
-	name: name$1,
-	logoURI: logoURI$1,
-	timestamp: timestamp$1,
-	version: version$1,
-	tokens: tokens$1
-};
-
-var addresses = {
-	airdrop: "0xd04a459FFD3A5E3C93d5cD8BB13d26a9845716c2",
-	coreVoting: "0xEaCD577C3F6c44C3ffA398baaD97aE12CDCFed4a",
-	elementToken: "0x5c6D51ecBA4D8E4F20373e3ce96a62342B125D6d",
-	gscCoreVoting: "0x40309f197e7f94B555904DF0f788a3F48cF326aB",
-	gscVault: "0xcA870E8aa4FCEa85b5f0c6F4209C8CBA9265B940",
-	lockingVault: "0x02Bd4A3b1b95b01F2Aa61655415A5d3EAAcaafdD",
-	optimisticGrants: "0x0000000000000000000000000000000000000000",
-	optimisticRewardsVault: "0x0000000000000000000000000000000000000000",
-	spender: "0xDa2Baf34B5717b257e52039f78d02B9C58751781",
-	timeLock: "0x81758f3361A769016eae4844072FA6d7f828a651",
-	treasury: "0x82eF450FB7f06E3294F2f19ed1713b255Af0f541",
-	vestingVault: "0x6De73946eab234F1EE61256F10067D713aF0e37A"
-};
-var chainId = 1;
-var mainnetAddressListJson = {
-	addresses: addresses,
-	chainId: chainId
-};
-
-var name = "Council mainnet token list";
-var logoURI = "https://element.fi/logo.svg";
-var timestamp = "2022-06-21T17:41:53.178Z";
-var version = {
-	major: 0,
-	minor: 1,
-	patch: 0
-};
-var tokens = [
-	{
-		chainId: 1,
-		address: "0x5c6D51ecBA4D8E4F20373e3ce96a62342B125D6d",
-		symbol: "ELFI",
-		decimals: 18,
-		name: "Element Finance"
-	},
-	{
-		chainId: 1,
-		address: "0xEaCD577C3F6c44C3ffA398baaD97aE12CDCFed4a",
-		name: "Element Core Voting Contract",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			dayInBlocks: 6496,
-			baseQuorum: "1100000.0",
-			lockDuration: 19488,
-			minProposalPower: "55000.0",
-			extraVoteTime: 32480
-		}
-	},
-	{
-		chainId: 1,
-		address: "0x40309f197e7f94B555904DF0f788a3F48cF326aB",
-		name: "Element GSC Core Voting Contract",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			dayInBlocks: 6496,
-			baseQuorum: "0.000000000000000001",
-			lockDuration: 19488,
-			minProposalPower: "0.000000000000000001",
-			extraVoteTime: 32480
-		}
-	},
-	{
-		chainId: 1,
-		address: "0x02Bd4A3b1b95b01F2Aa61655415A5d3EAAcaafdD",
-		name: "Element Locking Vault",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			token: "0x5c6D51ecBA4D8E4F20373e3ce96a62342B125D6d",
-			staleBlockLag: 200000
-		}
-	},
-	{
-		chainId: 1,
-		address: "0x6De73946eab234F1EE61256F10067D713aF0e37A",
-		name: "Element Vesting Vault",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			token: "0x5c6D51ecBA4D8E4F20373e3ce96a62342B125D6d",
-			staleBlockLag: 200000
-		}
-	},
-	{
-		chainId: 1,
-		address: "0xcA870E8aa4FCEa85b5f0c6F4209C8CBA9265B940",
-		name: "Element Governance Steering Committee Vault",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			coreVoting: "0xEaCD577C3F6c44C3ffA398baaD97aE12CDCFed4a",
-			votingPowerBound: "110000000000000000000000",
-			idleDuration: "345600"
-		}
-	},
-	{
-		chainId: 1,
-		address: "0xd04a459FFD3A5E3C93d5cD8BB13d26a9845716c2",
-		name: "Element Airdrop Contract",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			rewardsRoot: "0x5868b38fb60678b88b07721f03bc9bfd5be6b4f17829f5703e3556b31f4073c6",
-			lockingVault: "0x02Bd4A3b1b95b01F2Aa61655415A5d3EAAcaafdD",
-			expiration: "1680220799",
-			token: "0x5c6D51ecBA4D8E4F20373e3ce96a62342B125D6d"
-		}
-	},
-	{
-		chainId: 1,
-		address: "0x82eF450FB7f06E3294F2f19ed1713b255Af0f541",
-		name: "Element Treasury",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			owner: "0x81758f3361A769016eae4844072FA6d7f828a651"
-		}
-	},
-	{
-		chainId: 1,
-		address: "0x81758f3361A769016eae4844072FA6d7f828a651",
-		name: "Element Timelock",
-		decimals: 0,
-		symbol: "",
-		extensions: {
-			waitTime: "604800"
-		}
-	}
-];
-var mainnetTokenListJson = {
-	name: name,
-	logoURI: logoURI,
-	timestamp: timestamp,
-	version: version,
-	tokens: tokens
-};
-
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-
-function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+function $parcel$interopDefault(a) {
+  return a && a.__esModule ? a.default : a;
+}
+function $parcel$export(e, n, v, s) {
+  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
 }
 
-function __generator(thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+$parcel$export(module.exports, "goerliTokenList", () => $d2d3f2fa6e3df2fc$export$e9611bc3ed413e87);
+$parcel$export(module.exports, "goerliAddressList", () => $d2d3f2fa6e3df2fc$export$5cb61d802df8179b);
+$parcel$export(module.exports, "mainnetTokenList", () => $d2d3f2fa6e3df2fc$export$8872fc0a9db0e8b);
+$parcel$export(module.exports, "mainnetAddressList", () => $d2d3f2fa6e3df2fc$export$bf1e9dcca16b49bd);
+$parcel$export(module.exports, "getTokenList", () => $14808b5bee992ad1$export$4aec0e9d20ba276);
+var $d6f2632825c560ff$exports = {};
+$d6f2632825c560ff$exports = JSON.parse('{"addresses":{"airdrop":"0xb7920477F7A39c3DffA925076857eB1585503e1B","coreVoting":"0x0CB8aa45068EE31e97B717b0B35e26A43884c84c","elementToken":"0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601","gscCoreVoting":"0x600c4926c9F88beCE3533ceaAA36804d6E23F1c1","gscVault":"0x0A575bFA79454112c37B9Af2a6362c9c68f7d2e3","lockingVault":"0xb5E8AF575Ee302A24c6C7746a99D895BeF67cb5D","optimisticGrants":"0x092B49777CB45dc4939FBc4029ce7a116D63D29D","optimisticRewardsVault":"0x0000000000000000000000000000000000000000","spender":"0x722289C399e6f4AbCE80FaFbABC9a9876432834C","timeLock":"0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4","treasury":"0xd46dDb33A33FD3D352d08cc7022Ce1f5c6ccFF1a","vestingVault":"0xe69D2F8DeD2924e0845118E7E467Fc97F7994ef6"},"chainId":5}');
+
+
+var $e49274fe153076c5$exports = {};
+$e49274fe153076c5$exports = JSON.parse('{"name":"Council goerli token list","logoURI":"https://element.fi/logo.svg","timestamp":"2022-07-13T01:34:59.250Z","version":{"major":0,"minor":1,"patch":0},"tokens":[{"chainId":5,"address":"0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601","symbol":"\uD83E\uDDDD","decimals":18,"name":"Definitely Not Element Token"},{"chainId":5,"address":"0x0CB8aa45068EE31e97B717b0B35e26A43884c84c","name":"Element Core Voting Contract","decimals":0,"symbol":"","extensions":{"dayInBlocks":6496,"baseQuorum":"1000000.0","lockDuration":19488,"minProposalPower":"0.000000000000000001","extraVoteTime":2371040}},{"chainId":5,"address":"0x600c4926c9F88beCE3533ceaAA36804d6E23F1c1","name":"Element GSC Core Voting Contract","decimals":0,"symbol":"","extensions":{"dayInBlocks":6496,"baseQuorum":"0.000000000000000001","lockDuration":19488,"minProposalPower":"0.000000000000000001","extraVoteTime":32480}},{"chainId":5,"address":"0xb5E8AF575Ee302A24c6C7746a99D895BeF67cb5D","name":"Element Locking Vault","decimals":0,"symbol":"","extensions":{"token":"0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601","staleBlockLag":30000}},{"chainId":5,"address":"0xe69D2F8DeD2924e0845118E7E467Fc97F7994ef6","name":"Element Vesting Vault","decimals":0,"symbol":"","extensions":{"token":"0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601","staleBlockLag":20000}},{"chainId":5,"address":"0x0A575bFA79454112c37B9Af2a6362c9c68f7d2e3","name":"Element Governance Steering Committee Vault","decimals":0,"symbol":"","extensions":{"coreVoting":"0x0CB8aa45068EE31e97B717b0B35e26A43884c84c","votingPowerBound":"100000000000000000000000","idleDuration":"120"}},{"chainId":5,"address":"0x092B49777CB45dc4939FBc4029ce7a116D63D29D","name":"Element Optimistic Grants Vault","decimals":0,"symbol":"","extensions":{"token":"0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601","solvency":"0.0"}},{"chainId":5,"address":"0xb7920477F7A39c3DffA925076857eB1585503e1B","name":"Element Airdrop Contract","decimals":0,"symbol":"","extensions":{"rewardsRoot":"0x9aafc9b1d8798b80c68d556519e69c64fbe5a4b205bbdccec12375353a1bf784","lockingVault":"0xb5E8AF575Ee302A24c6C7746a99D895BeF67cb5D","expiration":"9999999999","token":"0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601"}},{"chainId":5,"address":"0xd46dDb33A33FD3D352d08cc7022Ce1f5c6ccFF1a","name":"Element Treasury","decimals":0,"symbol":"","extensions":{"owner":"0xcF3b7bcBbcEFF836F81f6EAd914706E699267bca"}},{"chainId":5,"address":"0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4","name":"Element Timelock","decimals":0,"symbol":"","extensions":{"waitTime":"1"}}]}');
+
+
+var $7a042c651bfb6c4f$exports = {};
+$7a042c651bfb6c4f$exports = JSON.parse('{"addresses":{"airdrop":"0xd04a459FFD3A5E3C93d5cD8BB13d26a9845716c2","coreVoting":"0xEaCD577C3F6c44C3ffA398baaD97aE12CDCFed4a","elementToken":"0x5c6D51ecBA4D8E4F20373e3ce96a62342B125D6d","gscCoreVoting":"0x40309f197e7f94B555904DF0f788a3F48cF326aB","gscVault":"0xcA870E8aa4FCEa85b5f0c6F4209C8CBA9265B940","lockingVault":"0x02Bd4A3b1b95b01F2Aa61655415A5d3EAAcaafdD","optimisticGrants":"0x0000000000000000000000000000000000000000","optimisticRewardsVault":"0x0000000000000000000000000000000000000000","spender":"0xDa2Baf34B5717b257e52039f78d02B9C58751781","timeLock":"0x81758f3361A769016eae4844072FA6d7f828a651","treasury":"0x82eF450FB7f06E3294F2f19ed1713b255Af0f541","vestingVault":"0x6De73946eab234F1EE61256F10067D713aF0e37A"},"chainId":1}');
+
+
+var $f0d61060ad054889$exports = {};
+$f0d61060ad054889$exports = JSON.parse('{"name":"Council mainnet token list","logoURI":"https://element.fi/logo.svg","timestamp":"2022-07-13T01:35:08.473Z","version":{"major":0,"minor":1,"patch":0},"tokens":[{"chainId":1,"address":"0x5c6D51ecBA4D8E4F20373e3ce96a62342B125D6d","symbol":"ELFI","decimals":18,"name":"Element Finance"},{"chainId":1,"address":"0xEaCD577C3F6c44C3ffA398baaD97aE12CDCFed4a","name":"Element Core Voting Contract","decimals":0,"symbol":"","extensions":{"dayInBlocks":6496,"baseQuorum":"1100000.0","lockDuration":19488,"minProposalPower":"55000.0","extraVoteTime":32480}},{"chainId":1,"address":"0x40309f197e7f94B555904DF0f788a3F48cF326aB","name":"Element GSC Core Voting Contract","decimals":0,"symbol":"","extensions":{"dayInBlocks":6496,"baseQuorum":"0.000000000000000001","lockDuration":19488,"minProposalPower":"0.000000000000000001","extraVoteTime":32480}},{"chainId":1,"address":"0x02Bd4A3b1b95b01F2Aa61655415A5d3EAAcaafdD","name":"Element Locking Vault","decimals":0,"symbol":"","extensions":{"token":"0x5c6D51ecBA4D8E4F20373e3ce96a62342B125D6d","staleBlockLag":200000}},{"chainId":1,"address":"0x6De73946eab234F1EE61256F10067D713aF0e37A","name":"Element Vesting Vault","decimals":0,"symbol":"","extensions":{"token":"0x5c6D51ecBA4D8E4F20373e3ce96a62342B125D6d","staleBlockLag":200000}},{"chainId":1,"address":"0xcA870E8aa4FCEa85b5f0c6F4209C8CBA9265B940","name":"Element Governance Steering Committee Vault","decimals":0,"symbol":"","extensions":{"coreVoting":"0xEaCD577C3F6c44C3ffA398baaD97aE12CDCFed4a","votingPowerBound":"110000000000000000000000","idleDuration":"345600"}},{"chainId":1,"address":"0xd04a459FFD3A5E3C93d5cD8BB13d26a9845716c2","name":"Element Airdrop Contract","decimals":0,"symbol":"","extensions":{"rewardsRoot":"0x5868b38fb60678b88b07721f03bc9bfd5be6b4f17829f5703e3556b31f4073c6","lockingVault":"0x02Bd4A3b1b95b01F2Aa61655415A5d3EAAcaafdD","expiration":"1680220799","token":"0x5c6D51ecBA4D8E4F20373e3ce96a62342B125D6d"}},{"chainId":1,"address":"0x82eF450FB7f06E3294F2f19ed1713b255Af0f541","name":"Element Treasury","decimals":0,"symbol":"","extensions":{"owner":"0x81758f3361A769016eae4844072FA6d7f828a651"}},{"chainId":1,"address":"0x81758f3361A769016eae4844072FA6d7f828a651","name":"Element Timelock","decimals":0,"symbol":"","extensions":{"waitTime":"604800"}}]}');
+
+
+
+
+async function $b9a85d57b0ae8efb$export$365b04c0669f75e2(provider, chainId, tokenAddress, name) {
+    if (!tokenAddress || tokenAddress === (0, $juIFp$ethers.ethers).constants.AddressZero) {
+        console.error("Invavlid Token Address for ", name, tokenAddress);
+        return;
     }
+    const airdropContract = (0, $juIFp$elementficounciltypechain.Airdrop__factory).connect(tokenAddress, provider);
+    const rewardsRootPromise = airdropContract.rewardsRoot();
+    const lockingVaultPromise = airdropContract.lockingVault();
+    const expirationPromise = airdropContract.expiration();
+    const tokenPromise = airdropContract.token();
+    const [rewardsRoot, lockingVault, expiration, token] = await Promise.all([
+        rewardsRootPromise,
+        lockingVaultPromise,
+        expirationPromise,
+        tokenPromise, 
+    ]);
+    return {
+        chainId: chainId,
+        address: tokenAddress,
+        name: name,
+        decimals: 0,
+        symbol: "",
+        extensions: {
+            rewardsRoot: rewardsRoot,
+            lockingVault: lockingVault,
+            expiration: expiration.toString(),
+            token: token
+        }
+    };
 }
 
-function getAirdropInfo(provider, chainId, tokenAddress, name) {
-    return __awaiter(this, void 0, void 0, function () {
-        var airdropContract, rewardsRootPromise, lockingVaultPromise, expirationPromise, tokenPromise, _a, rewardsRoot, lockingVault, expiration, token;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    if (!tokenAddress || tokenAddress === ethers.ethers.constants.AddressZero) {
-                        console.error("Invavlid Token Address for ", name, tokenAddress);
-                        return [2 /*return*/];
-                    }
-                    airdropContract = councilTypechain.Airdrop__factory.connect(tokenAddress, provider);
-                    rewardsRootPromise = airdropContract.rewardsRoot();
-                    lockingVaultPromise = airdropContract.lockingVault();
-                    expirationPromise = airdropContract.expiration();
-                    tokenPromise = airdropContract.token();
-                    return [4 /*yield*/, Promise.all([
-                            rewardsRootPromise,
-                            lockingVaultPromise,
-                            expirationPromise,
-                            tokenPromise,
-                        ])];
-                case 1:
-                    _a = _b.sent(), rewardsRoot = _a[0], lockingVault = _a[1], expiration = _a[2], token = _a[3];
-                    return [2 /*return*/, {
-                            chainId: chainId,
-                            address: tokenAddress,
-                            name: name,
-                            decimals: 0,
-                            symbol: "",
-                            extensions: {
-                                rewardsRoot: rewardsRoot,
-                                lockingVault: lockingVault,
-                                expiration: expiration.toString(),
-                                token: token,
-                            },
-                        }];
-            }
-        });
-    });
+
+
+
+
+async function $ee79fc33d768cdec$export$ad3472e493936806(provider, chainId, tokenAddress, name) {
+    if (!tokenAddress || tokenAddress === (0, $juIFp$ethers.ethers).constants.AddressZero) {
+        console.error("Invavlid Token Address for ", name, tokenAddress);
+        return;
+    }
+    const coreVotingContract = (0, $juIFp$elementficounciltypechain.CoreVoting__factory).connect(tokenAddress, provider);
+    const baseQuorum = await coreVotingContract.baseQuorum();
+    const lockDuration = await coreVotingContract.lockDuration();
+    const minProposalPower = await coreVotingContract.minProposalPower();
+    const extraVoteTime = await coreVotingContract.extraVoteTime();
+    const dayInBlocks = await coreVotingContract.DAY_IN_BLOCKS();
+    return {
+        chainId: chainId,
+        address: tokenAddress,
+        name: name,
+        decimals: 0,
+        symbol: "",
+        extensions: {
+            dayInBlocks: dayInBlocks.toNumber(),
+            baseQuorum: (0, $juIFp$etherslibutils.formatEther)(baseQuorum),
+            lockDuration: lockDuration.toNumber(),
+            minProposalPower: (0, $juIFp$etherslibutils.formatEther)(minProposalPower),
+            extraVoteTime: extraVoteTime.toNumber()
+        }
+    };
 }
 
-function getCoreVotingInfo(provider, chainId, tokenAddress, name) {
-    return __awaiter(this, void 0, void 0, function () {
-        var coreVotingContract, baseQuorum, lockDuration, minProposalPower, extraVoteTime, dayInBlocks;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!tokenAddress || tokenAddress === ethers.ethers.constants.AddressZero) {
-                        console.error("Invavlid Token Address for ", name, tokenAddress);
-                        return [2 /*return*/];
-                    }
-                    coreVotingContract = councilTypechain.CoreVoting__factory.connect(tokenAddress, provider);
-                    return [4 /*yield*/, coreVotingContract.baseQuorum()];
-                case 1:
-                    baseQuorum = _a.sent();
-                    return [4 /*yield*/, coreVotingContract.lockDuration()];
-                case 2:
-                    lockDuration = _a.sent();
-                    return [4 /*yield*/, coreVotingContract.minProposalPower()];
-                case 3:
-                    minProposalPower = _a.sent();
-                    return [4 /*yield*/, coreVotingContract.extraVoteTime()];
-                case 4:
-                    extraVoteTime = _a.sent();
-                    return [4 /*yield*/, coreVotingContract.DAY_IN_BLOCKS()];
-                case 5:
-                    dayInBlocks = _a.sent();
-                    return [2 /*return*/, {
-                            chainId: chainId,
-                            address: tokenAddress,
-                            name: name,
-                            decimals: 0,
-                            symbol: "",
-                            extensions: {
-                                dayInBlocks: dayInBlocks.toNumber(),
-                                baseQuorum: utils.formatEther(baseQuorum),
-                                lockDuration: lockDuration.toNumber(),
-                                minProposalPower: utils.formatEther(minProposalPower),
-                                extraVoteTime: extraVoteTime.toNumber(),
-                            },
-                        }];
-            }
-        });
-    });
+
+
+
+async function $c156cd4e24f81444$export$19b2322d146c7e41(provider, chainId, tokenAddress, name) {
+    if (!tokenAddress || tokenAddress === (0, $juIFp$ethers.ethers).constants.AddressZero) {
+        console.error("Invavlid Token Address for ", name, tokenAddress);
+        return;
+    }
+    const gscVaultContract = (0, $juIFp$elementficounciltypechain.GSCVault__factory).connect(tokenAddress, provider);
+    const coreVotingPromise = gscVaultContract.coreVoting();
+    const votingPowerBoundPromise = gscVaultContract.votingPowerBound();
+    const idleDurationPromise = gscVaultContract.idleDuration();
+    const [coreVoting, votingPowerBound, idleDuration] = await Promise.all([
+        coreVotingPromise,
+        votingPowerBoundPromise,
+        idleDurationPromise, 
+    ]);
+    return {
+        chainId: chainId,
+        address: tokenAddress,
+        name: name,
+        decimals: 0,
+        symbol: "",
+        extensions: {
+            coreVoting: coreVoting,
+            votingPowerBound: votingPowerBound.toString(),
+            idleDuration: idleDuration.toString()
+        }
+    };
 }
 
-function getGscVaultInfo(provider, chainId, tokenAddress, name) {
-    return __awaiter(this, void 0, void 0, function () {
-        var gscVaultContract, coreVotingPromise, votingPowerBoundPromise, idleDurationPromise, _a, coreVoting, votingPowerBound, idleDuration;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    if (!tokenAddress || tokenAddress === ethers.ethers.constants.AddressZero) {
-                        console.error("Invavlid Token Address for ", name, tokenAddress);
-                        return [2 /*return*/];
-                    }
-                    gscVaultContract = councilTypechain.GSCVault__factory.connect(tokenAddress, provider);
-                    coreVotingPromise = gscVaultContract.coreVoting();
-                    votingPowerBoundPromise = gscVaultContract.votingPowerBound();
-                    idleDurationPromise = gscVaultContract.idleDuration();
-                    return [4 /*yield*/, Promise.all([
-                            coreVotingPromise,
-                            votingPowerBoundPromise,
-                            idleDurationPromise,
-                        ])];
-                case 1:
-                    _a = _b.sent(), coreVoting = _a[0], votingPowerBound = _a[1], idleDuration = _a[2];
-                    return [2 /*return*/, {
-                            chainId: chainId,
-                            address: tokenAddress,
-                            name: name,
-                            decimals: 0,
-                            symbol: "",
-                            extensions: {
-                                coreVoting: coreVoting,
-                                votingPowerBound: votingPowerBound.toString(),
-                                idleDuration: idleDuration.toString(),
-                            },
-                        }];
-            }
-        });
-    });
+
+
+
+async function $85ca4f51a6202e84$export$39588e8ca56dde8c(provider, chainId, tokenAddress, name) {
+    if (!tokenAddress || tokenAddress === (0, $juIFp$ethers.ethers).constants.AddressZero) {
+        console.error("Invavlid Token Address for ", name, tokenAddress);
+        return;
+    }
+    const lockingVaultContract = (0, $juIFp$elementficounciltypechain.LockingVault__factory).connect(tokenAddress, provider);
+    const tokenPromise = lockingVaultContract.token();
+    const staleBlockLagPromise = lockingVaultContract.staleBlockLag();
+    const [token, staleBlockLag] = await Promise.all([
+        tokenPromise,
+        staleBlockLagPromise, 
+    ]);
+    return {
+        chainId: chainId,
+        address: tokenAddress,
+        name: name,
+        decimals: 0,
+        symbol: "",
+        extensions: {
+            token: token,
+            staleBlockLag: staleBlockLag.toNumber()
+        }
+    };
 }
 
-function getLockingVaultInfo(provider, chainId, tokenAddress, name) {
-    return __awaiter(this, void 0, void 0, function () {
-        var lockingVaultContract, tokenPromise, staleBlockLagPromise, _a, token, staleBlockLag;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    if (!tokenAddress || tokenAddress === ethers.ethers.constants.AddressZero) {
-                        console.error("Invavlid Token Address for ", name, tokenAddress);
-                        return [2 /*return*/];
-                    }
-                    lockingVaultContract = councilTypechain.LockingVault__factory.connect(tokenAddress, provider);
-                    tokenPromise = lockingVaultContract.token();
-                    staleBlockLagPromise = lockingVaultContract.staleBlockLag();
-                    return [4 /*yield*/, Promise.all([
-                            tokenPromise,
-                            staleBlockLagPromise,
-                        ])];
-                case 1:
-                    _a = _b.sent(), token = _a[0], staleBlockLag = _a[1];
-                    return [2 /*return*/, {
-                            chainId: chainId,
-                            address: tokenAddress,
-                            name: name,
-                            decimals: 0,
-                            symbol: "",
-                            extensions: {
-                                token: token,
-                                staleBlockLag: staleBlockLag.toNumber(),
-                            },
-                        }];
-            }
-        });
-    });
+
+
+
+
+async function $bb1a6ca1848810ce$export$2102456b9534a08d(provider, chainId, tokenAddress, name) {
+    if (!tokenAddress || tokenAddress === (0, $juIFp$ethers.ethers).constants.AddressZero) {
+        console.error("Invavlid Token Address for ", name, tokenAddress);
+        return;
+    }
+    const optimisticGrantsContract = (0, $juIFp$elementficounciltypechain.OptimisticGrants__factory).connect(tokenAddress, provider);
+    const tokenPromise = optimisticGrantsContract.token();
+    const solvencyPromise = optimisticGrantsContract.solvency();
+    const [token, solvency] = await Promise.all([
+        tokenPromise,
+        solvencyPromise
+    ]);
+    const tokenContract = (0, $juIFp$elementficounciltypechain.ERC20Permit__factory).connect(token, provider);
+    const tokenDecimals = await tokenContract.decimals();
+    return {
+        chainId: chainId,
+        address: tokenAddress,
+        name: name,
+        decimals: 0,
+        symbol: "",
+        extensions: {
+            token: token,
+            solvency: (0, $juIFp$etherslibutils.formatUnits)(solvency, tokenDecimals)
+        }
+    };
 }
 
-function getOptimisticGrantsInfo(provider, chainId, tokenAddress, name) {
-    return __awaiter(this, void 0, void 0, function () {
-        var optimisticGrantsContract, tokenPromise, solvencyPromise, _a, token, solvency, tokenContract, tokenDecimals;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    if (!tokenAddress || tokenAddress === ethers.ethers.constants.AddressZero) {
-                        console.error("Invavlid Token Address for ", name, tokenAddress);
-                        return [2 /*return*/];
-                    }
-                    optimisticGrantsContract = councilTypechain.OptimisticGrants__factory.connect(tokenAddress, provider);
-                    tokenPromise = optimisticGrantsContract.token();
-                    solvencyPromise = optimisticGrantsContract.solvency();
-                    return [4 /*yield*/, Promise.all([tokenPromise, solvencyPromise])];
-                case 1:
-                    _a = _b.sent(), token = _a[0], solvency = _a[1];
-                    tokenContract = councilTypechain.ERC20Permit__factory.connect(tokenAddress, provider);
-                    return [4 /*yield*/, tokenContract.decimals()];
-                case 2:
-                    tokenDecimals = _b.sent();
-                    return [2 /*return*/, {
-                            chainId: chainId,
-                            address: tokenAddress,
-                            name: name,
-                            decimals: 0,
-                            symbol: "",
-                            extensions: {
-                                token: token,
-                                solvency: utils.formatUnits(solvency, tokenDecimals),
-                            },
-                        }];
-            }
-        });
-    });
+
+
+
+async function $6f63955d5e344ccf$export$af8a7538a092c0ba(provider, chainId, tokenAddress, name) {
+    if (!tokenAddress || tokenAddress === (0, $juIFp$ethers.ethers).constants.AddressZero) {
+        console.error("Invavlid Token Address for ", name, tokenAddress);
+        return;
+    }
+    const optimisticRewardsVaultContract = (0, $juIFp$elementficounciltypechain.OptimisticRewards__factory).connect(tokenAddress, provider);
+    const pendingRootPromise = optimisticRewardsVaultContract.pendingRoot();
+    const proposalTimePromise = optimisticRewardsVaultContract.proposalTime();
+    const proposerPromise = optimisticRewardsVaultContract.proposer();
+    const challengePeriodPromise = optimisticRewardsVaultContract.challengePeriod();
+    const rewardsRootPromise = optimisticRewardsVaultContract.rewardsRoot();
+    const lockingVaultPromise = optimisticRewardsVaultContract.lockingVault();
+    const tokenPromise = optimisticRewardsVaultContract.token();
+    const [pendingRoot, proposalTime, proposer, challengePeriod, rewardsRoot, lockingVault, token, ] = await Promise.all([
+        pendingRootPromise,
+        proposalTimePromise,
+        proposerPromise,
+        challengePeriodPromise,
+        rewardsRootPromise,
+        lockingVaultPromise,
+        tokenPromise, 
+    ]);
+    return {
+        chainId: chainId,
+        address: tokenAddress,
+        name: name,
+        decimals: 0,
+        symbol: "",
+        extensions: {
+            pendingRoot: pendingRoot,
+            proposalTime: proposalTime.toNumber(),
+            proposer: proposer,
+            challengePeriod: challengePeriod.toNumber(),
+            rewardsRoot: rewardsRoot,
+            lockingVault: lockingVault,
+            token: token
+        }
+    };
 }
 
-function getOptimisticRewardsVaultInfo(provider, chainId, tokenAddress, name) {
-    return __awaiter(this, void 0, void 0, function () {
-        var optimisticRewardsVaultContract, pendingRootPromise, proposalTimePromise, proposerPromise, challengePeriodPromise, rewardsRootPromise, lockingVaultPromise, tokenPromise, _a, pendingRoot, proposalTime, proposer, challengePeriod, rewardsRoot, lockingVault, token;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    if (!tokenAddress || tokenAddress === ethers.ethers.constants.AddressZero) {
-                        console.error("Invavlid Token Address for ", name, tokenAddress);
-                        return [2 /*return*/];
-                    }
-                    optimisticRewardsVaultContract = councilTypechain.OptimisticRewards__factory.connect(tokenAddress, provider);
-                    pendingRootPromise = optimisticRewardsVaultContract.pendingRoot();
-                    proposalTimePromise = optimisticRewardsVaultContract.proposalTime();
-                    proposerPromise = optimisticRewardsVaultContract.proposer();
-                    challengePeriodPromise = optimisticRewardsVaultContract.challengePeriod();
-                    rewardsRootPromise = optimisticRewardsVaultContract.rewardsRoot();
-                    lockingVaultPromise = optimisticRewardsVaultContract.lockingVault();
-                    tokenPromise = optimisticRewardsVaultContract.token();
-                    return [4 /*yield*/, Promise.all([
-                            pendingRootPromise,
-                            proposalTimePromise,
-                            proposerPromise,
-                            challengePeriodPromise,
-                            rewardsRootPromise,
-                            lockingVaultPromise,
-                            tokenPromise,
-                        ])];
-                case 1:
-                    _a = _b.sent(), pendingRoot = _a[0], proposalTime = _a[1], proposer = _a[2], challengePeriod = _a[3], rewardsRoot = _a[4], lockingVault = _a[5], token = _a[6];
-                    return [2 /*return*/, {
-                            chainId: chainId,
-                            address: tokenAddress,
-                            name: name,
-                            decimals: 0,
-                            symbol: "",
-                            extensions: {
-                                pendingRoot: pendingRoot,
-                                proposalTime: proposalTime.toNumber(),
-                                proposer: proposer,
-                                challengePeriod: challengePeriod.toNumber(),
-                                rewardsRoot: rewardsRoot,
-                                lockingVault: lockingVault,
-                                token: token,
-                            },
-                        }];
-            }
-        });
-    });
+
+
+
+async function $1ca2e6b9cb8a5c46$export$ac1a17c2da84e5d(provider, chainId, tokenAddress, name) {
+    if (!tokenAddress || tokenAddress === (0, $juIFp$ethers.ethers).constants.AddressZero) {
+        console.error("Invavlid Token Address for ", name, tokenAddress);
+        return;
+    }
+    const timelockContract = (0, $juIFp$elementficounciltypechain.Timelock__factory).connect(tokenAddress, provider);
+    const waitTime = await timelockContract.waitTime();
+    return {
+        chainId: chainId,
+        address: tokenAddress,
+        name: name,
+        decimals: 0,
+        symbol: "",
+        extensions: {
+            waitTime: waitTime.toString()
+        }
+    };
 }
 
-function getTimelockInfo(provider, chainId, tokenAddress, name) {
-    return __awaiter(this, void 0, void 0, function () {
-        var timelockContract, waitTime;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!tokenAddress || tokenAddress === ethers.ethers.constants.AddressZero) {
-                        console.error("Invavlid Token Address for ", name, tokenAddress);
-                        return [2 /*return*/];
-                    }
-                    timelockContract = councilTypechain.Timelock__factory.connect(tokenAddress, provider);
-                    return [4 /*yield*/, timelockContract.waitTime()];
-                case 1:
-                    waitTime = _a.sent();
-                    return [2 /*return*/, {
-                            chainId: chainId,
-                            address: tokenAddress,
-                            name: name,
-                            decimals: 0,
-                            symbol: "",
-                            extensions: {
-                                waitTime: waitTime.toString(),
-                            },
-                        }];
-            }
-        });
-    });
+
+
+
+async function $ac36b3ebf140db75$export$fb5a25d1912ee407(provider, chainId, tokenAddress, name) {
+    if (!tokenAddress || tokenAddress === (0, $juIFp$ethers.ethers).constants.AddressZero) {
+        console.error("Invavlid Token Address for ", name, tokenAddress);
+        return;
+    }
+    const treasuryContract = (0, $juIFp$elementficounciltypechain.Treasury__factory).connect(tokenAddress, provider);
+    const owner = await treasuryContract.owner();
+    return {
+        chainId: chainId,
+        address: tokenAddress,
+        name: name,
+        decimals: 0,
+        symbol: "",
+        extensions: {
+            owner: owner
+        }
+    };
 }
 
-function getTreasuryInfo(provider, chainId, tokenAddress, name) {
-    return __awaiter(this, void 0, void 0, function () {
-        var treasuryContract, owner;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!tokenAddress || tokenAddress === ethers.ethers.constants.AddressZero) {
-                        console.error("Invavlid Token Address for ", name, tokenAddress);
-                        return [2 /*return*/];
-                    }
-                    treasuryContract = councilTypechain.Treasury__factory.connect(tokenAddress, provider);
-                    return [4 /*yield*/, treasuryContract.owner()];
-                case 1:
-                    owner = _a.sent();
-                    return [2 /*return*/, {
-                            chainId: chainId,
-                            address: tokenAddress,
-                            name: name,
-                            decimals: 0,
-                            symbol: "",
-                            extensions: {
-                                owner: owner,
-                            },
-                        }];
-            }
-        });
-    });
+
+
+
+async function $7478810f7b089d73$export$a9349a1873830f3a(provider, chainId, tokenAddress) {
+    if (!tokenAddress || tokenAddress === (0, $juIFp$ethers.ethers).constants.AddressZero) {
+        console.error("Invavlid Token Address for Voting Token", tokenAddress);
+        return;
+    }
+    const tokenContract = (0, $juIFp$elementficounciltypechain.ERC20Permit__factory).connect(tokenAddress, provider);
+    const name = await tokenContract.name();
+    const symbol = await tokenContract.symbol();
+    const decimals = await tokenContract.decimals();
+    return {
+        chainId: chainId,
+        address: tokenAddress,
+        symbol: symbol,
+        decimals: decimals,
+        name: name
+    };
 }
 
-function getVotingTokenInfo(provider, chainId, tokenAddress) {
-    return __awaiter(this, void 0, void 0, function () {
-        var tokenContract, name, symbol, decimals;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!tokenAddress || tokenAddress === ethers.ethers.constants.AddressZero) {
-                        console.error("Invavlid Token Address for Voting Token", tokenAddress);
-                        return [2 /*return*/];
-                    }
-                    tokenContract = councilTypechain.ERC20Permit__factory.connect(tokenAddress, provider);
-                    return [4 /*yield*/, tokenContract.name()];
-                case 1:
-                    name = _a.sent();
-                    return [4 /*yield*/, tokenContract.symbol()];
-                case 2:
-                    symbol = _a.sent();
-                    return [4 /*yield*/, tokenContract.decimals()];
-                case 3:
-                    decimals = _a.sent();
-                    return [2 /*return*/, {
-                            chainId: chainId,
-                            address: tokenAddress,
-                            symbol: symbol,
-                            decimals: decimals,
-                            name: name,
-                        }];
-            }
-        });
-    });
+
+async function $14808b5bee992ad1$export$4aec0e9d20ba276(provider, addressesJson, name) {
+    const { chainId: chainId , addresses: { elementToken: elementToken , coreVoting: coreVoting , gscCoreVoting: gscCoreVoting , timeLock: timeLock , lockingVault: lockingVault , vestingVault: vestingVault , optimisticRewardsVault: optimisticRewardsVault , airdrop: airdrop , optimisticGrants: optimisticGrants , treasury: treasury , gscVault: gscVault ,  } ,  } = addressesJson;
+    console.log(`${name} - ${chainId}`);
+    console.log("fetching voting token...");
+    const elementTokenInfo = await (0, $7478810f7b089d73$export$a9349a1873830f3a)(provider, chainId, elementToken);
+    console.log("fetching core voting...");
+    const coreVotingInfo = await (0, $ee79fc33d768cdec$export$ad3472e493936806)(provider, chainId, coreVoting, "Element Core Voting Contract");
+    console.log("fetching GSC core voting...");
+    const gscCoreVotingInfo = await (0, $ee79fc33d768cdec$export$ad3472e493936806)(provider, chainId, gscCoreVoting, "Element GSC Core Voting Contract");
+    console.log("fetching locking vault...");
+    const lockingVaultInfo = await (0, $85ca4f51a6202e84$export$39588e8ca56dde8c)(provider, chainId, lockingVault, "Element Locking Vault");
+    console.log("fetching vesting vault...");
+    const vestingVaultInfo = await (0, $85ca4f51a6202e84$export$39588e8ca56dde8c)(provider, chainId, vestingVault, "Element Vesting Vault");
+    console.log("fetching gsc vault...");
+    const gscVaultInfo = await (0, $c156cd4e24f81444$export$19b2322d146c7e41)(provider, chainId, gscVault, "Element Governance Steering Committee Vault");
+    console.log("fetching optimistic rewards vault...");
+    const optimisticRewardsVaultInfo = await (0, $6f63955d5e344ccf$export$af8a7538a092c0ba)(provider, chainId, optimisticRewardsVault, "Element Optimistic Rewards Vault");
+    console.log("fetching optimistic grants...");
+    let optimisticGrantsInfo;
+    try {
+        optimisticGrantsInfo = await (0, $bb1a6ca1848810ce$export$2102456b9534a08d)(provider, chainId, optimisticGrants, "Element Optimistic Grants Vault");
+    } catch (error) {
+        console.log("error fetching optimistic grants info", error);
+    }
+    console.log("fetching airdrop...");
+    const airdropInfo = await (0, $b9a85d57b0ae8efb$export$365b04c0669f75e2)(provider, chainId, airdrop, "Element Airdrop Contract");
+    console.log("fetching treasury...");
+    let treasuryInfo;
+    try {
+        treasuryInfo = await (0, $ac36b3ebf140db75$export$fb5a25d1912ee407)(provider, chainId, treasury, "Element Treasury");
+    } catch (error1) {
+        console.log("error fetching treasury info", error1);
+    }
+    console.log("fetching timelock...");
+    const timelockInfo = await (0, $1ca2e6b9cb8a5c46$export$ac1a17c2da84e5d)(provider, chainId, timeLock, "Element Timelock");
+    console.log("done!");
+    const tokenList = {
+        name: name,
+        logoURI: "https://element.fi/logo.svg",
+        timestamp: new Date().toISOString(),
+        version: {
+            major: 0,
+            minor: 1,
+            patch: 0
+        },
+        tokens: [
+            elementTokenInfo,
+            coreVotingInfo,
+            gscCoreVotingInfo,
+            lockingVaultInfo,
+            vestingVaultInfo,
+            gscVaultInfo,
+            optimisticRewardsVaultInfo,
+            optimisticGrantsInfo,
+            airdropInfo,
+            treasuryInfo,
+            timelockInfo, 
+        ].filter((t)=>!!t)
+    };
+    return tokenList;
 }
 
-function getTokenList(provider, addressesJson, name) {
-    return __awaiter(this, void 0, void 0, function () {
-        var chainId, _a, elementToken, coreVoting, gscCoreVoting, timeLock, lockingVault, vestingVault, optimisticRewardsVault, airdrop, optimisticGrants, treasury, gscVault, elementTokenInfo, coreVotingInfo, gscCoreVotingInfo, lockingVaultInfo, vestingVaultInfo, gscVaultInfo, optimisticRewardsVaultInfo, optimisticGrantsInfo, error_1, airdropInfo, treasuryInfo, error_2, timelockInfo, tokenList;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    chainId = addressesJson.chainId, _a = addressesJson.addresses, elementToken = _a.elementToken, coreVoting = _a.coreVoting, gscCoreVoting = _a.gscCoreVoting, timeLock = _a.timeLock, lockingVault = _a.lockingVault, vestingVault = _a.vestingVault, optimisticRewardsVault = _a.optimisticRewardsVault, airdrop = _a.airdrop, optimisticGrants = _a.optimisticGrants, treasury = _a.treasury, gscVault = _a.gscVault;
-                    return [4 /*yield*/, getVotingTokenInfo(provider, chainId, elementToken)];
-                case 1:
-                    elementTokenInfo = _b.sent();
-                    return [4 /*yield*/, getCoreVotingInfo(provider, chainId, coreVoting, "Element Core Voting Contract")];
-                case 2:
-                    coreVotingInfo = _b.sent();
-                    return [4 /*yield*/, getCoreVotingInfo(provider, chainId, gscCoreVoting, "Element GSC Core Voting Contract")];
-                case 3:
-                    gscCoreVotingInfo = _b.sent();
-                    return [4 /*yield*/, getLockingVaultInfo(provider, chainId, lockingVault, "Element Locking Vault")];
-                case 4:
-                    lockingVaultInfo = _b.sent();
-                    return [4 /*yield*/, getLockingVaultInfo(provider, chainId, vestingVault, "Element Vesting Vault")];
-                case 5:
-                    vestingVaultInfo = _b.sent();
-                    return [4 /*yield*/, getGscVaultInfo(provider, chainId, gscVault, "Element Governance Steering Committee Vault")];
-                case 6:
-                    gscVaultInfo = _b.sent();
-                    return [4 /*yield*/, getOptimisticRewardsVaultInfo(provider, chainId, optimisticRewardsVault, "Element Optimistic Rewards Vault")];
-                case 7:
-                    optimisticRewardsVaultInfo = _b.sent();
-                    _b.label = 8;
-                case 8:
-                    _b.trys.push([8, 10, , 11]);
-                    return [4 /*yield*/, getOptimisticGrantsInfo(provider, chainId, optimisticGrants, "Element Optimistic Grants Vault")];
-                case 9:
-                    optimisticGrantsInfo = _b.sent();
-                    return [3 /*break*/, 11];
-                case 10:
-                    error_1 = _b.sent();
-                    console.log("error fetching optimistic grants info", error_1);
-                    return [3 /*break*/, 11];
-                case 11: return [4 /*yield*/, getAirdropInfo(provider, chainId, airdrop, "Element Airdrop Contract")];
-                case 12:
-                    airdropInfo = _b.sent();
-                    _b.label = 13;
-                case 13:
-                    _b.trys.push([13, 15, , 16]);
-                    return [4 /*yield*/, getTreasuryInfo(provider, chainId, treasury, "Element Treasury")];
-                case 14:
-                    treasuryInfo = _b.sent();
-                    return [3 /*break*/, 16];
-                case 15:
-                    error_2 = _b.sent();
-                    console.log("error fetching treasury info", error_2);
-                    return [3 /*break*/, 16];
-                case 16: return [4 /*yield*/, getTimelockInfo(provider, chainId, timeLock, "Element Timelock")];
-                case 17:
-                    timelockInfo = _b.sent();
-                    tokenList = {
-                        name: name,
-                        logoURI: "https://element.fi/logo.svg",
-                        timestamp: new Date().toISOString(),
-                        version: {
-                            major: 0,
-                            minor: 1,
-                            patch: 0,
-                        },
-                        tokens: [
-                            elementTokenInfo,
-                            coreVotingInfo,
-                            gscCoreVotingInfo,
-                            lockingVaultInfo,
-                            vestingVaultInfo,
-                            gscVaultInfo,
-                            optimisticRewardsVaultInfo,
-                            optimisticGrantsInfo,
-                            airdropInfo,
-                            treasuryInfo,
-                            timelockInfo,
-                        ].filter(function (t) { return !!t; }),
-                    };
-                    return [2 /*return*/, tokenList];
-            }
-        });
-    });
-}
 
-// export goerli jsons
-var goerliTokenList = goerliTokenListJson;
-var goerliAddressList = goerliAddressListJson;
-// export mainnet jsons
-var mainnetTokenList = mainnetTokenListJson;
-var mainnetAddressList = mainnetAddressListJson;
+const $d2d3f2fa6e3df2fc$export$e9611bc3ed413e87 = (0, (/*@__PURE__*/$parcel$interopDefault($e49274fe153076c5$exports)));
+const $d2d3f2fa6e3df2fc$export$5cb61d802df8179b = (0, (/*@__PURE__*/$parcel$interopDefault($d6f2632825c560ff$exports)));
+const $d2d3f2fa6e3df2fc$export$8872fc0a9db0e8b = (0, (/*@__PURE__*/$parcel$interopDefault($f0d61060ad054889$exports)));
+const $d2d3f2fa6e3df2fc$export$bf1e9dcca16b49bd = (0, (/*@__PURE__*/$parcel$interopDefault($7a042c651bfb6c4f$exports)));
 
-exports.getTokenList = getTokenList;
-exports.goerliAddressList = goerliAddressList;
-exports.goerliTokenList = goerliTokenList;
-exports.mainnetAddressList = mainnetAddressList;
-exports.mainnetTokenList = mainnetTokenList;
+
+//# sourceMappingURL=index.js.map

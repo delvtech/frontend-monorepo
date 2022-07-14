@@ -35,12 +35,15 @@ export async function getTokenList(
     },
   } = addressesJson;
 
+  console.log(`${name} - ${chainId}`);
+  console.log("fetching voting token...");
   const elementTokenInfo = await getVotingTokenInfo(
     provider,
     chainId,
     elementToken,
   );
 
+  console.log("fetching core voting...");
   const coreVotingInfo = await getCoreVotingInfo(
     provider,
     chainId,
@@ -48,6 +51,7 @@ export async function getTokenList(
     "Element Core Voting Contract",
   );
 
+  console.log("fetching GSC core voting...");
   const gscCoreVotingInfo = await getCoreVotingInfo(
     provider,
     chainId,
@@ -55,6 +59,7 @@ export async function getTokenList(
     "Element GSC Core Voting Contract",
   );
 
+  console.log("fetching locking vault...");
   const lockingVaultInfo = await getLockingVaultInfo(
     provider,
     chainId,
@@ -62,6 +67,7 @@ export async function getTokenList(
     "Element Locking Vault",
   );
 
+  console.log("fetching vesting vault...");
   const vestingVaultInfo = await getLockingVaultInfo(
     provider,
     chainId,
@@ -69,6 +75,7 @@ export async function getTokenList(
     "Element Vesting Vault",
   );
 
+  console.log("fetching gsc vault...");
   const gscVaultInfo = await getGscVaultInfo(
     provider,
     chainId,
@@ -76,6 +83,7 @@ export async function getTokenList(
     "Element Governance Steering Committee Vault",
   );
 
+  console.log("fetching optimistic rewards vault...");
   const optimisticRewardsVaultInfo = await getOptimisticRewardsVaultInfo(
     provider,
     chainId,
@@ -83,6 +91,7 @@ export async function getTokenList(
     "Element Optimistic Rewards Vault",
   );
 
+  console.log("fetching optimistic grants...");
   let optimisticGrantsInfo: OptimisticsGrantsContractInfo | undefined;
   try {
     optimisticGrantsInfo = await getOptimisticGrantsInfo(
@@ -95,6 +104,7 @@ export async function getTokenList(
     console.log("error fetching optimistic grants info", error);
   }
 
+  console.log("fetching airdrop...");
   const airdropInfo = await getAirdropInfo(
     provider,
     chainId,
@@ -102,6 +112,7 @@ export async function getTokenList(
     "Element Airdrop Contract",
   );
 
+  console.log("fetching treasury...");
   let treasuryInfo: TreasuryInfo | undefined;
   try {
     treasuryInfo = await getTreasuryInfo(
@@ -114,6 +125,7 @@ export async function getTokenList(
     console.log("error fetching treasury info", error);
   }
 
+  console.log("fetching timelock...");
   const timelockInfo = await getTimelockInfo(
     provider,
     chainId,
@@ -121,6 +133,7 @@ export async function getTokenList(
     "Element Timelock",
   );
 
+  console.log("done!");
   const tokenList: TokenList = {
     name,
     logoURI: "https://element.fi/logo.svg",

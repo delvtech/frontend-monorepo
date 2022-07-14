@@ -1,8 +1,8 @@
 import { Provider } from "@ethersproject/abstract-provider";
 import { CoreVoting__factory } from "@elementfi/council-typechain";
 import { ethers } from "ethers";
-import { formatEther } from "ethers/lib/utils";
 import { CoreVotingContractInfo } from "src/types";
+import { formatEther } from "ethers/lib/utils";
 
 export async function getCoreVotingInfo(
   provider: Provider,
