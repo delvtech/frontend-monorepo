@@ -1,0 +1,6 @@
+query GetSummaryCardsData($contract: ID!) {
+  votingContract(address: $contract) {
+    proposalCount(isActive: true)
+    voterCount
+  }
+}

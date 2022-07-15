@@ -1,29 +1,35 @@
 import React, { ReactElement } from "react";
 
-import { ProposalsJson } from "@elementfi/council-proposals";
+// import { ProposalsJson } from "@elementfi/council-proposals";
 import { t } from "ttag";
 
 import { abbreviateLargeValue } from "src/base/numbers";
-import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import SummaryCard from "src/ui/overview/SummaryCard";
 import { useVotingPowerForProtocol } from "src/ui/voting/useVotingPowerForProtocol";
 import Link from "next/link";
-import useNumDelegates from "./useNumDelegates";
+import { useGetSummaryCardsDataQuery } from "./SummaryCards.generated";
+import { addressesJson } from "src/addresses";
 
-interface SummaryCardsProps {
-  proposalsJson: ProposalsJson;
-}
-export function SummaryCards({
-  proposalsJson,
-}: SummaryCardsProps): ReactElement {
-  const { data: currentBlock } = useLatestBlockNumber();
-  const numActiveProposals = currentBlock
-    ? proposalsJson.proposals.filter(
-        ({ expiration }) => expiration > currentBlock,
-      ).length
-    : 0;
+// interface SummaryCardsProps {
+//   proposalsJson: ProposalsJson;
+// }
 
-  const numDelegates = useNumDelegates();
+export function SummaryCards(): ReactElement {
+  const { data } = useGetSummaryCardsDataQuery({
+    variables: {
+      contract: addressesJson.addresses.coreVoting,
+    },
+  });
+
+  const numActiveProposals = data?.votingContract?.proposalCount || 0;
+
+  // TODO: Should we bother getting this from the API?
+  // ? proposalsJson.proposals.filter(
+  //     ({ expiration }) => expiration > currentBlock,
+  //   ).length
+  // : 0;
+
+  const numDelegates = data?.votingContract?.voterCount || 0;
 
   const votingPower = useVotingPowerForProtocol();
 
