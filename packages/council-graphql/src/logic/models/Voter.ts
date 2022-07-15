@@ -5,6 +5,11 @@ import { VotingVaultModel } from "./VotingVault";
 
 interface VoterModel {
   getAll: (options: { context: CouncilContext }) => Promise<Voter[]>;
+  getBalance: (options: {
+    voter: Voter;
+    votingVaults: VotingVault[];
+    context: CouncilContext;
+  }) => Promise<string | undefined>;
   getByAddress: (options: { address: string }) => Voter;
   getByAddresses: (options: { addresses: string[] }) => Voter[];
   getByVotingVault: (options: {
@@ -23,6 +28,20 @@ export const VoterModel: VoterModel = {
   getAll({ context }) {
     const votingVaults = VotingVaultModel.getAll({ context });
     return this.getByVotingVaults({ votingVaults, context });
+  },
+  async getBalance({ voter, votingVaults, context }) {
+    let balance = BigInt(0);
+    for (const votingVault of votingVaults) {
+      const dataSource = getVotingVaultDataSourceByAddress(
+        votingVault.address,
+        context.councilDataSources,
+      );
+      if (dataSource) {
+        const vaultBalance = await dataSource.getBalance(voter.address);
+        balance += BigInt(vaultBalance);
+      }
+    }
+    return balance.toString();
   },
   getByAddress({ address }) {
     return { address };
