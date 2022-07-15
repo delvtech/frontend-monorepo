@@ -22,7 +22,7 @@
     "@babel/core": "^7.16.0",
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@types/ethereumjs-abi": "^0.6.3",
-    "@types/node": "^14.17.20",
+    "@types/node": "^18.0.4",
     "eslint": "^7.32.0",
     "hardhat": "^2.6.6",
     "husky": "^7.0.4",

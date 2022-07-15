@@ -38,7 +38,7 @@
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.isplainobject": "^4.0.6",
     "@types/lodash.zip": "^4.2.6",
-    "@types/node": "^17.0.1",
+    "@types/node": "^18.0.4",
     "@zerollup/ts-transform-paths": "^1.7.18",
     "eslint": "^7.32.0",
     "ethers": "^5.6.6",
