@@ -1,3 +1,4 @@
+import { formatEther } from "ethers/lib/utils";
 import { Voter, VotingVault } from "src/generated";
 import { CouncilContext } from "src/logic/context";
 import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
@@ -41,7 +42,7 @@ export const VoterModel: VoterModel = {
         balance += BigInt(vaultBalance);
       }
     }
-    return balance.toString();
+    return formatEther(balance);
   },
   getByAddress({ address }) {
     return { address };
