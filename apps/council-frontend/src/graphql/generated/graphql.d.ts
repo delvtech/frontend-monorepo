@@ -13,7 +13,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>;
 };
-// Generated on 2022-07-14T13:31:03-05:00
+// Generated on 2022-07-18T11:18:53-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -126,10 +126,20 @@ export type Vote = {
 export type Voter = {
   __typename?: "Voter";
   address: Scalars["ID"];
+  balance?: Maybe<Scalars["String"]>;
+  balances?: Maybe<Array<Maybe<Scalars["String"]>>>;
   vote?: Maybe<Vote>;
   votes?: Maybe<Array<Maybe<Vote>>>;
   votingPower?: Maybe<VotingPower>;
   votingPowers?: Maybe<Array<Maybe<VotingPower>>>;
+};
+
+export type VoterBalanceArgs = {
+  votingVault: Scalars["ID"];
+};
+
+export type VoterBalancesArgs = {
+  votingVaults: Array<Scalars["ID"]>;
 };
 
 export type VoterVoteArgs = {
@@ -155,6 +165,7 @@ export type VoterVotingPowersArgs = {
 export type VotingContract = {
   __typename?: "VotingContract";
   address: Scalars["ID"];
+  balance?: Maybe<Scalars["String"]>;
   proposal?: Maybe<Proposal>;
   proposalCount?: Maybe<Scalars["Int"]>;
   proposals?: Maybe<Array<Maybe<Proposal>>>;
@@ -164,6 +175,10 @@ export type VotingContract = {
   votingPower?: Maybe<VotingPower>;
   votingPowers?: Maybe<Array<Maybe<VotingPower>>>;
   votingVaults: Array<VotingVault>;
+};
+
+export type VotingContractBalanceArgs = {
+  voter: Scalars["ID"];
 };
 
 export type VotingContractProposalArgs = {
@@ -205,11 +220,16 @@ export type VotingPower = {
 export type VotingVault = {
   __typename?: "VotingVault";
   address: Scalars["ID"];
+  balance?: Maybe<Scalars["String"]>;
   totalVotingPower?: Maybe<TotalVotingPower>;
   voterCount?: Maybe<Scalars["Int"]>;
   voters?: Maybe<Array<Maybe<Voter>>>;
   votingPower?: Maybe<VotingPower>;
   votingPowers?: Maybe<Array<Maybe<VotingPower>>>;
+};
+
+export type VotingVaultBalanceArgs = {
+  voter: Scalars["ID"];
 };
 
 export type VotingVaultTotalVotingPowerArgs = {

@@ -1,0 +1,8 @@
+query GetPortfolioCardData($coreVotingAddress: ID!, $account: ID!) {
+  votingContract(address: $coreVotingAddress) {
+    balance(voter: $account)
+    votingPower(voter: $account) {
+      value
+    }
+  }
+}

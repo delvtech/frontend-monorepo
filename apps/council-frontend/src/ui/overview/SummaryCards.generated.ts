@@ -8,7 +8,7 @@ import * as Apollo from "@apollo/client";
 // To edit this file, modify the @element/graphql codegen script.
 
 const defaultOptions = {} as const;
-// Generated on 2022-07-14T13:31:03-05:00
+// Generated on 2022-07-18T11:18:53-05:00
 
 export type GetSummaryCardsDataQueryVariables = Types.Exact<{
   contract: Types.Scalars["ID"];
