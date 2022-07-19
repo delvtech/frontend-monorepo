@@ -10,10 +10,6 @@ import Link from "next/link";
 import { useGetSummaryCardsDataQuery } from "./SummaryCards.generated";
 import { addressesJson } from "src/addresses";
 
-// interface SummaryCardsProps {
-//   proposalsJson: ProposalsJson;
-// }
-
 export function SummaryCards(): ReactElement {
   const { data } = useGetSummaryCardsDataQuery({
     variables: {
@@ -22,15 +18,7 @@ export function SummaryCards(): ReactElement {
   });
 
   const numActiveProposals = data?.votingContract?.proposalCount || 0;
-
-  // TODO: Should we bother getting this from the API?
-  // ? proposalsJson.proposals.filter(
-  //     ({ expiration }) => expiration > currentBlock,
-  //   ).length
-  // : 0;
-
   const numDelegates = data?.votingContract?.voterCount || 0;
-
   const votingPower = useVotingPowerForProtocol();
 
   const formattedTotalVotingPower = abbreviateLargeValue(
