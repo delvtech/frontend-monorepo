@@ -18,6 +18,11 @@ export class LockingVaultContract extends VotingVaultContract {
     this.contract = contract;
   }
 
+  async getBalance(voter: string): Promise<string> {
+    const [, balance] = await this.contract.functions.deposits(voter);
+    return balance.toString();
+  }
+
   async getVotingPowerView(
     voter: string,
     blockNumber: number,

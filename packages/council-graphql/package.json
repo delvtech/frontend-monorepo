@@ -18,8 +18,9 @@
     "src": "./src"
   },
   "scripts": {
-    "watch": "parcel watch",
+    "watch:lib": "parcel watch",
     "build:lib": "parcel build",
+    "watch:graphql": "elf-graphql --package -o src/generated -w",
     "build:graphql": "elf-graphql --package -o src/generated",
     "build": "npm run build:graphql && npm run build:lib",
     "prepare": "husky install",

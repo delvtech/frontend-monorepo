@@ -10,6 +10,7 @@ type Query {
 type VotingContract {
   address: ID!
   votingVaults: [VotingVault!]!
+  balance(voter: ID!): String
   proposal(id: ID!): Proposal
   proposals(ids: [ID!], isActive: Boolean): [Proposal]
   proposalCount(isActive: Boolean): Int
@@ -22,6 +23,7 @@ type VotingContract {
 
 type VotingVault {
   address: ID!
+  balance(voter: ID!): String
   totalVotingPower(blockNumber: Int): TotalVotingPower
   voters: [Voter]
   voterCount: Int
@@ -85,6 +87,8 @@ type TotalVotingPower {
 
 type Voter {
   address: ID!
+  balance(votingVault: ID!): String
+  balances(votingVaults: [ID!]!): [String]
   vote(proposal: ID!, votingContract: ID!): Vote
   votes(proposals: [ID!]!, votingContract: ID!): [Vote]
   votingPower(votingVault: ID!, blockNumber: Int): VotingPower

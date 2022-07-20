@@ -58,6 +58,15 @@ export const resolvers: Resolvers<CouncilContext> = {
     },
   },
   VotingContract: {
+    balance: async (votingContract, { voter: voterAddress }, context) => {
+      const voter = VoterModel.getByAddress({ address: voterAddress });
+      const balance = await VoterModel.getBalance({
+        voter,
+        votingVaults: votingContract.votingVaults,
+        context,
+      });
+      return balance || null;
+    },
     proposal: async (votingContract, { id }, context) => {
       const proposal = await ProposalModel.getById({
         id,
@@ -144,6 +153,15 @@ export const resolvers: Resolvers<CouncilContext> = {
     },
   },
   VotingVault: {
+    balance: async (votingVault, { voter: voterAddress }, context) => {
+      const voter = VoterModel.getByAddress({ address: voterAddress });
+      const balance = await VoterModel.getBalance({
+        voter,
+        votingVaults: [votingVault],
+        context,
+      });
+      return balance || null;
+    },
     totalVotingPower: (votingVault, { blockNumber }, context) => {
       return TotalVotingPowerModel.getByVotingVault({
         votingVault,
@@ -263,6 +281,44 @@ export const resolvers: Resolvers<CouncilContext> = {
     },
   },
   Voter: {
+    balance: async (voter, { votingVault: votingVaultAddress }, context) => {
+      const votingVault = VotingVaultModel.getByAddress({
+        address: votingVaultAddress,
+        context,
+      });
+      if (!votingVault) {
+        return null;
+      }
+      const balance = await VoterModel.getBalance({
+        voter,
+        votingVaults: [votingVault],
+        context,
+      });
+      return balance || null;
+    },
+    balances: async (
+      voter,
+      { votingVaults: votingVaultAddresses },
+      context,
+    ) => {
+      const votingVaults = VotingVaultModel.getByAddresses({
+        addresses: votingVaultAddresses,
+        context,
+      });
+      const balances = [];
+      for (const votingVault of votingVaults) {
+        let balance = null;
+        if (votingVault) {
+          balance = await VoterModel.getBalance({
+            voter,
+            votingVaults: [votingVault],
+            context,
+          });
+        }
+        balances.push(balance || null);
+      }
+      return balances;
+    },
     vote: async (voter, { proposal: id, votingContract: address }, context) => {
       const votingContract = VotingContractModel.getByAddress({
         address,

@@ -41,7 +41,7 @@ export function OverviewPage({
           {t`Governance Overview`}
         </H1>
       </div>
-      <SummaryCards proposalsJson={proposalsJson} />
+      <SummaryCards />
       <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 xl:flex-row xl:space-x-6 xl:space-y-0">
         <div className="w-full">
           <PortfolioCard

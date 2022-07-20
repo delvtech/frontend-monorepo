@@ -18,6 +18,16 @@ export class VestingVaultContract extends VotingVaultContract {
     this.contract = contract;
   }
 
+  async getBalance(voter: string): Promise<string> {
+    try {
+      const grants = await this.contract.functions.getGrant(voter);
+      return grants[0].toString();
+    } catch (err) {
+      // TODO: Handle error
+      return "0";
+    }
+  }
+
   async getVotingPowerView(
     voter: string,
     blockNumber: number,

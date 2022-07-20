@@ -12,6 +12,7 @@ export interface VoterWithPower {
 export interface VotingVaultDataSource {
   address: string;
   contract: BaseContract;
+  getBalance: (voter: string) => Promise<string>;
   getVotingPower: (voter: string, blockNumber: number) => Promise<string>;
   /**
    * Get's the voter's voting power at a given block without taking into account

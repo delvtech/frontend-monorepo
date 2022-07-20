@@ -1,1 +1,2 @@
 src/tailwind.output.css
+*.generated.ts

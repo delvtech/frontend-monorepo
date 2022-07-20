@@ -12,6 +12,10 @@ export class VotingVaultContract implements VotingVaultDataSource {
     this.contract = contract;
   }
 
+  async getBalance(voter: string): Promise<string> {
+    return "0";
+  }
+
   async getVotingPower(voter: string, blockNumber: number): Promise<string> {
     try {
       // TODO: find a better solution for this.

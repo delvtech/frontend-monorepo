@@ -168,6 +168,7 @@ const $ac266e1a17cc8ea7$export$40a03fbff71f56d3 = {
 
 
 
+
 const $7818ae0a8b433afc$export$1dbe110119cb4dd2 = {
     getAll ({ context: context  }) {
         return context.councilDataSources.votingVaults.map(({ address: address  })=>this.getByAddress({
@@ -197,6 +198,17 @@ const $74d4fdf5b0550f40$export$e424928527fab42f = {
             votingVaults: votingVaults,
             context: context
         });
+    },
+    async getBalance ({ voter: voter , votingVaults: votingVaults , context: context  }) {
+        let balance = BigInt(0);
+        for (const votingVault of votingVaults){
+            const dataSource = (0, $a9d8dc444614e877$export$2c8942c776a655d1)(votingVault.address, context.councilDataSources);
+            if (dataSource) {
+                const vaultBalance = await dataSource.getBalance(voter.address);
+                balance += BigInt(vaultBalance);
+            }
+        }
+        return (0, $1RIJT$etherslibutils.formatEther)(balance);
     },
     getByAddress ({ address: address  }) {
         return {
@@ -393,6 +405,17 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
         }
     },
     VotingContract: {
+        balance: async (votingContract, { voter: voterAddress  }, context)=>{
+            const voter = (0, $74d4fdf5b0550f40$export$e424928527fab42f).getByAddress({
+                address: voterAddress
+            });
+            const balance = await (0, $74d4fdf5b0550f40$export$e424928527fab42f).getBalance({
+                voter: voter,
+                votingVaults: votingContract.votingVaults,
+                context: context
+            });
+            return balance || null;
+        },
         proposal: async (votingContract, { id: id  }, context)=>{
             const proposal = await (0, $e35651dc583d7dca$export$b327309c2fad1272).getById({
                 id: id,
@@ -469,6 +492,19 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
         }
     },
     VotingVault: {
+        balance: async (votingVault, { voter: voterAddress  }, context)=>{
+            const voter = (0, $74d4fdf5b0550f40$export$e424928527fab42f).getByAddress({
+                address: voterAddress
+            });
+            const balance = await (0, $74d4fdf5b0550f40$export$e424928527fab42f).getBalance({
+                voter: voter,
+                votingVaults: [
+                    votingVault
+                ],
+                context: context
+            });
+            return balance || null;
+        },
         totalVotingPower: (votingVault, { blockNumber: blockNumber  }, context)=>{
             return (0, $ac266e1a17cc8ea7$export$40a03fbff71f56d3).getByVotingVault({
                 votingVault: votingVault,
@@ -616,6 +652,40 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
         }
     },
     Voter: {
+        balance: async (voter, { votingVault: votingVaultAddress  }, context)=>{
+            const votingVault = (0, $7818ae0a8b433afc$export$1dbe110119cb4dd2).getByAddress({
+                address: votingVaultAddress,
+                context: context
+            });
+            if (!votingVault) return null;
+            const balance = await (0, $74d4fdf5b0550f40$export$e424928527fab42f).getBalance({
+                voter: voter,
+                votingVaults: [
+                    votingVault
+                ],
+                context: context
+            });
+            return balance || null;
+        },
+        balances: async (voter, { votingVaults: votingVaultAddresses  }, context)=>{
+            const votingVaults = (0, $7818ae0a8b433afc$export$1dbe110119cb4dd2).getByAddresses({
+                addresses: votingVaultAddresses,
+                context: context
+            });
+            const balances = [];
+            for (const votingVault of votingVaults){
+                let balance = null;
+                if (votingVault) balance = await (0, $74d4fdf5b0550f40$export$e424928527fab42f).getBalance({
+                    voter: voter,
+                    votingVaults: [
+                        votingVault
+                    ],
+                    context: context
+                });
+                balances.push(balance || null);
+            }
+            return balances;
+        },
         vote: async (voter, { proposal: id , votingContract: address  }, context)=>{
             const votingContract = (0, $1f368d119f63f485$export$4c0b87851cbe4e3f).getByAddress({
                 address: address,
@@ -708,6 +778,9 @@ class $a0cf45371a696709$export$2b7e06d96cf7f075 {
         this.address = address;
         this.contract = contract;
     }
+    async getBalance(voter) {
+        return "0";
+    }
     async getVotingPower(voter, blockNumber) {
         try {
             // TODO: find a better solution for this.
@@ -770,6 +843,10 @@ class $a1c706d406f5708a$export$93f46c2abf3fc254 extends (0, $a0cf45371a696709$ex
         super(address, contract);
         this.contract = contract;
     }
+    async getBalance(voter) {
+        const [, balance] = await this.contract.functions.deposits(voter);
+        return balance.toString();
+    }
     async getVotingPowerView(voter, blockNumber) {
         try {
             // TODO: find a better solution for this.
@@ -810,6 +887,15 @@ class $e0e2802e459d88e3$export$a37e73beca8c1698 extends (0, $a0cf45371a696709$ex
         const contract = (0, $1RIJT$elementficounciltypechain.VestingVault__factory).connect(address, provider);
         super(address, contract);
         this.contract = contract;
+    }
+    async getBalance(voter) {
+        try {
+            const grants = await this.contract.functions.getGrant(voter);
+            return grants[0].toString();
+        } catch (err) {
+            // TODO: Handle error
+            return "0";
+        }
     }
     async getVotingPowerView(voter, blockNumber) {
         try {
@@ -950,8 +1036,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingContract",
                         "loc": {
-                            "start": 16,
-                            "end": 30
+                            "start": 15,
+                            "end": 29
                         }
                     },
                     "arguments": [
@@ -961,8 +1047,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "address",
                                 "loc": {
-                                    "start": 31,
-                                    "end": 38
+                                    "start": 30,
+                                    "end": 37
                                 }
                             },
                             "type": {
@@ -973,24 +1059,24 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "ID",
                                         "loc": {
-                                            "start": 40,
-                                            "end": 42
+                                            "start": 39,
+                                            "end": 41
                                         }
                                     },
                                     "loc": {
-                                        "start": 40,
-                                        "end": 42
+                                        "start": 39,
+                                        "end": 41
                                     }
                                 },
                                 "loc": {
-                                    "start": 40,
-                                    "end": 43
+                                    "start": 39,
+                                    "end": 42
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 31,
-                                "end": 43
+                                "start": 30,
+                                "end": 42
                             }
                         }
                     ],
@@ -1000,19 +1086,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "VotingContract",
                             "loc": {
-                                "start": 46,
-                                "end": 60
+                                "start": 45,
+                                "end": 59
                             }
                         },
                         "loc": {
-                            "start": 46,
-                            "end": 60
+                            "start": 45,
+                            "end": 59
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 16,
-                        "end": 60
+                        "start": 15,
+                        "end": 59
                     }
                 },
                 {
@@ -1021,8 +1107,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingContracts",
                         "loc": {
-                            "start": 64,
-                            "end": 79
+                            "start": 62,
+                            "end": 77
                         }
                     },
                     "arguments": [
@@ -1032,8 +1118,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "addresses",
                                 "loc": {
-                                    "start": 80,
-                                    "end": 89
+                                    "start": 78,
+                                    "end": 87
                                 }
                             },
                             "type": {
@@ -1046,29 +1132,29 @@ $430a85f9dbbc5964$exports = {
                                             "kind": "Name",
                                             "value": "ID",
                                             "loc": {
-                                                "start": 92,
-                                                "end": 94
+                                                "start": 90,
+                                                "end": 92
                                             }
                                         },
                                         "loc": {
-                                            "start": 92,
-                                            "end": 94
+                                            "start": 90,
+                                            "end": 92
                                         }
                                     },
                                     "loc": {
-                                        "start": 92,
-                                        "end": 95
+                                        "start": 90,
+                                        "end": 93
                                     }
                                 },
                                 "loc": {
-                                    "start": 91,
-                                    "end": 96
+                                    "start": 89,
+                                    "end": 94
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 80,
-                                "end": 96
+                                "start": 78,
+                                "end": 94
                             }
                         }
                     ],
@@ -1080,24 +1166,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "VotingContract",
                                 "loc": {
-                                    "start": 100,
-                                    "end": 114
+                                    "start": 98,
+                                    "end": 112
                                 }
                             },
                             "loc": {
-                                "start": 100,
-                                "end": 114
+                                "start": 98,
+                                "end": 112
                             }
                         },
                         "loc": {
-                            "start": 99,
-                            "end": 115
+                            "start": 97,
+                            "end": 113
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 64,
-                        "end": 115
+                        "start": 62,
+                        "end": 113
                     }
                 },
                 {
@@ -1106,8 +1192,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingVault",
                         "loc": {
-                            "start": 119,
-                            "end": 130
+                            "start": 116,
+                            "end": 127
                         }
                     },
                     "arguments": [
@@ -1117,8 +1203,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "address",
                                 "loc": {
-                                    "start": 131,
-                                    "end": 138
+                                    "start": 128,
+                                    "end": 135
                                 }
                             },
                             "type": {
@@ -1129,24 +1215,24 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "ID",
                                         "loc": {
-                                            "start": 140,
-                                            "end": 142
+                                            "start": 137,
+                                            "end": 139
                                         }
                                     },
                                     "loc": {
-                                        "start": 140,
-                                        "end": 142
+                                        "start": 137,
+                                        "end": 139
                                     }
                                 },
                                 "loc": {
-                                    "start": 140,
-                                    "end": 143
+                                    "start": 137,
+                                    "end": 140
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 131,
-                                "end": 143
+                                "start": 128,
+                                "end": 140
                             }
                         }
                     ],
@@ -1156,19 +1242,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "VotingVault",
                             "loc": {
-                                "start": 146,
-                                "end": 157
+                                "start": 143,
+                                "end": 154
                             }
                         },
                         "loc": {
-                            "start": 146,
-                            "end": 157
+                            "start": 143,
+                            "end": 154
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 119,
-                        "end": 157
+                        "start": 116,
+                        "end": 154
                     }
                 },
                 {
@@ -1177,8 +1263,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingVaults",
                         "loc": {
-                            "start": 161,
-                            "end": 173
+                            "start": 157,
+                            "end": 169
                         }
                     },
                     "arguments": [
@@ -1188,8 +1274,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "addresses",
                                 "loc": {
-                                    "start": 174,
-                                    "end": 183
+                                    "start": 170,
+                                    "end": 179
                                 }
                             },
                             "type": {
@@ -1202,29 +1288,29 @@ $430a85f9dbbc5964$exports = {
                                             "kind": "Name",
                                             "value": "ID",
                                             "loc": {
-                                                "start": 186,
-                                                "end": 188
+                                                "start": 182,
+                                                "end": 184
                                             }
                                         },
                                         "loc": {
-                                            "start": 186,
-                                            "end": 188
+                                            "start": 182,
+                                            "end": 184
                                         }
                                     },
                                     "loc": {
-                                        "start": 186,
-                                        "end": 189
+                                        "start": 182,
+                                        "end": 185
                                     }
                                 },
                                 "loc": {
-                                    "start": 185,
-                                    "end": 190
+                                    "start": 181,
+                                    "end": 186
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 174,
-                                "end": 190
+                                "start": 170,
+                                "end": 186
                             }
                         }
                     ],
@@ -1236,24 +1322,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "VotingVault",
                                 "loc": {
-                                    "start": 194,
-                                    "end": 205
+                                    "start": 190,
+                                    "end": 201
                                 }
                             },
                             "loc": {
-                                "start": 194,
-                                "end": 205
+                                "start": 190,
+                                "end": 201
                             }
                         },
                         "loc": {
-                            "start": 193,
-                            "end": 206
+                            "start": 189,
+                            "end": 202
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 161,
-                        "end": 206
+                        "start": 157,
+                        "end": 202
                     }
                 },
                 {
@@ -1262,8 +1348,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "voter",
                         "loc": {
-                            "start": 210,
-                            "end": 215
+                            "start": 205,
+                            "end": 210
                         }
                     },
                     "arguments": [
@@ -1273,8 +1359,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "address",
                                 "loc": {
-                                    "start": 216,
-                                    "end": 223
+                                    "start": 211,
+                                    "end": 218
                                 }
                             },
                             "type": {
@@ -1285,24 +1371,24 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "ID",
                                         "loc": {
-                                            "start": 225,
-                                            "end": 227
+                                            "start": 220,
+                                            "end": 222
                                         }
                                     },
                                     "loc": {
-                                        "start": 225,
-                                        "end": 227
+                                        "start": 220,
+                                        "end": 222
                                     }
                                 },
                                 "loc": {
-                                    "start": 225,
-                                    "end": 228
+                                    "start": 220,
+                                    "end": 223
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 216,
-                                "end": 228
+                                "start": 211,
+                                "end": 223
                             }
                         }
                     ],
@@ -1312,19 +1398,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "Voter",
                             "loc": {
-                                "start": 231,
-                                "end": 236
+                                "start": 226,
+                                "end": 231
                             }
                         },
                         "loc": {
-                            "start": 231,
-                            "end": 236
+                            "start": 226,
+                            "end": 231
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 210,
-                        "end": 236
+                        "start": 205,
+                        "end": 231
                     }
                 },
                 {
@@ -1333,8 +1419,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "voters",
                         "loc": {
-                            "start": 240,
-                            "end": 246
+                            "start": 234,
+                            "end": 240
                         }
                     },
                     "arguments": [
@@ -1344,8 +1430,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "addresses",
                                 "loc": {
-                                    "start": 247,
-                                    "end": 256
+                                    "start": 241,
+                                    "end": 250
                                 }
                             },
                             "type": {
@@ -1358,29 +1444,29 @@ $430a85f9dbbc5964$exports = {
                                             "kind": "Name",
                                             "value": "ID",
                                             "loc": {
-                                                "start": 259,
-                                                "end": 261
+                                                "start": 253,
+                                                "end": 255
                                             }
                                         },
                                         "loc": {
-                                            "start": 259,
-                                            "end": 261
+                                            "start": 253,
+                                            "end": 255
                                         }
                                     },
                                     "loc": {
-                                        "start": 259,
-                                        "end": 262
+                                        "start": 253,
+                                        "end": 256
                                     }
                                 },
                                 "loc": {
-                                    "start": 258,
-                                    "end": 263
+                                    "start": 252,
+                                    "end": 257
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 247,
-                                "end": 263
+                                "start": 241,
+                                "end": 257
                             }
                         }
                     ],
@@ -1392,30 +1478,30 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Voter",
                                 "loc": {
-                                    "start": 267,
-                                    "end": 272
+                                    "start": 261,
+                                    "end": 266
                                 }
                             },
                             "loc": {
-                                "start": 267,
-                                "end": 272
+                                "start": 261,
+                                "end": 266
                             }
                         },
                         "loc": {
-                            "start": 266,
-                            "end": 273
+                            "start": 260,
+                            "end": 267
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 240,
-                        "end": 273
+                        "start": 234,
+                        "end": 267
                     }
                 }
             ],
             "loc": {
                 "start": 0,
-                "end": 276
+                "end": 269
             }
         },
         {
@@ -1424,8 +1510,8 @@ $430a85f9dbbc5964$exports = {
                 "kind": "Name",
                 "value": "VotingContract",
                 "loc": {
-                    "start": 285,
-                    "end": 299
+                    "start": 276,
+                    "end": 290
                 }
             },
             "interfaces": [],
@@ -1437,8 +1523,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "address",
                         "loc": {
-                            "start": 305,
-                            "end": 312
+                            "start": 295,
+                            "end": 302
                         }
                     },
                     "arguments": [],
@@ -1450,24 +1536,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "ID",
                                 "loc": {
-                                    "start": 314,
-                                    "end": 316
+                                    "start": 304,
+                                    "end": 306
                                 }
                             },
                             "loc": {
-                                "start": 314,
-                                "end": 316
+                                "start": 304,
+                                "end": 306
                             }
                         },
                         "loc": {
-                            "start": 314,
-                            "end": 317
+                            "start": 304,
+                            "end": 307
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 305,
-                        "end": 317
+                        "start": 295,
+                        "end": 307
                     }
                 },
                 {
@@ -1476,8 +1562,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingVaults",
                         "loc": {
-                            "start": 321,
-                            "end": 333
+                            "start": 310,
+                            "end": 322
                         }
                     },
                     "arguments": [],
@@ -1493,44 +1579,44 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "VotingVault",
                                         "loc": {
-                                            "start": 336,
-                                            "end": 347
+                                            "start": 325,
+                                            "end": 336
                                         }
                                     },
                                     "loc": {
-                                        "start": 336,
-                                        "end": 347
+                                        "start": 325,
+                                        "end": 336
                                     }
                                 },
                                 "loc": {
-                                    "start": 336,
-                                    "end": 348
+                                    "start": 325,
+                                    "end": 337
                                 }
                             },
                             "loc": {
-                                "start": 335,
-                                "end": 349
+                                "start": 324,
+                                "end": 338
                             }
                         },
                         "loc": {
-                            "start": 335,
-                            "end": 350
+                            "start": 324,
+                            "end": 339
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 321,
-                        "end": 350
+                        "start": 310,
+                        "end": 339
                     }
                 },
                 {
                     "kind": "FieldDefinition",
                     "name": {
                         "kind": "Name",
-                        "value": "proposal",
+                        "value": "balance",
                         "loc": {
-                            "start": 354,
-                            "end": 362
+                            "start": 342,
+                            "end": 349
                         }
                     },
                     "arguments": [
@@ -1538,10 +1624,10 @@ $430a85f9dbbc5964$exports = {
                             "kind": "InputValueDefinition",
                             "name": {
                                 "kind": "Name",
-                                "value": "id",
+                                "value": "voter",
                                 "loc": {
-                                    "start": 363,
-                                    "end": 365
+                                    "start": 350,
+                                    "end": 355
                                 }
                             },
                             "type": {
@@ -1552,24 +1638,95 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "ID",
                                         "loc": {
-                                            "start": 367,
-                                            "end": 369
+                                            "start": 357,
+                                            "end": 359
                                         }
                                     },
                                     "loc": {
-                                        "start": 367,
-                                        "end": 369
+                                        "start": 357,
+                                        "end": 359
                                     }
                                 },
                                 "loc": {
-                                    "start": 367,
-                                    "end": 370
+                                    "start": 357,
+                                    "end": 360
                                 }
                             },
                             "directives": [],
                             "loc": {
+                                "start": 350,
+                                "end": 360
+                            }
+                        }
+                    ],
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "String",
+                            "loc": {
                                 "start": 363,
-                                "end": 370
+                                "end": 369
+                            }
+                        },
+                        "loc": {
+                            "start": 363,
+                            "end": 369
+                        }
+                    },
+                    "directives": [],
+                    "loc": {
+                        "start": 342,
+                        "end": 369
+                    }
+                },
+                {
+                    "kind": "FieldDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "proposal",
+                        "loc": {
+                            "start": 372,
+                            "end": 380
+                        }
+                    },
+                    "arguments": [
+                        {
+                            "kind": "InputValueDefinition",
+                            "name": {
+                                "kind": "Name",
+                                "value": "id",
+                                "loc": {
+                                    "start": 381,
+                                    "end": 383
+                                }
+                            },
+                            "type": {
+                                "kind": "NonNullType",
+                                "type": {
+                                    "kind": "NamedType",
+                                    "name": {
+                                        "kind": "Name",
+                                        "value": "ID",
+                                        "loc": {
+                                            "start": 385,
+                                            "end": 387
+                                        }
+                                    },
+                                    "loc": {
+                                        "start": 385,
+                                        "end": 387
+                                    }
+                                },
+                                "loc": {
+                                    "start": 385,
+                                    "end": 388
+                                }
+                            },
+                            "directives": [],
+                            "loc": {
+                                "start": 381,
+                                "end": 388
                             }
                         }
                     ],
@@ -1579,19 +1736,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "Proposal",
                             "loc": {
-                                "start": 373,
-                                "end": 381
+                                "start": 391,
+                                "end": 399
                             }
                         },
                         "loc": {
-                            "start": 373,
-                            "end": 381
+                            "start": 391,
+                            "end": 399
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 354,
-                        "end": 381
+                        "start": 372,
+                        "end": 399
                     }
                 },
                 {
@@ -1600,8 +1757,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "proposals",
                         "loc": {
-                            "start": 385,
-                            "end": 394
+                            "start": 402,
+                            "end": 411
                         }
                     },
                     "arguments": [
@@ -1611,8 +1768,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "ids",
                                 "loc": {
-                                    "start": 395,
-                                    "end": 398
+                                    "start": 412,
+                                    "end": 415
                                 }
                             },
                             "type": {
@@ -1625,29 +1782,29 @@ $430a85f9dbbc5964$exports = {
                                             "kind": "Name",
                                             "value": "ID",
                                             "loc": {
-                                                "start": 401,
-                                                "end": 403
+                                                "start": 418,
+                                                "end": 420
                                             }
                                         },
                                         "loc": {
-                                            "start": 401,
-                                            "end": 403
+                                            "start": 418,
+                                            "end": 420
                                         }
                                     },
                                     "loc": {
-                                        "start": 401,
-                                        "end": 404
+                                        "start": 418,
+                                        "end": 421
                                     }
                                 },
                                 "loc": {
-                                    "start": 400,
-                                    "end": 405
+                                    "start": 417,
+                                    "end": 422
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 395,
-                                "end": 405
+                                "start": 412,
+                                "end": 422
                             }
                         },
                         {
@@ -1656,8 +1813,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "isActive",
                                 "loc": {
-                                    "start": 407,
-                                    "end": 415
+                                    "start": 424,
+                                    "end": 432
                                 }
                             },
                             "type": {
@@ -1666,19 +1823,19 @@ $430a85f9dbbc5964$exports = {
                                     "kind": "Name",
                                     "value": "Boolean",
                                     "loc": {
-                                        "start": 417,
-                                        "end": 424
+                                        "start": 434,
+                                        "end": 441
                                     }
                                 },
                                 "loc": {
-                                    "start": 417,
-                                    "end": 424
+                                    "start": 434,
+                                    "end": 441
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 407,
-                                "end": 424
+                                "start": 424,
+                                "end": 441
                             }
                         }
                     ],
@@ -1690,24 +1847,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Proposal",
                                 "loc": {
-                                    "start": 428,
-                                    "end": 436
+                                    "start": 445,
+                                    "end": 453
                                 }
                             },
                             "loc": {
-                                "start": 428,
-                                "end": 436
+                                "start": 445,
+                                "end": 453
                             }
                         },
                         "loc": {
-                            "start": 427,
-                            "end": 437
+                            "start": 444,
+                            "end": 454
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 385,
-                        "end": 437
+                        "start": 402,
+                        "end": 454
                     }
                 },
                 {
@@ -1716,8 +1873,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "proposalCount",
                         "loc": {
-                            "start": 441,
-                            "end": 454
+                            "start": 457,
+                            "end": 470
                         }
                     },
                     "arguments": [
@@ -1727,8 +1884,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "isActive",
                                 "loc": {
-                                    "start": 455,
-                                    "end": 463
+                                    "start": 471,
+                                    "end": 479
                                 }
                             },
                             "type": {
@@ -1737,19 +1894,19 @@ $430a85f9dbbc5964$exports = {
                                     "kind": "Name",
                                     "value": "Boolean",
                                     "loc": {
-                                        "start": 465,
-                                        "end": 472
+                                        "start": 481,
+                                        "end": 488
                                     }
                                 },
                                 "loc": {
-                                    "start": 465,
-                                    "end": 472
+                                    "start": 481,
+                                    "end": 488
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 455,
-                                "end": 472
+                                "start": 471,
+                                "end": 488
                             }
                         }
                     ],
@@ -1759,19 +1916,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "Int",
                             "loc": {
-                                "start": 475,
-                                "end": 478
+                                "start": 491,
+                                "end": 494
                             }
                         },
                         "loc": {
-                            "start": 475,
-                            "end": 478
+                            "start": 491,
+                            "end": 494
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 441,
-                        "end": 478
+                        "start": 457,
+                        "end": 494
                     }
                 },
                 {
@@ -1780,8 +1937,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "totalVotingPower",
                         "loc": {
-                            "start": 482,
-                            "end": 498
+                            "start": 497,
+                            "end": 513
                         }
                     },
                     "arguments": [
@@ -1791,8 +1948,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "blockNumber",
                                 "loc": {
-                                    "start": 499,
-                                    "end": 510
+                                    "start": 514,
+                                    "end": 525
                                 }
                             },
                             "type": {
@@ -1801,19 +1958,19 @@ $430a85f9dbbc5964$exports = {
                                     "kind": "Name",
                                     "value": "Int",
                                     "loc": {
-                                        "start": 512,
-                                        "end": 515
+                                        "start": 527,
+                                        "end": 530
                                     }
                                 },
                                 "loc": {
-                                    "start": 512,
-                                    "end": 515
+                                    "start": 527,
+                                    "end": 530
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 499,
-                                "end": 515
+                                "start": 514,
+                                "end": 530
                             }
                         }
                     ],
@@ -1823,19 +1980,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "TotalVotingPower",
                             "loc": {
-                                "start": 518,
-                                "end": 534
+                                "start": 533,
+                                "end": 549
                             }
                         },
                         "loc": {
-                            "start": 518,
-                            "end": 534
+                            "start": 533,
+                            "end": 549
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 482,
-                        "end": 534
+                        "start": 497,
+                        "end": 549
                     }
                 },
                 {
@@ -1844,8 +2001,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "voters",
                         "loc": {
-                            "start": 538,
-                            "end": 544
+                            "start": 552,
+                            "end": 558
                         }
                     },
                     "arguments": [],
@@ -1857,24 +2014,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Voter",
                                 "loc": {
-                                    "start": 547,
-                                    "end": 552
+                                    "start": 561,
+                                    "end": 566
                                 }
                             },
                             "loc": {
-                                "start": 547,
-                                "end": 552
+                                "start": 561,
+                                "end": 566
                             }
                         },
                         "loc": {
-                            "start": 546,
-                            "end": 553
+                            "start": 560,
+                            "end": 567
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 538,
-                        "end": 553
+                        "start": 552,
+                        "end": 567
                     }
                 },
                 {
@@ -1883,8 +2040,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "voterCount",
                         "loc": {
-                            "start": 557,
-                            "end": 567
+                            "start": 570,
+                            "end": 580
                         }
                     },
                     "arguments": [],
@@ -1894,19 +2051,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "Int",
                             "loc": {
-                                "start": 569,
-                                "end": 572
+                                "start": 582,
+                                "end": 585
                             }
                         },
                         "loc": {
-                            "start": 569,
-                            "end": 572
+                            "start": 582,
+                            "end": 585
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 557,
-                        "end": 572
+                        "start": 570,
+                        "end": 585
                     }
                 },
                 {
@@ -1915,8 +2072,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingPower",
                         "loc": {
-                            "start": 576,
-                            "end": 587
+                            "start": 588,
+                            "end": 599
                         }
                     },
                     "arguments": [
@@ -1926,8 +2083,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "voter",
                                 "loc": {
-                                    "start": 588,
-                                    "end": 593
+                                    "start": 600,
+                                    "end": 605
                                 }
                             },
                             "type": {
@@ -1938,24 +2095,24 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "ID",
                                         "loc": {
-                                            "start": 595,
-                                            "end": 597
+                                            "start": 607,
+                                            "end": 609
                                         }
                                     },
                                     "loc": {
-                                        "start": 595,
-                                        "end": 597
+                                        "start": 607,
+                                        "end": 609
                                     }
                                 },
                                 "loc": {
-                                    "start": 595,
-                                    "end": 598
+                                    "start": 607,
+                                    "end": 610
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 588,
-                                "end": 598
+                                "start": 600,
+                                "end": 610
                             }
                         },
                         {
@@ -1964,8 +2121,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "blockNumber",
                                 "loc": {
-                                    "start": 600,
-                                    "end": 611
+                                    "start": 612,
+                                    "end": 623
                                 }
                             },
                             "type": {
@@ -1974,19 +2131,19 @@ $430a85f9dbbc5964$exports = {
                                     "kind": "Name",
                                     "value": "Int",
                                     "loc": {
-                                        "start": 613,
-                                        "end": 616
+                                        "start": 625,
+                                        "end": 628
                                     }
                                 },
                                 "loc": {
-                                    "start": 613,
-                                    "end": 616
+                                    "start": 625,
+                                    "end": 628
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 600,
-                                "end": 616
+                                "start": 612,
+                                "end": 628
                             }
                         }
                     ],
@@ -1996,19 +2153,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "VotingPower",
                             "loc": {
-                                "start": 619,
-                                "end": 630
+                                "start": 631,
+                                "end": 642
                             }
                         },
                         "loc": {
-                            "start": 619,
-                            "end": 630
+                            "start": 631,
+                            "end": 642
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 576,
-                        "end": 630
+                        "start": 588,
+                        "end": 642
                     }
                 },
                 {
@@ -2017,8 +2174,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingPowers",
                         "loc": {
-                            "start": 634,
-                            "end": 646
+                            "start": 645,
+                            "end": 657
                         }
                     },
                     "arguments": [
@@ -2028,8 +2185,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "voters",
                                 "loc": {
-                                    "start": 647,
-                                    "end": 653
+                                    "start": 658,
+                                    "end": 664
                                 }
                             },
                             "type": {
@@ -2042,29 +2199,29 @@ $430a85f9dbbc5964$exports = {
                                             "kind": "Name",
                                             "value": "ID",
                                             "loc": {
-                                                "start": 656,
-                                                "end": 658
+                                                "start": 667,
+                                                "end": 669
                                             }
                                         },
                                         "loc": {
-                                            "start": 656,
-                                            "end": 658
+                                            "start": 667,
+                                            "end": 669
                                         }
                                     },
                                     "loc": {
-                                        "start": 656,
-                                        "end": 659
+                                        "start": 667,
+                                        "end": 670
                                     }
                                 },
                                 "loc": {
-                                    "start": 655,
-                                    "end": 660
+                                    "start": 666,
+                                    "end": 671
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 647,
-                                "end": 660
+                                "start": 658,
+                                "end": 671
                             }
                         },
                         {
@@ -2073,8 +2230,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "blockNumber",
                                 "loc": {
-                                    "start": 662,
-                                    "end": 673
+                                    "start": 673,
+                                    "end": 684
                                 }
                             },
                             "type": {
@@ -2083,19 +2240,19 @@ $430a85f9dbbc5964$exports = {
                                     "kind": "Name",
                                     "value": "Int",
                                     "loc": {
-                                        "start": 675,
-                                        "end": 678
+                                        "start": 686,
+                                        "end": 689
                                     }
                                 },
                                 "loc": {
-                                    "start": 675,
-                                    "end": 678
+                                    "start": 686,
+                                    "end": 689
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 662,
-                                "end": 678
+                                "start": 673,
+                                "end": 689
                             }
                         }
                     ],
@@ -2107,30 +2264,30 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "VotingPower",
                                 "loc": {
-                                    "start": 682,
-                                    "end": 693
+                                    "start": 693,
+                                    "end": 704
                                 }
                             },
                             "loc": {
-                                "start": 682,
-                                "end": 693
+                                "start": 693,
+                                "end": 704
                             }
                         },
                         "loc": {
-                            "start": 681,
-                            "end": 694
+                            "start": 692,
+                            "end": 705
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 634,
-                        "end": 694
+                        "start": 645,
+                        "end": 705
                     }
                 }
             ],
             "loc": {
-                "start": 280,
-                "end": 697
+                "start": 271,
+                "end": 707
             }
         },
         {
@@ -2139,8 +2296,8 @@ $430a85f9dbbc5964$exports = {
                 "kind": "Name",
                 "value": "VotingVault",
                 "loc": {
-                    "start": 706,
-                    "end": 717
+                    "start": 714,
+                    "end": 725
                 }
             },
             "interfaces": [],
@@ -2152,8 +2309,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "address",
                         "loc": {
-                            "start": 723,
-                            "end": 730
+                            "start": 730,
+                            "end": 737
                         }
                     },
                     "arguments": [],
@@ -2165,24 +2322,95 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "ID",
                                 "loc": {
-                                    "start": 732,
-                                    "end": 734
+                                    "start": 739,
+                                    "end": 741
                                 }
                             },
                             "loc": {
-                                "start": 732,
-                                "end": 734
+                                "start": 739,
+                                "end": 741
                             }
                         },
                         "loc": {
-                            "start": 732,
-                            "end": 735
+                            "start": 739,
+                            "end": 742
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 723,
-                        "end": 735
+                        "start": 730,
+                        "end": 742
+                    }
+                },
+                {
+                    "kind": "FieldDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "balance",
+                        "loc": {
+                            "start": 745,
+                            "end": 752
+                        }
+                    },
+                    "arguments": [
+                        {
+                            "kind": "InputValueDefinition",
+                            "name": {
+                                "kind": "Name",
+                                "value": "voter",
+                                "loc": {
+                                    "start": 753,
+                                    "end": 758
+                                }
+                            },
+                            "type": {
+                                "kind": "NonNullType",
+                                "type": {
+                                    "kind": "NamedType",
+                                    "name": {
+                                        "kind": "Name",
+                                        "value": "ID",
+                                        "loc": {
+                                            "start": 760,
+                                            "end": 762
+                                        }
+                                    },
+                                    "loc": {
+                                        "start": 760,
+                                        "end": 762
+                                    }
+                                },
+                                "loc": {
+                                    "start": 760,
+                                    "end": 763
+                                }
+                            },
+                            "directives": [],
+                            "loc": {
+                                "start": 753,
+                                "end": 763
+                            }
+                        }
+                    ],
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "String",
+                            "loc": {
+                                "start": 766,
+                                "end": 772
+                            }
+                        },
+                        "loc": {
+                            "start": 766,
+                            "end": 772
+                        }
+                    },
+                    "directives": [],
+                    "loc": {
+                        "start": 745,
+                        "end": 772
                     }
                 },
                 {
@@ -2191,8 +2419,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "totalVotingPower",
                         "loc": {
-                            "start": 739,
-                            "end": 755
+                            "start": 775,
+                            "end": 791
                         }
                     },
                     "arguments": [
@@ -2202,8 +2430,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "blockNumber",
                                 "loc": {
-                                    "start": 756,
-                                    "end": 767
+                                    "start": 792,
+                                    "end": 803
                                 }
                             },
                             "type": {
@@ -2212,19 +2440,19 @@ $430a85f9dbbc5964$exports = {
                                     "kind": "Name",
                                     "value": "Int",
                                     "loc": {
-                                        "start": 769,
-                                        "end": 772
+                                        "start": 805,
+                                        "end": 808
                                     }
                                 },
                                 "loc": {
-                                    "start": 769,
-                                    "end": 772
+                                    "start": 805,
+                                    "end": 808
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 756,
-                                "end": 772
+                                "start": 792,
+                                "end": 808
                             }
                         }
                     ],
@@ -2234,19 +2462,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "TotalVotingPower",
                             "loc": {
-                                "start": 775,
-                                "end": 791
+                                "start": 811,
+                                "end": 827
                             }
                         },
                         "loc": {
-                            "start": 775,
-                            "end": 791
+                            "start": 811,
+                            "end": 827
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 739,
-                        "end": 791
+                        "start": 775,
+                        "end": 827
                     }
                 },
                 {
@@ -2255,8 +2483,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "voters",
                         "loc": {
-                            "start": 795,
-                            "end": 801
+                            "start": 830,
+                            "end": 836
                         }
                     },
                     "arguments": [],
@@ -2268,24 +2496,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Voter",
                                 "loc": {
-                                    "start": 804,
-                                    "end": 809
+                                    "start": 839,
+                                    "end": 844
                                 }
                             },
                             "loc": {
-                                "start": 804,
-                                "end": 809
+                                "start": 839,
+                                "end": 844
                             }
                         },
                         "loc": {
-                            "start": 803,
-                            "end": 810
+                            "start": 838,
+                            "end": 845
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 795,
-                        "end": 810
+                        "start": 830,
+                        "end": 845
                     }
                 },
                 {
@@ -2294,8 +2522,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "voterCount",
                         "loc": {
-                            "start": 814,
-                            "end": 824
+                            "start": 848,
+                            "end": 858
                         }
                     },
                     "arguments": [],
@@ -2305,19 +2533,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "Int",
                             "loc": {
-                                "start": 826,
-                                "end": 829
+                                "start": 860,
+                                "end": 863
                             }
                         },
                         "loc": {
-                            "start": 826,
-                            "end": 829
+                            "start": 860,
+                            "end": 863
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 814,
-                        "end": 829
+                        "start": 848,
+                        "end": 863
                     }
                 },
                 {
@@ -2326,8 +2554,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingPower",
                         "loc": {
-                            "start": 833,
-                            "end": 844
+                            "start": 866,
+                            "end": 877
                         }
                     },
                     "arguments": [
@@ -2337,8 +2565,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "voter",
                                 "loc": {
-                                    "start": 845,
-                                    "end": 850
+                                    "start": 878,
+                                    "end": 883
                                 }
                             },
                             "type": {
@@ -2349,24 +2577,24 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "ID",
                                         "loc": {
-                                            "start": 852,
-                                            "end": 854
+                                            "start": 885,
+                                            "end": 887
                                         }
                                     },
                                     "loc": {
-                                        "start": 852,
-                                        "end": 854
+                                        "start": 885,
+                                        "end": 887
                                     }
                                 },
                                 "loc": {
-                                    "start": 852,
-                                    "end": 855
+                                    "start": 885,
+                                    "end": 888
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 845,
-                                "end": 855
+                                "start": 878,
+                                "end": 888
                             }
                         },
                         {
@@ -2375,8 +2603,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "blockNumber",
                                 "loc": {
-                                    "start": 857,
-                                    "end": 868
+                                    "start": 890,
+                                    "end": 901
                                 }
                             },
                             "type": {
@@ -2385,19 +2613,19 @@ $430a85f9dbbc5964$exports = {
                                     "kind": "Name",
                                     "value": "Int",
                                     "loc": {
-                                        "start": 870,
-                                        "end": 873
+                                        "start": 903,
+                                        "end": 906
                                     }
                                 },
                                 "loc": {
-                                    "start": 870,
-                                    "end": 873
+                                    "start": 903,
+                                    "end": 906
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 857,
-                                "end": 873
+                                "start": 890,
+                                "end": 906
                             }
                         }
                     ],
@@ -2407,19 +2635,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "VotingPower",
                             "loc": {
-                                "start": 876,
-                                "end": 887
+                                "start": 909,
+                                "end": 920
                             }
                         },
                         "loc": {
-                            "start": 876,
-                            "end": 887
+                            "start": 909,
+                            "end": 920
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 833,
-                        "end": 887
+                        "start": 866,
+                        "end": 920
                     }
                 },
                 {
@@ -2428,8 +2656,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingPowers",
                         "loc": {
-                            "start": 891,
-                            "end": 903
+                            "start": 923,
+                            "end": 935
                         }
                     },
                     "arguments": [
@@ -2439,8 +2667,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "voters",
                                 "loc": {
-                                    "start": 904,
-                                    "end": 910
+                                    "start": 936,
+                                    "end": 942
                                 }
                             },
                             "type": {
@@ -2453,29 +2681,29 @@ $430a85f9dbbc5964$exports = {
                                             "kind": "Name",
                                             "value": "ID",
                                             "loc": {
-                                                "start": 913,
-                                                "end": 915
+                                                "start": 945,
+                                                "end": 947
                                             }
                                         },
                                         "loc": {
-                                            "start": 913,
-                                            "end": 915
+                                            "start": 945,
+                                            "end": 947
                                         }
                                     },
                                     "loc": {
-                                        "start": 913,
-                                        "end": 916
+                                        "start": 945,
+                                        "end": 948
                                     }
                                 },
                                 "loc": {
-                                    "start": 912,
-                                    "end": 917
+                                    "start": 944,
+                                    "end": 949
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 904,
-                                "end": 917
+                                "start": 936,
+                                "end": 949
                             }
                         },
                         {
@@ -2484,8 +2712,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "blockNumber",
                                 "loc": {
-                                    "start": 919,
-                                    "end": 930
+                                    "start": 951,
+                                    "end": 962
                                 }
                             },
                             "type": {
@@ -2494,19 +2722,19 @@ $430a85f9dbbc5964$exports = {
                                     "kind": "Name",
                                     "value": "Int",
                                     "loc": {
-                                        "start": 932,
-                                        "end": 935
+                                        "start": 964,
+                                        "end": 967
                                     }
                                 },
                                 "loc": {
-                                    "start": 932,
-                                    "end": 935
+                                    "start": 964,
+                                    "end": 967
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 919,
-                                "end": 935
+                                "start": 951,
+                                "end": 967
                             }
                         }
                     ],
@@ -2518,30 +2746,30 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "VotingPower",
                                 "loc": {
-                                    "start": 939,
-                                    "end": 950
+                                    "start": 971,
+                                    "end": 982
                                 }
                             },
                             "loc": {
-                                "start": 939,
-                                "end": 950
+                                "start": 971,
+                                "end": 982
                             }
                         },
                         "loc": {
-                            "start": 938,
-                            "end": 951
+                            "start": 970,
+                            "end": 983
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 891,
-                        "end": 951
+                        "start": 923,
+                        "end": 983
                     }
                 }
             ],
             "loc": {
-                "start": 701,
-                "end": 954
+                "start": 709,
+                "end": 985
             }
         },
         {
@@ -2550,8 +2778,8 @@ $430a85f9dbbc5964$exports = {
                 "kind": "Name",
                 "value": "Proposal",
                 "loc": {
-                    "start": 963,
-                    "end": 971
+                    "start": 992,
+                    "end": 1000
                 }
             },
             "interfaces": [],
@@ -2563,8 +2791,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "id",
                         "loc": {
-                            "start": 977,
-                            "end": 979
+                            "start": 1005,
+                            "end": 1007
                         }
                     },
                     "arguments": [],
@@ -2576,24 +2804,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "ID",
                                 "loc": {
-                                    "start": 981,
-                                    "end": 983
+                                    "start": 1009,
+                                    "end": 1011
                                 }
                             },
                             "loc": {
-                                "start": 981,
-                                "end": 983
+                                "start": 1009,
+                                "end": 1011
                             }
                         },
                         "loc": {
-                            "start": 981,
-                            "end": 984
+                            "start": 1009,
+                            "end": 1012
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 977,
-                        "end": 984
+                        "start": 1005,
+                        "end": 1012
                     }
                 },
                 {
@@ -2602,8 +2830,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingContract",
                         "loc": {
-                            "start": 988,
-                            "end": 1002
+                            "start": 1015,
+                            "end": 1029
                         }
                     },
                     "arguments": [],
@@ -2615,24 +2843,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "VotingContract",
                                 "loc": {
-                                    "start": 1004,
-                                    "end": 1018
+                                    "start": 1031,
+                                    "end": 1045
                                 }
                             },
                             "loc": {
-                                "start": 1004,
-                                "end": 1018
+                                "start": 1031,
+                                "end": 1045
                             }
                         },
                         "loc": {
-                            "start": 1004,
-                            "end": 1019
+                            "start": 1031,
+                            "end": 1046
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 988,
-                        "end": 1019
+                        "start": 1015,
+                        "end": 1046
                     }
                 },
                 {
@@ -2642,16 +2870,16 @@ $430a85f9dbbc5964$exports = {
                         "value": "Block Number",
                         "block": false,
                         "loc": {
-                            "start": 1023,
-                            "end": 1037
+                            "start": 1049,
+                            "end": 1063
                         }
                     },
                     "name": {
                         "kind": "Name",
                         "value": "created",
                         "loc": {
-                            "start": 1041,
-                            "end": 1048
+                            "start": 1066,
+                            "end": 1073
                         }
                     },
                     "arguments": [],
@@ -2663,24 +2891,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Int",
                                 "loc": {
-                                    "start": 1050,
-                                    "end": 1053
+                                    "start": 1075,
+                                    "end": 1078
                                 }
                             },
                             "loc": {
-                                "start": 1050,
-                                "end": 1053
+                                "start": 1075,
+                                "end": 1078
                             }
                         },
                         "loc": {
-                            "start": 1050,
-                            "end": 1054
+                            "start": 1075,
+                            "end": 1079
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1023,
-                        "end": 1054
+                        "start": 1049,
+                        "end": 1079
                     }
                 },
                 {
@@ -2690,16 +2918,16 @@ $430a85f9dbbc5964$exports = {
                         "value": "Block Number",
                         "block": false,
                         "loc": {
-                            "start": 1058,
-                            "end": 1072
+                            "start": 1082,
+                            "end": 1096
                         }
                     },
                     "name": {
                         "kind": "Name",
                         "value": "expiration",
                         "loc": {
-                            "start": 1076,
-                            "end": 1086
+                            "start": 1099,
+                            "end": 1109
                         }
                     },
                     "arguments": [],
@@ -2711,24 +2939,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Int",
                                 "loc": {
-                                    "start": 1088,
-                                    "end": 1091
+                                    "start": 1111,
+                                    "end": 1114
                                 }
                             },
                             "loc": {
-                                "start": 1088,
-                                "end": 1091
+                                "start": 1111,
+                                "end": 1114
                             }
                         },
                         "loc": {
-                            "start": 1088,
-                            "end": 1092
+                            "start": 1111,
+                            "end": 1115
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1058,
-                        "end": 1092
+                        "start": 1082,
+                        "end": 1115
                     }
                 },
                 {
@@ -2738,16 +2966,16 @@ $430a85f9dbbc5964$exports = {
                         "value": "Block Number",
                         "block": false,
                         "loc": {
-                            "start": 1096,
-                            "end": 1110
+                            "start": 1118,
+                            "end": 1132
                         }
                     },
                     "name": {
                         "kind": "Name",
                         "value": "unlock",
                         "loc": {
-                            "start": 1114,
-                            "end": 1120
+                            "start": 1135,
+                            "end": 1141
                         }
                     },
                     "arguments": [],
@@ -2759,24 +2987,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Int",
                                 "loc": {
-                                    "start": 1122,
-                                    "end": 1125
+                                    "start": 1143,
+                                    "end": 1146
                                 }
                             },
                             "loc": {
-                                "start": 1122,
-                                "end": 1125
+                                "start": 1143,
+                                "end": 1146
                             }
                         },
                         "loc": {
-                            "start": 1122,
-                            "end": 1126
+                            "start": 1143,
+                            "end": 1147
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1096,
-                        "end": 1126
+                        "start": 1118,
+                        "end": 1147
                     }
                 },
                 {
@@ -2786,16 +3014,16 @@ $430a85f9dbbc5964$exports = {
                         "value": "Proposals are active during their voting period, i.e., from creation block up\nto expiration block. This will be false if the current block is later than the\nproposal's expiration.",
                         "block": true,
                         "loc": {
-                            "start": 1130,
-                            "end": 1329
+                            "start": 1150,
+                            "end": 1345
                         }
                     },
                     "name": {
                         "kind": "Name",
                         "value": "isActive",
                         "loc": {
-                            "start": 1333,
-                            "end": 1341
+                            "start": 1348,
+                            "end": 1356
                         }
                     },
                     "arguments": [],
@@ -2807,24 +3035,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Boolean",
                                 "loc": {
-                                    "start": 1343,
-                                    "end": 1350
+                                    "start": 1358,
+                                    "end": 1365
                                 }
                             },
                             "loc": {
-                                "start": 1343,
-                                "end": 1350
+                                "start": 1358,
+                                "end": 1365
                             }
                         },
                         "loc": {
-                            "start": 1343,
-                            "end": 1351
+                            "start": 1358,
+                            "end": 1366
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1130,
-                        "end": 1351
+                        "start": 1150,
+                        "end": 1366
                     }
                 },
                 {
@@ -2833,8 +3061,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "isExecuted",
                         "loc": {
-                            "start": 1355,
-                            "end": 1365
+                            "start": 1369,
+                            "end": 1379
                         }
                     },
                     "arguments": [],
@@ -2844,19 +3072,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "Boolean",
                             "loc": {
-                                "start": 1367,
-                                "end": 1374
+                                "start": 1381,
+                                "end": 1388
                             }
                         },
                         "loc": {
-                            "start": 1367,
-                            "end": 1374
+                            "start": 1381,
+                            "end": 1388
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1355,
-                        "end": 1374
+                        "start": 1369,
+                        "end": 1388
                     }
                 },
                 {
@@ -2866,16 +3094,16 @@ $430a85f9dbbc5964$exports = {
                         "value": "Block Number",
                         "block": false,
                         "loc": {
-                            "start": 1378,
-                            "end": 1392
+                            "start": 1391,
+                            "end": 1405
                         }
                     },
                     "name": {
                         "kind": "Name",
                         "value": "lastCall",
                         "loc": {
-                            "start": 1396,
-                            "end": 1404
+                            "start": 1408,
+                            "end": 1416
                         }
                     },
                     "arguments": [],
@@ -2885,19 +3113,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "Int",
                             "loc": {
-                                "start": 1406,
-                                "end": 1409
+                                "start": 1418,
+                                "end": 1421
                             }
                         },
                         "loc": {
-                            "start": 1406,
-                            "end": 1409
+                            "start": 1418,
+                            "end": 1421
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1378,
-                        "end": 1409
+                        "start": 1391,
+                        "end": 1421
                     }
                 },
                 {
@@ -2906,8 +3134,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "quorum",
                         "loc": {
-                            "start": 1413,
-                            "end": 1419
+                            "start": 1424,
+                            "end": 1430
                         }
                     },
                     "arguments": [],
@@ -2917,19 +3145,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "String",
                             "loc": {
-                                "start": 1421,
-                                "end": 1427
+                                "start": 1432,
+                                "end": 1438
                             }
                         },
                         "loc": {
-                            "start": 1421,
-                            "end": 1427
+                            "start": 1432,
+                            "end": 1438
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1413,
-                        "end": 1427
+                        "start": 1424,
+                        "end": 1438
                     }
                 },
                 {
@@ -2938,8 +3166,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "vote",
                         "loc": {
-                            "start": 1431,
-                            "end": 1435
+                            "start": 1441,
+                            "end": 1445
                         }
                     },
                     "arguments": [
@@ -2949,8 +3177,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "voter",
                                 "loc": {
-                                    "start": 1436,
-                                    "end": 1441
+                                    "start": 1446,
+                                    "end": 1451
                                 }
                             },
                             "type": {
@@ -2961,24 +3189,24 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "ID",
                                         "loc": {
-                                            "start": 1443,
-                                            "end": 1445
+                                            "start": 1453,
+                                            "end": 1455
                                         }
                                     },
                                     "loc": {
-                                        "start": 1443,
-                                        "end": 1445
+                                        "start": 1453,
+                                        "end": 1455
                                     }
                                 },
                                 "loc": {
-                                    "start": 1443,
-                                    "end": 1446
+                                    "start": 1453,
+                                    "end": 1456
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 1436,
-                                "end": 1446
+                                "start": 1446,
+                                "end": 1456
                             }
                         }
                     ],
@@ -2988,19 +3216,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "Vote",
                             "loc": {
-                                "start": 1449,
-                                "end": 1453
+                                "start": 1459,
+                                "end": 1463
                             }
                         },
                         "loc": {
-                            "start": 1449,
-                            "end": 1453
+                            "start": 1459,
+                            "end": 1463
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1431,
-                        "end": 1453
+                        "start": 1441,
+                        "end": 1463
                     }
                 },
                 {
@@ -3009,8 +3237,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "voters",
                         "loc": {
-                            "start": 1457,
-                            "end": 1463
+                            "start": 1466,
+                            "end": 1472
                         }
                     },
                     "arguments": [],
@@ -3022,24 +3250,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Voter",
                                 "loc": {
-                                    "start": 1466,
-                                    "end": 1471
+                                    "start": 1475,
+                                    "end": 1480
                                 }
                             },
                             "loc": {
-                                "start": 1466,
-                                "end": 1471
+                                "start": 1475,
+                                "end": 1480
                             }
                         },
                         "loc": {
-                            "start": 1465,
-                            "end": 1472
+                            "start": 1474,
+                            "end": 1481
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1457,
-                        "end": 1472
+                        "start": 1466,
+                        "end": 1481
                     }
                 },
                 {
@@ -3048,8 +3276,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "voterCount",
                         "loc": {
-                            "start": 1476,
-                            "end": 1486
+                            "start": 1484,
+                            "end": 1494
                         }
                     },
                     "arguments": [],
@@ -3059,19 +3287,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "Int",
                             "loc": {
-                                "start": 1488,
-                                "end": 1491
+                                "start": 1496,
+                                "end": 1499
                             }
                         },
                         "loc": {
-                            "start": 1488,
-                            "end": 1491
+                            "start": 1496,
+                            "end": 1499
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1476,
-                        "end": 1491
+                        "start": 1484,
+                        "end": 1499
                     }
                 },
                 {
@@ -3080,8 +3308,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votes",
                         "loc": {
-                            "start": 1495,
-                            "end": 1500
+                            "start": 1502,
+                            "end": 1507
                         }
                     },
                     "arguments": [
@@ -3091,8 +3319,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "voters",
                                 "loc": {
-                                    "start": 1501,
-                                    "end": 1507
+                                    "start": 1508,
+                                    "end": 1514
                                 }
                             },
                             "type": {
@@ -3105,29 +3333,29 @@ $430a85f9dbbc5964$exports = {
                                             "kind": "Name",
                                             "value": "ID",
                                             "loc": {
-                                                "start": 1510,
-                                                "end": 1512
+                                                "start": 1517,
+                                                "end": 1519
                                             }
                                         },
                                         "loc": {
-                                            "start": 1510,
-                                            "end": 1512
+                                            "start": 1517,
+                                            "end": 1519
                                         }
                                     },
                                     "loc": {
-                                        "start": 1510,
-                                        "end": 1513
+                                        "start": 1517,
+                                        "end": 1520
                                     }
                                 },
                                 "loc": {
-                                    "start": 1509,
-                                    "end": 1514
+                                    "start": 1516,
+                                    "end": 1521
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 1501,
-                                "end": 1514
+                                "start": 1508,
+                                "end": 1521
                             }
                         }
                     ],
@@ -3139,24 +3367,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Vote",
                                 "loc": {
-                                    "start": 1518,
-                                    "end": 1522
+                                    "start": 1525,
+                                    "end": 1529
                                 }
                             },
                             "loc": {
-                                "start": 1518,
-                                "end": 1522
+                                "start": 1525,
+                                "end": 1529
                             }
                         },
                         "loc": {
-                            "start": 1517,
-                            "end": 1523
+                            "start": 1524,
+                            "end": 1530
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1495,
-                        "end": 1523
+                        "start": 1502,
+                        "end": 1530
                     }
                 },
                 {
@@ -3165,8 +3393,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingPower",
                         "loc": {
-                            "start": 1527,
-                            "end": 1538
+                            "start": 1533,
+                            "end": 1544
                         }
                     },
                     "arguments": [
@@ -3176,8 +3404,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "voter",
                                 "loc": {
-                                    "start": 1539,
-                                    "end": 1544
+                                    "start": 1545,
+                                    "end": 1550
                                 }
                             },
                             "type": {
@@ -3188,24 +3416,24 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "ID",
                                         "loc": {
-                                            "start": 1546,
-                                            "end": 1548
+                                            "start": 1552,
+                                            "end": 1554
                                         }
                                     },
                                     "loc": {
-                                        "start": 1546,
-                                        "end": 1548
+                                        "start": 1552,
+                                        "end": 1554
                                     }
                                 },
                                 "loc": {
-                                    "start": 1546,
-                                    "end": 1549
+                                    "start": 1552,
+                                    "end": 1555
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 1539,
-                                "end": 1549
+                                "start": 1545,
+                                "end": 1555
                             }
                         }
                     ],
@@ -3215,19 +3443,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "VotingPower",
                             "loc": {
-                                "start": 1552,
-                                "end": 1563
+                                "start": 1558,
+                                "end": 1569
                             }
                         },
                         "loc": {
-                            "start": 1552,
-                            "end": 1563
+                            "start": 1558,
+                            "end": 1569
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1527,
-                        "end": 1563
+                        "start": 1533,
+                        "end": 1569
                     }
                 },
                 {
@@ -3236,8 +3464,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingPowers",
                         "loc": {
-                            "start": 1567,
-                            "end": 1579
+                            "start": 1572,
+                            "end": 1584
                         }
                     },
                     "arguments": [
@@ -3247,8 +3475,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "voters",
                                 "loc": {
-                                    "start": 1580,
-                                    "end": 1586
+                                    "start": 1585,
+                                    "end": 1591
                                 }
                             },
                             "type": {
@@ -3261,29 +3489,29 @@ $430a85f9dbbc5964$exports = {
                                             "kind": "Name",
                                             "value": "ID",
                                             "loc": {
-                                                "start": 1589,
-                                                "end": 1591
+                                                "start": 1594,
+                                                "end": 1596
                                             }
                                         },
                                         "loc": {
-                                            "start": 1589,
-                                            "end": 1591
+                                            "start": 1594,
+                                            "end": 1596
                                         }
                                     },
                                     "loc": {
-                                        "start": 1589,
-                                        "end": 1592
+                                        "start": 1594,
+                                        "end": 1597
                                     }
                                 },
                                 "loc": {
-                                    "start": 1588,
-                                    "end": 1593
+                                    "start": 1593,
+                                    "end": 1598
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 1580,
-                                "end": 1593
+                                "start": 1585,
+                                "end": 1598
                             }
                         }
                     ],
@@ -3295,30 +3523,30 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "VotingPower",
                                 "loc": {
-                                    "start": 1597,
-                                    "end": 1608
+                                    "start": 1602,
+                                    "end": 1613
                                 }
                             },
                             "loc": {
-                                "start": 1597,
-                                "end": 1608
+                                "start": 1602,
+                                "end": 1613
                             }
                         },
                         "loc": {
-                            "start": 1596,
-                            "end": 1609
+                            "start": 1601,
+                            "end": 1614
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1567,
-                        "end": 1609
+                        "start": 1572,
+                        "end": 1614
                     }
                 }
             ],
             "loc": {
-                "start": 958,
-                "end": 1612
+                "start": 987,
+                "end": 1616
             }
         },
         {
@@ -3327,8 +3555,8 @@ $430a85f9dbbc5964$exports = {
                 "kind": "Name",
                 "value": "Vote",
                 "loc": {
-                    "start": 1621,
-                    "end": 1625
+                    "start": 1623,
+                    "end": 1627
                 }
             },
             "interfaces": [],
@@ -3340,8 +3568,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "voter",
                         "loc": {
-                            "start": 1631,
-                            "end": 1636
+                            "start": 1632,
+                            "end": 1637
                         }
                     },
                     "arguments": [],
@@ -3353,24 +3581,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Voter",
                                 "loc": {
-                                    "start": 1638,
-                                    "end": 1643
+                                    "start": 1639,
+                                    "end": 1644
                                 }
                             },
                             "loc": {
-                                "start": 1638,
-                                "end": 1643
+                                "start": 1639,
+                                "end": 1644
                             }
                         },
                         "loc": {
-                            "start": 1638,
-                            "end": 1644
+                            "start": 1639,
+                            "end": 1645
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1631,
-                        "end": 1644
+                        "start": 1632,
+                        "end": 1645
                     }
                 },
                 {
@@ -3418,8 +3646,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "proposal",
                         "loc": {
-                            "start": 1666,
-                            "end": 1674
+                            "start": 1665,
+                            "end": 1673
                         }
                     },
                     "arguments": [],
@@ -3431,24 +3659,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Proposal",
                                 "loc": {
-                                    "start": 1676,
-                                    "end": 1684
+                                    "start": 1675,
+                                    "end": 1683
                                 }
                             },
                             "loc": {
-                                "start": 1676,
-                                "end": 1684
+                                "start": 1675,
+                                "end": 1683
                             }
                         },
                         "loc": {
-                            "start": 1676,
-                            "end": 1685
+                            "start": 1675,
+                            "end": 1684
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1666,
-                        "end": 1685
+                        "start": 1665,
+                        "end": 1684
                     }
                 },
                 {
@@ -3457,8 +3685,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "castBallot",
                         "loc": {
-                            "start": 1689,
-                            "end": 1699
+                            "start": 1687,
+                            "end": 1697
                         }
                     },
                     "arguments": [],
@@ -3468,25 +3696,25 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "Ballot",
                             "loc": {
-                                "start": 1701,
-                                "end": 1707
+                                "start": 1699,
+                                "end": 1705
                             }
                         },
                         "loc": {
-                            "start": 1701,
-                            "end": 1707
+                            "start": 1699,
+                            "end": 1705
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1689,
-                        "end": 1707
+                        "start": 1687,
+                        "end": 1705
                     }
                 }
             ],
             "loc": {
-                "start": 1616,
-                "end": 1710
+                "start": 1618,
+                "end": 1707
             }
         },
         {
@@ -3495,8 +3723,8 @@ $430a85f9dbbc5964$exports = {
                 "kind": "Name",
                 "value": "Ballot",
                 "loc": {
-                    "start": 1719,
-                    "end": 1725
+                    "start": 1714,
+                    "end": 1720
                 }
             },
             "directives": [],
@@ -3507,14 +3735,14 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "Yes",
                         "loc": {
-                            "start": 1731,
-                            "end": 1734
+                            "start": 1725,
+                            "end": 1728
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1731,
-                        "end": 1734
+                        "start": 1725,
+                        "end": 1728
                     }
                 },
                 {
@@ -3523,14 +3751,14 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "No",
                         "loc": {
-                            "start": 1738,
-                            "end": 1740
+                            "start": 1731,
+                            "end": 1733
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1738,
-                        "end": 1740
+                        "start": 1731,
+                        "end": 1733
                     }
                 },
                 {
@@ -3539,20 +3767,20 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "Abstain",
                         "loc": {
-                            "start": 1744,
-                            "end": 1751
+                            "start": 1736,
+                            "end": 1743
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1744,
-                        "end": 1751
+                        "start": 1736,
+                        "end": 1743
                     }
                 }
             ],
             "loc": {
-                "start": 1714,
-                "end": 1754
+                "start": 1709,
+                "end": 1745
             }
         },
         {
@@ -3561,8 +3789,8 @@ $430a85f9dbbc5964$exports = {
                 "kind": "Name",
                 "value": "VotingPower",
                 "loc": {
-                    "start": 1763,
-                    "end": 1774
+                    "start": 1752,
+                    "end": 1763
                 }
             },
             "interfaces": [],
@@ -3574,8 +3802,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "blockNumber",
                         "loc": {
-                            "start": 1780,
-                            "end": 1791
+                            "start": 1768,
+                            "end": 1779
                         }
                     },
                     "arguments": [],
@@ -3587,24 +3815,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Int",
                                 "loc": {
-                                    "start": 1793,
-                                    "end": 1796
+                                    "start": 1781,
+                                    "end": 1784
                                 }
                             },
                             "loc": {
-                                "start": 1793,
-                                "end": 1796
+                                "start": 1781,
+                                "end": 1784
                             }
                         },
                         "loc": {
-                            "start": 1793,
-                            "end": 1797
+                            "start": 1781,
+                            "end": 1785
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1780,
-                        "end": 1797
+                        "start": 1768,
+                        "end": 1785
                     }
                 },
                 {
@@ -3613,8 +3841,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "value",
                         "loc": {
-                            "start": 1801,
-                            "end": 1806
+                            "start": 1788,
+                            "end": 1793
                         }
                     },
                     "arguments": [],
@@ -3626,24 +3854,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "String",
                                 "loc": {
-                                    "start": 1808,
-                                    "end": 1814
+                                    "start": 1795,
+                                    "end": 1801
                                 }
                             },
                             "loc": {
-                                "start": 1808,
-                                "end": 1814
+                                "start": 1795,
+                                "end": 1801
                             }
                         },
                         "loc": {
-                            "start": 1808,
-                            "end": 1815
+                            "start": 1795,
+                            "end": 1802
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1801,
-                        "end": 1815
+                        "start": 1788,
+                        "end": 1802
                     }
                 },
                 {
@@ -3652,8 +3880,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "voter",
                         "loc": {
-                            "start": 1819,
-                            "end": 1824
+                            "start": 1805,
+                            "end": 1810
                         }
                     },
                     "arguments": [],
@@ -3665,24 +3893,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Voter",
                                 "loc": {
-                                    "start": 1826,
-                                    "end": 1831
+                                    "start": 1812,
+                                    "end": 1817
                                 }
                             },
                             "loc": {
-                                "start": 1826,
-                                "end": 1831
+                                "start": 1812,
+                                "end": 1817
                             }
                         },
                         "loc": {
-                            "start": 1826,
-                            "end": 1832
+                            "start": 1812,
+                            "end": 1818
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1819,
-                        "end": 1832
+                        "start": 1805,
+                        "end": 1818
                     }
                 },
                 {
@@ -3691,8 +3919,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingVaults",
                         "loc": {
-                            "start": 1836,
-                            "end": 1848
+                            "start": 1821,
+                            "end": 1833
                         }
                     },
                     "arguments": [],
@@ -3708,34 +3936,34 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "VotingVault",
                                         "loc": {
-                                            "start": 1851,
-                                            "end": 1862
+                                            "start": 1836,
+                                            "end": 1847
                                         }
                                     },
                                     "loc": {
-                                        "start": 1851,
-                                        "end": 1862
+                                        "start": 1836,
+                                        "end": 1847
                                     }
                                 },
                                 "loc": {
-                                    "start": 1851,
-                                    "end": 1863
+                                    "start": 1836,
+                                    "end": 1848
                                 }
                             },
                             "loc": {
-                                "start": 1850,
-                                "end": 1864
+                                "start": 1835,
+                                "end": 1849
                             }
                         },
                         "loc": {
-                            "start": 1850,
-                            "end": 1865
+                            "start": 1835,
+                            "end": 1850
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1836,
-                        "end": 1865
+                        "start": 1821,
+                        "end": 1850
                     }
                 },
                 {
@@ -3744,8 +3972,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "isStale",
                         "loc": {
-                            "start": 1869,
-                            "end": 1876
+                            "start": 1853,
+                            "end": 1860
                         }
                     },
                     "arguments": [],
@@ -3755,25 +3983,25 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "Boolean",
                             "loc": {
-                                "start": 1878,
-                                "end": 1885
+                                "start": 1862,
+                                "end": 1869
                             }
                         },
                         "loc": {
-                            "start": 1878,
-                            "end": 1885
+                            "start": 1862,
+                            "end": 1869
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1869,
-                        "end": 1885
+                        "start": 1853,
+                        "end": 1869
                     }
                 }
             ],
             "loc": {
-                "start": 1758,
-                "end": 1888
+                "start": 1747,
+                "end": 1871
             }
         },
         {
@@ -3782,8 +4010,8 @@ $430a85f9dbbc5964$exports = {
                 "kind": "Name",
                 "value": "TotalVotingPower",
                 "loc": {
-                    "start": 1897,
-                    "end": 1913
+                    "start": 1878,
+                    "end": 1894
                 }
             },
             "interfaces": [],
@@ -3795,8 +4023,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "blockNumber",
                         "loc": {
-                            "start": 1919,
-                            "end": 1930
+                            "start": 1899,
+                            "end": 1910
                         }
                     },
                     "arguments": [],
@@ -3808,24 +4036,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Int",
                                 "loc": {
-                                    "start": 1932,
-                                    "end": 1935
+                                    "start": 1912,
+                                    "end": 1915
                                 }
                             },
                             "loc": {
-                                "start": 1932,
-                                "end": 1935
+                                "start": 1912,
+                                "end": 1915
                             }
                         },
                         "loc": {
-                            "start": 1932,
-                            "end": 1936
+                            "start": 1912,
+                            "end": 1916
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1919,
-                        "end": 1936
+                        "start": 1899,
+                        "end": 1916
                     }
                 },
                 {
@@ -3834,8 +4062,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "value",
                         "loc": {
-                            "start": 1940,
-                            "end": 1945
+                            "start": 1919,
+                            "end": 1924
                         }
                     },
                     "arguments": [],
@@ -3847,24 +4075,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "String",
                                 "loc": {
-                                    "start": 1947,
-                                    "end": 1953
+                                    "start": 1926,
+                                    "end": 1932
                                 }
                             },
                             "loc": {
-                                "start": 1947,
-                                "end": 1953
+                                "start": 1926,
+                                "end": 1932
                             }
                         },
                         "loc": {
-                            "start": 1947,
-                            "end": 1954
+                            "start": 1926,
+                            "end": 1933
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1940,
-                        "end": 1954
+                        "start": 1919,
+                        "end": 1933
                     }
                 },
                 {
@@ -3873,8 +4101,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingVaults",
                         "loc": {
-                            "start": 1958,
-                            "end": 1970
+                            "start": 1936,
+                            "end": 1948
                         }
                     },
                     "arguments": [],
@@ -3890,40 +4118,40 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "VotingVault",
                                         "loc": {
-                                            "start": 1973,
-                                            "end": 1984
+                                            "start": 1951,
+                                            "end": 1962
                                         }
                                     },
                                     "loc": {
-                                        "start": 1973,
-                                        "end": 1984
+                                        "start": 1951,
+                                        "end": 1962
                                     }
                                 },
                                 "loc": {
-                                    "start": 1973,
-                                    "end": 1985
+                                    "start": 1951,
+                                    "end": 1963
                                 }
                             },
                             "loc": {
-                                "start": 1972,
-                                "end": 1986
+                                "start": 1950,
+                                "end": 1964
                             }
                         },
                         "loc": {
-                            "start": 1972,
-                            "end": 1987
+                            "start": 1950,
+                            "end": 1965
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 1958,
-                        "end": 1987
+                        "start": 1936,
+                        "end": 1965
                     }
                 }
             ],
             "loc": {
-                "start": 1892,
-                "end": 1990
+                "start": 1873,
+                "end": 1967
             }
         },
         {
@@ -3932,8 +4160,8 @@ $430a85f9dbbc5964$exports = {
                 "kind": "Name",
                 "value": "Voter",
                 "loc": {
-                    "start": 1999,
-                    "end": 2004
+                    "start": 1974,
+                    "end": 1979
                 }
             },
             "interfaces": [],
@@ -3945,8 +4173,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "address",
                         "loc": {
-                            "start": 2010,
-                            "end": 2017
+                            "start": 1984,
+                            "end": 1991
                         }
                     },
                     "arguments": [],
@@ -3958,34 +4186,34 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "ID",
                                 "loc": {
-                                    "start": 2019,
-                                    "end": 2021
+                                    "start": 1993,
+                                    "end": 1995
                                 }
                             },
                             "loc": {
-                                "start": 2019,
-                                "end": 2021
+                                "start": 1993,
+                                "end": 1995
                             }
                         },
                         "loc": {
-                            "start": 2019,
-                            "end": 2022
+                            "start": 1993,
+                            "end": 1996
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 2010,
-                        "end": 2022
+                        "start": 1984,
+                        "end": 1996
                     }
                 },
                 {
                     "kind": "FieldDefinition",
                     "name": {
                         "kind": "Name",
-                        "value": "vote",
+                        "value": "balance",
                         "loc": {
-                            "start": 2026,
-                            "end": 2030
+                            "start": 1999,
+                            "end": 2006
                         }
                     },
                     "arguments": [
@@ -3993,10 +4221,10 @@ $430a85f9dbbc5964$exports = {
                             "kind": "InputValueDefinition",
                             "name": {
                                 "kind": "Name",
-                                "value": "proposal",
+                                "value": "votingVault",
                                 "loc": {
-                                    "start": 2031,
-                                    "end": 2039
+                                    "start": 2007,
+                                    "end": 2018
                                 }
                             },
                             "type": {
@@ -4007,62 +4235,24 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "ID",
                                         "loc": {
-                                            "start": 2041,
-                                            "end": 2043
+                                            "start": 2020,
+                                            "end": 2022
                                         }
                                     },
                                     "loc": {
-                                        "start": 2041,
-                                        "end": 2043
+                                        "start": 2020,
+                                        "end": 2022
                                     }
                                 },
                                 "loc": {
-                                    "start": 2041,
-                                    "end": 2044
+                                    "start": 2020,
+                                    "end": 2023
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 2031,
-                                "end": 2044
-                            }
-                        },
-                        {
-                            "kind": "InputValueDefinition",
-                            "name": {
-                                "kind": "Name",
-                                "value": "votingContract",
-                                "loc": {
-                                    "start": 2046,
-                                    "end": 2060
-                                }
-                            },
-                            "type": {
-                                "kind": "NonNullType",
-                                "type": {
-                                    "kind": "NamedType",
-                                    "name": {
-                                        "kind": "Name",
-                                        "value": "ID",
-                                        "loc": {
-                                            "start": 2062,
-                                            "end": 2064
-                                        }
-                                    },
-                                    "loc": {
-                                        "start": 2062,
-                                        "end": 2064
-                                    }
-                                },
-                                "loc": {
-                                    "start": 2062,
-                                    "end": 2065
-                                }
-                            },
-                            "directives": [],
-                            "loc": {
-                                "start": 2046,
-                                "end": 2065
+                                "start": 2007,
+                                "end": 2023
                             }
                         }
                     ],
@@ -4070,31 +4260,31 @@ $430a85f9dbbc5964$exports = {
                         "kind": "NamedType",
                         "name": {
                             "kind": "Name",
-                            "value": "Vote",
+                            "value": "String",
                             "loc": {
-                                "start": 2068,
-                                "end": 2072
+                                "start": 2026,
+                                "end": 2032
                             }
                         },
                         "loc": {
-                            "start": 2068,
-                            "end": 2072
+                            "start": 2026,
+                            "end": 2032
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 2026,
-                        "end": 2072
+                        "start": 1999,
+                        "end": 2032
                     }
                 },
                 {
                     "kind": "FieldDefinition",
                     "name": {
                         "kind": "Name",
-                        "value": "votes",
+                        "value": "balances",
                         "loc": {
-                            "start": 2076,
-                            "end": 2081
+                            "start": 2035,
+                            "end": 2043
                         }
                     },
                     "arguments": [
@@ -4102,10 +4292,10 @@ $430a85f9dbbc5964$exports = {
                             "kind": "InputValueDefinition",
                             "name": {
                                 "kind": "Name",
-                                "value": "proposals",
+                                "value": "votingVaults",
                                 "loc": {
-                                    "start": 2082,
-                                    "end": 2091
+                                    "start": 2044,
+                                    "end": 2056
                                 }
                             },
                             "type": {
@@ -4120,44 +4310,84 @@ $430a85f9dbbc5964$exports = {
                                                 "kind": "Name",
                                                 "value": "ID",
                                                 "loc": {
-                                                    "start": 2094,
-                                                    "end": 2096
+                                                    "start": 2059,
+                                                    "end": 2061
                                                 }
                                             },
                                             "loc": {
-                                                "start": 2094,
-                                                "end": 2096
+                                                "start": 2059,
+                                                "end": 2061
                                             }
                                         },
                                         "loc": {
-                                            "start": 2094,
-                                            "end": 2097
+                                            "start": 2059,
+                                            "end": 2062
                                         }
                                     },
                                     "loc": {
-                                        "start": 2093,
-                                        "end": 2098
+                                        "start": 2058,
+                                        "end": 2063
                                     }
                                 },
                                 "loc": {
-                                    "start": 2093,
-                                    "end": 2099
+                                    "start": 2058,
+                                    "end": 2064
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 2082,
-                                "end": 2099
+                                "start": 2044,
+                                "end": 2064
+                            }
+                        }
+                    ],
+                    "type": {
+                        "kind": "ListType",
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "String",
+                                "loc": {
+                                    "start": 2068,
+                                    "end": 2074
+                                }
+                            },
+                            "loc": {
+                                "start": 2068,
+                                "end": 2074
                             }
                         },
+                        "loc": {
+                            "start": 2067,
+                            "end": 2075
+                        }
+                    },
+                    "directives": [],
+                    "loc": {
+                        "start": 2035,
+                        "end": 2075
+                    }
+                },
+                {
+                    "kind": "FieldDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "vote",
+                        "loc": {
+                            "start": 2078,
+                            "end": 2082
+                        }
+                    },
+                    "arguments": [
                         {
                             "kind": "InputValueDefinition",
                             "name": {
                                 "kind": "Name",
-                                "value": "votingContract",
+                                "value": "proposal",
                                 "loc": {
-                                    "start": 2101,
-                                    "end": 2115
+                                    "start": 2083,
+                                    "end": 2091
                                 }
                             },
                             "type": {
@@ -4168,24 +4398,185 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "ID",
                                         "loc": {
-                                            "start": 2117,
-                                            "end": 2119
+                                            "start": 2093,
+                                            "end": 2095
                                         }
                                     },
                                     "loc": {
-                                        "start": 2117,
-                                        "end": 2119
+                                        "start": 2093,
+                                        "end": 2095
                                     }
                                 },
                                 "loc": {
-                                    "start": 2117,
-                                    "end": 2120
+                                    "start": 2093,
+                                    "end": 2096
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 2101,
-                                "end": 2120
+                                "start": 2083,
+                                "end": 2096
+                            }
+                        },
+                        {
+                            "kind": "InputValueDefinition",
+                            "name": {
+                                "kind": "Name",
+                                "value": "votingContract",
+                                "loc": {
+                                    "start": 2098,
+                                    "end": 2112
+                                }
+                            },
+                            "type": {
+                                "kind": "NonNullType",
+                                "type": {
+                                    "kind": "NamedType",
+                                    "name": {
+                                        "kind": "Name",
+                                        "value": "ID",
+                                        "loc": {
+                                            "start": 2114,
+                                            "end": 2116
+                                        }
+                                    },
+                                    "loc": {
+                                        "start": 2114,
+                                        "end": 2116
+                                    }
+                                },
+                                "loc": {
+                                    "start": 2114,
+                                    "end": 2117
+                                }
+                            },
+                            "directives": [],
+                            "loc": {
+                                "start": 2098,
+                                "end": 2117
+                            }
+                        }
+                    ],
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "Vote",
+                            "loc": {
+                                "start": 2120,
+                                "end": 2124
+                            }
+                        },
+                        "loc": {
+                            "start": 2120,
+                            "end": 2124
+                        }
+                    },
+                    "directives": [],
+                    "loc": {
+                        "start": 2078,
+                        "end": 2124
+                    }
+                },
+                {
+                    "kind": "FieldDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "votes",
+                        "loc": {
+                            "start": 2127,
+                            "end": 2132
+                        }
+                    },
+                    "arguments": [
+                        {
+                            "kind": "InputValueDefinition",
+                            "name": {
+                                "kind": "Name",
+                                "value": "proposals",
+                                "loc": {
+                                    "start": 2133,
+                                    "end": 2142
+                                }
+                            },
+                            "type": {
+                                "kind": "NonNullType",
+                                "type": {
+                                    "kind": "ListType",
+                                    "type": {
+                                        "kind": "NonNullType",
+                                        "type": {
+                                            "kind": "NamedType",
+                                            "name": {
+                                                "kind": "Name",
+                                                "value": "ID",
+                                                "loc": {
+                                                    "start": 2145,
+                                                    "end": 2147
+                                                }
+                                            },
+                                            "loc": {
+                                                "start": 2145,
+                                                "end": 2147
+                                            }
+                                        },
+                                        "loc": {
+                                            "start": 2145,
+                                            "end": 2148
+                                        }
+                                    },
+                                    "loc": {
+                                        "start": 2144,
+                                        "end": 2149
+                                    }
+                                },
+                                "loc": {
+                                    "start": 2144,
+                                    "end": 2150
+                                }
+                            },
+                            "directives": [],
+                            "loc": {
+                                "start": 2133,
+                                "end": 2150
+                            }
+                        },
+                        {
+                            "kind": "InputValueDefinition",
+                            "name": {
+                                "kind": "Name",
+                                "value": "votingContract",
+                                "loc": {
+                                    "start": 2152,
+                                    "end": 2166
+                                }
+                            },
+                            "type": {
+                                "kind": "NonNullType",
+                                "type": {
+                                    "kind": "NamedType",
+                                    "name": {
+                                        "kind": "Name",
+                                        "value": "ID",
+                                        "loc": {
+                                            "start": 2168,
+                                            "end": 2170
+                                        }
+                                    },
+                                    "loc": {
+                                        "start": 2168,
+                                        "end": 2170
+                                    }
+                                },
+                                "loc": {
+                                    "start": 2168,
+                                    "end": 2171
+                                }
+                            },
+                            "directives": [],
+                            "loc": {
+                                "start": 2152,
+                                "end": 2171
                             }
                         }
                     ],
@@ -4197,24 +4588,24 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "Vote",
                                 "loc": {
-                                    "start": 2124,
-                                    "end": 2128
+                                    "start": 2175,
+                                    "end": 2179
                                 }
                             },
                             "loc": {
-                                "start": 2124,
-                                "end": 2128
+                                "start": 2175,
+                                "end": 2179
                             }
                         },
                         "loc": {
-                            "start": 2123,
-                            "end": 2129
+                            "start": 2174,
+                            "end": 2180
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 2076,
-                        "end": 2129
+                        "start": 2127,
+                        "end": 2180
                     }
                 },
                 {
@@ -4223,8 +4614,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingPower",
                         "loc": {
-                            "start": 2133,
-                            "end": 2144
+                            "start": 2183,
+                            "end": 2194
                         }
                     },
                     "arguments": [
@@ -4234,8 +4625,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "votingVault",
                                 "loc": {
-                                    "start": 2145,
-                                    "end": 2156
+                                    "start": 2195,
+                                    "end": 2206
                                 }
                             },
                             "type": {
@@ -4246,24 +4637,24 @@ $430a85f9dbbc5964$exports = {
                                         "kind": "Name",
                                         "value": "ID",
                                         "loc": {
-                                            "start": 2158,
-                                            "end": 2160
+                                            "start": 2208,
+                                            "end": 2210
                                         }
                                     },
                                     "loc": {
-                                        "start": 2158,
-                                        "end": 2160
+                                        "start": 2208,
+                                        "end": 2210
                                     }
                                 },
                                 "loc": {
-                                    "start": 2158,
-                                    "end": 2161
+                                    "start": 2208,
+                                    "end": 2211
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 2145,
-                                "end": 2161
+                                "start": 2195,
+                                "end": 2211
                             }
                         },
                         {
@@ -4272,8 +4663,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "blockNumber",
                                 "loc": {
-                                    "start": 2163,
-                                    "end": 2174
+                                    "start": 2213,
+                                    "end": 2224
                                 }
                             },
                             "type": {
@@ -4282,19 +4673,19 @@ $430a85f9dbbc5964$exports = {
                                     "kind": "Name",
                                     "value": "Int",
                                     "loc": {
-                                        "start": 2176,
-                                        "end": 2179
+                                        "start": 2226,
+                                        "end": 2229
                                     }
                                 },
                                 "loc": {
-                                    "start": 2176,
-                                    "end": 2179
+                                    "start": 2226,
+                                    "end": 2229
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 2163,
-                                "end": 2179
+                                "start": 2213,
+                                "end": 2229
                             }
                         }
                     ],
@@ -4304,19 +4695,19 @@ $430a85f9dbbc5964$exports = {
                             "kind": "Name",
                             "value": "VotingPower",
                             "loc": {
-                                "start": 2182,
-                                "end": 2193
+                                "start": 2232,
+                                "end": 2243
                             }
                         },
                         "loc": {
-                            "start": 2182,
-                            "end": 2193
+                            "start": 2232,
+                            "end": 2243
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 2133,
-                        "end": 2193
+                        "start": 2183,
+                        "end": 2243
                     }
                 },
                 {
@@ -4325,8 +4716,8 @@ $430a85f9dbbc5964$exports = {
                         "kind": "Name",
                         "value": "votingPowers",
                         "loc": {
-                            "start": 2197,
-                            "end": 2209
+                            "start": 2246,
+                            "end": 2258
                         }
                     },
                     "arguments": [
@@ -4336,8 +4727,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "votingVaults",
                                 "loc": {
-                                    "start": 2210,
-                                    "end": 2222
+                                    "start": 2259,
+                                    "end": 2271
                                 }
                             },
                             "type": {
@@ -4352,34 +4743,34 @@ $430a85f9dbbc5964$exports = {
                                                 "kind": "Name",
                                                 "value": "ID",
                                                 "loc": {
-                                                    "start": 2225,
-                                                    "end": 2227
+                                                    "start": 2274,
+                                                    "end": 2276
                                                 }
                                             },
                                             "loc": {
-                                                "start": 2225,
-                                                "end": 2227
+                                                "start": 2274,
+                                                "end": 2276
                                             }
                                         },
                                         "loc": {
-                                            "start": 2225,
-                                            "end": 2228
+                                            "start": 2274,
+                                            "end": 2277
                                         }
                                     },
                                     "loc": {
-                                        "start": 2224,
-                                        "end": 2229
+                                        "start": 2273,
+                                        "end": 2278
                                     }
                                 },
                                 "loc": {
-                                    "start": 2224,
-                                    "end": 2230
+                                    "start": 2273,
+                                    "end": 2279
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 2210,
-                                "end": 2230
+                                "start": 2259,
+                                "end": 2279
                             }
                         },
                         {
@@ -4388,8 +4779,8 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "blockNumber",
                                 "loc": {
-                                    "start": 2232,
-                                    "end": 2243
+                                    "start": 2281,
+                                    "end": 2292
                                 }
                             },
                             "type": {
@@ -4398,19 +4789,19 @@ $430a85f9dbbc5964$exports = {
                                     "kind": "Name",
                                     "value": "Int",
                                     "loc": {
-                                        "start": 2245,
-                                        "end": 2248
+                                        "start": 2294,
+                                        "end": 2297
                                     }
                                 },
                                 "loc": {
-                                    "start": 2245,
-                                    "end": 2248
+                                    "start": 2294,
+                                    "end": 2297
                                 }
                             },
                             "directives": [],
                             "loc": {
-                                "start": 2232,
-                                "end": 2248
+                                "start": 2281,
+                                "end": 2297
                             }
                         }
                     ],
@@ -4422,36 +4813,36 @@ $430a85f9dbbc5964$exports = {
                                 "kind": "Name",
                                 "value": "VotingPower",
                                 "loc": {
-                                    "start": 2252,
-                                    "end": 2263
+                                    "start": 2301,
+                                    "end": 2312
                                 }
                             },
                             "loc": {
-                                "start": 2252,
-                                "end": 2263
+                                "start": 2301,
+                                "end": 2312
                             }
                         },
                         "loc": {
-                            "start": 2251,
-                            "end": 2264
+                            "start": 2300,
+                            "end": 2313
                         }
                     },
                     "directives": [],
                     "loc": {
-                        "start": 2197,
-                        "end": 2264
+                        "start": 2246,
+                        "end": 2313
                     }
                 }
             ],
             "loc": {
-                "start": 1994,
-                "end": 2267
+                "start": 1969,
+                "end": 2315
             }
         }
     ],
     "loc": {
         "start": 0,
-        "end": 2269
+        "end": 2316
     }
 };
 
