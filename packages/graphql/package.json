@@ -50,7 +50,7 @@
     "@graphql-codegen/typescript-react-apollo": "^3.2.14",
     "@graphql-codegen/typescript-resolvers": "^2.7.1",
     "@graphql-tools/schema": "^8.3.13",
-    "@graphql-yoga/node": "^2.13.2",
+    "@graphql-yoga/node": "^2.13.4",
     "@types/md5": "^2.3.2",
     "md5": "^2.3.0",
     "minimatch": "^5.1.0",
