@@ -61,7 +61,7 @@
     "@apollo/client": "^3.6.5",
     "@elementfi/eslint-config": "*",
     "@elementfi/prettier-config": "*",
-    "@types/node": "^17.0.42",
+    "@types/node": "^16.11.45",
     "@types/yargs": "^17.0.10",
     "eslint": "^7.32.0",
     "graphql": "^16.5.0",

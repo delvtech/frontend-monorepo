@@ -54,7 +54,7 @@
     "swr": "^1.1.2"
   },
   "devDependencies": {
-    "@types/node": "17.0.10",
+    "@types/node": "16.11.45",
     "@types/react": "17.0.38",
     "@types/react-slick": "^0.23.10",
     "@types/react-transition-group": "^4.4.4",
