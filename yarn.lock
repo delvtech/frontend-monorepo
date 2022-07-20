@@ -5054,7 +5054,7 @@
   dependencies:
     "@parcel/types" "2.6.0"
 
-"@parcel/plugin@2.6.2", "@parcel/plugin@^2.6.0":
+"@parcel/plugin@^2.6.0":
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/@parcel/plugin/-/plugin-2.6.2.tgz#d4c8cc558e962e4dfb7154a7f0a023f6abad07ac"
   integrity sha512-wbbWsM23Pr+8xtLSvf+UopXdVYlpKCCx6PuuZaZcKo+9IcDCWoGXD4M8Kkz14qBmkFn5uM00mULUqmVdSibB2w==
@@ -5158,12 +5158,12 @@
     browserslist "^4.6.6"
     nullthrows "^1.1.1"
 
-"@parcel/transformer-graphql@2.6.2":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/@parcel/transformer-graphql/-/transformer-graphql-2.6.2.tgz#34d985293d6789b914b4580d9d7e94359c6a9e3c"
-  integrity sha512-CG/AaxNbjiRYCu/+esu2OvpKGlrAqKzoCu9LAzy9rDFHNMkMNnvp8zpAT3IuQ0xw/SR/S9Ut13xbrs+E2cI1Qg==
+"@parcel/transformer-graphql@2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@parcel/transformer-graphql/-/transformer-graphql-2.6.0.tgz#8dbbfdb88b8552b81913765dd42b84d8a313c360"
+  integrity sha512-evjdyJsS/dmAY0z0fUQV8lvi7dU09JU4YQJCLjprgF37Vh+qH0xlKKeGdS6OSIperU8vAV1/1g9LP99GWaWZug==
   dependencies:
-    "@parcel/plugin" "2.6.2"
+    "@parcel/plugin" "2.6.0"
     graphql "^15.0.0"
     graphql-import-macro "^1.0.0"
 
@@ -5272,22 +5272,21 @@
     posthtml-render "^3.0.0"
     semver "^5.7.1"
 
-"@parcel/transformer-typescript-types@2.6.2":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/@parcel/transformer-typescript-types/-/transformer-typescript-types-2.6.2.tgz#73c4834f4171c1f53bb14d98a6dfb88c340fe53e"
-  integrity sha512-p2Ctikbnfof/GbWE67Fg0VlKkTYfbDujxHuk+qAm7XXGZe48dOc7l7CQ7swvapkUWkL3rKtsLAf3HecLz4D10Q==
+"@parcel/transformer-typescript-types@2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@parcel/transformer-typescript-types/-/transformer-typescript-types-2.6.0.tgz#27297a8c59572bd00f54a6156f586f7da5570f7f"
+  integrity sha512-T1ul8EFc/VxJp6jywDLKV66P0YseeROsZ/kwKpfJezua2mRO4iH2O6G9v5jn2H1C+bb6/M0JvfJqRxLj2Himlw==
   dependencies:
-    "@parcel/diagnostic" "2.6.2"
-    "@parcel/plugin" "2.6.2"
+    "@parcel/diagnostic" "2.6.0"
+    "@parcel/plugin" "2.6.0"
     "@parcel/source-map" "^2.0.0"
-    "@parcel/ts-utils" "2.6.2"
-    "@parcel/utils" "2.6.2"
+    "@parcel/ts-utils" "2.6.0"
     nullthrows "^1.1.1"
 
-"@parcel/ts-utils@2.6.2":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/@parcel/ts-utils/-/ts-utils-2.6.2.tgz#a132f876bf399ac61c2bfe75a29248cab6f015a9"
-  integrity sha512-PqmjyBYIa56bSjeumJj/tEFooYOBePw8PVi9dU1dkuJoBtDJl/+s/GPW2JnupaplKnlEtX8ag922vjua4A9gsg==
+"@parcel/ts-utils@2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@parcel/ts-utils/-/ts-utils-2.6.0.tgz#f9b07be2faa62862933741669b758ce56e5c15bf"
+  integrity sha512-U2Spr/vdOnxLzztXP6WpMO7JZTsaYO1G6F/cUTG5fReTQ0imM952FAc/WswpZWAPZqXqWCnvC/Z91JIkMDuYrA==
   dependencies:
     nullthrows "^1.1.1"
 
