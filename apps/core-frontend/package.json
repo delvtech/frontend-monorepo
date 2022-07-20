@@ -108,7 +108,7 @@
     "tailwindcss-classnames": "^1.9.0",
     "ts-money": "^0.4.6",
     "ttag": "^1.7.24",
-    "typescript": "^4.5.2",
+    "typescript": "^4.7.4",
     "warning": "^4.0.3"
   },
   "devDependencies": {
