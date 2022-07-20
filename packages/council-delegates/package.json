@@ -28,7 +28,7 @@
     "src": "./src"
   },
   "dependencies": {
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.4"
   },
   "devDependencies": {
     "@elementfi/eslint-config": "*",
