@@ -19,7 +19,7 @@
     "@blueprintjs/select": "^3.18.11",
     "@elementfi/core-tokenlist": "*",
     "@elementfi/core-typechain": "*",
-    "@ethersproject/abi": "^5.5.0",
+    "@ethersproject/abi": "^5.6.4",
     "@ethersproject/abstract-signer": "^5.4.1",
     "@ethersproject/bytes": "^5.5.0",
     "@ethersproject/contracts": "^5.4.1",
