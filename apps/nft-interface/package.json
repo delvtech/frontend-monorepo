@@ -48,7 +48,7 @@
     "react-slick": "^0.29.0",
     "react-text-transition": "^2.0.0",
     "react-transition-group": "^4.4.2",
-    "recharts": "^2.1.9",
+    "recharts": "^2.1.12",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.3",
     "swr": "^1.1.2"
