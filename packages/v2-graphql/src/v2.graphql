@@ -1,4 +1,9 @@
 type Query {
+  "Look up the multi term contract for a given yield source, eg: Yearn USDC Vault"
+  multiTerm(yieldSource: ID!): MultiTerm
+  "Look up the pool for a given maturity date"
+  pool(term: ID!, maturity: String!): Pool
+
   term(address: String!): Term
   terms(addresses: [String!], created: Int, maturity: Int): [Term]
   position(address: ID!): YieldSource
@@ -10,13 +15,34 @@ type Query {
   umbrellas(addresses: [ID!]): [UmbrellaTerm]
 }
 
-# type MultiTerm {
-#   address: ID!
-#   position: YieldSource
-#   terms: [Term]
-# }
+type MultiTerm {
+  address: ID!
+  position: YieldSource
+  terms: [Term]
+  principalToken(maturity: String!): PrincipalToken
+  yieldToken(startDate: String!, maturity: String!): YieldToken
+  "The underlying token, sometimes referred to as base asset"
+  token: Token
+}
 
-"TODO: Review 4626 standard"
+type Term {
+  id: ID!
+  name: String!
+  baseAsset: Token
+  "Dollar amount of deposits into the term"
+  tvl: String
+  position: YieldSource
+  "Timestamp in milliseconds since unix epoch"
+  createdTimestamp: Int
+  "Block Int the term was created at"
+  createdAtBlock: Int
+  "Timestamp in milliseconds since unix epoch"
+  maturity: String
+  pool: Pool
+  principalToken: PrincipalToken
+  yieldToken(startDate: String!): YieldToken
+}
+
 type PositionMultiTerm {
   "MultiTerm address"
   address: ID!
@@ -34,24 +60,6 @@ type PositionMultiTerm {
   pricePerShares(tokensOut: [String!]): [String]
   baseAsset: Token
   terms: [Term]
-}
-
-type Term {
-  id: ID!
-  name: String!
-  baseAsset: Token
-  "Dollar amount of deposits into the term"
-  tvl: String
-  position: YieldSource
-  "Timestamp in milliseconds since unix epoch"
-  createdTimestamp: Int
-  "Block Int the term was created at"
-  createdAtBlock: Int
-  "Timestamp in milliseconds since unix epoch"
-  maturity: String
-  pool: Pool
-  principalToken: Token
-  yieldToken: Token
 }
 
 type UmbrellaTerm {
