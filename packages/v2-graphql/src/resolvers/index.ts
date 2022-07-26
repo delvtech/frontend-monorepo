@@ -1,4 +1,4 @@
-import { V2Context } from "src/logic/context";
+import { V2Context } from "src/context";
 import { Resolvers } from "src/generated";
 
 export const resolvers: Resolvers<V2Context> = {

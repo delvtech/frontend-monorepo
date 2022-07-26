@@ -1,6 +1,6 @@
 import { Term } from "src/generated";
-import { V2Context } from "src/logic/context";
-import { getDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
+import { V2Context } from "src/context";
+import { getDataSourceByAddress } from "src/utils/getDataSourceByAddress";
 
 interface TermModel {
   getAll: (options: { context: V2Context }) => (Term | undefined)[];

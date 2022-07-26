@@ -1,4 +1,4 @@
-import { V2Context } from "src/logic/context";
+import { V2Context } from "src/context";
 
 export function getDataSourceByAddress(
   address: string,
