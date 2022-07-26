@@ -17,7 +17,7 @@ import { JoinGSCButton, LeaveGSCButton } from "src/ui/gsc/GSCButtons";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
 import { ThresholdProgressBar } from "src/ui/gsc/ThresholdProgressBar";
-import { useGetPortfolioCardDataQuery } from "./PortfolioCard.generated";
+import { useGetPortfolioCardDataQuery } from "src/graphql/generated";
 import { addressesJson } from "src/addresses";
 
 interface PortfolioCardProps {

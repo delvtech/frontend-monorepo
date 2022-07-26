@@ -58,9 +58,9 @@ var configs_js_1 = require("./configs.js");
  *   If none exist, the script will fail
  */
 function generate(_a) {
-    var outDir = _a.outDir, isPackage = _a.package, schema = _a.schema, w = _a.w;
+    var outDir = _a.outDir, isPackage = _a.package, schema = _a.schema, watch = _a.watch;
     return __awaiter(this, void 0, void 0, function () {
-        var graphqlFilesPath, config, baseTypesPath;
+        var graphqlFilesPath, config;
         var _b, _c, _d;
         return __generator(this, function (_e) {
             switch (_e.label) {
@@ -88,17 +88,15 @@ function generate(_a) {
                                 },
                                 _c);
                         }
-                        baseTypesPath = "".concat(outDir, "/graphql.d.ts");
                         config.generates = (_d = {},
-                            _d["".concat(outDir, "/graphql-modules.d.ts")] = configs_js_1.moduleDefinitions,
-                            _d[baseTypesPath] = configs_js_1.types,
-                            _d["."] = (0, configs_js_1.getCollocatedHooks)(baseTypesPath),
+                            _d["".concat(outDir, "/module.d.ts")] = configs_js_1.moduleDefinitions,
+                            _d["".concat(outDir, "/index.ts")] = configs_js_1.appMain,
                             _d);
                     }
                     return [4 /*yield*/, (0, cli_1.generate)(config)];
                 case 1:
                     _e.sent();
-                    if (w) {
+                    if (watch) {
                         (0, watch_1.watch)(graphqlFilesPath, function () {
                             (0, cli_1.generate)(config);
                         });

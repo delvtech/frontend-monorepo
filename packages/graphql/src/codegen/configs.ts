@@ -31,13 +31,6 @@ declare module '*.graphql' {
 };
 
 /**
- * A simple config for GraphQL types based on a schema's type definitions.
- */
-export const types: Types.ConfiguredOutput = {
-  plugins: ["time", addGeneratedNote, "typescript"],
-};
-
-/**
  * A config for generated module definitions to avoid TypeScript errors when
  * importing `.graphql` files into `.ts`, `.tsx`, and `.mts` files.
  */
@@ -71,26 +64,14 @@ export const packageMain: Types.ConfiguredOutput = {
 };
 
 /**
- * Create a config for generated Apollo hooks which are emitted next to their
- * corresponding `.graphql` files and import common schema types from a
- * base types path.
- * @param baseTypesPath The path to the base types.
- * @returns `ConfiguredOutput` to included in codegen.
+ * A config for generated types and Apollo hooks for a new `@elementfi` app.
  */
-export function getCollocatedHooks(
-  baseTypesPath: string,
-): Types.ConfiguredOutput {
-  return {
-    preset: "near-operation-file",
-    presetConfig: {
-      extension: ".generated.ts",
-      baseTypesPath: baseTypesPath,
-    },
-    plugins: [
-      "time",
-      addGeneratedNote,
-      "typescript-operations",
-      "typescript-react-apollo",
-    ],
-  };
-}
+export const appMain: Types.ConfiguredOutput = {
+  plugins: [
+    "time",
+    addGeneratedNote,
+    "typescript",
+    "typescript-operations",
+    "typescript-react-apollo",
+  ],
+};

@@ -1,2 +1,2 @@
 src/tailwind.output.css
-*.generated.ts
+src/graphql/generated/*

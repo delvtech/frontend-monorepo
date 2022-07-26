@@ -2,7 +2,7 @@ interface GenerateOptions {
     outDir: string;
     package?: boolean;
     schema?: string;
-    w?: boolean;
+    watch?: boolean;
 }
 /**
  * Generate TypeScript types and Apollo hooks from `.graphql` files for Element
@@ -20,5 +20,5 @@ interface GenerateOptions {
  *   script will look for type definitions in all `.graphql` files in the app.
  *   If none exist, the script will fail
  */
-export declare function generate({ outDir, package: isPackage, schema, w, }: GenerateOptions): Promise<void>;
+export declare function generate({ outDir, package: isPackage, schema, watch, }: GenerateOptions): Promise<void>;
 export {};

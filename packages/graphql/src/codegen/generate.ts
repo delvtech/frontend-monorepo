@@ -1,12 +1,7 @@
 import { generate as graphqlCodegen } from "@graphql-codegen/cli";
 import type { Types } from "@graphql-codegen/plugin-helpers";
 import { watch as watchFiles } from "./watch";
-import {
-  types,
-  moduleDefinitions,
-  packageMain,
-  getCollocatedHooks,
-} from "./configs.js";
+import { appMain, moduleDefinitions, packageMain } from "./configs.js";
 
 interface GenerateOptions {
   outDir: string;
@@ -62,11 +57,9 @@ export async function generate({
         },
       };
     }
-    const baseTypesPath = `${outDir}/graphql.d.ts`;
     config.generates = {
-      [`${outDir}/graphql-modules.d.ts`]: moduleDefinitions,
-      [baseTypesPath]: types,
-      ".": getCollocatedHooks(baseTypesPath),
+      [`${outDir}/module.d.ts`]: moduleDefinitions,
+      [`${outDir}/index.ts`]: appMain,
     };
   }
 
