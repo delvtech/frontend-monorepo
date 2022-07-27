@@ -4,6 +4,7 @@ export type LocalStorage = {
   clear: () => void;
 };
 
+// TODO: Move to component-library
 export function useLocalStorage(): LocalStorage {
   const isBrowser: boolean = typeof window !== "undefined";
 
