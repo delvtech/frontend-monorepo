@@ -19,7 +19,7 @@ import {
   PrincipalTokenInfo,
 } from "@elementfi/core-tokenlist";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
-import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
+import { convertEpochSecondsToDate } from "@elementfi/base";
 import { formatAbbreviatedDate } from "src/base/dates";
 import AssetIcon from "src/ui/base/svg/AssetIcon/AssetIcon";
 import { Intent } from "src/ui/base/Intent";

@@ -7,7 +7,7 @@ import {
   mapWETHToETHSentinel,
 } from "@elementfi/integrations/balancer/balancer";
 import { BALANCER_ETH_SENTINEL } from "@elementfi/integrations/balancer/ethSentinel";
-import { sortAddresses } from "@elementfi/base/utils/sortAddresses/sortAddresses";
+import { sortAddresses } from "@elementfi/base";
 import { StaticContractMethodArgs } from "@elementfi/react-query-typechain/src/types";
 import { BigNumber } from "ethers";
 import { parseEther } from "ethers/lib/utils";

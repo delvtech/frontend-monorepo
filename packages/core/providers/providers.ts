@@ -5,7 +5,7 @@ import { providers } from "ethers";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 import { AddressesJson } from "@elementfi/core/addresses/addresses";
-import { ChainId } from "@elementfi/base/ethereum/ethereum";
+import { ChainId } from "@elementfi/base";
 
 const LOCAL_RPC_HOST = "http://127.0.0.1:8545";
 

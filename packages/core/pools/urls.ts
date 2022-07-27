@@ -1,5 +1,4 @@
-import { ChainId } from "@elementfi/base/ethereum/ethereum";
-import { assertNever } from "@elementfi/base/utils/assertNever";
+import { ChainId, assertNever } from "@elementfi/base";
 
 export function getPoolURL(chainId: ChainId, poolAddress: string): string {
   switch (chainId) {

@@ -12,7 +12,7 @@ import { useLPTokenBalance } from "./hooks/useLPTokenBalance";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
 import { useELFIPerBlock } from "./hooks/useELFIPerBlock";
 import { formatAbbreviatedDate } from "src/base/dates";
-import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
+import { convertEpochSecondsToDate } from "@elementfi/base";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import { Popover2 } from "@blueprintjs/popover2";
 import {

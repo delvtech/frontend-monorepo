@@ -3,7 +3,7 @@ import {
   PrincipalTokenInfo,
 } from "@elementfi/core-tokenlist";
 import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
-import { convertEpochSecondsToDate } from "@elementfi/base/time/convertEpochSecondsToDate/convertEpochSecondsToDate";
+import { convertEpochSecondsToDate } from "@elementfi/base";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import React, { ReactElement, useState } from "react";
 import { formatAbbreviatedDate } from "src/base/dates";
@@ -19,11 +19,8 @@ import { useLPTokenBalance } from "src/ui/liquiditymining/hooks/useLPTokenBalanc
 import { useELFIPerBlock } from "src/ui/liquiditymining/hooks/useELFIPerBlock";
 import { useUserInfo } from "src/ui/liquiditymining/hooks/useUserInfo";
 import { t } from "ttag";
-import {
-  ETHEREUM_BLOCKS_PER_WEEK,
-  ChainId,
-} from "@elementfi/base/ethereum/ethereum";
-import { formatPercent } from "@elementfi/base/utils/formatPercent/formatPercent";
+import { ETHEREUM_BLOCKS_PER_WEEK, ChainId } from "@elementfi/base";
+import { formatPercent } from "@elementfi/base";
 import { getPoolURL } from "@elementfi/core/pools/urls";
 import { commify } from "ethers/lib/utils";
 import { usePoolShare } from "src/ui/liquiditymining/hooks/usePoolShare";

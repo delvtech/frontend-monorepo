@@ -2,7 +2,7 @@
 
 import { ElementType, ReactElement } from "react";
 
-import { assertNever } from "@elementfi/base/utils/assertNever";
+import { assertNever } from "@elementfi/base";
 import classNames from "classnames";
 
 import { PolymorphicComponentProps } from "src/@types/helper";

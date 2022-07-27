@@ -1,5 +1,5 @@
 import { BALANCER_ETH_SENTINEL } from "@elementfi/integrations/balancer/ethSentinel";
-import { typeAassertNever } from "@elementfi/base/utils/typeAssertNever";
+import { typeAassertNever } from "@elementfi/base";
 import {
   CryptoAsset,
   CryptoAssetType,

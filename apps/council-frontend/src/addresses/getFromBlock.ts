@@ -1,4 +1,4 @@
-import { ChainId } from "@elementfi/base/ethereum/ethereum";
+import { ChainId } from "@elementfi/base";
 import { addressesJson } from ".";
 
 const MAINNET_DEPLOY_BLOCK = 14496292;

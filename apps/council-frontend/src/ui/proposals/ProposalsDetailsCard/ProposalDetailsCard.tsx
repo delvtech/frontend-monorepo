@@ -1,4 +1,4 @@
-import { formatBalance2 } from "@elementfi/base/utils/formatBalance/formatBalance";
+import { formatBalance2 } from "@elementfi/base";
 import { Proposal } from "@elementfi/council-proposals";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
