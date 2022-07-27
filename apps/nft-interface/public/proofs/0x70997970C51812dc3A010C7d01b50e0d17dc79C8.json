@@ -1,0 +1,13 @@
+[
+  {
+    "leaf": {
+      "address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "tokenId": { "type": "BigNumber", "hex": "0x1" }
+    },
+    "proof": [
+      "0x8d7516f92f86ff2bff7638117eeefe54f86ce065a68c3b0f6c4b3d9bfb491ad6",
+      "0x31403139b3e90fd160d993560f6de598174a3c5cbb1dd8614454219f590c1d57",
+      "0x2c70357a690b685ecef91703e08c73f3be5a8fe584b65cb1de18eb9dd3308dcd"
+    ]
+  }
+]
