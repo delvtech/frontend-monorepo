@@ -129,7 +129,7 @@
     "react-test-renderer": "^17.0.2",
     "ts-node": "^10.8.1",
     "ttag-cli": "^1.9.3",
-    "typechain": "^5.2.0"
+    "typechain": "^8.1.0"
   },
   "name": "core-frontend",
   "private": true,
