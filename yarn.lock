@@ -5176,12 +5176,12 @@
     browserslist "^4.6.6"
     nullthrows "^1.1.1"
 
-"@parcel/transformer-graphql@2.6.0":
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/@parcel/transformer-graphql/-/transformer-graphql-2.6.0.tgz#8dbbfdb88b8552b81913765dd42b84d8a313c360"
-  integrity sha512-evjdyJsS/dmAY0z0fUQV8lvi7dU09JU4YQJCLjprgF37Vh+qH0xlKKeGdS6OSIperU8vAV1/1g9LP99GWaWZug==
+"@parcel/transformer-graphql@2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@parcel/transformer-graphql/-/transformer-graphql-2.6.2.tgz#34d985293d6789b914b4580d9d7e94359c6a9e3c"
+  integrity sha512-CG/AaxNbjiRYCu/+esu2OvpKGlrAqKzoCu9LAzy9rDFHNMkMNnvp8zpAT3IuQ0xw/SR/S9Ut13xbrs+E2cI1Qg==
   dependencies:
-    "@parcel/plugin" "2.6.0"
+    "@parcel/plugin" "2.6.2"
     graphql "^15.0.0"
     graphql-import-macro "^1.0.0"
 
@@ -24150,7 +24150,7 @@ param-case@^3.0.3, param-case@^3.0.4:
     dot-case "^3.0.4"
     tslib "^2.0.3"
 
-parcel@^2.6.2:
+parcel@^2.6.0, parcel@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/parcel/-/parcel-2.6.2.tgz#4585208880f42b24935c7d3ad167dcd42f8174eb"
   integrity sha512-q6hrD3rm9M4S/VBVTcOs3pl55cnRwWfco7n8hZoAqnInWjWB+Khu92LRBMerMBTdE15Y+lJhWrXNdimDYstfhQ==
