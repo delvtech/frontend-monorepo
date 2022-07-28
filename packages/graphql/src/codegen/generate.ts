@@ -34,10 +34,10 @@ export async function generate({
   schema,
   watch,
 }: GenerateOptions): Promise<void> {
-  const graphqlFilesPath = "./**/*.graphql";
+  const graphqlFilesPath = "./**/*.(graphql|gql)";
   const config: Partial<Types.Config> = {
-    schema: "./**/*.graphql",
-    documents: "./**/*.graphql",
+    schema: graphqlFilesPath,
+    documents: graphqlFilesPath,
     // documents are files with graphql operations (queries and mutations). This
     // option prevents the codegen from throwing an error if none are found.
     ignoreNoDocuments: true,
