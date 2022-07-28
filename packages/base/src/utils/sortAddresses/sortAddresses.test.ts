@@ -1,4 +1,4 @@
-import { sortAddresses } from "@elementfi/base/utils/sortAddresses/sortAddresses";
+import { sortAddresses } from "@elementfi/base";
 
 describe("sortAddresses", () => {
   test("when given an empty string[] should return an empty string[] ", () => {

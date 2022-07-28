@@ -1,5 +1,5 @@
 import { addressesJson } from "src/addresses";
-import { ChainId } from "@elementfi/base/ethereum/ethereum";
+import { ChainId } from "@elementfi/base";
 
 export const ETHERSCAN_DOMAIN = getDomain();
 

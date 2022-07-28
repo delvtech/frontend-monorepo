@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { assertNever } from "@elementfi/base/utils/assertNever";
+import { assertNever } from "@elementfi/base";
 import {
   ThumbDownIcon,
   ThumbUpIcon,

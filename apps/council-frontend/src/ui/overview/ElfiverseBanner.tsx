@@ -9,7 +9,7 @@ import Card from "src/ui/base/Card/Card";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import { useNFTTokenBalanceOf } from "src/ui/overview/useNFTTokenBalanceOf";
 import useNumDelegates from "./useNumDelegates";
-import { assertNever } from "@elementfi/base/utils/assertNever";
+import { assertNever } from "@elementfi/base";
 
 interface ElfiverseBannerProps {
   account: string | null | undefined;

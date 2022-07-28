@@ -1,6 +1,6 @@
 import { Currencies, Money } from "ts-money";
 
-import { formatMoney } from "@elementfi/base/money/formatMoney";
+import { formatMoney } from "@elementfi/base";
 
 test("should format undefined balance correctly", () => {
   expect(formatMoney(undefined)).toEqual(undefined);

@@ -1,11 +1,8 @@
-import {
-  PrefEnvelope,
-  makePrefEnvelope,
-} from "@elementfi/base/prefs/prefEnvelope";
+import { PrefEnvelope, makePrefEnvelope } from "src/prefs/prefEnvelope";
 import {
   LocalStorage,
   useLocalStorage,
-} from "@elementfi/base/localstorage/useLocalStorage";
+} from "src/localstorage/useLocalStorage";
 import { useCallback, useMemo } from "react";
 import { useQuery, useQueryClient } from "react-query";
 
@@ -14,6 +11,7 @@ interface PrefResult<T> {
   setPref: (newPref: T) => void;
 }
 
+// TODO: Move to component-library
 export function usePref<T>(id: string, defaultValue: T): PrefResult<T> {
   const efiLocalStorage = useLocalStorage();
   const getPrefFromLocalStorage = useGetPrefFromLocalStorage(efiLocalStorage);

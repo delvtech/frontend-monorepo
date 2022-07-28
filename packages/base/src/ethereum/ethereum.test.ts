@@ -1,8 +1,4 @@
-import {
-  isGoerli,
-  isLocalnet,
-  isMainnet,
-} from "@elementfi/base/ethereum/ethereum";
+import { isGoerli, isLocalnet, isMainnet } from "@elementfi/base";
 
 describe("isGoerli", () => {
   test("should return correct boolean", () => {

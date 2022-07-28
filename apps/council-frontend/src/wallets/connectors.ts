@@ -9,11 +9,7 @@ import {
 } from "src/providers/providers";
 import { t } from "ttag";
 
-import {
-  ChainId,
-  ChainNames,
-  DEFAULT_CHAIN_IDS,
-} from "@elementfi/base/ethereum/ethereum";
+import { ChainId, ChainNames, DEFAULT_CHAIN_IDS } from "@elementfi/base";
 import { addressesJson } from "src/addresses";
 
 /**

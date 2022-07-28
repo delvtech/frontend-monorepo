@@ -4,7 +4,7 @@ import {
   TokenInfo,
   YieldPoolTokenInfo,
 } from "@elementfi/core-tokenlist";
-import { sortAddresses } from "@elementfi/base/utils/sortAddresses/sortAddresses";
+import { sortAddresses } from "@elementfi/base";
 import { getTokenInfo } from "@elementfi/core/tokenlists/tokenlists";
 import { underlyingContractsByAddress } from "@elementfi/core/underlying/underlying";
 import { PoolInfo } from "@elementfi/core/pools/PoolInfo";

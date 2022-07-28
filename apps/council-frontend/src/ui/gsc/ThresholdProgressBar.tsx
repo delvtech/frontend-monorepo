@@ -7,7 +7,7 @@ import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 
-import { formatBalance2 } from "@elementfi/base/utils/formatBalance/formatBalance";
+import { formatBalance2 } from "@elementfi/base";
 import { EligibilityState } from "src/ui/gsc/useGSCStatus";
 
 interface ThresholdProgressBarProps {

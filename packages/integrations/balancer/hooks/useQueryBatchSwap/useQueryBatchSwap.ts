@@ -1,5 +1,5 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
-import { clipStringValueToDecimals } from "@elementfi/base/math/fixedPoint";
+import { clipStringValueToDecimals } from "@elementfi/base";
 import { isPrincipalPool } from "@elementfi/core/pools/ccpool";
 import { getPoolTokens } from "@elementfi/core/pools/getPoolTokens";
 import { PoolContract } from "@elementfi/core/pools/PoolContract";

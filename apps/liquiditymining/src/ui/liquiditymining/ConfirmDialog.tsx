@@ -4,7 +4,7 @@ import { t } from "ttag";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import classNames from "classnames";
-import { usePref } from "@elementfi/base/prefs/hooks/usePref/usePref";
+import { usePref } from "@elementfi/base";
 
 interface CommonProps {
   className?: string;
