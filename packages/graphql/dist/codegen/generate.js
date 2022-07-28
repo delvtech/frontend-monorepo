@@ -65,10 +65,10 @@ function generate(_a) {
         return __generator(this, function (_e) {
             switch (_e.label) {
                 case 0:
-                    graphqlFilesPath = "./**/*.graphql";
+                    graphqlFilesPath = "./**/*.(graphql|gql)";
                     config = {
-                        schema: "./**/*.graphql",
-                        documents: "./**/*.graphql",
+                        schema: graphqlFilesPath,
+                        documents: graphqlFilesPath,
                         // documents are files with graphql operations (queries and mutations). This
                         // option prevents the codegen from throwing an error if none are found.
                         ignoreNoDocuments: true,

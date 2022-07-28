@@ -2,21 +2,17 @@ import { Provider } from "@ethersproject/providers";
 import { GraphQLSchema } from "graphql";
 import { ApolloLink } from "@apollo/client";
 import { YogaNodeServerInstance } from "@graphql-yoga/node";
-export type ResolverContext<
-  T extends Record<string, any> = Record<string, any>,
-> = {
-  chainId: number;
-  provider: Provider;
+export type ResolverContext<T extends Record<string, any> = Record<string, any>> = {
+    chainId: number;
+    provider: Provider;
 } & T;
 export interface Graph {
-  schema: GraphQLSchema;
-  initContext?: (
-    initialContext: ResolverContext,
-  ) => Record<string, any> | Record<string, any>;
+    schema: GraphQLSchema;
+    initContext?: (initialContext: ResolverContext) => Record<string, any> | Record<string, any>;
 }
 export interface InitOptions {
-  graphs: Graph[];
-  provider: Provider;
+    graphs: Graph[];
+    provider: Provider;
 }
 /**
  * Create an `ApolloLink` instance for Apollo Client (specifically, a
@@ -36,13 +32,9 @@ export function getApolloLink(options: InitOptions): ApolloLink;
  *   execution context for schema resolvers.
  * @returns An `YogaNodeServerInstance` instance.
  */
-export function createServer(options: InitOptions): YogaNodeServerInstance<
-  {
+export function createServer(options: InitOptions): YogaNodeServerInstance<{
     req: Request;
     res: Response;
-  },
-  Record<string, any>,
-  void
->;
+}, Record<string, any>, void>;
 
 //# sourceMappingURL=main.d.ts.map
