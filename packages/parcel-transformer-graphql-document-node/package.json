@@ -1,6 +1,6 @@
 {
   "name": "@elementfi/parcel-transformer-graphql-document-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "license": "ISC",
   "source": "index.ts",
@@ -33,7 +33,7 @@
   "dependencies": {
     "@elementfi/eslint-config": "*",
     "@elementfi/prettier-config": "*",
-    "@parcel/plugin": "^2.6.0",
+    "@parcel/plugin": "^2.6.2",
     "eslint": "^7.32.0",
     "graphql": "^16.5.0",
     "husky": "^7.0.4",
