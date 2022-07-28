@@ -7,7 +7,7 @@ import { abbreviateLargeValue } from "src/base/numbers";
 import SummaryCard from "src/ui/overview/SummaryCard";
 import { useVotingPowerForProtocol } from "src/ui/voting/useVotingPowerForProtocol";
 import Link from "next/link";
-import { useGetSummaryCardsDataQuery } from "./SummaryCards.generated";
+import { useGetSummaryCardsDataQuery } from "src/graphql/generated";
 import { addressesJson } from "src/addresses";
 
 export function SummaryCards(): ReactElement {

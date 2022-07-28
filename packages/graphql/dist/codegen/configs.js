@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCollocatedHooks = exports.packageMain = exports.moduleDefinitions = exports.types = void 0;
+exports.appMain = exports.packageMain = exports.moduleDefinitions = void 0;
 /**
  * A comment to be added to the top of generated files.
  */
@@ -18,12 +18,6 @@ var addFallbackFileModule = {
         placement: "append",
         content: "\ndeclare module '*.graphql' {\n  import { DocumentNode } from 'graphql';\n  const Schema: DocumentNode;\n  export default Schema;\n}\n",
     },
-};
-/**
- * A simple config for GraphQL types based on a schema's type definitions.
- */
-exports.types = {
-    plugins: ["time", addGeneratedNote, "typescript"],
 };
 /**
  * A config for generated module definitions to avoid TypeScript errors when
@@ -57,25 +51,14 @@ exports.packageMain = {
     ],
 };
 /**
- * Create a config for generated Apollo hooks which are emitted next to their
- * corresponding `.graphql` files and import common schema types from a
- * base types path.
- * @param baseTypesPath The path to the base types.
- * @returns `ConfiguredOutput` to included in codegen.
+ * A config for generated types and Apollo hooks for a new `@elementfi` app.
  */
-function getCollocatedHooks(baseTypesPath) {
-    return {
-        preset: "near-operation-file",
-        presetConfig: {
-            extension: ".generated.ts",
-            baseTypesPath: baseTypesPath,
-        },
-        plugins: [
-            "time",
-            addGeneratedNote,
-            "typescript-operations",
-            "typescript-react-apollo",
-        ],
-    };
-}
-exports.getCollocatedHooks = getCollocatedHooks;
+exports.appMain = {
+    plugins: [
+        "time",
+        addGeneratedNote,
+        "typescript",
+        "typescript-operations",
+        "typescript-react-apollo",
+    ],
+};

@@ -1,3 +1,4 @@
 src/elf-tailwindcss-classnames
 src/tailwind.output.css
 .next/
+src/graphql/generated/*
