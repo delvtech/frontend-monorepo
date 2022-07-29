@@ -2,9 +2,9 @@
 *.js
 *.md
 *.yaml
-types/
-coverage/
+dist/
 artifacts/
 cache/
+compiled/
+contracts/
 node_modules/
-
