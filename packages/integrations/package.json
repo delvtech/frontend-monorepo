@@ -31,6 +31,6 @@
     "lodash.zip": "^4.2.0",
     "prettier": "2.6.2",
     "react": "^17.0.2",
-    "react-query": "^3.39.1"
+    "react-query": "^4.0.0"
   }
 }
