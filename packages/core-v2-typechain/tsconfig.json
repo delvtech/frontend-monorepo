@@ -10,12 +10,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "paths": {
-      "src/*": [
-        "./src/*"
-      ],
+      "src/*": ["./src/*"]
     }
   },
-  "include": [
-    "./hardhat.config.ts"
-  ]
+  "include": ["./hardhat.config.ts"]
 }
