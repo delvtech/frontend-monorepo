@@ -1,0 +1,47 @@
+{
+  "name": "@elementfi/core-v2-typechain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@elementfi/eslint-config": "*",
+    "@elementfi/prettier-config": "*",
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@openzeppelin/contracts": "^4.7.2",
+    "@typechain/ethers-v5": "^10.0.0",
+    "@typechain/hardhat": "^6.1.2",
+    "eslint": "^8.20.0",
+    "ethers": "^5.6.8",
+    "hardhat": "^2.10.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "prettier": "^2.6.2",
+    "ts-node": "^10.8.1",
+    "tsc": "^2.0.3",
+    "typechain": "^8.0.0",
+    "typechain-target-ethers-v5": "^5.0.1",
+    "typescript": "^4.7.3"
+  },
+  "scripts": {
+    "build:types": "tsc --project tsconfig.build.json",
+    "build": "npm run clean && npm run compile && npm run build:types",
+    "clean": "npx hardhat clean",
+    "compile": "npx hardhat compile",
+    "load-contracts": "sh scripts/load-contracts.sh",
+    "prepare": "husky install",
+    "lint:w": "eslint --fix **/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
+    "lint": "eslint **/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
+    "prettier:w": "prettier --write **/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
+    "prettier:check": "prettier --check **/*.{gql,graphql,js,jsx,ts,tsx,json,md}"
+  },
+  "lint-staged": {
+    "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}
