@@ -5,7 +5,8 @@ module.exports = {
     mocha: true,
     node: true,
   },
-  extends: ["plugin:node/recommended", "@elementfi/eslint-config"],
+  // extends from monorepo eslints package
+  extends: ["@elementfi/eslint-config", "plugin:node/recommended"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 12,
@@ -15,18 +16,10 @@ module.exports = {
       "error",
       { ignores: ["modules"] },
     ],
+    // TODO @cashd: Changed rule to warning until I can figure out resolving ts paths
+    "node/no-missing-import": ["warn"],
     // disabling this rule because the testnet will need to output to log frequently
     "no-console": "off",
-  },
-  plugins: ["import"],
-  settings: {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"],
-    },
-    "import/resolver": {
-      typescript: {
-        project: "tsconfig.json",
-      },
-    },
+    "no-process-exit": "off",
   },
 };

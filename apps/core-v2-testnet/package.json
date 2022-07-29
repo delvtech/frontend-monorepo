@@ -1,7 +1,6 @@
 {
   "name": "core-v2-testnet",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -10,11 +9,11 @@
     "compile": "npx hardhat compile",
     "deploy-local": "npx hardhat run --network localhost scripts/deploy.ts",
     "watch": "npx hardhat run --network localhost scripts/watch.ts",
-    "prepare": "husky install",
     "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
     "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'",
     "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "prettier:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,md}'"
+    "prettier:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,md}'",
+    "prepare": "husky install"
   },
   "workspaces": {
     "nohoist": [

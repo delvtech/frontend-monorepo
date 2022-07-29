@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-// import Logger from "utils/logger";
+import Logger from "@utils/logger";
 
 async function main() {
   const currentTimestampInSeconds = Math.round(Date.now() / 1000);
@@ -10,12 +10,12 @@ async function main() {
 
   const Lock = await ethers.getContractFactory("Lock");
 
-  // Logger.deployContract("Lock");
+  Logger.deployContract("Lock");
   const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
 
   await lock.deployed();
 
-  // Logger.successfulDeploy("Lock", lock);
+  Logger.successfulDeploy("Lock", lock);
 }
 
 main().catch((error) => {

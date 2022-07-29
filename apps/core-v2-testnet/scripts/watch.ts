@@ -7,47 +7,46 @@ import { ethers } from "hardhat";
 
 import prompts from "prompts";
 
+const crankedFunction = (func: () => any) =>
+  (async function fn() {
+    await func();
+    fn();
+  })();
+
 async function main() {
   const provider = ethers.provider;
   const stack: SnapshotRestorer[] = [];
+  // let latestBlockNumber;
 
-  provider.on("block", async () => {
-    //console.log("here", blockNumber);
+  provider.on("block", async (block: number) => {
     const snapshot = await takeSnapshot();
     stack.push(snapshot);
-    //console.log(stack);
+    // latestBlockNumber = block;
   });
 
   await mine(2);
 
-  const ask = async () => {
-    const response = await prompts(
-      {
-        type: "number",
-        name: "value",
-        message: "how many blocks to reverse?",
-        validate: (value) => (value < 18 ? `Nightclub is 18+ only` : true),
-      },
-      {
-        onCancel: () => {
-          console.log("trying to cancel");
-          //process.exit(0);
-        },
-      },
-    );
-
-    console.log(response); // => { value: 24 }
-    // if (response !== false) {
-    ask();
-    // }
-  };
-
-  // while (!isRunning) {
-  //   await ask();
-  // }
-
-  await ask();
+  await crankedFunction(ask);
 }
+
+const ask = async () => {
+  const response = await prompts(
+    {
+      type: "number",
+      name: "blocknumber",
+      message: "how many blocks to reverse?",
+      // validate: (value) => value > latestBlockNumber,
+    },
+    {
+      onCancel: () => {
+        console.log("trying to cancel");
+        process.exit(0);
+      },
+    },
+  );
+
+  console.log(response);
+};
 
 main().catch((error) => {
   console.error(error);
