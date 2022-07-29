@@ -1,9 +1,9 @@
 {
-  "name": "@elementfi/elf-core-v2-typechain",
+  "name": "@elementfi/core-v2-typechain",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/types/index.js",
-  "types": "dist/types/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "hardhat": "^2.10.0"
   },
