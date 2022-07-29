@@ -18,4 +18,15 @@ module.exports = {
     // disabling this rule because the testnet will need to output to log frequently
     "no-console": "off",
   },
+  plugins: ["import"],
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"],
+    },
+    "import/resolver": {
+      typescript: {
+        project: "tsconfig.json",
+      },
+    },
+  },
 };
