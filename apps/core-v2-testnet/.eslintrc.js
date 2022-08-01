@@ -20,7 +20,7 @@ module.exports = {
       "error",
       { ignores: ["modules"] },
     ],
-    // TODO @cashd: Changed rule to warning until I can figure out resolving ts paths
+    // disabling b/c this node rule has problems with ts paths, added import plugin for coverage instead
     "node/no-missing-import": "off",
     // disabling this rule because the testnet will need to output to log frequently
     "no-console": "off",

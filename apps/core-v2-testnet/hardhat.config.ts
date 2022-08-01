@@ -1,7 +1,7 @@
 import { HardhatUserConfig, task } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 
-// This adds support for typescript paths mappings
+// This adds support for typescript paths
 import "tsconfig-paths/register";
 
 // This is a sample Hardhat task. To learn how to create your own go to
