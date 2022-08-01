@@ -24,6 +24,7 @@ module.exports = {
     "node/no-missing-import": "off",
     // disabling this rule because the testnet will need to output to log frequently
     "no-console": "off",
+    // disabling b/c the watch script needs to terminate early and we use the exit() function
     "no-process-exit": "off",
   },
 };
