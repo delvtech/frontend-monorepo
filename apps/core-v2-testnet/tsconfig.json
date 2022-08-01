@@ -7,10 +7,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@utils/*": ["utils/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["./scripts", "./test", "./typechain", "./utils"],
   "files": ["./hardhat.config.ts"]

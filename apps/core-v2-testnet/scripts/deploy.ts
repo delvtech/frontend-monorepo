@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import Logger from "@utils/logger";
+import Logger from "utils/logger";
 
 async function main() {
   const currentTimestampInSeconds = Math.round(Date.now() / 1000);
