@@ -5,7 +5,12 @@ module.exports = {
     mocha: true,
     node: true,
   },
-  extends: ["plugin:node/recommended", "@elementfi/eslint-config"],
+  // extends from monorepo eslints package
+  extends: [
+    "plugin:node/recommended",
+    "plugin:import/recommended",
+    "@elementfi/eslint-config",
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 12,
@@ -15,7 +20,11 @@ module.exports = {
       "error",
       { ignores: ["modules"] },
     ],
+    // disabling b/c this node rule has problems with ts paths, added import plugin for coverage instead
+    "node/no-missing-import": "off",
     // disabling this rule because the testnet will need to output to log frequently
     "no-console": "off",
+    // disabling b/c the watch script needs to terminate early and we use the exit() function
+    "no-process-exit": "off",
   },
 };
