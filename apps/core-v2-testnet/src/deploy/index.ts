@@ -1,4 +1,5 @@
 // barrell
-export * from "./deployToken";
+export * from "./deployMockToken";
 export * from "./deployTerm";
 export * from "./deployVault";
+export * from "./deployForwarderFactory";

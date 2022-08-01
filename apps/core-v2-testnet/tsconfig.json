@@ -9,6 +9,6 @@
     "skipLibCheck": true,
     "baseUrl": "."
   },
-  "include": ["./scripts", "./test", "./typechain", "./utils"],
+  "include": ["./scripts", "./test", "./typechain", "./utils", "./src"],
   "files": ["./hardhat.config.ts"]
 }
