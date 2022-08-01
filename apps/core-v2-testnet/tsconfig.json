@@ -9,8 +9,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@utils/*": ["utils/*"],
-      "@scripts/*": ["scripts/*"]
+      "@utils/*": ["utils/*"]
     }
   },
   "include": ["./scripts", "./test", "./typechain", "./utils"],

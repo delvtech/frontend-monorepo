@@ -1,14 +1,12 @@
 import {
-  mine,
   SnapshotRestorer,
   takeSnapshot,
 } from "@nomicfoundation/hardhat-network-helpers";
 import { ethers } from "hardhat";
-
 import prompts from "prompts";
 
-// cranked mode
-const crankedFunction = (func: () => any) =>
+// util function to make a function recursive
+const forever = (func: () => void) =>
   (async function fn() {
     await func();
     fn();
@@ -16,38 +14,37 @@ const crankedFunction = (func: () => any) =>
 
 async function main() {
   const provider = ethers.provider;
+
+  // stack to store snapshots
   let stack: SnapshotRestorer[] = [];
 
+  // register event listener to new blocks
   provider.on("block", async (block: number) => {
     const snapshot = await takeSnapshot();
     stack.push(snapshot);
   });
 
-  await mine(2);
-
-  await crankedFunction(async () => {
+  await forever(async () => {
     const response = await prompts(
       {
         type: "number",
         name: "block",
         message: "how many blocks to reverse?",
-        validate: (value) => value > -1,
+        validate: (value) => value >= 0,
       },
       {
-        onCancel: () => {
-          console.log("trying to cancel");
-          process.exit(0);
-        },
+        onCancel: () => process.exit(0),
       },
     );
 
     const block = +response.block;
     if (block) {
-      const i = stack.length - +block;
+      const i = stack.length - block;
       const snapshot = stack[i];
 
       if (snapshot) {
         await snapshot.restore();
+        // remove any snapshots more recent blocks
         stack = stack.slice(0, i);
         console.log(
           `Successfully reverted ${block} blocks. The new current block number is ${await provider.getBlockNumber()}`,
