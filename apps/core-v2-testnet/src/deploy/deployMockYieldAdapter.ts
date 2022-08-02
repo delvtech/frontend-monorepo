@@ -5,7 +5,7 @@ import {
 import { Signer } from "ethers";
 import { validateAddresses } from "src/utils/validateAddresses";
 
-export async function deployYieldAdapter(
+export async function deployMockYieldAdapter(
   signer: Signer,
   vaultAddress: string,
   governanceAddress: string,
