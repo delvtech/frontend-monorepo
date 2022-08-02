@@ -3,6 +3,7 @@ import { ERC4626Term__factory } from "@elementfi/core-v2-typechain";
 import {
   deployForwarderFactory,
   deployMockToken,
+  deployTerm,
   deployVault,
 } from "src/deploy";
 
@@ -15,19 +16,17 @@ async function main() {
   const mockERC20 = await deployMockToken(signer, "FakeToken", "FAKE", 18);
   const vault = await deployVault(signer, mockERC20.address);
 
-  const termFactory = new ERC4626Term__factory(signer);
   // ERC20Forwarder contrat bytecode hash
   const linkHash = await forwarderFactory.ERC20LINK_HASH();
   const maxReserve = ethers.utils.parseEther("50000");
-  const owner = signer.address;
-  const term = await termFactory.deploy(
+  await deployTerm(
+    signer,
     vault.address,
     linkHash,
     forwarderFactory.address,
     maxReserve,
-    owner,
+    signer.address,
   );
-  await term.deployed();
 }
 
 main().catch((error) => {
