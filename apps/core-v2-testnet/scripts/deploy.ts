@@ -1,5 +1,4 @@
 import { ethers } from "hardhat";
-import { ERC4626Term__factory } from "@elementfi/core-v2-typechain";
 import {
   deployForwarderFactory,
   deployMockToken,
