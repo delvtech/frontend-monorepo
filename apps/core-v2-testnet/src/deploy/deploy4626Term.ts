@@ -5,7 +5,7 @@ import {
 import { Signer, BigNumberish } from "ethers";
 import { validateAddresses } from "src/utils";
 
-export async function deployTermVault(
+export async function deploy4626Term(
   signer: Signer,
   vaultAddress: string,
   linkHash: string,
