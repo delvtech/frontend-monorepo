@@ -921,6 +921,19 @@ html {
   content: attr(data-title);
 }
 
+.daisy-navbar {
+  display: flex;
+  align-items: center;
+  padding: var(--navbar-padding, 0.5rem);
+  min-height: 4rem;
+  width: 100%;
+}
+
+:where(.daisy-navbar > *) {
+  display: inline-flex;
+  align-items: center;
+}
+
 .daisy-btn-outline .daisy-badge {
   --tw-border-opacity: 1;
   border-color: hsl(var(--nf, var(--n)) / var(--tw-border-opacity));
@@ -1450,6 +1463,11 @@ html {
 
 .justify-center {
   justify-content: center;
+}
+
+.bg-base-100 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b1) / var(--tw-bg-opacity));
 }
 
 .shadow-lg {
