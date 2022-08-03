@@ -14,7 +14,7 @@ export async function createTerm(
   validateAddresses([destination]);
   const assetIds: number[] = [];
   const assetAmounts: number[] = [];
-  const hasPreFunding = false; // ???
+  const hasPreFunding = false; // tokens have been sent before doing a lock
 
   await term
     .connect(signer)

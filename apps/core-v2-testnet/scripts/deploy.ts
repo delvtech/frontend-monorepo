@@ -8,7 +8,7 @@ import {
 } from "src/deploy";
 import { createTerm } from "src/helpers/createTerm";
 import { getCurrentBlockTimestamp } from "src/utils";
-import { ONE_DAY, ONE_MINUTE } from "src/utils/time";
+import { ONE_DAY_IN_SECONDS, ONE_MINUTE_IN_SECONDS } from "@elementfi/base";
 
 async function main() {
   // get signers
@@ -19,7 +19,7 @@ async function main() {
   const forwarderFactory = await deployForwarderFactory(signer);
 
   // Deploy Mock Tokens
-  const usdcToken = await deployMockToken(signer, "USDC", "USDC", 18);
+  const usdcToken = await deployMockToken(signer, "USDC", "USDC", 6);
 
   // ERC20Forwarder contract bytecode hash
   const linkHash = await forwarderFactory.ERC20LINK_HASH();
@@ -48,8 +48,10 @@ async function main() {
 
   // Create new usdc term expiring in 30 days
   const currentTimestamp = await getCurrentBlockTimestamp(ethers.provider);
-  const start = BigNumber.from(currentTimestamp + ONE_MINUTE);
-  const expiry = BigNumber.from(currentTimestamp + ONE_DAY * 30);
+  // if start is in the future, the term will start on the current block timestamp
+  // needed a buffer here b/c just currentTimestamp ends up being before in the next block
+  const start = BigNumber.from(currentTimestamp + ONE_MINUTE_IN_SECONDS);
+  const expiry = BigNumber.from(currentTimestamp + ONE_DAY_IN_SECONDS * 30);
 
   await createTerm(
     signer,
