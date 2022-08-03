@@ -16,5 +16,8 @@
   "prettier.singleQuote": false,
   "prettier.semi": true,
   "prettier.printWidth": 80,
-  "eslint.workingDirectories": ["packages/council-tokenlist"]
+  "eslint.workingDirectories": [
+    "packages/council-tokenlist",
+    "packages/base"
+  ]
 }
