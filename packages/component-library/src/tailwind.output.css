@@ -603,22 +603,21 @@ html {
 }
 
 :root {
-  --p: 203 83% 60%;
-  --pf: 203 83% 48%;
-  --sf: 335 78% 48%;
-  --af: 56 100% 48%;
-  --nf: 0 0% 8%;
-  --b2: 0 0% 90%;
-  --b3: 0 0% 81%;
-  --bc: 0 0% 20%;
-  --pc: 203 100% 12%;
-  --sc: 335 100% 92%;
-  --ac: 56 100% 12%;
-  --nc: 0 0% 82%;
-  --inc: 192 100% 10%;
-  --suc: 291 100% 88%;
-  --wac: 25 100% 11%;
-  --erc: 4 100% 91%;
+  --p: 198 93% 60%;
+  --pf: 198 93% 48%;
+  --sf: 234 89% 59%;
+  --af: 329 86% 56%;
+  --b2: 222 47% 10%;
+  --b3: 222 47% 9%;
+  --bc: 222 66% 82%;
+  --pc: 198 100% 12%;
+  --sc: 234 100% 15%;
+  --ac: 329 100% 14%;
+  --nc: 217 76% 83%;
+  --inc: 198 100% 10%;
+  --suc: 172 100% 10%;
+  --wac: 41 100% 13%;
+  --erc: 351 100% 14%;
   --rounded-box: 1rem;
   --rounded-btn: 0.5rem;
   --rounded-badge: 1.9rem;
@@ -629,14 +628,15 @@ html {
   --border-btn: 1px;
   --tab-border: 1px;
   --tab-radius: 0.5rem;
-  --s: 335 78% 60%;
-  --a: 56 100% 60%;
-  --n: 0 0% 10%;
-  --b1: 0 0% 100%;
-  --in: 192 48% 52%;
-  --su: 291 48% 38%;
-  --wa: 25 85% 57%;
-  --er: 4 81% 56%;
+  --s: 234 89% 74%;
+  --a: 329 86% 70%;
+  --n: 217 33% 17%;
+  --nf: 217 30% 22%;
+  --b1: 222 47% 11%;
+  --in: 198 90% 48%;
+  --su: 172 66% 50%;
+  --wa: 41 88% 64%;
+  --er: 351 95% 71%;
 }
 
 *, ::before, ::after {
@@ -919,6 +919,19 @@ html {
 
 .daisy-btn-group > input[type="radio"].daisy-btn:before {
   content: attr(data-title);
+}
+
+.daisy-navbar {
+  display: flex;
+  align-items: center;
+  padding: var(--navbar-padding, 0.5rem);
+  min-height: 4rem;
+  width: 100%;
+}
+
+:where(.daisy-navbar > *) {
+  display: inline-flex;
+  align-items: center;
 }
 
 .daisy-btn-outline .daisy-badge {
@@ -1450,6 +1463,11 @@ html {
 
 .justify-center {
   justify-content: center;
+}
+
+.bg-base-100 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b1) / var(--tw-bg-opacity));
 }
 
 .shadow-lg {

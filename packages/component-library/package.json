@@ -26,7 +26,7 @@
   ],
   "scripts": {
     "prepare": "husky install",
-    "build:tailwind": "npx tailwindcss build -i src/index.css -o src/tailwind.output.css",
+    "build:tailwind": "npx tailwindcss build -i src/global.css -o src/tailwind.output.css",
     "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
     "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'",
     "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",

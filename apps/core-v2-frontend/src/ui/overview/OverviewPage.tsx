@@ -9,8 +9,8 @@ export function OverviewPage(): ReactElement {
   const { address: userAddress } = useAccount();
 
   return (
-    <div className="daisy-hero min-h-screen bg-base-200">
-      <div className="daisy-hero-content flex-col gap-8 text-center">
+    <div className="bg-base-200 min-h-screen">
+      <div className="flex-col gap-8 text-center">
         {userAddress ? <FakeTxButton /> : t`Connect wallet to continue`}
       </div>
     </div>

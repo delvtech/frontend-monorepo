@@ -2,8 +2,23 @@ module.exports = {
   plugins: [require("@tailwindcss/forms"), require("daisyui")],
   // Use daisyui for now so we can prototype using predefined tailwind classes, eg: .daisy-btn
   daisyui: {
-    // brutalist wireframing theme while we prototype
-    themes: ["cmyk"],
+    themes: [
+      {
+        // What should our theme be called?
+        hotpot: {
+          primary: "#38bdf8",
+          secondary: "#818CF8",
+          accent: "#F471B5",
+          neutral: "#1E293B",
+          "neutral-focus": "#273449",
+          "base-100": "#0F172A",
+          info: "#0CA5E9",
+          success: "#2DD4BF",
+          warning: "#F4BF50",
+          error: "#FB7085",
+        },
+      },
+    ],
 
     // Prefix all daisy- classes so they are easy to search/find globally
     prefix: "daisy-",
@@ -18,7 +33,6 @@ module.exports = {
 
   theme: {
     extend: {
-      colors: {},
       fontFamily: {
         mono: [
           "Roboto Mono",
