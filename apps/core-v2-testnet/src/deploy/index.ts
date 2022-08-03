@@ -1,5 +1,6 @@
-// barrell
-export * from "./deployMockToken";
-export * from "./deployTerm";
-export * from "./deployVault";
 export * from "./deployForwarderFactory";
+export * from "./deployMockToken";
+export * from "./deployMockYearnVault";
+export * from "./deployMockYieldAdapter";
+export * from "./deployTermVault";
+export * from "./deployVault";

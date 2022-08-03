@@ -3,19 +3,15 @@ import {
   MockERC4626__factory,
 } from "@elementfi/core-v2-typechain";
 import { Signer } from "ethers";
-import { ethers } from "hardhat";
-import { throwInvalidAddressError } from "src/errors";
+import { validateAddresses } from "src/utils";
 
 export async function deployVault(
   signer: Signer,
   tokenAddress: string,
 ): Promise<MockERC4626> {
-  if (!ethers.utils.isAddress(tokenAddress)) {
-    throwInvalidAddressError(tokenAddress);
-  }
+  validateAddresses([tokenAddress]);
 
   const vaultFactory = new MockERC4626__factory(signer);
   const vault = await vaultFactory.deploy(tokenAddress);
-  await vault.deployed();
-  return vault;
+  return await vault.deployed();
 }

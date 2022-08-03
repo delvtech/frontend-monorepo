@@ -1,6 +1,6 @@
 import { Provider } from "@ethersproject/providers";
 
-// Gets the current unix seconds timestamp at the current block
+// Gets the unix seconds timestamp at the current block
 export async function getCurrentBlockTimestamp(
   provider: Provider,
 ): Promise<number> {

@@ -1,11 +1,6 @@
 import { BigNumber } from "ethers";
 import { ethers } from "hardhat";
-import {
-  deployForwarderFactory,
-  deployMockToken,
-  deployTerm,
-  deployVault,
-} from "src/deploy";
+import { deployForwarderFactory, deployMockToken } from "src/deploy";
 import { deployMockYearnVault } from "src/deploy/deployMockYearnVault";
 import { deployMockYieldAdapter } from "src/deploy/deployMockYieldAdapter";
 import { createTerm } from "src/helpers/createTerm";
@@ -13,36 +8,27 @@ import { getCurrentBlockTimestamp } from "src/utils";
 import { ONE_DAY, ONE_MINUTE } from "src/utils/time";
 
 async function main() {
+  // get signers
   const signers = await ethers.getSigners();
-
   const [signer] = signers;
 
+  // Deploy ForwarderFactory
   const forwarderFactory = await deployForwarderFactory(signer);
-  const mockERC20 = await deployMockToken(signer, "FakeToken", "FAKE", 18);
-  const vault = await deployVault(signer, mockERC20.address);
 
-  // ERC20Forwarder contrat bytecode hash
+  // Deploy Mock Tokens
+  const usdcToken = await deployMockToken(signer, "USDC", "USDC", 18);
+
+  // ERC20Forwarder contract bytecode hash
   const linkHash = await forwarderFactory.ERC20LINK_HASH();
-  const maxReserve = ethers.utils.parseEther("50000");
-  await deployTerm(
-    signer,
-    vault.address,
-    linkHash,
-    forwarderFactory.address,
-    maxReserve,
-    signer.address,
-  );
 
   // deploy mock yearn vaults
   // todo see how many decimals is usdc token
-  const usdcToken = await deployMockToken(signer, "USDC", "USDC", 18);
-  console.log("token");
+
+  // Deploy mock vault
   const mockYearnVault = await deployMockYearnVault(signer, usdcToken.address);
-  console.log("vault");
 
   const governanceAddress = ethers.constants.AddressZero;
-
-  // deploy mock yield adapter i.e. term
+  // Deploy mock yield adapter i.e. term contract
   const mockYieldAdapter = await deployMockYieldAdapter(
     signer,
     mockYearnVault.address,
@@ -51,13 +37,13 @@ async function main() {
     forwarderFactory.address,
     usdcToken.address,
   );
-  console.log("yield adapter");
 
-  // give token to signer
+  // give tokens to signer
   usdcToken.connect(signer).mint(signer.address, 7e6);
   // set allowance for yield adapter
   usdcToken.approve(mockYieldAdapter.address, 12e6);
-  // create new term with underlying tokens
+
+  // Create new usdc term expiring in 30 days
   const currentTimestamp = await getCurrentBlockTimestamp(ethers.provider);
   const start = BigNumber.from(currentTimestamp + ONE_MINUTE);
   const expiry = BigNumber.from(currentTimestamp + ONE_DAY * 30);
