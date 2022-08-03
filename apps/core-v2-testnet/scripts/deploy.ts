@@ -1,8 +1,11 @@
 import { BigNumber } from "ethers";
 import { ethers } from "hardhat";
-import { deployForwarderFactory, deployMockToken } from "src/deploy";
-import { deployMockYearnVault } from "src/deploy/deployMockYearnVault";
-import { deployMockYieldAdapter } from "src/deploy/deployMockYieldAdapter";
+import {
+  deployForwarderFactory,
+  deployMockToken,
+  deployMockYearnVault,
+  deployMockYieldAdapter,
+} from "src/deploy";
 import { createTerm } from "src/helpers/createTerm";
 import { getCurrentBlockTimestamp } from "src/utils";
 import { ONE_DAY, ONE_MINUTE } from "src/utils/time";
