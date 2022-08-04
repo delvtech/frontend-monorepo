@@ -22,8 +22,8 @@
   },
   "source": "src/index2.ts",
   "main": "dist/index.js",
-  "module": "dist/js/index.esm.js",
-  "types": "dist/js/index.d.ts",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
