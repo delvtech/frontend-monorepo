@@ -20,11 +20,13 @@
     "tsc": "^2.0.3",
     "tsconfig-paths": "^4.0.0"
   },
+  "source": "src/index2.ts",
   "main": "dist/index.js",
+  "module": "dist/js/index.esm.js",
+  "types": "dist/js/index.d.ts",
   "files": [
     "dist"
   ],
-  "types": "dist/types.d.ts",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-vyper": "^3.0.0",

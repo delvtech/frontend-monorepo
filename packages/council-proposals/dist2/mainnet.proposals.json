@@ -14,12 +14,8 @@
       "createdTimestamp": 1652392980,
       "expiration": 14815569,
       "quorum": "1100000.0",
-      "targets": [
-        ""
-      ],
-      "calldatas": [
-        ""
-      ],
+      "targets": [""],
+      "calldatas": [""],
       "snapshotId": ""
     },
     {
@@ -34,9 +30,7 @@
       "createdTimestamp": 1654632842,
       "expiration": 14974707,
       "quorum": "1100000.0",
-      "targets": [
-        "0x81758f3361A769016eae4844072FA6d7f828a651"
-      ],
+      "targets": ["0x81758f3361A769016eae4844072FA6d7f828a651"],
       "calldatas": [
         "0x88b49b8332b3be434fca12a37af693421116ab7c7682da00e7283c2530502de382b0464b"
       ],
