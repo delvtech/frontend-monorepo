@@ -28,6 +28,7 @@
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-vyper": "^3.0.0",
+    "parcel": "^2.6.2",
     "@openzeppelin/contracts": "^3.4.0",
     "@typechain/ethers-v5": "^7.0.1",
     "@typechain/hardhat": "^2.2.0",
@@ -53,7 +54,9 @@
     "build-testnet": "bash scripts/build-testnet.sh && npm run _build-index && npm run _copy-files",
     "build-goerli": "bash scripts/build-goerli.sh && npm run _build-index && npm run _copy-files",
     "build-mainnet": "bash scripts/build-mainnet.sh",
-    "build": "npm run build-goerli && npm run build-mainnet && npm run _build-index && npm run _copy-files",
+    "watch": "parcel watch",
+    "build": "parcel build",
+    "buildOld": "npm run build-goerli && npm run build-mainnet && npm run _build-index && npm run _copy-files",
     "_build-index": "bash scripts/build-index.sh",
     "_copy-files": "bash scripts/copy-dist-files.sh",
     "_copy-testnet-addresses": "cp ../../apps/council-testnet/src/addresses/testnet.addresses.json src/addresses/testnet.addresses.json",
