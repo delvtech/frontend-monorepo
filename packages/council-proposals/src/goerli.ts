@@ -3,7 +3,7 @@ import { goerliAddressList } from "@elementfi/council-tokenlist";
 import { CoreVoting__factory } from "@elementfi/council-typechain";
 import fs from "fs";
 
-import { ProposalsJson } from "src/types";
+import { ProposalsJson } from "src/proposals/types";
 
 import { providers } from "ethers";
 import { getProposals } from "src/getProposals";

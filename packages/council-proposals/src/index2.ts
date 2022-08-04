@@ -1,5 +1,4 @@
-import testnetProposals from "src/proposals/testnet.proposals.json";
-
-export { ProposalsJson } from "./types";
-
+import testnetProposals from "./proposals/testnet.proposals.json";
 export { testnetProposals };
+
+export * from "./proposals/types";

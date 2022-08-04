@@ -1,5 +1,3 @@
-export declare const testnetProposals: ProposalsJson;
-
 export interface Proposal {
   /**
    * A hash of the targets and calldatas for the proposal

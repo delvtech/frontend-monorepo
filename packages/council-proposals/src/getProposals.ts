@@ -1,5 +1,5 @@
 import { formatEther } from "ethers/lib/utils";
-import { Proposal } from "src/types";
+import { Proposal } from "src/proposals/types";
 import { fetchSnapshotProposalTitleAndBody } from "src/snapshot";
 import { providers } from "ethers";
 import { CoreVoting } from "@elementfi/council-typechain";

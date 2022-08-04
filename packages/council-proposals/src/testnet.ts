@@ -3,7 +3,7 @@ import { CoreVoting__factory } from "@elementfi/council-typechain";
 import fs from "fs";
 import hre from "hardhat";
 
-import { ProposalsJson } from "src/types";
+import { ProposalsJson } from "src/proposals/types";
 
 import { SNAPSHOT_SPACE_ID_GOERLI } from "src/snapshot";
 import { getProposals } from "src/getProposals";
