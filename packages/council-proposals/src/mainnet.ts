@@ -16,8 +16,8 @@ const ALCHEMY_MAINNET_RPC_HOST = `https://eth-mainnet.alchemyapi.io/v2/${process
 
 const provider = new providers.JsonRpcProvider(ALCHEMY_MAINNET_RPC_HOST);
 
-const currentProposalsJson: ProposalsJson = require(`src/proposals/mainnet.proposals.json`);
-const currentGscProposalsJson: ProposalsJson = require(`src/proposals/mainnet-gsc.proposals.json`);
+const currentProposalsJson: ProposalsJson = require(`src/proposals/json/mainnet.proposals.json`);
+const currentGscProposalsJson: ProposalsJson = require(`src/proposals/json/mainnet-gsc.proposals.json`);
 
 const coreVotingContract = CoreVoting__factory.connect(
   mainnetAddressList.addresses.coreVoting,

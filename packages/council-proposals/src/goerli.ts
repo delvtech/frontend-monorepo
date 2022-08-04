@@ -16,8 +16,8 @@ const ALCHEMY_GOERLI_RPC_HOST = `https://eth-goerli.alchemyapi.io/v2/${process.e
 
 const provider = new providers.JsonRpcProvider(ALCHEMY_GOERLI_RPC_HOST);
 
-const currentProposalsJson: ProposalsJson = require(`src/proposals/goerli.proposals.json`);
-const currentGscProposalsJson: ProposalsJson = require(`src/proposals/goerli-gsc.proposals.json`);
+const currentProposalsJson: ProposalsJson = require(`src/proposals/json/goerli.proposals.json`);
+const currentGscProposalsJson: ProposalsJson = require(`src/proposals/json/goerli-gsc.proposals.json`);
 
 const coreVotingContract = CoreVoting__factory.connect(
   goerliAddressList.addresses.coreVoting,
