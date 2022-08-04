@@ -1,25 +1,16 @@
-# {
-#   multiTerm(0xyvUSDC....): {
-#     tvl
-#     terms {
-#       ...
-#     }
-#   }
-
-#   ----> { data: {
-#      multiTerm: {
-#        tvl: '5,000,000',
-#        terms: [{ ...}, {... }]
-#        }
-#     }
 type Query {
   "Look up the multi term contract for a given yield source, eg: Yearn USDC Vault"
   multiTerm(yieldSource: ID!): MultiTerm
   term(yieldSource: ID!, maturity: String!): Term
+  terms(yieldSource: ID!): [Term]
 
+  multiPool(yieldSource: ID!): MultiPool
   "Look up the pool for a given maturity date"
   pool(term: ID!, maturity: String!): Pool
-  terms(yieldSource: ID!): [Term]
+  pools(yieldSource: ID!): [Pool]
+
+  yieldSource(name: String!): YieldSource!
+  yieldSources(names: [String!]!): [YieldSource]!
 }
 
 type MultiTerm {
@@ -41,6 +32,7 @@ type MultiTerm {
 
 type Term {
   id: ID!
+  multiTerm: MultiTerm!
   name: String!
   "Timestamp in milliseconds since unix epoch"
   maturity: String!
@@ -60,6 +52,7 @@ type Term {
 }
 
 type YieldToken {
+  address: ID!
   tokenId: ID!
   startDate: String!
   maturity: String!
@@ -67,6 +60,7 @@ type YieldToken {
 }
 
 type PrincipalToken {
+  address: ID!
   tokenId: ID!
   maturity: String!
   "price in terms of base asset or fiat"
@@ -76,24 +70,41 @@ type PrincipalToken {
   baseAsset: Token
 }
 
+type Token {
+  address: ID!
+  symbol: String!
+  decimals: Int
+  price: String
+}
+
 type MultiPool {
-  poolId: ID!
-  pools(...filter args...): [Pool]
+  address: ID!
+  pools: [Pool]
   pool(maturity: String!): Pool
 }
 
 type Pool {
-  tokenId: ID!
+  id: ID!
+  multiPool: MultiPool!
+  # USDC
+  baseAsset: Token
+  baseAssetReserves: String
+  # yvUSDC (yv = yearn vault)
+  shareAsset: Token
+  shareAssetReserves: String
+  # ePyvUSDC (ep = element principal)
+  principalToken: PrincipalToken
+  principalTokenReserves: String
+  yieldSource: YieldSource
+  lpToken: Token
   maturity: String!
   "price in terms of base asset or fiat"
   price: String
   priceFiat: String
-  "the token this principal token will resolve 1 to 1 to."
-  baseAsset: Token
   term: Term
   tvl: String
-  swapInPreview(baseAssetIn: String!): SwapPreview!
-  swapOutPreview(principalTokenIn: String!): SwapPreview!
+  buyPreview(baseAssetIn: String!): SwapPreview!
+  sellPreview(principalTokenIn: String!): SwapPreview!
 }
 
 type SwapPreview {
@@ -102,59 +113,11 @@ type SwapPreview {
   slippage: Int
 }
 
+# 4626 vault standard interface
 type YieldSource {
   "Yearn"
   name: ID!
+  url: String!
+  # placeholder for more yield source specific data
+  pricePerShare: String
 }
-
-# type PositionMultiTerm {
-#   "MultiTerm address"
-#   address: ID!
-#   "address of the underlying position, eg: yearn vault usdc"
-#   position: ID!
-#   "Name of the yield source, eg: Yearn Vault Dai v2"
-#   name: String!
-#   protocol: Protocol
-#   "APY of the underlying yield source"
-#   apy: Int
-#   "TVL of the yield source (in dollars)"
-#   tvl: Int
-#   "Get the price of a vault token in terms of any of the base assets"
-#   pricePerShare(tokenOut: String!): String
-#   pricePerShares(tokensOut: [String!]): [String]
-#   baseAsset: Token
-#   terms: [Term]
-# }
-
-type Token {
-  address: ID!
-  symbol: String!
-  decimals: Int
-  price: String
-}
-
-# type Pool {
-#   address: ID!
-#   position: YieldSource!
-
-#   "Dollar amount traded in the pool"
-#   tradingVolume(fromBlock: Int, toBlock: Int): String
-
-#   "Dollar amount in fees accumulated on trades"
-#   fees(fromBlock: Int, toBlock: Int): String
-#   "Price of bond asset in terms of share asset, eg: 0.95 USDC for 1 ptUSDC"
-#   spotPrice(atBlock: Int): String
-
-#   "Num of principal or umbrella tokens"
-#   bondReserves: Int!
-#   "Num of base asset tokens"
-#   shareReserves: Int!
-#   timeStretch: String!
-
-#   "num milliseconds until term maturity"
-#   timeUntilMaturity: Int!
-
-#   totalSupply: String!
-#   initialPricePerShare: String!
-#   currentPricePerShare: String!
-# }
