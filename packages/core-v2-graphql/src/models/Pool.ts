@@ -1,6 +1,6 @@
 import { CoreV2Context } from "src/context";
-import { Term, YieldSource } from "src/generated";
-import { MultiTermModel } from "./MultiTerm";
+import { Pool, YieldSource } from "src/generated";
+import { MultiPoolModel } from "./MultiPool";
 
 interface GetByYieldSourceOptions {
   maturity: string;
@@ -12,26 +12,25 @@ function getByMaturity({
   maturity,
   yieldSource,
   context,
-}: GetByYieldSourceOptions): Term | undefined {
-  const multiTerm = MultiTermModel.getByYieldSource({
+}: GetByYieldSourceOptions): Pool | undefined {
+  const multiPool = MultiPoolModel.getByYieldSource({
     yieldSource,
     context,
   });
 
-  if (!multiTerm) {
+  if (!multiPool) {
     return undefined;
   }
 
-  // TODO: look up term by yield source name and maturity
+  // TODO: look up pool by yield source name and maturity
   return {
     id: "1",
-    multiTerm,
-    name: "Term 1",
+    multiPool,
     maturity,
     yieldSource,
   };
 }
 
-export const TermModel = {
+export const PoolModel = {
   getByMaturity,
 };

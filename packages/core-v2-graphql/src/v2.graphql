@@ -6,7 +6,7 @@ type Query {
 
   multiPool(yieldSource: ID!): MultiPool
   "Look up the pool for a given maturity date"
-  pool(term: ID!, maturity: String!): Pool
+  pool(yieldSource: ID!, maturity: String!): Pool
   pools(yieldSource: ID!): [Pool]
 
   yieldSource(name: String!): YieldSource!
@@ -16,10 +16,10 @@ type Query {
 type MultiTerm {
   "general lookup across terms for arbitrary helper functions, to be expanded"
   address: ID!
+  "Possibly fetched from a registry"
+  yieldSource: YieldSource!
   "The underlying token, sometimes referred to as base asset"
   baseAsset: Token
-  "Possibly fetched from a registry"
-  yieldSource: YieldSource
   "pretty sure these are useful"
   terms: [Term]
   tvl(atBlock: Int): String
@@ -36,13 +36,13 @@ type Term {
   name: String!
   "Timestamp in milliseconds since unix epoch"
   maturity: String!
+  "Possibly fetched from a registry"
+  yieldSource: YieldSource!
   baseAsset: Token
   principalToken: PrincipalToken
   "startDate must be between created and maturity"
   yieldToken(startDate: String!): YieldToken
   pool: Pool
-  "Possibly fetched from a registry"
-  yieldSource: YieldSource
   "Dollar amount of deposits into the term: union(mint,LP)"
   tvl: String
   "Timestamp in milliseconds since unix epoch"
@@ -73,19 +73,23 @@ type PrincipalToken {
 type Token {
   address: ID!
   symbol: String!
-  decimals: Int
+  decimals: Int!
   price: String
 }
 
 type MultiPool {
   address: ID!
-  pools: [Pool]
+  "Possibly fetched from a registry"
+  yieldSource: YieldSource!
   pool(maturity: String!): Pool
+  pools: [Pool]
 }
 
 type Pool {
   id: ID!
   multiPool: MultiPool!
+  maturity: String!
+  yieldSource: YieldSource!
   # USDC
   baseAsset: Token
   baseAssetReserves: String
@@ -95,16 +99,14 @@ type Pool {
   # ePyvUSDC (ep = element principal)
   principalToken: PrincipalToken
   principalTokenReserves: String
-  yieldSource: YieldSource
   lpToken: Token
-  maturity: String!
   "price in terms of base asset or fiat"
   price: String
   priceFiat: String
   term: Term
   tvl: String
-  buyPreview(baseAssetIn: String!): SwapPreview!
-  sellPreview(principalTokenIn: String!): SwapPreview!
+  buyPreview(baseAssetIn: String!): SwapPreview
+  sellPreview(principalTokenIn: String!): SwapPreview
 }
 
 type SwapPreview {
@@ -117,7 +119,7 @@ type SwapPreview {
 type YieldSource {
   "Yearn"
   name: ID!
-  url: String!
+  url: String
   # placeholder for more yield source specific data
   pricePerShare: String
 }

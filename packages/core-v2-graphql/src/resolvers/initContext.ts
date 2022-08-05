@@ -1,7 +1,10 @@
 import { ResolverContext } from "@elementfi/graphql";
-import { V2Context } from "src/context";
+import { CoreV2Context } from "src/context";
 
-export function initContext({ chainId, provider }: ResolverContext): V2Context {
+export function initContext({
+  chainId,
+  provider,
+}: ResolverContext): CoreV2Context {
   return {
     chainId,
     provider,
