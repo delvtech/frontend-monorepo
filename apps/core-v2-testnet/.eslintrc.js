@@ -26,5 +26,7 @@ module.exports = {
     "no-console": "off",
     // disabling b/c the watch script needs to terminate early and we use the exit() function
     "no-process-exit": "off",
+    // node plugin throws an error when importing from core-v2-typechain b/c it's not published
+    "node/no-unpublished-import": "off",
   },
 };

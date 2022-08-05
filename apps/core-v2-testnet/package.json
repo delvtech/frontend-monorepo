@@ -27,6 +27,8 @@
     "tsconfig-paths": "^4.0.0"
   },
   "devDependencies": {
+    "@elementfi/core-v2-typechain": "*",
+    "@elementfi/base": "*",
     "@elementfi/eslint-config": "*",
     "@elementfi/prettier-config": "*",
     "@ethersproject/abi": "^5.6.4",

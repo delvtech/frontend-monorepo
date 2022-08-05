@@ -19,7 +19,7 @@ async function main() {
   let stack: SnapshotRestorer[] = [];
 
   // register event listener to new blocks
-  provider.on("block", async (block: number) => {
+  provider.on("block", async () => {
     const snapshot = await takeSnapshot();
     stack.push(snapshot);
   });
