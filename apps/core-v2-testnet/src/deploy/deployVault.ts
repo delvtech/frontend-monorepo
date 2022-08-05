@@ -3,7 +3,7 @@ import {
   MockERC4626__factory,
 } from "@elementfi/core-v2-typechain";
 import { Signer } from "ethers";
-import { validateAddresses } from "src/utils";
+import { validateAddresses } from "@elementfi/base";
 
 export async function deployVault(
   signer: Signer,

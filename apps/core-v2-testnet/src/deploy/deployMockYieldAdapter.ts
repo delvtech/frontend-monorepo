@@ -3,7 +3,7 @@ import {
   MockYieldAdapter__factory,
 } from "@elementfi/core-v2-typechain";
 import { Signer } from "ethers";
-import { validateAddresses } from "src/utils/validateAddresses";
+import { validateAddresses } from "@elementfi/base";
 
 export async function deployMockYieldAdapter(
   signer: Signer,

@@ -3,7 +3,7 @@ import {
   MockERC20YearnVault__factory,
 } from "@elementfi/core-v2-typechain";
 import { Signer } from "ethers";
-import { validateAddresses } from "src/utils";
+import { validateAddresses } from "@elementfi/base";
 
 // Deploys a mock yearn vault
 // The vault is based off of ERC-20, no ERC-4626

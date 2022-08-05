@@ -1,6 +1,6 @@
 import { Term } from "@elementfi/core-v2-typechain";
 import { BigNumber, Signer } from "ethers";
-import { validateAddresses } from "src/utils/validateAddresses";
+import { validateAddresses } from "@elementfi/base";
 
 // Creates new term within existing term contract
 export async function createTerm(

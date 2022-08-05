@@ -3,7 +3,7 @@ import {
   ERC4626Term__factory,
 } from "@elementfi/core-v2-typechain";
 import { Signer, BigNumberish } from "ethers";
-import { validateAddresses } from "src/utils";
+import { validateAddresses } from "@elementfi/base";
 
 export async function deploy4626Term(
   signer: Signer,
