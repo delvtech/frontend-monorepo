@@ -6,8 +6,8 @@ import { validateAddresses } from "src/utils/validateAddresses";
 export async function createTerm(
   signer: Signer,
   term: Term,
-  start: BigNumber, // unix timestamp seconds
-  expiry: BigNumber, // unix timestamp seconds
+  start: number, // unix timestamp seconds
+  expiry: number, // unix timestamp seconds
   destination: string,
   underlyingAmount: BigNumber,
 ): Promise<void> {

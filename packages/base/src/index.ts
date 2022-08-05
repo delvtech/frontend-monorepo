@@ -25,3 +25,4 @@ export * from "src/utils/typeAssertNever";
 export * from "src/utils/formatBalance/formatBalance";
 export * from "src/utils/formatPercent/formatPercent";
 export * from "src/utils/sortAddresses/sortAddresses";
+export * from "src/utils/validateAddresses/validateAddresses";

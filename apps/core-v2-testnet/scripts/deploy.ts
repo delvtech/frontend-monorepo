@@ -42,16 +42,18 @@ async function main() {
   );
 
   // give tokens to signer
-  usdcToken.connect(signer).mint(signer.address, 7e6);
-  // set allowance for yield adapter
-  usdcToken.approve(mockYieldAdapter.address, 12e6);
+  const amount = 7e6;
+  usdcToken.connect(signer).mint(signer.address, amount);
+  // set allowance for yield adapter to spend signer's usdc
+  const allowanceAmount = ethers.constants.MaxUint256;
+  usdcToken.approve(mockYieldAdapter.address, allowanceAmount);
 
   // Create new usdc term expiring in 30 days
   const currentTimestamp = await getCurrentBlockTimestamp(ethers.provider);
   // if start is in the future, the term will start on the current block timestamp
   // needed a buffer here b/c just currentTimestamp ends up being before in the next block
-  const start = BigNumber.from(currentTimestamp + ONE_MINUTE_IN_SECONDS);
-  const expiry = BigNumber.from(currentTimestamp + ONE_DAY_IN_SECONDS * 30);
+  const start = currentTimestamp + ONE_MINUTE_IN_SECONDS;
+  const expiry = currentTimestamp + ONE_DAY_IN_SECONDS * 30;
 
   await createTerm(
     signer,
