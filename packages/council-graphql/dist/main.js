@@ -772,11 +772,10 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
 function $a39bbae42cb1e1aa$export$ade7a147f5129058({ cache: cache = new (0, ($parcel$interopDefault($1RIJT$lrucache)))({
     max: 500
 }) , cacheKey: cacheKey , callback: callback , options: options  }) {
-    if (cache.has(cacheKey)) {
-        console.log("\u2705 cache hit", cacheKey);
-        return cache.get(cacheKey, options);
-    } else {
-        console.log("\u274C cache miss", cacheKey);
+    if (cache.has(cacheKey)) // console.log("✅ cache hit", cacheKey);
+    return cache.get(cacheKey, options);
+    else {
+        // console.log("❌ cache miss", cacheKey);
         const value = callback();
         cache.set(cacheKey, value, options);
         return value;
@@ -785,7 +784,8 @@ function $a39bbae42cb1e1aa$export$ade7a147f5129058({ cache: cache = new (0, ($pa
 function $a39bbae42cb1e1aa$export$611736262b635f8d(prefix, args) {
     const argKeys = [];
     for (const arg of args){
-        if (arg === null) argKeys.push("null");
+        if (arg === undefined) argKeys.push("undefined");
+        else if (arg === null) argKeys.push("null");
         else if (typeof arg === "object") argKeys.push((0, ($parcel$interopDefault($1RIJT$fastjsonstablestringify)))(arg));
         else argKeys.push(arg.toString());
     }
