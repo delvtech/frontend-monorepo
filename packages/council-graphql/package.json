@@ -41,7 +41,6 @@
     "@elementfi/council-typechain": "*",
     "@graphql-tools/schema": "^8.3.13",
     "ethers": "^5.6.8",
-    "fast-json-stable-stringify": "^2.1.0",
     "lru-cache": "^7.13.1"
   },
   "devDependencies": {
