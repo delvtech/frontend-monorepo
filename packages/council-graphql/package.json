@@ -39,7 +39,9 @@
     "@elementfi/council-tokenlist": "*",
     "@elementfi/council-typechain": "*",
     "@graphql-tools/schema": "^8.3.13",
-    "ethers": "^5.6.8"
+    "ethers": "^5.6.8",
+    "fast-json-stable-stringify": "^2.1.0",
+    "lru-cache": "^7.13.1"
   },
   "devDependencies": {
     "@apollo/client": "^3.6.6",
@@ -48,6 +50,7 @@
     "@elementfi/parcel-transformer-graphql-document-node": "*",
     "@elementfi/prettier-config": "*",
     "@ethersproject/providers": "^5.6.8",
+    "@types/lru-cache": "^7.10.10",
     "eslint": "7.32.0",
     "graphql": "^16.5.0",
     "husky": "^8.0.1",
