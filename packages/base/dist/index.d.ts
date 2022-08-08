@@ -9,9 +9,9 @@ export const EMPTY_ARRAY: unknown[];
  */
 export function useConsole(...consoleArgs: any): void;
 export enum ChainId {
-  MAINNET = 1,
-  GOERLI = 5,
-  LOCAL = 31337,
+    MAINNET = 1,
+    GOERLI = 5,
+    LOCAL = 31337
 }
 export const ETHEREUM_BLOCK_PER_DAY = 5760;
 export const ETHEREUM_BLOCKS_PER_WEEK: number;
@@ -24,52 +24,43 @@ export const NUM_ETH_DECIMALS = 18;
 export const ONE_ETHER: import("ethers").BigNumber;
 export const ETH_ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export type LocalStorage = {
-  getItem: (key: string) => string;
-  setItem: (key: string, value: string) => boolean;
-  clear: () => void;
+    getItem: (key: string) => string;
+    setItem: (key: string, value: string) => boolean;
+    clear: () => void;
 };
 export function useLocalStorage(): LocalStorage;
 export interface FixedFormat {
-  /**
-   * number of decimals to use for fixed point math
-   */
-  decimals: number;
-  /**
-   * if the number is signed or unsigned
-   */
-  signed: boolean;
-  /**
-   * width in bits, must be power of 8. i.e. 8, 16, ..., 256.  Max is 256
-   */
-  width: number;
-  /**
-   * name of this format
-   */
-  name: string;
-  /**
-   * multiplier added to this number
-   */
-  _multiplier: string;
+    /**
+     * number of decimals to use for fixed point math
+     */
+    decimals: number;
+    /**
+     * if the number is signed or unsigned
+     */
+    signed: boolean;
+    /**
+     * width in bits, must be power of 8. i.e. 8, 16, ..., 256.  Max is 256
+     */
+    width: number;
+    /**
+     * name of this format
+     */
+    name: string;
+    /**
+     * multiplier added to this number
+     */
+    _multiplier: string;
 }
 export interface FixedFormatOptions {
-  decimals?: number;
-  signed?: boolean;
-  width?: number;
-  name?: string;
-  _multiplier?: string;
+    decimals?: number;
+    signed?: boolean;
+    width?: number;
+    name?: string;
+    _multiplier?: string;
 }
-export function getSafeFixedNumber(
-  value: string,
-  formatOptions?: FixedFormatOptions,
-): FixedNumber;
-export function clipFixNumberToStringDecimals(
-  value: FixedNumber,
-  decimals: number,
-): string;
-export function clipStringValueToDecimals(
-  value: string | undefined,
-  maxDecimals: number,
-): string;
+export function getSafeFixedNumber(value: string, formatOptions?: FixedFormatOptions): FixedNumber;
+export function clipFixNumberToStringDecimals(value: FixedNumber, decimals: number): string;
+export function clipStringValueToDecimals(value: string | undefined, maxDecimals: number): string;
 /**
  * Helper function to get the number of digits after the decimal.  Assumes a properly formatted
  * number with only numeric characters and 0 or 1 decimals
@@ -78,8 +69,8 @@ export function clipStringValueToDecimals(
  */
 export function getPlacesAfterDecimal(stringValue: string | undefined): number;
 export interface Account {
-  address: string;
-  value: BigNumberish;
+    address: string;
+    value: BigNumberish;
 }
 export function getMerkleTree(accounts: Account[]): MerkleTree;
 export function hashAccount(account: Account): string;
@@ -93,31 +84,21 @@ export function hashAccount(account: Account): string;
  * (wei)
  * @param {number} cryptoDecimals the number of decimals to convert the fractional unit value to
  */
-export function convertToFiatBalance(
-  fiatValue: Money,
-  cryptoFractionalValue: BigNumber,
-  cryptoDecimals: number,
-): Money;
-export function convertNumberToFiatBalance(
-  fiatValue: Money,
-  cryptoNominalValue: number,
-): Money;
+export function convertToFiatBalance(fiatValue: Money, cryptoFractionalValue: BigNumber, cryptoDecimals: number): Money;
+export function convertNumberToFiatBalance(fiatValue: Money, cryptoNominalValue: number): Money;
 interface FormatMoneyOptions {
-  defaultMoney?: Money;
-  wholeAmounts?: boolean;
+    defaultMoney?: Money;
+    wholeAmounts?: boolean;
 }
 /**
  * Helper to convert a Money object to a human readable string
  * ex: $1.23
  * @param {Money} money value to be formatted
  */
-export function formatMoney(
-  money: Money | undefined,
-  options?: FormatMoneyOptions,
-): string | undefined;
+export function formatMoney(money: Money | undefined, options?: FormatMoneyOptions): string | undefined;
 export interface PrefEnvelope<T> {
-  pref: T;
-  version: string;
+    pref: T;
+    version: string;
 }
 /**
  * Use an envelope because JSON.stringify likes serializable objects and prefs
@@ -128,16 +109,12 @@ export interface PrefEnvelope<T> {
  */
 export function makePrefEnvelope<T>(pref: T): PrefEnvelope<T>;
 interface PrefResult<T> {
-  pref: T;
-  setPref: (newPref: T) => void;
+    pref: T;
+    setPref: (newPref: T) => void;
 }
 export function usePref<T>(id: string, defaultValue: T): PrefResult<T>;
-export function getQueryData<T>(
-  queryResult: QueryObserverResult<T>,
-): T | undefined;
-export function getQueriesData<T>(
-  queryResults: QueryObserverResult<T>[],
-): (T | undefined)[];
+export function getQueryData<T>(queryResult: QueryObserverResult<T>): T | undefined;
+export function getQueriesData<T>(queryResults: QueryObserverResult<T>[]): (T | undefined)[];
 /**
  * Formats a Date object, eg: "27"
  */
@@ -196,31 +173,19 @@ export function assertNever(never: never): void;
  */
 export function typeAassertNever(checkNever: never): void;
 interface FormatBalanceOptions {
-  /**
-   * Whether or not to include commas when formatting, default is true.
-   * Example: "1,000,000"
-   */
-  formatCommas: boolean;
+    /**
+     * Whether or not to include commas when formatting, default is true.
+     * Example: "1,000,000"
+     */
+    formatCommas: boolean;
 }
 /**
  * @deprecated BigNumber balance is deprecated, use formatBalance2 instead that just uses strings
  */
-export function formatBalance(
-  balance: BigNumber | undefined,
-  decimals: number | undefined,
-  maxPrecision?: number,
-  options?: FormatBalanceOptions,
-): string;
-export function formatBalance2(
-  balance: string | undefined,
-  decimals: number | undefined,
-  maxPrecision?: number,
-  options?: FormatBalanceOptions,
-): string;
-export function formatPercent(
-  decimalAmount: number,
-  precision?: number,
-): string;
+export function formatBalance(balance: BigNumber | undefined, decimals: number | undefined, maxPrecision?: number, options?: FormatBalanceOptions): string;
+export function formatBalance2(balance: string | undefined, decimals: number | undefined, maxPrecision?: number, options?: FormatBalanceOptions): string;
+export function formatPercent(decimalAmount: number, precision?: number): string;
 export function sortAddresses(addresses: string[]): string[];
+export function validateAddresses(addresses: string[]): void | never;
 
 //# sourceMappingURL=index.d.ts.map
