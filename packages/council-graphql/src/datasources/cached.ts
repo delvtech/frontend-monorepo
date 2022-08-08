@@ -47,7 +47,9 @@ export function cached<TCallback extends AnyFunction>({
 export function getCacheKey(prefix: string, args: any[]): string {
   const argKeys: string[] = [];
   for (const arg of args) {
-    if (arg === null) {
+    if (arg === undefined) {
+      argKeys.push("undefined");
+    } else if (arg === null) {
       argKeys.push("null");
     } else if (typeof arg === "object") {
       argKeys.push(stringify(arg));
