@@ -112,6 +112,7 @@ export const ProposalModel: ProposalModel = {
   },
 };
 
+// TODO: Remove type casting
 function getByIdFromDataSource(proposal: Proposal, context: CouncilContext) {
   const dataSource = getVotingContractDataSourceByAddress(
     proposal.votingContract.address,

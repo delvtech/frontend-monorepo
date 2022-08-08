@@ -372,5 +372,44 @@ export const resolvers: Resolvers<CouncilContext> = {
       });
       return Promise.all(votes);
     },
+    votingPower: (
+      voter,
+      { votingVault: votingVaultAddress, blockNumber },
+      context,
+    ) => {
+      const votingVault = VotingVaultModel.getByAddress({
+        address: votingVaultAddress,
+        context,
+      });
+      if (!votingVault) {
+        return null;
+      }
+      return VotingPowerModel.getByVoter({
+        voter,
+        votingVaults: [votingVault],
+        blockNumber,
+        context,
+      });
+    },
+    votingPowers: (
+      voter,
+      { votingVaults: votingVaultAddresses, blockNumber },
+      context,
+    ) => {
+      const votingVaults = VotingVaultModel.getByAddresses({
+        addresses: votingVaultAddresses,
+        context,
+      });
+      return votingVaults.map((votingVault) => {
+        return votingVault
+          ? VotingPowerModel.getByVoter({
+              voter,
+              votingVaults: [votingVault],
+              blockNumber,
+              context,
+            })
+          : null;
+      });
+    },
   },
 };
