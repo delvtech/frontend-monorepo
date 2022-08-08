@@ -20,14 +20,17 @@
     "tsc": "^2.0.3",
     "tsconfig-paths": "^4.0.0"
   },
+  "source": "src/index2.ts",
   "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "types": "dist/types.d.ts",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-vyper": "^3.0.0",
+    "parcel": "^2.6.2",
     "@openzeppelin/contracts": "^3.4.0",
     "@typechain/ethers-v5": "^7.0.1",
     "@typechain/hardhat": "^2.2.0",
@@ -50,23 +53,22 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
-    "build-testnet": "bash scripts/build-testnet.sh && npm run _build-index && npm run _copy-files",
-    "build-goerli": "bash scripts/build-goerli.sh && npm run _build-index && npm run _copy-files",
-    "build-mainnet": "bash scripts/build-mainnet.sh",
-    "build": "npm run build-goerli && npm run build-mainnet && npm run _build-index && npm run _copy-files",
-    "_build-index": "bash scripts/build-index.sh",
-    "_copy-files": "bash scripts/copy-dist-files.sh",
-    "_copy-testnet-addresses": "cp ../../apps/council-testnet/src/addresses/testnet.addresses.json src/addresses/testnet.addresses.json",
-    "copy-testnet": "npm run _copy-testnet-addresses",
+    "scrape:testnet": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/testnet.ts --network localhost --no-compile",
+    "scrape:goerli": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/goerli.ts --network goerli --no-compile",
+    "scrape:mainnet": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/mainnet.ts --network mainnet --no-compile",
+    "scrape:all": "npm run build-goerli && npm run build-mainnet",
+    "watch": "parcel watch",
+    "build": "parcel build && bash scripts/copy-static-files.sh",
+    "copy-testnet": "cp ../../apps/council-testnet/src/addresses/testnet.addresses.json src/addresses/testnet.addresses.json",
     "push-to-aws": "bash scripts/push-to-aws.sh",
     "prepare": "husky install",
-    "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "prettier:check": "prettier --check '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'"
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'",
+    "prettier:w": "prettier --write '**/*.{js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
-    "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
+    "**/*.{js,jsx,ts,tsx,json,md}": [
       "eslint --fix",
       "prettier --write"
     ]
