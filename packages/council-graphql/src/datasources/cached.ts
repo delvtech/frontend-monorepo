@@ -1,7 +1,6 @@
 import LRUCache from "lru-cache";
 import stringify from "fast-json-stable-stringify";
 
-type AnyFunction = (...args: any[]) => any;
 type GetAndSetOptions = Parameters<LRUCache<string, any>["get"]>[1] &
   Parameters<LRUCache<string, any>["set"]>[2];
 
@@ -16,7 +15,7 @@ type GetAndSetOptions = Parameters<LRUCache<string, any>["get"]>[1] &
  * @param options.options LRUCache's `get` and `set` options merged.
  * @returns The return value of the callback function.
  */
-export function cached<TCallback extends AnyFunction>({
+export function cached<TCallback extends (...args: any[]) => any>({
   cache = new LRUCache({ max: 500 }),
   cacheKey,
   callback,
