@@ -28,8 +28,10 @@ export function cached<TCallback extends AnyFunction>({
   options?: GetAndSetOptions;
 }): ReturnType<TCallback> {
   if (cache.has(cacheKey)) {
+    console.log("✅ cache hit", cacheKey);
     return cache.get(cacheKey, options) as ReturnType<TCallback>;
   } else {
+    console.log("❌ cache miss", cacheKey);
     const value = callback();
     cache.set(cacheKey, value, options);
     return value;

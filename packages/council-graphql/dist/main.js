@@ -1,8 +1,8 @@
 var $1RIJT$graphqltoolsschema = require("@graphql-tools/schema");
 var $1RIJT$elementficounciltokenlist = require("@elementfi/council-tokenlist");
 var $1RIJT$etherslibutils = require("ethers/lib/utils");
-var $1RIJT$elementficounciltypechain = require("@elementfi/council-typechain");
 var $1RIJT$lrucache = require("lru-cache");
+var $1RIJT$elementficounciltypechain = require("@elementfi/council-typechain");
 var $1RIJT$fastjsonstablestringify = require("fast-json-stable-stringify");
 var $1RIJT$ethers = require("ethers");
 
@@ -729,6 +729,37 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
                 return vote || null;
             });
             return Promise.all(votes);
+        },
+        votingPower: (voter, { votingVault: votingVaultAddress , blockNumber: blockNumber  }, context)=>{
+            const votingVault = (0, $7818ae0a8b433afc$export$1dbe110119cb4dd2).getByAddress({
+                address: votingVaultAddress,
+                context: context
+            });
+            if (!votingVault) return null;
+            return (0, $889645ffb5e37d8c$export$a0cbbdeeb12308cd).getByVoter({
+                voter: voter,
+                votingVaults: [
+                    votingVault
+                ],
+                blockNumber: blockNumber,
+                context: context
+            });
+        },
+        votingPowers: (voter, { votingVaults: votingVaultAddresses , blockNumber: blockNumber  }, context)=>{
+            const votingVaults = (0, $7818ae0a8b433afc$export$1dbe110119cb4dd2).getByAddresses({
+                addresses: votingVaultAddresses,
+                context: context
+            });
+            return votingVaults.map((votingVault)=>{
+                return votingVault ? (0, $889645ffb5e37d8c$export$a0cbbdeeb12308cd).getByVoter({
+                    voter: voter,
+                    votingVaults: [
+                        votingVault
+                    ],
+                    blockNumber: blockNumber,
+                    context: context
+                }) : null;
+            });
         }
     }
 };
@@ -741,8 +772,11 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
 function $a39bbae42cb1e1aa$export$ade7a147f5129058({ cache: cache = new (0, ($parcel$interopDefault($1RIJT$lrucache)))({
     max: 500
 }) , cacheKey: cacheKey , callback: callback , options: options  }) {
-    if (cache.has(cacheKey)) return cache.get(cacheKey, options);
-    else {
+    if (cache.has(cacheKey)) {
+        console.log("\u2705 cache hit", cacheKey);
+        return cache.get(cacheKey, options);
+    } else {
+        console.log("\u274C cache miss", cacheKey);
         const value = callback();
         cache.set(cacheKey, value, options);
         return value;
@@ -859,7 +893,9 @@ class $a0cf45371a696709$export$2b7e06d96cf7f075 {
                     const votePower = await this.contract.callStatic.queryVotePower(voter, blockNumber, "0x00");
                     (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
                     return votePower.toString();
-                } catch (error) {}
+                } catch (error) {
+                    console.error(error);
+                }
                 return "0";
             }
         });
@@ -962,6 +998,7 @@ class $a1c706d406f5708a$export$93f46c2abf3fc254 extends (0, $a0cf45371a696709$ex
                     (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
                     return votePower.toString();
                 } catch (error) {
+                    console.error(error);
                     return "0";
                 }
             }
@@ -1044,6 +1081,7 @@ class $e0e2802e459d88e3$export$a37e73beca8c1698 extends (0, $a0cf45371a696709$ex
                     (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
                     return votePower.toString();
                 } catch (error) {
+                    console.error(error);
                     return "0";
                 }
             }
