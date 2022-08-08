@@ -1,16 +1,17 @@
 type Query {
   "Look up the multi term contract for a given yield source, eg: Yearn USDC Vault"
-  multiTerm(yieldSource: ID!): MultiTerm
-  term(yieldSource: ID!, maturity: String!): Term
-  terms(yieldSource: ID!): [Term]
+  multiTerm(address: ID, yieldSource: ID): MultiTerm
+  term(multiTerm: ID!, maturity: String!): Term
+  terms(multiTerm: ID!): [Term]
 
   multiPool(yieldSource: ID!): MultiPool
   "Look up the pool for a given maturity date"
-  pool(yieldSource: ID!, maturity: String!): Pool
-  pools(yieldSource: ID!): [Pool]
+  pool(multiPool: ID!, maturity: String!): Pool
+  pools(multiPool: ID!): [Pool]
 
-  yieldSource(name: String!): YieldSource!
-  yieldSources(names: [String!]!): [YieldSource]!
+  # Should the registry contain details about yield source or tokenlist
+  # yieldSource(token: ID!): YieldSource!
+  # yieldSources(names: [String!]!): [YieldSource]!
 }
 
 type MultiTerm {
@@ -119,7 +120,6 @@ type SwapPreview {
 type YieldSource {
   "Yearn"
   name: ID!
-  url: String
   # placeholder for more yield source specific data
   pricePerShare: String
 }

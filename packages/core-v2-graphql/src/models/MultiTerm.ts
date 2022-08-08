@@ -10,7 +10,7 @@ function getByYieldSource({
   yieldSource,
   context,
 }: GetByYieldSourceOptions): MultiTerm {
-  // TODO: look up multiterm by yield source name
+  // TODO: look up multiterm by yield source name using registry
   return {
     address: "0x1",
     yieldSource,
