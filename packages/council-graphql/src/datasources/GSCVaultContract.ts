@@ -1,10 +1,10 @@
 import { BigNumber } from "ethers";
 import { Provider } from "@ethersproject/providers";
 import LRUCache from "lru-cache";
+import { cached, getCacheKey } from "@elementfi/base";
 import { GSCVault, GSCVault__factory } from "@elementfi/council-typechain";
 import { VoterWithPower } from "./VotingVaultDataSource";
 import { VotingVaultContract } from "./VotingVaultContract";
-import { cached, getCacheKey } from "./cached";
 
 // TODO: implement Dataloader (https://github.com/graphql/dataloader)
 export class GSCVaultContract extends VotingVaultContract {

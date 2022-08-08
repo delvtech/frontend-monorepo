@@ -1,8 +1,8 @@
 import { BaseContract, ethers } from "ethers";
 import { Logger } from "ethers/lib/utils";
 import LRUCache from "lru-cache";
+import { cached, getCacheKey } from "@elementfi/base";
 import { VoterWithPower, VotingVaultDataSource } from "./VotingVaultDataSource";
-import { cached, getCacheKey } from "./cached";
 
 // TODO: implement Dataloader (https://github.com/graphql/dataloader)
 export class VotingVaultContract implements VotingVaultDataSource {

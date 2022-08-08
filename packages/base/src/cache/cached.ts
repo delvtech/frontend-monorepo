@@ -11,9 +11,10 @@ type GetAndSetOptions = Parameters<LRUCache<string, any>["get"]>[1] &
  * @param options.callback A function with a return value that will be cached
  *   and reused based on the cache's options.
  * @param options.cache An optional `lru-cache` instance to use for the
- *   call back's result. A new instance with `max: 500` is created by default.
+ *   callback's result. A new instance with `max: 500` is created by default.
  * @param options.options LRUCache's `get` and `set` options merged.
  * @returns The return value of the callback function.
+ * @see https://github.com/isaacs/node-lru-cache
  */
 export function cached<TCallback extends (...args: any[]) => any>({
   cache = new LRUCache({ max: 500 }),

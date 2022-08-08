@@ -1,9 +1,9 @@
 var $1RIJT$graphqltoolsschema = require("@graphql-tools/schema");
 var $1RIJT$elementficounciltokenlist = require("@elementfi/council-tokenlist");
 var $1RIJT$etherslibutils = require("ethers/lib/utils");
-var $1RIJT$lrucache = require("lru-cache");
 var $1RIJT$elementficounciltypechain = require("@elementfi/council-typechain");
-var $1RIJT$fastjsonstablestringify = require("fast-json-stable-stringify");
+var $1RIJT$lrucache = require("lru-cache");
+var $1RIJT$elementfibase = require("@elementfi/base");
 var $1RIJT$ethers = require("ethers");
 
 function $parcel$interopDefault(a) {
@@ -768,31 +768,6 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
 
 
 
-
-function $a39bbae42cb1e1aa$export$ade7a147f5129058({ cache: cache = new (0, ($parcel$interopDefault($1RIJT$lrucache)))({
-    max: 500
-}) , cacheKey: cacheKey , callback: callback , options: options  }) {
-    if (cache.has(cacheKey)) // console.log("✅ cache hit", cacheKey);
-    return cache.get(cacheKey, options);
-    else {
-        // console.log("❌ cache miss", cacheKey);
-        const value = callback();
-        cache.set(cacheKey, value, options);
-        return value;
-    }
-}
-function $a39bbae42cb1e1aa$export$611736262b635f8d(prefix, args) {
-    const argKeys = [];
-    for (const arg of args){
-        if (arg === undefined) argKeys.push("undefined");
-        else if (arg === null) argKeys.push("null");
-        else if (typeof arg === "object") argKeys.push((0, ($parcel$interopDefault($1RIJT$fastjsonstablestringify)))(arg));
-        else argKeys.push(arg.toString());
-    }
-    return `${prefix}:${argKeys.join(",")}`;
-}
-
-
 class $41844f56d22dc55e$export$ca33481ae8bfff02 {
     constructor(address, provider, votingVaults){
         this.address = address;
@@ -803,9 +778,9 @@ class $41844f56d22dc55e$export$ca33481ae8bfff02 {
         });
     }
     async getProposalCreatedEventArgs(fromBlock, toBlock) {
-        return (0, $a39bbae42cb1e1aa$export$ade7a147f5129058)({
+        return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $a39bbae42cb1e1aa$export$611736262b635f8d)("getProposalCreatedEventArgs", [
+            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getProposalCreatedEventArgs", [
                 fromBlock,
                 toBlock, 
             ]),
@@ -823,9 +798,9 @@ class $41844f56d22dc55e$export$ca33481ae8bfff02 {
         });
     }
     async getProposalById(id) {
-        return (0, $a39bbae42cb1e1aa$export$ade7a147f5129058)({
+        return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $a39bbae42cb1e1aa$export$611736262b635f8d)("getProposalById", [
+            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getProposalById", [
                 id
             ]),
             callback: async ()=>{
@@ -842,9 +817,9 @@ class $41844f56d22dc55e$export$ca33481ae8bfff02 {
         });
     }
     async getVote(voter, proposalId) {
-        return (0, $a39bbae42cb1e1aa$export$ade7a147f5129058)({
+        return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $a39bbae42cb1e1aa$export$611736262b635f8d)("getVote", [
+            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getVote", [
                 voter,
                 proposalId
             ]),
@@ -865,6 +840,7 @@ class $41844f56d22dc55e$export$ca33481ae8bfff02 {
 
 
 
+
 class $a0cf45371a696709$export$2b7e06d96cf7f075 {
     constructor(address, contract, cache){
         this.address = address;
@@ -875,9 +851,9 @@ class $a0cf45371a696709$export$2b7e06d96cf7f075 {
         return "0";
     }
     async getVotingPower(voter, blockNumber) {
-        return (0, $a39bbae42cb1e1aa$export$ade7a147f5129058)({
+        return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $a39bbae42cb1e1aa$export$611736262b635f8d)("getVotingPower", [
+            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getVotingPower", [
                 voter,
                 blockNumber
             ]),
@@ -893,9 +869,7 @@ class $a0cf45371a696709$export$2b7e06d96cf7f075 {
                     const votePower = await this.contract.callStatic.queryVotePower(voter, blockNumber, "0x00");
                     (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
                     return votePower.toString();
-                } catch (error) {
-                    console.error(error);
-                }
+                } catch (error) {}
                 return "0";
             }
         });
@@ -909,7 +883,6 @@ class $a0cf45371a696709$export$2b7e06d96cf7f075 {
 }
 
 
-
 class $492df70f1218e6f0$export$e2e4dee807f6af7a extends (0, $a0cf45371a696709$export$2b7e06d96cf7f075) {
     constructor(address, provider){
         const contract = (0, $1RIJT$elementficounciltypechain.GSCVault__factory).connect(address, provider);
@@ -921,9 +894,9 @@ class $492df70f1218e6f0$export$e2e4dee807f6af7a extends (0, $a0cf45371a696709$ex
         this.cache = cache;
     }
     async getAllVotersWithPower(fromBlock, toBlock) {
-        return (0, $a39bbae42cb1e1aa$export$ade7a147f5129058)({
+        return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $a39bbae42cb1e1aa$export$611736262b635f8d)("getAllVotersWithPower", [
+            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getAllVotersWithPower", [
                 fromBlock,
                 toBlock
             ]),
@@ -968,9 +941,9 @@ class $a1c706d406f5708a$export$93f46c2abf3fc254 extends (0, $a0cf45371a696709$ex
         this.cache = cache;
     }
     async getBalance(voter) {
-        return (0, $a39bbae42cb1e1aa$export$ade7a147f5129058)({
+        return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $a39bbae42cb1e1aa$export$611736262b635f8d)("getBalance", [
+            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getBalance", [
                 voter
             ]),
             callback: async ()=>{
@@ -980,9 +953,9 @@ class $a1c706d406f5708a$export$93f46c2abf3fc254 extends (0, $a0cf45371a696709$ex
         });
     }
     async getVotingPowerView(voter, blockNumber) {
-        return (0, $a39bbae42cb1e1aa$export$ade7a147f5129058)({
+        return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $a39bbae42cb1e1aa$export$611736262b635f8d)("getVotingPowerView", [
+            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getVotingPowerView", [
                 voter,
                 blockNumber
             ]),
@@ -998,16 +971,15 @@ class $a1c706d406f5708a$export$93f46c2abf3fc254 extends (0, $a0cf45371a696709$ex
                     (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
                     return votePower.toString();
                 } catch (error) {
-                    console.error(error);
                     return "0";
                 }
             }
         });
     }
     async getAllVotersWithPower(fromBlock, toBlock) {
-        return (0, $a39bbae42cb1e1aa$export$ade7a147f5129058)({
+        return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $a39bbae42cb1e1aa$export$611736262b635f8d)("getAllVotersWithPower", [
+            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getAllVotersWithPower", [
                 fromBlock,
                 toBlock
             ]),
@@ -1046,9 +1018,9 @@ class $e0e2802e459d88e3$export$a37e73beca8c1698 extends (0, $a0cf45371a696709$ex
         this.cache = cache;
     }
     async getBalance(voter) {
-        return (0, $a39bbae42cb1e1aa$export$ade7a147f5129058)({
+        return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $a39bbae42cb1e1aa$export$611736262b635f8d)("getBalance", [
+            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getBalance", [
                 voter
             ]),
             callback: async ()=>{
@@ -1063,9 +1035,9 @@ class $e0e2802e459d88e3$export$a37e73beca8c1698 extends (0, $a0cf45371a696709$ex
         });
     }
     async getVotingPowerView(voter, blockNumber) {
-        return (0, $a39bbae42cb1e1aa$export$ade7a147f5129058)({
+        return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $a39bbae42cb1e1aa$export$611736262b635f8d)("getVotingPowerView", [
+            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getVotingPowerView", [
                 voter,
                 blockNumber
             ]),
@@ -1081,16 +1053,15 @@ class $e0e2802e459d88e3$export$a37e73beca8c1698 extends (0, $a0cf45371a696709$ex
                     (0, $1RIJT$ethers.ethers).utils.Logger.setLogLevel((0, $1RIJT$etherslibutils.Logger).levels.WARNING);
                     return votePower.toString();
                 } catch (error) {
-                    console.error(error);
                     return "0";
                 }
             }
         });
     }
     async getAllVotersWithPower(fromBlock, toBlock) {
-        return (0, $a39bbae42cb1e1aa$export$ade7a147f5129058)({
+        return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $a39bbae42cb1e1aa$export$611736262b635f8d)("getAllVotersWithPower", [
+            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getAllVotersWithPower", [
                 fromBlock,
                 toBlock
             ]),

@@ -1,8 +1,8 @@
 import { Provider } from "@ethersproject/providers";
 import LRUCache from "lru-cache";
+import { cached, getCacheKey } from "@elementfi/base";
 import { CoreVoting__factory, CoreVoting } from "@elementfi/council-typechain";
 import { VotingVaultDataSource } from "./VotingVaultDataSource";
-import { cached, getCacheKey } from "./cached";
 
 // TODO: implement Dataloader (https://github.com/graphql/dataloader)
 export class CoreVotingContract {

@@ -2,13 +2,13 @@ import { ethers } from "ethers";
 import { Logger } from "ethers/lib/utils";
 import { Provider } from "@ethersproject/providers";
 import LRUCache from "lru-cache";
+import { cached, getCacheKey } from "@elementfi/base";
 import {
   VestingVault,
   VestingVault__factory,
 } from "@elementfi/council-typechain";
 import { VotingVaultContract } from "./VotingVaultContract";
 import { VoterWithPower } from "./VotingVaultDataSource";
-import { cached, getCacheKey } from "./cached";
 
 // TODO: implement Dataloader (https://github.com/graphql/dataloader)
 export class VestingVaultContract extends VotingVaultContract {

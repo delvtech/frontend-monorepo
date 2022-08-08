@@ -6,6 +6,7 @@
  * consumers of this package.
  */
 
+export * from "src/cache/cached";
 export * from "src/constants/emptyArray";
 export * from "src/debug/useConsole";
 export * from "src/ethereum/ethereum";
