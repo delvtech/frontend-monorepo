@@ -8,6 +8,8 @@ pragma solidity ^0.8.15;
 contract TWAROracle {
     mapping(uint256 => uint256[]) internal _buffers;
 
+    event UpdateBuffer(uint256 value, uint256 metadata);
+
     /// @dev An initialization function for the buffer.  During initialization, the maxLength is
     /// set to the value passed in, minTimeStep and timeStamp are set to values for the current block.
     /// 0 when the first item is added.
@@ -151,6 +153,8 @@ contract TWAROracle {
         }
 
         buffer[headIndex] = sumAndTimeStamp;
+
+        emit UpdateBuffer(sumAndTimeStamp, metadata);
     }
 
     /// @dev A public function to read the timeStamp&sum value from the specified index and buffer.

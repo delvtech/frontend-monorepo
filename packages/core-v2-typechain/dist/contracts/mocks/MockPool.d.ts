@@ -1,8 +1,8 @@
 import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
 import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from "../common";
-export interface PoolInterface extends utils.Interface {
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from "../../common";
+export interface MockPoolInterface extends utils.Interface {
     functions: {
         "DOMAIN_SEPARATOR()": FunctionFragment;
         "PERMIT_TYPEHASH()": FunctionFragment;
@@ -38,6 +38,7 @@ export interface PoolInterface extends utils.Interface {
         "setApproval(uint256,address,uint256)": FunctionFragment;
         "setApprovalBridge(uint256,address,uint256,address)": FunctionFragment;
         "setApprovalForAll(address,bool)": FunctionFragment;
+        "setFees(uint256,uint128,uint128)": FunctionFragment;
         "setOwner(address)": FunctionFragment;
         "symbol(uint256)": FunctionFragment;
         "term()": FunctionFragment;
@@ -51,7 +52,7 @@ export interface PoolInterface extends utils.Interface {
         "updateTradeFee(uint128)": FunctionFragment;
         "withdraw(uint256,uint256,address)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "calculateAverageWeightedValue" | "calculateAverageWeightedValue(uint256,uint32)" | "collectFees" | "collectFees(uint256,address)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositBonds" | "depositBonds(uint256,uint256,address,uint256)" | "depositUnderlying" | "depositUnderlying(uint256,uint256,address,uint256)" | "factory" | "factory()" | "governanceContract" | "governanceContract()" | "governanceFeePercent" | "governanceFeePercent()" | "governanceFees" | "governanceFees(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "owner" | "owner()" | "parameters" | "parameters(uint256)" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "purchaseYt" | "purchaseYt(uint256,uint256,address,uint256)" | "readMetadataParsed" | "readMetadataParsed(uint256)" | "readSumAndTimeStampForPool" | "readSumAndTimeStampForPool(uint256,uint16)" | "registerPoolId" | "registerPoolId(uint256,uint256,uint32,address,uint16,uint16)" | "reserves" | "reserves(uint256)" | "rollover" | "rollover(uint256,uint256,uint256,address,uint256)" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setOwner" | "setOwner(address)" | "symbol" | "symbol(uint256)" | "term" | "term()" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "tradeBonds" | "tradeBonds(uint256,uint256,uint256,address,bool)" | "tradeFee" | "tradeFee()" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "updateGovernanceFeePercent" | "updateGovernanceFeePercent(uint128)" | "updateTradeFee" | "updateTradeFee(uint128)" | "withdraw" | "withdraw(uint256,uint256,address)"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "calculateAverageWeightedValue" | "calculateAverageWeightedValue(uint256,uint32)" | "collectFees" | "collectFees(uint256,address)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositBonds" | "depositBonds(uint256,uint256,address,uint256)" | "depositUnderlying" | "depositUnderlying(uint256,uint256,address,uint256)" | "factory" | "factory()" | "governanceContract" | "governanceContract()" | "governanceFeePercent" | "governanceFeePercent()" | "governanceFees" | "governanceFees(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "owner" | "owner()" | "parameters" | "parameters(uint256)" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "purchaseYt" | "purchaseYt(uint256,uint256,address,uint256)" | "readMetadataParsed" | "readMetadataParsed(uint256)" | "readSumAndTimeStampForPool" | "readSumAndTimeStampForPool(uint256,uint16)" | "registerPoolId" | "registerPoolId(uint256,uint256,uint32,address,uint16,uint16)" | "reserves" | "reserves(uint256)" | "rollover" | "rollover(uint256,uint256,uint256,address,uint256)" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setFees" | "setFees(uint256,uint128,uint128)" | "setOwner" | "setOwner(address)" | "symbol" | "symbol(uint256)" | "term" | "term()" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "tradeBonds" | "tradeBonds(uint256,uint256,uint256,address,bool)" | "tradeFee" | "tradeFee()" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "updateGovernanceFeePercent" | "updateGovernanceFeePercent(uint128)" | "updateTradeFee" | "updateTradeFee(uint128)" | "withdraw" | "withdraw(uint256,uint256,address)"): FunctionFragment;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR()", values?: undefined): string;
     encodeFunctionData(functionFragment: "PERMIT_TYPEHASH", values?: undefined): string;
@@ -228,6 +229,16 @@ export interface PoolInterface extends utils.Interface {
     ]): string;
     encodeFunctionData(functionFragment: "setApprovalForAll", values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
     encodeFunctionData(functionFragment: "setApprovalForAll(address,bool)", values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
+    encodeFunctionData(functionFragment: "setFees", values: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>
+    ]): string;
+    encodeFunctionData(functionFragment: "setFees(uint256,uint128,uint128)", values: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>
+    ]): string;
     encodeFunctionData(functionFragment: "setOwner", values: [PromiseOrValue<string>]): string;
     encodeFunctionData(functionFragment: "setOwner(address)", values: [PromiseOrValue<string>]): string;
     encodeFunctionData(functionFragment: "symbol", values: [PromiseOrValue<BigNumberish>]): string;
@@ -362,6 +373,8 @@ export interface PoolInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "setApprovalBridge(uint256,address,uint256,address)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setApprovalForAll", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setApprovalForAll(address,bool)", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "setFees", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "setFees(uint256,uint128,uint128)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setOwner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setOwner(address)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
@@ -495,11 +508,11 @@ export declare type YtPurchasedEvent = TypedEvent<[
     BigNumber
 ], YtPurchasedEventObject>;
 export declare type YtPurchasedEventFilter = TypedEventFilter<YtPurchasedEvent>;
-export interface Pool extends BaseContract {
+export interface MockPool extends BaseContract {
     connect(signerOrProvider: Signer | Provider | string): this;
     attach(addressOrName: string): this;
     deployed(): Promise<this>;
-    interface: PoolInterface;
+    interface: MockPoolInterface;
     queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
     listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
     listeners(eventName?: string): Array<Listener>;
@@ -698,6 +711,12 @@ export interface Pool extends BaseContract {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<ContractTransaction>;
+        setFees(poolId: PromiseOrValue<BigNumberish>, feeShares: PromiseOrValue<BigNumberish>, feeBond: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<ContractTransaction>;
+        "setFees(uint256,uint128,uint128)"(poolId: PromiseOrValue<BigNumberish>, feeShares: PromiseOrValue<BigNumberish>, feeBond: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
         setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -933,6 +952,12 @@ export interface Pool extends BaseContract {
     "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
+    setFees(poolId: PromiseOrValue<BigNumberish>, feeShares: PromiseOrValue<BigNumberish>, feeBond: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+        from?: PromiseOrValue<string>;
+    }): Promise<ContractTransaction>;
+    "setFees(uint256,uint128,uint128)"(poolId: PromiseOrValue<BigNumberish>, feeShares: PromiseOrValue<BigNumberish>, feeBond: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+        from?: PromiseOrValue<string>;
+    }): Promise<ContractTransaction>;
     setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
@@ -1120,6 +1145,8 @@ export interface Pool extends BaseContract {
         "setApprovalBridge(uint256,address,uint256,address)"(tokenID: PromiseOrValue<BigNumberish>, operator: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, caller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         setApprovalForAll(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
+        setFees(poolId: PromiseOrValue<BigNumberish>, feeShares: PromiseOrValue<BigNumberish>, feeBond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+        "setFees(uint256,uint128,uint128)"(poolId: PromiseOrValue<BigNumberish>, feeShares: PromiseOrValue<BigNumberish>, feeBond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         setOwner(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         "setOwner(address)"(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         symbol(poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
@@ -1280,6 +1307,12 @@ export interface Pool extends BaseContract {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<BigNumber>;
+        setFees(poolId: PromiseOrValue<BigNumberish>, feeShares: PromiseOrValue<BigNumberish>, feeBond: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<BigNumber>;
+        "setFees(uint256,uint128,uint128)"(poolId: PromiseOrValue<BigNumberish>, feeShares: PromiseOrValue<BigNumberish>, feeBond: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
         setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -1454,6 +1487,12 @@ export interface Pool extends BaseContract {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<PopulatedTransaction>;
+        setFees(poolId: PromiseOrValue<BigNumberish>, feeShares: PromiseOrValue<BigNumberish>, feeBond: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<PopulatedTransaction>;
+        "setFees(uint256,uint128,uint128)"(poolId: PromiseOrValue<BigNumberish>, feeShares: PromiseOrValue<BigNumberish>, feeBond: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
         setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {

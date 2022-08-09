@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Term__factory = exports.Pool__factory = exports.MultiToken__factory = exports.MockYieldSpaceMath__factory = exports.MockYieldAdapter__factory = exports.MockTWAROracle__factory = exports.MockMultiToken__factory = exports.MockFixedPointMath__factory = exports.MockERC4626__factory = exports.MockERC20YearnVault__factory = exports.MockERC20Permit__factory = exports.MockERC20__factory = exports.LP__factory = exports.TWAROracle__factory = exports.FixedPointMath__factory = exports.ERC20Permit__factory = exports.DateString__factory = exports.Authorizable__factory = exports.IYieldAdapter__factory = exports.IYearnVault__factory = exports.ITerm__factory = exports.IPool__factory = exports.IMultiToken__factory = exports.IForwarderFactory__factory = exports.IERC20Mint__factory = exports.ForwarderFactory__factory = exports.ERC4626Term__factory = exports.ERC20Forwarder__factory = exports.IERC20__factory = exports.IERC20Metadata__factory = exports.ERC4626__factory = exports.IERC20Permit__factory = exports.ERC20__factory = exports.IERC4626__factory = exports.factories = void 0;
+exports.Term__factory = exports.Pool__factory = exports.MultiToken__factory = exports.MockYieldSpaceMath__factory = exports.MockYieldAdapter__factory = exports.MockTWAROracle__factory = exports.MockPool__factory = exports.MockMultiToken__factory = exports.MockFixedPointMath__factory = exports.MockERC4626__factory = exports.MockERC20YearnVault__factory = exports.MockERC20Permit__factory = exports.MockERC20__factory = exports.LP__factory = exports.TWAROracle__factory = exports.FixedPointMath__factory = exports.ERC20Permit__factory = exports.DateString__factory = exports.Authorizable__factory = exports.IYieldAdapter__factory = exports.IYearnVault__factory = exports.ITerm__factory = exports.IPool__factory = exports.IMultiToken__factory = exports.IForwarderFactory__factory = exports.IERC20Mint__factory = exports.ICompoundV3__factory = exports.ForwarderFactory__factory = exports.ERC4626Term__factory = exports.ERC20Forwarder__factory = exports.CompoundV3Term__factory = exports.IERC20__factory = exports.IERC20Metadata__factory = exports.ERC4626__factory = exports.IERC20Permit__factory = exports.ERC20__factory = exports.IERC4626__factory = exports.factories = void 0;
 exports.factories = __importStar(require("./factories"));
 var IERC4626__factory_1 = require("./factories/@openzeppelin/contracts/interfaces/IERC4626__factory");
 Object.defineProperty(exports, "IERC4626__factory", { enumerable: true, get: function () { return IERC4626__factory_1.IERC4626__factory; } });
@@ -37,12 +37,16 @@ var IERC20Metadata__factory_1 = require("./factories/@openzeppelin/contracts/tok
 Object.defineProperty(exports, "IERC20Metadata__factory", { enumerable: true, get: function () { return IERC20Metadata__factory_1.IERC20Metadata__factory; } });
 var IERC20__factory_1 = require("./factories/@openzeppelin/contracts/token/ERC20/IERC20__factory");
 Object.defineProperty(exports, "IERC20__factory", { enumerable: true, get: function () { return IERC20__factory_1.IERC20__factory; } });
+var CompoundV3Term__factory_1 = require("./factories/contracts/CompoundV3Term__factory");
+Object.defineProperty(exports, "CompoundV3Term__factory", { enumerable: true, get: function () { return CompoundV3Term__factory_1.CompoundV3Term__factory; } });
 var ERC20Forwarder__factory_1 = require("./factories/contracts/ERC20Forwarder__factory");
 Object.defineProperty(exports, "ERC20Forwarder__factory", { enumerable: true, get: function () { return ERC20Forwarder__factory_1.ERC20Forwarder__factory; } });
 var ERC4626Term__factory_1 = require("./factories/contracts/ERC4626Term__factory");
 Object.defineProperty(exports, "ERC4626Term__factory", { enumerable: true, get: function () { return ERC4626Term__factory_1.ERC4626Term__factory; } });
 var ForwarderFactory__factory_1 = require("./factories/contracts/ForwarderFactory__factory");
 Object.defineProperty(exports, "ForwarderFactory__factory", { enumerable: true, get: function () { return ForwarderFactory__factory_1.ForwarderFactory__factory; } });
+var ICompoundV3__factory_1 = require("./factories/contracts/interfaces/ICompoundV3__factory");
+Object.defineProperty(exports, "ICompoundV3__factory", { enumerable: true, get: function () { return ICompoundV3__factory_1.ICompoundV3__factory; } });
 var IERC20Mint__factory_1 = require("./factories/contracts/interfaces/IERC20Mint__factory");
 Object.defineProperty(exports, "IERC20Mint__factory", { enumerable: true, get: function () { return IERC20Mint__factory_1.IERC20Mint__factory; } });
 var IForwarderFactory__factory_1 = require("./factories/contracts/interfaces/IForwarderFactory__factory");
@@ -81,6 +85,8 @@ var MockFixedPointMath__factory_1 = require("./factories/contracts/mocks/MockFix
 Object.defineProperty(exports, "MockFixedPointMath__factory", { enumerable: true, get: function () { return MockFixedPointMath__factory_1.MockFixedPointMath__factory; } });
 var MockMultiToken__factory_1 = require("./factories/contracts/mocks/MockMultiToken__factory");
 Object.defineProperty(exports, "MockMultiToken__factory", { enumerable: true, get: function () { return MockMultiToken__factory_1.MockMultiToken__factory; } });
+var MockPool__factory_1 = require("./factories/contracts/mocks/MockPool__factory");
+Object.defineProperty(exports, "MockPool__factory", { enumerable: true, get: function () { return MockPool__factory_1.MockPool__factory; } });
 var MockTWAROracle__factory_1 = require("./factories/contracts/mocks/MockTWAROracle__factory");
 Object.defineProperty(exports, "MockTWAROracle__factory", { enumerable: true, get: function () { return MockTWAROracle__factory_1.MockTWAROracle__factory; } });
 var MockYieldAdapter__factory_1 = require("./factories/contracts/mocks/MockYieldAdapter__factory");

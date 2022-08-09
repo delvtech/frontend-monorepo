@@ -1,3 +1,4 @@
+export { ICompoundV3__factory } from "./ICompoundV3__factory";
 export { IERC20__factory } from "./IERC20__factory";
 export { IERC20Mint__factory } from "./IERC20Mint__factory";
 export { IERC20Permit__factory } from "./IERC20Permit__factory";

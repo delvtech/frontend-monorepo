@@ -30,6 +30,7 @@ contract MultiToken is IMultiToken {
     // Sub Token Name and Symbol, created by inheriting contracts
     mapping(uint256 => string) internal _name;
     mapping(uint256 => string) internal _symbol;
+
     // Error triggered when the create2 verification fails
     error NonLinkerCaller();
 
@@ -85,8 +86,9 @@ contract MultiToken is IMultiToken {
     modifier onlyLinker(uint256 tokenID) {
         // If the caller does not match the address hash, we revert because it is not
         // allowed to access permission-ed methods.
-        if (msg.sender != _deriveForwarderAddress(tokenID))
+        if (msg.sender != _deriveForwarderAddress(tokenID)) {
             revert NonLinkerCaller();
+        }
         // Execute the following function
         _;
     }

@@ -79,4 +79,12 @@ contract MockYieldAdapter is IYieldAdapter, Term {
     function lockedSharePrice() public view returns (uint256) {
         return (vault.pricePerShare() / one);
     }
+
+    function setBalance(
+        uint256 poolId,
+        address who,
+        uint256 amount
+    ) public {
+        balanceOf[poolId][who] = amount;
+    }
 }

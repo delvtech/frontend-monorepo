@@ -1,8 +1,8 @@
 import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
 import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from "../../common";
-export interface MockYieldAdapterInterface extends utils.Interface {
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from "../common";
+export interface CompoundV3TermInterface extends utils.Interface {
     functions: {
         "DOMAIN_SEPARATOR()": FunctionFragment;
         "PERMIT_TYPEHASH()": FunctionFragment;
@@ -22,7 +22,7 @@ export interface MockYieldAdapterInterface extends utils.Interface {
         "isAuthorized(address)": FunctionFragment;
         "linkerCodeHash()": FunctionFragment;
         "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)": FunctionFragment;
-        "lockedSharePrice()": FunctionFragment;
+        "maxReserve()": FunctionFragment;
         "name(uint256)": FunctionFragment;
         "nonces(address)": FunctionFragment;
         "one()": FunctionFragment;
@@ -33,20 +33,23 @@ export interface MockYieldAdapterInterface extends utils.Interface {
         "setApproval(uint256,address,uint256)": FunctionFragment;
         "setApprovalBridge(uint256,address,uint256,address)": FunctionFragment;
         "setApprovalForAll(address,bool)": FunctionFragment;
-        "setBalance(uint256,address,uint256)": FunctionFragment;
         "setOwner(address)": FunctionFragment;
         "sharesPerExpiry(uint256)": FunctionFragment;
         "symbol(uint256)": FunctionFragment;
+        "targetReserve()": FunctionFragment;
         "token()": FunctionFragment;
         "totalSupply(uint256)": FunctionFragment;
         "transferFrom(uint256,address,address,uint256)": FunctionFragment;
         "transferFromBridge(uint256,address,address,uint256,address)": FunctionFragment;
+        "underlyingAsYieldShares(uint256)": FunctionFragment;
         "unlock(address,uint256[],uint256[])": FunctionFragment;
         "unlockedSharePrice()": FunctionFragment;
-        "vault()": FunctionFragment;
+        "yieldSharesAsUnderlying(uint256)": FunctionFragment;
+        "yieldSharesIssued()": FunctionFragment;
+        "yieldSource()": FunctionFragment;
         "yieldTerms(uint256)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "UNLOCKED_PT_ID" | "UNLOCKED_PT_ID()" | "UNLOCKED_YT_ID" | "UNLOCKED_YT_ID()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "convertYT" | "convertYT(uint256,uint256,address,bool)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositUnlocked" | "depositUnlocked(uint256,uint256,uint256,address)" | "factory" | "factory()" | "finalizedTerms" | "finalizedTerms(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "lock" | "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)" | "lockedSharePrice" | "lockedSharePrice()" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "one" | "one()" | "owner" | "owner()" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "redeem" | "redeem(uint256,uint256,uint256)" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setBalance" | "setBalance(uint256,address,uint256)" | "setOwner" | "setOwner(address)" | "sharesPerExpiry" | "sharesPerExpiry(uint256)" | "symbol" | "symbol(uint256)" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "unlock" | "unlock(address,uint256[],uint256[])" | "unlockedSharePrice" | "unlockedSharePrice()" | "vault" | "vault()" | "yieldTerms" | "yieldTerms(uint256)"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "UNLOCKED_PT_ID" | "UNLOCKED_PT_ID()" | "UNLOCKED_YT_ID" | "UNLOCKED_YT_ID()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "convertYT" | "convertYT(uint256,uint256,address,bool)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositUnlocked" | "depositUnlocked(uint256,uint256,uint256,address)" | "factory" | "factory()" | "finalizedTerms" | "finalizedTerms(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "lock" | "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)" | "maxReserve" | "maxReserve()" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "one" | "one()" | "owner" | "owner()" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "redeem" | "redeem(uint256,uint256,uint256)" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setOwner" | "setOwner(address)" | "sharesPerExpiry" | "sharesPerExpiry(uint256)" | "symbol" | "symbol(uint256)" | "targetReserve" | "targetReserve()" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "underlyingAsYieldShares" | "underlyingAsYieldShares(uint256)" | "unlock" | "unlock(address,uint256[],uint256[])" | "unlockedSharePrice" | "unlockedSharePrice()" | "yieldSharesAsUnderlying" | "yieldSharesAsUnderlying(uint256)" | "yieldSharesIssued" | "yieldSharesIssued()" | "yieldSource" | "yieldSource()" | "yieldTerms" | "yieldTerms(uint256)"): FunctionFragment;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR()", values?: undefined): string;
     encodeFunctionData(functionFragment: "PERMIT_TYPEHASH", values?: undefined): string;
@@ -131,8 +134,8 @@ export interface MockYieldAdapterInterface extends utils.Interface {
         PromiseOrValue<BigNumberish>,
         PromiseOrValue<BigNumberish>
     ]): string;
-    encodeFunctionData(functionFragment: "lockedSharePrice", values?: undefined): string;
-    encodeFunctionData(functionFragment: "lockedSharePrice()", values?: undefined): string;
+    encodeFunctionData(functionFragment: "maxReserve", values?: undefined): string;
+    encodeFunctionData(functionFragment: "maxReserve()", values?: undefined): string;
     encodeFunctionData(functionFragment: "name", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "name(uint256)", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "nonces", values: [PromiseOrValue<string>]): string;
@@ -203,22 +206,14 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     ]): string;
     encodeFunctionData(functionFragment: "setApprovalForAll", values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
     encodeFunctionData(functionFragment: "setApprovalForAll(address,bool)", values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
-    encodeFunctionData(functionFragment: "setBalance", values: [
-        PromiseOrValue<BigNumberish>,
-        PromiseOrValue<string>,
-        PromiseOrValue<BigNumberish>
-    ]): string;
-    encodeFunctionData(functionFragment: "setBalance(uint256,address,uint256)", values: [
-        PromiseOrValue<BigNumberish>,
-        PromiseOrValue<string>,
-        PromiseOrValue<BigNumberish>
-    ]): string;
     encodeFunctionData(functionFragment: "setOwner", values: [PromiseOrValue<string>]): string;
     encodeFunctionData(functionFragment: "setOwner(address)", values: [PromiseOrValue<string>]): string;
     encodeFunctionData(functionFragment: "sharesPerExpiry", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "sharesPerExpiry(uint256)", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "symbol", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "symbol(uint256)", values: [PromiseOrValue<BigNumberish>]): string;
+    encodeFunctionData(functionFragment: "targetReserve", values?: undefined): string;
+    encodeFunctionData(functionFragment: "targetReserve()", values?: undefined): string;
     encodeFunctionData(functionFragment: "token", values?: undefined): string;
     encodeFunctionData(functionFragment: "token()", values?: undefined): string;
     encodeFunctionData(functionFragment: "totalSupply", values: [PromiseOrValue<BigNumberish>]): string;
@@ -249,6 +244,8 @@ export interface MockYieldAdapterInterface extends utils.Interface {
         PromiseOrValue<BigNumberish>,
         PromiseOrValue<string>
     ]): string;
+    encodeFunctionData(functionFragment: "underlyingAsYieldShares", values: [PromiseOrValue<BigNumberish>]): string;
+    encodeFunctionData(functionFragment: "underlyingAsYieldShares(uint256)", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "unlock", values: [
         PromiseOrValue<string>,
         PromiseOrValue<BigNumberish>[],
@@ -261,8 +258,12 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     ]): string;
     encodeFunctionData(functionFragment: "unlockedSharePrice", values?: undefined): string;
     encodeFunctionData(functionFragment: "unlockedSharePrice()", values?: undefined): string;
-    encodeFunctionData(functionFragment: "vault", values?: undefined): string;
-    encodeFunctionData(functionFragment: "vault()", values?: undefined): string;
+    encodeFunctionData(functionFragment: "yieldSharesAsUnderlying", values: [PromiseOrValue<BigNumberish>]): string;
+    encodeFunctionData(functionFragment: "yieldSharesAsUnderlying(uint256)", values: [PromiseOrValue<BigNumberish>]): string;
+    encodeFunctionData(functionFragment: "yieldSharesIssued", values?: undefined): string;
+    encodeFunctionData(functionFragment: "yieldSharesIssued()", values?: undefined): string;
+    encodeFunctionData(functionFragment: "yieldSource", values?: undefined): string;
+    encodeFunctionData(functionFragment: "yieldSource()", values?: undefined): string;
     encodeFunctionData(functionFragment: "yieldTerms", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "yieldTerms(uint256)", values: [PromiseOrValue<BigNumberish>]): string;
     decodeFunctionResult(functionFragment: "DOMAIN_SEPARATOR", data: BytesLike): Result;
@@ -301,8 +302,8 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "linkerCodeHash()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "lock", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "lockedSharePrice", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "lockedSharePrice()", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "maxReserve", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "maxReserve()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "name(uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
@@ -323,14 +324,14 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "setApprovalBridge(uint256,address,uint256,address)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setApprovalForAll", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setApprovalForAll(address,bool)", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setBalance", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "setBalance(uint256,address,uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setOwner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setOwner(address)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "sharesPerExpiry", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "sharesPerExpiry(uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "symbol(uint256)", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "targetReserve", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "targetReserve()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "token", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "token()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "totalSupply", data: BytesLike): Result;
@@ -339,12 +340,18 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "transferFrom(uint256,address,address,uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "transferFromBridge", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "transferFromBridge(uint256,address,address,uint256,address)", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "underlyingAsYieldShares", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "underlyingAsYieldShares(uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "unlock", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "unlock(address,uint256[],uint256[])", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "unlockedSharePrice", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "unlockedSharePrice()", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "vault", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "vault()", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "yieldSharesAsUnderlying", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "yieldSharesAsUnderlying(uint256)", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "yieldSharesIssued", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "yieldSharesIssued()", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "yieldSource", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "yieldSource()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "yieldTerms", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "yieldTerms(uint256)", data: BytesLike): Result;
     events: {
@@ -396,11 +403,11 @@ export declare type TransferSingleEvent = TypedEvent<[
     BigNumber
 ], TransferSingleEventObject>;
 export declare type TransferSingleEventFilter = TypedEventFilter<TransferSingleEvent>;
-export interface MockYieldAdapter extends BaseContract {
+export interface CompoundV3Term extends BaseContract {
     connect(signerOrProvider: Signer | Provider | string): this;
     attach(addressOrName: string): this;
     deployed(): Promise<this>;
-    interface: MockYieldAdapterInterface;
+    interface: CompoundV3TermInterface;
     queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
     listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
     listeners(eventName?: string): Array<Listener>;
@@ -483,8 +490,8 @@ export interface MockYieldAdapter extends BaseContract {
         "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)"(assetIds: PromiseOrValue<BigNumberish>[], assetAmounts: PromiseOrValue<BigNumberish>[], underlyingAmount: PromiseOrValue<BigNumberish>, hasPreFunding: PromiseOrValue<boolean>, ytDestination: PromiseOrValue<string>, ptDestination: PromiseOrValue<string>, ytBeginDate: PromiseOrValue<BigNumberish>, expiration: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
-        lockedSharePrice(overrides?: CallOverrides): Promise<[BigNumber]>;
-        "lockedSharePrice()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+        maxReserve(overrides?: CallOverrides): Promise<[BigNumber]>;
+        "maxReserve()"(overrides?: CallOverrides): Promise<[BigNumber]>;
         name(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
         "name(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -525,12 +532,6 @@ export interface MockYieldAdapter extends BaseContract {
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
-        setBalance(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
-            from?: PromiseOrValue<string>;
-        }): Promise<ContractTransaction>;
-        "setBalance(uint256,address,uint256)"(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
-            from?: PromiseOrValue<string>;
-        }): Promise<ContractTransaction>;
         setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
@@ -541,6 +542,8 @@ export interface MockYieldAdapter extends BaseContract {
         "sharesPerExpiry(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
         symbol(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
         "symbol(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
+        targetReserve(overrides?: CallOverrides): Promise<[BigNumber]>;
+        "targetReserve()"(overrides?: CallOverrides): Promise<[BigNumber]>;
         token(overrides?: CallOverrides): Promise<[string]>;
         "token()"(overrides?: CallOverrides): Promise<[string]>;
         totalSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -557,6 +560,12 @@ export interface MockYieldAdapter extends BaseContract {
         "transferFromBridge(uint256,address,address,uint256,address)"(tokenID: PromiseOrValue<BigNumberish>, from: PromiseOrValue<string>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, caller: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
+        underlyingAsYieldShares(underlying: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber] & {
+            yieldShares: BigNumber;
+        }>;
+        "underlyingAsYieldShares(uint256)"(underlying: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber] & {
+            yieldShares: BigNumber;
+        }>;
         unlock(destination: PromiseOrValue<string>, tokenIds: PromiseOrValue<BigNumberish>[], amounts: PromiseOrValue<BigNumberish>[], overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
@@ -565,8 +574,16 @@ export interface MockYieldAdapter extends BaseContract {
         }): Promise<ContractTransaction>;
         unlockedSharePrice(overrides?: CallOverrides): Promise<[BigNumber]>;
         "unlockedSharePrice()"(overrides?: CallOverrides): Promise<[BigNumber]>;
-        vault(overrides?: CallOverrides): Promise<[string]>;
-        "vault()"(overrides?: CallOverrides): Promise<[string]>;
+        yieldSharesAsUnderlying(yieldShares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber] & {
+            underlying: BigNumber;
+        }>;
+        "yieldSharesAsUnderlying(uint256)"(yieldShares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber] & {
+            underlying: BigNumber;
+        }>;
+        yieldSharesIssued(overrides?: CallOverrides): Promise<[BigNumber]>;
+        "yieldSharesIssued()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+        yieldSource(overrides?: CallOverrides): Promise<[string]>;
+        "yieldSource()"(overrides?: CallOverrides): Promise<[string]>;
         yieldTerms(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber] & {
             shares: BigNumber;
             pt: BigNumber;
@@ -648,8 +665,8 @@ export interface MockYieldAdapter extends BaseContract {
     "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)"(assetIds: PromiseOrValue<BigNumberish>[], assetAmounts: PromiseOrValue<BigNumberish>[], underlyingAmount: PromiseOrValue<BigNumberish>, hasPreFunding: PromiseOrValue<boolean>, ytDestination: PromiseOrValue<string>, ptDestination: PromiseOrValue<string>, ytBeginDate: PromiseOrValue<BigNumberish>, expiration: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
-    lockedSharePrice(overrides?: CallOverrides): Promise<BigNumber>;
-    "lockedSharePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+    maxReserve(overrides?: CallOverrides): Promise<BigNumber>;
+    "maxReserve()"(overrides?: CallOverrides): Promise<BigNumber>;
     name(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
     "name(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
     nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -690,12 +707,6 @@ export interface MockYieldAdapter extends BaseContract {
     "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
-    setBalance(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
-        from?: PromiseOrValue<string>;
-    }): Promise<ContractTransaction>;
-    "setBalance(uint256,address,uint256)"(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
-        from?: PromiseOrValue<string>;
-    }): Promise<ContractTransaction>;
     setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
@@ -706,6 +717,8 @@ export interface MockYieldAdapter extends BaseContract {
     "sharesPerExpiry(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
     symbol(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
     "symbol(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+    targetReserve(overrides?: CallOverrides): Promise<BigNumber>;
+    "targetReserve()"(overrides?: CallOverrides): Promise<BigNumber>;
     token(overrides?: CallOverrides): Promise<string>;
     "token()"(overrides?: CallOverrides): Promise<string>;
     totalSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -722,6 +735,8 @@ export interface MockYieldAdapter extends BaseContract {
     "transferFromBridge(uint256,address,address,uint256,address)"(tokenID: PromiseOrValue<BigNumberish>, from: PromiseOrValue<string>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, caller: PromiseOrValue<string>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
+    underlyingAsYieldShares(underlying: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    "underlyingAsYieldShares(uint256)"(underlying: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
     unlock(destination: PromiseOrValue<string>, tokenIds: PromiseOrValue<BigNumberish>[], amounts: PromiseOrValue<BigNumberish>[], overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
@@ -730,8 +745,12 @@ export interface MockYieldAdapter extends BaseContract {
     }): Promise<ContractTransaction>;
     unlockedSharePrice(overrides?: CallOverrides): Promise<BigNumber>;
     "unlockedSharePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
-    vault(overrides?: CallOverrides): Promise<string>;
-    "vault()"(overrides?: CallOverrides): Promise<string>;
+    yieldSharesAsUnderlying(yieldShares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    "yieldSharesAsUnderlying(uint256)"(yieldShares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    yieldSharesIssued(overrides?: CallOverrides): Promise<BigNumber>;
+    "yieldSharesIssued()"(overrides?: CallOverrides): Promise<BigNumber>;
+    yieldSource(overrides?: CallOverrides): Promise<string>;
+    "yieldSource()"(overrides?: CallOverrides): Promise<string>;
     yieldTerms(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber] & {
         shares: BigNumber;
         pt: BigNumber;
@@ -789,8 +808,8 @@ export interface MockYieldAdapter extends BaseContract {
         "linkerCodeHash()"(overrides?: CallOverrides): Promise<string>;
         lock(assetIds: PromiseOrValue<BigNumberish>[], assetAmounts: PromiseOrValue<BigNumberish>[], underlyingAmount: PromiseOrValue<BigNumberish>, hasPreFunding: PromiseOrValue<boolean>, ytDestination: PromiseOrValue<string>, ptDestination: PromiseOrValue<string>, ytBeginDate: PromiseOrValue<BigNumberish>, expiration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
         "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)"(assetIds: PromiseOrValue<BigNumberish>[], assetAmounts: PromiseOrValue<BigNumberish>[], underlyingAmount: PromiseOrValue<BigNumberish>, hasPreFunding: PromiseOrValue<boolean>, ytDestination: PromiseOrValue<string>, ptDestination: PromiseOrValue<string>, ytBeginDate: PromiseOrValue<BigNumberish>, expiration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
-        lockedSharePrice(overrides?: CallOverrides): Promise<BigNumber>;
-        "lockedSharePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+        maxReserve(overrides?: CallOverrides): Promise<BigNumber>;
+        "maxReserve()"(overrides?: CallOverrides): Promise<BigNumber>;
         name(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
         "name(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -811,14 +830,14 @@ export interface MockYieldAdapter extends BaseContract {
         "setApprovalBridge(uint256,address,uint256,address)"(tokenID: PromiseOrValue<BigNumberish>, operator: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, caller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         setApprovalForAll(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
-        setBalance(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-        "setBalance(uint256,address,uint256)"(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         setOwner(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         "setOwner(address)"(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         sharesPerExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         "sharesPerExpiry(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         symbol(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
         "symbol(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+        targetReserve(overrides?: CallOverrides): Promise<BigNumber>;
+        "targetReserve()"(overrides?: CallOverrides): Promise<BigNumber>;
         token(overrides?: CallOverrides): Promise<string>;
         "token()"(overrides?: CallOverrides): Promise<string>;
         totalSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -827,12 +846,18 @@ export interface MockYieldAdapter extends BaseContract {
         "transferFrom(uint256,address,address,uint256)"(tokenID: PromiseOrValue<BigNumberish>, from: PromiseOrValue<string>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         transferFromBridge(tokenID: PromiseOrValue<BigNumberish>, from: PromiseOrValue<string>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, caller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         "transferFromBridge(uint256,address,address,uint256,address)"(tokenID: PromiseOrValue<BigNumberish>, from: PromiseOrValue<string>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, caller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+        underlyingAsYieldShares(underlying: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+        "underlyingAsYieldShares(uint256)"(underlying: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         unlock(destination: PromiseOrValue<string>, tokenIds: PromiseOrValue<BigNumberish>[], amounts: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<BigNumber>;
         "unlock(address,uint256[],uint256[])"(destination: PromiseOrValue<string>, tokenIds: PromiseOrValue<BigNumberish>[], amounts: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<BigNumber>;
         unlockedSharePrice(overrides?: CallOverrides): Promise<BigNumber>;
         "unlockedSharePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
-        vault(overrides?: CallOverrides): Promise<string>;
-        "vault()"(overrides?: CallOverrides): Promise<string>;
+        yieldSharesAsUnderlying(yieldShares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+        "yieldSharesAsUnderlying(uint256)"(yieldShares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+        yieldSharesIssued(overrides?: CallOverrides): Promise<BigNumber>;
+        "yieldSharesIssued()"(overrides?: CallOverrides): Promise<BigNumber>;
+        yieldSource(overrides?: CallOverrides): Promise<string>;
+        "yieldSource()"(overrides?: CallOverrides): Promise<string>;
         yieldTerms(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber] & {
             shares: BigNumber;
             pt: BigNumber;
@@ -911,8 +936,8 @@ export interface MockYieldAdapter extends BaseContract {
         "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)"(assetIds: PromiseOrValue<BigNumberish>[], assetAmounts: PromiseOrValue<BigNumberish>[], underlyingAmount: PromiseOrValue<BigNumberish>, hasPreFunding: PromiseOrValue<boolean>, ytDestination: PromiseOrValue<string>, ptDestination: PromiseOrValue<string>, ytBeginDate: PromiseOrValue<BigNumberish>, expiration: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
-        lockedSharePrice(overrides?: CallOverrides): Promise<BigNumber>;
-        "lockedSharePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+        maxReserve(overrides?: CallOverrides): Promise<BigNumber>;
+        "maxReserve()"(overrides?: CallOverrides): Promise<BigNumber>;
         name(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         "name(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -953,12 +978,6 @@ export interface MockYieldAdapter extends BaseContract {
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
-        setBalance(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
-            from?: PromiseOrValue<string>;
-        }): Promise<BigNumber>;
-        "setBalance(uint256,address,uint256)"(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
-            from?: PromiseOrValue<string>;
-        }): Promise<BigNumber>;
         setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
@@ -969,6 +988,8 @@ export interface MockYieldAdapter extends BaseContract {
         "sharesPerExpiry(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         symbol(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         "symbol(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+        targetReserve(overrides?: CallOverrides): Promise<BigNumber>;
+        "targetReserve()"(overrides?: CallOverrides): Promise<BigNumber>;
         token(overrides?: CallOverrides): Promise<BigNumber>;
         "token()"(overrides?: CallOverrides): Promise<BigNumber>;
         totalSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -985,6 +1006,8 @@ export interface MockYieldAdapter extends BaseContract {
         "transferFromBridge(uint256,address,address,uint256,address)"(tokenID: PromiseOrValue<BigNumberish>, from: PromiseOrValue<string>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, caller: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
+        underlyingAsYieldShares(underlying: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+        "underlyingAsYieldShares(uint256)"(underlying: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         unlock(destination: PromiseOrValue<string>, tokenIds: PromiseOrValue<BigNumberish>[], amounts: PromiseOrValue<BigNumberish>[], overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
@@ -993,8 +1016,12 @@ export interface MockYieldAdapter extends BaseContract {
         }): Promise<BigNumber>;
         unlockedSharePrice(overrides?: CallOverrides): Promise<BigNumber>;
         "unlockedSharePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
-        vault(overrides?: CallOverrides): Promise<BigNumber>;
-        "vault()"(overrides?: CallOverrides): Promise<BigNumber>;
+        yieldSharesAsUnderlying(yieldShares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+        "yieldSharesAsUnderlying(uint256)"(yieldShares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+        yieldSharesIssued(overrides?: CallOverrides): Promise<BigNumber>;
+        "yieldSharesIssued()"(overrides?: CallOverrides): Promise<BigNumber>;
+        yieldSource(overrides?: CallOverrides): Promise<BigNumber>;
+        "yieldSource()"(overrides?: CallOverrides): Promise<BigNumber>;
         yieldTerms(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         "yieldTerms(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
     };
@@ -1059,8 +1086,8 @@ export interface MockYieldAdapter extends BaseContract {
         "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)"(assetIds: PromiseOrValue<BigNumberish>[], assetAmounts: PromiseOrValue<BigNumberish>[], underlyingAmount: PromiseOrValue<BigNumberish>, hasPreFunding: PromiseOrValue<boolean>, ytDestination: PromiseOrValue<string>, ptDestination: PromiseOrValue<string>, ytBeginDate: PromiseOrValue<BigNumberish>, expiration: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
-        lockedSharePrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        "lockedSharePrice()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        maxReserve(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "maxReserve()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         name(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "name(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1101,12 +1128,6 @@ export interface MockYieldAdapter extends BaseContract {
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
-        setBalance(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
-            from?: PromiseOrValue<string>;
-        }): Promise<PopulatedTransaction>;
-        "setBalance(uint256,address,uint256)"(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
-            from?: PromiseOrValue<string>;
-        }): Promise<PopulatedTransaction>;
         setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
@@ -1117,6 +1138,8 @@ export interface MockYieldAdapter extends BaseContract {
         "sharesPerExpiry(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         symbol(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "symbol(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        targetReserve(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "targetReserve()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "token()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         totalSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1133,6 +1156,8 @@ export interface MockYieldAdapter extends BaseContract {
         "transferFromBridge(uint256,address,address,uint256,address)"(tokenID: PromiseOrValue<BigNumberish>, from: PromiseOrValue<string>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, caller: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
+        underlyingAsYieldShares(underlying: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "underlyingAsYieldShares(uint256)"(underlying: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         unlock(destination: PromiseOrValue<string>, tokenIds: PromiseOrValue<BigNumberish>[], amounts: PromiseOrValue<BigNumberish>[], overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
@@ -1141,8 +1166,12 @@ export interface MockYieldAdapter extends BaseContract {
         }): Promise<PopulatedTransaction>;
         unlockedSharePrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "unlockedSharePrice()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        "vault()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        yieldSharesAsUnderlying(yieldShares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "yieldSharesAsUnderlying(uint256)"(yieldShares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        yieldSharesIssued(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "yieldSharesIssued()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        yieldSource(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "yieldSource()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         yieldTerms(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "yieldTerms(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
     };
