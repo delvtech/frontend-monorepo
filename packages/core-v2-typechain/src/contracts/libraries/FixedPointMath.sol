@@ -33,7 +33,7 @@ library FixedPointMath {
         uint256 y,
         uint256 d
     ) internal pure returns (uint256 z) {
-        assembly {
+        assembly ("memory-safe") {
             // Store x * y in z for now.
             z := mul(x, y)
 
@@ -57,7 +57,7 @@ library FixedPointMath {
         uint256 y,
         uint256 d
     ) internal pure returns (uint256 z) {
-        assembly {
+        assembly ("memory-safe") {
             // Store x * y in z for now.
             z := mul(x, y)
 

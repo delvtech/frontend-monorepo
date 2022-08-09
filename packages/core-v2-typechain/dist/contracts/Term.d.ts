@@ -426,10 +426,10 @@ export interface Term extends BaseContract {
         }): Promise<ContractTransaction>;
         decimals(overrides?: CallOverrides): Promise<[number]>;
         "decimals()"(overrides?: CallOverrides): Promise<[number]>;
-        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
-        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
         factory(overrides?: CallOverrides): Promise<[string]>;
@@ -581,10 +581,10 @@ export interface Term extends BaseContract {
     }): Promise<ContractTransaction>;
     decimals(overrides?: CallOverrides): Promise<number>;
     "decimals()"(overrides?: CallOverrides): Promise<number>;
-    depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+    depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
-    "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+    "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
     factory(overrides?: CallOverrides): Promise<string>;
@@ -720,8 +720,8 @@ export interface Term extends BaseContract {
         "deauthorize(address)"(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         decimals(overrides?: CallOverrides): Promise<number>;
         "decimals()"(overrides?: CallOverrides): Promise<number>;
-        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
-        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
         factory(overrides?: CallOverrides): Promise<string>;
         "factory()"(overrides?: CallOverrides): Promise<string>;
         finalizedTerms(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[
@@ -840,10 +840,10 @@ export interface Term extends BaseContract {
         }): Promise<BigNumber>;
         decimals(overrides?: CallOverrides): Promise<BigNumber>;
         "decimals()"(overrides?: CallOverrides): Promise<BigNumber>;
-        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
-        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
         factory(overrides?: CallOverrides): Promise<BigNumber>;
@@ -978,10 +978,10 @@ export interface Term extends BaseContract {
         }): Promise<PopulatedTransaction>;
         decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "decimals()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
-        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
         factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;

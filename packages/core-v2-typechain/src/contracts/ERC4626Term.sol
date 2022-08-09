@@ -8,31 +8,31 @@ import "./interfaces/IERC20.sol";
 import "./MultiToken.sol";
 
 /// @title Term contract instance for the EIP-4626 Tokenized Vault Standard
-///
+
 /// @notice ERC4626Term is an implementation of the IYieldAdapter which is used
 /// to interface the Element Protocol with yield bearing positions which utilize the
 /// EIP-4626 Tokenized Vault Standard.
-///
+
 /// @dev ERC4626Term implements an interface for the EIP-4626 Tokenized Vault
 /// Standard. The contract is used internally by instances of Term.sol to `deposit`/`withdraw`
 /// a users amount of underlying for/from "shares" which are used by the Element Protocol to derive
 /// Principal and Yield Tokens.
 /// The definition of "shares" is significant as it has two implied meanings and understanding them
 /// is important in understanding the architecture of the protocol.
-///
+
 /// NOTE: To disambiguate ERC4626's conception of "shares" and the Element
 /// Protocol's version, ERC4626's "shares" have been renamed here as "vaultShares"
-///
+
 /// ### ShareState.Locked ###
-///
+
 /// "shares" in this context are congruent with "vaultShares". Simply,
 /// we can price "shares" the same as "vaultShares" relative to their claim on
 /// underlying in the ERC4626 vault. An important point is that depositing and
 /// withdrawing at the start and end of a given term garners no loss of yield
 /// relative to dealing with the ERC4626 vault directly.
-///
+
 /// ### ShareState.Unlocked ###
-///
+
 /// "shares" here differ from the "Locked" context so that the protocol can
 /// implement a gas reserve for an improved LP experience for small users and an
 /// overall more performative position for all LPers than version 1 of the
@@ -49,18 +49,20 @@ import "./MultiToken.sol";
 /// and exit LP positions by depositing and withdrawing underlying to and from
 /// the reserve instead of directly depositing to the ERC4626 vault.
 /// TODO Explain AMM efficiencies also
-///
+
 contract ERC4626Term is Term {
     /// address of ERC4626 vault
     IERC4626 public immutable vault;
 
     /// accounts for the balance of "unlocked" underlying for this term
     uint128 private _underlyingReserve;
+
     /// accounts for the balance of "unlocked" vaultShares for this term
     uint128 private _vaultShareReserve;
 
     /// upper limit of balance of _underlyingReserve allowed in this contract
     uint256 public immutable maxReserve;
+
     /// desired amount of underlying
     uint256 public immutable targetReserve;
 
@@ -158,14 +160,14 @@ contract ERC4626Term is Term {
         uint256 proposedUnderlyingReserve = underlyingReserve + underlying;
 
         /// Accounting of the reserves when depositing works as follows:
-        ///
+
         /// - When the sum of the `underlyingReserve` and deposited `underlying`
         /// exceeds the maxReserve limit a rebalancing must occur, swapping
         /// all but a `targetReserve` amount of `underlying` for `vaultShares`.
-        ///
+
         /// - The case where the `maxReserve` limit is not exceeded, no deposit to
         /// the ERC4626 vault occurs.
-        ///
+
         /// We can expect across multiple consecutive deposits through either
         /// of these code paths that the reserve of underlying to float between
         /// `targetReserve` and `maxReserve` while the reserve of `vaultShares`
@@ -243,7 +245,7 @@ contract ERC4626Term is Term {
         /// Underlying due to the user is calculated relative to the ratio of
         /// the `underlyingReserve` + underlyingValue of the `vaultShareReserve`
         /// and the total supply of shares issued.
-        ///
+
         /// NOTE: There is an accounting caveat here as the `_shares` amount has
         /// been previously burned from the shares totalSupply. This must be
         /// accounted for so shares are redeemed in the correct ratio
@@ -252,11 +254,11 @@ contract ERC4626Term is Term {
             (_shares + totalSupply[UNLOCKED_YT_ID]);
 
         /// Accounting of the reserves when withdrawing works as follows:
-        ///
+
         /// 1) When the underlying due to the user is less than or equal to
         /// `underlyingReserve`, that amount is transferred directly from the
         /// reserve to the user.
-        ///
+
         /// 2) If the amount of underlying due to the user is greater than the
         /// underlyingReserve, the logic breaks into two further cases:
         ///   2.1) If the amount of underlying due is greater than the
@@ -413,7 +415,7 @@ contract ERC4626Term is Term {
     {
         /// When pricing "locked" shares, `_shares` are directly analogous to
         /// `vaultShares` and so we can price them as if they were
-        ///
+
         /// In the "unlocked" context, `_shares` are priced relative to the ratio
         /// of the `impliedUnderlying` and the totalSupply of "unlocked" shares
         if (_state == ShareState.Locked) {
