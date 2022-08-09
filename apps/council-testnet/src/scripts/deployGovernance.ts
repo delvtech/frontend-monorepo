@@ -38,6 +38,12 @@ export interface GovernanceContracts {
   treasury: string;
   spender: string;
   airdrop: string;
+  githubTier1Airdrop: string;
+  githubTier2Airdrop: string;
+  githubTier3Airdrop: string;
+  discordTier1Airdrop: string;
+  discordTier2Airdrop: string;
+  discordTier3Airdrop: string;
 }
 
 export async function deployGovernanace(
@@ -213,18 +219,24 @@ export async function deployGovernanace(
   console.log("Set permissions for vesting vault");
 
   return {
-    elementToken: votingToken.address,
+    airdrop: airdropContract.address,
     coreVoting: coreVoting.address,
+    discordTier1Airdrop: ethers.constants.AddressZero,
+    discordTier2Airdrop: ethers.constants.AddressZero,
+    discordTier3Airdrop: ethers.constants.AddressZero,
+    elementToken: votingToken.address,
+    githubTier1Airdrop: ethers.constants.AddressZero,
+    githubTier2Airdrop: ethers.constants.AddressZero,
+    githubTier3Airdrop: ethers.constants.AddressZero,
     gscCoreVoting: gscCoreVoting.address,
     gscVault: gscVault.address,
-    timeLock: timeLock.address,
     lockingVault: lockingVault.address,
-    vestingVault: vestingVault.address,
-    optimisticRewardsVault: ethers.constants.AddressZero,
-    airdrop: airdropContract.address,
     optimisticGrants: ethers.constants.AddressZero,
-    treasury: treasuryContract.address,
+    optimisticRewardsVault: ethers.constants.AddressZero,
     spender: spenderContract.address,
+    timeLock: timeLock.address,
+    treasury: treasuryContract.address,
+    vestingVault: vestingVault.address,
   };
 }
 

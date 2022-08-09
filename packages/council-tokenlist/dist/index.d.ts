@@ -3,18 +3,24 @@ import { TokenList, TokenInfo } from "@uniswap/token-lists";
 export interface AddressesJsonFile {
     chainId: number;
     addresses: {
-        elementToken: string;
+        airdrop: string;
         coreVoting: string;
+        discordTier1Airdrop: string;
+        discordTier2Airdrop: string;
+        discordTier3Airdrop: string;
+        elementToken: string;
+        githubTier1Airdrop: string;
+        githubTier2Airdrop: string;
+        githubTier3Airdrop: string;
         gscCoreVoting: string;
         gscVault: string;
-        timeLock: string;
         lockingVault: string;
-        vestingVault: string;
-        optimisticRewardsVault: string;
         optimisticGrants: string;
+        optimisticRewardsVault: string;
         spender: string;
-        airdrop: string;
+        timeLock: string;
         treasury: string;
+        vestingVault: string;
     };
 }
 export function getTokenList(provider: Provider, addressesJson: AddressesJsonFile, name: string): Promise<TokenList>;

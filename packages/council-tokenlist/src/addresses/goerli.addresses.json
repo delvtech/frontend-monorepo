@@ -2,7 +2,13 @@
   "addresses": {
     "airdrop": "0xb7920477F7A39c3DffA925076857eB1585503e1B",
     "coreVoting": "0x0CB8aa45068EE31e97B717b0B35e26A43884c84c",
+    "discordTier1Airdrop": "0x8c7a3457742bC7ae91Bec25ea9Ab5dCbEF412292",
+    "discordTier2Airdrop": "0x6E023DAF6D9B89491A86A4554651fBaF3b8402FE",
+    "discordTier3Airdrop": "0x6923F46Bfbf87E01428b8a70B1B6737a982ABcdA",
     "elementToken": "0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601",
+    "githubTier1Airdrop": "0x7198A8379fE0A0663A1E7020F6100F39b53bbB9e",
+    "githubTier2Airdrop": "0xd21A03818ffe26dD92AEeD030E8a4b920c25C1cd",
+    "githubTier3Airdrop": "0xd98BD503c766F2ee0Bf05A4f34dA50af5B71D051",
     "gscCoreVoting": "0x600c4926c9F88beCE3533ceaAA36804d6E23F1c1",
     "gscVault": "0x0A575bFA79454112c37B9Af2a6362c9c68f7d2e3",
     "lockingVault": "0xb5E8AF575Ee302A24c6C7746a99D895BeF67cb5D",
