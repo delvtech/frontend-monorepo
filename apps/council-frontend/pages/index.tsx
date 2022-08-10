@@ -11,7 +11,7 @@ interface HomeProps {
 export default function Home({ proposalsJson }: HomeProps): ReactElement {
   return (
     <PageView childrenContainerClassName="flex justify-center">
-      <OverviewPage proposalsJson={proposalsJson} />
+      <OverviewPage />
     </PageView>
   );
 }
