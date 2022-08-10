@@ -6,13 +6,15 @@ import {
   useState,
   useEffect,
 } from "react";
-import Head from "next/head";
+import { Proposal, ProposalsJson } from "@elementfi/council-proposals";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
-import { useWeb3React } from "@web3-react/core";
-import { Proposal, ProposalsJson } from "@elementfi/council-proposals";
+import { Signer } from "ethers";
+import Head from "next/head";
 import { t } from "ttag";
+import { useAccount, useSigner } from "wagmi";
 
+import { ProposalList } from "./ProposalList/ProposalList";
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/integrations/snapshot/endpoints";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -22,8 +24,6 @@ import {
   useIsTailwindSmallScreen,
   useIsTailwindLargeScreen,
 } from "src/ui/base/tailwindBreakpoints";
-import { useSigner } from "src/ui/signer/useSigner";
-import { ProposalList } from "./ProposalList/ProposalList";
 import {
   NoProposalsDetail,
   NoProposalsList,
@@ -45,8 +45,9 @@ export default function ProposalsPage({
   proposalsJson,
   currentBlockNumber,
 }: ProposalsPageProps): ReactElement {
-  const { account, library } = useWeb3React();
-  const signer = useSigner(account, library);
+  const { address } = useAccount();
+  const { data } = useSigner();
+  const signer = data as Signer | undefined;
 
   const [activeTabId, setActiveTabId] = useState<TabId>(TabId.ACTIVE);
 
@@ -172,7 +173,7 @@ export default function ProposalsPage({
     <ProposalDetailsCard
       key={selectedProposalId}
       onClose={handleOnClose}
-      account={account}
+      account={address}
       signer={signer}
       proposal={selectedProposal}
       unverified={!selectedProposal.snapshotId}
@@ -213,7 +214,7 @@ export default function ProposalsPage({
             <NoProposalsList activeTabId={activeTabId} />
           ) : (
             <ProposalList
-              account={account}
+              account={address}
               signer={signer}
               proposals={
                 activeTabId === TabId.ACTIVE ? activeProposals : pastProposals
@@ -247,7 +248,7 @@ export default function ProposalsPage({
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                <Dialog.Overlay className="fixed inset-0 bg-gray-500/75 transition-opacity" />
               </Transition.Child>
 
               <Transition.Child

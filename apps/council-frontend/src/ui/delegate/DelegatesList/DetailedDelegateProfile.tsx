@@ -1,16 +1,16 @@
 import { ReactElement, useEffect, useRef } from "react";
+import { Delegate } from "@elementfi/council-delegates";
+import { Provider } from "@ethersproject/providers";
+import classNames from "classnames";
 import { t } from "ttag";
+import { useAccount } from "wagmi";
 import H2 from "src/ui/base/H2/H2";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
-import classNames from "classnames";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
-import { useWeb3React } from "@web3-react/core";
 import CloseButton from "src/ui/base/Dialog/CloseButton";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
-import { Provider } from "@ethersproject/providers";
-import { Delegate } from "@elementfi/council-delegates";
 
 interface DetailedDelegateProfileProps {
   provider?: Provider;
@@ -29,9 +29,9 @@ function DetailedDelegateProfile({
   selected,
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
-  const { account } = useWeb3React();
+  const { address } = useAccount();
   const previousSelectedRef = useRef<boolean>();
-  const chooseDelegateTooltip = !account ? t`Connect wallet` : "";
+  const chooseDelegateTooltip = !address ? t`Connect wallet` : "";
   const formattedAddress = useFormattedWalletAddress(
     delegate.address,
     provider,

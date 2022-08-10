@@ -1,27 +1,28 @@
 import React, { ReactElement, useCallback, useRef, useState } from "react";
-
-import { Web3Provider } from "@ethersproject/providers";
-import { useWeb3React } from "@web3-react/core";
+import { Delegate } from "@elementfi/council-delegates";
+import { Disclosure } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/solid";
+import classNames from "classnames";
+import { BigNumber, Signer } from "ethers";
+import { commify, formatEther } from "ethers/lib/utils";
 import { jt, t } from "ttag";
+import { useAccount, useSigner } from "wagmi";
 
+import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
+import { useGSCMembers } from "./useGSCMembers";
+import { useGSCCandidates } from "./useCandidates";
 import { defaultProvider } from "src/providers/providers";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { GSCMemberProfileRow } from "src/ui/gsc/GSCMemberProfileRow";
-import { useGSCMembers } from "./useGSCMembers";
-import { useGSCCandidates } from "./useCandidates";
 import Card from "src/ui/base/Card/Card";
 import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
-import { Disclosure } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
-import classNames from "classnames";
 import { GSCPortfolioCard } from "src/ui/gsc/GSCPortfolioCard";
 import { ChangeDelegateButton } from "src/ui/gsc/ChangeDelegationButton";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { useDelegate } from "src/ui/delegate/useDelegate";
-import { BigNumber } from "ethers";
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useKick } from "src/ui/gsc/useKickGSC";
 import { buildToastTransactionConfig } from "src/ui/notifications/buildToastTransactionConfig";
@@ -30,10 +31,7 @@ import {
   VotePowerByDelegate,
 } from "src/ui/gsc/useVotingPowerByDelegates";
 import { useGSCStatus, EligibilityState } from "src/ui/gsc/useGSCStatus";
-import { getUserVaultsExtraData } from "./getUserVaultsExtraData.ts";
-import { commify, formatEther } from "ethers/lib/utils";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
-import { Delegate } from "@elementfi/council-delegates";
 
 const provider = defaultProvider;
 
@@ -44,11 +42,12 @@ enum TabOption {
 }
 
 export function GSCOverviewSection(): ReactElement {
-  const { account, library } = useWeb3React<Web3Provider>();
-  const signer = library?.getSigner();
+  const { address } = useAccount();
+  const { data } = useSigner();
+  const signer = data as Signer | undefined;
 
-  const currentDelegate = useDelegate(account);
-  const { status } = useGSCStatus(account);
+  const currentDelegate = useDelegate(address);
+  const { status } = useGSCStatus(address);
   const isGSC = status === EligibilityState.Current;
 
   // Fetch and sort current GSC members
@@ -71,7 +70,7 @@ export function GSCOverviewSection(): ReactElement {
 
   // Change Delegation logic
   const { mutate: changeDelegation, isLoading: changeDelegationLoading } =
-    useChangeDelegation(account, signer);
+    useChangeDelegation(address, signer);
   const handleDelegation = (address: string) => changeDelegation([address]);
   const { mutate: kick, isLoading: isLeaveTxnLoading } = useKick(
     signer,
@@ -96,7 +95,7 @@ export function GSCOverviewSection(): ReactElement {
         {t`Governance GSC Overview`}
       </H1>
 
-      <GSCPortfolioCard account={account} signer={signer} />
+      <GSCPortfolioCard account={address} signer={signer} />
 
       <Card className="">
         <div className="w-full flex-col justify-center space-y-6 ">
@@ -256,7 +255,7 @@ export function GSCOverviewSection(): ReactElement {
                                 handleDelegation(member.address)
                               }
                               disabled={isGSC}
-                              account={account}
+                              account={address}
                               isLoading={changeDelegationLoading}
                               isCurrentDelegate={currentlyDelegated}
                             />
@@ -288,7 +287,7 @@ export function GSCOverviewSection(): ReactElement {
                         onDelegationClick={() =>
                           handleDelegation(delegate.address)
                         }
-                        account={account}
+                        account={address}
                         disabled={isGSC}
                         isLoading={changeDelegationLoading}
                         isCurrentDelegate={currentlyDelegated}

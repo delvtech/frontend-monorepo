@@ -1,14 +1,14 @@
 import React, { ReactElement, useState } from "react";
 import Head from "next/head";
-import { useWeb3React } from "@web3-react/core";
+import { useAccount, useSigner } from "wagmi";
+import { Signer } from "ethers";
+import { parseEther } from "ethers/lib/utils";
+import { t } from "ttag";
 
 import { ChooseDelegate } from "src/ui/airdrop/ChooseDelegate/ChooseDelegate";
 import { StartAirdropCard } from "src/ui/airdrop/StartAirdropCard/StartAirdropCard";
 import { AirdropPreview } from "src/ui/airdrop/AirdropPreview/AirdropPreview";
 import Steps from "src/ui/base/Steps/Steps";
-import { useSigner } from "src/ui/signer/useSigner";
-import { t } from "ttag";
-import { parseEther } from "ethers/lib/utils";
 import { MerkleRewardType, useMerkleInfo } from "src/ui/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { MerkleProof } from "src/merkle/MerkleProof";
@@ -22,6 +22,7 @@ import { ReviewTransaction } from "src/ui/airdrop/ReviewClaim/ReviewTransaction"
 import { AirdropAlreadyClaimed } from "src/ui/airdrop/AirdropAlreadyClaimed/AirdropAlreadyClaimed";
 import { ClaimSuccessful } from "src/ui/airdrop/ClaimSuccessful/ClaimSuccessful";
 import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
+import { defaultProvider } from "src/providers/providers";
 
 enum Step {
   /**
@@ -63,16 +64,19 @@ enum Step {
   ALREADY_CLAIMED = "claimed",
 }
 
+const provider = defaultProvider;
+
 export default function AirdropPage(): ReactElement {
-  const { account, active, library } = useWeb3React();
-  const signer = useSigner(account, library);
+  const { address, isConnected } = useAccount();
+  const { data } = useSigner();
+  const signer = data as Signer | undefined;
   const merkleInfoQueryData = useMerkleInfo(
-    account?.toLowerCase(),
+    address?.toLowerCase(),
     MerkleRewardType.RETRO,
   );
 
   const { data: merkleInfo } = merkleInfoQueryData;
-  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
+  const claimableBalance = useUnclaimedAirdrop(address, merkleInfo);
 
   const [delegateAddress, setDelegateAddress] = useState<string | undefined>();
 
@@ -156,9 +160,9 @@ export default function AirdropPage(): ReactElement {
             default:
               return (
                 <StartAirdropCard
-                  account={account}
-                  library={library}
-                  walletConnectionActive={active}
+                  account={address}
+                  library={provider}
+                  walletConnectionActive={isConnected}
                   onNextStep={() => {
                     if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {
                       goToStep(Step.ALREADY_CLAIMED);
@@ -171,18 +175,18 @@ export default function AirdropPage(): ReactElement {
 
             case Step.ALREADY_CLAIMED:
               return (
-                <AirdropAlreadyClaimed account={account} provider={library} />
+                <AirdropAlreadyClaimed account={address} provider={provider} />
               );
 
             case Step.AIRDROP_PREVIEW:
               return (
-                <AirdropPreview account={account} onNextStep={goToNextStep} />
+                <AirdropPreview account={address} onNextStep={goToNextStep} />
               );
 
             case Step.DELEGATE_INSTRUCTIONS:
               return (
                 <DelegateInstructions
-                  account={account}
+                  account={address}
                   onPrevStep={goToPreviousStep}
                   onNextStep={goToNextStep}
                 />
@@ -190,8 +194,8 @@ export default function AirdropPage(): ReactElement {
             case Step.CHOOSE_DELEGATE:
               return (
                 <ChooseDelegate
-                  account={account as string}
-                  provider={library}
+                  account={address as string}
+                  provider={provider}
                   onChooseDelegate={setDelegateAddress}
                   onPrevStep={goToPreviousStep}
                   onNextStep={goToNextStep}
@@ -200,8 +204,8 @@ export default function AirdropPage(): ReactElement {
             case Step.REVIEW_TRANSACTION:
               return (
                 <ReviewTransaction
-                  account={account}
-                  provider={library}
+                  account={address}
+                  provider={provider}
                   signer={signer}
                   delegateAddress={
                     delegateAddress as string /* safe to cast because users cannot get to this step w/out choosing a delegate first */

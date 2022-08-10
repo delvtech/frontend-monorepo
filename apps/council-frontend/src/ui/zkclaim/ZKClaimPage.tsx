@@ -1,6 +1,9 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import { Signer } from "ethers";
 import Head from "next/head";
-import { useWeb3React } from "@web3-react/core";
+import { useAccount, useSigner } from "wagmi";
+import { t } from "ttag";
+
 import LookupCard from "./LookupCard";
 import EligibleCard from "./EligibleCard";
 import AlreadyClaimedCard from "./AlreadyClaimedCard";
@@ -10,8 +13,8 @@ import DelegateInfoCard from "./DelegateInfoCard";
 import ChooseDelegateCard from "./ChooseDelegateCard";
 import TransactionCard from "./TransactionCard";
 import ShareCard from "./ShareCard";
+import useAddressScreening from "./useAddressScreening";
 import useZKProof from "./useZKProof";
-import { useSigner } from "src/ui/signer/useSigner";
 import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
 import { ElementLogo } from "src/ui/base/svg/ElementLogo/ElementLogo";
 import {
@@ -20,9 +23,8 @@ import {
 } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
-import { t } from "ttag";
-import useAddressScreening from "./useAddressScreening";
 import useAlreadyClaimed from "./useAlreadyClaimed";
+import { defaultProvider } from "src/providers/providers";
 
 export enum Step {
   LOOKUP = "lookup",
@@ -33,9 +35,12 @@ export enum Step {
   SHARE = "share",
 }
 
+const provider = defaultProvider;
+
 export default function ZKClaimPage(): ReactElement {
-  const { account, library } = useWeb3React();
-  const signer = useSigner(account, library);
+  const { address } = useAccount();
+  const { data } = useSigner();
+  const signer = data as Signer | undefined;
 
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
   const key = keySecretPair?.[0];
@@ -49,10 +54,10 @@ export default function ZKClaimPage(): ReactElement {
   } = useZKProof({
     key,
     secret,
-    account: account || undefined,
+    account: address || undefined,
   });
   const alreadyClaimed = useAlreadyClaimed(key, contract);
-  const { pass } = useAddressScreening(account);
+  const { pass } = useAddressScreening(address);
 
   const {
     canViewStep,
@@ -182,8 +187,8 @@ export default function ZKClaimPage(): ReactElement {
 
       {/* Delegate */}
       <ChooseDelegateCard
-        account={account as string}
-        provider={library}
+        account={address as string}
+        provider={provider}
         className={getStepClassName(Step.DELEGATE)}
         onChooseDelegate={setDelegateAddress}
         onPreviousStep={goToPreviousStep}
@@ -194,8 +199,8 @@ export default function ZKClaimPage(): ReactElement {
       {delegateAddress && (
         <TransactionCard
           className={getStepClassName(Step.TRANSACTION)}
-          provider={library}
-          account={account}
+          provider={provider}
+          account={address}
           signer={signer}
           isReady={isReady}
           contract={contract}
