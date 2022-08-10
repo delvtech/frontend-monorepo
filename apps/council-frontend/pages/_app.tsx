@@ -3,8 +3,8 @@ import "@fontsource/rubik/600.css";
 import "@fontsource/roboto-mono";
 import "@fontsource/roboto-mono/500.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
-import "styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import "styles/globals.css";
 
 import React, { ReactElement } from "react";
 import { QueryClientProvider } from "react-query";
