@@ -24,6 +24,7 @@ import { defaultProvider } from "src/providers/providers";
 import { queryClient } from "src/queryClient";
 import { addressesJson } from "src/addresses";
 import { Notifications } from "src/ui/notifications/Notifications";
+import CustomAvatar from "src/ui/wallet/CustomAvatar";
 import { wagmiClient } from "src/wagmiClient";
 import { chains } from "src/provider";
 
@@ -41,7 +42,7 @@ console.log(addressesJson);
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
+      <RainbowKitProvider chains={chains} avatar={CustomAvatar}>
         <ApolloProvider client={apolloClient}>
           <QueryClientProvider client={queryClient}>
             <Notifications />
