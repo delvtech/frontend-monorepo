@@ -68,8 +68,7 @@ const provider = defaultProvider;
 
 export default function AirdropPage(): ReactElement {
   const { address, isConnected } = useAccount();
-  const { data } = useSigner();
-  const signer = data as Signer | undefined;
+  const { data: signer } = useSigner();
   const merkleInfoQueryData = useMerkleInfo(
     address?.toLowerCase(),
     MerkleRewardType.RETRO,

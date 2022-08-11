@@ -39,8 +39,7 @@ const provider = defaultProvider;
 
 export default function ZKClaimPage(): ReactElement {
   const { address } = useAccount();
-  const { data } = useSigner();
-  const signer = data as Signer | undefined;
+  const { data: signer } = useSigner();
 
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
   const key = keySecretPair?.[0];

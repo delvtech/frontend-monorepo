@@ -41,8 +41,7 @@ export default function GSCProposalsSection({
   currentBlockNumber,
 }: ProposalsSectionProps): ReactElement {
   const { address } = useAccount();
-  const { data } = useSigner();
-  const signer = data as Signer | undefined;
+  const { data: signer } = useSigner();
 
   // set the default to the first active proposal, since that's what filter is
   // on by default

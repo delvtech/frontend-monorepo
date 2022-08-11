@@ -20,8 +20,7 @@ const provider = defaultProvider;
 
 export function OverviewPage(): ReactElement {
   const { address } = useAccount();
-  const { data } = useSigner();
-  const signer = data as Signer | undefined;
+  const { data: signer } = useSigner();
 
   return (
     <div className="h-full w-full space-y-6 xl:max-w-[1024px]">
