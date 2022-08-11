@@ -19,8 +19,7 @@ import { defaultProvider } from "src/providers/providers";
 const provider = defaultProvider;
 
 export default function DelegatePage(): ReactElement {
-  const { data } = useSigner();
-  const signer = data as Signer | undefined;
+  const { data: signer } = useSigner();
   const { address } = useAccount();
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");

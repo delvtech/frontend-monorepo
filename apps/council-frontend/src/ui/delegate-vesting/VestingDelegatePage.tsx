@@ -20,8 +20,7 @@ const provider = defaultProvider;
 
 export default function VestingClaim(): ReactElement {
   const { address } = useAccount();
-  const { data } = useSigner();
-  const signer = data as Signer | undefined;
+  const { data: signer } = useSigner();
 
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");

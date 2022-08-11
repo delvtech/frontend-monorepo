@@ -43,8 +43,7 @@ enum TabOption {
 
 export function GSCOverviewSection(): ReactElement {
   const { address } = useAccount();
-  const { data } = useSigner();
-  const signer = data as Signer | undefined;
+  const { data: signer } = useSigner();
 
   const currentDelegate = useDelegate(address);
   const { status } = useGSCStatus(address);

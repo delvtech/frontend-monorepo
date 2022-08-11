@@ -46,8 +46,7 @@ export default function ProposalsPage({
   currentBlockNumber,
 }: ProposalsPageProps): ReactElement {
   const { address } = useAccount();
-  const { data } = useSigner();
-  const signer = data as Signer | undefined;
+  const { data: signer } = useSigner();
 
   const [activeTabId, setActiveTabId] = useState<TabId>(TabId.ACTIVE);
 
