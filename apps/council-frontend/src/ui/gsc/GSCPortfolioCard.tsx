@@ -19,7 +19,7 @@ import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 interface PortfolioCardProps {
   account: string | null | undefined;
   provider?: Provider;
-  signer?: Signer | null | undefined;
+  signer?: Signer | null;
 }
 
 export function GSCPortfolioCard({

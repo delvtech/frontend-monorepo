@@ -21,7 +21,7 @@ const EMPTY_BYTE = "0x00";
 
 export function useJoinGSC(
   account: string | null | undefined,
-  signer?: Signer | null | undefined,
+  signer?: Signer | null,
   options?: UseSmartContractTransactionOptions<GSCVault, "proveMembership">,
 ): { handleJoin: () => Promise<void>; isLoading: boolean } {
   const { mutate: join, isLoading } = useSmartContractTransaction(
