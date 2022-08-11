@@ -38,7 +38,7 @@ const StatusTagIntents: Record<ProposalStatus, Intent> = {
 };
 
 interface ProposalStatusIconProps {
-  signer: Signer | undefined;
+  signer: Signer | null | undefined;
   proposal: Proposal;
   disableTooltip?: boolean;
   isGSCProposal?: boolean;

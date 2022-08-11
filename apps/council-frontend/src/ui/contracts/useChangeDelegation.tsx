@@ -13,7 +13,7 @@ import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 
 export function useChangeDelegation(
   address: string | null | undefined,
-  signer: Signer | undefined,
+  signer: Signer | null | undefined,
 ): UseMutationResult<
   ContractReceipt | undefined,
   unknown,

@@ -18,7 +18,7 @@ import { useQueryClient } from "react-query";
 
 interface GSCButtonProps {
   account: string | null | undefined;
-  signer: Signer | undefined;
+  signer: Signer | null | undefined;
   disabled?: boolean;
   isGSC?: boolean;
 }

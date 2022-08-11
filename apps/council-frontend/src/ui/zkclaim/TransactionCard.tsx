@@ -31,7 +31,7 @@ interface TransactionCardProps {
   className?: string;
   account: string | null | undefined;
   provider: Provider | undefined;
-  signer: Signer | undefined;
+  signer: Signer | null | undefined;
   isReady: boolean;
   contract: PrivateAirdrop | undefined;
   generateProof: () => Promise<string> | undefined;

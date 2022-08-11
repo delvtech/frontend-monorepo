@@ -16,7 +16,7 @@ const { gscVault: gscVaultAddress } = addressesJson.addresses;
 
 export function useGSCVote(
   account: string | undefined | null,
-  signer: Signer | undefined,
+  signer: Signer | null | undefined,
   proposalCreatedAtBlockNumber: number,
   options?: UseSmartContractTransactionOptions<CoreVoting, "vote">,
 ): {

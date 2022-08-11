@@ -9,7 +9,7 @@ import {
 } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 
 export function useClaimAndDepositAirdrop(
-  signer: Signer | undefined,
+  signer: Signer | null | undefined,
   options?: UseSmartContractTransactionOptions<Airdrop, "claimAndDelegate">,
 ): UseMutationResult<
   ContractReceipt | undefined,

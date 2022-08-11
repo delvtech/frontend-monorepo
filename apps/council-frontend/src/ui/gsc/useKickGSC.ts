@@ -9,7 +9,7 @@ import { GSCVault } from "@elementfi/council-typechain";
 import { UseMutationResult } from "react-query";
 
 export function useKick(
-  signer?: Signer,
+  signer?: Signer | null | undefined,
   options?: UseSmartContractTransactionOptions<GSCVault, "kick">,
 ): UseMutationResult<
   ContractReceipt | undefined,
