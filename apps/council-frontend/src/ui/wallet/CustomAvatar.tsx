@@ -1,14 +1,22 @@
-import React, { useEffect, useRef } from "react";
-import { AvatarComponent } from "@rainbow-me/rainbowkit";
+import React, { ReactElement, useEffect, useRef } from "react";
 import jazzicon from "@metamask/jazzicon";
 import { t } from "ttag";
 import Image from "next/image";
-
 import { getMetamaskJazziconSeed } from "src/base/getMetamaskJazziconSeed";
 
 const JAZZICON_DIAMETER_PIXELS = 48;
 
-const CustomAvatar: AvatarComponent = ({ address, ensImage, size }) => {
+interface AvatarComponentProps {
+  address: string;
+  ensImage?: string | null | undefined;
+  size: number;
+}
+
+function CustomAvatar({
+  address,
+  ensImage,
+  size,
+}: AvatarComponentProps): ReactElement {
   const jazziconRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -39,6 +47,6 @@ const CustomAvatar: AvatarComponent = ({ address, ensImage, size }) => {
   ) : (
     <div ref={jazziconRef}></div>
   );
-};
+}
 
 export default CustomAvatar;
