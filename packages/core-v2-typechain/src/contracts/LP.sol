@@ -233,7 +233,7 @@ contract LP is MultiToken {
         address to
     ) internal returns (uint256) {
         // Must be initialized
-        // NOTE - There's a strong requirment for trades to not be able to move the pool to
+        // NOTE - There's a strong requirement for trades to not be able to move the pool to
         //        have a reserve of exactly 0 in either asset
         require(
             currentShares != 0 && currentBonds != 0,

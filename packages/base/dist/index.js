@@ -1,3 +1,5 @@
+var $kVMNA$lrucache = require("lru-cache");
+var $kVMNA$fastjsonstablestringify = require("fast-json-stable-stringify");
 var $kVMNA$react = require("react");
 var $kVMNA$reactuse = require("react-use");
 var $kVMNA$lodashisequal = require("lodash.isequal");
@@ -24,12 +26,42 @@ function $parcel$exportWildcard(dest, source) {
 
   return dest;
 }
-function $parcel$export(e, n, v, s) {
-  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
-}
 function $parcel$interopDefault(a) {
   return a && a.__esModule ? a.default : a;
 }
+function $parcel$export(e, n, v, s) {
+  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
+}
+var $f34c70895ba47bf3$exports = {};
+
+$parcel$export($f34c70895ba47bf3$exports, "cached", () => $f34c70895ba47bf3$export$ade7a147f5129058);
+$parcel$export($f34c70895ba47bf3$exports, "getCacheKey", () => $f34c70895ba47bf3$export$611736262b635f8d);
+
+
+function $f34c70895ba47bf3$export$ade7a147f5129058({ cache: cache = new (0, ($parcel$interopDefault($kVMNA$lrucache)))({
+    max: 500
+}) , cacheKey: cacheKey , callback: callback , options: options  }) {
+    if (cache.has(cacheKey)) // console.log("✅ cache hit", cacheKey);
+    return cache.get(cacheKey, options);
+    else {
+        // console.log("❌ cache miss", cacheKey);
+        const value = callback();
+        cache.set(cacheKey, value, options);
+        return value;
+    }
+}
+function $f34c70895ba47bf3$export$611736262b635f8d(prefix, args) {
+    const argKeys = [];
+    for (const arg of args){
+        if (arg === undefined) argKeys.push("undefined");
+        else if (arg === null) argKeys.push("null");
+        else if (typeof arg === "object") argKeys.push((0, ($parcel$interopDefault($kVMNA$fastjsonstablestringify)))(arg));
+        else argKeys.push(arg.toString());
+    }
+    return `${prefix}:${argKeys.join(",")}`;
+}
+
+
 var $a199ce3284f2ec67$exports = {};
 
 $parcel$export($a199ce3284f2ec67$exports, "EMPTY_ARRAY", () => $a199ce3284f2ec67$export$2c66e96878bf4792);
@@ -480,6 +512,7 @@ function $3578c23aa56390e6$export$30140dd01348b2a4(addresses) {
 }
 
 
+$parcel$exportWildcard(module.exports, $f34c70895ba47bf3$exports);
 $parcel$exportWildcard(module.exports, $a199ce3284f2ec67$exports);
 $parcel$exportWildcard(module.exports, $070df8e59a3d40c0$exports);
 $parcel$exportWildcard(module.exports, $17cb476856efe655$exports);

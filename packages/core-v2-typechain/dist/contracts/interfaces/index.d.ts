@@ -1,3 +1,4 @@
+export type { ICompoundV3 } from "./ICompoundV3";
 export type { IERC20 } from "./IERC20";
 export type { IERC20Mint } from "./IERC20Mint";
 export type { IERC20Permit } from "./IERC20Permit";

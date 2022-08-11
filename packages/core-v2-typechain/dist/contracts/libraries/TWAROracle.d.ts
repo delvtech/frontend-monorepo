@@ -1,5 +1,5 @@
 import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from "../../common";
 export interface TWAROracleInterface extends utils.Interface {
@@ -21,8 +21,21 @@ export interface TWAROracleInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "readMetadataParsed(uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "readSumAndTimeStampForPool", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "readSumAndTimeStampForPool(uint256,uint16)", data: BytesLike): Result;
-    events: {};
+    events: {
+        "UpdateBuffer(uint256,uint256)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "UpdateBuffer"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "UpdateBuffer(uint256,uint256)"): EventFragment;
 }
+export interface UpdateBufferEventObject {
+    value: BigNumber;
+    metadata: BigNumber;
+}
+export declare type UpdateBufferEvent = TypedEvent<[
+    BigNumber,
+    BigNumber
+], UpdateBufferEventObject>;
+export declare type UpdateBufferEventFilter = TypedEventFilter<UpdateBufferEvent>;
 export interface TWAROracle extends BaseContract {
     connect(signerOrProvider: Signer | Provider | string): this;
     attach(addressOrName: string): this;
@@ -171,7 +184,10 @@ export interface TWAROracle extends BaseContract {
             cumulativeSum: BigNumber;
         }>;
     };
-    filters: {};
+    filters: {
+        "UpdateBuffer(uint256,uint256)"(value?: null, metadata?: null): UpdateBufferEventFilter;
+        UpdateBuffer(value?: null, metadata?: null): UpdateBufferEventFilter;
+    };
     estimateGas: {
         calculateAverageWeightedValue(bufferId: PromiseOrValue<BigNumberish>, timeInSeconds: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         "calculateAverageWeightedValue(uint256,uint32)"(bufferId: PromiseOrValue<BigNumberish>, timeInSeconds: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;

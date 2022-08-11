@@ -308,7 +308,7 @@ var _abi = [
             },
             {
                 internalType: "uint256",
-                name: "ptId",
+                name: "ptExpiry",
                 type: "uint256",
             },
             {

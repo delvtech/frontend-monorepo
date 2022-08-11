@@ -4,4 +4,3 @@ compiled
 src/*.addresses.json
 .env
 node_modules
-src/index.ts

@@ -33,6 +33,7 @@ export interface MockYieldAdapterInterface extends utils.Interface {
         "setApproval(uint256,address,uint256)": FunctionFragment;
         "setApprovalBridge(uint256,address,uint256,address)": FunctionFragment;
         "setApprovalForAll(address,bool)": FunctionFragment;
+        "setBalance(uint256,address,uint256)": FunctionFragment;
         "setOwner(address)": FunctionFragment;
         "sharesPerExpiry(uint256)": FunctionFragment;
         "symbol(uint256)": FunctionFragment;
@@ -45,7 +46,7 @@ export interface MockYieldAdapterInterface extends utils.Interface {
         "vault()": FunctionFragment;
         "yieldTerms(uint256)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "UNLOCKED_PT_ID" | "UNLOCKED_PT_ID()" | "UNLOCKED_YT_ID" | "UNLOCKED_YT_ID()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "convertYT" | "convertYT(uint256,uint256,address,bool)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositUnlocked" | "depositUnlocked(uint256,uint256,uint256,address)" | "factory" | "factory()" | "finalizedTerms" | "finalizedTerms(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "lock" | "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)" | "lockedSharePrice" | "lockedSharePrice()" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "one" | "one()" | "owner" | "owner()" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "redeem" | "redeem(uint256,uint256,uint256)" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setOwner" | "setOwner(address)" | "sharesPerExpiry" | "sharesPerExpiry(uint256)" | "symbol" | "symbol(uint256)" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "unlock" | "unlock(address,uint256[],uint256[])" | "unlockedSharePrice" | "unlockedSharePrice()" | "vault" | "vault()" | "yieldTerms" | "yieldTerms(uint256)"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "UNLOCKED_PT_ID" | "UNLOCKED_PT_ID()" | "UNLOCKED_YT_ID" | "UNLOCKED_YT_ID()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "convertYT" | "convertYT(uint256,uint256,address,bool)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositUnlocked" | "depositUnlocked(uint256,uint256,uint256,address)" | "factory" | "factory()" | "finalizedTerms" | "finalizedTerms(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "lock" | "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)" | "lockedSharePrice" | "lockedSharePrice()" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "one" | "one()" | "owner" | "owner()" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "redeem" | "redeem(uint256,uint256,uint256)" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setBalance" | "setBalance(uint256,address,uint256)" | "setOwner" | "setOwner(address)" | "sharesPerExpiry" | "sharesPerExpiry(uint256)" | "symbol" | "symbol(uint256)" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "unlock" | "unlock(address,uint256[],uint256[])" | "unlockedSharePrice" | "unlockedSharePrice()" | "vault" | "vault()" | "yieldTerms" | "yieldTerms(uint256)"): FunctionFragment;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR()", values?: undefined): string;
     encodeFunctionData(functionFragment: "PERMIT_TYPEHASH", values?: undefined): string;
@@ -202,6 +203,16 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     ]): string;
     encodeFunctionData(functionFragment: "setApprovalForAll", values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
     encodeFunctionData(functionFragment: "setApprovalForAll(address,bool)", values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
+    encodeFunctionData(functionFragment: "setBalance", values: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<string>,
+        PromiseOrValue<BigNumberish>
+    ]): string;
+    encodeFunctionData(functionFragment: "setBalance(uint256,address,uint256)", values: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<string>,
+        PromiseOrValue<BigNumberish>
+    ]): string;
     encodeFunctionData(functionFragment: "setOwner", values: [PromiseOrValue<string>]): string;
     encodeFunctionData(functionFragment: "setOwner(address)", values: [PromiseOrValue<string>]): string;
     encodeFunctionData(functionFragment: "sharesPerExpiry", values: [PromiseOrValue<BigNumberish>]): string;
@@ -312,6 +323,8 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "setApprovalBridge(uint256,address,uint256,address)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setApprovalForAll", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setApprovalForAll(address,bool)", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "setBalance", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "setBalance(uint256,address,uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setOwner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setOwner(address)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "sharesPerExpiry", data: BytesLike): Result;
@@ -436,10 +449,10 @@ export interface MockYieldAdapter extends BaseContract {
         }): Promise<ContractTransaction>;
         decimals(overrides?: CallOverrides): Promise<[number]>;
         "decimals()"(overrides?: CallOverrides): Promise<[number]>;
-        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
-        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
         factory(overrides?: CallOverrides): Promise<[string]>;
@@ -510,6 +523,12 @@ export interface MockYieldAdapter extends BaseContract {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<ContractTransaction>;
+        setBalance(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<ContractTransaction>;
+        "setBalance(uint256,address,uint256)"(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
         setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -595,10 +614,10 @@ export interface MockYieldAdapter extends BaseContract {
     }): Promise<ContractTransaction>;
     decimals(overrides?: CallOverrides): Promise<number>;
     "decimals()"(overrides?: CallOverrides): Promise<number>;
-    depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+    depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
-    "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+    "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
     factory(overrides?: CallOverrides): Promise<string>;
@@ -671,6 +690,12 @@ export interface MockYieldAdapter extends BaseContract {
     "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
+    setBalance(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+        from?: PromiseOrValue<string>;
+    }): Promise<ContractTransaction>;
+    "setBalance(uint256,address,uint256)"(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+        from?: PromiseOrValue<string>;
+    }): Promise<ContractTransaction>;
     setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
@@ -738,8 +763,8 @@ export interface MockYieldAdapter extends BaseContract {
         "deauthorize(address)"(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         decimals(overrides?: CallOverrides): Promise<number>;
         "decimals()"(overrides?: CallOverrides): Promise<number>;
-        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
-        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
         factory(overrides?: CallOverrides): Promise<string>;
         "factory()"(overrides?: CallOverrides): Promise<string>;
         finalizedTerms(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[
@@ -786,6 +811,8 @@ export interface MockYieldAdapter extends BaseContract {
         "setApprovalBridge(uint256,address,uint256,address)"(tokenID: PromiseOrValue<BigNumberish>, operator: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, caller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         setApprovalForAll(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
+        setBalance(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+        "setBalance(uint256,address,uint256)"(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         setOwner(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         "setOwner(address)"(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         sharesPerExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -862,10 +889,10 @@ export interface MockYieldAdapter extends BaseContract {
         }): Promise<BigNumber>;
         decimals(overrides?: CallOverrides): Promise<BigNumber>;
         "decimals()"(overrides?: CallOverrides): Promise<BigNumber>;
-        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
-        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
         factory(overrides?: CallOverrides): Promise<BigNumber>;
@@ -924,6 +951,12 @@ export interface MockYieldAdapter extends BaseContract {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<BigNumber>;
+        setBalance(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<BigNumber>;
+        "setBalance(uint256,address,uint256)"(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
         setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -1004,10 +1037,10 @@ export interface MockYieldAdapter extends BaseContract {
         }): Promise<PopulatedTransaction>;
         decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "decimals()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        depositUnlocked(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
-        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptId: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
+        "depositUnlocked(uint256,uint256,uint256,address)"(underlyingAmount: PromiseOrValue<BigNumberish>, ptAmount: PromiseOrValue<BigNumberish>, ptExpiry: PromiseOrValue<BigNumberish>, destination: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
         factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1066,6 +1099,12 @@ export interface MockYieldAdapter extends BaseContract {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
         "setApprovalForAll(address,bool)"(operator: PromiseOrValue<string>, approved: PromiseOrValue<boolean>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<PopulatedTransaction>;
+        setBalance(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<PopulatedTransaction>;
+        "setBalance(uint256,address,uint256)"(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
         setOwner(who: PromiseOrValue<string>, overrides?: Overrides & {

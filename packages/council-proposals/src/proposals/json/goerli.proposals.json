@@ -14,9 +14,7 @@
       "expiration": 6161442,
       "forumLink": "",
       "quorum": "100000.0",
-      "targets": [
-        "0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4"
-      ],
+      "targets": ["0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4"],
       "calldatas": [
         "0x88b49b8364ec53acdd6f74efcba0de586952c40e23aa87d547d57fabb1ee21203b7b09ea"
       ],
@@ -34,9 +32,7 @@
       "createdTimestamp": 1644450139,
       "expiration": 8742068,
       "quorum": "1000000.0",
-      "targets": [
-        "0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4"
-      ],
+      "targets": ["0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4"],
       "calldatas": [
         "0x88b49b8364ec53acdd6f74efcba0de586952c40e23aa87d547d57fabb1ee21203b7b09ea"
       ],
@@ -54,9 +50,7 @@
       "createdTimestamp": 1646719373,
       "expiration": 8889993,
       "quorum": "1000000.0",
-      "targets": [
-        "0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4"
-      ],
+      "targets": ["0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4"],
       "calldatas": [
         "0x88b49b8364ec53acdd6f74efcba0de586952c40e23aa87d547d57fabb1ee21203b7b09ea"
       ],
@@ -74,12 +68,8 @@
       "expiration": 6161450,
       "quorum": "100000.0",
       "forumLink": "",
-      "targets": [
-        ""
-      ],
-      "calldatas": [
-        ""
-      ],
+      "targets": [""],
+      "calldatas": [""],
       "snapshotId": "-1"
     },
     {
@@ -94,12 +84,8 @@
       "createdTimestamp": 1548854791,
       "expiration": 0,
       "quorum": "0.0",
-      "targets": [
-        ""
-      ],
-      "calldatas": [
-        ""
-      ],
+      "targets": [""],
+      "calldatas": [""],
       "snapshotId": "-1"
     },
     {
@@ -114,12 +100,8 @@
       "createdTimestamp": 1641651114,
       "expiration": 6216929,
       "quorum": "1000000.0",
-      "targets": [
-        ""
-      ],
-      "calldatas": [
-        ""
-      ],
+      "targets": [""],
+      "calldatas": [""],
       "snapshotId": "-1"
     },
     {
@@ -134,12 +116,8 @@
       "createdTimestamp": 1643385402,
       "expiration": 6332536,
       "quorum": "1000000.0",
-      "targets": [
-        ""
-      ],
-      "calldatas": [
-        ""
-      ],
+      "targets": [""],
+      "calldatas": [""],
       "snapshotId": "-1"
     },
     {
@@ -154,12 +132,8 @@
       "forumLink": "",
       "expiration": 6332577,
       "quorum": "1000000.0",
-      "targets": [
-        ""
-      ],
-      "calldatas": [
-        ""
-      ],
+      "targets": [""],
+      "calldatas": [""],
       "snapshotId": "-1"
     },
     {
@@ -174,12 +148,8 @@
       "forumLink": "",
       "expiration": 8742070,
       "quorum": "1000000.0",
-      "targets": [
-        ""
-      ],
-      "calldatas": [
-        ""
-      ],
+      "targets": [""],
+      "calldatas": [""],
       "snapshotId": "-1"
     },
     {
@@ -194,12 +164,8 @@
       "createdTimestamp": 1646181871,
       "expiration": 8854182,
       "quorum": "1000000.0",
-      "targets": [
-        ""
-      ],
-      "calldatas": [
-        ""
-      ],
+      "targets": [""],
+      "calldatas": [""],
       "snapshotId": "-1"
     }
   ]

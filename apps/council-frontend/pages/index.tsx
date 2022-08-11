@@ -3,7 +3,11 @@ import React, { ReactElement } from "react";
 import PageView from "src/ui/app/PageView";
 import { ProposalsJson } from "@elementfi/council-proposals";
 import { PROPOSALS_JSON_URL } from "src/proposals";
-import mainnetProposals from "@elementfi/council-proposals/dist/mainnet.proposals.json";
+
+// in development we want to read directly from the package instead of going
+// to s3. This way we can test out locally how a new proposal looks in the UI
+// without having to update production s3 buckets.
+import mainnetProposals from "@elementfi/council-proposals/dist/json/mainnet.proposals.json";
 
 interface HomeProps {
   proposalsJson: ProposalsJson;

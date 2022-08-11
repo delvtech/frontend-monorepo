@@ -6,7 +6,11 @@ import { PROPOSALS_JSON_URL } from "src/proposals";
 import PageView from "src/ui/app/PageView";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import ProposalsPage from "src/ui/proposals/ProposalsPage";
-import mainnetProposals from "@elementfi/council-proposals/dist/mainnet.proposals.json";
+
+// in development we want to read directly from the package instead of going
+// to s3. This way we can test out locally how a new proposal looks in the UI
+// without having to update production s3 buckets.
+import mainnetProposals from "@elementfi/council-proposals/dist/json/mainnet.proposals.json";
 
 interface ProposalsProps {
   proposalsJson: ProposalsJson;

@@ -2,7 +2,7 @@ import { Callout, Dialog } from "@blueprintjs/core";
 import classNames from "classnames";
 import { CSSProperties, ReactElement } from "react";
 import { useMedia } from "react-use";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 import { useDarkMode } from "ui/prefs/useDarkMode/useDarkMode";
 
 const smallScreenStyle: CSSProperties = {
@@ -15,6 +15,12 @@ interface IneligibleWalletDialogProps {
   isOpen: boolean;
 }
 
+const elementFinanceDiscordSupportChannelLink = (
+  <a
+    key="discord-support-channel-link"
+    href="https://discord.gg/tmn6h3XFV8"
+  >{t`Element Finance’s Discord #support channel`}</a>
+);
 export default function IneligibleAccountDialog({
   isOpen,
 }: IneligibleWalletDialogProps): ReactElement {
@@ -32,7 +38,16 @@ export default function IneligibleAccountDialog({
     >
       <div className="p-5">
         <Callout intent="danger">
-          {t`This account is not eligible to use this website.`}
+          <p>{t`This account is not eligible to use this website.`}</p>
+          <p>{t` In many cases, our compliance
+          filters prohibit certain wallet addresses, individuals, or jurisdictions from using this
+          UI.`}</p>
+          <p>{t`Please note that Element Finance, Inc. does not control access to the Element
+          Protocol, and does not hold or maintain custody of user funds. In some instances, the
+          filter may be temporary pending further review.`}</p>
+          <p>{jt`For further information or questions,
+          please contact ${elementFinanceDiscordSupportChannelLink}, and provide the relevant
+          transaction date/time and wallet address.`}</p>
         </Callout>
       </div>
     </Dialog>
