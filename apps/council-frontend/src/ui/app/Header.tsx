@@ -1,7 +1,5 @@
 import React, { ReactElement } from "react";
-import { useWeb3React } from "@web3-react/core";
 import { t } from "ttag";
-import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
 import ElementUrl from "src/urls";
 import GasIcon from "src/ui/base/svg/GasIcon";
@@ -12,22 +10,23 @@ import {
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
-import { Provider } from "@ethersproject/providers";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount } from "wagmi";
 
 const GAS_URL = "https://www.etherchain.org/tools/gasnow";
 
 function Header(): ReactElement {
-  const { account, active, library } = useWeb3React<Provider>();
+  const { address } = useAccount();
   const { data: gasPrice } = useGasPrice();
-  const amountDeposited = useDeposited(account) || "0";
+
+  const amountDeposited = useDeposited(address) || "0";
   const formattedAmountDeposited = parseFloat(amountDeposited).toFixed(2);
 
   return (
-    <div className="flex w-full justify-between">
-      <div className="flex space-x-3"></div>
-      <div className="flex items-center space-x-4 text-gray-400">
-        {account ? (
+    <div className="flex w-full">
+      <div className="ml-auto flex items-center space-x-4 text-gray-400">
+        {address ? (
           <div className="flex items-center">
             <span className="mr-8 hidden items-center gap-1 lg:flex">
               <ExternalLink
@@ -59,13 +58,17 @@ function Header(): ReactElement {
             </Tooltip>
           </div>
         ) : null}
-
-        <WalletProfileButton
-          account={account}
-          provider={library}
-          walletConnectionActive={active}
-        />
       </div>
+
+      {/* TODO: There's a weird bug that happens when you refresh the Delegate page when your wallet is connected. Check console for a potential hydration error (missing div) */}
+      <ConnectButton
+        showBalance={false}
+        accountStatus={{
+          smallScreen: "avatar",
+          largeScreen: "full",
+        }}
+        label={t`Connect Wallet`}
+      />
     </div>
   );
 }

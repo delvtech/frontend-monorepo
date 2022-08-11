@@ -6,12 +6,12 @@ import {
   useMemo,
   useState,
 } from "react";
-
 import { Proposal, ProposalsJson } from "@elementfi/council-proposals";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
-import { useWeb3React } from "@web3-react/core";
+import { Signer } from "ethers";
 import { t } from "ttag";
+import { useAccount, useSigner } from "wagmi";
 
 import { ELEMENT_FINANCE_GSC_SNAPSHOT_URL } from "src/integrations/snapshot/endpoints";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
@@ -22,8 +22,6 @@ import {
   useIsTailwindLargeScreen,
   useIsTailwindSmallScreen,
 } from "src/ui/base/tailwindBreakpoints";
-import { useSigner } from "src/ui/signer/useSigner";
-
 import { ProposalList } from "src/ui/proposals/ProposalList/ProposalList";
 import {
   NoProposalsDetail,
@@ -42,8 +40,9 @@ export default function GSCProposalsSection({
   proposalsJson,
   currentBlockNumber,
 }: ProposalsSectionProps): ReactElement {
-  const { account, library } = useWeb3React();
-  const signer = useSigner(account, library);
+  const { address } = useAccount();
+  const { data } = useSigner();
+  const signer = data as Signer | undefined;
 
   // set the default to the first active proposal, since that's what filter is
   // on by default
@@ -167,7 +166,7 @@ export default function GSCProposalsSection({
     <GSCProposalDetailsCard
       key={selectedProposalId}
       onClose={handleOnClose}
-      account={account}
+      account={address}
       signer={signer}
       proposal={selectedProposal}
       unverified={!selectedProposal.snapshotId}
@@ -205,7 +204,7 @@ export default function GSCProposalsSection({
           ) : (
             <ProposalList
               isGSCProposal
-              account={account}
+              account={address}
               signer={signer}
               proposals={
                 activeTabId === TabId.ACTIVE ? activeProposals : pastProposals
@@ -239,7 +238,7 @@ export default function GSCProposalsSection({
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                <Dialog.Overlay className="fixed inset-0 bg-gray-500/75 transition-opacity" />
               </Transition.Child>
 
               <Transition.Child

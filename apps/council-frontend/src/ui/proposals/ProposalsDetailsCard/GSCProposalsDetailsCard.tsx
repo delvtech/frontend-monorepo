@@ -52,7 +52,7 @@ import { BallotLabel } from "src/ui/proposals/ProposalsDetailsCard/BallotLabel";
 interface GSCProposalDetailsCardProps {
   className?: string;
   account: string | null | undefined;
-  signer: Signer | undefined;
+  signer: Signer | null | undefined;
   proposal: Proposal;
   onClose: () => void;
   unverified?: boolean;

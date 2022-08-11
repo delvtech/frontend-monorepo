@@ -61,7 +61,7 @@ export function useSmartContractTransaction<
   // TODO: contracts should not be undefined thanks to tokenlist
   contract: TContract | undefined,
   methodName: TMethodName,
-  signer: Signer | undefined,
+  signer: Signer | null | undefined,
   options: UseSmartContractTransactionOptions<TContract, TMethodName> = {},
 ): UseSmartContractTransactionResult<TContract, TMethodName> {
   const { onTransactionMined, onTransactionSubmitted, onError, setGasLimit } =

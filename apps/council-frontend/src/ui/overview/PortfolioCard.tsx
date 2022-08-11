@@ -23,7 +23,7 @@ import { addressesJson } from "src/addresses";
 interface PortfolioCardProps {
   account: string | undefined | null;
   provider?: Provider;
-  signer: Signer | undefined;
+  signer: Signer | null | undefined;
 }
 
 export function PortfolioCard(props: PortfolioCardProps): ReactElement {

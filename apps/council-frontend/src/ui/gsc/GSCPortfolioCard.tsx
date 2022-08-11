@@ -17,9 +17,9 @@ import { GSCHistory } from "src/ui/gsc/GSCHistory";
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 
 interface PortfolioCardProps {
-  account: string | undefined | null;
+  account: string | null | undefined;
   provider?: Provider;
-  signer?: Signer;
+  signer?: Signer | null;
 }
 
 export function GSCPortfolioCard({

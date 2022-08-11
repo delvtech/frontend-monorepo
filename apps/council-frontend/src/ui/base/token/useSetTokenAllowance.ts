@@ -8,7 +8,7 @@ import { ContractReceipt, Signer } from "ethers";
 import { useSmartContractTransaction } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 
 export function useSetTokenAllowance(
-  signer: Signer | undefined,
+  signer: Signer | null | undefined,
   tokenAddress: string,
 ): UseMutationResult<
   ContractReceipt | undefined,

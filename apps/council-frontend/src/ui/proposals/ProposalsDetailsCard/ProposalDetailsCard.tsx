@@ -55,7 +55,7 @@ import { ReactMarkdownOptions } from "react-markdown/lib/react-markdown";
 interface ProposalDetailsCardProps {
   className?: string;
   account: string | null | undefined;
-  signer: Signer | undefined;
+  signer: Signer | null | undefined;
   proposal: Proposal;
   onClose: () => void;
   unverified?: boolean;

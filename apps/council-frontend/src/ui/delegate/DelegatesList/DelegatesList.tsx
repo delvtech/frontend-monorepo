@@ -136,6 +136,7 @@ function DelegatesList({
 
             return (
               <DelegateProfileRow
+                key={delegate.address}
                 renderPredicate={renderPredicate}
                 provider={provider}
                 selected={selected}

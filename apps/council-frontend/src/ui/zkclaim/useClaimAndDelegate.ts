@@ -8,7 +8,7 @@ import {
 } from "@elementfi/react-query-typechain/src/hooks/useSmartContractTransaction/useSmartContractTransaction";
 
 export function useClaimAndDelegate(
-  signer: Signer | undefined,
+  signer: Signer | null | undefined,
   contract: PrivateAirdrop | undefined,
   options?: UseSmartContractTransactionOptions<
     PrivateAirdrop,

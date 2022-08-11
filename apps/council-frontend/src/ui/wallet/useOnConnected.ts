@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { usePrevious } from "react-use";
-import { useWeb3React } from "@web3-react/core";
+import { useAccount } from "wagmi";
 
 /**
  * Invokes a callback when the user connects their wallet.
  * @param callback The function to run when the wallet is connected
  */
 export default function useOnConnected(callback: () => void): void {
-  const { active } = useWeb3React();
-  const previousActive = usePrevious(active);
+  const { isConnected } = useAccount();
+  const previousActive = usePrevious(isConnected);
   useEffect(() => {
-    if (!previousActive && active) {
+    if (!previousActive && isConnected) {
       callback();
     }
-  }, [previousActive, active, callback]);
+  }, [previousActive, isConnected, callback]);
 }

@@ -6,7 +6,7 @@ import { ProposalListItem } from "./ProposalListItem";
 
 interface ProposalListProps {
   account: string | null | undefined;
-  signer: Signer | undefined;
+  signer: Signer | null | undefined;
   proposals: Proposal[];
   selectedProposalId: string | undefined;
   onClickItem: (proposalId: string | undefined) => void;

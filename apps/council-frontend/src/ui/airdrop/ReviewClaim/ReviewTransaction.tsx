@@ -19,7 +19,7 @@ interface ReviewTransactionProps {
   account: string | null | undefined;
   provider?: Provider;
   delegateAddress: string;
-  signer: Signer | undefined;
+  signer: Signer | null | undefined;
   onPrevStep: () => void;
   onNextStep: () => void;
 }

@@ -22,7 +22,7 @@ const { lockingVault: lockingVaultAddress, vestingVault: vestingVaultAddress } =
 
 export function useVote(
   account: string | undefined | null,
-  signer: Signer | undefined,
+  signer: Signer | null | undefined,
   proposalCreatedAtBlockNumber: number,
   options?: UseSmartContractTransactionOptions<CoreVoting, "vote">,
 ): {

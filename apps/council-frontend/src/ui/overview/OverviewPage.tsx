@@ -1,14 +1,13 @@
 import React, { ReactElement } from "react";
-
-import Head from "next/head";
-import { Web3Provider } from "@ethersproject/providers";
+import { ProposalsJson } from "@elementfi/council-proposals";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
+import { Signer } from "ethers";
+import Head from "next/head";
 import { jt, t } from "ttag";
+import { useAccount, useSigner } from "wagmi";
 
-import { ProposalsJson } from "@elementfi/council-proposals";
 import ElementUrls from "src/urls";
 import Card from "src/ui/base/Card/Card";
 import H1 from "src/ui/base/H1/H1";
@@ -16,19 +15,13 @@ import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { PortfolioCard } from "src/ui/overview/PortfolioCard";
 import { SummaryCards } from "src/ui/overview/SummaryCards";
 import { defaultProvider } from "src/providers/providers";
-import { useSigner } from "src/ui/signer/useSigner";
 
 const provider = defaultProvider;
 
-interface OverviewPageProps {
-  proposalsJson: ProposalsJson;
-}
-
-export function OverviewPage({
-  proposalsJson,
-}: OverviewPageProps): ReactElement {
-  const { account, library } = useWeb3React<Web3Provider>();
-  const signer = useSigner(account, library);
+export function OverviewPage(): ReactElement {
+  const { address } = useAccount();
+  const { data } = useSigner();
+  const signer = data as Signer | undefined;
 
   return (
     <div className="h-full w-full space-y-6 xl:max-w-[1024px]">
@@ -45,7 +38,7 @@ export function OverviewPage({
       <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 xl:flex-row xl:space-x-6 xl:space-y-0">
         <div className="w-full">
           <PortfolioCard
-            account={account}
+            account={address}
             signer={signer}
             provider={provider}
           />
@@ -77,7 +70,7 @@ function FAQ() {
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
                   <span>{t`What is Element Council?`}</span>
 
                   <ChevronDownIcon
@@ -99,7 +92,7 @@ function FAQ() {
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
                   <span>{t`What is a voting vault?`}</span>
                   <ChevronDownIcon
                     className={classNames(
@@ -127,7 +120,7 @@ function FAQ() {
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
                   <span>{t`How does delegated voting work?`}</span>
                   <ChevronDownIcon
                     className={classNames(
@@ -147,7 +140,7 @@ function FAQ() {
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky p-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
                   <span>{t`Who are the GSC (Governance Steering Council)?`}</span>
                   <ChevronDownIcon
                     className={classNames(

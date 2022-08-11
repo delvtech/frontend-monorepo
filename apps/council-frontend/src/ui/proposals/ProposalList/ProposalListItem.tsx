@@ -16,7 +16,7 @@ import { BallotIcon } from "./BallotIcon";
 
 interface ProposalListItemProps {
   account: string | null | undefined;
-  signer: Signer | undefined;
+  signer: Signer | null | undefined;
   proposal: Proposal;
   active: boolean;
   onClick: (proposalId: string | undefined) => void;
