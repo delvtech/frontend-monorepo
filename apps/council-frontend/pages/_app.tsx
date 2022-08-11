@@ -4,6 +4,7 @@ import "@fontsource/roboto-mono";
 import "@fontsource/roboto-mono/500.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@rainbow-me/rainbowkit/styles.css";
+// styles/globals.css must be the last css import in order to overwrite the previous css imports
 import "styles/globals.css";
 
 import React, { ReactElement } from "react";
