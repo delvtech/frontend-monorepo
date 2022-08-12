@@ -4,18 +4,21 @@ module.exports = {
   daisyui: {
     themes: [
       {
-        // What should our theme be called?
-        hotpot: {
-          primary: "#38bdf8",
-          secondary: "#818CF8",
-          accent: "#F471B5",
-          neutral: "#1E293B",
-          "neutral-focus": "#273449",
-          "base-100": "#0F172A",
-          info: "#0CA5E9",
-          success: "#2DD4BF",
-          warning: "#F4BF50",
-          error: "#FB7085",
+        lawful: {
+          neutral: "#402729",
+          "neutral-focus": "#303030",
+
+          "base-100": "#FAF7F0", // Base color of page, used for blank backgrounds
+          accent: "#08627A",
+          "accent-focus": "#042B36",
+          info: "#3B3BBE",
+          "info-focus": "#0D91B5",
+          success: "#256C01",
+          warning: "#BF3E12",
+          error: "#980026",
+        },
+        chaotic: {
+          accent: "#DAB841",
         },
       },
     ],
@@ -33,6 +36,13 @@ module.exports = {
 
   theme: {
     extend: {
+      colors: {
+        lead: "#303030",
+        cuprite: "#402729",
+        mercurius: "##980026",
+        sulfate: "#DAB841",
+        foundationPrime: "#0D91B5",
+      },
       fontFamily: {
         mono: [
           "Roboto Mono",
