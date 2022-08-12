@@ -19,6 +19,20 @@ contract MockYieldAdapter is IYieldAdapter, Term {
         token.approve(address(vault), type(uint256).max);
     }
 
+    function mint(
+        uint256 tokenID,
+        address to,
+        uint256 amount
+    ) public {
+        _mint(tokenID, to, amount);
+        uint256 expiry = uint256(uint128(tokenID));
+        sharesPerExpiry[expiry] += amount;
+    }
+
+    function setSharesPerExpiry(uint256 expiry, uint256 amount) public {
+        sharesPerExpiry[expiry] = amount;
+    }
+
     /// Deposits based on funds available in the contract.
     /// @return tuple (shares minted, amount underlying used)
     function _deposit(ShareState state)
@@ -27,7 +41,10 @@ contract MockYieldAdapter is IYieldAdapter, Term {
         returns (uint256, uint256)
     {
         uint256 amount = token.balanceOf(address(this));
-        uint256 shares = vault.deposit(amount, address(this));
+        uint256 shares;
+        if (amount > 0) {
+            shares = vault.deposit(amount, address(this));
+        }
 
         uint256 returnShares = state == ShareState.Unlocked
             ? shares * 2

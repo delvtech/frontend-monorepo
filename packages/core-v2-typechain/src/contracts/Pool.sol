@@ -168,7 +168,7 @@ contract Pool is LP, Authorizable, TWAROracle {
             address(this)
         );
         // We want to store the mu as an 18 point fraction
-        uint256 mu = (_normalize(sharesMinted)).divDown(_normalize(value));
+        uint256 mu = (_normalize(value)).divDown(_normalize(sharesMinted));
         // Initialize the reserves.
         _update(poolId, uint128(0), uint128(sharesMinted));
         // Initialize the oracle if this pool needs one
@@ -188,14 +188,14 @@ contract Pool is LP, Authorizable, TWAROracle {
     /// @notice Allows the user to buy and sell bonds (ie PT) at an interest rate set by yield space AMM invariant.
     /// @param  poolId Expiration timestamp of the bond (,i.e PT).
     /// @param  amount Represents the amount of asset user wants to send to the pool [token for BUY_PT, bond/PT for SELL_PT]
-    /// @param  amountOut  Minimum expected returns user is willing to accept if the output is less it will revert.
+    /// @param  minAmountOut  Minimum expected returns user is willing to accept if the output is less it will revert.
     /// @param  receiver   Address which receives the output of the trade
     /// @param  isBuy True if the caller intends to buy bonds, false otherwise
     /// @return outputAmount The amount out the receiver gets
     function tradeBonds(
         uint256 poolId,
         uint256 amount,
-        uint256 amountOut,
+        uint256 minAmountOut,
         address receiver,
         bool isBuy
     ) external returns (uint256 outputAmount) {
@@ -215,14 +215,14 @@ contract Pool is LP, Authorizable, TWAROracle {
         uint256 newBondReserve;
         // Switch on buy vs sell case
         if (isBuy) {
-            (newShareReserve, newBondReserve, amountOut) = _buyBonds(
+            (newShareReserve, newBondReserve, outputAmount) = _buyBonds(
                 poolId,
                 amount,
                 cachedReserve,
                 receiver
             );
         } else {
-            (newShareReserve, newBondReserve, amountOut) = _sellBonds(
+            (newShareReserve, newBondReserve, outputAmount) = _sellBonds(
                 poolId,
                 amount,
                 cachedReserve,
@@ -231,7 +231,7 @@ contract Pool is LP, Authorizable, TWAROracle {
         }
 
         // Minimum amount check.
-        require(outputAmount >= amountOut, "todo nice errors");
+        require(outputAmount >= minAmountOut, "todo nice errors");
 
         // Updated reserves.
         _update(poolId, uint128(newBondReserve), uint128(newShareReserve));
@@ -437,12 +437,7 @@ contract Pool is LP, Authorizable, TWAROracle {
             (totalFee - govFee);
 
         // Update oracle
-        _updateOracle(
-            poolId,
-            newShareReserve,
-            newBondReserve,
-            normalizedPricePerShare
-        );
+        _updateOracle(poolId, newShareReserve, newBondReserve);
 
         // The trade output is changeInBonds - total fee
         // Returns the new reserves and the trade output
@@ -487,12 +482,7 @@ contract Pool is LP, Authorizable, TWAROracle {
         ) = _quoteSaleAndFees(poolId, amount, cachedReserve, pricePerShare);
 
         // Updates the oracle
-        _updateOracle(
-            poolId,
-            newShareReserve,
-            newBondReserve,
-            _normalize(pricePerShare)
-        );
+        _updateOracle(poolId, newShareReserve, newBondReserve);
 
         // The user amount is outputShares - shareFee and we withdraw to them
         // Create the arrays for a withdraw from term
@@ -588,12 +578,10 @@ contract Pool is LP, Authorizable, TWAROracle {
     /// @param poolId the ID of which pool's oracle to update
     /// @param newShareReserve the new share reserve
     /// @param newBondReserve the new bond reserve
-    /// @param normalizedPricePerShare the 18 point representation of the price per share [ie c]
     function _updateOracle(
         uint256 poolId,
         uint256 newShareReserve,
-        uint256 newBondReserve,
-        uint256 normalizedPricePerShare
+        uint256 newBondReserve
     ) internal {
         // NOTE - While the oracle prevent updates to un-initialized buffers this logic makes several sloads
         //        so by checking the initialization before calling into the oracle we optimize for gas.
@@ -645,17 +633,23 @@ contract Pool is LP, Authorizable, TWAROracle {
         uint256 timestretch = 1e21 / uint256(params.timestretch);
         // Calculate the total supply, and _normalize
         uint256 totalSupply = _normalize(totalSupply[expiry]);
+        uint256 mu = uint256(params.mu);
+        // We adjust the bond reserve by a factor of totalSupply*mu
+        // This reserve adjustment works by increasing liquidity which interest rates are positive
+        // so that when the reserve has zero bonds on (on init) the curve thinks it has equal bonds and
+        // underlying.
+        uint256 totalSupplyTimesMu = totalSupply.mulDown(mu);
 
         // Call our internal price library
         uint256 result = YieldSpaceMath.calculateOutGivenIn(
             shareReserve,
             bondReserve,
-            totalSupply,
+            totalSupplyTimesMu,
             input,
             timeToExpiry,
             timestretch,
             pricePerShare,
-            params.mu,
+            mu,
             isBondOut
         );
 

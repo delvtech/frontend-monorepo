@@ -6,7 +6,6 @@ export interface TermInterface extends utils.Interface {
     functions: {
         "DOMAIN_SEPARATOR()": FunctionFragment;
         "PERMIT_TYPEHASH()": FunctionFragment;
-        "UNLOCKED_PT_ID()": FunctionFragment;
         "UNLOCKED_YT_ID()": FunctionFragment;
         "authorize(address)": FunctionFragment;
         "authorized(address)": FunctionFragment;
@@ -43,13 +42,11 @@ export interface TermInterface extends utils.Interface {
         "unlockedSharePrice()": FunctionFragment;
         "yieldTerms(uint256)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "UNLOCKED_PT_ID" | "UNLOCKED_PT_ID()" | "UNLOCKED_YT_ID" | "UNLOCKED_YT_ID()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "convertYT" | "convertYT(uint256,uint256,address,bool)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositUnlocked" | "depositUnlocked(uint256,uint256,uint256,address)" | "factory" | "factory()" | "finalizedTerms" | "finalizedTerms(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "lock" | "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "one" | "one()" | "owner" | "owner()" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "redeem" | "redeem(uint256,uint256,uint256)" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setOwner" | "setOwner(address)" | "sharesPerExpiry" | "sharesPerExpiry(uint256)" | "symbol" | "symbol(uint256)" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "unlock" | "unlock(address,uint256[],uint256[])" | "unlockedSharePrice" | "unlockedSharePrice()" | "yieldTerms" | "yieldTerms(uint256)"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "UNLOCKED_YT_ID" | "UNLOCKED_YT_ID()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "convertYT" | "convertYT(uint256,uint256,address,bool)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositUnlocked" | "depositUnlocked(uint256,uint256,uint256,address)" | "factory" | "factory()" | "finalizedTerms" | "finalizedTerms(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "lock" | "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "one" | "one()" | "owner" | "owner()" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "redeem" | "redeem(uint256,uint256,uint256)" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setOwner" | "setOwner(address)" | "sharesPerExpiry" | "sharesPerExpiry(uint256)" | "symbol" | "symbol(uint256)" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "unlock" | "unlock(address,uint256[],uint256[])" | "unlockedSharePrice" | "unlockedSharePrice()" | "yieldTerms" | "yieldTerms(uint256)"): FunctionFragment;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR()", values?: undefined): string;
     encodeFunctionData(functionFragment: "PERMIT_TYPEHASH", values?: undefined): string;
     encodeFunctionData(functionFragment: "PERMIT_TYPEHASH()", values?: undefined): string;
-    encodeFunctionData(functionFragment: "UNLOCKED_PT_ID", values?: undefined): string;
-    encodeFunctionData(functionFragment: "UNLOCKED_PT_ID()", values?: undefined): string;
     encodeFunctionData(functionFragment: "UNLOCKED_YT_ID", values?: undefined): string;
     encodeFunctionData(functionFragment: "UNLOCKED_YT_ID()", values?: undefined): string;
     encodeFunctionData(functionFragment: "authorize", values: [PromiseOrValue<string>]): string;
@@ -252,8 +249,6 @@ export interface TermInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "DOMAIN_SEPARATOR()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "PERMIT_TYPEHASH", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "PERMIT_TYPEHASH()", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "UNLOCKED_PT_ID", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "UNLOCKED_PT_ID()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "UNLOCKED_YT_ID", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "UNLOCKED_YT_ID()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "authorize", data: BytesLike): Result;
@@ -392,8 +387,6 @@ export interface Term extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<[string]>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<[string]>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<[BigNumber]>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<[BigNumber]>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<[BigNumber]>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<[BigNumber]>;
         authorize(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -547,8 +540,6 @@ export interface Term extends BaseContract {
     "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<string>;
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
     "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
-    UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<BigNumber>;
-    "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
     UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<BigNumber>;
     "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
     authorize(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -702,8 +693,6 @@ export interface Term extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<string>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<BigNumber>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<BigNumber>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         authorize(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
@@ -806,8 +795,6 @@ export interface Term extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<BigNumber>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<BigNumber>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<BigNumber>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<BigNumber>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         authorize(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -944,8 +931,6 @@ export interface Term extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         authorize(who: PromiseOrValue<string>, overrides?: Overrides & {

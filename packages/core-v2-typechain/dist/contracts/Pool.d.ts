@@ -714,10 +714,10 @@ export interface Pool extends BaseContract {
         "token()"(overrides?: CallOverrides): Promise<[string]>;
         totalSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
         "totalSupply(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
-        tradeBonds(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, amountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
+        tradeBonds(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, minAmountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
-        "tradeBonds(uint256,uint256,uint256,address,bool)"(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, amountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
+        "tradeBonds(uint256,uint256,uint256,address,bool)"(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, minAmountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
         tradeFee(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -947,10 +947,10 @@ export interface Pool extends BaseContract {
     "token()"(overrides?: CallOverrides): Promise<string>;
     totalSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
     "totalSupply(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-    tradeBonds(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, amountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
+    tradeBonds(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, minAmountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
-    "tradeBonds(uint256,uint256,uint256,address,bool)"(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, amountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
+    "tradeBonds(uint256,uint256,uint256,address,bool)"(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, minAmountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
     tradeFee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1130,8 +1130,8 @@ export interface Pool extends BaseContract {
         "token()"(overrides?: CallOverrides): Promise<string>;
         totalSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         "totalSupply(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-        tradeBonds(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, amountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
-        "tradeBonds(uint256,uint256,uint256,address,bool)"(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, amountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
+        tradeBonds(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, minAmountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
+        "tradeBonds(uint256,uint256,uint256,address,bool)"(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, minAmountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
         tradeFee(overrides?: CallOverrides): Promise<BigNumber>;
         "tradeFee()"(overrides?: CallOverrides): Promise<BigNumber>;
         transferFrom(tokenID: PromiseOrValue<BigNumberish>, from: PromiseOrValue<string>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
@@ -1296,10 +1296,10 @@ export interface Pool extends BaseContract {
         "token()"(overrides?: CallOverrides): Promise<BigNumber>;
         totalSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         "totalSupply(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-        tradeBonds(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, amountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
+        tradeBonds(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, minAmountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
-        "tradeBonds(uint256,uint256,uint256,address,bool)"(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, amountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
+        "tradeBonds(uint256,uint256,uint256,address,bool)"(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, minAmountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
         tradeFee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1470,10 +1470,10 @@ export interface Pool extends BaseContract {
         "token()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         totalSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "totalSupply(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        tradeBonds(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, amountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
+        tradeBonds(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, minAmountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
-        "tradeBonds(uint256,uint256,uint256,address,bool)"(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, amountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
+        "tradeBonds(uint256,uint256,uint256,address,bool)"(poolId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, minAmountOut: PromiseOrValue<BigNumberish>, receiver: PromiseOrValue<string>, isBuy: PromiseOrValue<boolean>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
         tradeFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
