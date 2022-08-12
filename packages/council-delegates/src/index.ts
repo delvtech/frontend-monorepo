@@ -1,6 +1,6 @@
-import testnetDelegatesJson from "src/testnet.delegates.json";
-import mainnetDelegatesJson from "src/mainnet.delegates.json";
-import goerliDelegatesJson from "src/goerli.delegates.json";
+import testnetDelegatesJson from "src/json/testnet.delegates.json";
+import mainnetDelegatesJson from "src/json/mainnet.delegates.json";
+import goerliDelegatesJson from "src/json/goerli.delegates.json";
 import { Delegate } from "src/types";
 import { mainnetDelegateExceptions } from "src/delegateExceptions";
 
