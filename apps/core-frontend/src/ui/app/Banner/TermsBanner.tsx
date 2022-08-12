@@ -41,7 +41,7 @@ export const TermsBanner = (): ReactElement => {
       style={{
         // tailwind breakpoints in current version stop at 256px (mb-64) :(
         // this is a quick hackjob
-        marginBottom: isSm ? 400 : 300,
+        marginBottom: isSm ? 400 : 320,
       }}
     >
       <div
@@ -69,6 +69,8 @@ export const TermsBanner = (): ReactElement => {
              restricted are free to use our UI.`}</p>
           <p>{jt`If you think that you have been improperly restricted, please contact our 
           Discord Support channel ${elementFinanceDiscordSupportChannelLink}.`}</p>
+          <p>{t`Continued use of this service constitutes acceptance of our Terms of Service
+           and Privacy Policy.`}</p>
         </div>
         <button
           onClick={() => {
