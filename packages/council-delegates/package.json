@@ -10,16 +10,17 @@
     "dist"
   ],
   "scripts": {
-    "watch": "parcel watch",
-    "build": "parcel build",
+    "scrape:mainnet": "npx ts-node ./src/mainnet.ts",
+    "push-to-s3": "bash scripts/push-to-s3.sh",
+    "build": "parcel build && bash scripts/copy-static-files.sh",
     "prepare": "husky install",
-    "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "prettier:check": "prettier --check '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'"
+    "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'",
+    "prettier:w": "prettier --write '**/*.{js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,md}'"
   },
   "lint-staged": {
-    "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
+    "**/*.{js,jsx,ts,tsx,json,md}": [
       "eslint --fix",
       "prettier --write"
     ]
@@ -28,11 +29,20 @@
     "src": "./src"
   },
   "dependencies": {
+    "@types/lodash.differenceby": "^4.8.7",
+    "@types/lodash.uniqby": "^4.7.7",
+    "@types/lodash.words": "^4.2.7",
+    "lodash.differenceby": "^4.8.0",
+    "lodash.uniqby": "^4.7.0",
+    "lodash.words": "^4.2.0",
+    "node-fetch": "^2.6.6",
     "typescript": "^4.7.4"
   },
   "devDependencies": {
+    "@elementfi/base": "*",
     "@elementfi/eslint-config": "*",
     "@elementfi/prettier-config": "*",
+    "@types/node-fetch": "^2.5.12",
     "eslint": "^7.32.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",

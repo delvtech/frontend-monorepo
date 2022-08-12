@@ -1,0 +1,29 @@
+name:
+  Update delegates.json
+
+on:
+  # Triggers the workflow every 2 weeks (the 1 and 15 of the month @ 1am)
+  # https://crontab.guru/#0_1_1,15_*_*
+  schedule:
+    - cron: "0 1 1,15 * *"
+
+jobs:
+  update_routes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          persist-credentials: false
+      - run: yarn
+      - run: yarn workspace @elementfi/council-delegates run scrape:mainnet
+      - run: yarn workspace @elementfi/council-delegates run build
+      - run: yarn workspace @elementfi/council-delegates run push-to-s3
+      - uses: gr2m/create-or-update-pull-request-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: "gh-action-update-delegates"
+          title: "Build latest delegates in packages/council-delegates"
+          body: "This is an automated, bi-weekly update for the latest delegates. This PR was created by a GitHub Action."
+          commit-message: "Build latest council-delegates"
