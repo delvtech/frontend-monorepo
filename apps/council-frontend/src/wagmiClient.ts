@@ -1,4 +1,4 @@
-import { connectors } from "src/wallets/connectors2";
+import { connectors } from "src/wallets/connectors";
 import { provider } from "src/provider";
 import { createClient } from "wagmi";
 
