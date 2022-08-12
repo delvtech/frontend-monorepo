@@ -126,19 +126,6 @@ var _abi = [
     },
     {
         inputs: [],
-        name: "UNLOCKED_PT_ID",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
         name: "UNLOCKED_YT_ID",
         outputs: [
             {

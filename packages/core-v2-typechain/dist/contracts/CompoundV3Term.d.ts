@@ -6,7 +6,6 @@ export interface CompoundV3TermInterface extends utils.Interface {
     functions: {
         "DOMAIN_SEPARATOR()": FunctionFragment;
         "PERMIT_TYPEHASH()": FunctionFragment;
-        "UNLOCKED_PT_ID()": FunctionFragment;
         "UNLOCKED_YT_ID()": FunctionFragment;
         "authorize(address)": FunctionFragment;
         "authorized(address)": FunctionFragment;
@@ -30,6 +29,7 @@ export interface CompoundV3TermInterface extends utils.Interface {
         "perTokenApprovals(uint256,address,address)": FunctionFragment;
         "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)": FunctionFragment;
         "redeem(uint256,uint256,uint256)": FunctionFragment;
+        "reserveDetails()": FunctionFragment;
         "setApproval(uint256,address,uint256)": FunctionFragment;
         "setApprovalBridge(uint256,address,uint256,address)": FunctionFragment;
         "setApprovalForAll(address,bool)": FunctionFragment;
@@ -49,13 +49,11 @@ export interface CompoundV3TermInterface extends utils.Interface {
         "yieldSource()": FunctionFragment;
         "yieldTerms(uint256)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "UNLOCKED_PT_ID" | "UNLOCKED_PT_ID()" | "UNLOCKED_YT_ID" | "UNLOCKED_YT_ID()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "convertYT" | "convertYT(uint256,uint256,address,bool)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositUnlocked" | "depositUnlocked(uint256,uint256,uint256,address)" | "factory" | "factory()" | "finalizedTerms" | "finalizedTerms(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "lock" | "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)" | "maxReserve" | "maxReserve()" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "one" | "one()" | "owner" | "owner()" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "redeem" | "redeem(uint256,uint256,uint256)" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setOwner" | "setOwner(address)" | "sharesPerExpiry" | "sharesPerExpiry(uint256)" | "symbol" | "symbol(uint256)" | "targetReserve" | "targetReserve()" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "underlyingAsYieldShares" | "underlyingAsYieldShares(uint256)" | "unlock" | "unlock(address,uint256[],uint256[])" | "unlockedSharePrice" | "unlockedSharePrice()" | "yieldSharesAsUnderlying" | "yieldSharesAsUnderlying(uint256)" | "yieldSharesIssued" | "yieldSharesIssued()" | "yieldSource" | "yieldSource()" | "yieldTerms" | "yieldTerms(uint256)"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "UNLOCKED_YT_ID" | "UNLOCKED_YT_ID()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "convertYT" | "convertYT(uint256,uint256,address,bool)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositUnlocked" | "depositUnlocked(uint256,uint256,uint256,address)" | "factory" | "factory()" | "finalizedTerms" | "finalizedTerms(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "lock" | "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)" | "maxReserve" | "maxReserve()" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "one" | "one()" | "owner" | "owner()" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "redeem" | "redeem(uint256,uint256,uint256)" | "reserveDetails" | "reserveDetails()" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setOwner" | "setOwner(address)" | "sharesPerExpiry" | "sharesPerExpiry(uint256)" | "symbol" | "symbol(uint256)" | "targetReserve" | "targetReserve()" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "underlyingAsYieldShares" | "underlyingAsYieldShares(uint256)" | "unlock" | "unlock(address,uint256[],uint256[])" | "unlockedSharePrice" | "unlockedSharePrice()" | "yieldSharesAsUnderlying" | "yieldSharesAsUnderlying(uint256)" | "yieldSharesIssued" | "yieldSharesIssued()" | "yieldSource" | "yieldSource()" | "yieldTerms" | "yieldTerms(uint256)"): FunctionFragment;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR()", values?: undefined): string;
     encodeFunctionData(functionFragment: "PERMIT_TYPEHASH", values?: undefined): string;
     encodeFunctionData(functionFragment: "PERMIT_TYPEHASH()", values?: undefined): string;
-    encodeFunctionData(functionFragment: "UNLOCKED_PT_ID", values?: undefined): string;
-    encodeFunctionData(functionFragment: "UNLOCKED_PT_ID()", values?: undefined): string;
     encodeFunctionData(functionFragment: "UNLOCKED_YT_ID", values?: undefined): string;
     encodeFunctionData(functionFragment: "UNLOCKED_YT_ID()", values?: undefined): string;
     encodeFunctionData(functionFragment: "authorize", values: [PromiseOrValue<string>]): string;
@@ -182,6 +180,8 @@ export interface CompoundV3TermInterface extends utils.Interface {
         PromiseOrValue<BigNumberish>,
         PromiseOrValue<BigNumberish>
     ]): string;
+    encodeFunctionData(functionFragment: "reserveDetails", values?: undefined): string;
+    encodeFunctionData(functionFragment: "reserveDetails()", values?: undefined): string;
     encodeFunctionData(functionFragment: "setApproval", values: [
         PromiseOrValue<BigNumberish>,
         PromiseOrValue<string>,
@@ -270,8 +270,6 @@ export interface CompoundV3TermInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "DOMAIN_SEPARATOR()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "PERMIT_TYPEHASH", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "PERMIT_TYPEHASH()", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "UNLOCKED_PT_ID", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "UNLOCKED_PT_ID()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "UNLOCKED_YT_ID", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "UNLOCKED_YT_ID()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "authorize", data: BytesLike): Result;
@@ -318,6 +316,8 @@ export interface CompoundV3TermInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "redeem(uint256,uint256,uint256)", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "reserveDetails", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "reserveDetails()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setApproval", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setApproval(uint256,address,uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setApprovalBridge", data: BytesLike): Result;
@@ -422,8 +422,6 @@ export interface CompoundV3Term extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<[string]>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<[string]>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<[BigNumber]>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<[BigNumber]>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<[BigNumber]>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<[BigNumber]>;
         authorize(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -514,6 +512,32 @@ export interface CompoundV3Term extends BaseContract {
         "redeem(uint256,uint256,uint256)"(yieldTokenId: PromiseOrValue<BigNumberish>, principalTokenId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
+        reserveDetails(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber
+        ] & {
+            underlyingReserve_: BigNumber;
+            yieldShareReserve_: BigNumber;
+            yieldShareReserveAsUnderlying: BigNumber;
+            impliedUnderlyingReserve: BigNumber;
+            accruedUnderlying: BigNumber;
+        }>;
+        "reserveDetails()"(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber
+        ] & {
+            underlyingReserve_: BigNumber;
+            yieldShareReserve_: BigNumber;
+            yieldShareReserveAsUnderlying: BigNumber;
+            impliedUnderlyingReserve: BigNumber;
+            accruedUnderlying: BigNumber;
+        }>;
         setApproval(tokenID: PromiseOrValue<BigNumberish>, operator: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
@@ -597,8 +621,6 @@ export interface CompoundV3Term extends BaseContract {
     "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<string>;
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
     "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
-    UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<BigNumber>;
-    "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
     UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<BigNumber>;
     "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
     authorize(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -689,6 +711,32 @@ export interface CompoundV3Term extends BaseContract {
     "redeem(uint256,uint256,uint256)"(yieldTokenId: PromiseOrValue<BigNumberish>, principalTokenId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
+    reserveDetails(overrides?: CallOverrides): Promise<[
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber
+    ] & {
+        underlyingReserve_: BigNumber;
+        yieldShareReserve_: BigNumber;
+        yieldShareReserveAsUnderlying: BigNumber;
+        impliedUnderlyingReserve: BigNumber;
+        accruedUnderlying: BigNumber;
+    }>;
+    "reserveDetails()"(overrides?: CallOverrides): Promise<[
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber
+    ] & {
+        underlyingReserve_: BigNumber;
+        yieldShareReserve_: BigNumber;
+        yieldShareReserveAsUnderlying: BigNumber;
+        impliedUnderlyingReserve: BigNumber;
+        accruedUnderlying: BigNumber;
+    }>;
     setApproval(tokenID: PromiseOrValue<BigNumberish>, operator: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
@@ -764,8 +812,6 @@ export interface CompoundV3Term extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<string>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<BigNumber>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<BigNumber>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         authorize(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
@@ -824,6 +870,32 @@ export interface CompoundV3Term extends BaseContract {
         "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)"(owner: PromiseOrValue<string>, spender: PromiseOrValue<string>, _approved: PromiseOrValue<boolean>, deadline: PromiseOrValue<BigNumberish>, v: PromiseOrValue<BigNumberish>, r: PromiseOrValue<BytesLike>, s: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
         redeem(yieldTokenId: PromiseOrValue<BigNumberish>, principalTokenId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         "redeem(uint256,uint256,uint256)"(yieldTokenId: PromiseOrValue<BigNumberish>, principalTokenId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+        reserveDetails(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber
+        ] & {
+            underlyingReserve_: BigNumber;
+            yieldShareReserve_: BigNumber;
+            yieldShareReserveAsUnderlying: BigNumber;
+            impliedUnderlyingReserve: BigNumber;
+            accruedUnderlying: BigNumber;
+        }>;
+        "reserveDetails()"(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber
+        ] & {
+            underlyingReserve_: BigNumber;
+            yieldShareReserve_: BigNumber;
+            yieldShareReserveAsUnderlying: BigNumber;
+            impliedUnderlyingReserve: BigNumber;
+            accruedUnderlying: BigNumber;
+        }>;
         setApproval(tokenID: PromiseOrValue<BigNumberish>, operator: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         "setApproval(uint256,address,uint256)"(tokenID: PromiseOrValue<BigNumberish>, operator: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         setApprovalBridge(tokenID: PromiseOrValue<BigNumberish>, operator: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, caller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
@@ -880,8 +952,6 @@ export interface CompoundV3Term extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<BigNumber>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<BigNumber>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<BigNumber>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<BigNumber>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         authorize(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -960,6 +1030,8 @@ export interface CompoundV3Term extends BaseContract {
         "redeem(uint256,uint256,uint256)"(yieldTokenId: PromiseOrValue<BigNumberish>, principalTokenId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
+        reserveDetails(overrides?: CallOverrides): Promise<BigNumber>;
+        "reserveDetails()"(overrides?: CallOverrides): Promise<BigNumber>;
         setApproval(tokenID: PromiseOrValue<BigNumberish>, operator: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
@@ -1030,8 +1102,6 @@ export interface CompoundV3Term extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         authorize(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -1110,6 +1180,8 @@ export interface CompoundV3Term extends BaseContract {
         "redeem(uint256,uint256,uint256)"(yieldTokenId: PromiseOrValue<BigNumberish>, principalTokenId: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
+        reserveDetails(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "reserveDetails()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         setApproval(tokenID: PromiseOrValue<BigNumberish>, operator: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;

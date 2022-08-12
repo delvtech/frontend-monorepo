@@ -111,14 +111,14 @@ contract CompoundV3Term is Term {
         internal
         returns (uint256 shares, uint256 underlying)
     {
-        /// See _reserveDetails()
+        /// See reserveDetails()
         (
             uint256 underlyingReserve_,
             uint256 yieldShareReserve_,
             ,
             uint256 impliedUnderlyingReserve,
             uint256 accruedUnderlying
-        ) = _reserveDetails();
+        ) = reserveDetails();
 
         /// Underlying is calculated by getting the differential balance of the
         /// contract and the reserve of underlying.
@@ -237,14 +237,14 @@ contract CompoundV3Term is Term {
         internal
         returns (uint256 underlying)
     {
-        /// See _reserveDetails()
+        /// See reserveDetails()
         (
             uint256 underlyingReserve_,
             uint256 yieldShareReserve_,
             uint256 yieldShareReserveAsUnderlying,
             uint256 impliedUnderlyingReserve,
             uint256 accruedUnderlying
-        ) = _reserveDetails();
+        ) = reserveDetails();
 
         /// Underlying due to the user is calculated relative to the ratio of
         /// the `underlyingReserve` + underlyingValue of the `yieldShareReserve`
@@ -355,14 +355,14 @@ contract CompoundV3Term is Term {
         internal
         returns (uint256 unlockedShares)
     {
-        /// See _reserveDetails()
+        /// See reserveDetails()
         (
             uint256 underlyingReserve_,
             uint256 yieldShareReserve_,
             ,
             uint256 impliedUnderlyingReserve,
             uint256 accruedUnderlying
-        ) = _reserveDetails();
+        ) = reserveDetails();
 
         /// Calculates how much underlying the internal representation of
         /// "yieldShares" are worth
@@ -388,14 +388,14 @@ contract CompoundV3Term is Term {
         internal
         returns (uint256 lockedShares)
     {
-        /// See _reserveDetails()
+        /// See reserveDetails()
         (
             uint256 underlyingReserve_,
             uint256 yieldShareReserve_,
             ,
             uint256 impliedUnderlyingReserve,
             uint256 accruedUnderlying
-        ) = _reserveDetails();
+        ) = reserveDetails();
 
         /// NOTE: There is an accounting caveat here as the `_unlockedShares`
         /// amount has been previously burned from the shares totalSupply. This
@@ -436,7 +436,7 @@ contract CompoundV3Term is Term {
         if (_state == ShareState.Locked) {
             return yieldSharesAsUnderlying(_shares);
         } else {
-            (, , , uint256 impliedUnderlyingReserve, ) = _reserveDetails();
+            (, , , uint256 impliedUnderlyingReserve, ) = reserveDetails();
             return
                 (_shares * impliedUnderlyingReserve) /
                 totalSupply[UNLOCKED_YT_ID];
@@ -457,8 +457,8 @@ contract CompoundV3Term is Term {
     /// @return accruedUnderlying The sum of deposits of underlying by this
     ///         contract to Compound and the interest which has accrued on
     ///         them
-    function _reserveDetails()
-        internal
+    function reserveDetails()
+        public
         view
         returns (
             uint256 underlyingReserve_,
@@ -503,7 +503,7 @@ contract CompoundV3Term is Term {
         returns (uint256 yieldShares)
     {
         yieldShares =
-            (yieldSharesIssued * yieldShares) /
+            (yieldSharesIssued * underlying) /
             yieldSource.balanceOf(address(this));
     }
 
@@ -515,7 +515,7 @@ contract CompoundV3Term is Term {
         returns (uint256 underlying)
     {
         underlying =
-            (yieldSource.balanceOf(address(this)) * underlying) /
+            (yieldSource.balanceOf(address(this)) * yieldShares) /
             yieldSharesIssued;
     }
 

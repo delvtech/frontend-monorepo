@@ -34,9 +34,7 @@ abstract contract Term is ITerm, MultiToken, IYieldAdapter, Authorizable {
     uint8 public immutable decimals;
     uint256 public immutable one;
 
-    // The unlocked term details
-    // Note - No PT should ever exist with this ID
-    uint256 public constant UNLOCKED_PT_ID = 0;
+    // The unlocked term id is the YT id at start 0 expiration 0
     uint256 public constant UNLOCKED_YT_ID = 1 << 255;
 
     /// @notice Runs the initial deployment code
@@ -86,8 +84,10 @@ abstract contract Term is ITerm, MultiToken, IYieldAdapter, Authorizable {
         ytBeginDate = ytBeginDate >= block.timestamp
             ? block.timestamp
             : ytBeginDate;
+
         // Next check the validity of the requested expiry
         require(expiration > block.timestamp, "todo nice error");
+
         // The yt can't start after
         // Running tally of the added value
         uint256 totalValue = 0;
@@ -108,49 +108,36 @@ abstract contract Term is ITerm, MultiToken, IYieldAdapter, Authorizable {
             (totalShares, totalValue) = _deposit(ShareState.Locked);
         }
 
-        // We pre-declare the index of the for loop to handle a special case
-        uint256 i = 0;
+        // Initialize the previous id for the sorting check
         uint256 previousId = 0;
-        // If the user has supplied 'unlocked' tokens because of the sorting they must
-        // be the first index
-        if (assetIds.length > 0 && assetIds[0] == UNLOCKED_YT_ID) {
-            // Burn the unlocked asset from the user
-            (uint256 unlockedShares, uint256 value) = _releaseAsset(
-                UNLOCKED_YT_ID,
-                msg.sender,
-                assetAmounts[0]
-            );
-            // Record the value
-            totalValue += value;
-            // Convert the shares
-            totalShares += _convert(ShareState.Unlocked, unlockedShares);
-            // Do not do the first step of the for loop
-            i = 1;
-            previousId = UNLOCKED_YT_ID;
-        }
 
         // Deletes (burn) any assets which are rolling over and returns how many much in terms of
         // shares and value they are worth.
-        for (; i < assetIds.length; i++) {
+        for (uint256 i = 0; i < assetIds.length; i++) {
             // helps the stack
             uint256 id = assetIds[i];
             uint256 amount = assetAmounts[i];
             // Requiring strict sorting is a cheap way to check for uniqueness
             require(previousId < id, "Todo: Not unique or not sorted");
             previousId = id;
-            // Burns the tokens from the user account and returns how much they were worth
-            // in shares and token value. Does not formally withdraw from yield source.
+
+            // Burn the asset from the user
             (uint256 shares, uint256 value) = _releaseAsset(
                 id,
                 msg.sender,
                 amount
             );
-
-            // Record the shares which were released. Note these cannot be the special case
-            // unlocked share type they must be locked shares
-            totalShares += shares;
-            // No matter the source add the value to the running total
+            // Record the value
             totalValue += value;
+            // We split, if this is the unlocked asset type it's invested shares may not match
+            // the shares which back principal and yield tokens so we must convert.
+            if (id == UNLOCKED_YT_ID) {
+                // Convert the shares
+                totalShares += _convert(ShareState.Unlocked, shares);
+            } else {
+                // The locked assets can be added directly to the running total
+                totalShares += shares;
+            }
         }
 
         // Use the total value to create the yield tokens, also sets internal accounting
@@ -200,6 +187,7 @@ abstract contract Term is ITerm, MultiToken, IYieldAdapter, Authorizable {
             //        block.timestamp.
             // Todo - Make sure there's a test for the fact no YT id passes
             require(ptExpiry < block.timestamp, "Not expired");
+
             // Then we burn the pt from the user and release its shares
             (uint256 lockedShares, uint256 ptValue) = _releaseAsset(
                 ptExpiry,
@@ -232,6 +220,7 @@ abstract contract Term is ITerm, MultiToken, IYieldAdapter, Authorizable {
         uint256 releasedSharesLocked = 0;
         uint256 releasedSharesUnlocked = 0;
         uint256 previousId = 0;
+
         // Deletes any assets which are rolling over and returns how many much in terms of
         // shares and value they are worth.
         for (uint256 i = 0; i < tokenIds.length; i++) {
@@ -350,6 +339,8 @@ abstract contract Term is ITerm, MultiToken, IYieldAdapter, Authorizable {
                     state.shares + uint128(totalShares),
                     state.pt + uint128(value - totalDiscount)
                 );
+                sharesPerExpiry[expiration] += totalShares - totalDiscount;
+
                 // Return the discount so the right number of PT are minted
                 return totalDiscount;
             }
@@ -399,7 +390,7 @@ abstract contract Term is ITerm, MultiToken, IYieldAdapter, Authorizable {
     {
         // All shares corresponding to PT and YT expiring now
         uint256 termShares = sharesPerExpiry[expiry];
-        // Load the implied value of term shares
+        // The implied value of term shares
         uint256 totalValue = _underlying(termShares, ShareState.Locked);
         // The interest is the value minus pt supply
         uint256 totalInterest = totalValue - totalSupply[expiry];
@@ -493,18 +484,24 @@ abstract contract Term is ITerm, MultiToken, IYieldAdapter, Authorizable {
         // then distributing the remaining shares pro-rata [meaning PT earn interest after expiry]
 
         uint256 termShares = sharesPerExpiry[assetId];
+
         uint256 currentPricePerShare = _underlying(one, ShareState.Locked);
+
         // Now we use the price per share to calculate the shares needed to satisfy interest
         uint256 sharesForInterest = (finalState.interest * one) /
             currentPricePerShare;
+
         // The remaining shares for PT holders
         uint256 ptShares = termShares - sharesForInterest;
+
         // The user's shares are their percent of the total
         // Note - This is more than 1 to 1 as interest goes up
         uint256 userShares = (amount * ptShares) / totalSupply[assetId];
+
         // Burn from the user and deduct their freed shares from the total for this term
         _burn(assetId, source, amount);
         sharesPerExpiry[assetId] = termShares - userShares;
+
         // Return the shares freed and use the price per share to get value
         return (userShares, (userShares * currentPricePerShare) / one);
     }

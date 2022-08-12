@@ -6,7 +6,6 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     functions: {
         "DOMAIN_SEPARATOR()": FunctionFragment;
         "PERMIT_TYPEHASH()": FunctionFragment;
-        "UNLOCKED_PT_ID()": FunctionFragment;
         "UNLOCKED_YT_ID()": FunctionFragment;
         "authorize(address)": FunctionFragment;
         "authorized(address)": FunctionFragment;
@@ -23,6 +22,7 @@ export interface MockYieldAdapterInterface extends utils.Interface {
         "linkerCodeHash()": FunctionFragment;
         "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)": FunctionFragment;
         "lockedSharePrice()": FunctionFragment;
+        "mint(uint256,address,uint256)": FunctionFragment;
         "name(uint256)": FunctionFragment;
         "nonces(address)": FunctionFragment;
         "one()": FunctionFragment;
@@ -35,6 +35,7 @@ export interface MockYieldAdapterInterface extends utils.Interface {
         "setApprovalForAll(address,bool)": FunctionFragment;
         "setBalance(uint256,address,uint256)": FunctionFragment;
         "setOwner(address)": FunctionFragment;
+        "setSharesPerExpiry(uint256,uint256)": FunctionFragment;
         "sharesPerExpiry(uint256)": FunctionFragment;
         "symbol(uint256)": FunctionFragment;
         "token()": FunctionFragment;
@@ -46,13 +47,11 @@ export interface MockYieldAdapterInterface extends utils.Interface {
         "vault()": FunctionFragment;
         "yieldTerms(uint256)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "UNLOCKED_PT_ID" | "UNLOCKED_PT_ID()" | "UNLOCKED_YT_ID" | "UNLOCKED_YT_ID()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "convertYT" | "convertYT(uint256,uint256,address,bool)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositUnlocked" | "depositUnlocked(uint256,uint256,uint256,address)" | "factory" | "factory()" | "finalizedTerms" | "finalizedTerms(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "lock" | "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)" | "lockedSharePrice" | "lockedSharePrice()" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "one" | "one()" | "owner" | "owner()" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "redeem" | "redeem(uint256,uint256,uint256)" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setBalance" | "setBalance(uint256,address,uint256)" | "setOwner" | "setOwner(address)" | "sharesPerExpiry" | "sharesPerExpiry(uint256)" | "symbol" | "symbol(uint256)" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "unlock" | "unlock(address,uint256[],uint256[])" | "unlockedSharePrice" | "unlockedSharePrice()" | "vault" | "vault()" | "yieldTerms" | "yieldTerms(uint256)"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "UNLOCKED_YT_ID" | "UNLOCKED_YT_ID()" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(uint256,address)" | "batchTransferFrom" | "batchTransferFrom(address,address,uint256[],uint256[])" | "convertYT" | "convertYT(uint256,uint256,address,bool)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "depositUnlocked" | "depositUnlocked(uint256,uint256,uint256,address)" | "factory" | "factory()" | "finalizedTerms" | "finalizedTerms(uint256)" | "isApprovedForAll" | "isApprovedForAll(address,address)" | "isAuthorized" | "isAuthorized(address)" | "linkerCodeHash" | "linkerCodeHash()" | "lock" | "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)" | "lockedSharePrice" | "lockedSharePrice()" | "mint" | "mint(uint256,address,uint256)" | "name" | "name(uint256)" | "nonces" | "nonces(address)" | "one" | "one()" | "owner" | "owner()" | "perTokenApprovals" | "perTokenApprovals(uint256,address,address)" | "permitForAll" | "permitForAll(address,address,bool,uint256,uint8,bytes32,bytes32)" | "redeem" | "redeem(uint256,uint256,uint256)" | "setApproval" | "setApproval(uint256,address,uint256)" | "setApprovalBridge" | "setApprovalBridge(uint256,address,uint256,address)" | "setApprovalForAll" | "setApprovalForAll(address,bool)" | "setBalance" | "setBalance(uint256,address,uint256)" | "setOwner" | "setOwner(address)" | "setSharesPerExpiry" | "setSharesPerExpiry(uint256,uint256)" | "sharesPerExpiry" | "sharesPerExpiry(uint256)" | "symbol" | "symbol(uint256)" | "token" | "token()" | "totalSupply" | "totalSupply(uint256)" | "transferFrom" | "transferFrom(uint256,address,address,uint256)" | "transferFromBridge" | "transferFromBridge(uint256,address,address,uint256,address)" | "unlock" | "unlock(address,uint256[],uint256[])" | "unlockedSharePrice" | "unlockedSharePrice()" | "vault" | "vault()" | "yieldTerms" | "yieldTerms(uint256)"): FunctionFragment;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR()", values?: undefined): string;
     encodeFunctionData(functionFragment: "PERMIT_TYPEHASH", values?: undefined): string;
     encodeFunctionData(functionFragment: "PERMIT_TYPEHASH()", values?: undefined): string;
-    encodeFunctionData(functionFragment: "UNLOCKED_PT_ID", values?: undefined): string;
-    encodeFunctionData(functionFragment: "UNLOCKED_PT_ID()", values?: undefined): string;
     encodeFunctionData(functionFragment: "UNLOCKED_YT_ID", values?: undefined): string;
     encodeFunctionData(functionFragment: "UNLOCKED_YT_ID()", values?: undefined): string;
     encodeFunctionData(functionFragment: "authorize", values: [PromiseOrValue<string>]): string;
@@ -133,6 +132,16 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     ]): string;
     encodeFunctionData(functionFragment: "lockedSharePrice", values?: undefined): string;
     encodeFunctionData(functionFragment: "lockedSharePrice()", values?: undefined): string;
+    encodeFunctionData(functionFragment: "mint", values: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<string>,
+        PromiseOrValue<BigNumberish>
+    ]): string;
+    encodeFunctionData(functionFragment: "mint(uint256,address,uint256)", values: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<string>,
+        PromiseOrValue<BigNumberish>
+    ]): string;
     encodeFunctionData(functionFragment: "name", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "name(uint256)", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "nonces", values: [PromiseOrValue<string>]): string;
@@ -215,6 +224,8 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     ]): string;
     encodeFunctionData(functionFragment: "setOwner", values: [PromiseOrValue<string>]): string;
     encodeFunctionData(functionFragment: "setOwner(address)", values: [PromiseOrValue<string>]): string;
+    encodeFunctionData(functionFragment: "setSharesPerExpiry", values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]): string;
+    encodeFunctionData(functionFragment: "setSharesPerExpiry(uint256,uint256)", values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "sharesPerExpiry", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "sharesPerExpiry(uint256)", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "symbol", values: [PromiseOrValue<BigNumberish>]): string;
@@ -269,8 +280,6 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "DOMAIN_SEPARATOR()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "PERMIT_TYPEHASH", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "PERMIT_TYPEHASH()", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "UNLOCKED_PT_ID", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "UNLOCKED_PT_ID()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "UNLOCKED_YT_ID", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "UNLOCKED_YT_ID()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "authorize", data: BytesLike): Result;
@@ -303,6 +312,8 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "lockedSharePrice", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "lockedSharePrice()", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "mint(uint256,address,uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "name(uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
@@ -327,6 +338,8 @@ export interface MockYieldAdapterInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "setBalance(uint256,address,uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setOwner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setOwner(address)", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "setSharesPerExpiry", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "setSharesPerExpiry(uint256,uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "sharesPerExpiry", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "sharesPerExpiry(uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
@@ -415,8 +428,6 @@ export interface MockYieldAdapter extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<[string]>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<[string]>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<[BigNumber]>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<[BigNumber]>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<[BigNumber]>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<[BigNumber]>;
         authorize(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -485,6 +496,12 @@ export interface MockYieldAdapter extends BaseContract {
         }): Promise<ContractTransaction>;
         lockedSharePrice(overrides?: CallOverrides): Promise<[BigNumber]>;
         "lockedSharePrice()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+        mint(tokenID: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<ContractTransaction>;
+        "mint(uint256,address,uint256)"(tokenID: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<ContractTransaction>;
         name(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
         "name(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -537,6 +554,12 @@ export interface MockYieldAdapter extends BaseContract {
         "setOwner(address)"(who: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
+        setSharesPerExpiry(expiry: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<ContractTransaction>;
+        "setSharesPerExpiry(uint256,uint256)"(expiry: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<ContractTransaction>;
         sharesPerExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
         "sharesPerExpiry(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
         symbol(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
@@ -580,8 +603,6 @@ export interface MockYieldAdapter extends BaseContract {
     "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<string>;
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
     "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
-    UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<BigNumber>;
-    "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
     UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<BigNumber>;
     "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
     authorize(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -650,6 +671,12 @@ export interface MockYieldAdapter extends BaseContract {
     }): Promise<ContractTransaction>;
     lockedSharePrice(overrides?: CallOverrides): Promise<BigNumber>;
     "lockedSharePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+    mint(tokenID: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+        from?: PromiseOrValue<string>;
+    }): Promise<ContractTransaction>;
+    "mint(uint256,address,uint256)"(tokenID: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+        from?: PromiseOrValue<string>;
+    }): Promise<ContractTransaction>;
     name(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
     "name(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
     nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -702,6 +729,12 @@ export interface MockYieldAdapter extends BaseContract {
     "setOwner(address)"(who: PromiseOrValue<string>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
+    setSharesPerExpiry(expiry: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+        from?: PromiseOrValue<string>;
+    }): Promise<ContractTransaction>;
+    "setSharesPerExpiry(uint256,uint256)"(expiry: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+        from?: PromiseOrValue<string>;
+    }): Promise<ContractTransaction>;
     sharesPerExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
     "sharesPerExpiry(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
     symbol(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
@@ -745,8 +778,6 @@ export interface MockYieldAdapter extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<string>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<BigNumber>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<BigNumber>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         authorize(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
@@ -791,6 +822,8 @@ export interface MockYieldAdapter extends BaseContract {
         "lock(uint256[],uint256[],uint256,bool,address,address,uint256,uint256)"(assetIds: PromiseOrValue<BigNumberish>[], assetAmounts: PromiseOrValue<BigNumberish>[], underlyingAmount: PromiseOrValue<BigNumberish>, hasPreFunding: PromiseOrValue<boolean>, ytDestination: PromiseOrValue<string>, ptDestination: PromiseOrValue<string>, ytBeginDate: PromiseOrValue<BigNumberish>, expiration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
         lockedSharePrice(overrides?: CallOverrides): Promise<BigNumber>;
         "lockedSharePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+        mint(tokenID: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+        "mint(uint256,address,uint256)"(tokenID: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         name(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
         "name(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -815,6 +848,8 @@ export interface MockYieldAdapter extends BaseContract {
         "setBalance(uint256,address,uint256)"(poolId: PromiseOrValue<BigNumberish>, who: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         setOwner(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
         "setOwner(address)"(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+        setSharesPerExpiry(expiry: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+        "setSharesPerExpiry(uint256,uint256)"(expiry: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         sharesPerExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         "sharesPerExpiry(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         symbol(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
@@ -855,8 +890,6 @@ export interface MockYieldAdapter extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<BigNumber>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<BigNumber>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<BigNumber>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<BigNumber>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<BigNumber>;
         authorize(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -913,6 +946,12 @@ export interface MockYieldAdapter extends BaseContract {
         }): Promise<BigNumber>;
         lockedSharePrice(overrides?: CallOverrides): Promise<BigNumber>;
         "lockedSharePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+        mint(tokenID: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<BigNumber>;
+        "mint(uint256,address,uint256)"(tokenID: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<BigNumber>;
         name(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         "name(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -965,6 +1004,12 @@ export interface MockYieldAdapter extends BaseContract {
         "setOwner(address)"(who: PromiseOrValue<string>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
+        setSharesPerExpiry(expiry: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<BigNumber>;
+        "setSharesPerExpiry(uint256,uint256)"(expiry: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<BigNumber>;
         sharesPerExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         "sharesPerExpiry(uint256)"(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
         symbol(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -1003,8 +1048,6 @@ export interface MockYieldAdapter extends BaseContract {
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        UNLOCKED_PT_ID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        "UNLOCKED_PT_ID()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         UNLOCKED_YT_ID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "UNLOCKED_YT_ID()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         authorize(who: PromiseOrValue<string>, overrides?: Overrides & {
@@ -1061,6 +1104,12 @@ export interface MockYieldAdapter extends BaseContract {
         }): Promise<PopulatedTransaction>;
         lockedSharePrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "lockedSharePrice()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        mint(tokenID: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<PopulatedTransaction>;
+        "mint(uint256,address,uint256)"(tokenID: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<PopulatedTransaction>;
         name(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "name(uint256)"(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1111,6 +1160,12 @@ export interface MockYieldAdapter extends BaseContract {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
         "setOwner(address)"(who: PromiseOrValue<string>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<PopulatedTransaction>;
+        setSharesPerExpiry(expiry: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<PopulatedTransaction>;
+        "setSharesPerExpiry(uint256,uint256)"(expiry: PromiseOrValue<BigNumberish>, amount: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
         sharesPerExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
