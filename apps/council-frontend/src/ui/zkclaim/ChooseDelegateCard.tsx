@@ -9,7 +9,6 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import H2 from "src/ui/base/H2/H2";
 import { InputValidationIcon } from "src/ui/base/InputValidationIcon";
-import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton";
 import useOnConnected from "src/ui/wallet/useOnConnected";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
@@ -18,6 +17,7 @@ import classNames from "classnames";
 import { useResolvedEnsName } from "src/ui/ethereum/useResolvedEnsName";
 import { Provider } from "@ethersproject/providers";
 import { isValidAddress } from "src/base/isValidAddress";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 interface ChooseDelegateCardProps {
   account: string;
@@ -40,10 +40,16 @@ export default function ChooseDelegateCard({
   const [customAddress, setCustomAddress] = useState<string>();
   const [isSelfDelegated, setIsSelfDelegated] = useState(false);
 
+  const { openConnectModal } = useConnectModal();
   const { data: resolvedDelegateAddress } = useResolvedEnsName(
     selectedAddress,
     provider,
   );
+
+  const handleSelfDelegateClick = () => {
+    setIsSelfDelegated(true);
+    openConnectModal && openConnectModal();
+  };
 
   useOnConnected(() => {
     if (isSelfDelegated) {
@@ -155,11 +161,12 @@ export default function ChooseDelegateCard({
                   </Button>
                 )
               ) : (
-                <ConnectWalletButton
-                  label="Self-delegate"
+                <Button
                   variant={ButtonVariant.OUTLINE_WHITE}
-                  onClick={() => setIsSelfDelegated(true)}
-                />
+                  onClick={handleSelfDelegateClick}
+                >
+                  {t`Self-delegate`}
+                </Button>
               )}
             </div>
           </div>

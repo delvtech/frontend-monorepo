@@ -13,7 +13,7 @@
     "@heroicons/react": "^1.0.6",
     "@metamask/jazzicon": "^2.0.0",
     "@popperjs/core": "^2.11.2",
-    "@rainbow-me/rainbowkit": "^0.4.3",
+    "@rainbow-me/rainbowkit": "^0.4.6",
     "@svgr/webpack": "^6.2.1",
     "@tailwindcss/forms": "^0.5.0",
     "@types/lodash.isequal": "^4.5.5",

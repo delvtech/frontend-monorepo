@@ -14,7 +14,6 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { getFeaturedDelegate } from "src/delegates/isFeaturedDelegate";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
-import { ConnectWalletDialog } from "src/ui/wallet/ConnectWalletDialog";
 import { commify } from "ethers/lib/utils";
 import { jt, t } from "ttag";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
@@ -26,6 +25,7 @@ import { Spinner } from "src/ui/base/Spinner/Spinner";
 import { pedersenHash, toHex } from "zkp-merkle-airdrop-lib";
 import useClaimableAmount from "./useClaimableAmount";
 import { PrivateAirdrop } from "@elementfi/council-typechain";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 interface TransactionCardProps {
   className?: string;
@@ -56,8 +56,6 @@ export default function TransactionCard({
   onSuccess,
   onNextStep,
 }: TransactionCardProps): ReactElement {
-  const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
-  const onCloseWalletDialog = useCallback(() => setWalletDialogOpen(false), []);
   const claimableAmount = useClaimableAmount(contract);
   const formattedAddress = useFormattedWalletAddress(delegateAddress, provider);
   const delegateLabel =
@@ -65,6 +63,8 @@ export default function TransactionCard({
   const [isTransactionPending, setIsTransactionPending] = useState(false);
   const [success, setSuccess] = useState(false);
   const toastIdRef = useRef<string>();
+
+  const { openConnectModal } = useConnectModal();
   const { mutate: claimAndDelegate } = useClaimAndDelegate(signer, contract, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
@@ -109,10 +109,6 @@ export default function TransactionCard({
   };
   return (
     <>
-      <ConnectWalletDialog
-        isOpen={isWalletDialogOpen}
-        onClose={onCloseWalletDialog}
-      />
       <Card className={className} variant={CardVariant.BLUE}>
         <div className="flex flex-col gap-2 p-2 text-white sm:px-6 sm:py-4">
           <div className="mb-8 text-center text-white sm:items-center sm:px-10 sm:text-center md:px-32">
@@ -200,7 +196,7 @@ export default function TransactionCard({
               <Button
                 className="px-12"
                 variant={ButtonVariant.GRADIENT}
-                onClick={() => setWalletDialogOpen(true)}
+                onClick={openConnectModal}
               >
                 {t`Connect Wallet`}
               </Button>
