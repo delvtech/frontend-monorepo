@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "scrape:mainnet": "npx ts-node ./src/mainnet.ts",
+    "push-to-s3": "bash scripts/push-to-s3.sh",
     "build": "parcel build && bash scripts/copy-static-files.sh",
     "prepare": "husky install",
     "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
