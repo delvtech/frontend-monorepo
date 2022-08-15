@@ -1,9 +1,12 @@
 import { ReactElement, ReactNode } from "react";
+export type Variant = "primary" | "secondary" | "accent" | "neutral" | "info" | "success" | "warning" | "error";
 interface ButtonProps {
     children: string | ReactElement;
+    variant?: Extract<Variant, "accent" | "info" | "success" | "warning" | "error">;
+    outline?: boolean;
     onClick: () => any;
 }
-export function Button({ children, onClick }: ButtonProps): ReactElement;
+export function Button({ children, variant, outline, onClick, }: ButtonProps): ReactElement;
 interface ToastProps {
     message: string;
 }

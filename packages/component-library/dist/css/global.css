@@ -818,6 +818,26 @@ html {
   outline-offset: 2px;
 }
 
+.daisy-btn-accent {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--a) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--a) / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: hsl(var(--ac) / var(--tw-text-opacity));
+}
+
+.daisy-btn-accent:hover, .daisy-btn-accent.daisy-btn-active {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--af, var(--a)) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--af, var(--a)) / var(--tw-bg-opacity));
+}
+
+.daisy-btn-accent:focus-visible {
+  outline: 2px solid hsl(var(--a));
+}
+
 .daisy-btn-info {
   --tw-border-opacity: 1;
   border-color: hsl(var(--in) / var(--tw-border-opacity));
@@ -836,6 +856,66 @@ html {
 
 .daisy-btn-info:focus-visible {
   outline: 2px solid hsl(var(--in));
+}
+
+.daisy-btn-success {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--su) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--su) / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: hsl(var(--suc, var(--nc)) / var(--tw-text-opacity));
+}
+
+.daisy-btn-success:hover, .daisy-btn-success.daisy-btn-active {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--su) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--su) / var(--tw-bg-opacity));
+}
+
+.daisy-btn-success:focus-visible {
+  outline: 2px solid hsl(var(--su));
+}
+
+.daisy-btn-warning {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--wa) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--wa) / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: hsl(var(--wac, var(--nc)) / var(--tw-text-opacity));
+}
+
+.daisy-btn-warning:hover, .daisy-btn-warning.daisy-btn-active {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--wa) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--wa) / var(--tw-bg-opacity));
+}
+
+.daisy-btn-warning:focus-visible {
+  outline: 2px solid hsl(var(--wa));
+}
+
+.daisy-btn-error {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--er) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--er) / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: hsl(var(--erc, var(--nc)) / var(--tw-text-opacity));
+}
+
+.daisy-btn-error:hover, .daisy-btn-error.daisy-btn-active {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--er) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--er) / var(--tw-bg-opacity));
+}
+
+.daisy-btn-error:focus-visible {
+  outline: 2px solid hsl(var(--er));
 }
 
 .daisy-btn.daisy-glass:hover, .daisy-btn.daisy-glass.daisy-btn-active {
@@ -1072,8 +1152,24 @@ html {
   }
 }
 
+.daisy-drawer-toggle:focus-visible ~ .daisy-drawer-content .daisy-drawer-button.daisy-btn-accent {
+  outline: 2px solid hsl(var(--a));
+}
+
 .daisy-drawer-toggle:focus-visible ~ .daisy-drawer-content .daisy-drawer-button.daisy-btn-info {
   outline: 2px solid hsl(var(--in));
+}
+
+.daisy-drawer-toggle:focus-visible ~ .daisy-drawer-content .daisy-drawer-button.daisy-btn-success {
+  outline: 2px solid hsl(var(--su));
+}
+
+.daisy-drawer-toggle:focus-visible ~ .daisy-drawer-content .daisy-drawer-button.daisy-btn-warning {
+  outline: 2px solid hsl(var(--wa));
+}
+
+.daisy-drawer-toggle:focus-visible ~ .daisy-drawer-content .daisy-drawer-button.daisy-btn-error {
+  outline: 2px solid hsl(var(--er));
 }
 
 @keyframes progress-loading {
@@ -1146,9 +1242,9 @@ html {
   justify-content: space-between;
 }
 
-.bg-accent {
+.bg-neutral {
   --tw-bg-opacity: 1;
-  background-color: hsl(var(--a) / var(--tw-bg-opacity));
+  background-color: hsl(var(--n) / var(--tw-bg-opacity));
 }
 
 .bg-base-100 {
@@ -1156,15 +1252,14 @@ html {
   background-color: hsl(var(--b1) / var(--tw-bg-opacity));
 }
 
-.bg-neutral {
-  --tw-bg-opacity: 1;
-  background-color: hsl(var(--n) / var(--tw-bg-opacity));
-}
-
 .shadow-lg {
   --tw-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.outline {
+  outline-style: solid;
 }
 
 /*# sourceMappingURL=global.css.map */
