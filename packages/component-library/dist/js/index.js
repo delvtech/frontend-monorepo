@@ -614,9 +614,25 @@ function $3bd822c0fa6114ff$export$42cfbb80f7861e77({ children: children  }) {
 }
 
 
+var $3bf0b24309a762a9$exports = {};
+
+$parcel$export($3bf0b24309a762a9$exports, "Card", () => $3bf0b24309a762a9$export$60332b2344f7fe41);
+
+function $3bf0b24309a762a9$export$60332b2344f7fe41({ children: children  }) {
+    return /*#__PURE__*/ (0, $95e690a3037e1728$exports.jsx)("div", {
+        className: "daisy-card w-96 bg-neutral",
+        children: /*#__PURE__*/ (0, $95e690a3037e1728$exports.jsx)("div", {
+            className: "daisy-card-body",
+            children: children
+        })
+    });
+}
+
+
 $parcel$exportWildcard($76a45f4c52fed683$exports, $465829501352e7d8$exports);
 $parcel$exportWildcard($76a45f4c52fed683$exports, $c81fdb1785c3a6b9$exports);
 $parcel$exportWildcard($76a45f4c52fed683$exports, $3bd822c0fa6114ff$exports);
+$parcel$exportWildcard($76a45f4c52fed683$exports, $3bf0b24309a762a9$exports);
 
 
 $parcel$exportWildcard($23d1d3b3d19e7451$exports, $76a45f4c52fed683$exports);
