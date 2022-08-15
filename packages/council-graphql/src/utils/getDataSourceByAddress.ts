@@ -1,6 +1,6 @@
 import type { CoreVotingContract } from "src/datasources/CoreVotingContract";
 import type { VotingVaultDataSource } from "src/datasources/VotingVaultDataSource";
-import { CouncilContext } from "src/logic/context";
+import { CouncilContext } from "src/context";
 
 export function getVotingVaultDataSourceByAddress(
   address: string,

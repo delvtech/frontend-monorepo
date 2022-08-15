@@ -1,7 +1,7 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { Graph } from "@elementfi/graphql";
 import { resolvers } from "./resolvers";
-import { initContext } from "./resolvers/initContext";
+import { initContext } from "./context/init";
 import typeDefs from "./council.graphql";
 
 export const councilSchema = makeExecutableSchema({

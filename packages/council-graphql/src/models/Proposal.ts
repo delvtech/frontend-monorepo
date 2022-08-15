@@ -1,9 +1,9 @@
 import { CoreVotingContract } from "src/datasources/CoreVotingContract";
+import { CouncilContext } from "src/context";
 import { Proposal, VotingContract } from "src/generated";
-import { CouncilContext } from "src/logic/context";
-import { getVotingContractDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
-import { getFromBlockNumber } from "src/logic/utils/getFromBlockNumber";
-import { getLatestBlockNumber } from "src/logic/utils/getLatestBlockNumber";
+import { getFromBlockNumber } from "src/utils/getFromBlockNumber";
+import { getLatestBlockNumber } from "src/utils/getLatestBlockNumber";
+import { getVotingContractDataSourceByAddress } from "src/utils/getDataSourceByAddress";
 
 const EXECUTED_PROPOSAL_HASH =
   "0x0000000000000000000000000000000000000000000000000000000000000000";

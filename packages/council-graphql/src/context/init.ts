@@ -1,16 +1,16 @@
 import { AddressesJsonFile } from "@elementfi/council-tokenlist";
 import { ResolverContext } from "@elementfi/graphql";
-import { CoreVotingContract } from "src/datasources/CoreVotingContract";
-import { GSCVaultContract } from "src/datasources/GSCVaultContract";
-import { LockingVaultContract } from "src/datasources/LockingVaultContract";
-import { VestingVaultContract } from "src/datasources/VestingVaultContract";
-import { CouncilContext } from "src/logic/context";
 import {
   goerliAddressList,
   mainnetAddressList,
   testnetAddressList,
   waffleAddressList,
 } from "src/addressLists";
+import { CouncilContext } from "src/context";
+import { CoreVotingContract } from "src/datasources/CoreVotingContract";
+import { GSCVaultContract } from "src/datasources/GSCVaultContract";
+import { LockingVaultContract } from "src/datasources/LockingVaultContract";
+import { VestingVaultContract } from "src/datasources/VestingVaultContract";
 
 // TODO: What's the right way to prevent collisions with other packages.
 // Namespace?

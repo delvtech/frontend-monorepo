@@ -1,7 +1,7 @@
 import { formatEther } from "ethers/lib/utils";
+import { CouncilContext } from "src/context";
 import { Ballot, Proposal, Vote, Voter } from "src/generated";
-import { CouncilContext } from "src/logic/context";
-import { getVotingContractDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
+import { getVotingContractDataSourceByAddress } from "src/utils/getDataSourceByAddress";
 import { VoterModel } from "./Voter";
 
 interface VoteModel {

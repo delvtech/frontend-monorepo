@@ -1,9 +1,9 @@
 import { formatEther, parseEther } from "ethers/lib/utils";
+import { CouncilContext } from "src/context";
 import { TotalVotingPower, VotingVault } from "src/generated";
-import { CouncilContext } from "src/logic/context";
-import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
-import { getFromBlockNumber } from "src/logic/utils/getFromBlockNumber";
-import { getLatestBlockNumber } from "src/logic/utils/getLatestBlockNumber";
+import { getVotingVaultDataSourceByAddress } from "src/utils/getDataSourceByAddress";
+import { getFromBlockNumber } from "src/utils/getFromBlockNumber";
+import { getLatestBlockNumber } from "src/utils/getLatestBlockNumber";
 
 // TODO: Should this come from method arguments as `excludeAddresses`?
 const nonVoters = [
