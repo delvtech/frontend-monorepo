@@ -1,37 +1,41 @@
-import React, { ReactElement } from "react";
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { useAccount } from "wagmi";
+import React, { Fragment, ReactElement } from "react";
+import { useAccount, useEnsName } from "wagmi";
 import { t } from "ttag";
-import { toastTransactionSubmitted } from "src/ui/overview/toasts";
-import { Button } from "@elementfi/component-library";
+import { Button, Card, CardTitle } from "@elementfi/component-library";
 
 export function OverviewPage(): ReactElement {
   const { address: userAddress } = useAccount();
+  const { data: ensName } = useEnsName({ address: userAddress });
 
   return (
     <div className="bg-base-200 min-h-screen">
-      <div className="flex-col gap-8 text-center">
-        {userAddress ? <FakeTxButton /> : t`Connect wallet to continue`}
-      </div>
+      <h1>{t`Welcome ${ensName}`}</h1>
+      <TermCard />
     </div>
   );
 }
 
 export default OverviewPage;
 
-function FakeTxButton(): ReactElement {
-  const addRecentTransaction = useAddRecentTransaction();
+function TermCard(): ReactElement {
   return (
-    <Button
-      onClick={() => {
-        addRecentTransaction({
-          hash: "0xeef10fc5170f669b86c4cd0444882a96087221325f8bf2f55d6188633aa7be7c",
-          description: "Swap 1 ETH for 1,100 USDC",
-        });
-        toastTransactionSubmitted();
-      }}
-    >
-      Send fake transaction
-    </Button>
+    <Card>
+      <CardTitle
+        title={t`Dai pool 6m`}
+        action={<Button onClick={() => {}}>{t`Deposit`}</Button>}
+      />
+      <div>
+        <p>{t`Fixed APR`}</p>
+        <p>{t`6.61% APR`}</p>
+      </div>
+      <div>
+        <p>{t`Variable APY`}</p>
+        <p>{t`1.96% APY`}</p>
+      </div>
+      <div>
+        <p>{t`TVL`}</p>
+        <p>{t`$909,888`}</p>
+      </div>
+    </Card>
   );
 }
