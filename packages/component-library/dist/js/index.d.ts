@@ -13,8 +13,12 @@ interface NavbarProps {
 }
 export function Navbar({ children }: NavbarProps): ReactElement;
 interface CardProps {
-    children: string | ReactElement;
+    children: string | ReactNode;
 }
 export function Card({ children }: CardProps): ReactElement;
+export function CardTitle({ title, action, }: {
+    title: string | ReactNode;
+    action?: ReactNode;
+}): ReactElement;
 
 //# sourceMappingURL=index.d.ts.map
