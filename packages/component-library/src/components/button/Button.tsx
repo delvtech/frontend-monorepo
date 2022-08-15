@@ -7,10 +7,7 @@ interface ButtonProps {
 
 export function Button({ children, onClick }: ButtonProps): ReactElement {
   return (
-    <button
-      className="daisy-btn daisy-btn-outline daisy-btn-info"
-      onClick={onClick}
-    >
+    <button className="daisy-btn daisy-btn daisy-btn-info" onClick={onClick}>
       {children}
     </button>
   );
