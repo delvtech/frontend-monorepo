@@ -4,10 +4,10 @@ module.exports = {
   daisyui: {
     themes: [
       {
+        // "light mode"
         lawful: {
           neutral: "#402729",
           "neutral-focus": "#303030",
-
           "base-100": "#FAF7F0", // Base color of page, used for blank backgrounds
           accent: "#08627A",
           "accent-focus": "#042B36",
@@ -17,6 +17,7 @@ module.exports = {
           warning: "#BF3E12",
           error: "#980026",
         },
+        // "dark mode"
         chaotic: {
           accent: "#DAB841",
         },
@@ -42,6 +43,7 @@ module.exports = {
         mercurius: "##980026",
         sulfate: "#DAB841",
         foundationPrime: "#0D91B5",
+        // TODO: Add remaining colors
       },
       fontFamily: {
         mono: [
