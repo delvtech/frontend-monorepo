@@ -6,6 +6,7 @@ const colors = {
   sulfate: "#DAB841",
   salt: "#FAF7F0",
   foundationPrime: "#0D91B5",
+  redactedPrime: "#FF5C73",
 };
 
 module.exports = {
