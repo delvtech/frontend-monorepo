@@ -1,6 +1,6 @@
 {
   "name": "@elementfi/core-typechain",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "",
   "dependencies": {
     "@elementfi/eslint-config": "*",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-vyper": "^3.0.0",
-    "@openzeppelin/contracts": "^4.4.2",
+    "@openzeppelin/contracts": "4.4.2",
     "@typechain/ethers-v5": "^8.0.5",
     "@typechain/hardhat": "^4.0.0",
     "@types/ethereumjs-abi": "^0.6.3",
