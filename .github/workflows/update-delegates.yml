@@ -1,5 +1,4 @@
-name:
-  Update delegates.json
+name: Update delegates.json
 
 on:
   # Triggers the workflow every 2 weeks (the 1 and 15 of the month @ 1am)

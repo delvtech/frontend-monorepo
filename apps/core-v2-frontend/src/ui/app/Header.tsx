@@ -11,7 +11,7 @@ export default function Header(): ReactElement {
   return (
     <Navbar>
       <div className="flex-1">
-        <ElementIcon variant={IconVariant.LIGHT} size={IconSize.LARGE} />
+        <ElementIcon variant={IconVariant.DARK} size={IconSize.LARGE} />
       </div>
       <div className="flex-none">{<ConnectButton />}</div>
     </Navbar>

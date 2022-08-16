@@ -9,9 +9,9 @@ import "@elementfi/component-library/dist/css/global.css";
 import "styles/globals.css";
 
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { WagmiConfig } from "wagmi";
 
 import { AppProps } from "next/app";
+import dynamic from "next/dynamic";
 import React, { ReactElement } from "react";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -19,16 +19,28 @@ import { queryClient } from "src/queryClient";
 import { chains } from "src/provider";
 import { wagmiClient } from "src/wagmiClient";
 import { Toaster } from "react-hot-toast";
+import { WagmiConfig } from "wagmi";
+
+// Wagmi can't be rendered in SSR without exploding the dev-goerli server
+const WagmiConfigWithoutSSR = dynamic(
+  async () => {
+    const { WagmiConfig } = await import("wagmi");
+    return WagmiConfig;
+  },
+  {
+    ssr: false,
+  },
+) as typeof WagmiConfig;
 
 function App({ Component, pageProps }: AppProps): ReactElement {
   return (
     <QueryClientProvider client={queryClient}>
-      <WagmiConfig client={wagmiClient}>
+      <WagmiConfigWithoutSSR client={wagmiClient}>
         <RainbowKitProvider chains={chains} showRecentTransactions>
           <Toaster />
           <Component {...pageProps} />
         </RainbowKitProvider>
-      </WagmiConfig>
+      </WagmiConfigWithoutSSR>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );

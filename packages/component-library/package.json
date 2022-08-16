@@ -8,7 +8,8 @@
   "module": "dist/js/index.esm.js",
   "targets": {
     "js": {
-      "source": "src/index.ts"
+      "source": "src/index.ts",
+      "isLibrary": true
     },
     "css": {
       "source": "src/global.css"
@@ -45,6 +46,7 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.2",
+    "classnames": "^2.3.1",
     "daisyui": "^2.17.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

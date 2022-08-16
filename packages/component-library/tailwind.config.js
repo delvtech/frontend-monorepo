@@ -1,21 +1,37 @@
+// Shared colors from the design system to configure in tailwind and daisy
+const colors = {
+  lead: "#303030",
+  cuprite: "#402729",
+  mercurius: "#980026",
+  sulfate: "#DAB841",
+  salt: "#FAF7F0",
+  foundationPrime: "#0D91B5",
+  redactedPrime: "#FF5C73",
+};
+
 module.exports = {
   plugins: [require("@tailwindcss/forms"), require("daisyui")],
-  // Use daisyui for now so we can prototype using predefined tailwind classes, eg: .daisy-btn
   daisyui: {
     themes: [
       {
-        // What should our theme be called?
-        hotpot: {
-          primary: "#38bdf8",
-          secondary: "#818CF8",
-          accent: "#F471B5",
-          neutral: "#1E293B",
-          "neutral-focus": "#273449",
-          "base-100": "#0F172A",
-          info: "#0CA5E9",
-          success: "#2DD4BF",
-          warning: "#F4BF50",
-          error: "#FB7085",
+        // light mode
+        lawful: {
+          primary: "#E4F2E8",
+          secondary: "#D6D6ED",
+          neutral: "#FCEFDF",
+          accent: "#08627A",
+          "accent-focus": "#042B36",
+          "base-100": colors.salt, // Base color of page, used for blank backgrounds
+          info: "#3B3BBE",
+          "info-focus": colors.foundationPrime,
+          success: "#256C01",
+          warning: "#BF3E12",
+          error: colors.mercurius,
+        },
+
+        // "dark mode"
+        chaotic: {
+          accent: colors.sulfate,
         },
       },
     ],
@@ -33,6 +49,7 @@ module.exports = {
 
   theme: {
     extend: {
+      colors,
       fontFamily: {
         mono: [
           "Roboto Mono",
