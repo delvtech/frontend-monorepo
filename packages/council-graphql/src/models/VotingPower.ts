@@ -1,8 +1,8 @@
 import { formatEther } from "ethers/lib/utils";
+import { CouncilContext } from "src/context";
 import { Voter, VotingPower, VotingVault } from "src/generated";
-import { CouncilContext } from "src/logic/context";
-import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
-import { getLatestBlockNumber } from "src/logic/utils/getLatestBlockNumber";
+import { getVotingVaultDataSourceByAddress } from "src/utils/getDataSourceByAddress";
+import { getLatestBlockNumber } from "src/utils/getLatestBlockNumber";
 
 interface VotingPowerModel {
   getByVoter: (options: {

@@ -1,5 +1,5 @@
+import { CouncilContext } from "src/context";
 import { VotingVault } from "src/generated";
-import { CouncilContext } from "src/logic/context";
 
 interface VotingVaultModel {
   getAll: (options: { context: CouncilContext }) => VotingVault[];

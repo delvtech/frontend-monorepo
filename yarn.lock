@@ -9126,10 +9126,28 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@17.0.38", "@types/react@17.0.44", "@types/react@^17", "@types/react@^17.0.38", "@types/react@^17.0.39", "@types/react@^18.0.14":
+"@types/react@*", "@types/react@17.0.44", "@types/react@^17", "@types/react@^17.0.38", "@types/react@^17.0.39":
   version "17.0.44"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.44.tgz#c3714bd34dd551ab20b8015d9d0dbec812a51ec7"
   integrity sha512-Ye0nlw09GeMp2Suh8qoOv0odfgCoowfM/9MG6WeRD60Gq9wS90bdkdRtYbRkNhXOpG4H+YXGvj4wOWhAC0LJ1g==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@17.0.38":
+  version "17.0.38"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.38.tgz#f24249fefd89357d5fa71f739a686b8d7c7202bd"
+  integrity sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^18.0.14":
+  version "18.0.17"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.17.tgz#4583d9c322d67efe4b39a935d223edcc7050ccf4"
+  integrity sha512-38ETy4tL+rn4uQQi7mB81G7V1g0u2ryquNmsVIOKUAEIDK+3CUjZ6rSRpdvS99dNBnkLFL83qfmtLacGOTIhwQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -14315,7 +14333,7 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.1, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-cross-undici-fetch@0.4.13, cross-undici-fetch@^0.4.11, cross-undici-fetch@^0.4.13:
+cross-undici-fetch@^0.4.11, cross-undici-fetch@^0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/cross-undici-fetch/-/cross-undici-fetch-0.4.13.tgz#cc693121267f8203217e0c8768d3d4cf97889b44"
   integrity sha512-7g4hCZcq/9DiYhF43lRWgtZjPqg8tMrjG3eO94QiFQcdFR4TcmcT0Czdu7H+brXDkdbWJQrjYCV93ggE61INDA==
@@ -28834,7 +28852,7 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-snarkjs@0.4.10, snarkjs@^0.4.10:
+snarkjs@^0.4.10:
   version "0.4.10"
   resolved "https://registry.yarnpkg.com/snarkjs/-/snarkjs-0.4.10.tgz#5a8048e691af8f3e6016014ba2cb0e916f508be1"
   integrity sha512-YWgxso7CGcSfkyDGraVjPuBJtq6GEsZ16YBJj2eD0TFum2D5BxnawvyTo4p/7UpctAT0r05DoHo80zgaWnbIKA==
@@ -30939,6 +30957,25 @@ ts-node@^10.8.2:
   version "10.8.2"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.8.2.tgz#3185b75228cef116bf82ffe8762594f54b2a23f2"
   integrity sha512-LYdGnoGddf1D6v8REPtIH+5iq/gTDuZqv2/UJUU7tKjuEU8xVZorBM+buCGNjj+pGEud+sOoM4CX3/YzINpENA==
+  dependencies:
+    "@cspotcode/source-map-support" "^0.8.0"
+    "@tsconfig/node10" "^1.0.7"
+    "@tsconfig/node12" "^1.0.7"
+    "@tsconfig/node14" "^1.0.0"
+    "@tsconfig/node16" "^1.0.2"
+    acorn "^8.4.1"
+    acorn-walk "^8.1.1"
+    arg "^4.1.0"
+    create-require "^1.1.0"
+    diff "^4.0.1"
+    make-error "^1.1.1"
+    v8-compile-cache-lib "^3.0.1"
+    yn "3.1.1"
+
+ts-node@^10.9.1:
+  version "10.9.1"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.9.1.tgz#e73de9102958af9e1f0b168a6ff320e25adcff4b"
+  integrity sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==
   dependencies:
     "@cspotcode/source-map-support" "^0.8.0"
     "@tsconfig/node10" "^1.0.7"

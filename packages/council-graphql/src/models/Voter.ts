@@ -1,7 +1,7 @@
 import { formatEther } from "ethers/lib/utils";
+import { CouncilContext } from "src/context";
 import { Voter, VotingVault } from "src/generated";
-import { CouncilContext } from "src/logic/context";
-import { getVotingVaultDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
+import { getVotingVaultDataSourceByAddress } from "src/utils/getDataSourceByAddress";
 import { VotingVaultModel } from "./VotingVault";
 
 interface VoterModel {

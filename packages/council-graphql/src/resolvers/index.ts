@@ -1,12 +1,12 @@
+import { CouncilContext } from "src/context";
 import { Resolvers } from "src/generated";
-import { CouncilContext } from "src/logic/context";
-import { ProposalModel } from "src/logic/models/Proposal";
-import { TotalVotingPowerModel } from "src/logic/models/TotalVotingPower";
-import { VoteModel } from "src/logic/models/Vote";
-import { VoterModel } from "src/logic/models/Voter";
-import { VotingContractModel } from "src/logic/models/VotingContract";
-import { VotingPowerModel } from "src/logic/models/VotingPower";
-import { VotingVaultModel } from "src/logic/models/VotingVault";
+import { ProposalModel } from "src/models/Proposal";
+import { TotalVotingPowerModel } from "src/models/TotalVotingPower";
+import { VoteModel } from "src/models/Vote";
+import { VoterModel } from "src/models/Voter";
+import { VotingContractModel } from "src/models/VotingContract";
+import { VotingPowerModel } from "src/models/VotingPower";
+import { VotingVaultModel } from "src/models/VotingVault";
 
 export const resolvers: Resolvers<CouncilContext> = {
   Query: {

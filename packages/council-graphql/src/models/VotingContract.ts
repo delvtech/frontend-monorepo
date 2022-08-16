@@ -1,6 +1,6 @@
+import { CouncilContext } from "src/context";
 import { VotingContract } from "src/generated";
-import { CouncilContext } from "src/logic/context";
-import { getVotingContractDataSourceByAddress } from "src/logic/utils/getDataSourceByAddress";
+import { getVotingContractDataSourceByAddress } from "src/utils/getDataSourceByAddress";
 
 interface VotingContractModel {
   getAll: (options: {

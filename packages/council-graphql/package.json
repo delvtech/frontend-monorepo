@@ -20,6 +20,11 @@
   "scripts": {
     "watch:lib": "parcel watch",
     "build:lib": "parcel build",
+    "start": "ts-node -r dotenv/config src/server.ts",
+    "start:mainnet": "cross-env CHAIN_NAME=mainnet npm start",
+    "start:mainnet-fork": "cross-env CHAIN_NAME=mainnet-fork npm start",
+    "start:goerli": "cross-env CHAIN_NAME=goerli npm start",
+    "start:testnet": "cross-env CHAIN_NAME=testnet npm start",
     "watch:graphql": "elf-graphql --package -o src/generated -w",
     "build:graphql": "elf-graphql --package -o src/generated",
     "build": "npm run build:graphql && npm run build:lib",
@@ -51,12 +56,16 @@
     "@elementfi/prettier-config": "*",
     "@ethersproject/providers": "^5.6.8",
     "@types/lru-cache": "^7.10.10",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.1",
     "eslint": "7.32.0",
+    "ethereum-waffle": "^3.4.4",
     "graphql": "^16.5.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "parcel": "^2.6.2",
     "prettier": "2.6.2",
+    "ts-node": "^10.9.1",
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
