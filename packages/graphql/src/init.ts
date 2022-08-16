@@ -41,7 +41,15 @@ export default function init({ graphs, provider }: InitOptions): {
   return {
     schema: mergeSchemas({ schemas }),
     context: new Promise<ResolverContext>(async (resolve) => {
-      const { chainId } = await provider.getNetwork();
+      let chainId: number;
+      try {
+        // this will throw errors if the network can't be fetched (e.g., the
+        // provider is a local json rpc host and the network isn't running.)
+        const network = await provider.getNetwork();
+        chainId = network.chainId;
+      } catch {
+        chainId = 31337;
+      }
       const initialContext = {
         chainId,
         provider,
