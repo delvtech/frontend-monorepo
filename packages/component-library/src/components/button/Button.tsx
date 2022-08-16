@@ -9,6 +9,8 @@ interface ButtonProps {
     /* only some variants are supported */
     "accent" | "info" | "success" | "warning" | "error"
   >;
+
+  size?: "normal" | "small";
   outline?: boolean;
   onClick: () => any;
 }
@@ -16,12 +18,14 @@ interface ButtonProps {
 export function Button({
   children,
   variant = "accent",
+  size = "normal",
   outline,
   onClick,
 }: ButtonProps): ReactElement {
   return (
     <button
       className={classNames("daisy-btn", {
+        "daisy-btn-sm": size === "small",
         "daisy-btn-outline": outline,
         "daisy-btn-accent": variant === "accent",
         "daisy-btn-info": variant === "info",
