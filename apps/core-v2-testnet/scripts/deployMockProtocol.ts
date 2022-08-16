@@ -9,17 +9,22 @@ import {
 import { createTerm } from "src/helpers/createTerm";
 import { getCurrentBlockTimestamp } from "src/utils";
 import { ONE_DAY_IN_SECONDS, ONE_MINUTE_IN_SECONDS } from "@elementfi/base";
+import { deployMockPermitToken } from "src/deploy/mocks/deployMockPermitToken";
 
+// Script to deploy a mock version of the core-v2 protocol
+// Uses special mock contracts from the @elementfi/protocol-v2 repo
 async function main() {
   // get signers
   const signers = await ethers.getSigners();
-  const [signer] = signers;
+  const [deployer] = signers;
 
-  // Deploy ForwarderFactory
-  const forwarderFactory = await deployForwarderFactory(signer);
+  // deploy Forwarder Factory
+  const forwarderFactory = await deployForwarderFactory(deployer);
 
-  // Deploy Mock Tokens
-  const usdcToken = await deployMockToken(signer, "USDC", "USDC", 6);
+  // deploy mock tokens
+  const usdcToken = await deployMockToken(deployer, "USDC", "USDC", 6);
+  const DAIToken = await deployMockToken(deployer, "DAI", "DAI", 6);
+  const WETHToken = await deployMockPermitToken(deployer, "USDC", "USDC", 6);
 
   // ERC20Forwarder contract bytecode hash
   const linkHash = await forwarderFactory.ERC20LINK_HASH();
@@ -28,12 +33,15 @@ async function main() {
   // todo see how many decimals is usdc token
 
   // Deploy mock vault
-  const mockYearnVault = await deployMockYearnVault(signer, usdcToken.address);
+  const mockYearnVault = await deployMockYearnVault(
+    deployer,
+    usdcToken.address,
+  );
 
   const governanceAddress = ethers.constants.AddressZero;
   // Deploy mock yield adapter i.e. term contract
   const mockYieldAdapter = await deployMockYieldAdapter(
-    signer,
+    deployer,
     mockYearnVault.address,
     governanceAddress,
     linkHash,
