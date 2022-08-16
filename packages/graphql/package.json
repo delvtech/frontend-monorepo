@@ -58,7 +58,7 @@
     "yargs": "^17.5.1"
   },
   "devDependencies": {
-    "@apollo/client": "^3.6.5",
+    "@apollo/client": "^3.6.9",
     "@elementfi/eslint-config": "*",
     "@elementfi/prettier-config": "*",
     "@types/node": "^17.0.42",
@@ -75,7 +75,7 @@
     "typescript-transform-paths": "^3.3.1"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.6.5",
+    "@apollo/client": "^3.6.9",
     "graphql": ">=16.5",
     "react": ">=16.8.0"
   }

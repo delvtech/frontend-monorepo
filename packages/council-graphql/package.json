@@ -49,7 +49,7 @@
     "lru-cache": "^7.13.1"
   },
   "devDependencies": {
-    "@apollo/client": "^3.6.6",
+    "@apollo/client": "^3.6.9",
     "@elementfi/eslint-config": "*",
     "@elementfi/graphql": "*",
     "@elementfi/parcel-transformer-graphql-document-node": "*",
@@ -69,7 +69,7 @@
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.6.6",
+    "@apollo/client": "^3.6.9",
     "@elementfi/graphql": "*",
     "graphql": ">=16.5",
     "react": ">=16.8.0"
