@@ -3,10 +3,11 @@ export type Variant = "primary" | "secondary" | "accent" | "neutral" | "info" | 
 interface ButtonProps {
     children: string | ReactElement;
     variant?: Extract<Variant, "accent" | "info" | "success" | "warning" | "error">;
+    size?: "normal" | "small";
     outline?: boolean;
     onClick: () => any;
 }
-export function Button({ children, variant, outline, onClick, }: ButtonProps): ReactElement;
+export function Button({ children, variant, size, outline, onClick, }: ButtonProps): ReactElement;
 interface ToastProps {
     message: string;
 }

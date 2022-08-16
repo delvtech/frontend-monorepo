@@ -1206,6 +1206,27 @@ html {
   }
 }
 
+.daisy-btn-sm {
+  height: 2rem;
+  min-height: 2rem;
+  padding-left: .75rem;
+  padding-right: .75rem;
+  font-size: .875rem;
+}
+
+.daisy-btn-square:where(.daisy-btn-sm) {
+  height: 2rem;
+  width: 2rem;
+  padding: 0;
+}
+
+.daisy-btn-circle:where(.daisy-btn-sm) {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 9999px;
+  padding: 0;
+}
+
 .daisy-card-compact .daisy-card-body {
   padding: 1rem;
   font-size: .875rem;
