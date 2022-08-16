@@ -1,22 +1,18 @@
+import { ChainId } from "@elementfi/base";
 import {
   AddressesJsonFile,
-  goerliAddressList as originalGoerliAddressList,
-  mainnetAddressList as originalMainnetAddressList,
+  goerliAddressList,
+  mainnetAddressList,
 } from "@elementfi/council-tokenlist";
 
-export const goerliAddressList = originalGoerliAddressList;
-export const mainnetAddressList = originalMainnetAddressList;
-
-const LOCALHOST_CHAIN_ID = 31337;
-
 export const mainnetForkAddressList = {
-  ...originalMainnetAddressList,
-  chainId: LOCALHOST_CHAIN_ID,
+  ...mainnetAddressList,
+  chainId: ChainId.LOCAL,
 };
 
 // For local hardhat only, this is inlined as an object to preserve type safety
 export const testnetAddressList: AddressesJsonFile = {
-  chainId: LOCALHOST_CHAIN_ID,
+  chainId: ChainId.LOCAL,
   addresses: {
     airdrop: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
     coreVoting: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
@@ -61,5 +57,45 @@ export const waffleAddressList: AddressesJsonFile = {
     treasury: "0x6f2fa37EBfaf089C4Fd7e6124C1028306943D11d",
     vestingVault: "0x2061701b22095418514C0D4a28366C54B1464C17",
   },
-  chainId: LOCALHOST_CHAIN_ID,
+  chainId: ChainId.LOCAL,
 };
+
+export function getAddressList(chainId?: number): AddressesJsonFile {
+  switch (chainId) {
+    case mainnetAddressList.chainId:
+      return mainnetAddressList;
+    case goerliAddressList.chainId:
+      return goerliAddressList;
+    case ChainId.LOCAL:
+      return getLocalhostAddressList();
+    default:
+      return getEnvAddressList();
+  }
+}
+
+function getEnvAddressList(): AddressesJsonFile {
+  if (process.env.NODE_ENV === "test") {
+    return waffleAddressList;
+  }
+  switch (process.env.CHAIN_NAME) {
+    case "goerli":
+      return goerliAddressList;
+    case "mainnet":
+      return mainnetAddressList;
+    default:
+      return getLocalhostAddressList();
+  }
+}
+
+function getLocalhostAddressList() {
+  if (process.env.NODE_ENV === "test") {
+    return waffleAddressList;
+  }
+  switch (process.env.CHAIN_NAME) {
+    case "mainnet-fork":
+      return mainnetForkAddressList;
+    case "testnet":
+    default:
+      return testnetAddressList;
+  }
+}
