@@ -304,6 +304,9 @@ contract Pool is LP, Authorizable, TWAROracle {
         // Make sure that the generated PTs are equal to
         /// TODO: The rounding errors might make this check fail
         require(pt == amount, "todo nice error");
+
+        // Update the oracle
+        _updateOracle(poolId, newShareReserve, newBondReserve);
         // Updated reserves.
         _update(poolId, uint128(newBondReserve), uint128(newShareReserve));
         // Todo update oracle
@@ -497,7 +500,7 @@ contract Pool is LP, Authorizable, TWAROracle {
     }
 
     /// @notice Helper function to calculate sale and fees for a sell, plus update the fee state.
-    /// @dev Unlike the buy flow we use this logic in both 'buyYt' and '_sellBonds' and so abstract
+    /// @dev Unlike the buy flow we use this logic in both 'purchaseYt' and '_sellBonds' and so abstract
     ///      it into a function.
     ///      WARN - Do not allow calling this function outside the context of a trade
     /// @param  poolId Pool Id supported for the trade.
@@ -537,8 +540,8 @@ contract Pool is LP, Authorizable, TWAROracle {
         // Calculate total fee with the multiplier which is an 18 point fraction
         uint256 fee = (impliedInterest * uint256(tradeFee)) /
             FixedPointMath.ONE_18;
-        // The fee in shares is the percent of share value that is fee times shares
-        uint256 shareFee = (shareValue * fee) / shareValue;
+        // Divide the fee value by the price per share to get the fee in shares
+        uint256 shareFee = (fee * _one) / pricePerShare;
         // The governance percent is the this times by the 18 point governance percent
         // fraction
         uint256 governanceFee = (shareFee * uint256(governanceFeePercent)) /
