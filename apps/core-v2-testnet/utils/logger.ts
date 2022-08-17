@@ -9,8 +9,6 @@ const Logger = {
 
   successfulDeploy(name?: string, contract?: Contract): void {
     console.log(c.greenBright(`Successfully deployed ${name} contract! 🎉`));
-    contract && console.log(`Deployed at ${c.bgBlack.white(contract.address)}`);
-    console.log("\n");
   },
 };
 
