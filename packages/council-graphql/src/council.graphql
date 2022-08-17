@@ -4,7 +4,7 @@ type Query {
   votingVault(address: ID!): VotingVault
   votingVaults(addresses: [ID!]): [VotingVault]
   voter(address: ID!): Voter
-  voters(addresses: [ID!]): [Voter]
+  voters(addresses: [ID!], search: String): [Voter]!
 }
 
 type VotingContract {
@@ -89,6 +89,7 @@ type Voter {
   address: ID!
   balance(votingVault: ID!): String
   balances(votingVaults: [ID!]!): [String]
+  ensName: String
   vote(proposal: ID!, votingContract: ID!): Vote
   votes(proposals: [ID!]!, votingContract: ID!): [Vote]
   votingPower(votingVault: ID!, blockNumber: Int): VotingPower

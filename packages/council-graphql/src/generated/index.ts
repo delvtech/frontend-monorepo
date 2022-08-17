@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-08-08T14:01:23-05:00
+// Generated on 2022-08-17T14:25:14-07:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -84,7 +84,7 @@ export type ProposalVotingPowersArgs = {
 export type Query = {
   __typename?: "Query";
   voter?: Maybe<Voter>;
-  voters?: Maybe<Array<Maybe<Voter>>>;
+  voters: Array<Maybe<Voter>>;
   votingContract?: Maybe<VotingContract>;
   votingContracts?: Maybe<Array<Maybe<VotingContract>>>;
   votingVault?: Maybe<VotingVault>;
@@ -97,6 +97,7 @@ export type QueryVoterArgs = {
 
 export type QueryVotersArgs = {
   addresses?: InputMaybe<Array<Scalars["ID"]>>;
+  search?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryVotingContractArgs = {
@@ -135,6 +136,7 @@ export type Voter = {
   address: Scalars["ID"];
   balance?: Maybe<Scalars["String"]>;
   balances?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  ensName?: Maybe<Scalars["String"]>;
   vote?: Maybe<Vote>;
   votes?: Maybe<Array<Maybe<Vote>>>;
   votingPower?: Maybe<VotingPower>;
@@ -456,7 +458,7 @@ export type QueryResolvers<
     RequireFields<QueryVoterArgs, "address">
   >;
   voters?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes["Voter"]>>>,
+    Array<Maybe<ResolversTypes["Voter"]>>,
     ParentType,
     ContextType,
     Partial<QueryVotersArgs>
@@ -533,6 +535,7 @@ export type VoterResolvers<
     ContextType,
     RequireFields<VoterBalancesArgs, "votingVaults">
   >;
+  ensName?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   vote?: Resolver<
     Maybe<ResolversTypes["Vote"]>,
     ParentType,

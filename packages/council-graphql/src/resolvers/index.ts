@@ -1,5 +1,6 @@
+import { filter } from "fuzzaldrin";
 import { CouncilContext } from "src/context";
-import { Resolvers } from "src/generated";
+import { Resolvers, Voter } from "src/generated";
 import { ProposalModel } from "src/models/Proposal";
 import { TotalVotingPowerModel } from "src/models/TotalVotingPower";
 import { VoteModel } from "src/models/Vote";
@@ -49,12 +50,49 @@ export const resolvers: Resolvers<CouncilContext> = {
     voter: (_, { address }) => {
       return VoterModel.getByAddress({ address });
     },
-    voters: (_, { addresses }, context) => {
+    voters: async (_, { addresses, search }, context) => {
+      let voters: (Voter | undefined)[] = [];
+
       if (addresses) {
-        return VoterModel.getByAddresses({ addresses });
+        voters = await VoterModel.getByAddresses({ addresses });
       } else {
-        return VoterModel.getAll({ context });
+        voters = await VoterModel.getAll({ context });
       }
+
+      if (search) {
+        const candidates: string[] = [];
+
+        voters = await Promise.all(
+          voters.map(async (voter) => {
+            if (!voter) {
+              return;
+            }
+
+            candidates.push(voter.address);
+
+            const ensName = await VoterModel.getEnsName({ voter, context });
+            if (ensName) {
+              candidates.push(ensName);
+            }
+
+            return {
+              ...voter,
+              ensName,
+            };
+          }),
+        );
+
+        const matches = filter(candidates, search);
+
+        voters = voters.filter((voter) =>
+          voter
+            ? matches.includes(voter.address) ||
+              matches.includes(voter.ensName || "")
+            : false,
+        );
+      }
+
+      return voters.map((voter) => voter || null);
     },
   },
   VotingContract: {
@@ -318,6 +356,9 @@ export const resolvers: Resolvers<CouncilContext> = {
         balances.push(balance || null);
       }
       return balances;
+    },
+    ensName: (voter, _, context) => {
+      return VoterModel.getEnsName({ voter, context });
     },
     vote: async (voter, { proposal: id, votingContract: address }, context) => {
       const votingContract = VotingContractModel.getByAddress({
