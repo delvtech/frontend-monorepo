@@ -1,8 +1,8 @@
-import { V2Context } from "src/context";
+import { CoreV2Context } from "src/context";
 
 export function getDataSourceByAddress(
   address: string,
-  dataSources: V2Context["elementDataSources"],
+  dataSources: CoreV2Context["elementDataSources"],
 ): any | undefined {
   return dataSources.find(
     (dataSource: { address: string }) => dataSource.address === address,
