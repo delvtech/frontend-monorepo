@@ -1,5 +1,5 @@
-import { ERC20Permit__factory } from "@elementfi/core-typechain/dist/libraries/factories/ERC20Permit__factory";
-import { ERC20__factory } from "@elementfi/core-typechain/dist/libraries/factories/ERC20__factory";
+import { ERC20Permit__factory } from "@elementfi/core-typechain/dist/libraries";
+import { ERC20__factory } from "@elementfi/core-typechain/dist/libraries";
 import { ZapSwapCurve__factory } from "@elementfi/core-typechain/dist/v1.1";
 import { defaultProvider } from "elf/providers/providers";
 import {

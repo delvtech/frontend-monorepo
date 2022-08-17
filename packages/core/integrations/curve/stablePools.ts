@@ -1,5 +1,5 @@
-import { CRVLUSD } from "@elementfi/core-typechain/dist/libraries/CRVLUSD";
-import { CRVLUSD__factory } from "@elementfi/core-typechain/dist/libraries/factories/CRVLUSD__factory";
+import { CRVLUSD } from "@elementfi/core-typechain/dist/libraries";
+import { CRVLUSD__factory } from "@elementfi/core-typechain/dist/libraries";
 import { AddressesJson } from "@elementfi/core/addresses/addresses";
 // TODO: stuff under packages/ should not have a default provider
 import { defaultProvider } from "@elementfi/core/providers/providers";
