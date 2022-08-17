@@ -15,6 +15,9 @@
     "stylelint": "^14.8.1",
     "tsc": "^2.0.4"
   },
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -39,7 +42,7 @@
     "build-contracts": "sh scripts/build-contracts.sh",
     "build-typescript": "sh scripts/build-typescript.sh",
     "copy-dist-files": "sh scripts/copy-files-to-dist.sh",
-    "build": "npm run build-contracts && npm run build-typescript && npm run copy-dist-files",
+    "build": "sh scripts/build-parcel.sh",
     "prepublish": "npm run build",
     "prepare": "husky install",
     "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",

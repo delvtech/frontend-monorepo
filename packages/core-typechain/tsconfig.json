@@ -12,5 +12,5 @@
       "src/*": ["./src/*"]
     }
   },
-  "include": ["./typechain-types/"]
+  "include": ["./src/"]
 }
