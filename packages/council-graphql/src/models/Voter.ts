@@ -1,9 +1,12 @@
+import LRUCache from "lru-cache";
 import { formatEther } from "ethers/lib/utils";
 import { CouncilContext } from "src/context";
 import { Voter, VotingVault } from "src/generated";
 import { getVotingVaultDataSourceByAddress } from "src/utils/getDataSourceByAddress";
 import { VotingVaultModel } from "./VotingVault";
+import { cached, getCacheKey } from "@elementfi/base";
 
+const cache = new LRUCache<string, string>({ max: 500 });
 interface VoterModel {
   getAll: (options: { context: CouncilContext }) => Promise<Voter[]>;
   getBalance: (options: {
@@ -23,6 +26,10 @@ interface VoterModel {
     blockNumber?: number;
     context: CouncilContext;
   }) => Promise<Voter[]>;
+  getEnsName: (options: {
+    voter: Voter;
+    context: CouncilContext;
+  }) => Promise<string | null>;
 }
 
 export const VoterModel: VoterModel = {
@@ -81,5 +88,12 @@ export const VoterModel: VoterModel = {
     }
 
     return this.getByAddresses({ addresses: Array.from(addresses) });
+  },
+  async getEnsName({ voter, context }) {
+    return cached({
+      cache,
+      cacheKey: getCacheKey("getEnsName", [voter.address]),
+      callback: () => context.provider.lookupAddress(voter.address),
+    });
   },
 };
