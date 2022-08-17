@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-08-05T13:05:25-05:00
+// Generated on 2022-08-17T01:38:37-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -37,7 +37,7 @@ export type MultiPool = {
   pool?: Maybe<Pool>;
   pools?: Maybe<Array<Maybe<Pool>>>;
   /** Possibly fetched from a registry */
-  yieldSource: YieldSource;
+  yieldSource?: Maybe<YieldSource>;
 };
 
 export type MultiPoolPoolArgs = {
@@ -57,7 +57,7 @@ export type MultiTerm = {
   totalVolume?: Maybe<Scalars["String"]>;
   tvl?: Maybe<Scalars["String"]>;
   /** Possibly fetched from a registry */
-  yieldSource: YieldSource;
+  yieldSource?: Maybe<YieldSource>;
   yields?: Maybe<Array<Maybe<Scalars["String"]>>>;
 };
 
@@ -84,7 +84,7 @@ export type Pool = {
   shareAssetReserves?: Maybe<Scalars["String"]>;
   term?: Maybe<Term>;
   tvl?: Maybe<Scalars["String"]>;
-  yieldSource: YieldSource;
+  yieldSource?: Maybe<YieldSource>;
 };
 
 export type PoolBuyPreviewArgs = {
@@ -117,8 +117,6 @@ export type Query = {
   pools?: Maybe<Array<Maybe<Pool>>>;
   term?: Maybe<Term>;
   terms?: Maybe<Array<Maybe<Term>>>;
-  yieldSource: YieldSource;
-  yieldSources: Array<Maybe<YieldSource>>;
 };
 
 export type QueryMultiPoolArgs = {
@@ -126,33 +124,26 @@ export type QueryMultiPoolArgs = {
 };
 
 export type QueryMultiTermArgs = {
-  yieldSource: Scalars["ID"];
+  address?: InputMaybe<Scalars["ID"]>;
+  yieldSource?: InputMaybe<Scalars["ID"]>;
 };
 
 export type QueryPoolArgs = {
   maturity: Scalars["String"];
-  yieldSource: Scalars["ID"];
+  multiPool: Scalars["ID"];
 };
 
 export type QueryPoolsArgs = {
-  yieldSource: Scalars["ID"];
+  multiPool: Scalars["ID"];
 };
 
 export type QueryTermArgs = {
   maturity: Scalars["String"];
-  yieldSource: Scalars["ID"];
+  multiTerm: Scalars["ID"];
 };
 
 export type QueryTermsArgs = {
-  yieldSource: Scalars["ID"];
-};
-
-export type QueryYieldSourceArgs = {
-  name: Scalars["String"];
-};
-
-export type QueryYieldSourcesArgs = {
-  names: Array<Scalars["String"]>;
+  multiTerm: Scalars["ID"];
 };
 
 export type SwapPreview = {
@@ -179,7 +170,7 @@ export type Term = {
   /** Dollar amount of deposits into the term: union(mint,LP) */
   tvl?: Maybe<Scalars["String"]>;
   /** Possibly fetched from a registry */
-  yieldSource: YieldSource;
+  yieldSource?: Maybe<YieldSource>;
   /** startDate must be between created and maturity */
   yieldToken?: Maybe<YieldToken>;
 };
@@ -201,7 +192,6 @@ export type YieldSource = {
   /** Yearn */
   name: Scalars["ID"];
   pricePerShare?: Maybe<Scalars["String"]>;
-  url?: Maybe<Scalars["String"]>;
 };
 
 export type YieldToken = {
@@ -371,7 +361,7 @@ export type MultiPoolResolvers<
     ContextType
   >;
   yieldSource?: Resolver<
-    ResolversTypes["YieldSource"],
+    Maybe<ResolversTypes["YieldSource"]>,
     ParentType,
     ContextType
   >;
@@ -406,7 +396,7 @@ export type MultiTermResolvers<
     Partial<MultiTermTvlArgs>
   >;
   yieldSource?: Resolver<
-    ResolversTypes["YieldSource"],
+    Maybe<ResolversTypes["YieldSource"]>,
     ParentType,
     ContextType
   >;
@@ -473,7 +463,7 @@ export type PoolResolvers<
   term?: Resolver<Maybe<ResolversTypes["Term"]>, ParentType, ContextType>;
   tvl?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   yieldSource?: Resolver<
-    ResolversTypes["YieldSource"],
+    Maybe<ResolversTypes["YieldSource"]>,
     ParentType,
     ContextType
   >;
@@ -511,43 +501,31 @@ export type QueryResolvers<
     Maybe<ResolversTypes["MultiTerm"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryMultiTermArgs, "yieldSource">
+    Partial<QueryMultiTermArgs>
   >;
   pool?: Resolver<
     Maybe<ResolversTypes["Pool"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryPoolArgs, "maturity" | "yieldSource">
+    RequireFields<QueryPoolArgs, "maturity" | "multiPool">
   >;
   pools?: Resolver<
     Maybe<Array<Maybe<ResolversTypes["Pool"]>>>,
     ParentType,
     ContextType,
-    RequireFields<QueryPoolsArgs, "yieldSource">
+    RequireFields<QueryPoolsArgs, "multiPool">
   >;
   term?: Resolver<
     Maybe<ResolversTypes["Term"]>,
     ParentType,
     ContextType,
-    RequireFields<QueryTermArgs, "maturity" | "yieldSource">
+    RequireFields<QueryTermArgs, "maturity" | "multiTerm">
   >;
   terms?: Resolver<
     Maybe<Array<Maybe<ResolversTypes["Term"]>>>,
     ParentType,
     ContextType,
-    RequireFields<QueryTermsArgs, "yieldSource">
-  >;
-  yieldSource?: Resolver<
-    ResolversTypes["YieldSource"],
-    ParentType,
-    ContextType,
-    RequireFields<QueryYieldSourceArgs, "name">
-  >;
-  yieldSources?: Resolver<
-    Array<Maybe<ResolversTypes["YieldSource"]>>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryYieldSourcesArgs, "names">
+    RequireFields<QueryTermsArgs, "multiTerm">
   >;
 };
 
@@ -592,7 +570,7 @@ export type TermResolvers<
   >;
   tvl?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   yieldSource?: Resolver<
-    ResolversTypes["YieldSource"],
+    Maybe<ResolversTypes["YieldSource"]>,
     ParentType,
     ContextType
   >;
@@ -626,7 +604,6 @@ export type YieldSourceResolvers<
     ParentType,
     ContextType
   >;
-  url?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

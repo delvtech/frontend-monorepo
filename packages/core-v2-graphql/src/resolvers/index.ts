@@ -1,5 +1,5 @@
 import { CoreV2Context } from "src/context";
-import { Resolvers } from "src/generated";
+import { MultiTerm, Resolvers } from "src/generated";
 import { MultiTermModel } from "src/models/MultiTerm";
 import { TermModel } from "src/models/Term";
 import { YieldSourceModel } from "src/models/YieldSource";
@@ -8,24 +8,29 @@ import { PoolModel } from "src/models/Pool";
 
 export const resolvers: Resolvers<CoreV2Context> = {
   Query: {
-    multiTerm: (_, { yieldSource: yieldSourceName }, context) => {
-      const yieldSource = YieldSourceModel.getByName({
-        name: yieldSourceName,
-        context,
-      });
-      const multiTerm = MultiTermModel.getByYieldSource({
-        yieldSource,
-        context,
-      });
+    multiTerm: (_, { address, yieldSource: yieldSourceName }, context) => {
+      let multiTerm: MultiTerm | null = null;
+      if (address) {
+        multiTerm = MultiTermModel.getByAddress({ address, context });
+      } else if (yieldSourceName) {
+        const yieldSource = YieldSourceModel.getByName({
+          name: yieldSourceName,
+          context,
+        });
+        multiTerm = MultiTermModel.getByYieldSource({
+          yieldSource,
+          context,
+        });
+      }
       return multiTerm || null;
     },
 
-    term: (_, { yieldSource: yieldSourceName, maturity }, context) => {
-      const yieldSource = YieldSourceModel.getByName({
-        name: yieldSourceName,
+    term: (_, { multiTerm: multiTermAddress, maturity }, context) => {
+      const multiTerm = MultiTermModel.getByAddress({
+        address: multiTermAddress,
         context,
       });
-      const term = TermModel.getByMaturity({ maturity, yieldSource, context });
+      const term = TermModel.getByMaturity({ maturity, multiTerm, context });
       return term || null;
     },
 
@@ -45,12 +50,12 @@ export const resolvers: Resolvers<CoreV2Context> = {
       return multiPool || null;
     },
 
-    pool: (_, { yieldSource: yieldSourceName, maturity }, context) => {
-      const yieldSource = YieldSourceModel.getByName({
-        name: yieldSourceName,
+    pool: (_, { multiPool: multiPoolAddress, maturity }, context) => {
+      const multiPool = MultiPoolModel.getByAddress({
+        address: multiPoolAddress,
         context,
       });
-      const pool = PoolModel.getByMaturity({ maturity, yieldSource, context });
+      const pool = PoolModel.getByMaturity({ maturity, multiPool, context });
       return pool || null;
     },
 
@@ -58,21 +63,21 @@ export const resolvers: Resolvers<CoreV2Context> = {
 
     // },
 
-    yieldSource: (_, { name }, context) => {
-      const yieldSource = YieldSourceModel.getByName({
-        name,
-        context,
-      });
-      return yieldSource || null;
-    },
+    // yieldSource: (_, { name }, context) => {
+    //   const yieldSource = YieldSourceModel.getByName({
+    //     name,
+    //     context,
+    //   });
+    //   return yieldSource || null;
+    // },
 
-    yieldSources: (_, { names }, context) => {
-      const yieldSources = YieldSourceModel.getByNames({
-        names,
-        context,
-      });
-      return yieldSources.map((yieldSource) => yieldSource || null);
-    },
+    // yieldSources: (_, { names }, context) => {
+    //   const yieldSources = YieldSourceModel.getByNames({
+    //     names,
+    //     context,
+    //   });
+    //   return yieldSources.map((yieldSource) => yieldSource || null);
+    // },
   },
 
   // MultiTerm: {

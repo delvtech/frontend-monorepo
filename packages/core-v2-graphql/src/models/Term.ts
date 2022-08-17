@@ -1,37 +1,26 @@
 import { CoreV2Context } from "src/context";
-import { Term, YieldSource } from "src/generated";
-import { MultiTermModel } from "./MultiTerm";
+import { MultiTerm, Term } from "src/generated";
 
-interface GetByYieldSourceOptions {
+export const TermModel = {
+  getByMaturity,
+};
+
+interface GetByMaturityOptions {
   maturity: string;
-  yieldSource: YieldSource;
+  multiTerm: MultiTerm;
   context: CoreV2Context;
 }
 
 function getByMaturity({
   maturity,
-  yieldSource,
+  multiTerm,
   context,
-}: GetByYieldSourceOptions): Term | undefined {
-  const multiTerm = MultiTermModel.getByYieldSource({
-    yieldSource,
-    context,
-  });
-
-  if (!multiTerm) {
-    return undefined;
-  }
-
-  // TODO: look up term by yield source name and maturity
+}: GetByMaturityOptions): Term | undefined {
+  // TODO: look up term by multiterm and maturity
   return {
     id: "1",
     multiTerm,
     name: "Term 1",
     maturity,
-    yieldSource,
   };
 }
-
-export const TermModel = {
-  getByMaturity,
-};

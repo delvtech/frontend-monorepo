@@ -18,7 +18,7 @@ type MultiTerm {
   "general lookup across terms for arbitrary helper functions, to be expanded"
   address: ID!
   "Possibly fetched from a registry"
-  yieldSource: YieldSource!
+  yieldSource: YieldSource
   "The underlying token, sometimes referred to as base asset"
   baseAsset: Token
   "pretty sure these are useful"
@@ -38,7 +38,7 @@ type Term {
   "Timestamp in milliseconds since unix epoch"
   maturity: String!
   "Possibly fetched from a registry"
-  yieldSource: YieldSource!
+  yieldSource: YieldSource
   baseAsset: Token
   principalToken: PrincipalToken
   "startDate must be between created and maturity"
@@ -81,7 +81,7 @@ type Token {
 type MultiPool {
   address: ID!
   "Possibly fetched from a registry"
-  yieldSource: YieldSource!
+  yieldSource: YieldSource
   pool(maturity: String!): Pool
   pools: [Pool]
 }
@@ -90,7 +90,7 @@ type Pool {
   id: ID!
   multiPool: MultiPool!
   maturity: String!
-  yieldSource: YieldSource!
+  yieldSource: YieldSource
   # USDC
   baseAsset: Token
   baseAssetReserves: String

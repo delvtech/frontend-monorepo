@@ -1,6 +1,11 @@
 import { CoreV2Context } from "src/context";
 import { YieldSource } from "src/generated";
 
+export const YieldSourceModel = {
+  getByName,
+  getByNames,
+};
+
 interface GetByNameOptions {
   name: string;
   context: CoreV2Context;
@@ -29,8 +34,3 @@ function getByNames({
     };
   });
 }
-
-export const YieldSourceModel = {
-  getByName,
-  getByNames,
-};

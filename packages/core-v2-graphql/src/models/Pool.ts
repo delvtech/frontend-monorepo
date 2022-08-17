@@ -1,36 +1,25 @@
 import { CoreV2Context } from "src/context";
-import { Pool, YieldSource } from "src/generated";
-import { MultiPoolModel } from "./MultiPool";
+import { MultiPool, Pool } from "src/generated";
 
-interface GetByYieldSourceOptions {
+export const PoolModel = {
+  getByMaturity,
+};
+
+interface GetByMaturityOptions {
   maturity: string;
-  yieldSource: YieldSource;
+  multiPool: MultiPool;
   context: CoreV2Context;
 }
 
 function getByMaturity({
   maturity,
-  yieldSource,
+  multiPool,
   context,
-}: GetByYieldSourceOptions): Pool | undefined {
-  const multiPool = MultiPoolModel.getByYieldSource({
-    yieldSource,
-    context,
-  });
-
-  if (!multiPool) {
-    return undefined;
-  }
-
+}: GetByMaturityOptions): Pool | undefined {
   // TODO: look up pool by yield source name and maturity
   return {
     id: "1",
     multiPool,
     maturity,
-    yieldSource,
   };
 }
-
-export const PoolModel = {
-  getByMaturity,
-};
