@@ -1,5 +1,5 @@
 import { Term } from "@elementfi/core-v2-typechain";
-import { BigNumber, BigNumberish, Signer } from "ethers";
+import { BigNumberish } from "ethers";
 import { validateAddresses } from "@elementfi/base";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 

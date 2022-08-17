@@ -97,7 +97,7 @@ async function main() {
   await createTerm(user, wethTerm, start, expiry180, user.address, 15_000);
 
   // Create pools for every term
-  const fee = 20;
+  const fee = 0;
 
   const usdcPool = await deployMockPool(
     deployer,
@@ -141,30 +141,46 @@ async function main() {
   // register pool for every 90 / 180 day term
   await usdcPool
     .connect(user)
-    .registerPoolId(expiry90, 100_000, 1000, user.address, 0, 0);
+    .registerPoolId(expiry90, 100_000, 10000, user.address, 0, 0);
   await usdcPool
     .connect(user)
-    .registerPoolId(expiry180, 100_000, 1000, user.address, 0, 0);
+    .registerPoolId(expiry180, 100_000, 10000, user.address, 0, 0);
   await daiPool
     .connect(user)
-    .registerPoolId(expiry90, 100_000, 1000, user.address, 0, 0);
+    .registerPoolId(expiry90, 100_000, 10000, user.address, 0, 0);
   await daiPool
     .connect(user)
-    .registerPoolId(expiry180, 100_000, 1000, user.address, 0, 0);
+    .registerPoolId(expiry180, 100_000, 10000, user.address, 0, 0);
   await wethPool
     .connect(user)
-    .registerPoolId(expiry90, 5_000, 1000, user.address, 0, 0);
+    .registerPoolId(expiry90, 5_000, 10000, user.address, 0, 0);
   await wethPool
     .connect(user)
-    .registerPoolId(expiry180, 5_000, 1000, user.address, 0, 0);
+    .registerPoolId(expiry180, 5_000, 10000, user.address, 0, 0);
+
+  await usdcTerm.connect(user).setApprovalForAll(usdcPool.address, true);
+  await daiTerm.connect(user).setApprovalForAll(daiPool.address, true);
+  await wethTerm.connect(user).setApprovalForAll(wethPool.address, true);
 
   // intialize each pool with liquidity
-  // await usdcPool.tradeBonds(expiry90, 50_000, 0, user.address, false);
-  // await usdcPool.tradeBonds(expiry180, 50_000, 0, user.address, false);
-  // await daiPool.tradeBonds(expiry90, 50_000, 0, user.address, false);
-  // await daiPool.tradeBonds(expiry180, 50_000, 0, user.address, false);
-  // await wethPool.tradeBonds(expiry90, 1_000, 0, user.address, false);
-  // await wethPool.tradeBonds(expiry180, 1_000, 0, user.address, false);
+  await usdcPool
+    .connect(user)
+    .tradeBonds(expiry90, 50_000, 0, user.address, false);
+  await usdcPool
+    .connect(user)
+    .tradeBonds(expiry180, 50_000, 0, user.address, false);
+  await daiPool
+    .connect(user)
+    .tradeBonds(expiry90, 50_000, 0, user.address, false);
+  await daiPool
+    .connect(user)
+    .tradeBonds(expiry180, 50_000, 0, user.address, false);
+  await wethPool
+    .connect(user)
+    .tradeBonds(expiry90, 1_000, 0, user.address, false);
+  await wethPool
+    .connect(user)
+    .tradeBonds(expiry180, 1_000, 0, user.address, false);
 }
 
 main().catch((error) => {
