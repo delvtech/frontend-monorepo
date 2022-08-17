@@ -44,7 +44,7 @@
     "copy-dist-files": "sh scripts/copy-files-to-dist.sh",
     "build": "sh scripts/build-parcel.sh",
     "prepublish": "npm run build",
-    "prepare": "husky install",
+    "prepare": "cd ../ && husky install",
     "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
     "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
     "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
