@@ -9,6 +9,7 @@ import { createTerm } from "src/helpers/createTerm";
 import { getCurrentBlockTimestamp } from "src/utils";
 import { ONE_DAY_IN_SECONDS, ONE_MINUTE_IN_SECONDS } from "@elementfi/base";
 import { deployMockPermitToken } from "src/deploy/mocks/deployMockPermitToken";
+import { deployMockPool } from "src/deploy/mocks/deployMockPool";
 
 // Script to deploy a mock version of the core-v2 protocol
 // Uses mock contracts from the @elementfi/protocol-v2 repo
@@ -16,8 +17,8 @@ async function main() {
   // Get signers
   const signers = await ethers.getSigners();
 
-  // [ signer 1 for deploying | signer 2 for mock governance ]
-  const [deployer, governance] = signers;
+  // [ signer 1 for deploying | signer 2 for mock governance | signer 3 for mock user]
+  const [deployer, governance, user] = signers;
 
   // Deploy Forwarder Factory
   const forwarderFactory = await deployForwarderFactory(deployer);
@@ -68,15 +69,19 @@ async function main() {
   );
 
   // Mint tokens to deployer EOA and give term contract max allowance
-  usdc.connect(deployer).mint(deployer.address, 1_000_000);
-  usdc.approve(usdcTerm.address, ethers.constants.MaxUint256);
+  await usdc.mint(user.address, 1_000_000);
+  await usdc
+    .connect(user)
+    .approve(usdcTerm.address, ethers.constants.MaxUint256);
 
-  dai.connect(deployer).mint(deployer.address, 1_000_000);
-  dai.approve(daiTerm.address, ethers.constants.MaxUint256);
+  await dai.mint(user.address, 1_000_000);
+  await dai.connect(user).approve(daiTerm.address, ethers.constants.MaxUint256);
 
   // TODO @cashd: use permit here
-  weth.connect(deployer).mint(deployer.address, 100_000);
-  weth.approve(wethTerm.address, ethers.constants.MaxUint256);
+  await weth.mint(user.address, 100_000);
+  await weth
+    .connect(user)
+    .approve(wethTerm.address, ethers.constants.MaxUint256);
 
   // Create 90 and 180 day terms
   const currentTimestamp = await getCurrentBlockTimestamp(ethers.provider);
@@ -84,61 +89,82 @@ async function main() {
   const expiry90 = currentTimestamp + ONE_DAY_IN_SECONDS * 90;
   const expiry180 = currentTimestamp + ONE_DAY_IN_SECONDS * 180;
 
-  await createTerm(
-    deployer,
-    usdcTerm,
-    start,
-    expiry90,
-    deployer.address,
-    200_000,
-  );
-
-  await createTerm(
-    deployer,
-    usdcTerm,
-    start,
-    expiry180,
-    deployer.address,
-    200_000,
-  );
-
-  await createTerm(
-    deployer,
-    daiTerm,
-    start,
-    expiry90,
-    deployer.address,
-    200_000,
-  );
-
-  await createTerm(
-    deployer,
-    daiTerm,
-    start,
-    expiry180,
-    deployer.address,
-    200_000,
-  );
-
-  await createTerm(
-    deployer,
-    wethTerm,
-    start,
-    expiry90,
-    deployer.address,
-    15_000,
-  );
-
-  await createTerm(
-    deployer,
-    wethTerm,
-    start,
-    expiry180,
-    deployer.address,
-    15_000,
-  );
+  await createTerm(user, usdcTerm, start, expiry90, user.address, 200_000);
+  await createTerm(user, usdcTerm, start, expiry180, user.address, 200_000);
+  await createTerm(user, daiTerm, start, expiry90, user.address, 200_000);
+  await createTerm(user, daiTerm, start, expiry180, user.address, 200_000);
+  await createTerm(user, wethTerm, start, expiry90, user.address, 15_000);
+  await createTerm(user, wethTerm, start, expiry180, user.address, 15_000);
 
   // Create pools for every term
+  const fee = 20;
+
+  const usdcPool = await deployMockPool(
+    deployer,
+    usdcTerm,
+    usdc,
+    fee,
+    linkHash,
+    governance,
+    forwarderFactory,
+  );
+
+  const daiPool = await deployMockPool(
+    deployer,
+    daiTerm,
+    dai,
+    fee,
+    linkHash,
+    governance,
+    forwarderFactory,
+  );
+
+  const wethPool = await deployMockPool(
+    deployer,
+    wethTerm,
+    weth,
+    fee,
+    linkHash,
+    governance,
+    forwarderFactory,
+  );
+
+  // give allowance from user to pool
+  await usdc
+    .connect(user)
+    .approve(usdcPool.address, ethers.constants.MaxUint256);
+  await dai.connect(user).approve(daiPool.address, ethers.constants.MaxUint256);
+  await weth
+    .connect(user)
+    .approve(wethPool.address, ethers.constants.MaxUint256);
+
+  // register pool for every 90 / 180 day term
+  await usdcPool
+    .connect(user)
+    .registerPoolId(expiry90, 100_000, 1000, user.address, 0, 0);
+  await usdcPool
+    .connect(user)
+    .registerPoolId(expiry180, 100_000, 1000, user.address, 0, 0);
+  await daiPool
+    .connect(user)
+    .registerPoolId(expiry90, 100_000, 1000, user.address, 0, 0);
+  await daiPool
+    .connect(user)
+    .registerPoolId(expiry180, 100_000, 1000, user.address, 0, 0);
+  await wethPool
+    .connect(user)
+    .registerPoolId(expiry90, 5_000, 1000, user.address, 0, 0);
+  await wethPool
+    .connect(user)
+    .registerPoolId(expiry180, 5_000, 1000, user.address, 0, 0);
+
+  // intialize each pool with liquidity
+  // await usdcPool.tradeBonds(expiry90, 50_000, 0, user.address, false);
+  // await usdcPool.tradeBonds(expiry180, 50_000, 0, user.address, false);
+  // await daiPool.tradeBonds(expiry90, 50_000, 0, user.address, false);
+  // await daiPool.tradeBonds(expiry180, 50_000, 0, user.address, false);
+  // await wethPool.tradeBonds(expiry90, 1_000, 0, user.address, false);
+  // await wethPool.tradeBonds(expiry180, 1_000, 0, user.address, false);
 }
 
 main().catch((error) => {
