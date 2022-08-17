@@ -51,7 +51,7 @@ export const resolvers: Resolvers<CouncilContext> = {
       return VoterModel.getByAddress({ address });
     },
     voters: async (_, { addresses, search }, context) => {
-      let voters: (Voter | undefined | null)[] = [];
+      let voters: (Voter | undefined)[] = [];
 
       if (addresses) {
         voters = await VoterModel.getByAddresses({ addresses });
@@ -65,7 +65,7 @@ export const resolvers: Resolvers<CouncilContext> = {
         voters = await Promise.all(
           voters.map(async (voter) => {
             if (!voter) {
-              return null;
+              return;
             }
 
             candidates.push(voter.address);

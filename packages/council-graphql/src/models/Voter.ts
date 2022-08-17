@@ -89,7 +89,7 @@ export const VoterModel: VoterModel = {
 
     return this.getByAddresses({ addresses: Array.from(addresses) });
   },
-  async getEnsName({ voter, context }) {
+  getEnsName({ voter, context }) {
     return cached({
       cache,
       cacheKey: getCacheKey("getEnsName", [voter.address]),
