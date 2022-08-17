@@ -43,7 +43,7 @@
     "merkletreejs": "^0.2.31",
     "prettier": "2.6.2",
     "react": "^17.0.2",
-    "react-query": "^3.39.1",
+    "react-query": "^3.39.2",
     "react-use": "^17.3.2",
     "ts-money": "^0.4.7"
   },
