@@ -7,7 +7,7 @@
     "start": "npx hardhat node",
     "test": "npx hardhat test",
     "compile": "npx hardhat compile",
-    "deploy-local": "npx hardhat run --network localhost scripts/deploy.ts",
+    "mock": "npx hardhat run --network localhost scripts/deployMockProtocol.ts",
     "watch": "npx hardhat run --network localhost scripts/watch.ts",
     "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
     "lint": "eslint '**/*.{js,jsx,ts,tsx,json,md}'",

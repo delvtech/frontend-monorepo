@@ -1,5 +1,5 @@
 import { Term } from "@elementfi/core-v2-typechain";
-import { BigNumber, Signer } from "ethers";
+import { BigNumber, BigNumberish, Signer } from "ethers";
 import { validateAddresses } from "@elementfi/base";
 
 // Creates new term within existing term contract
@@ -9,7 +9,7 @@ export async function createTerm(
   start: number, // unix timestamp seconds
   expiry: number, // unix timestamp seconds
   destination: string,
-  underlyingAmount: BigNumber,
+  underlyingAmount: BigNumberish,
 ): Promise<void> {
   validateAddresses([destination]);
   const assetIds: number[] = [];
