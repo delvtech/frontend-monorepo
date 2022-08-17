@@ -7,7 +7,6 @@ import {
 } from "src/deploy";
 import { createTerm } from "src/helpers/createTerm";
 import { getCurrentBlockTimestamp } from "src/utils";
-import Logger from "utils/logger";
 import { ONE_DAY_IN_SECONDS, ONE_MINUTE_IN_SECONDS } from "@elementfi/base";
 import { deployMockPermitToken } from "src/deploy/mocks/deployMockPermitToken";
 import { deployMockPool } from "src/deploy/mocks/deployMockPool";
@@ -23,16 +22,11 @@ async function main() {
 
   // Deploy Forwarder Factory
   const forwarderFactory = await deployForwarderFactory(deployer);
-  Logger.successfulDeploy("Forwader factory", forwarderFactory);
 
   // Deploy mock tokens
   const usdc = await deployMockToken(deployer, "USDC", "USDC", 6);
   const dai = await deployMockToken(deployer, "DAI", "DAI", 6);
   const weth = await deployMockPermitToken(deployer, "USDC", "USDC", 6); // only permit token
-
-  Logger.successfulDeploy("USDC Token", usdc);
-  Logger.successfulDeploy("DAI Token", dai);
-  Logger.successfulDeploy("WETH Token", weth);
 
   // ERC20Forwarder contract bytecode hash
   const linkHash = await forwarderFactory.ERC20LINK_HASH();
@@ -44,10 +38,6 @@ async function main() {
   const yvUSDC = await deployMockYearnVault(deployer, usdc.address);
   const yvDAI = await deployMockYearnVault(deployer, dai.address);
   const yvWETH = await deployMockYearnVault(deployer, weth.address);
-
-  Logger.successfulDeploy("USDC Yearn Vault", yvUSDC);
-  Logger.successfulDeploy("DAI Yearn Vault", yvDAI);
-  Logger.successfulDeploy("WETH Yearn Vault", yvWETH);
 
   // Deploy mock yield adapter (term) for each vault token
 
@@ -77,10 +67,6 @@ async function main() {
     forwarderFactory.address,
     weth.address,
   );
-
-  Logger.successfulDeploy("USDC Term", daiTerm);
-  Logger.successfulDeploy("DAI Term", daiTerm);
-  Logger.successfulDeploy("WETH Term", wethTerm);
 
   // Mint tokens to deployer EOA and give term contract max allowance
   await usdc.mint(user.address, 1_000_000);
@@ -142,10 +128,6 @@ async function main() {
     governance,
     forwarderFactory,
   );
-
-  Logger.successfulDeploy("USDC Pool", daiPool);
-  Logger.successfulDeploy("DAI Pool", daiPool);
-  Logger.successfulDeploy("WETH Pool", wethPool);
 
   // give allowance from user to pool
   await usdc
