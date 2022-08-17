@@ -1,6 +1,6 @@
 import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
 // TODO Use better type definition for interacting stablePool contract
-import { CRVLUSD } from "@elementfi/core-typechain/dist/libraries";
+import { CRVLUSD } from "@elementfi/core-typechain/dist/precompiled/CRVLUSD";
 
 import { formatUnits } from "ethers/lib/utils";
 import { Currencies, Currency, Money } from "ts-money";
