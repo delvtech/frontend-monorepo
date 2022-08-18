@@ -15,6 +15,8 @@ function getByName({ name, context }: GetByNameOptions): YieldSource {
   // TODO: look up yield source by name (possibly from registry)
   return {
     name,
+    protocol: "yearn",
+    address: "0x0000000000000000000000000",
   };
 }
 
@@ -31,6 +33,8 @@ function getByNames({
   return names.map((name) => {
     return {
       name,
+      protocol: "yearn",
+      address: '"0xd1eda2c4213d9c63a6f48ee5fdb23b7991ad90a9"',
     };
   });
 }
