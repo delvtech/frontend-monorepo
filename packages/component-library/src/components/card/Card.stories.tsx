@@ -4,6 +4,13 @@ import { Card as CardComponent } from "./Card";
 export default {
   title: "Card",
   component: CardComponent,
+  argTypes: {
+    children: {
+      table: {
+        disable: true,
+      },
+    },
+  },
 } as ComponentMeta<typeof CardComponent>;
 
 const Template: ComponentStory<typeof CardComponent> = (args) => (

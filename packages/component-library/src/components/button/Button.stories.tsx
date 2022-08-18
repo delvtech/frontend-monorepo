@@ -10,6 +10,16 @@ export default {
         disable: true,
       },
     },
+    children: {
+      table: {
+        disable: true,
+      },
+    },
+    onClick: {
+      table: {
+        disable: true,
+      },
+    },
   },
 } as ComponentMeta<typeof Button>;
 

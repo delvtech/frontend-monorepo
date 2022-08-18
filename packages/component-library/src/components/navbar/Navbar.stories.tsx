@@ -3,7 +3,14 @@ import { Navbar as NavbarComponent } from "./Navbar";
 
 export default {
   title: "Navbar",
-  compoennt: NavbarComponent,
+  component: NavbarComponent,
+  argTypes: {
+    children: {
+      table: {
+        disable: true,
+      },
+    },
+  },
 } as ComponentMeta<typeof NavbarComponent>;
 
 const Template: ComponentStory<typeof NavbarComponent> = (args) => (
