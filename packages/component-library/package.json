@@ -30,7 +30,7 @@
   ],
   "scripts": {
     "start:storybook": "start-storybook -p 9001",
-    "build:storybook": "build-storybook",
+    "build:storybook": "build-storybook --docs",
     "prepare": "husky install",
     "build:tailwind": "npx tailwindcss build -i src/global.css -o src/tailwind.output.css",
     "lint:w": "eslint --fix '**/*.{js,jsx,ts,tsx,json,md}'",
