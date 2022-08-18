@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root,
-[data-theme] {
-  background-color: unset;
+/* This was interferring with how Storybook renders the background color */
+@layer base {
+  :root,
+  [data-theme] {
+    background-color: unset;
+  }
 }
