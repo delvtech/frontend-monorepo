@@ -6,6 +6,7 @@ import "./Term.sol";
 import "./interfaces/IERC4626.sol";
 import "./interfaces/IERC20.sol";
 import "./MultiToken.sol";
+import "./libraries/Errors.sol";
 
 /// @title Term contract instance for the EIP-4626 Tokenized Vault Standard
 
@@ -396,7 +397,8 @@ contract ERC4626Term is Term {
         lockedShares = vault.previewWithdraw(unlockedSharesAsUnderlying);
 
         /// Check if enough `vaultShares` in the `vaultShareReserve`
-        require(lockedShares <= vaultShareReserve, "not enough vault shares");
+        if (lockedShares > vaultShareReserve)
+            revert ElementError.VaultShareReserveTooLow();
 
         /// Deduct `lockedShares` from the `vaultShareReserve`
         _setReserves(underlyingReserve, vaultShareReserve - lockedShares);

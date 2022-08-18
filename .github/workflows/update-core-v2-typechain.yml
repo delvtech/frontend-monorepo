@@ -1,0 +1,30 @@
+name: update-core-v2-typechain
+
+on:
+  # Triggers the workflow every day at 6pm ET (22 UTC)
+  # https://crontab.guru/#0_22_*_*_*
+  schedule:
+    - cron: "0 22 * * *"
+
+jobs:
+  update_routes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          persist-credentials: false
+          node-version: "14"
+          cache: yarn
+      - run: npm install -g yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn workspace @elementfi/core-v2-typechain load-contracts
+      - run: yarn workspace @elementfi/core-v2-typechain build
+      - uses: gr2m/create-or-update-pull-request-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: "gh-action-update-core-v2-typechain"
+          title: "Build latest core-v2-typechain from protocol-v2 repo"
+          body: "This is an automated, daily update for parity between protocol-v2 and core-v2-typechain. This PR was created by a GitHub Action."
+          commit-message: "Build latest core-v2-typechain"

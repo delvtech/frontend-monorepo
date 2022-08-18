@@ -4,6 +4,7 @@ pragma solidity ^0.8.15;
 import "./interfaces/IERC20.sol";
 import "./interfaces/IMultiToken.sol";
 import "./interfaces/IForwarderFactory.sol";
+import "./libraries/Errors.sol";
 
 // This ERC20 forwarder forwards calls through an ERC20-compliant interface
 // to move the sub tokens in our multi-token contract. This enables our
@@ -183,9 +184,9 @@ contract ERC20Forwarder is IERC20 {
         bytes32 s
     ) external {
         // Require that the signature is not expired
-        require(block.timestamp <= deadline, "ERC20Permit: expired deadline");
+        if (block.timestamp > deadline) revert ElementError.ExpiredDeadline();
         // Require that the owner is not zero
-        require(owner != address(0), "ERC20: invalid-address-0");
+        if (owner == address(0)) revert ElementError.RestrictedZeroAddress();
 
         bytes32 structHash = keccak256(
             abi.encodePacked(
@@ -206,7 +207,7 @@ contract ERC20Forwarder is IERC20 {
 
         // Check that the signature is valid
         address signer = ecrecover(structHash, v, r, s);
-        require(signer == owner, "ERC20Permit: invalid signature");
+        if (signer != owner) revert ElementError.InvalidSignature();
 
         // Increment the signature nonce
         nonces[owner]++;

@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.15;
 
-import "contracts/libraries/Errors.sol";
 import "contracts/libraries/FixedPointMath.sol";
 
 /// @notice YieldSpace math library.

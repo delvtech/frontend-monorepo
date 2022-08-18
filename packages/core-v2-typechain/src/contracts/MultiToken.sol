@@ -2,6 +2,7 @@
 pragma solidity ^0.8.15;
 
 import "./interfaces/IMultiToken.sol";
+import "./libraries/Errors.sol";
 
 // A lite version of a semi fungible, which removes some methods and so
 // is not technically a 1155 compliant multi-token semi fungible, but almost
@@ -30,9 +31,6 @@ contract MultiToken is IMultiToken {
     // Sub Token Name and Symbol, created by inheriting contracts
     mapping(uint256 => string) internal _name;
     mapping(uint256 => string) internal _symbol;
-
-    // Error triggered when the create2 verification fails
-    error NonLinkerCaller();
 
     // The contract which deployed this one
     address public immutable factory;
@@ -87,7 +85,7 @@ contract MultiToken is IMultiToken {
         // If the caller does not match the address hash, we revert because it is not
         // allowed to access permission-ed methods.
         if (msg.sender != _deriveForwarderAddress(tokenID)) {
-            revert NonLinkerCaller();
+            revert ElementError.InvalidERC20Bridge();
         }
         // Execute the following function
         _;
@@ -309,10 +307,13 @@ contract MultiToken is IMultiToken {
         uint256[] calldata values
     ) external {
         // Checks for inconsistent addresses
-        require(from != address(0), "transfer from the zero address");
-        require(to != address(0), "transfer to the zero address");
+        if (from == address(0) || to == address(0))
+            revert ElementError.RestrictedZeroAddress();
+
         // Check for inconsistent length
-        require(ids.length == values.length, "ids and values length mismatch");
+        if (ids.length != values.length)
+            revert ElementError.BatchInputLengthMismatch();
+
         // Call internal transfer for each asset
         for (uint256 i = 0; i < ids.length; i++) {
             _transferFrom(ids[i], from, to, values[i], msg.sender);
@@ -342,9 +343,9 @@ contract MultiToken is IMultiToken {
         bytes32 s
     ) external {
         // Require that the signature is not expired
-        require(block.timestamp <= deadline, "ERC20Permit: expired deadline");
+        if (block.timestamp > deadline) revert ElementError.ExpiredDeadline();
         // Require that the owner is not zero
-        require(owner != address(0), "ERC20: invalid-address-0");
+        if (owner == address(0)) revert ElementError.RestrictedZeroAddress();
 
         bytes32 structHash = keccak256(
             abi.encodePacked(
@@ -365,7 +366,7 @@ contract MultiToken is IMultiToken {
 
         // Check that the signature is valid
         address signer = ecrecover(structHash, v, r, s);
-        require(signer == owner, "ERC20Permit: invalid signature");
+        if (signer != owner) revert ElementError.InvalidSignature();
 
         // Increment the signature nonce
         nonces[owner]++;

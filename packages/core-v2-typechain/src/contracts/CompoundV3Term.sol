@@ -5,6 +5,7 @@ pragma solidity ^0.8.15;
 import "./Term.sol";
 import "./MultiToken.sol";
 import "./interfaces/ICompoundV3.sol";
+import "./libraries/Errors.sol";
 
 /// Docs: https://c3-docs.compound.finance/
 contract CompoundV3Term is Term {
@@ -411,7 +412,8 @@ contract CompoundV3Term is Term {
             accruedUnderlying;
 
         /// Check if enough `lockedShares`/`yieldShares` are in the `yieldShareReserve`
-        require(lockedShares <= yieldShareReserve_, "not enough vault shares");
+        if (lockedShares > yieldShareReserve_)
+            revert ElementError.VaultShareReserveTooLow();
 
         /// Deduct `lockedShares` from the `yieldShareReserve`
         _setReserves(underlyingReserve_, yieldShareReserve_ - lockedShares);

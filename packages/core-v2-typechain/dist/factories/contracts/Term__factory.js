@@ -8,7 +8,82 @@ var ethers_1 = require("ethers");
 var _abi = [
     {
         inputs: [],
-        name: "NonLinkerCaller",
+        name: "Authorizable_SenderMustBeAuthorized",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "Authorizable_SenderMustBeOwner",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "BatchInputLengthMismatch",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "ExpirationDateMustBeNonZero",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "ExpiredDeadline",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "IncongruentPrincipalAndYieldTokenIds",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "InvalidERC20Bridge",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "InvalidSignature",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "InvalidYieldTokenCreation",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "NotAYieldTokenId",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "RestrictedZeroAddress",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "StartDateMustBeNonZero",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "TermExpired",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "TermNotExpired",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "TermNotInitialized",
+        type: "error",
+    },
+    {
+        inputs: [],
+        name: "UnsortedAssetIds",
         type: "error",
     },
     {

@@ -8,6 +8,7 @@ import "./libraries/Authorizable.sol";
 import "./libraries/TWAROracle.sol";
 import "./interfaces/IMultiToken.sol";
 import "./interfaces/ITerm.sol";
+import "./libraries/Errors.sol";
 
 contract Pool is LP, Authorizable, TWAROracle {
     // Lets us use the fixed point math library as calls
@@ -93,7 +94,9 @@ contract Pool is LP, Authorizable, TWAROracle {
         Authorizable()
     {
         // Should not be zero.
-        require(_governanceContract != address(0), "todo nice errors");
+        if (_governanceContract == address(0))
+            revert ElementError.RestrictedZeroAddress();
+
         // Set the owner of this contract
         _authorize(_governanceContract);
         setOwner(_governanceContract);
@@ -150,13 +153,15 @@ contract Pool is LP, Authorizable, TWAROracle {
         uint16 maxLength
     ) external returns (uint256 mintedLpTokens) {
         // Expired PTs are not supported.
-        require(poolId > block.timestamp, "todo nice time errors");
+        if (poolId <= block.timestamp) revert ElementError.TermExpired();
         // Should not be already initialized.
-        require(totalSupply[poolId] == uint256(0), "todo nice errors");
+        if (totalSupply[poolId] != uint256(0))
+            revert ElementError.PoolInitialized();
         // Make sure the timestretch is non-zero.
-        require(timeStretch > uint32(0), "todo nice errors");
+        if (timeStretch == uint32(0))
+            revert ElementError.TimeStretchMustBeNonZero();
         // Make sure the provided bondsIn and amount are non-zero values.
-        require(underlyingIn > 0, "todo nice errors");
+        if (underlyingIn == 0) revert ElementError.UnderlyingInMustBeNonZero();
         // Transfer tokens from the user
         token.transferFrom(msg.sender, address(this), underlyingIn);
         // Make a deposit to the unlocked shares in the term for the user
@@ -200,16 +205,15 @@ contract Pool is LP, Authorizable, TWAROracle {
         bool isBuy
     ) external returns (uint256 outputAmount) {
         // No trade after expiration
-        require(poolId > block.timestamp, "Todo nice time error");
+        if (poolId <= block.timestamp) revert ElementError.TermExpired();
 
         // Read the cached reserves for the unlocked shares and bonds ,i.e. PT.
         Reserve memory cachedReserve = reserves[poolId];
         // Should check for the support with the pool.
-        require(
-            cachedReserve.shares != uint128(0) ||
-                cachedReserve.bonds != uint128(0),
-            "todo nice init error"
-        );
+        if (
+            cachedReserve.shares == uint128(0) &&
+            cachedReserve.bonds == uint128(0)
+        ) revert ElementError.PoolNotInitialized();
 
         uint256 newShareReserve;
         uint256 newBondReserve;
@@ -231,7 +235,8 @@ contract Pool is LP, Authorizable, TWAROracle {
         }
 
         // Minimum amount check.
-        require(outputAmount >= minAmountOut, "todo nice errors");
+        if (outputAmount < minAmountOut)
+            revert ElementError.ExceededSlippageLimit();
 
         // Updated reserves.
         _update(poolId, uint128(newBondReserve), uint128(newShareReserve));
@@ -253,15 +258,15 @@ contract Pool is LP, Authorizable, TWAROracle {
         uint256 maxInput
     ) external {
         // No trade after expiration
-        require(poolId > block.timestamp, "Todo nice time error");
+        if (poolId <= block.timestamp) revert ElementError.TermExpired();
+
         // Load reserves
         Reserve memory cachedReserve = reserves[poolId];
         // Should check for the support with the pool.
-        require(
-            cachedReserve.shares != uint128(0) ||
-                cachedReserve.bonds != uint128(0),
-            "todo nice init error"
-        );
+        if (
+            cachedReserve.shares == uint128(0) &&
+            cachedReserve.bonds == uint128(0)
+        ) revert ElementError.PoolNotInitialized();
 
         // Load the current price per share
         uint256 pricePerShare = term.unlockedSharePrice();
@@ -280,7 +285,9 @@ contract Pool is LP, Authorizable, TWAROracle {
         // they must pay the differential
         uint256 underlyingOwed = amount - saleUnderlying;
         // We check this is not more than the user slippage bound
-        require(underlyingOwed <= maxInput, "todo: nice slippage error");
+        if (underlyingOwed > maxInput)
+            revert ElementError.ExceededSlippageLimit();
+
         // We transfer this amount from the user
         token.transferFrom(msg.sender, address(this), underlyingOwed);
 
@@ -303,7 +310,7 @@ contract Pool is LP, Authorizable, TWAROracle {
         );
         // Make sure that the generated PTs are equal to
         /// TODO: The rounding errors might make this check fail
-        require(pt == amount, "todo nice error");
+        if (pt != amount) revert ElementError.InaccurateUnlockShareTrade();
 
         // Update the oracle
         _updateOracle(poolId, newShareReserve, newBondReserve);

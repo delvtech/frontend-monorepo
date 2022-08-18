@@ -5,6 +5,7 @@ import "./MultiToken.sol";
 import "./interfaces/IERC20.sol";
 import "./interfaces/ITerm.sol";
 import "./interfaces/IYieldAdapter.sol";
+import "./libraries/Errors.sol";
 
 // LP is a multitoken [ie fake 1155] contract which accepts deposits and withdraws
 // from the AMM.
@@ -67,7 +68,7 @@ contract LP is MultiToken {
         uint256 minOutput
     ) external returns (uint256) {
         // No minting after expiration
-        require(poolId > block.timestamp, "Todo nice time error");
+        if (poolId <= block.timestamp) revert ElementError.TermExpired();
         // Transfer from the user
         token.transferFrom(msg.sender, address(this), amount);
         // We deposit into the unlocked position of the term in order to calculate
@@ -90,7 +91,7 @@ contract LP is MultiToken {
             destination
         );
         // Check enough has been made and return that amount
-        require(newLpToken >= minOutput, "Todo nice errors");
+        if (newLpToken < minOutput) revert ElementError.ExceededSlippageLimit();
         return (newLpToken);
     }
 
@@ -109,7 +110,8 @@ contract LP is MultiToken {
         uint256 minLpOut
     ) external returns (uint256) {
         // No minting after expiration
-        require(poolId > block.timestamp, "Todo nice time error");
+        if (poolId <= block.timestamp) revert ElementError.TermExpired();
+
         // Load the pool details
         uint256 loadedShares = uint256(reserves[poolId].shares);
         uint256 loadedBonds = uint256(reserves[poolId].bonds);
@@ -133,7 +135,8 @@ contract LP is MultiToken {
         reserves[poolId].shares = uint128(loadedShares + sharesNeeded);
         reserves[poolId].bonds = uint128(loadedBonds + bondsDeposited);
         // Check enough has been made and return that amount
-        require(lpCreated >= minLpOut, "Todo nice errors");
+        if (lpCreated < minLpOut) revert ElementError.ExceededSlippageLimit();
+
         return (lpCreated);
     }
 
@@ -188,10 +191,10 @@ contract LP is MultiToken {
         uint256 minOutput
     ) external returns (uint256) {
         // Only expired bonds can be rolled over
-        require(
-            fromPoolId < block.timestamp && toPoolId > block.timestamp,
-            "Todo nice time error"
-        );
+        if (fromPoolId >= block.timestamp) revert ElementError.TermNotExpired();
+
+        if (toPoolId < block.timestamp) revert ElementError.TermExpired();
+
         // Burn lp token and free assets. Will also finalize the pool and so return
         // zero for the userBonds if it's after expiry time.
         (uint256 userShares, ) = _withdrawToShares(
@@ -211,7 +214,8 @@ contract LP is MultiToken {
             destination
         );
         // Require that the output matches user expectations
-        require(newLpToken >= minOutput, "Todo nice expectation error");
+        if (newLpToken < minOutput) revert ElementError.ExceededSlippageLimit();
+
         return (newLpToken);
     }
 
@@ -235,12 +239,11 @@ contract LP is MultiToken {
         // Must be initialized
         // NOTE - There's a strong requirement for trades to not be able to move the pool to
         //        have a reserve of exactly 0 in either asset
-        require(
-            currentShares != 0 && currentBonds != 0,
-            "todo nice initialization error"
-        );
+        if (currentShares == 0 || currentBonds == 0)
+            revert ElementError.PoolNotInitialized();
         // No deposits after expiry
-        require(poolId > block.timestamp, "Todo nice time error");
+        if (poolId <= block.timestamp) revert ElementError.TermExpired();
+
         // Calculate total reserve with conversion to underlying units
         // IE: amount_bonds + amountShares*underlyingPerShare
         uint256 totalValue = currentShares * pricePerShare + currentBonds;

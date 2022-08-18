@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.15;
 
+import "./Errors.sol";
+
 /// @notice A Time Weighted Average Rate Oracle to calculate the value over a given time period.
 /// @dev Stores values in customizable circular buffers.  Values are stored as the cumulative sum
 /// where cumSum = value * timeDelta + prevCumSum.  The time delta is the time that has elapsed
@@ -24,16 +26,19 @@ contract TWAROracle {
     ) internal {
         // maxLength of zero indicates a buffer has not been initialized.  Upper value for
         // maxLength checked by the fact that it is uint16.
-        require(maxLength > 1, "min length is 1");
+        if (maxLength <= 1)
+            revert ElementError.TWAROracle_IncorrectBufferLength();
 
         (, , , uint16 _maxLength, ) = readMetadataParsed(bufferId);
-        require(_maxLength == 0, "buffer already initialized");
+        if (_maxLength > 0)
+            revert ElementError.TWAROracle_BufferAlreadyInitialized();
 
         // The minimum time required to pass before an update will be made to a buffer.
         uint32 minTimeStep = uint32(maxTime) / uint32(maxLength);
         // This is more of a sanity check.  Note that minimum time steps that are less time than a
         // block can lead to dangerous side effects.
-        require(minTimeStep >= 1, "minimum time step is 1");
+        if (minTimeStep == 0)
+            revert ElementError.TWAROracle_MinTimeStepMustBeNonZero();
 
         uint256 metadata = _combineMetadata(
             minTimeStep,
@@ -169,7 +174,8 @@ contract TWAROracle {
         (, , , , uint16 bufferLength) = readMetadataParsed(bufferId);
 
         // Because we use the length prop for metadata, we need to specifically check the index.
-        require(index < bufferLength, "index out of bounds");
+        if (index >= bufferLength)
+            revert ElementError.TWAROracle_IndexOutOfBounds();
 
         uint256 value = _buffers[bufferId][index];
         cumulativeSum = uint224(value);
@@ -199,7 +205,8 @@ contract TWAROracle {
         ) = readMetadataParsed(bufferId);
 
         // We can't calculate the value from just one element since there is no previous timeStamp.
-        require(bufferLength > 1, "not enough elements");
+        if (bufferLength <= 1)
+            revert ElementError.TWAROracle_NotEnoughElements();
 
         // If the buffer is full, the oldest index is the next index, otherwise its the first
         // element in the array.
