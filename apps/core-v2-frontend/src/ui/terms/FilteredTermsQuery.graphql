@@ -1,0 +1,28 @@
+query FilteredTerms(
+  $multiTermAddresses: [ID!]
+  $baseAssetAddresses: [ID!]
+  $yieldSourceAddresses: [ID!]
+  $timeRemaining: String
+  $holders: [ID!]
+) {
+  terms(
+    multiTerms: $multiTermAddresses
+    baseAssets: $baseAssetAddresses
+    yieldSources: $yieldSourceAddresses
+    timeRemaining: $timeRemaining
+    holders: $holders
+  ) {
+    id
+    yieldSource {
+      address
+      protocol
+    }
+    baseAsset {
+      symbol
+    }
+    maturity
+    variableAPY
+    fixedAPR
+    tvl
+  }
+}

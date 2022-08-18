@@ -20,6 +20,8 @@ import { chains } from "src/provider";
 import { wagmiClient } from "src/wagmiClient";
 import { Toaster } from "react-hot-toast";
 import { WagmiConfig } from "wagmi";
+import { ApolloProvider } from "@apollo/client";
+import { apolloClient } from "src/apolloClient";
 
 // Wagmi can't be rendered in SSR without exploding the dev-goerli server
 const WagmiConfigWithoutSSR = dynamic(
@@ -37,8 +39,10 @@ function App({ Component, pageProps }: AppProps): ReactElement {
     <QueryClientProvider client={queryClient}>
       <WagmiConfigWithoutSSR client={wagmiClient}>
         <RainbowKitProvider chains={chains} showRecentTransactions>
-          <Toaster />
-          <Component {...pageProps} />
+          <ApolloProvider client={apolloClient}>
+            <Toaster />
+            <Component {...pageProps} />
+          </ApolloProvider>
         </RainbowKitProvider>
       </WagmiConfigWithoutSSR>
       <ReactQueryDevtools />
