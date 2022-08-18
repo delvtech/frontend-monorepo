@@ -1,6 +1,7 @@
 import * as NextImage from "next/image";
 import { addDecorator } from "@storybook/react";
 import { withA11y } from "@storybook/addon-a11y";
+import "../src/global.css";
 import "../src/storybook.css";
 
 // Chromatic storybook testing doesn't work well with the default optimized images from next/image.
