@@ -1,0 +1,7 @@
+/* File is used to overwrite default tailwind css settings for storybook */
+
+/* This was interferring with how Storybook renders the background color */
+:root,
+[data-theme] {
+  background-color: unset;
+}

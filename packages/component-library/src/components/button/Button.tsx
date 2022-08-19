@@ -9,7 +9,6 @@ interface ButtonProps {
     /* only some variants are supported */
     "accent" | "info" | "success" | "warning" | "error"
   >;
-
   size?: "normal" | "small";
   outline?: boolean;
   onClick: () => any;
