@@ -19,6 +19,7 @@
   "eslint.workingDirectories": [
     "packages/council-tokenlist",
     "packages/component-library",
+    "packages/core-v2-graphql",
     "packages/base"
   ]
 }

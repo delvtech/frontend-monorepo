@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-08-17T01:38:37-05:00
+// Generated on 2022-08-18T14:51:36-07:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -29,6 +29,13 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+};
+
+export type BuySwapPreview = {
+  __typename?: "BuySwapPreview";
+  baseAssetAmountIn: Scalars["String"];
+  principalTokenAmountOut: Scalars["String"];
+  slippage?: Maybe<Scalars["Int"]>;
 };
 
 export type MultiPool = {
@@ -51,10 +58,10 @@ export type MultiTerm = {
   /** The underlying token, sometimes referred to as base asset */
   baseAsset?: Maybe<Token>;
   perDayVolume?: Maybe<Scalars["String"]>;
-  /** pretty sure these are useful */
   terms?: Maybe<Array<Maybe<Term>>>;
   /** scratch space: are these useful? */
   totalVolume?: Maybe<Scalars["String"]>;
+  /** pretty sure this is useful */
   tvl?: Maybe<Scalars["String"]>;
   /** Possibly fetched from a registry */
   yieldSource?: Maybe<YieldSource>;
@@ -69,17 +76,16 @@ export type Pool = {
   __typename?: "Pool";
   baseAsset?: Maybe<Token>;
   baseAssetReserves?: Maybe<Scalars["String"]>;
-  buyPreview?: Maybe<SwapPreview>;
+  buyPreview?: Maybe<BuySwapPreview>;
   id: Scalars["ID"];
   lpToken?: Maybe<Token>;
   maturity: Scalars["String"];
   multiPool: MultiPool;
-  /** price in terms of base asset or fiat */
   price?: Maybe<Scalars["String"]>;
   priceFiat?: Maybe<Scalars["String"]>;
   principalToken?: Maybe<PrincipalToken>;
   principalTokenReserves?: Maybe<Scalars["String"]>;
-  sellPreview?: Maybe<SwapPreview>;
+  sellPreview?: Maybe<SellSwapPreview>;
   shareAsset?: Maybe<Token>;
   shareAssetReserves?: Maybe<Scalars["String"]>;
   term?: Maybe<Term>;
@@ -88,11 +94,11 @@ export type Pool = {
 };
 
 export type PoolBuyPreviewArgs = {
-  baseAssetIn: Scalars["String"];
+  baseAssetAmountIn: Scalars["String"];
 };
 
 export type PoolSellPreviewArgs = {
-  principalTokenIn: Scalars["String"];
+  principalAmountTokenIn: Scalars["String"];
 };
 
 export type PrincipalToken = {
@@ -102,8 +108,7 @@ export type PrincipalToken = {
   baseAsset?: Maybe<Token>;
   maturity: Scalars["String"];
   /** price in terms of base asset or fiat */
-  price?: Maybe<Scalars["String"]>;
-  priceFiat?: Maybe<Scalars["String"]>;
+  pool?: Maybe<Pool>;
   tokenId: Scalars["ID"];
 };
 
@@ -112,6 +117,7 @@ export type Query = {
   multiPool?: Maybe<MultiPool>;
   /** Look up the multi term contract for a given yield source, eg: Yearn USDC Vault */
   multiTerm?: Maybe<MultiTerm>;
+  multiTerms: Array<Maybe<MultiTerm>>;
   /** Look up the pool for a given maturity date */
   pool?: Maybe<Pool>;
   pools?: Maybe<Array<Maybe<Pool>>>;
@@ -126,6 +132,12 @@ export type QueryMultiPoolArgs = {
 export type QueryMultiTermArgs = {
   address?: InputMaybe<Scalars["ID"]>;
   yieldSource?: InputMaybe<Scalars["ID"]>;
+};
+
+export type QueryMultiTermsArgs = {
+  addresses?: InputMaybe<Array<Scalars["ID"]>>;
+  baseAsset?: InputMaybe<Array<Scalars["ID"]>>;
+  yieldSources?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export type QueryPoolArgs = {
@@ -143,13 +155,17 @@ export type QueryTermArgs = {
 };
 
 export type QueryTermsArgs = {
-  multiTerm: Scalars["ID"];
+  baseAssets?: InputMaybe<Array<Scalars["ID"]>>;
+  holders?: InputMaybe<Array<Scalars["ID"]>>;
+  multiTerms?: InputMaybe<Array<Scalars["ID"]>>;
+  timeRemaining?: InputMaybe<Scalars["String"]>;
+  yieldSources?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
-export type SwapPreview = {
-  __typename?: "SwapPreview";
-  baseAsset: Scalars["String"];
-  principalTokenIn: Scalars["String"];
+export type SellSwapPreview = {
+  __typename?: "SellSwapPreview";
+  baseAssetAmountOut: Scalars["String"];
+  principalTokenAmountIn: Scalars["String"];
   slippage?: Maybe<Scalars["Int"]>;
 };
 
@@ -160,6 +176,7 @@ export type Term = {
   createdAtBlock?: Maybe<Scalars["Int"]>;
   /** Timestamp in milliseconds since unix epoch */
   createdTimestamp?: Maybe<Scalars["Int"]>;
+  fixedAPR?: Maybe<Scalars["Int"]>;
   id: Scalars["ID"];
   /** Timestamp in milliseconds since unix epoch */
   maturity: Scalars["String"];
@@ -169,10 +186,15 @@ export type Term = {
   principalToken?: Maybe<PrincipalToken>;
   /** Dollar amount of deposits into the term: union(mint,LP) */
   tvl?: Maybe<Scalars["String"]>;
+  variableAPY?: Maybe<Scalars["Int"]>;
   /** Possibly fetched from a registry */
   yieldSource?: Maybe<YieldSource>;
   /** startDate must be between created and maturity */
   yieldToken?: Maybe<YieldToken>;
+};
+
+export type TermTvlArgs = {
+  atBlock?: InputMaybe<Scalars["Int"]>;
 };
 
 export type TermYieldTokenArgs = {
@@ -189,9 +211,11 @@ export type Token = {
 
 export type YieldSource = {
   __typename?: "YieldSource";
-  /** Yearn */
-  name: Scalars["ID"];
+  address: Scalars["ID"];
+  name: Scalars["String"];
+  /** placeholder for more yield source specific data */
   pricePerShare?: Maybe<Scalars["String"]>;
+  protocol: Scalars["String"];
 };
 
 export type YieldToken = {
@@ -311,6 +335,7 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  BuySwapPreview: ResolverTypeWrapper<BuySwapPreview>;
   ID: ResolverTypeWrapper<Scalars["ID"]>;
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   MultiPool: ResolverTypeWrapper<MultiPool>;
@@ -318,8 +343,8 @@ export type ResolversTypes = {
   Pool: ResolverTypeWrapper<Pool>;
   PrincipalToken: ResolverTypeWrapper<PrincipalToken>;
   Query: ResolverTypeWrapper<{}>;
+  SellSwapPreview: ResolverTypeWrapper<SellSwapPreview>;
   String: ResolverTypeWrapper<Scalars["String"]>;
-  SwapPreview: ResolverTypeWrapper<SwapPreview>;
   Term: ResolverTypeWrapper<Term>;
   Token: ResolverTypeWrapper<Token>;
   YieldSource: ResolverTypeWrapper<YieldSource>;
@@ -329,6 +354,7 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars["Boolean"];
+  BuySwapPreview: BuySwapPreview;
   ID: Scalars["ID"];
   Int: Scalars["Int"];
   MultiPool: MultiPool;
@@ -336,12 +362,30 @@ export type ResolversParentTypes = {
   Pool: Pool;
   PrincipalToken: PrincipalToken;
   Query: {};
+  SellSwapPreview: SellSwapPreview;
   String: Scalars["String"];
-  SwapPreview: SwapPreview;
   Term: Term;
   Token: Token;
   YieldSource: YieldSource;
   YieldToken: YieldToken;
+};
+
+export type BuySwapPreviewResolvers<
+  ContextType = ResolverContext,
+  ParentType extends ResolversParentTypes["BuySwapPreview"] = ResolversParentTypes["BuySwapPreview"],
+> = {
+  baseAssetAmountIn?: Resolver<
+    ResolversTypes["String"],
+    ParentType,
+    ContextType
+  >;
+  principalTokenAmountOut?: Resolver<
+    ResolversTypes["String"],
+    ParentType,
+    ContextType
+  >;
+  slippage?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type MultiPoolResolvers<
@@ -419,10 +463,10 @@ export type PoolResolvers<
     ContextType
   >;
   buyPreview?: Resolver<
-    Maybe<ResolversTypes["SwapPreview"]>,
+    Maybe<ResolversTypes["BuySwapPreview"]>,
     ParentType,
     ContextType,
-    RequireFields<PoolBuyPreviewArgs, "baseAssetIn">
+    RequireFields<PoolBuyPreviewArgs, "baseAssetAmountIn">
   >;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   lpToken?: Resolver<Maybe<ResolversTypes["Token"]>, ParentType, ContextType>;
@@ -445,10 +489,10 @@ export type PoolResolvers<
     ContextType
   >;
   sellPreview?: Resolver<
-    Maybe<ResolversTypes["SwapPreview"]>,
+    Maybe<ResolversTypes["SellSwapPreview"]>,
     ParentType,
     ContextType,
-    RequireFields<PoolSellPreviewArgs, "principalTokenIn">
+    RequireFields<PoolSellPreviewArgs, "principalAmountTokenIn">
   >;
   shareAsset?: Resolver<
     Maybe<ResolversTypes["Token"]>,
@@ -477,12 +521,7 @@ export type PrincipalTokenResolvers<
   address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   baseAsset?: Resolver<Maybe<ResolversTypes["Token"]>, ParentType, ContextType>;
   maturity?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  price?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  priceFiat?: Resolver<
-    Maybe<ResolversTypes["String"]>,
-    ParentType,
-    ContextType
-  >;
+  pool?: Resolver<Maybe<ResolversTypes["Pool"]>, ParentType, ContextType>;
   tokenId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -502,6 +541,12 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     Partial<QueryMultiTermArgs>
+  >;
+  multiTerms?: Resolver<
+    Array<Maybe<ResolversTypes["MultiTerm"]>>,
+    ParentType,
+    ContextType,
+    Partial<QueryMultiTermsArgs>
   >;
   pool?: Resolver<
     Maybe<ResolversTypes["Pool"]>,
@@ -525,16 +570,20 @@ export type QueryResolvers<
     Maybe<Array<Maybe<ResolversTypes["Term"]>>>,
     ParentType,
     ContextType,
-    RequireFields<QueryTermsArgs, "multiTerm">
+    Partial<QueryTermsArgs>
   >;
 };
 
-export type SwapPreviewResolvers<
+export type SellSwapPreviewResolvers<
   ContextType = ResolverContext,
-  ParentType extends ResolversParentTypes["SwapPreview"] = ResolversParentTypes["SwapPreview"],
+  ParentType extends ResolversParentTypes["SellSwapPreview"] = ResolversParentTypes["SellSwapPreview"],
 > = {
-  baseAsset?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  principalTokenIn?: Resolver<
+  baseAssetAmountOut?: Resolver<
+    ResolversTypes["String"],
+    ParentType,
+    ContextType
+  >;
+  principalTokenAmountIn?: Resolver<
     ResolversTypes["String"],
     ParentType,
     ContextType
@@ -558,6 +607,7 @@ export type TermResolvers<
     ParentType,
     ContextType
   >;
+  fixedAPR?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   maturity?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   multiTerm?: Resolver<ResolversTypes["MultiTerm"], ParentType, ContextType>;
@@ -568,7 +618,13 @@ export type TermResolvers<
     ParentType,
     ContextType
   >;
-  tvl?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  tvl?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType,
+    Partial<TermTvlArgs>
+  >;
+  variableAPY?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   yieldSource?: Resolver<
     Maybe<ResolversTypes["YieldSource"]>,
     ParentType,
@@ -598,12 +654,14 @@ export type YieldSourceResolvers<
   ContextType = ResolverContext,
   ParentType extends ResolversParentTypes["YieldSource"] = ResolversParentTypes["YieldSource"],
 > = {
-  name?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   pricePerShare?: Resolver<
     Maybe<ResolversTypes["String"]>,
     ParentType,
     ContextType
   >;
+  protocol?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -624,12 +682,13 @@ export type YieldTokenResolvers<
 };
 
 export type Resolvers<ContextType = ResolverContext> = {
+  BuySwapPreview?: BuySwapPreviewResolvers<ContextType>;
   MultiPool?: MultiPoolResolvers<ContextType>;
   MultiTerm?: MultiTermResolvers<ContextType>;
   Pool?: PoolResolvers<ContextType>;
   PrincipalToken?: PrincipalTokenResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  SwapPreview?: SwapPreviewResolvers<ContextType>;
+  SellSwapPreview?: SellSwapPreviewResolvers<ContextType>;
   Term?: TermResolvers<ContextType>;
   Token?: TokenResolvers<ContextType>;
   YieldSource?: YieldSourceResolvers<ContextType>;

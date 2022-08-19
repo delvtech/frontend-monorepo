@@ -1,8 +1,23 @@
 type Query {
   "Look up the multi term contract for a given yield source, eg: Yearn USDC Vault"
   multiTerm(address: ID, yieldSource: ID): MultiTerm
+  multiTerms(
+    # The terms to search over, results will strictly be matches from this list
+    addresses: [ID!]
+    # Filter by yield sources
+    yieldSources: [ID!]
+    # Filter by base assets
+    baseAsset: [ID!]
+  ): [MultiTerm]!
+
   term(multiTerm: ID!, maturity: String!): Term
-  terms(multiTerm: ID!): [Term]
+  terms(
+    baseAssets: [ID!]
+    multiTerms: [ID!]
+    yieldSources: [ID!]
+    timeRemaining: String
+    holders: [ID!]
+  ): [Term]
 
   multiPool(yieldSource: ID!): MultiPool
   "Look up the pool for a given maturity date"
@@ -21,8 +36,9 @@ type MultiTerm {
   yieldSource: YieldSource
   "The underlying token, sometimes referred to as base asset"
   baseAsset: Token
-  "pretty sure these are useful"
   terms: [Term]
+
+  "pretty sure this is useful"
   tvl(atBlock: Int): String
 
   "scratch space: are these useful?"
@@ -45,11 +61,16 @@ type Term {
   yieldToken(startDate: String!): YieldToken
   pool: Pool
   "Dollar amount of deposits into the term: union(mint,LP)"
-  tvl: String
+  tvl(atBlock: Int): String
   "Timestamp in milliseconds since unix epoch"
   createdTimestamp: Int
   "Block Int the term was created at"
   createdAtBlock: Int
+
+  # rates live on the term because PTs, YTs, and Pools don't have any accounting
+  # for the yield itself
+  variableAPY: Int
+  fixedAPR: Int
 }
 
 type YieldToken {
@@ -65,8 +86,9 @@ type PrincipalToken {
   tokenId: ID!
   maturity: String!
   "price in terms of base asset or fiat"
-  price: String
-  priceFiat: String
+  pool: Pool
+  # price: String
+  # priceFiat: String
   " the token this principal token will resolve 1 to 1 to."
   baseAsset: Token
 }
@@ -101,25 +123,37 @@ type Pool {
   principalToken: PrincipalToken
   principalTokenReserves: String
   lpToken: Token
-  "price in terms of base asset or fiat"
+  # price in terms of base asset or fiat
   price: String
   priceFiat: String
   term: Term
   tvl: String
-  buyPreview(baseAssetIn: String!): SwapPreview
-  sellPreview(principalTokenIn: String!): SwapPreview
+  buyPreview(baseAssetAmountIn: String!): BuySwapPreview
+  sellPreview(principalAmountTokenIn: String!): SellSwapPreview
 }
 
-type SwapPreview {
-  baseAsset: String!
-  principalTokenIn: String!
+type BuySwapPreview {
+  baseAssetAmountIn: String!
+  principalTokenAmountOut: String!
+  slippage: Int
+}
+type SellSwapPreview {
+  principalTokenAmountIn: String!
+  baseAssetAmountOut: String!
   slippage: Int
 }
 
 # 4626 vault standard interface
 type YieldSource {
-  "Yearn"
-  name: ID!
-  # placeholder for more yield source specific data
+  # eg: vault address
+  address: ID!
+
+  # yearn
+  protocol: String!
+
+  # yearn vault USDC
+  name: String!
+
+  "placeholder for more yield source specific data"
   pricePerShare: String
 }

@@ -1,11 +1,21 @@
+import { Button } from "@elementfi/component-library";
 import React, { ReactElement } from "react";
-import { useAccount, useEnsName } from "wagmi";
 import { t } from "ttag";
-import { Button, Card, CardTitle } from "@elementfi/component-library";
+import { useAccount, useEnsName } from "wagmi";
+
+import { TermCard } from "src/ui/overview/TermCard";
+import { useFilteredTermsQuery } from "src/graphql/generated";
 
 export function OverviewPage(): ReactElement {
   const { address: userAddress } = useAccount();
   const { data: ensName } = useEnsName({ address: userAddress });
+
+  const { data } = useFilteredTermsQuery({
+    variables: {
+      holders: "",
+    },
+  });
+  console.log("data", data);
 
   return (
     <div className="mx-16 flex w-full flex-1 gap-16">
@@ -97,27 +107,3 @@ export function OverviewPage(): ReactElement {
 }
 
 export default OverviewPage;
-
-function TermCard(): ReactElement {
-  return (
-    <Card>
-      <CardTitle
-        title={t`Dai pool 6m`}
-        action={<Button onClick={() => {}}>{t`Deposit`}</Button>}
-      />
-      {/* TODO: Make Stat component */}
-      <div>
-        <strong>{t`Fixed APR`}</strong>
-        <p>{t`6.61% APR`}</p>
-      </div>
-      <div>
-        <strong>{t`Variable APY`}</strong>
-        <p>{t`1.96% APY`}</p>
-      </div>
-      <div>
-        <strong>{t`TVL`}</strong>
-        <p>{t`$909,888`}</p>
-      </div>
-    </Card>
-  );
-}
