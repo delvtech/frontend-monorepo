@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-08-17T14:25:14-07:00
+// Generated on 2022-08-19T15:53:53-07:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -98,6 +98,8 @@ export type QueryVoterArgs = {
 export type QueryVotersArgs = {
   addresses?: InputMaybe<Array<Scalars["ID"]>>;
   search?: InputMaybe<Scalars["String"]>;
+  votingPowerMax?: InputMaybe<Scalars["String"]>;
+  votingPowerMin?: InputMaybe<Scalars["String"]>;
 };
 
 export type QueryVotingContractArgs = {
