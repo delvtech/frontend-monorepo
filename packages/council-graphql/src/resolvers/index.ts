@@ -1,3 +1,4 @@
+import { BigNumber } from "ethers";
 import { filter } from "fuzzaldrin";
 import { CouncilContext } from "src/context";
 import { Resolvers, Voter } from "src/generated";
@@ -50,7 +51,11 @@ export const resolvers: Resolvers<CouncilContext> = {
     voter: (_, { address }) => {
       return VoterModel.getByAddress({ address });
     },
-    voters: async (_, { addresses, search }, context) => {
+    voters: async (
+      _,
+      { addresses, search, votingPowerMin, votingPowerMax },
+      context,
+    ) => {
       let voters: (Voter | undefined)[] = [];
 
       if (addresses) {
@@ -61,7 +66,6 @@ export const resolvers: Resolvers<CouncilContext> = {
 
       if (search) {
         const candidates: string[] = [];
-
         voters = await Promise.all(
           voters.map(async (voter) => {
             if (!voter) {
@@ -90,6 +94,60 @@ export const resolvers: Resolvers<CouncilContext> = {
               matches.includes(voter.ensName || "")
             : false,
         );
+      }
+
+      if (votingPowerMin || votingPowerMax) {
+        voters = await Promise.all(
+          voters.map(async (voter) => {
+            if (!voter) {
+              return;
+            }
+
+            const votingPower = await VotingPowerModel.getByVoter({
+              voter,
+              // TODO: Resolve:
+              // Adding votingPowerMin/Max will now require the need to pass in a vault address?
+              // Maybe set up a type like ...
+              /**
+               *
+               * voter(
+               *    addresses: [ID!]
+               *    search: String
+               *    votingPowerFilter: VotingPowerFilter
+               * )
+               *
+               * type VotingPowerFilter {
+               *    votingPowerMin: String // Way to express having at the very least one (votingPowerMin or votingPowerMax)
+               *    votingPowerMax: String
+               *    vaultAddress: String!
+               * }
+               */
+              votingVaults: [
+                { address: "0x02Bd4A3b1b95b01F2Aa61655415A5d3EAAcaafdD" },
+              ],
+              context,
+            });
+
+            return {
+              ...voter,
+              votingPower,
+            };
+          }),
+        );
+
+        voters = voters.filter((voter) => {
+          if (!voter || !voter.votingPower) {
+            return false;
+          }
+
+          // TODO: Resolve:
+          // decimal accuracy? Conversion to number would potentitally remove decimal places
+          const votingPower = Number(voter.votingPower.value);
+          const minimum = Number(votingPowerMin) || 0;
+          const maximum = Number(votingPowerMax) || Number.MAX_VALUE;
+
+          return minimum < votingPower && maximum > votingPower;
+        });
       }
 
       return voters.map((voter) => voter || null);
