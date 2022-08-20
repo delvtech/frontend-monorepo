@@ -4,7 +4,12 @@ type Query {
   votingVault(address: ID!): VotingVault
   votingVaults(addresses: [ID!]): [VotingVault]
   voter(address: ID!): Voter
-  voters(addresses: [ID!], search: String): [Voter]!
+  voters(
+    addresses: [ID!]
+    search: String
+    votingPowerMin: String
+    votingPowerMax: String
+  ): [Voter]!
 }
 
 type VotingContract {
