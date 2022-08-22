@@ -107,6 +107,8 @@ export type Query = {
     pools?: Maybe<Array<Maybe<Pool>>>;
     term?: Maybe<Term>;
     terms?: Maybe<Array<Maybe<Term>>>;
+    token?: Maybe<Token>;
+    tokens?: Maybe<Token>;
 };
 export type QueryMultiPoolArgs = {
     yieldSource: Scalars['ID'];
@@ -137,6 +139,12 @@ export type QueryTermsArgs = {
     multiTerms?: InputMaybe<Array<Scalars['ID']>>;
     timeRemaining?: InputMaybe<Scalars['String']>;
     yieldSources?: InputMaybe<Array<Scalars['ID']>>;
+};
+export type QueryTokenArgs = {
+    address: Scalars['ID'];
+};
+export type QueryTokensArgs = {
+    addresses?: InputMaybe<Array<Scalars['ID']>>;
 };
 export type SellSwapPreview = {
     __typename?: 'SellSwapPreview';
@@ -318,6 +326,8 @@ export type QueryResolvers<ContextType = ResolverContext, ParentType extends Res
     pools?: Resolver<Maybe<Array<Maybe<ResolversTypes['Pool']>>>, ParentType, ContextType, RequireFields<QueryPoolsArgs, 'multiPool'>>;
     term?: Resolver<Maybe<ResolversTypes['Term']>, ParentType, ContextType, RequireFields<QueryTermArgs, 'maturity' | 'multiTerm'>>;
     terms?: Resolver<Maybe<Array<Maybe<ResolversTypes['Term']>>>, ParentType, ContextType, Partial<QueryTermsArgs>>;
+    token?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QueryTokenArgs, 'address'>>;
+    tokens?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, Partial<QueryTokensArgs>>;
 };
 export type SellSwapPreviewResolvers<ContextType = ResolverContext, ParentType extends ResolversParentTypes['SellSwapPreview'] = ResolversParentTypes['SellSwapPreview']> = {
     baseAssetAmountOut?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

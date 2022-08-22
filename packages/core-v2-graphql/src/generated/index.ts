@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-08-18T14:51:36-07:00
+// Generated on 2022-08-22T05:53:31-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -123,6 +123,8 @@ export type Query = {
   pools?: Maybe<Array<Maybe<Pool>>>;
   term?: Maybe<Term>;
   terms?: Maybe<Array<Maybe<Term>>>;
+  token?: Maybe<Token>;
+  tokens?: Maybe<Token>;
 };
 
 export type QueryMultiPoolArgs = {
@@ -160,6 +162,14 @@ export type QueryTermsArgs = {
   multiTerms?: InputMaybe<Array<Scalars["ID"]>>;
   timeRemaining?: InputMaybe<Scalars["String"]>;
   yieldSources?: InputMaybe<Array<Scalars["ID"]>>;
+};
+
+export type QueryTokenArgs = {
+  address: Scalars["ID"];
+};
+
+export type QueryTokensArgs = {
+  addresses?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export type SellSwapPreview = {
@@ -571,6 +581,18 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     Partial<QueryTermsArgs>
+  >;
+  token?: Resolver<
+    Maybe<ResolversTypes["Token"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryTokenArgs, "address">
+  >;
+  tokens?: Resolver<
+    Maybe<ResolversTypes["Token"]>,
+    ParentType,
+    ContextType,
+    Partial<QueryTokensArgs>
   >;
 };
 
