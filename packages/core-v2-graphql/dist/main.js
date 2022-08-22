@@ -1,5 +1,4 @@
 var $bsQ4Z$graphqltoolsschema = require("@graphql-tools/schema");
-var $bsQ4Z$elementficorev2typechain = require("@elementfi/core-v2-typechain");
 
 function $parcel$interopDefault(a) {
   return a && a.__esModule ? a.default : a;
@@ -100,19 +99,8 @@ function $38d41d43985fa869$var$getByMaturity({ maturity: maturity , multiTerm: m
 }
 
 
-
-
-class $bb60d4e8fa15dc58$export$df3911195f8a5c08 {
-    constructor(address, provider){
-        this.address = address;
-        this.contract = (0, $bsQ4Z$elementficorev2typechain.ERC20__factory).connect(address, provider);
-    }
-    async getBalanceOf(address) {
-        return this.contract.balanceOf(address);
-    }
-    async getAllowance(owner, spender) {
-        return this.contract.allowance(owner, spender);
-    }
+function $c15e267034013f03$export$81a5cdb6fade8a42(address, dataSources, key) {
+    return dataSources[key].find((dataSource)=>dataSource.address === address);
 }
 
 
@@ -122,7 +110,7 @@ const $a1ee3c0593e6c8c6$export$b59f4b18f328714d = {
     getByAddress: $a1ee3c0593e6c8c6$var$getByAddress
 };
 async function $a1ee3c0593e6c8c6$var$getByAddress({ address: address , context: context  }) {
-    const tokenContract = (0, $bsQ4Z$elementficorev2typechain.ERC20__factory).connect(address, context.provider);
+    const tokenContract = (0, $c15e267034013f03$export$81a5cdb6fade8a42)(address, context.elementDataSources, "tokenContracts");
     return {
         address: await tokenContract.address,
         decimals: await tokenContract.decimals(),
@@ -131,11 +119,11 @@ async function $a1ee3c0593e6c8c6$var$getByAddress({ address: address , context: 
     };
 }
 async function $a1ee3c0593e6c8c6$var$getBalanceOf({ address: address , owner: owner , context: context  }) {
-    const tokenContract = new (0, $bb60d4e8fa15dc58$export$df3911195f8a5c08)(address, context.provider);
+    const tokenContract = (0, $c15e267034013f03$export$81a5cdb6fade8a42)(address, context.elementDataSources, "tokenContracts");
     return (await tokenContract.getBalanceOf(owner)).toString();
 }
 async function $a1ee3c0593e6c8c6$var$getAllowance({ address: address , owner: owner , spender: spender , context: context  }) {
-    const tokenContract = new (0, $bb60d4e8fa15dc58$export$df3911195f8a5c08)(address, context.provider);
+    const tokenContract = (0, $c15e267034013f03$export$81a5cdb6fade8a42)(address, context.elementDataSources, "tokenContracts");
     return (await tokenContract.getAllowance(owner, spender)).toString();
 }
 
@@ -299,7 +287,9 @@ function $ec94378a7e3179cb$export$54fae1269cb9a9e0({ chainId: chainId , provider
     return {
         chainId: chainId,
         provider: provider,
-        elementDataSources: {}
+        elementDataSources: {
+            tokenContracts: []
+        }
     };
 }
 
