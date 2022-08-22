@@ -186,7 +186,7 @@ export type Token = {
     address: Scalars['ID'];
     allowance?: Maybe<Scalars['String']>;
     balanceOf?: Maybe<Scalars['String']>;
-    decimals: Scalars['Int'];
+    decimals: Scalars['String'];
     name: Scalars['String'];
     price?: Maybe<Scalars['String']>;
     symbol: Scalars['String'];
@@ -366,7 +366,7 @@ export type TokenResolvers<ContextType = ResolverContext, ParentType extends Res
     address?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
     allowance?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<TokenAllowanceArgs, 'owner' | 'spender'>>;
     balanceOf?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<TokenBalanceOfArgs, 'owner'>>;
-    decimals?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    decimals?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     price?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     symbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

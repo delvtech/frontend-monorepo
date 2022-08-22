@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-08-22T16:12:48-05:00
+// Generated on 2022-08-22T18:24:51-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -216,7 +216,7 @@ export type Token = {
   address: Scalars["ID"];
   allowance?: Maybe<Scalars["String"]>;
   balanceOf?: Maybe<Scalars["String"]>;
-  decimals: Scalars["Int"];
+  decimals: Scalars["String"];
   name: Scalars["String"];
   price?: Maybe<Scalars["String"]>;
   symbol: Scalars["String"];
@@ -690,7 +690,7 @@ export type TokenResolvers<
     ContextType,
     RequireFields<TokenBalanceOfArgs, "owner">
   >;
-  decimals?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  decimals?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   price?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   symbol?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
