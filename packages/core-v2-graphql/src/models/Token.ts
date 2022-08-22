@@ -2,6 +2,7 @@ import { ERC20__factory } from "@elementfi/core-v2-typechain";
 import { CoreV2Context } from "src/context";
 import { TokenContract } from "src/datasources/TokenContract";
 import { Token } from "src/generated";
+import { getDataSourceByAddress } from "src/utils/getDataSourceByAddress";
 
 // model should be a class that takes in a datasource(s)
 export const TokenModel = {
@@ -19,7 +20,11 @@ async function getByAddress({
   address,
   context,
 }: GetByAddressOptions): Promise<Token> {
-  const tokenContract = ERC20__factory.connect(address, context.provider);
+  const tokenContract = getDataSourceByAddress(
+    address,
+    context.elementDataSources,
+    "tokenContracts",
+  );
 
   return {
     address: await tokenContract.address,
@@ -34,7 +39,11 @@ async function getBalanceOf({
   owner,
   context,
 }: { owner: string } & GetByAddressOptions): Promise<string> {
-  const tokenContract = new TokenContract(address, context.provider);
+  const tokenContract = getDataSourceByAddress(
+    address,
+    context.elementDataSources,
+    "tokenContracts",
+  );
 
   return (await tokenContract.getBalanceOf(owner)).toString();
 }
@@ -48,7 +57,11 @@ async function getAllowance({
   owner: string;
   spender: string;
 } & GetByAddressOptions): Promise<string> {
-  const tokenContract = new TokenContract(address, context.provider);
+  const tokenContract = getDataSourceByAddress(
+    address,
+    context.elementDataSources,
+    "tokenContracts",
+  );
 
   return (await tokenContract.getAllowance(owner, spender)).toString();
 }
