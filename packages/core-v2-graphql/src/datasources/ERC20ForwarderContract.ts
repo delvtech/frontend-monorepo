@@ -4,6 +4,7 @@ import {
   ERC20Forwarder__factory,
 } from "@elementfi/core-v2-typechain";
 
+// TODO: add caching to datasource
 export class ERC20ForwarderContract {
   address: string;
   contract: ERC20Forwarder;

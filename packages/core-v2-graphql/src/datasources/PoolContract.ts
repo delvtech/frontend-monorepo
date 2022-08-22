@@ -1,6 +1,7 @@
 import { Provider } from "@ethersproject/providers";
 import { Pool, Pool__factory } from "@elementfi/core-v2-typechain";
 
+// TODO: add caching to datasource
 export class PoolContract {
   address: string;
   contract: Pool;

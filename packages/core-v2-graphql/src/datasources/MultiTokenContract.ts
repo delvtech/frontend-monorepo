@@ -1,6 +1,7 @@
 import { Provider } from "@ethersproject/providers";
 import { MultiToken, MultiToken__factory } from "@elementfi/core-v2-typechain";
 
+// TODO: add caching to datasource
 export class MultiTokenContract {
   address: string;
   contract: MultiToken;
