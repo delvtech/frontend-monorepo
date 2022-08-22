@@ -163,8 +163,21 @@ export const resolvers: Resolvers<CoreV2Context> = {
   // },
 
   Token: {
-    price: async (token, _, context) => {
-      return "";
+    balanceOf: async (token, { owner }, context) => {
+      return await TokenModel.getBalanceOf({
+        address: token.address,
+        owner,
+        context,
+      });
+    },
+
+    allowance: async (token, { owner, spender }, context) => {
+      return await TokenModel.getAllowance({
+        address: token.address,
+        owner,
+        spender,
+        context,
+      });
     },
   },
 

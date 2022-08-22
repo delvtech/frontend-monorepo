@@ -100,7 +100,10 @@ type Token {
   address: ID!
   symbol: String!
   decimals: Int!
+  name: String!
   price: String
+  allowance(owner: String!, spender: String!): String
+  balanceOf(owner: String!): String
 }
 
 type MultiPool {
