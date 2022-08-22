@@ -99,7 +99,7 @@ type PrincipalToken {
 type Token {
   address: ID!
   symbol: String!
-  decimals: Int!
+  decimals: String!
   name: String!
   price: String
   allowance(owner: String!, spender: String!): String

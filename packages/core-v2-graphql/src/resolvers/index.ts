@@ -164,7 +164,7 @@ export const resolvers: Resolvers<CoreV2Context> = {
 
   Token: {
     balanceOf: async (token, { owner }, context) => {
-      return await TokenModel.getBalanceOf({
+      return await TokenModel.getBalance({
         address: token.address,
         owner,
         context,

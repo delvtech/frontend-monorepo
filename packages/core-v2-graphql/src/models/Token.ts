@@ -1,4 +1,3 @@
-import { ERC20__factory } from "@elementfi/core-v2-typechain";
 import { CoreV2Context } from "src/context";
 import { TokenContract } from "src/datasources/TokenContract";
 import { Token } from "src/generated";
@@ -7,7 +6,7 @@ import { getDataSourceByAddress } from "src/utils/getDataSourceByAddress";
 // model should be a class that takes in a datasource(s)
 export const TokenModel = {
   getAllowance,
-  getBalanceOf,
+  getBalance,
   getByAddress,
 };
 
@@ -19,49 +18,60 @@ interface GetByAddressOptions {
 async function getByAddress({
   address,
   context,
-}: GetByAddressOptions): Promise<Token> {
+}: GetByAddressOptions): Promise<Token | null> {
   const tokenContract = getDataSourceByAddress(
     address,
-    context.elementDataSources,
-    "tokenContracts",
+    context.elementDataSources.tokenContracts,
   );
 
-  return {
-    address: await tokenContract.address,
-    decimals: await tokenContract.decimals(),
-    symbol: await tokenContract.symbol(),
-    name: await tokenContract.name(),
-  };
+  return tokenContract
+    ? {
+        address: await tokenContract.address,
+        decimals: await tokenContract.getDecimals(),
+        symbol: await tokenContract.getSymbol(),
+        name: await tokenContract.getname(),
+      }
+    : null;
 }
 
-async function getBalanceOf({
-  address,
+interface GetBalanceOptions {
+  owner: string;
+  address: string;
+  context: CoreV2Context;
+}
+
+async function getBalance({
   owner,
+  address,
   context,
-}: { owner: string } & GetByAddressOptions): Promise<string> {
+}: GetBalanceOptions): Promise<string | null> {
   const tokenContract = getDataSourceByAddress(
     address,
-    context.elementDataSources,
-    "tokenContracts",
+    context.elementDataSources.tokenContracts,
   );
 
-  return (await tokenContract.getBalanceOf(owner)).toString();
+  return tokenContract ? await tokenContract.getBalanceOf(owner) : null;
+}
+
+interface GetAllowanceOptions {
+  owner: string;
+  spender: string;
+  address: string;
+  context: CoreV2Context;
 }
 
 async function getAllowance({
-  address,
   owner,
   spender,
+  address,
   context,
-}: {
-  owner: string;
-  spender: string;
-} & GetByAddressOptions): Promise<string> {
+}: GetAllowanceOptions): Promise<string | null> {
   const tokenContract = getDataSourceByAddress(
     address,
-    context.elementDataSources,
-    "tokenContracts",
+    context.elementDataSources.tokenContracts,
   );
 
-  return (await tokenContract.getAllowance(owner, spender)).toString();
+  return tokenContract
+    ? await tokenContract.getAllowance(owner, spender)
+    : null;
 }
