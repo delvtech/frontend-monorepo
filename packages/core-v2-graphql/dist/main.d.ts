@@ -184,9 +184,19 @@ export type TermYieldTokenArgs = {
 export type Token = {
     __typename?: 'Token';
     address: Scalars['ID'];
+    allowance?: Maybe<Scalars['String']>;
+    balanceOf?: Maybe<Scalars['String']>;
     decimals: Scalars['Int'];
+    name: Scalars['String'];
     price?: Maybe<Scalars['String']>;
     symbol: Scalars['String'];
+};
+export type TokenAllowanceArgs = {
+    owner: Scalars['String'];
+    spender: Scalars['String'];
+};
+export type TokenBalanceOfArgs = {
+    owner: Scalars['String'];
 };
 export type YieldSource = {
     __typename?: 'YieldSource';
@@ -354,7 +364,10 @@ export type TermResolvers<ContextType = ResolverContext, ParentType extends Reso
 };
 export type TokenResolvers<ContextType = ResolverContext, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = {
     address?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+    allowance?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<TokenAllowanceArgs, 'owner' | 'spender'>>;
+    balanceOf?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<TokenBalanceOfArgs, 'owner'>>;
     decimals?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     price?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     symbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
