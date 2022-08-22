@@ -106,7 +106,6 @@ class $bb60d4e8fa15dc58$export$df3911195f8a5c08 {
     constructor(address, provider){
         this.address = address;
         this.contract = (0, $bsQ4Z$elementficorev2typechain.ERC20__factory).connect(address, provider);
-        console.log("here");
     }
     async getBalanceOf(address) {
         return this.contract.balanceOf(address);

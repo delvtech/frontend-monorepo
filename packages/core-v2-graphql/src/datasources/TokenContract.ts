@@ -9,7 +9,6 @@ export class TokenContract {
   constructor(address: string, provider: Provider) {
     this.address = address;
     this.contract = ERC20__factory.connect(address, provider);
-    console.log("here");
   }
 
   async getBalanceOf(address: string): Promise<BigNumber> {
