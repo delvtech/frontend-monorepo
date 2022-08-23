@@ -6,7 +6,7 @@ import { getDataSourceByAddress } from "src/utils/getDataSourceByAddress";
 // model should be a class that takes in a datasource(s)
 export const TokenModel = {
   getAllowance,
-  getBalance,
+  getBalanceOf,
   getByAddress,
 };
 
@@ -40,7 +40,7 @@ interface GetBalanceOptions {
   context: CoreV2Context;
 }
 
-async function getBalance({
+async function getBalanceOf({
   owner,
   address,
   context,
