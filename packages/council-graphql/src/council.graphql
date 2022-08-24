@@ -9,6 +9,7 @@ type Query {
     search: String
     votingPowerMin: String
     votingPowerMax: String
+    votingVaults: [ID!]
   ): [Voter]!
 }
 
