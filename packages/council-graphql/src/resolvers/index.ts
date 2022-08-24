@@ -1,7 +1,6 @@
-import { BigNumber } from "ethers";
 import { filter } from "fuzzaldrin";
 import { CouncilContext } from "src/context";
-import { Resolvers, Voter } from "src/generated";
+import { Resolvers, Voter, VotingVault } from "src/generated";
 import { ProposalModel } from "src/models/Proposal";
 import { TotalVotingPowerModel } from "src/models/TotalVotingPower";
 import { VoteModel } from "src/models/Vote";
@@ -53,9 +52,10 @@ export const resolvers: Resolvers<CouncilContext> = {
     },
     voters: async (
       _,
-      { addresses, search, votingPowerMin, votingPowerMax },
+      { addresses, search, votingPowerMin, votingPowerMax, votingVaults },
       context,
     ) => {
+      const filteredVoters: Voter[] = [];
       let voters: (Voter | undefined)[] = [];
 
       if (addresses) {
@@ -64,93 +64,67 @@ export const resolvers: Resolvers<CouncilContext> = {
         voters = await VoterModel.getAll({ context });
       }
 
-      if (search) {
-        const candidates: string[] = [];
-        voters = await Promise.all(
-          voters.map(async (voter) => {
-            if (!voter) {
-              return;
-            }
+      if (search || votingPowerMin || votingPowerMax) {
+        let vaults: (VotingVault | undefined)[];
 
-            candidates.push(voter.address);
+        for (let voter of voters) {
+          if (!voter) {
+            continue;
+          }
 
+          // Get ensName of voter
+          if (search) {
             const ensName = await VoterModel.getEnsName({ voter, context });
-            if (ensName) {
-              candidates.push(ensName);
-            }
+            voter = { ...voter, ensName };
+          }
 
-            return {
-              ...voter,
-              ensName,
-            };
-          }),
-        );
-
-        const matches = filter(candidates, search);
-
-        voters = voters.filter((voter) =>
-          voter
-            ? matches.includes(voter.address) ||
-              matches.includes(voter.ensName || "")
-            : false,
-        );
-      }
-
-      if (votingPowerMin || votingPowerMax) {
-        voters = await Promise.all(
-          voters.map(async (voter) => {
-            if (!voter) {
-              return;
+          // Get votingPower of voter
+          if (votingPowerMin || votingPowerMax) {
+            if (votingVaults) {
+              vaults = VotingVaultModel.getByAddresses({
+                addresses: votingVaults,
+                context,
+              }).filter((vault) => vault !== undefined);
+            } else {
+              vaults = VotingVaultModel.getAll({ context });
             }
 
             const votingPower = await VotingPowerModel.getByVoter({
               voter,
-              // TODO: Resolve:
-              // Adding votingPowerMin/Max will now require the need to pass in a vault address?
-              // Maybe set up a type like ...
-              /**
-               *
-               * voter(
-               *    addresses: [ID!]
-               *    search: String
-               *    votingPowerFilter: VotingPowerFilter
-               * )
-               *
-               * type VotingPowerFilter {
-               *    votingPowerMin: String // Way to express having at the very least one (votingPowerMin or votingPowerMax)
-               *    votingPowerMax: String
-               *    vaultAddress: String!
-               * }
-               */
-              votingVaults: [
-                { address: "0x02Bd4A3b1b95b01F2Aa61655415A5d3EAAcaafdD" },
-              ],
+              votingVaults: vaults as VotingVault[],
               context,
             });
-
-            return {
-              ...voter,
-              votingPower,
-            };
-          }),
-        );
-
-        voters = voters.filter((voter) => {
-          if (!voter || !voter.votingPower) {
-            return false;
+            voter = { ...voter, votingPower };
           }
 
-          // TODO: Resolve:
-          // decimal accuracy? Conversion to number would potentitally remove decimal places
-          const votingPower = Number(voter.votingPower.value);
-          const minimum = Number(votingPowerMin) || 0;
-          const maximum = Number(votingPowerMax) || Number.MAX_VALUE;
+          let searchCondition = true;
+          let votingPowerCondition = true;
+          if (search) {
+            // Check whether current voter passes search filter
+            searchCondition = !!filter(
+              [voter.ensName || "", voter.address],
+              search,
+            ).length;
+          }
+          if (votingPowerMin || votingPowerMax) {
+            // Check whether current voter passes votingPower filter(s)
+            const votingPower = Number(voter.votingPower?.value || 0);
+            const minimum = Number(votingPowerMin || 0);
+            const maximum = Number(votingPowerMax || Infinity);
 
-          return minimum < votingPower && maximum > votingPower;
-        });
+            votingPowerCondition =
+              minimum < votingPower && maximum > votingPower;
+          }
+
+          if (searchCondition && votingPowerCondition) {
+            filteredVoters.push(voter);
+          }
+        }
+      } else {
+        return voters.map((voter) => voter || null);
       }
 
-      return voters.map((voter) => voter || null);
+      return filteredVoters;
     },
   },
   VotingContract: {
