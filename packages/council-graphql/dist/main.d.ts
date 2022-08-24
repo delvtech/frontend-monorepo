@@ -85,6 +85,7 @@ export type QueryVotersArgs = {
     search?: InputMaybe<Scalars['String']>;
     votingPowerMax?: InputMaybe<Scalars['String']>;
     votingPowerMin?: InputMaybe<Scalars['String']>;
+    votingVaults?: InputMaybe<Array<Scalars['ID']>>;
 };
 export type QueryVotingContractArgs = {
     address: Scalars['ID'];
