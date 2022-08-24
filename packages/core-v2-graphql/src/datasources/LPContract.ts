@@ -1,6 +1,7 @@
 import { Provider } from "@ethersproject/providers";
 import { LP, LP__factory } from "@elementfi/core-v2-typechain";
 
+// TODO: add caching to datasource
 export class LPContract {
   address: string;
   contract: LP;

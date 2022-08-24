@@ -22,6 +22,11 @@
     "build:lib": "parcel build",
     "build:graphql": "elf-graphql --package -o src/generated",
     "build": "npm run build:graphql && npm run build:lib",
+    "start": "ts-node -r dotenv/config src/server.ts",
+    "start:mainnet": "cross-env CHAIN_NAME=mainnet npm start",
+    "start:mainnet-fork": "cross-env CHAIN_NAME=mainnet-fork npm start",
+    "start:goerli": "cross-env CHAIN_NAME=goerli npm start",
+    "start:testnet": "cross-env CHAIN_NAME=testnet npm start",
     "prepare": "husky install",
     "lint:w": "eslint --fix src/**/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
     "lint": "eslint src/**/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
@@ -37,7 +42,8 @@
   "dependencies": {
     "@elementfi/base": "*",
     "@elementfi/core-v2-typechain": "*",
-    "@graphql-tools/schema": "^8.3.13"
+    "@graphql-tools/schema": "^8.3.13",
+    "cross-env": "^7.0.3"
   },
   "devDependencies": {
     "@apollo/client": "^3.6.6",

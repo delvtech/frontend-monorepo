@@ -1,6 +1,7 @@
 import { Provider } from "@ethersproject/providers";
 import { Term, Term__factory } from "@elementfi/core-v2-typechain";
 
+// TODO: add caching to datasource
 export class TermContract {
   address: string;
   contract: Term;

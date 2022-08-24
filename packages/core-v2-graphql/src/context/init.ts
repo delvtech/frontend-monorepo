@@ -1,5 +1,6 @@
 import { ResolverContext } from "@elementfi/graphql";
 import { CoreV2Context } from "src/context";
+import { TokenContract } from "src/datasources/TokenContract";
 
 export function initContext({
   chainId,
@@ -8,6 +9,8 @@ export function initContext({
   return {
     chainId,
     provider,
-    elementDataSources: {},
+    elementDataSources: {
+      tokenContracts: [],
+    },
   };
 }

@@ -24,6 +24,9 @@ type Query {
   pool(multiPool: ID!, maturity: String!): Pool
   pools(multiPool: ID!): [Pool]
 
+  token(address: ID!): Token
+  tokens(addresses: [ID!]): Token
+
   # Should the registry contain details about yield source or tokenlist
   # yieldSource(token: ID!): YieldSource!
   # yieldSources(names: [String!]!): [YieldSource]!
@@ -96,8 +99,11 @@ type PrincipalToken {
 type Token {
   address: ID!
   symbol: String!
-  decimals: Int!
+  decimals: String!
+  name: String!
   price: String
+  allowance(owner: String!, spender: String!): String
+  balanceOf(owner: String!): String
 }
 
 type MultiPool {

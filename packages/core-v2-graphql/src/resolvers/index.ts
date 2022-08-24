@@ -1,10 +1,13 @@
 import { CoreV2Context } from "src/context";
 import { MultiTerm, Resolvers } from "src/generated";
-import { MultiTermModel } from "src/models/MultiTerm";
-import { TermModel } from "src/models/Term";
-import { YieldSourceModel } from "src/models/YieldSource";
-import { MultiPoolModel } from "src/models/MultiPool";
-import { PoolModel } from "src/models/Pool";
+import {
+  PoolModel,
+  TokenModel,
+  TermModel,
+  YieldSourceModel,
+  MultiPoolModel,
+  MultiTermModel,
+} from "src/models";
 
 export const resolvers: Resolvers<CoreV2Context> = {
   Query: {
@@ -57,6 +60,10 @@ export const resolvers: Resolvers<CoreV2Context> = {
       });
       const pool = PoolModel.getByMaturity({ maturity, multiPool, context });
       return pool || null;
+    },
+
+    token: async (_, { address }, context) => {
+      return await TokenModel.getByAddress({ address, context });
     },
 
     // pools: (_, { yieldSource: yieldSourceName }, context) => {
@@ -155,11 +162,24 @@ export const resolvers: Resolvers<CoreV2Context> = {
   //   }
   // },
 
-  // Token: {
-  //   price: (token, _, context) => {
+  Token: {
+    balanceOf: async (token, { owner }, context) => {
+      return await TokenModel.getBalanceOf({
+        address: token.address,
+        owner,
+        context,
+      });
+    },
 
-  //   }
-  // },
+    allowance: async (token, { owner, spender }, context) => {
+      return await TokenModel.getAllowance({
+        address: token.address,
+        owner,
+        spender,
+        context,
+      });
+    },
+  },
 
   // MultiPool: {
   //   pool: (multiPool, { maturity }, context) => {

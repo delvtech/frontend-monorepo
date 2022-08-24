@@ -20,7 +20,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>;
 };
-// Generated on 2022-08-18T14:51:36-07:00
+// Generated on 2022-08-22T18:24:51-05:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -123,6 +123,8 @@ export type Query = {
   pools?: Maybe<Array<Maybe<Pool>>>;
   term?: Maybe<Term>;
   terms?: Maybe<Array<Maybe<Term>>>;
+  token?: Maybe<Token>;
+  tokens?: Maybe<Token>;
 };
 
 export type QueryMultiPoolArgs = {
@@ -160,6 +162,14 @@ export type QueryTermsArgs = {
   multiTerms?: InputMaybe<Array<Scalars["ID"]>>;
   timeRemaining?: InputMaybe<Scalars["String"]>;
   yieldSources?: InputMaybe<Array<Scalars["ID"]>>;
+};
+
+export type QueryTokenArgs = {
+  address: Scalars["ID"];
+};
+
+export type QueryTokensArgs = {
+  addresses?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export type SellSwapPreview = {
@@ -204,9 +214,21 @@ export type TermYieldTokenArgs = {
 export type Token = {
   __typename?: "Token";
   address: Scalars["ID"];
-  decimals: Scalars["Int"];
+  allowance?: Maybe<Scalars["String"]>;
+  balanceOf?: Maybe<Scalars["String"]>;
+  decimals: Scalars["String"];
+  name: Scalars["String"];
   price?: Maybe<Scalars["String"]>;
   symbol: Scalars["String"];
+};
+
+export type TokenAllowanceArgs = {
+  owner: Scalars["String"];
+  spender: Scalars["String"];
+};
+
+export type TokenBalanceOfArgs = {
+  owner: Scalars["String"];
 };
 
 export type YieldSource = {
@@ -572,6 +594,18 @@ export type QueryResolvers<
     ContextType,
     Partial<QueryTermsArgs>
   >;
+  token?: Resolver<
+    Maybe<ResolversTypes["Token"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryTokenArgs, "address">
+  >;
+  tokens?: Resolver<
+    Maybe<ResolversTypes["Token"]>,
+    ParentType,
+    ContextType,
+    Partial<QueryTokensArgs>
+  >;
 };
 
 export type SellSwapPreviewResolvers<
@@ -644,7 +678,20 @@ export type TokenResolvers<
   ParentType extends ResolversParentTypes["Token"] = ResolversParentTypes["Token"],
 > = {
   address?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  decimals?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  allowance?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType,
+    RequireFields<TokenAllowanceArgs, "owner" | "spender">
+  >;
+  balanceOf?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType,
+    RequireFields<TokenBalanceOfArgs, "owner">
+  >;
+  decimals?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   price?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   symbol?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
