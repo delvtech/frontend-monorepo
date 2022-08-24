@@ -3,6 +3,7 @@ import { VotingVault } from "src/generated";
 
 interface VotingVaultModel {
   getAll: (options: { context: CouncilContext }) => VotingVault[];
+
   getByAddress: (options: {
     address: string;
     context: CouncilContext;
@@ -20,9 +21,11 @@ export const VotingVaultModel: VotingVaultModel = {
       ({ address }) => this.getByAddress({ address, context }) as VotingVault,
     );
   },
+
   getByAddress({ address }) {
     return { address };
   },
+
   getByAddresses({ addresses }): VotingVault[] {
     return addresses.map((address) => ({
       address,
