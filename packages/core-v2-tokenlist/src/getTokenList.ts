@@ -4,6 +4,7 @@ import { TokenInfo, TokenList } from "@uniswap/token-lists";
 import { AddressesJsonFile } from "./addresses/AddressesJsonFile";
 import { tags } from "./tags";
 import { getERC20Info } from "./erc20";
+import { getPrincipalTokenInfo } from "./principalToken";
 
 export async function getTokenList(
   provider: Provider,
@@ -66,8 +67,6 @@ export async function getTokenList(
   const yieldSourceAssets = [yvUSDCToken, yvDAI, yvWETH];
   const terms = [USDCTerm, DAITerm, WETHTerm];
 
-  console.log(typechain.ERC20__factory.name);
-
   const principalTokens = [
     pUSDC_30Token,
     pUSDC_60Token,
@@ -101,6 +100,16 @@ export async function getTokenList(
   console.log("fetching yield source assets...");
   for (const address of yieldSourceAssets) {
     const tokenInfo: TokenInfo = await getERC20Info(provider, chainId, address);
+    tokenList.tokens.push(tokenInfo);
+  }
+
+  console.log("fetching principal tokens...");
+  for (const address of principalTokens) {
+    const tokenInfo: TokenInfo = await getPrincipalTokenInfo(
+      provider,
+      chainId,
+      address,
+    );
     tokenList.tokens.push(tokenInfo);
   }
 
