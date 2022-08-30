@@ -1,0 +1,68 @@
+{
+  "name": "Core V2 goerli token list",
+  "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+  "tags": {
+    "eP": {
+      "name": "Principal token",
+      "description": "Token that represents a deposit of principal into a yield position"
+    },
+    "eY": {
+      "name": "Yield token",
+      "description": "Token that represents the yield on a deposit into a yield position"
+    },
+    "ccpool": {
+      "name": "ConvergentCurve pool",
+      "description": "Token that represents the balancer pool for Principal tokens"
+    }
+  },
+  "timestamp": "2022-08-30T16:07:42.140Z",
+  "version": {
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  },
+  "tokens": [
+    {
+      "address": "0x544d6a84bfc818220c2eeadd7ad3ca831d032808",
+      "chainId": 5,
+      "decimals": 6,
+      "name": "USDC",
+      "symbol": "USDC"
+    },
+    {
+      "address": "0xd7c890349c40a77bf5c5176b48b418b87b60dda9",
+      "chainId": 5,
+      "decimals": 18,
+      "name": "DAI",
+      "symbol": "DAI"
+    },
+    {
+      "address": "0x8186cfa19589498af755a6aad2da75c1120f7a47",
+      "chainId": 5,
+      "decimals": 18,
+      "name": "WETH",
+      "symbol": "WETH"
+    },
+    {
+      "address": "0xd1eda2c4213d9c63a6f48ee5fdb23b7991ad90a9",
+      "chainId": 5,
+      "decimals": 6,
+      "name": "Mock Yearn Vault",
+      "symbol": "MYV"
+    },
+    {
+      "address": "0xd716afa8426bc64c537848b7624891e369fe1705",
+      "chainId": 5,
+      "decimals": 18,
+      "name": "Mock Yearn Vault",
+      "symbol": "MYV"
+    },
+    {
+      "address": "0x0396551b4436f49bc9e4274c1bf17002323d0c7f",
+      "chainId": 5,
+      "decimals": 18,
+      "name": "Mock Yearn Vault",
+      "symbol": "MYV"
+    }
+  ]
+}
