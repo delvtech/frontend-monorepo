@@ -4,7 +4,6 @@ import type { Listener, Provider } from "@ethersproject/providers";
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from "../../common";
 export interface MockERC20YearnVaultInterface extends utils.Interface {
     functions: {
-        "DEGRADATION_COEFFICIENT()": FunctionFragment;
         "DOMAIN_SEPARATOR()": FunctionFragment;
         "PERMIT_TYPEHASH()": FunctionFragment;
         "allowance(address,address)": FunctionFragment;
@@ -20,7 +19,6 @@ export interface MockERC20YearnVaultInterface extends utils.Interface {
         "isAuthorized(address)": FunctionFragment;
         "lastReport()": FunctionFragment;
         "lockedProfit()": FunctionFragment;
-        "lockedProfitDegradation()": FunctionFragment;
         "name()": FunctionFragment;
         "nonces(address)": FunctionFragment;
         "owner()": FunctionFragment;
@@ -28,6 +26,7 @@ export interface MockERC20YearnVaultInterface extends utils.Interface {
         "precisionFactor()": FunctionFragment;
         "pricePerShare()": FunctionFragment;
         "report(uint256)": FunctionFragment;
+        "reportLoss(uint256)": FunctionFragment;
         "setDepositLimit(uint256)": FunctionFragment;
         "setOwner(address)": FunctionFragment;
         "symbol()": FunctionFragment;
@@ -39,9 +38,7 @@ export interface MockERC20YearnVaultInterface extends utils.Interface {
         "transferFrom(address,address,uint256)": FunctionFragment;
         "withdraw(uint256,address,uint256)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "DEGRADATION_COEFFICIENT" | "DEGRADATION_COEFFICIENT()" | "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "allowance" | "allowance(address,address)" | "apiVersion" | "apiVersion()" | "approve" | "approve(address,uint256)" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(address)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "deposit" | "deposit(uint256,address)" | "governance" | "governance()" | "isAuthorized" | "isAuthorized(address)" | "lastReport" | "lastReport()" | "lockedProfit" | "lockedProfit()" | "lockedProfitDegradation" | "lockedProfitDegradation()" | "name" | "name()" | "nonces" | "nonces(address)" | "owner" | "owner()" | "permit" | "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)" | "precisionFactor" | "precisionFactor()" | "pricePerShare" | "pricePerShare()" | "report" | "report(uint256)" | "setDepositLimit" | "setDepositLimit(uint256)" | "setOwner" | "setOwner(address)" | "symbol" | "symbol()" | "token" | "token()" | "totalAssets" | "totalAssets()" | "totalShares" | "totalShares()" | "totalSupply" | "totalSupply()" | "transfer" | "transfer(address,uint256)" | "transferFrom" | "transferFrom(address,address,uint256)" | "withdraw" | "withdraw(uint256,address,uint256)"): FunctionFragment;
-    encodeFunctionData(functionFragment: "DEGRADATION_COEFFICIENT", values?: undefined): string;
-    encodeFunctionData(functionFragment: "DEGRADATION_COEFFICIENT()", values?: undefined): string;
+    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "DOMAIN_SEPARATOR()" | "PERMIT_TYPEHASH" | "PERMIT_TYPEHASH()" | "allowance" | "allowance(address,address)" | "apiVersion" | "apiVersion()" | "approve" | "approve(address,uint256)" | "authorize" | "authorize(address)" | "authorized" | "authorized(address)" | "balanceOf" | "balanceOf(address)" | "deauthorize" | "deauthorize(address)" | "decimals" | "decimals()" | "deposit" | "deposit(uint256,address)" | "governance" | "governance()" | "isAuthorized" | "isAuthorized(address)" | "lastReport" | "lastReport()" | "lockedProfit" | "lockedProfit()" | "name" | "name()" | "nonces" | "nonces(address)" | "owner" | "owner()" | "permit" | "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)" | "precisionFactor" | "precisionFactor()" | "pricePerShare" | "pricePerShare()" | "report" | "report(uint256)" | "reportLoss" | "reportLoss(uint256)" | "setDepositLimit" | "setDepositLimit(uint256)" | "setOwner" | "setOwner(address)" | "symbol" | "symbol()" | "token" | "token()" | "totalAssets" | "totalAssets()" | "totalShares" | "totalShares()" | "totalSupply" | "totalSupply()" | "transfer" | "transfer(address,uint256)" | "transferFrom" | "transferFrom(address,address,uint256)" | "withdraw" | "withdraw(uint256,address,uint256)"): FunctionFragment;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR()", values?: undefined): string;
     encodeFunctionData(functionFragment: "PERMIT_TYPEHASH", values?: undefined): string;
@@ -72,8 +69,6 @@ export interface MockERC20YearnVaultInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "lastReport()", values?: undefined): string;
     encodeFunctionData(functionFragment: "lockedProfit", values?: undefined): string;
     encodeFunctionData(functionFragment: "lockedProfit()", values?: undefined): string;
-    encodeFunctionData(functionFragment: "lockedProfitDegradation", values?: undefined): string;
-    encodeFunctionData(functionFragment: "lockedProfitDegradation()", values?: undefined): string;
     encodeFunctionData(functionFragment: "name", values?: undefined): string;
     encodeFunctionData(functionFragment: "name()", values?: undefined): string;
     encodeFunctionData(functionFragment: "nonces", values: [PromiseOrValue<string>]): string;
@@ -104,6 +99,8 @@ export interface MockERC20YearnVaultInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "pricePerShare()", values?: undefined): string;
     encodeFunctionData(functionFragment: "report", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "report(uint256)", values: [PromiseOrValue<BigNumberish>]): string;
+    encodeFunctionData(functionFragment: "reportLoss", values: [PromiseOrValue<BigNumberish>]): string;
+    encodeFunctionData(functionFragment: "reportLoss(uint256)", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "setDepositLimit", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "setDepositLimit(uint256)", values: [PromiseOrValue<BigNumberish>]): string;
     encodeFunctionData(functionFragment: "setOwner", values: [PromiseOrValue<string>]): string;
@@ -140,8 +137,6 @@ export interface MockERC20YearnVaultInterface extends utils.Interface {
         PromiseOrValue<string>,
         PromiseOrValue<BigNumberish>
     ]): string;
-    decodeFunctionResult(functionFragment: "DEGRADATION_COEFFICIENT", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "DEGRADATION_COEFFICIENT()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "DOMAIN_SEPARATOR", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "DOMAIN_SEPARATOR()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "PERMIT_TYPEHASH", data: BytesLike): Result;
@@ -172,8 +167,6 @@ export interface MockERC20YearnVaultInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "lastReport()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "lockedProfit", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "lockedProfit()", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "lockedProfitDegradation", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "lockedProfitDegradation()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "name()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
@@ -188,6 +181,8 @@ export interface MockERC20YearnVaultInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "pricePerShare()", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "report", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "report(uint256)", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "reportLoss", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "reportLoss(uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setDepositLimit", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setDepositLimit(uint256)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setOwner", data: BytesLike): Result;
@@ -254,8 +249,6 @@ export interface MockERC20YearnVault extends BaseContract {
     once: OnEvent<this>;
     removeListener: OnEvent<this>;
     functions: {
-        DEGRADATION_COEFFICIENT(overrides?: CallOverrides): Promise<[BigNumber]>;
-        "DEGRADATION_COEFFICIENT()"(overrides?: CallOverrides): Promise<[BigNumber]>;
         DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<[string]>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
@@ -302,8 +295,6 @@ export interface MockERC20YearnVault extends BaseContract {
         "lastReport()"(overrides?: CallOverrides): Promise<[BigNumber]>;
         lockedProfit(overrides?: CallOverrides): Promise<[BigNumber]>;
         "lockedProfit()"(overrides?: CallOverrides): Promise<[BigNumber]>;
-        lockedProfitDegradation(overrides?: CallOverrides): Promise<[BigNumber]>;
-        "lockedProfitDegradation()"(overrides?: CallOverrides): Promise<[BigNumber]>;
         name(overrides?: CallOverrides): Promise<[string]>;
         "name()"(overrides?: CallOverrides): Promise<[string]>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -324,6 +315,12 @@ export interface MockERC20YearnVault extends BaseContract {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
         "report(uint256)"(_deposit: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<ContractTransaction>;
+        reportLoss(loss: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<ContractTransaction>;
+        "reportLoss(uint256)"(loss: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
         setDepositLimit(_limit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[void]>;
@@ -363,8 +360,6 @@ export interface MockERC20YearnVault extends BaseContract {
             from?: PromiseOrValue<string>;
         }): Promise<ContractTransaction>;
     };
-    DEGRADATION_COEFFICIENT(overrides?: CallOverrides): Promise<BigNumber>;
-    "DEGRADATION_COEFFICIENT()"(overrides?: CallOverrides): Promise<BigNumber>;
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
     "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<string>;
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
@@ -411,8 +406,6 @@ export interface MockERC20YearnVault extends BaseContract {
     "lastReport()"(overrides?: CallOverrides): Promise<BigNumber>;
     lockedProfit(overrides?: CallOverrides): Promise<BigNumber>;
     "lockedProfit()"(overrides?: CallOverrides): Promise<BigNumber>;
-    lockedProfitDegradation(overrides?: CallOverrides): Promise<BigNumber>;
-    "lockedProfitDegradation()"(overrides?: CallOverrides): Promise<BigNumber>;
     name(overrides?: CallOverrides): Promise<string>;
     "name()"(overrides?: CallOverrides): Promise<string>;
     nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -433,6 +426,12 @@ export interface MockERC20YearnVault extends BaseContract {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
     "report(uint256)"(_deposit: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+        from?: PromiseOrValue<string>;
+    }): Promise<ContractTransaction>;
+    reportLoss(loss: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+        from?: PromiseOrValue<string>;
+    }): Promise<ContractTransaction>;
+    "reportLoss(uint256)"(loss: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
     setDepositLimit(_limit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
@@ -472,8 +471,6 @@ export interface MockERC20YearnVault extends BaseContract {
         from?: PromiseOrValue<string>;
     }): Promise<ContractTransaction>;
     callStatic: {
-        DEGRADATION_COEFFICIENT(overrides?: CallOverrides): Promise<BigNumber>;
-        "DEGRADATION_COEFFICIENT()"(overrides?: CallOverrides): Promise<BigNumber>;
         DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<string>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
@@ -504,8 +501,6 @@ export interface MockERC20YearnVault extends BaseContract {
         "lastReport()"(overrides?: CallOverrides): Promise<BigNumber>;
         lockedProfit(overrides?: CallOverrides): Promise<BigNumber>;
         "lockedProfit()"(overrides?: CallOverrides): Promise<BigNumber>;
-        lockedProfitDegradation(overrides?: CallOverrides): Promise<BigNumber>;
-        "lockedProfitDegradation()"(overrides?: CallOverrides): Promise<BigNumber>;
         name(overrides?: CallOverrides): Promise<string>;
         "name()"(overrides?: CallOverrides): Promise<string>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -520,6 +515,8 @@ export interface MockERC20YearnVault extends BaseContract {
         "pricePerShare()"(overrides?: CallOverrides): Promise<BigNumber>;
         report(_deposit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         "report(uint256)"(_deposit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+        reportLoss(loss: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+        "reportLoss(uint256)"(loss: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         setDepositLimit(_limit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         "setDepositLimit(uint256)"(_limit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
         setOwner(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
@@ -548,8 +545,6 @@ export interface MockERC20YearnVault extends BaseContract {
         Transfer(from?: PromiseOrValue<string> | null, to?: PromiseOrValue<string> | null, value?: null): TransferEventFilter;
     };
     estimateGas: {
-        DEGRADATION_COEFFICIENT(overrides?: CallOverrides): Promise<BigNumber>;
-        "DEGRADATION_COEFFICIENT()"(overrides?: CallOverrides): Promise<BigNumber>;
         DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<BigNumber>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
@@ -596,8 +591,6 @@ export interface MockERC20YearnVault extends BaseContract {
         "lastReport()"(overrides?: CallOverrides): Promise<BigNumber>;
         lockedProfit(overrides?: CallOverrides): Promise<BigNumber>;
         "lockedProfit()"(overrides?: CallOverrides): Promise<BigNumber>;
-        lockedProfitDegradation(overrides?: CallOverrides): Promise<BigNumber>;
-        "lockedProfitDegradation()"(overrides?: CallOverrides): Promise<BigNumber>;
         name(overrides?: CallOverrides): Promise<BigNumber>;
         "name()"(overrides?: CallOverrides): Promise<BigNumber>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -618,6 +611,12 @@ export interface MockERC20YearnVault extends BaseContract {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
         "report(uint256)"(_deposit: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<BigNumber>;
+        reportLoss(loss: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<BigNumber>;
+        "reportLoss(uint256)"(loss: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<BigNumber>;
         setDepositLimit(_limit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -658,8 +657,6 @@ export interface MockERC20YearnVault extends BaseContract {
         }): Promise<BigNumber>;
     };
     populateTransaction: {
-        DEGRADATION_COEFFICIENT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        "DEGRADATION_COEFFICIENT()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -706,8 +703,6 @@ export interface MockERC20YearnVault extends BaseContract {
         "lastReport()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         lockedProfit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "lockedProfit()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        lockedProfitDegradation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        "lockedProfitDegradation()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -728,6 +723,12 @@ export interface MockERC20YearnVault extends BaseContract {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
         "report(uint256)"(_deposit: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<PopulatedTransaction>;
+        reportLoss(loss: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
+            from?: PromiseOrValue<string>;
+        }): Promise<PopulatedTransaction>;
+        "reportLoss(uint256)"(loss: PromiseOrValue<BigNumberish>, overrides?: Overrides & {
             from?: PromiseOrValue<string>;
         }): Promise<PopulatedTransaction>;
         setDepositLimit(_limit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;

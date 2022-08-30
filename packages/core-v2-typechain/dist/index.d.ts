@@ -45,6 +45,8 @@ export type { DateString } from "./contracts/libraries/DateString";
 export { DateString__factory } from "./factories/contracts/libraries/DateString__factory";
 export type { ERC20Permit } from "./contracts/libraries/ERC20Permit";
 export { ERC20Permit__factory } from "./factories/contracts/libraries/ERC20Permit__factory";
+export type { ElementError } from "./contracts/libraries/Errors.sol/ElementError";
+export { ElementError__factory } from "./factories/contracts/libraries/Errors.sol/ElementError__factory";
 export type { FixedPointMath } from "./contracts/libraries/FixedPointMath";
 export { FixedPointMath__factory } from "./factories/contracts/libraries/FixedPointMath__factory";
 export type { TWAROracle } from "./contracts/libraries/TWAROracle";
