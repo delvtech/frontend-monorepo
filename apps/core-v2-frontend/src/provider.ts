@@ -15,8 +15,8 @@ export const { chains, provider } = configureChains(
   [
     // If a provider does not support a chain, it will fall back onto the next one
     // in the array.
-    alchemyProvider({ alchemyId: process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID }),
-    alchemyProvider({ alchemyId: process.env.NEXT_PUBLIC_GOERLI_ALCHEMY_ID }),
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_ID }),
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_GOERLI_ALCHEMY_ID }),
     jsonRpcProvider({
       rpc: () => ({
         http: LOCAL_RPC_HOST,
