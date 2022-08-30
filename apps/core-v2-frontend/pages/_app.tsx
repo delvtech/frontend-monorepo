@@ -12,10 +12,7 @@ import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
 import { AppProps } from "next/app";
 import dynamic from "next/dynamic";
-import React, { ReactElement } from "react";
-import { QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
-import { queryClient } from "src/queryClient";
+import { ReactElement } from "react";
 import { chains } from "src/provider";
 import { wagmiClient } from "src/wagmiClient";
 import { Toaster } from "react-hot-toast";
@@ -36,17 +33,14 @@ const WagmiConfigWithoutSSR = dynamic(
 
 function App({ Component, pageProps }: AppProps): ReactElement {
   return (
-    <QueryClientProvider client={queryClient}>
-      <WagmiConfigWithoutSSR client={wagmiClient}>
-        <RainbowKitProvider chains={chains} showRecentTransactions>
-          <ApolloProvider client={apolloClient}>
-            <Toaster />
-            <Component {...pageProps} />
-          </ApolloProvider>
-        </RainbowKitProvider>
-      </WagmiConfigWithoutSSR>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    <WagmiConfigWithoutSSR client={wagmiClient}>
+      <RainbowKitProvider chains={chains} showRecentTransactions>
+        <ApolloProvider client={apolloClient}>
+          <Toaster />
+          <Component {...pageProps} />
+        </ApolloProvider>
+      </RainbowKitProvider>
+    </WagmiConfigWithoutSSR>
   );
 }
 
