@@ -1,0 +1,62 @@
+{
+  "tags": {
+    "principalToken": {
+      "name": "principalToken"
+    },
+    "term": {
+      "name": "term",
+      "description": "An sub token from a multiTerm, this might include a forwarder address"
+    },
+    "multiTerm": {
+      "name": "multiTerm",
+      "description": "An 1155 MultiToken contract containing many PT and YT sub tokens"
+    }
+  },
+  "version": {
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  },
+  "erc20": {
+    "tags": {
+      "principalToken": {
+        "name": "term",
+        "description": "An sub token from a multiTerm, this might include a forwarder address"
+      }
+    },
+    "tokens": []
+  },
+
+  "tokens": [
+    {
+      "chainId": 1,
+      "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "decimals": 18
+    },
+    {
+      "address": "",
+      "name": "A specific Yearn Dai principal Token",
+      "symbol": "ePyvDAI-01JUN23",
+      "tags": ["principalToken"],
+      "extensions": {
+        "parentMultiTerm": "0x31bce31ec9095547116f3ce4aec411509265104d",
+        "expiry": 1661977554773,
+        "underlying": "0xDaiAddress",
+        "createdAtTimestamp": 28392832382,
+        "position": "0x2983u98qu98quasdoifjaosdjf"
+      }
+    },
+    {
+      "address": "0x31bce31ec9095547116f3ce4aec411509265104d",
+      "name": "Yearn Dai MultiTerm",
+      "tags": ["multiTerm"],
+      "extensions": {
+        "underlying": "0xDaiAddress",
+        "position": "0x2983u98qu98quasdoifjaosdjf",
+        "factory": "0x923asdofjaosidjf9284r9qsjf"
+      }
+    }
+  ]
+}

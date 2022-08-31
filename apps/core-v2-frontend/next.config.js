@@ -1,4 +1,5 @@
 const svgrTemplate = require("./svgr-template");
+const path = require("path");
 
 /**
  * @type {import("next").NextConfig}
@@ -11,7 +12,7 @@ const nextConfig = {
     externalDir: true,
   },
 
-  webpack: (config) => {
+  webpack: (config, context) => {
     // https://github.com/a16z/zkp-merkle-airdrop-fe-ex#notes
     config.resolve.fallback = {
       fs: false,
