@@ -624,7 +624,6 @@ html {
   info-focus: #0D91B5;
   --su: 100 98% 21%;
   --wa: 15 83% 41%;
-  warning-focus: #FF5C73;
   --er: 345 100% 30%;
 }
 
@@ -663,7 +662,6 @@ html {
   info-focus: #0D91B5;
   --su: 100 98% 21%;
   --wa: 15 83% 41%;
-  warning-focus: #FF5C73;
   --er: 345 100% 30%;
 }
 
@@ -1708,6 +1706,27 @@ html {
   }
 }
 
+.daisy-btn-sm {
+  height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  min-height: 2rem;
+  font-size: 0.875rem;
+}
+
+.daisy-btn-square:where(.daisy-btn-sm) {
+  height: 2rem;
+  width: 2rem;
+  padding: 0px;
+}
+
+.daisy-btn-circle:where(.daisy-btn-sm) {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 9999px;
+  padding: 0px;
+}
+
 .daisy-card-compact .daisy-card-body {
   padding: 1rem;
   font-size: 0.875rem;
@@ -1726,6 +1745,10 @@ html {
 
 .daisy-card-normal .daisy-card-title {
   margin-bottom: 0.75rem;
+}
+
+.table {
+  display: table;
 }
 
 .w-96 {
