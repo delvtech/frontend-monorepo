@@ -2,20 +2,16 @@
   "name": "Core V2 goerli token list",
   "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
   "tags": {
-    "eP": {
-      "name": "Principal token",
+    "pool": {
+      "name": "LP Pool",
+      "description": "Token that represents the pool for Principal tokens"
+    },
+    "principalToken": {
+      "name": "Principal Token",
       "description": "Token that represents a deposit of principal into a yield position"
-    },
-    "eY": {
-      "name": "Yield token",
-      "description": "Token that represents the yield on a deposit into a yield position"
-    },
-    "ccpool": {
-      "name": "ConvergentCurve pool",
-      "description": "Token that represents the balancer pool for Principal tokens"
     }
   },
-  "timestamp": "2022-08-30T16:24:25.081Z",
+  "timestamp": "2022-09-01T09:20:47.664Z",
   "version": {
     "major": 0,
     "minor": 0,
@@ -44,150 +40,291 @@
       "symbol": "WETH"
     },
     {
-      "address": "0xd1eda2c4213d9c63a6f48ee5fdb23b7991ad90a9",
+      "address": "0x13f95E81304039588beaDb34488f2B56de26835b",
       "chainId": 5,
       "decimals": 6,
-      "name": "Mock Yearn Vault",
-      "symbol": "MYV"
-    },
-    {
-      "address": "0xd716afa8426bc64c537848b7624891e369fe1705",
-      "chainId": 5,
-      "decimals": 18,
-      "name": "Mock Yearn Vault",
-      "symbol": "MYV"
-    },
-    {
-      "address": "0x0396551b4436f49bc9e4274c1bf17002323d0c7f",
-      "chainId": 5,
-      "decimals": 18,
-      "name": "Mock Yearn Vault",
-      "symbol": "MYV"
-    },
-    {
-      "address": "0x13f95e81304039588beadb34488f2b56de26835b",
-      "chainId": 5,
-      "decimals": 18,
       "name": "",
       "symbol": "",
-      "tags": ["eP"],
+      "tags": ["principalToken"],
       "extensions": {
         "underlying": "0x544D6A84BfC818220c2eEadD7ad3Ca831d032808",
-        "createdAtTimestamp": 1660580652,
-        "unlockTimestamp": 1663172616,
-        "position": "0xD1EDA2C4213d9C63a6F48EE5FdB23b7991Ad90a9"
+        "position": "0xD1EDA2C4213d9C63a6F48EE5FdB23b7991Ad90a9",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1663172616,
+        "multiTerm": "0x830f3ee9F5f5376E40f26b7055828F7a3733FC6f",
+        "tokenId": 1663172616
       }
     },
     {
-      "address": "0xbe5e3d7b20de52cd59610f5abd7da4fa836e3c86",
+      "address": "0xBE5e3d7B20de52cD59610F5aBd7Da4fA836E3C86",
       "chainId": 5,
-      "decimals": 18,
+      "decimals": 6,
       "name": "",
       "symbol": "",
-      "tags": ["eP"],
+      "tags": ["principalToken"],
       "extensions": {
         "underlying": "0x544D6A84BfC818220c2eEadD7ad3Ca831d032808",
-        "createdAtTimestamp": 1660580652,
-        "unlockTimestamp": 1665764616,
-        "position": "0xD1EDA2C4213d9C63a6F48EE5FdB23b7991Ad90a9"
+        "position": "0xD1EDA2C4213d9C63a6F48EE5FdB23b7991Ad90a9",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1665764616,
+        "multiTerm": "0x830f3ee9F5f5376E40f26b7055828F7a3733FC6f",
+        "tokenId": 1665764616
       }
     },
     {
-      "address": "0xf5eba649ae2ea7cab173202bcc5adcdfaf6feacb",
+      "address": "0xf5EBA649ae2Ea7CAB173202Bcc5aDCDFAF6fEACB",
       "chainId": 5,
-      "decimals": 18,
+      "decimals": 6,
       "name": "",
       "symbol": "",
-      "tags": ["eP"],
+      "tags": ["principalToken"],
       "extensions": {
         "underlying": "0x544D6A84BfC818220c2eEadD7ad3Ca831d032808",
-        "createdAtTimestamp": 1660580652,
-        "unlockTimestamp": 1668356616,
-        "position": "0xD1EDA2C4213d9C63a6F48EE5FdB23b7991Ad90a9"
+        "position": "0xD1EDA2C4213d9C63a6F48EE5FdB23b7991Ad90a9",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1668356616,
+        "multiTerm": "0x830f3ee9F5f5376E40f26b7055828F7a3733FC6f",
+        "tokenId": 1668356616
       }
     },
     {
-      "address": "0xc271d1bc9152d02983260bde44cc114cae044f63",
+      "address": "0xc271d1bc9152d02983260BDE44cc114Cae044F63",
       "chainId": 5,
       "decimals": 18,
       "name": "",
       "symbol": "",
-      "tags": ["eP"],
+      "tags": ["principalToken"],
       "extensions": {
         "underlying": "0xD7c890349c40A77BF5c5176b48b418B87B60Dda9",
-        "createdAtTimestamp": 1660580652,
-        "unlockTimestamp": 1663172616,
-        "position": "0xD716AFA8426bc64C537848b7624891E369fe1705"
+        "position": "0xD716AFA8426bc64C537848b7624891E369fe1705",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1663172616,
+        "multiTerm": "0x31BCe31Ec9095547116f3cE4Aec411509265104D",
+        "tokenId": 1663172616
       }
     },
     {
-      "address": "0xf58938fc5fc8916c4e605c203ad143116d307652",
+      "address": "0xF58938Fc5fc8916C4e605c203AD143116D307652",
       "chainId": 5,
       "decimals": 18,
       "name": "",
       "symbol": "",
-      "tags": ["eP"],
+      "tags": ["principalToken"],
       "extensions": {
         "underlying": "0xD7c890349c40A77BF5c5176b48b418B87B60Dda9",
-        "createdAtTimestamp": 1660580652,
-        "unlockTimestamp": 1665764616,
-        "position": "0xD716AFA8426bc64C537848b7624891E369fe1705"
+        "position": "0xD716AFA8426bc64C537848b7624891E369fe1705",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1665764616,
+        "multiTerm": "0x31BCe31Ec9095547116f3cE4Aec411509265104D",
+        "tokenId": 1665764616
       }
     },
     {
-      "address": "0x96d2366b325b572c880d2338b09ecad90f3b8a61",
+      "address": "0x96d2366b325B572c880D2338b09eCad90f3b8a61",
       "chainId": 5,
       "decimals": 18,
       "name": "",
       "symbol": "",
-      "tags": ["eP"],
+      "tags": ["principalToken"],
       "extensions": {
         "underlying": "0xD7c890349c40A77BF5c5176b48b418B87B60Dda9",
-        "createdAtTimestamp": 1660580652,
-        "unlockTimestamp": 1668356616,
-        "position": "0xD716AFA8426bc64C537848b7624891E369fe1705"
+        "position": "0xD716AFA8426bc64C537848b7624891E369fe1705",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1668356616,
+        "multiTerm": "0x31BCe31Ec9095547116f3cE4Aec411509265104D",
+        "tokenId": 1668356616
       }
     },
     {
-      "address": "0x6e3e63f03bc729b118360a8f25dc68d17444b2c6",
+      "address": "0x6E3e63F03bc729B118360A8f25DC68d17444B2C6",
       "chainId": 5,
       "decimals": 18,
       "name": "",
       "symbol": "",
-      "tags": ["eP"],
+      "tags": ["principalToken"],
       "extensions": {
         "underlying": "0x8186CFa19589498AF755a6aad2da75c1120f7A47",
-        "createdAtTimestamp": 1660580652,
-        "unlockTimestamp": 1663172616,
-        "position": "0x0396551B4436F49BC9e4274C1Bf17002323D0c7F"
+        "position": "0x0396551B4436F49BC9e4274C1Bf17002323D0c7F",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1663172616,
+        "multiTerm": "0x269f8cA2e878765E2ecDc15169D762550a77c881",
+        "tokenId": 1663172616
       }
     },
     {
-      "address": "0x048b771929d4e23ff3b94cc9958557764e4132a0",
+      "address": "0x048B771929D4E23ff3B94cC9958557764e4132A0",
       "chainId": 5,
       "decimals": 18,
       "name": "",
       "symbol": "",
-      "tags": ["eP"],
+      "tags": ["principalToken"],
       "extensions": {
         "underlying": "0x8186CFa19589498AF755a6aad2da75c1120f7A47",
-        "createdAtTimestamp": 1660580652,
-        "unlockTimestamp": 1665764616,
-        "position": "0x0396551B4436F49BC9e4274C1Bf17002323D0c7F"
+        "position": "0x0396551B4436F49BC9e4274C1Bf17002323D0c7F",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1665764616,
+        "multiTerm": "0x269f8cA2e878765E2ecDc15169D762550a77c881",
+        "tokenId": 1665764616
       }
     },
     {
-      "address": "0xa23099d276be7be065c2d0afdd4d82cfd268787e",
+      "address": "0xA23099d276be7bE065C2d0AFdd4d82cFD268787E",
       "chainId": 5,
       "decimals": 18,
       "name": "",
       "symbol": "",
-      "tags": ["eP"],
+      "tags": ["principalToken"],
       "extensions": {
         "underlying": "0x8186CFa19589498AF755a6aad2da75c1120f7A47",
-        "createdAtTimestamp": 1660580652,
-        "unlockTimestamp": 1668356616,
-        "position": "0x0396551B4436F49BC9e4274C1Bf17002323D0c7F"
+        "position": "0x0396551B4436F49BC9e4274C1Bf17002323D0c7F",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1668356616,
+        "multiTerm": "0x269f8cA2e878765E2ecDc15169D762550a77c881",
+        "tokenId": 1668356616
+      }
+    },
+    {
+      "address": "0xB708Cdd716E1aa065dA8f3Df0072caf262EA2ba4",
+      "chainId": 5,
+      "decimals": 6,
+      "name": "LP: ",
+      "symbol": "LP: ",
+      "tags": ["pool"],
+      "extensions": {
+        "principalToken": "0x13f95E81304039588beaDb34488f2B56de26835b",
+        "underlying": "0x544D6A84BfC818220c2eEadD7ad3Ca831d032808",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1663172616,
+        "multiPool": "0x86b3d49e1e3b07c37e11d74d4c108814d9616a89",
+        "poolId": 1663172616
+      }
+    },
+    {
+      "address": "0xCCaC555f2689Faa7B7E1474b9161285114B97D11",
+      "chainId": 5,
+      "decimals": 6,
+      "name": "LP: ",
+      "symbol": "LP: ",
+      "tags": ["pool"],
+      "extensions": {
+        "principalToken": "0xBE5e3d7B20de52cD59610F5aBd7Da4fA836E3C86",
+        "underlying": "0x544D6A84BfC818220c2eEadD7ad3Ca831d032808",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1665764616,
+        "multiPool": "0x86b3d49e1e3b07c37e11d74d4c108814d9616a89",
+        "poolId": 1665764616
+      }
+    },
+    {
+      "address": "0xBD95432d442265a84cd12228734ba0895e5a9284",
+      "chainId": 5,
+      "decimals": 6,
+      "name": "LP: ",
+      "symbol": "LP: ",
+      "tags": ["pool"],
+      "extensions": {
+        "principalToken": "0xf5EBA649ae2Ea7CAB173202Bcc5aDCDFAF6fEACB",
+        "underlying": "0x544D6A84BfC818220c2eEadD7ad3Ca831d032808",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1668356616,
+        "multiPool": "0x86b3d49e1e3b07c37e11d74d4c108814d9616a89",
+        "poolId": 1668356616
+      }
+    },
+    {
+      "address": "0xC663C1EC1143bEb9390F5e32e694c75013a132c4",
+      "chainId": 5,
+      "decimals": 18,
+      "name": "LP: ",
+      "symbol": "LP: ",
+      "tags": ["pool"],
+      "extensions": {
+        "principalToken": "0xc271d1bc9152d02983260BDE44cc114Cae044F63",
+        "underlying": "0xD7c890349c40A77BF5c5176b48b418B87B60Dda9",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1663172616,
+        "multiPool": "0x6cd7dec64640f3d9f4f1e508ddde764fc3111e52",
+        "poolId": 1663172616
+      }
+    },
+    {
+      "address": "0xA2A0c6a5Da00c85a623dd79B0C727309f7F00b8F",
+      "chainId": 5,
+      "decimals": 18,
+      "name": "LP: ",
+      "symbol": "LP: ",
+      "tags": ["pool"],
+      "extensions": {
+        "principalToken": "0xF58938Fc5fc8916C4e605c203AD143116D307652",
+        "underlying": "0xD7c890349c40A77BF5c5176b48b418B87B60Dda9",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1665764616,
+        "multiPool": "0x6cd7dec64640f3d9f4f1e508ddde764fc3111e52",
+        "poolId": 1665764616
+      }
+    },
+    {
+      "address": "0x9dBC2F8bbC50b8Ffc89336893de885C8D8f7DCbE",
+      "chainId": 5,
+      "decimals": 18,
+      "name": "LP: ",
+      "symbol": "LP: ",
+      "tags": ["pool"],
+      "extensions": {
+        "principalToken": "0x96d2366b325B572c880D2338b09eCad90f3b8a61",
+        "underlying": "0xD7c890349c40A77BF5c5176b48b418B87B60Dda9",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1668356616,
+        "multiPool": "0x6cd7dec64640f3d9f4f1e508ddde764fc3111e52",
+        "poolId": 1668356616
+      }
+    },
+    {
+      "address": "0xC96D5836ffd15c05F962C2E70f561931769DAB13",
+      "chainId": 5,
+      "decimals": 18,
+      "name": "LP: ",
+      "symbol": "LP: ",
+      "tags": ["pool"],
+      "extensions": {
+        "principalToken": "0x6E3e63F03bc729B118360A8f25DC68d17444B2C6",
+        "underlying": "0x8186CFa19589498AF755a6aad2da75c1120f7A47",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1663172616,
+        "multiPool": "0x4ef14a824476d327df1750eda85650a57fb74d28",
+        "poolId": 1663172616
+      }
+    },
+    {
+      "address": "0xBFC7809A7c8ED2754B9640E976E10713c6c783c2",
+      "chainId": 5,
+      "decimals": 18,
+      "name": "LP: ",
+      "symbol": "LP: ",
+      "tags": ["pool"],
+      "extensions": {
+        "principalToken": "0x048B771929D4E23ff3B94cC9958557764e4132A0",
+        "underlying": "0x8186CFa19589498AF755a6aad2da75c1120f7A47",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1665764616,
+        "multiPool": "0x4ef14a824476d327df1750eda85650a57fb74d28",
+        "poolId": 1665764616
+      }
+    },
+    {
+      "address": "0x3b0CB50e3425E9f74C16Bee280F7a26f62EF6E94",
+      "chainId": 5,
+      "decimals": 18,
+      "name": "LP: ",
+      "symbol": "LP: ",
+      "tags": ["pool"],
+      "extensions": {
+        "principalToken": "0xA23099d276be7bE065C2d0AFdd4d82cFD268787E",
+        "underlying": "0x8186CFa19589498AF755a6aad2da75c1120f7A47",
+        "createdAtTimestamp": 1660580664,
+        "expiryTimestamp": 1668356616,
+        "multiPool": "0x4ef14a824476d327df1750eda85650a57fb74d28",
+        "poolId": 1668356616
       }
     }
   ]

@@ -4,24 +4,18 @@ export interface TagInfo {
 }
 
 export enum TokenTag {
-  CCPOOL = "ccpool",
-  PRINCIPAL = "eP",
-  YIELD = "eY",
+  POOL = "pool",
+  PRINCIPAL = "principalToken",
 }
 
 export const tags: Record<TokenTag, TagInfo> = {
+  [TokenTag.POOL]: {
+    name: "LP Pool",
+    description: "Token that represents the pool for Principal tokens",
+  },
   [TokenTag.PRINCIPAL]: {
-    name: "Principal token",
+    name: "Principal Token",
     description:
       "Token that represents a deposit of principal into a yield position",
-  },
-  [TokenTag.YIELD]: {
-    name: "Yield token",
-    description:
-      "Token that represents the yield on a deposit into a yield position",
-  },
-  [TokenTag.CCPOOL]: {
-    name: "ConvergentCurve pool",
-    description: "Token that represents the balancer pool for Principal tokens",
   },
 };

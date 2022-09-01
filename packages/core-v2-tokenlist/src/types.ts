@@ -8,42 +8,29 @@ export interface PrincipalTokenInfo extends TokenInfo {
     underlying: string;
 
     /**
-     * The interest token for the principal token
+     * The wrapped position, eg: an Element yearn vault asset proxy
      */
-    // interestToken: string;
+    position: string;
 
     /**
      * Number of seconds after epoch when the principal token was created
      */
     createdAtTimestamp: number;
+
     /**
      * Number of seconds after epoch when the principal token can be redeemed
      */
-    unlockTimestamp: number;
+    expiryTimestamp: number;
 
     /**
-     * The wrapped position, eg: an Element yearn vault asset proxy
+     * The 1155 multi token contract that this token belongs to
      */
-    position: string;
-  };
-}
-
-export interface YieldTokenInfo extends TokenInfo {
-  extensions: {
-    /**
-     * The underlying base asset for the yield token
-     */
-    underlying: string;
+    multiTerm: string;
 
     /**
-     * The Principal Token's address
+     * The identifier for this token in the multiTerm
      */
-    tranche: string;
-
-    /**
-     * Number of seconds after epoch when the yield token can be redeemed
-     */
-    unlockTimestamp: number;
+    tokenId: number;
   };
 }
 
@@ -52,18 +39,12 @@ export interface PrincipalPoolTokenInfo extends TokenInfo {
     /**
      * The principal token address
      */
-    bond: string;
+    principalToken: string;
 
     /**
-     * The underlying base asset for the principal token.  NOTE: This will be a
-     * weth address when dealing with eth tranches.
+     * The underlying base asset for the principal token
      */
     underlying: string;
-
-    /**
-     * balancer poolId
-     */
-    poolId: string;
 
     /**
      * Number of seconds after epoch when the pool was created
@@ -72,19 +53,18 @@ export interface PrincipalPoolTokenInfo extends TokenInfo {
 
     /**
      * Number of seconds after epoch when the pool assets will converge in
-     * price.
+     * price
      */
-    expiration: number;
+    expiryTimestamp: number;
 
     /**
-     * The number of seconds in the pools timescale.
+     * The 1155 multi token contract that this token belongs to
      */
-    unitSeconds: number;
+    multiPool: string;
 
     /**
-     * The address of the ConvergentPoolFactory contract this pool was created
-     * from. This is useful for determining pool contract versions.
+     * The identifier for this token in the multiPool
      */
-    convergentPoolFactory: string;
+    poolId: number;
   };
 }
