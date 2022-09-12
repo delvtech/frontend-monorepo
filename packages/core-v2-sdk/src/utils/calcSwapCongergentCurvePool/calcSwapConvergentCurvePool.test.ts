@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { calcSwapConvergentCurvePool } from "src/calcSwapCongergentCurvePool/calculateTradePrincipalTokens";
+import { calcSwapConvergentCurvePool } from "./calculateTradePrincipalTokens";
 
 describe("cacl", () => {
   it("Should return a string", () => {

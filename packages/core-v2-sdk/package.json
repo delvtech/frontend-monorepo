@@ -1,16 +1,31 @@
 {
   "name": "@elementfi/core-v2-sdk",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Element SDK for V2 contracts",
-  "main": "index.js",
+  "license": "Apache-2.0",
+  "source": "src/index.ts",
+  "main": "dist/main.js",
+  "targets": {
+    "main": {
+      "includeNodeModules": []
+    }
+  },
+  "types": "dist/main.d.ts",
+  "files": [
+    "dist"
+  ],
+  "alias": {
+    "src": "./src"
+  },
   "scripts": {
-    "test": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat test",
-    "build": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat compile",
+    "watch": "parcel watch",
+    "build": "parcel build",
+    "test": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat test",
     "prepare": "husky install",
-    "lint:w": "eslint --fix '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "lint": "eslint '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "prettier:w": "prettier --write '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'",
-    "prettier:check": "prettier --check '**/*.{gql,graphql,js,jsx,ts,tsx,json,md}'"
+    "lint:w": "eslint --fix **/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
+    "lint": "eslint **/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
+    "prettier:w": "prettier --write **/*.{gql,graphql,js,jsx,ts,tsx,json,md}",
+    "prettier:check": "prettier --check **/*.{gql,graphql,js,jsx,ts,tsx,json,md}"
   },
   "lint-staged": {
     "**/*.{gql,graphql,js,jsx,ts,tsx,json,md}": [
@@ -20,45 +35,45 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/element-fi/frontend-monorepo.git"
+    "url": "https://github.com/element-fi/frontend-monorepo.git"
   },
-  "author": "Matthew Brown",
-  "license": "Apache-2.0",
+  "author": "Element Finance (https://www.element.fi)",
   "bugs": {
     "url": "https://github.com/element-fi/frontend-monorepo/issues"
   },
-  "homepage": "https://github.com/element-fi/frontend-monorepo/apps/#readme",
+  "homepage": "https://github.com/element-fi/frontend-monorepo/tree/main/packages/core-v2-sdk#readme",
   "dependencies": {
-    "@elementfi/core-typechain": "*",
-    "@elementfi/council-typechain": "*",
-    "@elementfi/eslint-config": "*",
-    "@elementfi/prettier-config": "*",
-    "@openzeppelin/contracts": "^4.6.0",
-    "ethers": "^5.6.6",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.3.7",
-    "prettier": "2.6.2"
+    "@elementfi/core-v2-typechain": "*"
   },
   "devDependencies": {
+    "@elementfi/eslint-config": "*",
+    "@elementfi/prettier-config": "*",
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.6.0",
     "@typechain/ethers-v5": "^7.2.0",
     "@typechain/hardhat": "^2.3.1",
     "@types/chai": "^4.3.1",
     "@types/mocha": "^9.1.1",
     "@types/node": "^12.20.52",
-    "@typescript-eslint/eslint-plugin": "^5.31.0",
-    "@typescript-eslint/parser": "^5.36.0",
     "chai": "^4.3.6",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
+    "eslint": "7.32.0",
     "ethereum-waffle": "^3.4.4",
-    "ethers": "^5.6.7",
+    "ethers": "^5.6.8",
     "hardhat": "^2.9.6",
-    "solhint": "^3.3.7",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "parcel": "^2.6.0",
+    "prettier": "2.6.2",
     "ts-node": "^10.8.1",
     "tsconfig-paths": "^4.0.0",
     "typechain": "^5.2.0",
     "typescript": "^4.7.4"
+  },
+  "peerDependencies": {
+    "ethers": ">=5.6"
   }
 }

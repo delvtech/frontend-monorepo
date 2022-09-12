@@ -1,4 +1,4 @@
-import { tradePrincipalTokens } from "src/tradePrincipalTokens/tradePrincipalTokens";
+import { tradePrincipalTokens } from "./tradePrincipalTokens";
 /* eslint-disable no-restricted-imports */
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
@@ -6,10 +6,10 @@ import { parseEther } from "ethers/lib/utils";
 import hre, { ethers } from "hardhat";
 
 // TODO add tsconfig-paths/register to hardhat config
-import { LiquidityPool__factory } from "../../typechain/factories/LiquidityPool__factory";
-import { MockERC20__factory } from "../../typechain/factories/MockERC20__factory";
-import { LiquidityPool } from "../../typechain/LiquidityPool";
-import { MockERC20 } from "../../typechain/MockERC20";
+import { LiquidityPool__factory } from "typechain/factories/LiquidityPool__factory";
+import { MockERC20__factory } from "typechain/factories/MockERC20__factory";
+import { LiquidityPool } from "typechain/LiquidityPool";
+import { MockERC20 } from "typechain/MockERC20";
 
 describe("tradePrincipalTokens", () => {
   let signers: SignerWithAddress[];

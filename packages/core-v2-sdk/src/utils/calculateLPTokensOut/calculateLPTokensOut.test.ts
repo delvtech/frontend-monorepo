@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { calculateLPTokensOut } from "src/calculateLPTokensOut/calculateLPTokensOut";
+import { calculateLPTokensOut } from "./calculateLPTokensOut";
 
 const tokenOneAddress = ethers.constants.AddressZero;
 const tokenTwoAddress = ethers.constants.AddressZero;

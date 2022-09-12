@@ -2,7 +2,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import hre, { ethers } from "hardhat";
 
-import { tradePrincipalTokens } from "src/tradePrincipalTokens/tradePrincipalTokens";
+import { tradePrincipalTokens } from "src/utils/tradePrincipalTokens/tradePrincipalTokens";
 
 const tokenInAddress = ethers.constants.AddressZero;
 const tokenOutAddress = ethers.constants.AddressZero;

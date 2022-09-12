@@ -2,11 +2,12 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import hre, { ethers } from "hardhat";
 
-import { withdrawLiquidity } from "src/withdrawLiquidity/withdrawLiquidity";
+import { buyYieldTokens } from "src/utils/buyYieldTokens/buyYieldTokens";
 
-const poolAddress = ethers.constants.AddressZero;
+const contractAddress = ethers.constants.AddressZero;
+const vaultAddress = ethers.constants.AddressZero;
 
-describe("withdrawLiquidity", () => {
+describe("buyYieldtokens", () => {
   let signers: SignerWithAddress[];
   let signer: SignerWithAddress;
 
@@ -16,7 +17,7 @@ describe("withdrawLiquidity", () => {
   });
 
   it("Should return a transaction", async () => {
-    const tx = await withdrawLiquidity("1", poolAddress, signer);
+    const tx = await buyYieldTokens(contractAddress, vaultAddress, "1", signer);
     expect(tx.from).to.equal(signer.address);
   });
 });

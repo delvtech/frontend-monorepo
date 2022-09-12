@@ -2,7 +2,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import hre, { ethers } from "hardhat";
 
-import { redeemLiquidity } from "src/redeemLiquidity/redeemLiquidity";
+import { redeemLiquidity } from "./redeemLiquidity";
 
 const poolAddress = ethers.constants.AddressZero;
 
