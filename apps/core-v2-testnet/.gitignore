@@ -5,7 +5,10 @@ coverage.json
 typechain
 typechain-types
 
-#Hardhat files
+# Hardhat files
 cache
 artifacts
+
+# local
+accounts.json
 
