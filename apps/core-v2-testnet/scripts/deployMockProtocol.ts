@@ -11,6 +11,7 @@ import Logger from "utils/logger";
 import { ONE_DAY_IN_SECONDS, ONE_MINUTE_IN_SECONDS } from "@elementfi/base";
 import { deployMockPermitToken } from "src/deploy/mocks/deployMockPermitToken";
 import { deployMockPool } from "src/deploy/mocks/deployMockPool";
+import { giveTokens } from "src/helpers/giveTokens";
 
 // Script to deploy a mock version of the core-v2 protocol
 // Uses mock contracts from the @elementfi/protocol-v2 repo
@@ -82,17 +83,28 @@ async function main() {
   Logger.successfulDeploy("DAI Term", daiTerm);
   Logger.successfulDeploy("WETH Term", wethTerm);
 
-  // Mint tokens to deployer EOA and give term contract max allowance
-  await usdc.mint(user.address, 1_000_000);
+  // Mint tokens to all signers and give term contract max allowance
+  giveTokens(
+    signers.map((signer) => signer.address),
+    usdc,
+    1_000_000,
+  );
   await usdc
     .connect(user)
     .approve(usdcTerm.address, ethers.constants.MaxUint256);
 
-  await dai.mint(user.address, 1_000_000);
+  giveTokens(
+    signers.map((signer) => signer.address),
+    dai,
+    1_000_000,
+  );
   await dai.connect(user).approve(daiTerm.address, ethers.constants.MaxUint256);
 
-  // TODO @cashd: use permit here
-  await weth.mint(user.address, 100_000);
+  giveTokens(
+    signers.map((signer) => signer.address),
+    weth,
+    100_000,
+  );
   await weth
     .connect(user)
     .approve(wethTerm.address, ethers.constants.MaxUint256);
