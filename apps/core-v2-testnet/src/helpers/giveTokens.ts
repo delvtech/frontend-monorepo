@@ -5,9 +5,10 @@ export async function giveTokens(
   token: MockERC20 | MockERC20Permit,
   amount: number,
 ): Promise<void[]> {
+  const scalar = 10 ^ (await token.decimals());
   return await Promise.all(
     accounts.map(async (account) => {
-      await token.mint(account, amount * (await token.decimals()));
+      await token.mint(account, amount * scalar);
     }),
   );
 }
