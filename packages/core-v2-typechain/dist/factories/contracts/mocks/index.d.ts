@@ -6,5 +6,6 @@ export { MockFixedPointMath__factory } from "./MockFixedPointMath__factory";
 export { MockMultiToken__factory } from "./MockMultiToken__factory";
 export { MockPool__factory } from "./MockPool__factory";
 export { MockTWAROracle__factory } from "./MockTWAROracle__factory";
+export { MockTerm__factory } from "./MockTerm__factory";
 export { MockYieldAdapter__factory } from "./MockYieldAdapter__factory";
 export { MockYieldSpaceMath__factory } from "./MockYieldSpaceMath__factory";

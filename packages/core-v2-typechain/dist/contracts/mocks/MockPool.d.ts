@@ -403,6 +403,7 @@ export interface MockPoolInterface extends utils.Interface {
         "Approval(address,address,uint256)": EventFragment;
         "ApprovalForAll(address,address,bool)": EventFragment;
         "BondsTraded(uint256,address,bool,uint256,uint256)": EventFragment;
+        "PoolRegistered(uint256)": EventFragment;
         "Sync(uint256,uint256,uint256)": EventFragment;
         "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
         "UpdateBuffer(uint256,uint256)": EventFragment;
@@ -414,6 +415,8 @@ export interface MockPoolInterface extends utils.Interface {
     getEvent(nameOrSignatureOrTopic: "ApprovalForAll(address,address,bool)"): EventFragment;
     getEvent(nameOrSignatureOrTopic: "BondsTraded"): EventFragment;
     getEvent(nameOrSignatureOrTopic: "BondsTraded(uint256,address,bool,uint256,uint256)"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "PoolRegistered"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "PoolRegistered(uint256)"): EventFragment;
     getEvent(nameOrSignatureOrTopic: "Sync"): EventFragment;
     getEvent(nameOrSignatureOrTopic: "Sync(uint256,uint256,uint256)"): EventFragment;
     getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
@@ -460,6 +463,13 @@ export declare type BondsTradedEvent = TypedEvent<[
     BigNumber
 ], BondsTradedEventObject>;
 export declare type BondsTradedEventFilter = TypedEventFilter<BondsTradedEvent>;
+export interface PoolRegisteredEventObject {
+    poolId: BigNumber;
+}
+export declare type PoolRegisteredEvent = TypedEvent<[
+    BigNumber
+], PoolRegisteredEventObject>;
+export declare type PoolRegisteredEventFilter = TypedEventFilter<PoolRegisteredEvent>;
 export interface SyncEventObject {
     poolId: BigNumber;
     bondReserve: BigNumber;
@@ -1179,6 +1189,8 @@ export interface MockPool extends BaseContract {
         ApprovalForAll(account?: PromiseOrValue<string> | null, operator?: PromiseOrValue<string> | null, approved?: null): ApprovalForAllEventFilter;
         "BondsTraded(uint256,address,bool,uint256,uint256)"(poolId?: PromiseOrValue<BigNumberish> | null, receiver?: PromiseOrValue<string> | null, isBuy?: PromiseOrValue<boolean> | null, amountIn?: null, amountOut?: null): BondsTradedEventFilter;
         BondsTraded(poolId?: PromiseOrValue<BigNumberish> | null, receiver?: PromiseOrValue<string> | null, isBuy?: PromiseOrValue<boolean> | null, amountIn?: null, amountOut?: null): BondsTradedEventFilter;
+        "PoolRegistered(uint256)"(poolId?: PromiseOrValue<BigNumberish> | null): PoolRegisteredEventFilter;
+        PoolRegistered(poolId?: PromiseOrValue<BigNumberish> | null): PoolRegisteredEventFilter;
         "Sync(uint256,uint256,uint256)"(poolId?: PromiseOrValue<BigNumberish> | null, bondReserve?: null, shareReserve?: null): SyncEventFilter;
         Sync(poolId?: PromiseOrValue<BigNumberish> | null, bondReserve?: null, shareReserve?: null): SyncEventFilter;
         "TransferSingle(address,address,address,uint256,uint256)"(operator?: PromiseOrValue<string> | null, from?: PromiseOrValue<string> | null, to?: PromiseOrValue<string> | null, id?: null, value?: null): TransferSingleEventFilter;
