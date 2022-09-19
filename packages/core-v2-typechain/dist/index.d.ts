@@ -67,6 +67,8 @@ export type { MockMultiToken } from "./contracts/mocks/MockMultiToken";
 export { MockMultiToken__factory } from "./factories/contracts/mocks/MockMultiToken__factory";
 export type { MockPool } from "./contracts/mocks/MockPool";
 export { MockPool__factory } from "./factories/contracts/mocks/MockPool__factory";
+export type { MockTerm } from "./contracts/mocks/MockTerm";
+export { MockTerm__factory } from "./factories/contracts/mocks/MockTerm__factory";
 export type { MockTWAROracle } from "./contracts/mocks/MockTWAROracle";
 export { MockTWAROracle__factory } from "./factories/contracts/mocks/MockTWAROracle__factory";
 export type { MockYieldAdapter } from "./contracts/mocks/MockYieldAdapter";

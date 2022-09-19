@@ -6,5 +6,6 @@ export type { MockFixedPointMath } from "./MockFixedPointMath";
 export type { MockMultiToken } from "./MockMultiToken";
 export type { MockPool } from "./MockPool";
 export type { MockTWAROracle } from "./MockTWAROracle";
+export type { MockTerm } from "./MockTerm";
 export type { MockYieldAdapter } from "./MockYieldAdapter";
 export type { MockYieldSpaceMath } from "./MockYieldSpaceMath";
