@@ -14,7 +14,11 @@ interface FixedRateCardListProps {
 }
 
 const aztecLink = (
-  <a href="https://zk.money/earn" key="aztec-link">
+  <a
+    href="https://zk.money/earn"
+    key="aztec-link"
+    onClick={(e) => e.stopPropagation()}
+  >
     zk.money
   </a>
 );
