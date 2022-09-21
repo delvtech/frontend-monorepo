@@ -15,7 +15,7 @@ import { getCurvePoolTokensForPrincipalToken } from "elf/curve/tokens";
 import { getPoolInfoForPrincipalToken } from "elf/pools/ccpool";
 import { getIsMature } from "elf/tranche/getIsMature";
 import { useRouter } from "next/router";
-import { ReactElement, useCallback } from "react";
+import { ReactElement, ReactNode, useCallback } from "react";
 import { getTokenInfo } from "tokenlists/tokenlists";
 import { t } from "ttag";
 import { Navigation } from "ui/app/navigation/navigation";
@@ -27,12 +27,14 @@ import { usePrincipalTokenYield } from "ui/pools/hooks/usePrincipalTokenYield";
 
 interface FixedRateCardProps {
   principalToken: PrincipalTokenInfo;
+  bannerText?: ReactNode;
 }
 
 export function FixedRateCardWithZap(
   props: FixedRateCardProps,
 ): ReactElement | null {
   const {
+    bannerText,
     principalToken: {
       address,
       extensions: { unlockTimestamp, underlying, position },
@@ -63,8 +65,8 @@ export function FixedRateCardWithZap(
     <Card
       interactive
       elevation={Elevation.TWO}
+      onClick={onCardClick}
       className={classNames(
-        { [styles.fixedRatesZapGrid]: isLargeScreen },
         tw(
           "w-full",
           "max-w-sm",
@@ -77,42 +79,73 @@ export function FixedRateCardWithZap(
           "items-center",
         ),
       )}
-      onClick={onCardClick}
     >
-      <div>
-        <LabeledText
-          className={tw("text-left", "pl-2")}
-          icon={BaseAssetIcon ? <BaseAssetIcon height={36} width={36} /> : null}
-          iconClassName={tw("flex-shrink-0")}
-          label={t`${positionName}`}
-          labelClassName={tw("text-xs")}
-          textClassName={tw("text-base")}
-          text={t`${baseAssetSymbol}`}
-        />
-      </div>
       <div
         className={classNames(
-          tw("grid", "grid-cols-3", "content-center", "gap-2"),
+          { [styles.fixedRatesZapGrid]: isLargeScreen },
+          tw(
+            "w-full",
+            "max-w-sm",
+            "lg:min-w-full",
+            "lg:max-w-xl",
+            "flex",
+            "flex-col",
+            "space-y-4",
+            "lg:space-y-0",
+            "items-center",
+          ),
         )}
       >
-        {curvePoolTokens.map(({ address }) =>
-          findAssetIconByAddress(address)({ height: 20, width: 20 }),
-        )}
-      </div>
+        <div>
+          <LabeledText
+            className={tw("text-left", "pl-2")}
+            icon={
+              BaseAssetIcon ? <BaseAssetIcon height={36} width={36} /> : null
+            }
+            iconClassName={tw("flex-shrink-0")}
+            label={t`${positionName}`}
+            labelClassName={tw("text-xs")}
+            textClassName={tw("text-base")}
+            text={t`${baseAssetSymbol}`}
+          />
+        </div>
+        <div
+          className={classNames(
+            tw("grid", "grid-cols-3", "content-center", "gap-2"),
+          )}
+        >
+          {curvePoolTokens.map(({ address }) =>
+            findAssetIconByAddress(address)({ height: 20, width: 20 }),
+          )}
+        </div>
 
-      <span>
-        <Tag large fill intent={isRedeemable ? Intent.SUCCESS : Intent.PRIMARY}>
-          {formattedUnlockDate}
-        </Tag>
-      </span>
-      <span className={tw("text-base")}>
-        {t`${isLargeScreen ? "" : t`Fixed APR: `} ${formatPercent(fixedRate)}`}
-      </span>
-      <div className={tw("text-right")}>
-        <Button minimal rightIcon={IconNames.CARET_RIGHT} onClick={() => {}}>
-          {!isLargeScreen ? t`Continue` : null}
-        </Button>
+        <span>
+          <Tag
+            large
+            fill
+            intent={isRedeemable ? Intent.SUCCESS : Intent.PRIMARY}
+          >
+            {formattedUnlockDate}
+          </Tag>
+        </span>
+        <span className={tw("text-base")}>
+          {t`${isLargeScreen ? "" : t`Fixed APR: `} ${formatPercent(
+            fixedRate,
+          )}`}
+        </span>
+        <div className={tw("text-right")}>
+          <Button minimal rightIcon={IconNames.CARET_RIGHT} onClick={() => {}}>
+            {!isLargeScreen ? t`Continue` : null}
+          </Button>
+        </div>
       </div>
+      {bannerText ? (
+        <div className="w-full">
+          <Tag large className="mt-8" minimal fill multiline>
+            {bannerText}
+          </Tag>
+        </div>
+      ) : null}
     </Card>
   );
 }
