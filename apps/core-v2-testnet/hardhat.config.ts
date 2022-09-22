@@ -1,17 +1,12 @@
-import { HardhatNetworkAccountsUserConfig } from "hardhat/types";
-import { HardhatUserConfig } from "hardhat/config";
-import { existsSync, readFileSync } from "fs";
-
 // This adds support for typescript paths
 import "tsconfig-paths/register";
-
 import "@nomicfoundation/hardhat-toolbox";
 import "dotenv/config";
 import "src/tasks";
 import getAccounts from "src/utils/getAccounts";
+import { HardhatUserConfig } from "hardhat/config";
 
-const { GOERLI_RPC, PRIVATE_KEY } = process.env;
-console.log(GOERLI_RPC, PRIVATE_KEY);
+const { GOERLI_RPC, PRIVATE_KEY, REPORT_GAS, ETHERSCAN_API } = process.env;
 
 // Go to https://hardhat.org/config/ to learn more
 const config: HardhatUserConfig = {
@@ -25,12 +20,12 @@ const config: HardhatUserConfig = {
     },
   },
   gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
+    enabled: REPORT_GAS !== undefined,
     currency: "USD",
   },
 
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: ETHERSCAN_API,
   },
 };
 
