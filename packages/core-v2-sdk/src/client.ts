@@ -1,18 +1,35 @@
-import { CoreV2Context } from "src/context";
-import { MultiPoolGetter } from "src/getters/MultiPoolGetter";
-import { MultiTermGetter } from "src/getters/MultiTermGetter";
-import { YieldSourceGetter } from "src/getters/YieldSourceGetter";
+import { providers } from "ethers";
+
+export interface ElementClientOptions {
+  chainId: number;
+  provider: providers.BaseProvider;
+  dataSources?: Record<string, any>[];
+}
 
 export class ElementClient {
-  context: CoreV2Context;
-  multiPools: MultiPoolGetter;
-  multiTerms: MultiTermGetter;
-  yieldSources: YieldSourceGetter;
+  chainId: number;
+  provider: providers.BaseProvider;
+  dataSources: Record<string, any>[];
 
-  constructor(context: CoreV2Context) {
-    this.context = context;
-    this.multiPools = new MultiPoolGetter(this);
-    this.multiTerms = new MultiTermGetter(this);
-    this.yieldSources = new YieldSourceGetter(this);
+  constructor({ chainId, provider, dataSources = [] }: ElementClientOptions) {
+    this.chainId = chainId;
+    this.provider = provider;
+    this.dataSources = dataSources;
   }
 }
+
+// class MultiPoolContractDataSourceManager {
+//   ds: Record<string, MultiPoolContractDataSource>;
+//   constructor() {
+//     this.ds = {};
+//   }
+
+//   getDataSource(address: string, provider: providers.BaseProvider): MultiPoolContractDataSource {
+//     if (this.ds[address]) {
+//       return this.ds[address]
+//     } else {
+//       this.ds[address] = new MultiPoolContractDataSource({ address, provider})
+//       return this.ds[address]
+//     }
+//   }
+// }
