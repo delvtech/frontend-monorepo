@@ -1,5 +1,3 @@
-import { Term } from "./Term";
-import { Token } from "./Token";
 import { YieldSource } from "./YieldSource";
 
 export interface MultiTermFields {
