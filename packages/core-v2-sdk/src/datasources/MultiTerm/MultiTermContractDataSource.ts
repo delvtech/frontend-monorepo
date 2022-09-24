@@ -22,11 +22,7 @@ export class MultiTermContractDataSource implements MultiTermDataSource {
 
   async getYieldSource(): Promise<null> {
     // console.warn('Idk how to do that')
-    return cached({
-      cacheKey: "getYieldSourceAddress",
-      cache: this.cache,
-      callback: () => null,
-    });
+    return null;
   }
 
   async getBaseAsset(): Promise<string> {
