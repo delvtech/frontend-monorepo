@@ -1,6 +1,6 @@
 import { Provider } from "@ethersproject/providers";
 import LRUCache from "lru-cache";
-import { cached, getCacheKey } from "@elementfi/base";
+import { cached } from "@elementfi/base";
 import { CoreVoting__factory, CoreVoting } from "@elementfi/council-typechain";
 import { VotingVaultDataSource } from "./VotingVaultDataSource";
 
@@ -37,10 +37,7 @@ export class CoreVotingContract {
   > {
     return cached({
       cache: this.cache,
-      cacheKey: getCacheKey("getProposalCreatedEventArgs", [
-        fromBlock,
-        toBlock,
-      ]),
+      cacheKey: ["getProposalCreatedEventArgs", fromBlock, toBlock],
       callback: async () => {
         const proposalCreatedEvents = await this.contract.queryFilter(
           this.contract.filters.ProposalCreated(),
@@ -71,7 +68,7 @@ export class CoreVotingContract {
   }> {
     return cached({
       cache: this.cache,
-      cacheKey: getCacheKey("getProposalById", [id]),
+      cacheKey: ["getProposalById", id],
       callback: async () => {
         const { proposalHash, created, unlock, expiration, quorum, lastCall } =
           await this.contract.functions.proposals(id);
@@ -96,7 +93,7 @@ export class CoreVotingContract {
   }> {
     return cached({
       cache: this.cache,
-      cacheKey: getCacheKey("getVote", [voter, proposalId]),
+      cacheKey: ["getVote", voter, proposalId],
       callback: async () => {
         const { votingPower, castBallot } = await this.contract.functions.votes(
           voter,

@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import { Logger } from "ethers/lib/utils";
 import { Provider } from "@ethersproject/providers";
 import LRUCache from "lru-cache";
-import { cached, getCacheKey } from "@elementfi/base";
+import { cached } from "@elementfi/base";
 import {
   LockingVault,
   LockingVault__factory,
@@ -26,7 +26,7 @@ export class LockingVaultContract extends VotingVaultContract {
   async getBalance(voter: string): Promise<string> {
     return cached({
       cache: this.cache,
-      cacheKey: getCacheKey("getBalance", [voter]),
+      cacheKey: ["getBalance", voter],
       callback: async () => {
         const [, balance] = await this.contract.functions.deposits(voter);
         return balance.toString();
@@ -40,7 +40,7 @@ export class LockingVaultContract extends VotingVaultContract {
   ): Promise<string> {
     return cached({
       cache: this.cache,
-      cacheKey: getCacheKey("getVotingPowerView", [voter, blockNumber]),
+      cacheKey: ["getVotingPowerView", voter, blockNumber],
       callback: async () => {
         try {
           // TODO: find a better solution for this.
@@ -72,7 +72,7 @@ export class LockingVaultContract extends VotingVaultContract {
   ): Promise<VoterWithPower[]> {
     return cached({
       cache: this.cache,
-      cacheKey: getCacheKey("getAllVotersWithPower", [fromBlock, toBlock]),
+      cacheKey: ["getAllVotersWithPower", fromBlock, toBlock],
       callback: async () => {
         const powersByVoter: Record<string, bigint> = {};
         const voteChangeEvents = await this.contract.queryFilter(

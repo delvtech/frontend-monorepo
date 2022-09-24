@@ -1,7 +1,7 @@
 import { BaseContract, ethers } from "ethers";
 import { Logger } from "ethers/lib/utils";
 import LRUCache from "lru-cache";
-import { cached, getCacheKey } from "@elementfi/base";
+import { cached } from "@elementfi/base";
 import { VoterWithPower, VotingVaultDataSource } from "./VotingVaultDataSource";
 
 // TODO: implement Dataloader (https://github.com/graphql/dataloader)
@@ -27,7 +27,7 @@ export class VotingVaultContract implements VotingVaultDataSource {
   async getVotingPower(voter: string, blockNumber: number): Promise<string> {
     return cached({
       cache: this.cache,
-      cacheKey: getCacheKey("getVotingPower", [voter, blockNumber]),
+      cacheKey: ["getVotingPower", voter, blockNumber],
       callback: async () => {
         try {
           // TODO: find a better solution for this.

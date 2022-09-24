@@ -17,18 +17,11 @@ type GetAndSetOptions = Parameters<LRUCache<string, any>["get"]>[1] & Parameters
  * @see https://github.com/isaacs/node-lru-cache
  */
 export function cached<TCallback extends (...args: any[]) => any>({ cache, cacheKey, callback, options, }: {
-    cacheKey: string;
+    cacheKey: any;
     callback: TCallback;
     cache?: LRUCache<string, any>;
     options?: GetAndSetOptions;
 }): ReturnType<TCallback>;
-/**
- * Create a cache key from a prefix and list of values (arguments)
- * @param prefix The starting value of the key.
- * @param args The values to stringify and append to the key.
- * @returns A string made up of the prefix and stringified arguments.
- */
-export function getCacheKey(prefix: string, args: any[]): string;
 export const EMPTY_ARRAY: unknown[];
 /**
  * Hook to only console.log when the inputs to console.log change.

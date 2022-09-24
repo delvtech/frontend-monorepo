@@ -16,30 +16,20 @@ function $parcel$export(e, n, v, s) {
 var $f8c6ad5c7e6eecf8$exports = {};
 
 $parcel$export($f8c6ad5c7e6eecf8$exports, "cached", () => $f8c6ad5c7e6eecf8$export$ade7a147f5129058);
-$parcel$export($f8c6ad5c7e6eecf8$exports, "getCacheKey", () => $f8c6ad5c7e6eecf8$export$611736262b635f8d);
 
 
 function $f8c6ad5c7e6eecf8$export$ade7a147f5129058({ cache: cache = new (0, $aHKi9$lrucache)({
     max: 500
 }) , cacheKey: cacheKey , callback: callback , options: options  }) {
-    if (cache.has(cacheKey)) // console.log("✅ cache hit", cacheKey);
-    return cache.get(cacheKey, options);
+    const key = (0, $aHKi9$fastjsonstablestringify)(cacheKey);
+    if (cache.has(key)) // console.log("✅ cache hit", key);
+    return cache.get(key, options);
     else {
-        // console.log("❌ cache miss", cacheKey);
+        // console.log("❌ cache miss", key);
         const value = callback();
-        cache.set(cacheKey, value, options);
+        cache.set(key, value, options);
         return value;
     }
-}
-function $f8c6ad5c7e6eecf8$export$611736262b635f8d(prefix, args) {
-    const argKeys = [];
-    for (const arg of args){
-        if (arg === undefined) argKeys.push("undefined");
-        else if (arg === null) argKeys.push("null");
-        else if (typeof arg === "object") argKeys.push((0, $aHKi9$fastjsonstablestringify)(arg));
-        else argKeys.push(arg.toString());
-    }
-    return `${prefix}:${argKeys.join(",")}`;
 }
 
 
@@ -495,5 +485,5 @@ function $397765b987602cec$export$30140dd01348b2a4(addresses) {
 
 
 
-export {$f8c6ad5c7e6eecf8$export$ade7a147f5129058 as cached, $f8c6ad5c7e6eecf8$export$611736262b635f8d as getCacheKey, $67b205b0d34a74dc$export$2c66e96878bf4792 as EMPTY_ARRAY, $2d3f595eb50fcfec$export$7b92a9e9dcf639e8 as useConsole, $d59bee517dec3a5e$export$c06e1e7429de6283 as ChainId, $d59bee517dec3a5e$export$bb242f449f295e97 as ETHEREUM_BLOCK_PER_DAY, $d59bee517dec3a5e$export$d2f565a827ab012f as ETHEREUM_BLOCKS_PER_WEEK, $d59bee517dec3a5e$export$b3ea0c2306f884e1 as ChainNames, $d59bee517dec3a5e$export$aa618d5381c5cd48 as DEFAULT_CHAIN_IDS, $d59bee517dec3a5e$export$f68b30b973603526 as isLocalnet, $d59bee517dec3a5e$export$112421be00e64d10 as isGoerli, $d59bee517dec3a5e$export$5cb72704ec8022bd as isMainnet, $d59bee517dec3a5e$export$199d09866564123d as NUM_ETH_DECIMALS, $d59bee517dec3a5e$export$99abd183ce604255 as ONE_ETHER, $d59bee517dec3a5e$export$883ac2ca342d37f3 as ETH_ZERO_ADDRESS, $56b3c55af2bf5bcd$export$86e2cef2561044ac as useLocalStorage, $625fbb756041e4d7$export$18a3d1c69191c29e as getSafeFixedNumber, $625fbb756041e4d7$export$735b087916fcd24e as clipStringValueToDecimals, $625fbb756041e4d7$export$887f17e12b783cf7 as clipFixNumberToStringDecimals, $625fbb756041e4d7$export$69ac86cfdeba39d7 as getPlacesAfterDecimal, $1dba59548019060a$export$bde2602fd07d5cd7 as getMerkleTree, $1dba59548019060a$export$94df4b1ba6ed894d as hashAccount, $78cd2ca7b158658c$export$322d0207dec006d8 as convertToFiatBalance, $78cd2ca7b158658c$export$66665394091af12e as convertNumberToFiatBalance, $223d6cf3e1cd7b13$export$a17b3c2052469c69 as formatMoney, $7a8c7ec10f643837$export$967ec28199d3ad70 as usePref, $d55f72fa3e9a5dd1$export$456e5585408a0e3b as makePrefEnvelope, $e765d4d6c0744573$export$a8185c52fc9e2680 as getQueryData, $e765d4d6c0744573$export$541bc0d5d3d58e1c as getQueriesData, $79d6d779453d656e$export$a7f242eff11c1345 as formatDay, $79d6d779453d656e$export$6f25eb35eacda85b as formatFullDate, $79d6d779453d656e$export$30b172ccaef86308 as formatAbbreviatedDate, $79d6d779453d656e$export$48a32b34c69b0d84 as formatAbbreviatedMonthAndDay, $79d6d779453d656e$export$2979e79cc7cbf15b as formatYear, $cce8023e214136c1$export$5a6b55f8dbb0d34 as ONE_MINUTE_IN_SECONDS, $cce8023e214136c1$export$cb35ad678b61c779 as ONE_HOUR_IN_SECONDS, $cce8023e214136c1$export$c3df4e96b54fcc7 as ONE_DAY_IN_SECONDS, $cce8023e214136c1$export$569c3f5d39917057 as ONE_WEEK_IN_SECONDS, $cce8023e214136c1$export$dcabcde36a89149e as THIRTY_DAYS_IN_SECONDS, $cce8023e214136c1$export$fd0023aaea78d8ed as ONE_YEAR_IN_SECONDS, $cce8023e214136c1$export$6fba758ec36a5528 as ONE_MINUTE_IN_MILLISECONDS, $cce8023e214136c1$export$94def635c43dedab as ONE_HOUR_IN_MILLISECONDS, $cce8023e214136c1$export$4865375e6d8c4009 as TWELVE_HOUR_IN_MILLISECONDS, $cce8023e214136c1$export$2cf27d95188f1c13 as ONE_DAY_IN_MILLISECONDS, $cce8023e214136c1$export$fa561709697f8f37 as ONE_WEEK_IN_MILLISECONDS, $cce8023e214136c1$export$fe77a6ad9c93ac8 as ONE_YEAR_IN_MILLISECONDS, $cce8023e214136c1$export$885b9d72bc39ecdb as THIRTY_DAYS_IN_MILLISECONDS, $81db7f6a623e3a87$export$e76c9fc34db009b3 as convertEpochSecondsToDate, $92c0779481e80c2c$export$cbadc5a7223772a8 as assertNever, $facaa208d48b1127$export$327684fd9171161 as typeAassertNever, $29a98aa38f0bbc3a$export$cc3bc0b518c1c6b8 as formatBalance, $29a98aa38f0bbc3a$export$7fa9619042492a8a as formatBalance2, $1e23852652f6a0af$export$32e6b1ae352e94d6 as formatPercent, $be9bcc1d4b89dcc8$export$fa295b83bf634638 as sortAddresses, $397765b987602cec$export$30140dd01348b2a4 as validateAddresses};
+export {$f8c6ad5c7e6eecf8$export$ade7a147f5129058 as cached, $67b205b0d34a74dc$export$2c66e96878bf4792 as EMPTY_ARRAY, $2d3f595eb50fcfec$export$7b92a9e9dcf639e8 as useConsole, $d59bee517dec3a5e$export$c06e1e7429de6283 as ChainId, $d59bee517dec3a5e$export$bb242f449f295e97 as ETHEREUM_BLOCK_PER_DAY, $d59bee517dec3a5e$export$d2f565a827ab012f as ETHEREUM_BLOCKS_PER_WEEK, $d59bee517dec3a5e$export$b3ea0c2306f884e1 as ChainNames, $d59bee517dec3a5e$export$aa618d5381c5cd48 as DEFAULT_CHAIN_IDS, $d59bee517dec3a5e$export$f68b30b973603526 as isLocalnet, $d59bee517dec3a5e$export$112421be00e64d10 as isGoerli, $d59bee517dec3a5e$export$5cb72704ec8022bd as isMainnet, $d59bee517dec3a5e$export$199d09866564123d as NUM_ETH_DECIMALS, $d59bee517dec3a5e$export$99abd183ce604255 as ONE_ETHER, $d59bee517dec3a5e$export$883ac2ca342d37f3 as ETH_ZERO_ADDRESS, $56b3c55af2bf5bcd$export$86e2cef2561044ac as useLocalStorage, $625fbb756041e4d7$export$18a3d1c69191c29e as getSafeFixedNumber, $625fbb756041e4d7$export$735b087916fcd24e as clipStringValueToDecimals, $625fbb756041e4d7$export$887f17e12b783cf7 as clipFixNumberToStringDecimals, $625fbb756041e4d7$export$69ac86cfdeba39d7 as getPlacesAfterDecimal, $1dba59548019060a$export$bde2602fd07d5cd7 as getMerkleTree, $1dba59548019060a$export$94df4b1ba6ed894d as hashAccount, $78cd2ca7b158658c$export$322d0207dec006d8 as convertToFiatBalance, $78cd2ca7b158658c$export$66665394091af12e as convertNumberToFiatBalance, $223d6cf3e1cd7b13$export$a17b3c2052469c69 as formatMoney, $7a8c7ec10f643837$export$967ec28199d3ad70 as usePref, $d55f72fa3e9a5dd1$export$456e5585408a0e3b as makePrefEnvelope, $e765d4d6c0744573$export$a8185c52fc9e2680 as getQueryData, $e765d4d6c0744573$export$541bc0d5d3d58e1c as getQueriesData, $79d6d779453d656e$export$a7f242eff11c1345 as formatDay, $79d6d779453d656e$export$6f25eb35eacda85b as formatFullDate, $79d6d779453d656e$export$30b172ccaef86308 as formatAbbreviatedDate, $79d6d779453d656e$export$48a32b34c69b0d84 as formatAbbreviatedMonthAndDay, $79d6d779453d656e$export$2979e79cc7cbf15b as formatYear, $cce8023e214136c1$export$5a6b55f8dbb0d34 as ONE_MINUTE_IN_SECONDS, $cce8023e214136c1$export$cb35ad678b61c779 as ONE_HOUR_IN_SECONDS, $cce8023e214136c1$export$c3df4e96b54fcc7 as ONE_DAY_IN_SECONDS, $cce8023e214136c1$export$569c3f5d39917057 as ONE_WEEK_IN_SECONDS, $cce8023e214136c1$export$dcabcde36a89149e as THIRTY_DAYS_IN_SECONDS, $cce8023e214136c1$export$fd0023aaea78d8ed as ONE_YEAR_IN_SECONDS, $cce8023e214136c1$export$6fba758ec36a5528 as ONE_MINUTE_IN_MILLISECONDS, $cce8023e214136c1$export$94def635c43dedab as ONE_HOUR_IN_MILLISECONDS, $cce8023e214136c1$export$4865375e6d8c4009 as TWELVE_HOUR_IN_MILLISECONDS, $cce8023e214136c1$export$2cf27d95188f1c13 as ONE_DAY_IN_MILLISECONDS, $cce8023e214136c1$export$fa561709697f8f37 as ONE_WEEK_IN_MILLISECONDS, $cce8023e214136c1$export$fe77a6ad9c93ac8 as ONE_YEAR_IN_MILLISECONDS, $cce8023e214136c1$export$885b9d72bc39ecdb as THIRTY_DAYS_IN_MILLISECONDS, $81db7f6a623e3a87$export$e76c9fc34db009b3 as convertEpochSecondsToDate, $92c0779481e80c2c$export$cbadc5a7223772a8 as assertNever, $facaa208d48b1127$export$327684fd9171161 as typeAassertNever, $29a98aa38f0bbc3a$export$cc3bc0b518c1c6b8 as formatBalance, $29a98aa38f0bbc3a$export$7fa9619042492a8a as formatBalance2, $1e23852652f6a0af$export$32e6b1ae352e94d6 as formatPercent, $be9bcc1d4b89dcc8$export$fa295b83bf634638 as sortAddresses, $397765b987602cec$export$30140dd01348b2a4 as validateAddresses};
 //# sourceMappingURL=index.esm.js.map

@@ -22,40 +22,19 @@ export function cached<TCallback extends (...args: any[]) => any>({
   callback,
   options,
 }: {
-  cacheKey: string;
+  cacheKey: any;
   callback: TCallback;
   cache?: LRUCache<string, any>;
   options?: GetAndSetOptions;
 }): ReturnType<TCallback> {
-  if (cache.has(cacheKey)) {
-    // console.log("✅ cache hit", cacheKey);
-    return cache.get(cacheKey, options) as ReturnType<TCallback>;
+  const key = stringify(cacheKey);
+  if (cache.has(key)) {
+    // console.log("✅ cache hit", key);
+    return cache.get(key, options) as ReturnType<TCallback>;
   } else {
-    // console.log("❌ cache miss", cacheKey);
+    // console.log("❌ cache miss", key);
     const value = callback();
-    cache.set(cacheKey, value, options);
+    cache.set(key, value, options);
     return value;
   }
-}
-
-/**
- * Create a cache key from a prefix and list of values (arguments)
- * @param prefix The starting value of the key.
- * @param args The values to stringify and append to the key.
- * @returns A string made up of the prefix and stringified arguments.
- */
-export function getCacheKey(prefix: string, args: any[]): string {
-  const argKeys: string[] = [];
-  for (const arg of args) {
-    if (arg === undefined) {
-      argKeys.push("undefined");
-    } else if (arg === null) {
-      argKeys.push("null");
-    } else if (typeof arg === "object") {
-      argKeys.push(stringify(arg));
-    } else {
-      argKeys.push(arg.toString());
-    }
-  }
-  return `${prefix}:${argKeys.join(",")}`;
 }
