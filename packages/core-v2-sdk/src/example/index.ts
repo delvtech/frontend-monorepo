@@ -14,11 +14,13 @@ async function example() {
   });
   const multiTerm = await multiPool.getTerm();
   const baseAsset = await multiTerm.getBaseAsset();
+  const yieldSource = await multiTerm.getYieldSource();
 
   console.log({
     multiPool,
     multiTerm,
     baseAsset,
+    yieldSource,
   });
 }
 

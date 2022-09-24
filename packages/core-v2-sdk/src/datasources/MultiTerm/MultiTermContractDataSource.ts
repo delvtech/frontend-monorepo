@@ -21,6 +21,7 @@ export class MultiTermContractDataSource implements MultiTermDataSource {
   }
 
   async getYieldSource(): Promise<null> {
+    // TODO: Replace with appropriate Term.sol yield source property once added
     // console.warn('Idk how to do that')
     return null;
   }
