@@ -1,39 +1,26 @@
-import { YieldSource } from "./YieldSource";
-
-export interface MultiTermFields {
-  address: string;
-  yieldSource: YieldSource;
-  // baseAsset: Token;
-  // terms: Term[];
-  // totalVolume: string;
-  // perDayVolume: string;
-  // yields: string[];
-}
+import { providers } from "ethers";
+import { MultiTermDataSource } from "src/datasources/MultiTerm/MultiTermDataSource";
+import { MultiTermContractDataSource } from "src/datasources/MultiTerm/MultiTermContractDataSource";
+import { Token } from "./Token";
 
 export class MultiTerm {
   address: string;
-  yieldSource: YieldSource;
-  // baseAsset: Token;
-  // terms: Term[];
-  // totalVolume: string;
-  // perDayVolume: string;
-  // yields: string[];
+  dataSource: MultiTermDataSource;
+  provider: providers.BaseProvider;
 
-  constructor({
-    address,
-    yieldSource,
-  }: // baseAsset,
-  // terms,
-  // totalVolume,
-  // perDayVolume,
-  // yields,
-  MultiTermFields) {
+  constructor(
+    address: string,
+    provider: providers.BaseProvider,
+    dataSource?: MultiTermDataSource,
+  ) {
     this.address = address;
-    this.yieldSource = yieldSource;
-    // this.baseAsset = baseAsset;
-    // this.terms = terms;
-    // this.totalVolume = totalVolume;
-    // this.perDayVolume = perDayVolume;
-    // this.yields = yields;
+    this.dataSource =
+      dataSource ?? new MultiTermContractDataSource({ address, provider });
+    this.provider = provider;
+  }
+
+  async getBaseAsset(): Promise<Token> {
+    const address = await this.dataSource.getBaseAsset();
+    return new Token(address, this.provider);
   }
 }

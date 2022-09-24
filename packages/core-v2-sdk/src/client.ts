@@ -17,19 +17,3 @@ export class ElementClient {
     this.dataSources = dataSources;
   }
 }
-
-// class MultiPoolContractDataSourceManager {
-//   ds: Record<string, MultiPoolContractDataSource>;
-//   constructor() {
-//     this.ds = {};
-//   }
-
-//   getDataSource(address: string, provider: providers.BaseProvider): MultiPoolContractDataSource {
-//     if (this.ds[address]) {
-//       return this.ds[address]
-//     } else {
-//       this.ds[address] = new MultiPoolContractDataSource({ address, provider})
-//       return this.ds[address]
-//     }
-//   }
-// }
