@@ -1,18 +1,24 @@
-import { providers } from "ethers";
+import { ElementClient } from "src/client";
 import { TokenContractDataSource } from "src/datasources/Token/TokenContractDataSource";
 import { TokenDataSource } from "src/datasources/Token/TokenDataSource";
 
-export class Token {
+export interface TokenOptions {
   address: string;
-  dataSource: TokenDataSource;
+  client: ElementClient;
+  dataSource?: TokenDataSource;
+}
 
-  constructor(
-    address: string,
-    provider: providers.BaseProvider,
-    dataSource?: TokenDataSource,
-  ) {
-    this.address = address;
+export class Token {
+  client: ElementClient;
+  dataSource: TokenDataSource;
+  address: string;
+
+  constructor({ address, client, dataSource }: TokenOptions) {
+    this.client = client;
     this.dataSource =
-      dataSource || new TokenContractDataSource({ address, provider });
+      dataSource ??
+      client.getDataSource<TokenDataSource>({ address }) ??
+      new TokenContractDataSource({ address, provider: client.provider });
+    this.address = address;
   }
 }

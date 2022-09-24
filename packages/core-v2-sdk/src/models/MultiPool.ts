@@ -1,32 +1,33 @@
-import { providers } from "ethers";
 import { ElementClient } from "src/client";
 import { MultiPoolContractDataSource } from "src/datasources/MultiPool/MultiPoolContractDataSource";
 import { MultiPoolDataSource } from "src/datasources/MultiPool/MultiPoolDataSource";
-import { setDataSourceByAddress } from "src/utils/setDataSourceByAddress";
 import { MultiTerm } from "./MultiTerm";
 
-export class MultiPool {
+export interface MultiPoolOptions {
   address: string;
-  dataSource: MultiPoolDataSource;
-  provider: providers.BaseProvider;
+  client: ElementClient;
+  dataSource?: MultiPoolDataSource;
+}
 
-  constructor(
-    address: string,
-    client: ElementClient,
-    dataSource?: MultiPoolDataSource,
-  ) {
-    this.address = address;
-    this.provider = client.provider;
+export class MultiPool {
+  client: ElementClient;
+  dataSource: MultiPoolDataSource;
+  address: string;
+
+  constructor({ address, client, dataSource }: MultiPoolOptions) {
+    this.client = client;
     this.dataSource =
       dataSource ??
-      setDataSourceByAddress(
-        new MultiPoolContractDataSource({ address, provider: client.provider }),
-        client,
-      );
+      client.getDataSource<MultiPoolDataSource>({ address }) ??
+      new MultiPoolContractDataSource({ address, provider: client.provider });
+    this.address = address;
   }
 
   async getTerm(): Promise<MultiTerm> {
     const address = await this.dataSource.getMultiTerm();
-    return new MultiTerm(address, this.provider);
+    return new MultiTerm({
+      address,
+      client: this.client,
+    });
   }
 }
