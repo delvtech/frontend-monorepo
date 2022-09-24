@@ -9,16 +9,16 @@ export interface TokenOptions {
 }
 
 export class Token {
+  address: string;
   client: ElementClient;
   dataSource: TokenDataSource;
-  address: string;
 
   constructor({ address, client, dataSource }: TokenOptions) {
+    this.address = address;
     this.client = client;
     this.dataSource =
       dataSource ??
       client.getDataSource<TokenDataSource>({ address }) ??
       new TokenContractDataSource({ address, provider: client.provider });
-    this.address = address;
   }
 }

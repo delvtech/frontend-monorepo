@@ -11,17 +11,17 @@ export interface MultiTermOptions {
 }
 
 export class MultiTerm {
+  address: string;
   client: ElementClient;
   dataSource: MultiTermDataSource;
-  address: string;
 
   constructor({ address, client, dataSource }: MultiTermOptions) {
+    this.address = address;
     this.client = client;
     this.dataSource =
       dataSource ??
       client.getDataSource<MultiTermDataSource>({ address }) ??
       new MultiTermContractDataSource({ address, provider: client.provider });
-    this.address = address;
   }
 
   async getBaseAsset(): Promise<Token> {

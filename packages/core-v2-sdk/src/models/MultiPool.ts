@@ -10,17 +10,17 @@ export interface MultiPoolOptions {
 }
 
 export class MultiPool {
+  address: string;
   client: ElementClient;
   dataSource: MultiPoolDataSource;
-  address: string;
 
   constructor({ address, client, dataSource }: MultiPoolOptions) {
+    this.address = address;
     this.client = client;
     this.dataSource =
       dataSource ??
       client.getDataSource<MultiPoolDataSource>({ address }) ??
       new MultiPoolContractDataSource({ address, provider: client.provider });
-    this.address = address;
   }
 
   async getTerm(): Promise<MultiTerm> {

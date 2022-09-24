@@ -9,17 +9,17 @@ export interface YieldSourceOptions {
 }
 
 export class YieldSource {
+  address: string;
   client: ElementClient;
   dataSource: YieldSourceDataSource;
-  address: string;
 
   constructor({ address, client, dataSource }: YieldSourceOptions) {
+    this.address = address;
     this.client = client;
     this.dataSource =
       dataSource ??
       client.getDataSource<YieldSourceDataSource>({ address }) ??
       new UnknownYieldSourceDataSource({ address });
-    this.address = address;
   }
 
   getName(): Promise<string> {
