@@ -2,18 +2,18 @@ import { providers, BaseContract, BigNumberish, ContractTransaction, Overrides, 
 import LRUCache from "lru-cache";
 import { Pool as _Pool1, Term as _Term1, ERC4626Term, CompoundV3Term, ERC20, ERC4626 } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
-export interface ElementClientOptions {
+export interface ElementContextOptions {
     chainId: number;
     provider: providers.BaseProvider;
     dataSources?: Record<string, any>[];
 }
-export class ElementClient {
+export class ElementContext {
     chainId: number;
     provider: providers.BaseProvider;
     dataSources: Record<string, any>[];
-    constructor({ chainId, provider, dataSources }: ElementClientOptions);
+    constructor({ chainId, provider, dataSources }: ElementContextOptions);
     getDataSource<T extends Record<string, any>>(filter: Partial<T>): T | null;
-    setDataSource<T extends Record<string, any>>(filter: Partial<T>, dataSource: T): T;
+    registerDataSource<T extends Record<string, any>>(filter: Partial<T>, dataSource: T): T;
 }
 export class CachedDataSource {
     cache: LRUCache<string, any>;
@@ -149,9 +149,9 @@ export class ERC4626ContractDataSource extends ContractDataSource<ERC4626> imple
 }
 export class Token {
     address: string;
-    client: ElementClient;
+    context: ElementContext;
     dataSource: TokenDataSource;
-    constructor(address: string, client: ElementClient, dataSource?: TokenDataSource);
+    constructor(address: string, context: ElementContext, dataSource?: TokenDataSource);
     getSymbol(): Promise<string>;
     getDecimals(): Promise<number>;
     getName(): Promise<string>;
@@ -161,16 +161,16 @@ export class Token {
 }
 export class YieldSource {
     address: string;
-    client: ElementClient;
+    context: ElementContext;
     dataSource: YieldSourceDataSource;
-    constructor(address: string, client: ElementClient, dataSource?: YieldSourceDataSource);
+    constructor(address: string, context: ElementContext, dataSource?: YieldSourceDataSource);
     getName(): Promise<string>;
 }
 declare class PrincipalToken {
     id: number;
-    client: ElementClient;
+    context: ElementContext;
     term: Term;
-    constructor(id: number, client: ElementClient, term: Term);
+    constructor(id: number, context: ElementContext, term: Term);
     get maturity(): number;
     getBaseAsset(): Promise<Token>;
     getSymbol(): Promise<string>;
@@ -180,9 +180,9 @@ declare class PrincipalToken {
 }
 declare class YieldToken {
     id: number;
-    client: ElementClient;
+    context: ElementContext;
     term: Term;
-    constructor(id: number, client: ElementClient, term: Term);
+    constructor(id: number, context: ElementContext, term: Term);
     get maturity(): number;
     getBaseAsset(): Promise<Token>;
     getSymbol(): Promise<string>;
@@ -193,10 +193,10 @@ declare class YieldToken {
 }
 export class Term {
     id: number;
-    client: ElementClient;
+    context: ElementContext;
     multiTerm: MultiTerm;
     principalToken: PrincipalToken;
-    constructor(id: number, client: ElementClient, multiTerm: MultiTerm);
+    constructor(id: number, context: ElementContext, multiTerm: MultiTerm);
     get maturity(): number;
     getYieldSource(): Promise<YieldSource | null>;
     getBaseAsset(): Promise<Token>;
@@ -206,9 +206,9 @@ export class Term {
 }
 export class MultiTerm {
     address: string;
-    client: ElementClient;
+    context: ElementContext;
     dataSource: MultiTermDataSource;
-    constructor(address: string, client: ElementClient, dataSource?: MultiTermDataSource);
+    constructor(address: string, context: ElementContext, dataSource?: MultiTermDataSource);
     getTerm(expiryTimestamp: number): Promise<Term | null>;
     getTerms(fromBlock?: number, toBlock?: number): Promise<Term[]>;
     getYieldSource(): Promise<YieldSource | null>;
@@ -218,9 +218,9 @@ export class MultiTerm {
 }
 export class Pool {
     id: number;
-    client: ElementClient;
+    context: ElementContext;
     multiPool: MultiPool;
-    constructor(id: number, client: ElementClient, multiPool: MultiPool);
+    constructor(id: number, context: ElementContext, multiPool: MultiPool);
     get maturity(): number;
     getYieldSource(): Promise<YieldSource | null>;
     getBaseAsset(): Promise<Token>;
@@ -229,9 +229,9 @@ export class Pool {
 }
 export class MultiPool {
     address: string;
-    client: ElementClient;
+    context: ElementContext;
     dataSource: MultiPoolDataSource;
-    constructor(address: string, client: ElementClient, dataSource?: MultiPoolDataSource);
+    constructor(address: string, context: ElementContext, dataSource?: MultiPoolDataSource);
     getPool(expiryTimestamp: number): Promise<Pool | null>;
     getPools(fromBlock?: number, toBlock?: number): Promise<Pool[]>;
     getMultiTerm(): Promise<MultiTerm>;

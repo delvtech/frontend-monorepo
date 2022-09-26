@@ -1,17 +1,17 @@
 import { providers } from "ethers";
 
-export interface ElementClientOptions {
+export interface ElementContextOptions {
   chainId: number;
   provider: providers.BaseProvider;
   dataSources?: Record<string, any>[];
 }
 
-export class ElementClient {
+export class ElementContext {
   chainId: number;
   provider: providers.BaseProvider;
   dataSources: Record<string, any>[];
 
-  constructor({ chainId, provider, dataSources = [] }: ElementClientOptions) {
+  constructor({ chainId, provider, dataSources = [] }: ElementContextOptions) {
     this.chainId = chainId;
     this.provider = provider;
     this.dataSources = dataSources;
@@ -30,7 +30,7 @@ export class ElementClient {
     return (dataSource as T) ?? null;
   }
 
-  setDataSource<T extends Record<string, any>>(
+  registerDataSource<T extends Record<string, any>>(
     filter: Partial<T>,
     dataSource: T,
   ): T {

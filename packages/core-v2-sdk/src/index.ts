@@ -1,4 +1,4 @@
-export * from "./client";
+export * from "./context";
 
 export * from "./datasources/CachedDataSource";
 export * from "./datasources/ContractDataSource";

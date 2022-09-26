@@ -1,30 +1,30 @@
-import { ElementClient } from "src/client";
+import { ElementContext } from "src/context";
 import { TokenContractDataSource } from "src/datasources/Token/TokenContractDataSource";
 import { TokenDataSource } from "src/datasources/Token/TokenDataSource";
 import { CoinGeckoAPIDataSource } from "src/datasources/TokenAPI/CoinGeckoAPIDataSource";
 
 export class Token {
   address: string;
-  client: ElementClient;
+  context: ElementContext;
   dataSource: TokenDataSource;
 
   constructor(
     address: string,
-    client: ElementClient,
+    context: ElementContext,
     dataSource?: TokenDataSource,
   ) {
     this.address = address;
-    this.client = client;
+    this.context = context;
     if (dataSource) {
       this.dataSource = dataSource;
     } else {
-      const tokenAPIDataSource = client.setDataSource(
+      const tokenAPIDataSource = context.registerDataSource(
         { baseURL: CoinGeckoAPIDataSource.baseURL },
         new CoinGeckoAPIDataSource(),
       );
-      this.dataSource = client.setDataSource(
+      this.dataSource = context.registerDataSource(
         { address },
-        new TokenContractDataSource(address, client.provider, {
+        new TokenContractDataSource(address, context.provider, {
           apiDataSource: tokenAPIDataSource,
         }),
       );

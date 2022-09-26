@@ -25,16 +25,15 @@ function $parcel$export(e, n, v, s) {
 function $parcel$interopDefault(a) {
   return a && a.__esModule ? a.default : a;
 }
-var $2d791c10cef53ac9$exports = {};
+var $f65b6b18b897f856$exports = {};
 
-$parcel$export($2d791c10cef53ac9$exports, "ElementClient", () => $2d791c10cef53ac9$export$893aa5fc2ccbccd6);
-class $2d791c10cef53ac9$export$893aa5fc2ccbccd6 {
+$parcel$export($f65b6b18b897f856$exports, "ElementContext", () => $f65b6b18b897f856$export$4186b0f94a8cd1c0);
+class $f65b6b18b897f856$export$4186b0f94a8cd1c0 {
     constructor({ chainId: chainId , provider: provider , dataSources: dataSources = []  }){
         this.chainId = chainId;
         this.provider = provider;
         this.dataSources = dataSources;
     }
-    // TODO: Should data sources take on the responsibility of uniquely identifying themselves?
     getDataSource(filter) {
         const dataSource1 = this.dataSources.find((dataSource)=>{
             let isMatch = true;
@@ -43,10 +42,7 @@ class $2d791c10cef53ac9$export$893aa5fc2ccbccd6 {
         });
         return dataSource1 ?? null;
     }
-    setDataSource(filter, // TODO: This could be turned into a callback function that's only called
-    // when there isn't an existing data source to avoid the wasted effort of
-    // constructing a new data source when one already exists.
-    dataSource) {
+    registerDataSource(filter, dataSource) {
         const existing = this.getDataSource(filter);
         if (existing) return existing;
         this.dataSources.push(dataSource);
@@ -479,10 +475,10 @@ var $43a71ca2139b91c6$exports = {};
 $parcel$export($43a71ca2139b91c6$exports, "YieldSource", () => $43a71ca2139b91c6$export$5b513f5c41d35e50);
 
 class $43a71ca2139b91c6$export$5b513f5c41d35e50 {
-    constructor(address, client, dataSource){
+    constructor(address, context, dataSource){
         this.address = address;
-        this.client = client;
-        this.dataSource = dataSource ?? client.setDataSource({
+        this.context = context;
+        this.dataSource = dataSource ?? context.registerDataSource({
             address: address
         }, new (0, $047c4a05380e9203$export$cf7432b8e060b664)(address));
     }
@@ -650,24 +646,24 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
 
 
 class $db3c4c3da11ea48c$export$38f2878d4d50407d {
-    constructor(address, client, dataSource){
+    constructor(address, context, dataSource){
         this.address = address;
-        this.client = client;
-        this.dataSource = dataSource ?? client.setDataSource({
+        this.context = context;
+        this.dataSource = dataSource ?? context.registerDataSource({
             address: address
-        }, new (0, $bd9ebd5a6170b777$export$3e28d0e9e34d7848)(address, client.provider));
+        }, new (0, $bd9ebd5a6170b777$export$3e28d0e9e34d7848)(address, context.provider));
     }
     async getPool(expiryTimestamp) {
         // TODO: should this validate that the pool exists?
-        return new (0, $5c922a29083dd917$export$14963ee5c8637e11)(expiryTimestamp, this.client, this);
+        return new (0, $5c922a29083dd917$export$14963ee5c8637e11)(expiryTimestamp, this.context, this);
     }
     async getPools(fromBlock, toBlock) {
         const poolIds = await this.dataSource.getPoolIds(fromBlock, toBlock);
-        return poolIds.map((id)=>new (0, $5c922a29083dd917$export$14963ee5c8637e11)(id, this.client, this));
+        return poolIds.map((id)=>new (0, $5c922a29083dd917$export$14963ee5c8637e11)(id, this.context, this));
     }
     async getMultiTerm() {
         const address = await this.dataSource.getMultiTerm();
-        return new (0, $73142241d07e4549$export$44a06e384a6d2ed0)(address, this.client);
+        return new (0, $73142241d07e4549$export$44a06e384a6d2ed0)(address, this.context);
     }
     async getYieldSource() {
         const multiTerm = await this.getMultiTerm();
@@ -801,7 +797,6 @@ async function $2199ecd2883db3b5$export$3191c47e10722ce4(amount, poolAddress, si
 }
 
 
-$parcel$exportWildcard(module.exports, $2d791c10cef53ac9$exports);
 $parcel$exportWildcard(module.exports, $54e3433d3ac69f8a$exports);
 $parcel$exportWildcard(module.exports, $20adc394a346779f$exports);
 $parcel$exportWildcard(module.exports, $d0dba6c4aa120ac9$exports);
@@ -831,6 +826,7 @@ $parcel$exportWildcard(module.exports, $9dde791ff857a61d$exports);
 $parcel$exportWildcard(module.exports, $36cbfb79cc4b34b2$exports);
 $parcel$exportWildcard(module.exports, $9c1766b6f9f74658$exports);
 $parcel$exportWildcard(module.exports, $2199ecd2883db3b5$exports);
+$parcel$exportWildcard(module.exports, $f65b6b18b897f856$exports);
 
 
 //# sourceMappingURL=main.js.map

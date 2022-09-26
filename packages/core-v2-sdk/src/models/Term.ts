@@ -1,4 +1,4 @@
-import { ElementClient } from "src/client";
+import { ElementContext } from "src/context";
 import { MultiTerm } from "./MultiTerm";
 import { PrincipalToken } from "./PrincipalToken";
 import { Token } from "./Token";
@@ -7,15 +7,15 @@ import { YieldToken } from "./YieldToken";
 
 export class Term {
   id: number;
-  client: ElementClient;
+  context: ElementContext;
   multiTerm: MultiTerm;
   principalToken: PrincipalToken;
 
-  constructor(id: number, client: ElementClient, multiTerm: MultiTerm) {
+  constructor(id: number, context: ElementContext, multiTerm: MultiTerm) {
     this.id = id;
-    this.client = client;
+    this.context = context;
     this.multiTerm = multiTerm;
-    this.principalToken = new PrincipalToken(id, client, this);
+    this.principalToken = new PrincipalToken(id, context, this);
   }
 
   get maturity(): number {
@@ -41,6 +41,6 @@ export class Term {
 
   // TODO: How do I get the token ID with a start and end date?
   getYieldToken(startTimeStamp: number): YieldToken {
-    return new YieldToken(this.id, this.client, this);
+    return new YieldToken(this.id, this.context, this);
   }
 }

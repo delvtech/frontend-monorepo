@@ -1,16 +1,16 @@
-import { ElementClient } from "src/client";
+import { ElementContext } from "src/context";
 import { MultiPool } from "./MultiPool";
 import { Token } from "./Token";
 import { YieldSource } from "./YieldSource";
 
 export class Pool {
   id: number;
-  client: ElementClient;
+  context: ElementContext;
   multiPool: MultiPool;
 
-  constructor(id: number, client: ElementClient, multiPool: MultiPool) {
+  constructor(id: number, context: ElementContext, multiPool: MultiPool) {
     this.id = id;
-    this.client = client;
+    this.context = context;
     this.multiPool = multiPool;
   }
 
@@ -36,6 +36,6 @@ export class Pool {
     if (!yieldSource) {
       return null;
     }
-    return new Token(yieldSource.address, this.client);
+    return new Token(yieldSource.address, this.context);
   }
 }

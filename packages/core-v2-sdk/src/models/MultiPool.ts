@@ -1,4 +1,4 @@
-import { ElementClient } from "src/client";
+import { ElementContext } from "src/context";
 import { MultiPoolContractDataSource } from "src/datasources/MultiPool/MultiPoolContractDataSource";
 import { MultiPoolDataSource } from "src/datasources/MultiPool/MultiPoolDataSource";
 import { MultiTerm } from "./MultiTerm";
@@ -8,37 +8,37 @@ import { YieldSource } from "./YieldSource";
 
 export class MultiPool {
   address: string;
-  client: ElementClient;
+  context: ElementContext;
   dataSource: MultiPoolDataSource;
 
   constructor(
     address: string,
-    client: ElementClient,
+    context: ElementContext,
     dataSource?: MultiPoolDataSource,
   ) {
     this.address = address;
-    this.client = client;
+    this.context = context;
     this.dataSource =
       dataSource ??
-      client.setDataSource(
+      context.registerDataSource(
         { address },
-        new MultiPoolContractDataSource(address, client.provider),
+        new MultiPoolContractDataSource(address, context.provider),
       );
   }
 
   async getPool(expiryTimestamp: number): Promise<Pool | null> {
     // TODO: should this validate that the pool exists?
-    return new Pool(expiryTimestamp, this.client, this);
+    return new Pool(expiryTimestamp, this.context, this);
   }
 
   async getPools(fromBlock?: number, toBlock?: number): Promise<Pool[]> {
     const poolIds = await this.dataSource.getPoolIds(fromBlock, toBlock);
-    return poolIds.map((id) => new Pool(id, this.client, this));
+    return poolIds.map((id) => new Pool(id, this.context, this));
   }
 
   async getMultiTerm(): Promise<MultiTerm> {
     const address = await this.dataSource.getMultiTerm();
-    return new MultiTerm(address, this.client);
+    return new MultiTerm(address, this.context);
   }
 
   async getYieldSource(): Promise<YieldSource | null> {

@@ -1,22 +1,22 @@
-import { ElementClient } from "src/client";
+import { ElementContext } from "src/context";
 import { YieldSourceDataSource } from "src/datasources/YieldSource/YieldSourceDataSource";
 import { UnknownYieldSourceDataSource } from "src/datasources/YieldSource/UnknownYieldSourceDataSource";
 
 export class YieldSource {
   address: string;
-  client: ElementClient;
+  context: ElementContext;
   dataSource: YieldSourceDataSource;
 
   constructor(
     address: string,
-    client: ElementClient,
+    context: ElementContext,
     dataSource?: YieldSourceDataSource,
   ) {
     this.address = address;
-    this.client = client;
+    this.context = context;
     this.dataSource =
       dataSource ??
-      client.setDataSource(
+      context.registerDataSource(
         { address },
         new UnknownYieldSourceDataSource(address),
       );

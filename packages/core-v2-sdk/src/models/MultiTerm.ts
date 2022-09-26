@@ -1,4 +1,4 @@
-import { ElementClient } from "src/client";
+import { ElementContext } from "src/context";
 import { MultiTermDataSource } from "src/datasources/MultiTerm/MultiTermDataSource";
 import { MultiTermContractDataSource } from "src/datasources/MultiTerm/MultiTermContractDataSource";
 import { Token } from "./Token";
@@ -7,32 +7,32 @@ import { Term } from "./Term";
 
 export class MultiTerm {
   address: string;
-  client: ElementClient;
+  context: ElementContext;
   dataSource: MultiTermDataSource;
 
   constructor(
     address: string,
-    client: ElementClient,
+    context: ElementContext,
     dataSource?: MultiTermDataSource,
   ) {
     this.address = address;
-    this.client = client;
+    this.context = context;
     this.dataSource =
       dataSource ??
-      client.setDataSource(
+      context.registerDataSource(
         { address },
-        new MultiTermContractDataSource(address, client.provider),
+        new MultiTermContractDataSource(address, context.provider),
       );
   }
 
   async getTerm(expiryTimestamp: number): Promise<Term | null> {
     // TODO: should this validate that the term exists?
-    return new Term(expiryTimestamp, this.client, this);
+    return new Term(expiryTimestamp, this.context, this);
   }
 
   async getTerms(fromBlock?: number, toBlock?: number): Promise<Term[]> {
     const termIds = await this.dataSource.getTermIds(fromBlock, toBlock);
-    return termIds.map((id) => new Term(id, this.client, this));
+    return termIds.map((id) => new Term(id, this.context, this));
   }
 
   async getYieldSource(): Promise<YieldSource | null> {
@@ -40,12 +40,12 @@ export class MultiTerm {
     if (!address) {
       return null;
     }
-    return new YieldSource(address, this.client);
+    return new YieldSource(address, this.context);
   }
 
   async getBaseAsset(): Promise<Token> {
     const address = await this.dataSource.getBaseAsset();
-    return new Token(address, this.client);
+    return new Token(address, this.context);
   }
 
   getDecimals(): Promise<number> {

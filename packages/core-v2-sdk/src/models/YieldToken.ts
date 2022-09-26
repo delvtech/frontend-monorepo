@@ -1,15 +1,15 @@
-import { ElementClient } from "src/client";
+import { ElementContext } from "src/context";
 import { Term } from "./Term";
 import { Token } from "./Token";
 
 export class YieldToken {
   id: number;
-  client: ElementClient;
+  context: ElementContext;
   term: Term;
 
-  constructor(id: number, client: ElementClient, term: Term) {
+  constructor(id: number, context: ElementContext, term: Term) {
     this.id = id;
-    this.client = client;
+    this.context = context;
     this.term = term;
   }
 
