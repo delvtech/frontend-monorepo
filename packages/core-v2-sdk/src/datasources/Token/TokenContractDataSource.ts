@@ -37,7 +37,7 @@ export class TokenContractDataSource implements TokenDataSource {
     return this.erc20DataSource.call("name", []);
   }
 
-  async getPrice(currency: string): Promise<number> {
+  async getPrice(currency: string): Promise<number | null> {
     // TODO: find a more reliable way to get the id
     const id = await (await this.getName()).toLowerCase();
     return this.apiDataSource.getTokenPrice(id, currency);

@@ -11,10 +11,10 @@ export class CoinGeckoAPIDataSource extends HTTPDataSource {
   async getTokenPrice<ID extends string, CODE extends string>(
     id: ID,
     currency: CODE,
-  ): Promise<number> {
+  ): Promise<number | null> {
     const res = await this.get<Record<ID, Record<CODE, number>>>(
       `/simple/price?ids=${id}&vs_currencies=${currency ?? "usd"}`,
     );
-    return res[id]?.[currency] ?? 1;
+    return res[id]?.[currency] ?? null;
   }
 }
