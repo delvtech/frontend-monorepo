@@ -10,8 +10,9 @@ export class CachedDataSource implements DataSource {
   }
 
   // The return type will match the return type of the callback function.
-  cached<T extends (...args: any) => any>(
-    cacheKey: unknown,
+  cached<T extends (...args: any) => any, TKey = any>(
+    // The cache key will be reduced to a string
+    cacheKey: TKey,
     callback: T,
   ): ReturnType<T> {
     return cached({
