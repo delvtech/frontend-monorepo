@@ -9,6 +9,7 @@ export class CachedDataSource implements DataSource {
     this.cache = cache ?? new LRUCache({ max: 500 });
   }
 
+  // The return type will match the return type of the callback function.
   cached<T extends (...args: any) => any>(
     cacheKey: unknown,
     callback: T,
