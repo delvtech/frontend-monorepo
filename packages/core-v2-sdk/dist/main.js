@@ -197,6 +197,23 @@ class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$ex
     getMultiTerm() {
         return this.call("term", []);
     }
+    async getReserves(tokenId) {
+        const [sharesBigNumber, bondsBigNumber] = await this.call("reserves", [
+            tokenId, 
+        ]);
+        return {
+            shares: sharesBigNumber.toString(),
+            bonds: bondsBigNumber.toString()
+        };
+    }
+    async getShareReserves(tokenId) {
+        const { shares: shares  } = await this.getReserves(tokenId);
+        return shares;
+    }
+    async getBondReserves(tokenId) {
+        const { bonds: bonds  } = await this.getReserves(tokenId);
+        return bonds;
+    }
 }
 
 
@@ -213,17 +230,39 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
     constructor(address, provider){
         super((0, $eCQIH$elementficorev2typechain.Term__factory).connect(address, provider));
     }
+    getTransferEvents(from, to, fromBlock, toBlock) {
+        return this.cached([
+            "TransferSingle",
+            from,
+            to,
+            fromBlock,
+            toBlock
+        ], async ()=>{
+            const eventFilter = this.contract.filters.TransferSingle(null, from, to);
+            return this.contract.queryFilter(eventFilter, fromBlock, toBlock);
+        });
+    }
     async getTermIds(fromBlock, toBlock) {
         return this.cached([
-            "getPoolIds",
+            "getTermIds",
             fromBlock,
             toBlock
         ], async ()=>{
             // TODO: Filter out yield token addresses
-            const eventFilter = this.contract.filters.TransferSingle(null, // new mints result in a transfer from the zero address
-            (0, $eCQIH$elementfibase.ETH_ZERO_ADDRESS));
-            const events = await this.contract.queryFilter(eventFilter, fromBlock, toBlock);
+            const events = await this.getTransferEvents(// new mints result in a transfer from the zero address
+            (0, $eCQIH$ethers.ethers).constants.AddressZero, null, fromBlock, toBlock);
             return Array.from(new Set(events.map((event)=>event.args.id.toNumber())));
+        });
+    }
+    getCreatedAtBlock(tokenId) {
+        return this.cached([
+            "getCreatedAtBlock",
+            tokenId
+        ], async ()=>{
+            const events = await this.getTransferEvents(// new mints result in a transfer from the zero address
+            (0, $eCQIH$ethers.ethers).constants.AddressZero, null);
+            const firstTransferEvent = events.find(({ args: args  })=>args.id.eq(tokenId));
+            return firstTransferEvent?.blockNumber || null;
         });
     }
     async getYieldSource() {
@@ -233,6 +272,26 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
     }
     async getBaseAsset() {
         return this.call("token", []);
+    }
+    getSymbol(tokenId) {
+        return this.call("symbol", [
+            tokenId
+        ]);
+    }
+    getDecimals() {
+        return this.call("decimals", []);
+    }
+    getName(tokenId) {
+        return this.call("name", [
+            tokenId
+        ]);
+    }
+    async getBalanceOf(tokenId, address) {
+        const balanceBigNumber = await this.call("balanceOf", [
+            tokenId,
+            address
+        ]);
+        return balanceBigNumber.toString();
     }
 }
 
@@ -287,7 +346,7 @@ class $f00ba8e0ba7f8838$export$9329909b02e34fde extends (0, $d0dba6c4aa120ac9$ex
     }
     async getTokenPrice(id, currency) {
         const res = await this.get(`/simple/price?ids=${id}&vs_currencies=${currency ?? "usd"}`);
-        return res[id][currency];
+        return res[id]?.[currency] ?? 1;
     }
 }
 
@@ -379,7 +438,7 @@ $parcel$export($2361706748e2a981$exports, "Token", () => $2361706748e2a981$expor
 
 
 class $2361706748e2a981$export$50792b0e93539fde {
-    constructor({ address: address , client: client , dataSource: dataSource  }){
+    constructor(address, client, dataSource){
         this.address = address;
         this.client = client;
         if (dataSource) this.dataSource = dataSource;
@@ -420,7 +479,7 @@ var $43a71ca2139b91c6$exports = {};
 $parcel$export($43a71ca2139b91c6$exports, "YieldSource", () => $43a71ca2139b91c6$export$5b513f5c41d35e50);
 
 class $43a71ca2139b91c6$export$5b513f5c41d35e50 {
-    constructor({ address: address , client: client , dataSource: dataSource  }){
+    constructor(address, client, dataSource){
         this.address = address;
         this.client = client;
         this.dataSource = dataSource ?? client.setDataSource({
@@ -436,11 +495,70 @@ class $43a71ca2139b91c6$export$5b513f5c41d35e50 {
 var $51ba50e48c247b12$exports = {};
 
 $parcel$export($51ba50e48c247b12$exports, "Term", () => $51ba50e48c247b12$export$656c1e606ad06131);
+class $2ababb11162a7525$export$62007a0bd048d56c {
+    constructor(id, client, term){
+        this.id = id;
+        this.client = client;
+        this.term = term;
+    }
+    get maturity() {
+        return this.id;
+    }
+    async getBaseAsset() {
+        return this.term.getBaseAsset();
+    }
+    async getSymbol() {
+        return this.term.multiTerm.dataSource.getSymbol(this.id);
+    }
+    async getDecimals() {
+        return this.term.multiTerm.getDecimals();
+    }
+    async getName() {
+        return this.term.multiTerm.dataSource.getName(this.id);
+    }
+    async getBalanceOf(address) {
+        return this.term.multiTerm.dataSource.getBalanceOf(this.id, address);
+    }
+}
+
+
+class $d42f7646c857727b$export$7e27801a0b3a9d2a {
+    constructor(id, client, term){
+        this.id = id;
+        this.client = client;
+        this.term = term;
+    }
+    get maturity() {
+        return this.id;
+    }
+    async getBaseAsset() {
+        return this.term.getBaseAsset();
+    }
+    async getSymbol() {
+        return this.term.multiTerm.dataSource.getSymbol(this.id);
+    }
+    async getDecimals() {
+        return this.term.multiTerm.dataSource.getDecimals();
+    }
+    async getName() {
+        return this.term.multiTerm.dataSource.getName(this.id);
+    }
+    async getBalanceOf(address) {
+        return this.term.multiTerm.dataSource.getBalanceOf(this.id, address);
+    }
+    // TODO:
+    async getAccruedInterest() {
+        return "0";
+    }
+}
+
+
 class $51ba50e48c247b12$export$656c1e606ad06131 {
-    constructor({ id: id , client: client , multiTerm: multiTerm  }){
+    constructor(id, client, multiTerm){
         this.id = id;
         this.client = client;
         this.multiTerm = multiTerm;
+        this.principalToken = new (0, $2ababb11162a7525$export$62007a0bd048d56c)(id, client, this);
     }
     get maturity() {
         return this.id;
@@ -451,11 +569,22 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
     getBaseAsset() {
         return this.multiTerm.getBaseAsset();
     }
+    // TODO:
+    async tvl(atBlock) {
+        return "0";
+    }
+    createdAtBlock() {
+        return this.multiTerm.dataSource.getCreatedAtBlock(this.id);
+    }
+    // TODO: How do I get the token ID with a start and end date?
+    getYieldToken(startTimeStamp) {
+        return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(this.id, this.client, this);
+    }
 }
 
 
 class $73142241d07e4549$export$44a06e384a6d2ed0 {
-    constructor({ address: address , client: client , dataSource: dataSource  }){
+    constructor(address, client, dataSource){
         this.address = address;
         this.client = client;
         this.dataSource = dataSource ?? client.setDataSource({
@@ -464,34 +593,27 @@ class $73142241d07e4549$export$44a06e384a6d2ed0 {
     }
     async getTerm(expiryTimestamp) {
         // TODO: should this validate that the term exists?
-        return new (0, $51ba50e48c247b12$export$656c1e606ad06131)({
-            id: expiryTimestamp,
-            client: this.client,
-            multiTerm: this
-        });
+        return new (0, $51ba50e48c247b12$export$656c1e606ad06131)(expiryTimestamp, this.client, this);
     }
     async getTerms(fromBlock, toBlock) {
         const termIds = await this.dataSource.getTermIds(fromBlock, toBlock);
-        return termIds.map((id)=>new (0, $51ba50e48c247b12$export$656c1e606ad06131)({
-                id: id,
-                client: this.client,
-                multiTerm: this
-            }));
+        return termIds.map((id)=>new (0, $51ba50e48c247b12$export$656c1e606ad06131)(id, this.client, this));
     }
     async getYieldSource() {
         const address = await this.dataSource.getYieldSource();
         if (!address) return null;
-        return new (0, $43a71ca2139b91c6$export$5b513f5c41d35e50)({
-            address: address,
-            client: this.client
-        });
+        return new (0, $43a71ca2139b91c6$export$5b513f5c41d35e50)(address, this.client);
     }
     async getBaseAsset() {
         const address = await this.dataSource.getBaseAsset();
-        return new (0, $2361706748e2a981$export$50792b0e93539fde)({
-            address: address,
-            client: this.client
-        });
+        return new (0, $2361706748e2a981$export$50792b0e93539fde)(address, this.client);
+    }
+    getDecimals() {
+        return this.dataSource.getDecimals();
+    }
+    // TODO:
+    async getTVL(atBlock) {
+        return "0";
     }
 }
 
@@ -499,8 +621,9 @@ class $73142241d07e4549$export$44a06e384a6d2ed0 {
 var $5c922a29083dd917$exports = {};
 
 $parcel$export($5c922a29083dd917$exports, "Pool", () => $5c922a29083dd917$export$14963ee5c8637e11);
+
 class $5c922a29083dd917$export$14963ee5c8637e11 {
-    constructor({ id: id , client: client , multiPool: multiPool  }){
+    constructor(id, client, multiPool){
         this.id = id;
         this.client = client;
         this.multiPool = multiPool;
@@ -514,11 +637,20 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
     getBaseAsset() {
         return this.multiPool.getBaseAsset();
     }
+    // TODO:
+    async getBaseAssetReserves() {
+        return "0";
+    }
+    async shareAsset() {
+        const yieldSource = await this.getYieldSource();
+        if (!yieldSource) return null;
+        return new (0, $2361706748e2a981$export$50792b0e93539fde)(yieldSource.address, this.client);
+    }
 }
 
 
 class $db3c4c3da11ea48c$export$38f2878d4d50407d {
-    constructor({ address: address , client: client , dataSource: dataSource  }){
+    constructor(address, client, dataSource){
         this.address = address;
         this.client = client;
         this.dataSource = dataSource ?? client.setDataSource({
@@ -527,26 +659,15 @@ class $db3c4c3da11ea48c$export$38f2878d4d50407d {
     }
     async getPool(expiryTimestamp) {
         // TODO: should this validate that the pool exists?
-        return new (0, $5c922a29083dd917$export$14963ee5c8637e11)({
-            id: expiryTimestamp,
-            client: this.client,
-            multiPool: this
-        });
+        return new (0, $5c922a29083dd917$export$14963ee5c8637e11)(expiryTimestamp, this.client, this);
     }
     async getPools(fromBlock, toBlock) {
         const poolIds = await this.dataSource.getPoolIds(fromBlock, toBlock);
-        return poolIds.map((id)=>new (0, $5c922a29083dd917$export$14963ee5c8637e11)({
-                id: id,
-                client: this.client,
-                multiPool: this
-            }));
+        return poolIds.map((id)=>new (0, $5c922a29083dd917$export$14963ee5c8637e11)(id, this.client, this));
     }
     async getMultiTerm() {
         const address = await this.dataSource.getMultiTerm();
-        return new (0, $73142241d07e4549$export$44a06e384a6d2ed0)({
-            address: address,
-            client: this.client
-        });
+        return new (0, $73142241d07e4549$export$44a06e384a6d2ed0)(address, this.client);
     }
     async getYieldSource() {
         const multiTerm = await this.getMultiTerm();

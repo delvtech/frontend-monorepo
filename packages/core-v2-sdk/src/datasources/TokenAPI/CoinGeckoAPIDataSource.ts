@@ -14,6 +14,6 @@ export class CoinGeckoAPIDataSource extends HTTPDataSource {
     const res = await this.get<Record<ID, Record<CODE, number>>>(
       `/simple/price?ids=${id}&vs_currencies=${currency ?? "usd"}`,
     );
-    return res[id][currency];
+    return res[id]?.[currency] ?? 1;
   }
 }
