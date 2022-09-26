@@ -4,7 +4,7 @@ import { CouncilContext } from "src/context";
 import { Voter, VotingVault } from "src/generated";
 import { getVotingVaultDataSourceByAddress } from "src/utils/getDataSourceByAddress";
 import { VotingVaultModel } from "./VotingVault";
-import { cached, getCacheKey } from "@elementfi/base";
+import { cached } from "@elementfi/base";
 
 const cache = new LRUCache<string, string>({ max: 500 });
 interface VoterModel {
@@ -92,7 +92,7 @@ export const VoterModel: VoterModel = {
   getEnsName({ voter, context }) {
     return cached({
       cache,
-      cacheKey: getCacheKey("getEnsName", [voter.address]),
+      cacheKey: ["getEnsName", voter.address],
       callback: () => context.provider.lookupAddress(voter.address),
     });
   },

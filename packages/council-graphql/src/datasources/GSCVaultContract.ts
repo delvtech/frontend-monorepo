@@ -1,7 +1,7 @@
 import { BigNumber } from "ethers";
 import { Provider } from "@ethersproject/providers";
 import LRUCache from "lru-cache";
-import { cached, getCacheKey } from "@elementfi/base";
+import { cached } from "@elementfi/base";
 import { GSCVault, GSCVault__factory } from "@elementfi/council-typechain";
 import { VoterWithPower } from "./VotingVaultDataSource";
 import { VotingVaultContract } from "./VotingVaultContract";
@@ -25,7 +25,7 @@ export class GSCVaultContract extends VotingVaultContract {
   ): Promise<VoterWithPower[]> {
     return cached({
       cache: this.cache,
-      cacheKey: getCacheKey("getAllVotersWithPower", [fromBlock, toBlock]),
+      cacheKey: ["getAllVotersWithPower", fromBlock, toBlock],
       callback: async () => {
         const latestJoinTimestampByMember: Record<string, BigNumber> = {};
         const joinEvents = await this.contract.queryFilter(

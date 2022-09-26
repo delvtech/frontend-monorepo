@@ -2,8 +2,8 @@ var $1RIJT$graphqltoolsschema = require("@graphql-tools/schema");
 var $1RIJT$fuzzaldrin = require("fuzzaldrin");
 var $1RIJT$elementficounciltokenlist = require("@elementfi/council-tokenlist");
 var $1RIJT$etherslibutils = require("ethers/lib/utils");
-var $1RIJT$elementfibase = require("@elementfi/base");
 var $1RIJT$lrucache = require("lru-cache");
+var $1RIJT$elementfibase = require("@elementfi/base");
 var $1RIJT$elementficounciltypechain = require("@elementfi/council-typechain");
 var $1RIJT$ethers = require("ethers");
 
@@ -32,6 +32,7 @@ function $parcel$exportWildcard(dest, source) {
 
 $parcel$export(module.exports, "councilSchema", () => $efcd12aae16f0d3a$export$824f3a4901d93da0);
 $parcel$export(module.exports, "councilGraph", () => $efcd12aae16f0d3a$export$e7bdfe02b30499c1);
+
 
 
 function $047baa0fb4e3b4e7$export$472b2ff001c2cfbf(chainId) {
@@ -173,6 +174,7 @@ const $fd6ceb4db45efc28$export$40a03fbff71f56d3 = {
 
 
 
+
 const $6e80fa9dbf1dc463$export$1dbe110119cb4dd2 = {
     getAll ({ context: context  }) {
         return context.councilDataSources.votingVaults.map(({ address: address  })=>this.getByAddress({
@@ -191,7 +193,6 @@ const $6e80fa9dbf1dc463$export$1dbe110119cb4dd2 = {
             }));
     }
 };
-
 
 
 
@@ -251,17 +252,14 @@ const $ececcc37bb5e5066$export$e424928527fab42f = {
             addresses: Array.from(addresses)
         });
     },
-    async getEnsName ({ voter: voter , context: context  }) {
-        console.log("getting ens name: ", voter.address);
+    getEnsName ({ voter: voter , context: context  }) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: $ececcc37bb5e5066$var$cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getEnsName", [
+            cacheKey: [
+                "getEnsName",
                 voter.address
-            ]),
-            callback: ()=>{
-                console.log("cache missed");
-                return context.provider.lookupAddress(voter.address);
-            }
+            ],
+            callback: ()=>context.provider.lookupAddress(voter.address)
         });
     }
 };
@@ -375,7 +373,6 @@ const $7f716b31368ced62$export$a0cbbdeeb12308cd = {
 
 
 
-
 const $76cfde035e4f639b$export$f62412552be5daf2 = {
     Query: {
         votingContract: (_, { address: address  }, context)=>{
@@ -429,7 +426,7 @@ const $76cfde035e4f639b$export$f62412552be5daf2 = {
             if (search) {
                 const candidates = [];
                 voters = await Promise.all(voters.map(async (voter)=>{
-                    if (!voter) return null;
+                    if (!voter) return;
                     candidates.push(voter.address);
                     const ensName = await (0, $ececcc37bb5e5066$export$e424928527fab42f).getEnsName({
                         voter: voter,
@@ -911,10 +908,11 @@ class $41844f56d22dc55e$export$ca33481ae8bfff02 {
     async getProposalCreatedEventArgs(fromBlock, toBlock) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getProposalCreatedEventArgs", [
+            cacheKey: [
+                "getProposalCreatedEventArgs",
                 fromBlock,
-                toBlock, 
-            ]),
+                toBlock
+            ],
             callback: async ()=>{
                 const proposalCreatedEvents = await this.contract.queryFilter(this.contract.filters.ProposalCreated(), fromBlock, toBlock);
                 return proposalCreatedEvents.map(({ args: { proposalId: proposalId , created: created , execution: execution , expiration: expiration  }  })=>{
@@ -931,9 +929,10 @@ class $41844f56d22dc55e$export$ca33481ae8bfff02 {
     async getProposalById(id) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getProposalById", [
+            cacheKey: [
+                "getProposalById",
                 id
-            ]),
+            ],
             callback: async ()=>{
                 const { proposalHash: proposalHash , created: created , unlock: unlock , expiration: expiration , quorum: quorum , lastCall: lastCall  } = await this.contract.functions.proposals(id);
                 return {
@@ -950,10 +949,11 @@ class $41844f56d22dc55e$export$ca33481ae8bfff02 {
     async getVote(voter, proposalId) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getVote", [
+            cacheKey: [
+                "getVote",
                 voter,
                 proposalId
-            ]),
+            ],
             callback: async ()=>{
                 const { votingPower: votingPower , castBallot: castBallot  } = await this.contract.functions.votes(voter, proposalId);
                 return {
@@ -984,10 +984,11 @@ class $a0cf45371a696709$export$2b7e06d96cf7f075 {
     async getVotingPower(voter, blockNumber) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getVotingPower", [
+            cacheKey: [
+                "getVotingPower",
                 voter,
                 blockNumber
-            ]),
+            ],
             callback: async ()=>{
                 try {
                     // TODO: find a better solution for this.
@@ -1027,10 +1028,11 @@ class $492df70f1218e6f0$export$e2e4dee807f6af7a extends (0, $a0cf45371a696709$ex
     async getAllVotersWithPower(fromBlock, toBlock) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getAllVotersWithPower", [
+            cacheKey: [
+                "getAllVotersWithPower",
                 fromBlock,
                 toBlock
-            ]),
+            ],
             callback: async ()=>{
                 const latestJoinTimestampByMember = {};
                 const joinEvents = await this.contract.queryFilter(this.contract.filters.MembershipProved(), fromBlock, toBlock);
@@ -1074,9 +1076,10 @@ class $a1c706d406f5708a$export$93f46c2abf3fc254 extends (0, $a0cf45371a696709$ex
     async getBalance(voter) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getBalance", [
+            cacheKey: [
+                "getBalance",
                 voter
-            ]),
+            ],
             callback: async ()=>{
                 const [, balance] = await this.contract.functions.deposits(voter);
                 return balance.toString();
@@ -1086,10 +1089,11 @@ class $a1c706d406f5708a$export$93f46c2abf3fc254 extends (0, $a0cf45371a696709$ex
     async getVotingPowerView(voter, blockNumber) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getVotingPowerView", [
+            cacheKey: [
+                "getVotingPowerView",
                 voter,
                 blockNumber
-            ]),
+            ],
             callback: async ()=>{
                 try {
                     // TODO: find a better solution for this.
@@ -1110,10 +1114,11 @@ class $a1c706d406f5708a$export$93f46c2abf3fc254 extends (0, $a0cf45371a696709$ex
     async getAllVotersWithPower(fromBlock, toBlock) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getAllVotersWithPower", [
+            cacheKey: [
+                "getAllVotersWithPower",
                 fromBlock,
                 toBlock
-            ]),
+            ],
             callback: async ()=>{
                 const powersByVoter = {};
                 const voteChangeEvents = await this.contract.queryFilter(this.contract.filters.VoteChange(), fromBlock, toBlock);
@@ -1151,9 +1156,10 @@ class $e0e2802e459d88e3$export$a37e73beca8c1698 extends (0, $a0cf45371a696709$ex
     async getBalance(voter) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getBalance", [
+            cacheKey: [
+                "getBalance",
                 voter
-            ]),
+            ],
             callback: async ()=>{
                 try {
                     const grants = await this.contract.functions.getGrant(voter);
@@ -1168,10 +1174,11 @@ class $e0e2802e459d88e3$export$a37e73beca8c1698 extends (0, $a0cf45371a696709$ex
     async getVotingPowerView(voter, blockNumber) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getVotingPowerView", [
+            cacheKey: [
+                "getVotingPowerView",
                 voter,
                 blockNumber
-            ]),
+            ],
             callback: async ()=>{
                 try {
                     // TODO: find a better solution for this.
@@ -1192,10 +1199,11 @@ class $e0e2802e459d88e3$export$a37e73beca8c1698 extends (0, $a0cf45371a696709$ex
     async getAllVotersWithPower(fromBlock, toBlock) {
         return (0, $1RIJT$elementfibase.cached)({
             cache: this.cache,
-            cacheKey: (0, $1RIJT$elementfibase.getCacheKey)("getAllVotersWithPower", [
+            cacheKey: [
+                "getAllVotersWithPower",
                 fromBlock,
                 toBlock
-            ]),
+            ],
             callback: async ()=>{
                 const powersByVoter = {};
                 const voteChangeEvents = await this.contract.queryFilter(this.contract.filters.VoteChange(), fromBlock, toBlock);

@@ -35,30 +35,20 @@ function $parcel$export(e, n, v, s) {
 var $f34c70895ba47bf3$exports = {};
 
 $parcel$export($f34c70895ba47bf3$exports, "cached", () => $f34c70895ba47bf3$export$ade7a147f5129058);
-$parcel$export($f34c70895ba47bf3$exports, "getCacheKey", () => $f34c70895ba47bf3$export$611736262b635f8d);
 
 
 function $f34c70895ba47bf3$export$ade7a147f5129058({ cache: cache = new (0, ($parcel$interopDefault($kVMNA$lrucache)))({
     max: 500
 }) , cacheKey: cacheKey , callback: callback , options: options  }) {
-    if (cache.has(cacheKey)) // console.log("✅ cache hit", cacheKey);
-    return cache.get(cacheKey, options);
+    const key = (0, ($parcel$interopDefault($kVMNA$fastjsonstablestringify)))(cacheKey);
+    if (cache.has(key)) // console.log("✅ cache hit", key);
+    return cache.get(key, options);
     else {
-        // console.log("❌ cache miss", cacheKey);
+        // console.log("❌ cache miss", key);
         const value = callback();
-        cache.set(cacheKey, value, options);
+        cache.set(key, value, options);
         return value;
     }
-}
-function $f34c70895ba47bf3$export$611736262b635f8d(prefix, args) {
-    const argKeys = [];
-    for (const arg of args){
-        if (arg === undefined) argKeys.push("undefined");
-        else if (arg === null) argKeys.push("null");
-        else if (typeof arg === "object") argKeys.push((0, ($parcel$interopDefault($kVMNA$fastjsonstablestringify)))(arg));
-        else argKeys.push(arg.toString());
-    }
-    return `${prefix}:${argKeys.join(",")}`;
 }
 
 

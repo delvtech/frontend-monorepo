@@ -1,18 +1,23 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
-    "strict": true,
+    "target": "es5",
+    "lib": ["esnext", "dom"],
+    "skipLibCheck": true,
     "esModuleInterop": true,
+    "strict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "incremental": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
     "resolveJsonModule": true,
-    "outDir": "dist",
-    "baseUrl": "./",
-    "rootDir": "./",
-    "declaration": true
-  },
-  "paths": {
-    "src/*": ["./src/*"],
-    "typechain/*": ["./typechain/*"]
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "src/*": ["./src/*"],
+      "typechain/*": ["./typechain/*"]
+    }
   },
   "include": ["./src", "./typechain"],
   "files": ["./hardhat.config.ts"]
