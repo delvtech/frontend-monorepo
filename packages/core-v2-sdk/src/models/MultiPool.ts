@@ -32,7 +32,10 @@ export class MultiPool {
   }
 
   async getPools(fromBlock?: number, toBlock?: number): Promise<Pool[]> {
-    const poolIds = await this.dataSource.getPoolIds(fromBlock, toBlock);
+    const poolIds = await this.dataSource.getPoolIds(
+      fromBlock,
+      toBlock ?? (await this.context.provider.getBlockNumber()),
+    );
     return poolIds.map((id) => new Pool(id, this.context, this));
   }
 

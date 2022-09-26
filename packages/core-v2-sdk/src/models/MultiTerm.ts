@@ -31,7 +31,10 @@ export class MultiTerm {
   }
 
   async getTerms(fromBlock?: number, toBlock?: number): Promise<Term[]> {
-    const termIds = await this.dataSource.getTermIds(fromBlock, toBlock);
+    const termIds = await this.dataSource.getTermIds(
+      fromBlock,
+      toBlock ?? (await this.context.provider.getBlockNumber()),
+    );
     return termIds.map((id) => new Term(id, this.context, this));
   }
 
