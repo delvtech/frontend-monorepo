@@ -45,7 +45,7 @@
     "@types/mocha": "^9.1.1",
     "@types/node": "^18.0.3",
     "@types/prompts": "^2.0.14",
-    "eslint-import-resolver-typescript": "^3.3.0",
+    "eslint-import-resolver-typescript": "^3.5.1",
     "eslint-plugin-import": "^2.26.0",
     "hardhat-gas-reporter": "^1.0.8",
     "husky": "^8.0.1",
