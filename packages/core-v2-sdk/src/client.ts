@@ -32,9 +32,6 @@ export class ElementClient {
 
   setDataSource<T extends Record<string, any>>(
     filter: Partial<T>,
-    // TODO: This could be turned into a callback function that's only called
-    // when there isn't an existing data source to avoid the wasted effort of
-    // constructing a new data source when one already exists.
     dataSource: T,
   ): T {
     const existing = this.getDataSource(filter);
