@@ -7,15 +7,15 @@ import { getLatestBlockNumber } from "src/utils/getLatestBlockNumber";
 interface VotingPowerModel {
   getByVoter: (options: {
     voter: Voter;
-    blockNumber?: number | undefined | null;
+    blockNumber?: number | null;
     votingVaults: VotingVault[];
     context: CouncilContext;
   }) => Promise<VotingPower>;
 
   getByVoters: (options: {
     voters: Voter[];
+    blockNumber?: number | null;
     votingVaults: VotingVault[];
-    blockNumber: number | undefined | null;
     context: CouncilContext;
   }) => Promise<VotingPower[]>;
 
@@ -34,7 +34,10 @@ export const VotingPowerModel: VotingPowerModel = {
   }) {
     blockNumber = blockNumber || (await getLatestBlockNumber(provider));
     let aggregateValue = BigInt(0);
-    for (const { address } of votingVaults) {
+    const validVaults: VotingVault[] = [];
+
+    for (const vault of votingVaults) {
+      const { address } = vault;
       const dataSource = getVotingVaultDataSourceByAddress(
         address,
         councilDataSources,
@@ -45,12 +48,14 @@ export const VotingPowerModel: VotingPowerModel = {
           blockNumber,
         );
         aggregateValue += BigInt(vaultPower);
+        validVaults.push(vault);
       }
     }
+
     return {
       value: formatEther(aggregateValue),
       voter,
-      votingVaults,
+      votingVaults: validVaults,
       blockNumber,
     };
   },

@@ -1,6 +1,6 @@
 import { filter } from "fuzzaldrin";
 import { CouncilContext } from "src/context";
-import { Resolvers, Voter } from "src/generated";
+import { Resolvers, Voter, VotingVault } from "src/generated";
 import { ProposalModel } from "src/models/Proposal";
 import { TotalVotingPowerModel } from "src/models/TotalVotingPower";
 import { VoteModel } from "src/models/Vote";
@@ -50,7 +50,12 @@ export const resolvers: Resolvers<CouncilContext> = {
     voter: (_, { address }) => {
       return VoterModel.getByAddress({ address });
     },
-    voters: async (_, { addresses, search }, context) => {
+    voters: async (
+      _,
+      { addresses, search, votingPowerMin, votingPowerMax, votingVaults },
+      context,
+    ) => {
+      const filteredVoters: Voter[] = [];
       let voters: (Voter | undefined)[] = [];
 
       if (addresses) {
@@ -59,40 +64,67 @@ export const resolvers: Resolvers<CouncilContext> = {
         voters = await VoterModel.getAll({ context });
       }
 
-      if (search) {
-        const candidates: string[] = [];
+      if (search || votingPowerMin || votingPowerMax) {
+        let vaults: (VotingVault | undefined)[];
 
-        voters = await Promise.all(
-          voters.map(async (voter) => {
-            if (!voter) {
-              return;
-            }
+        for (let voter of voters) {
+          if (!voter) {
+            continue;
+          }
 
-            candidates.push(voter.address);
-
+          // Get ensName of voter
+          if (search) {
             const ensName = await VoterModel.getEnsName({ voter, context });
-            if (ensName) {
-              candidates.push(ensName);
+            voter = { ...voter, ensName };
+          }
+
+          // Get votingPower of voter
+          if (votingPowerMin || votingPowerMax) {
+            if (votingVaults) {
+              vaults = VotingVaultModel.getByAddresses({
+                addresses: votingVaults,
+                context,
+              }).filter((vault) => vault !== undefined);
+            } else {
+              vaults = VotingVaultModel.getAll({ context });
             }
 
-            return {
-              ...voter,
-              ensName,
-            };
-          }),
-        );
+            const votingPower = await VotingPowerModel.getByVoter({
+              voter,
+              votingVaults: vaults as VotingVault[],
+              context,
+            });
+            voter = { ...voter, votingPower };
+          }
 
-        const matches = filter(candidates, search);
+          let searchCondition = true;
+          let votingPowerCondition = true;
+          if (search) {
+            // Check whether current voter passes search filter
+            searchCondition = !!filter(
+              [voter.ensName || "", voter.address],
+              search,
+            ).length;
+          }
+          if (votingPowerMin || votingPowerMax) {
+            // Check whether current voter passes votingPower filter(s)
+            const votingPower = Number(voter.votingPower?.value || 0);
+            const minimum = Number(votingPowerMin || 0);
+            const maximum = Number(votingPowerMax || Infinity);
 
-        voters = voters.filter((voter) =>
-          voter
-            ? matches.includes(voter.address) ||
-              matches.includes(voter.ensName || "")
-            : false,
-        );
+            votingPowerCondition =
+              minimum < votingPower && maximum > votingPower;
+          }
+
+          if (searchCondition && votingPowerCondition) {
+            filteredVoters.push(voter);
+          }
+        }
+      } else {
+        return voters.map((voter) => voter || null);
       }
 
-      return voters.map((voter) => voter || null);
+      return filteredVoters;
     },
   },
   VotingContract: {
