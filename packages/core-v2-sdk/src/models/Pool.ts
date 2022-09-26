@@ -7,15 +7,13 @@ export class Pool {
   id: number;
   context: ElementContext;
   multiPool: MultiPool;
+  maturityDate: Date;
 
   constructor(id: number, context: ElementContext, multiPool: MultiPool) {
     this.id = id;
     this.context = context;
     this.multiPool = multiPool;
-  }
-
-  get maturity(): number {
-    return this.id;
+    this.maturityDate = new Date(id + 1000);
   }
 
   getYieldSource(): Promise<YieldSource | null> {

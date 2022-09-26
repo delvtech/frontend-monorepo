@@ -10,16 +10,14 @@ export class Term {
   context: ElementContext;
   multiTerm: MultiTerm;
   principalToken: PrincipalToken;
+  maturityDate: Date;
 
   constructor(id: number, context: ElementContext, multiTerm: MultiTerm) {
     this.id = id;
     this.context = context;
     this.multiTerm = multiTerm;
     this.principalToken = new PrincipalToken(id, context, this);
-  }
-
-  get maturity(): number {
-    return this.id;
+    this.maturityDate = new Date(id + 1000);
   }
 
   getYieldSource(): Promise<YieldSource | null> {
