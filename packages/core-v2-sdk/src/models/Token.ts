@@ -43,7 +43,7 @@ export class Token {
     return this.dataSource.getName();
   }
 
-  getPrice(currency: string): Promise<number> {
+  getPrice(currency: string): Promise<number | null> {
     return this.dataSource.getPrice(currency);
   }
 
