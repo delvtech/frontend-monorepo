@@ -8,7 +8,7 @@ import { BigNumber } from "ethers";
 import { useCallback } from "react";
 import { QueryObserverResult } from "react-query";
 import { Currencies, Money } from "ts-money";
-import { CRVLUSD } from "@elementfi/core-typechain/dist/libraries/CRVLUSD";
+import { CRVLUSD } from "@elementfi/core-typechain/dist/precompiled/CRVLUSD";
 
 // Goerli curve stable pools can be inferred to be $1
 const GOERLI_STUB_VIRTUAL_PRICE = {

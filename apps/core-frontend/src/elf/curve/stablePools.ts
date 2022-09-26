@@ -1,4 +1,4 @@
-import { CRVLUSD__factory } from "@elementfi/core-typechain/dist/libraries/factories/CRVLUSD__factory";
+import { CRVLUSD__factory } from "@elementfi/core-typechain/dist/precompiled/CRVLUSD__factory";
 import { AddressesJson } from "addresses/addresses";
 import { defaultProvider } from "elf/providers/providers";
 

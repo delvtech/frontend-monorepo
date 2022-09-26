@@ -2,12 +2,12 @@ import {
   CurveContract__factory,
   CurveStethPool__factory,
 } from "@elementfi/core-typechain/dist/libraries";
-import { CurvePool1 } from "@elementfi/core-typechain/dist/libraries/CurvePool1";
-import { CurvePool2 } from "@elementfi/core-typechain/dist/libraries/CurvePool2";
-import { CurvePool3 } from "@elementfi/core-typechain/dist/libraries/CurvePool3";
-import { CurvePool1__factory } from "@elementfi/core-typechain/dist/libraries/factories/CurvePool1__factory";
-import { CurvePool2__factory } from "@elementfi/core-typechain/dist/libraries/factories/CurvePool2__factory";
-import { CurvePool3__factory } from "@elementfi/core-typechain/dist/libraries/factories/CurvePool3__factory";
+import { CurvePool1 } from "@elementfi/core-typechain/dist/libraries";
+import { CurvePool2 } from "@elementfi/core-typechain/dist/libraries";
+import { CurvePool3 } from "@elementfi/core-typechain/dist/libraries";
+import { CurvePool1__factory } from "@elementfi/core-typechain/dist/libraries";
+import { CurvePool2__factory } from "@elementfi/core-typechain/dist/libraries";
+import { CurvePool3__factory } from "@elementfi/core-typechain/dist/libraries";
 import { CurveLpTokenInfo } from "@elementfi/core-tokenlist";
 import { defaultProvider } from "elf/providers/providers";
 
