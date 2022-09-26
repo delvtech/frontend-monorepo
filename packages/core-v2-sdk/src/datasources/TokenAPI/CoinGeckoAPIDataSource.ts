@@ -7,6 +7,7 @@ export class CoinGeckoAPIDataSource extends HTTPDataSource {
     super("https://api.coingecko.com/api/v3/");
   }
 
+  // TODO: Add strong types for CODE and possibly ID
   async getTokenPrice<ID extends string, CODE extends string>(
     id: ID,
     currency: CODE,
