@@ -1,30 +1,22 @@
+import { providers } from "ethers";
 import {
   CompoundV3Term,
   CompoundV3Term__factory,
 } from "@elementfi/core-v2-typechain";
-import { cached } from "@elementfi/base";
-import {
-  MultiTermContractDataSource,
-  MultiTermContractDataSourceOptions,
-} from "./MultiTermContractDataSource";
-
-interface CompoundV3TermContractDataSourceOptions
-  extends MultiTermContractDataSourceOptions {}
+import { ContractDataSource } from "src/datasources/ContractDataSource";
+import { MultiTermContractDataSource } from "./MultiTermContractDataSource";
 
 export class CompoundV3TermContractDataSource extends MultiTermContractDataSource {
   contract: CompoundV3Term;
 
-  constructor(options: CompoundV3TermContractDataSourceOptions) {
-    super(options);
-    const { address, provider } = options;
+  constructor(address: string, provider: providers.BaseProvider) {
+    super(address, provider);
     this.contract = CompoundV3Term__factory.connect(address, provider);
   }
 
-  getYieldSourceAddress(): Promise<string> {
-    return cached({
-      cacheKey: "getYieldSourceAddress",
-      cache: this.cache,
-      callback: () => this.contract.yieldSource(),
-    });
+  getYieldSourceAddress(
+    this: ContractDataSource<CompoundV3Term>,
+  ): Promise<string> {
+    return this.call("yieldSource", []);
   }
 }

@@ -2,32 +2,52 @@ import { ElementClient } from "src/client";
 import { MultiPoolContractDataSource } from "src/datasources/MultiPool/MultiPoolContractDataSource";
 import { MultiPoolDataSource } from "src/datasources/MultiPool/MultiPoolDataSource";
 import { MultiTerm } from "./MultiTerm";
-
-export interface MultiPoolOptions {
-  address: string;
-  client: ElementClient;
-  dataSource?: MultiPoolDataSource;
-}
+import { Pool } from "./Pool";
+import { Token } from "./Token";
+import { YieldSource } from "./YieldSource";
 
 export class MultiPool {
   address: string;
   client: ElementClient;
   dataSource: MultiPoolDataSource;
 
-  constructor({ address, client, dataSource }: MultiPoolOptions) {
+  constructor(
+    address: string,
+    client: ElementClient,
+    dataSource?: MultiPoolDataSource,
+  ) {
     this.address = address;
     this.client = client;
     this.dataSource =
       dataSource ??
-      client.getDataSource<MultiPoolDataSource>({ address }) ??
-      new MultiPoolContractDataSource({ address, provider: client.provider });
+      client.setDataSource(
+        { address },
+        new MultiPoolContractDataSource(address, client.provider),
+      );
   }
 
-  async getTerm(): Promise<MultiTerm> {
+  async getPool(expiryTimestamp: number): Promise<Pool | null> {
+    // TODO: should this validate that the pool exists?
+    return new Pool(expiryTimestamp, this.client, this);
+  }
+
+  async getPools(fromBlock?: number, toBlock?: number): Promise<Pool[]> {
+    const poolIds = await this.dataSource.getPoolIds(fromBlock, toBlock);
+    return poolIds.map((id) => new Pool(id, this.client, this));
+  }
+
+  async getMultiTerm(): Promise<MultiTerm> {
     const address = await this.dataSource.getMultiTerm();
-    return new MultiTerm({
-      address,
-      client: this.client,
-    });
+    return new MultiTerm(address, this.client);
+  }
+
+  async getYieldSource(): Promise<YieldSource | null> {
+    const multiTerm = await this.getMultiTerm();
+    return multiTerm.getYieldSource();
+  }
+
+  async getBaseAsset(): Promise<Token> {
+    const multiTerm = await this.getMultiTerm();
+    return multiTerm.getBaseAsset();
   }
 }

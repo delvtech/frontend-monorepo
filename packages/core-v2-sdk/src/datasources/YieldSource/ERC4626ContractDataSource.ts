@@ -1,32 +1,17 @@
-import { YieldSourceDataSource } from "./YieldSourceDataSource";
 import { providers } from "ethers";
-import LRUCache from "lru-cache";
-import { cached } from "@elementfi/base";
 import { ERC4626, ERC4626__factory } from "@elementfi/core-v2-typechain";
+import { ContractDataSource } from "src/datasources/ContractDataSource";
+import { YieldSourceDataSource } from "./YieldSourceDataSource";
 
-interface ERC4626ContractDataSourceOptions {
-  address: string;
-  provider: providers.BaseProvider;
-}
-
-export class ERC4626ContractDataSource implements YieldSourceDataSource {
-  address: string;
-  contract: ERC4626;
-  cache: LRUCache<string, any>;
-
-  constructor({ address, provider }: ERC4626ContractDataSourceOptions) {
-    this.address = address;
-    this.contract = ERC4626__factory.connect(address, provider);
-    this.cache = new LRUCache({ max: 500 });
+export class ERC4626ContractDataSource
+  extends ContractDataSource<ERC4626>
+  implements YieldSourceDataSource
+{
+  constructor(address: string, provider: providers.BaseProvider) {
+    super(ERC4626__factory.connect(address, provider));
   }
 
   async getName(): Promise<string> {
-    return cached({
-      cacheKey: "getName",
-      callback: async () => {
-        return this.contract.name();
-      },
-      cache: this.cache,
-    });
+    return this.call("name", []);
   }
 }
