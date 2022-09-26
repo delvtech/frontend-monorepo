@@ -18,6 +18,7 @@ export class ElementContext {
     this.dataSources = dataSources;
   }
 
+  // TODO: How can we make this more efficient, yet still flexible
   getDataSource<T extends Record<string, any>>(filter: Partial<T>): T | null {
     const dataSource = this.dataSources.find((dataSource) => {
       let isMatch = true;
