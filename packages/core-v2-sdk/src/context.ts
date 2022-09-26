@@ -1,4 +1,5 @@
 import { providers } from "ethers";
+import { DataSource } from "./datasources/DataSource";
 
 export interface ElementContextOptions {
   chainId: number;
@@ -9,7 +10,7 @@ export interface ElementContextOptions {
 export class ElementContext {
   chainId: number;
   provider: providers.BaseProvider;
-  dataSources: Record<string, any>[];
+  dataSources: DataSource[];
 
   constructor({ chainId, provider, dataSources = [] }: ElementContextOptions) {
     this.chainId = chainId;
