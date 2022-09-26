@@ -17,7 +17,6 @@ export class ElementClient {
     this.dataSources = dataSources;
   }
 
-  // TODO: Should data sources take on the responsibility of uniquely identifying themselves?
   getDataSource<T extends Record<string, any>>(filter: Partial<T>): T | null {
     const dataSource = this.dataSources.find((dataSource) => {
       let isMatch = true;
