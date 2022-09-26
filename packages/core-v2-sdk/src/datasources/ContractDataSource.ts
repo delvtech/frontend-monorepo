@@ -4,6 +4,9 @@ import { CachedDataSource } from "./CachedDataSource";
 
 type AnyFunction = (...args: any) => any;
 
+/**
+ * Get a union of all keys/properties on T that are functions
+ */
 export type FunctionKeys<T> = Exclude<
   {
     [K in keyof T]: T[K] extends AnyFunction ? K : never;
