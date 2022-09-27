@@ -8,4 +8,5 @@ export interface MultiTermDataSource {
   getDecimals: () => Promise<number>;
   getName: (tokenId: number) => Promise<string>;
   getBalanceOf: (tokenId: number, address: string) => Promise<string>;
+  getUnlockedPricePerShare: () => Promise<string>;
 }
