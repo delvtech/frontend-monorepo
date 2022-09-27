@@ -70,6 +70,7 @@ export class Pool {
 
   /**
    * Gets principle token spot price from the pool, disregarding slippage.
+   * @dev Formula source: https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500
    * @return {Promise<string>} Principle token spot price.
    */
   async getSpotPrice(): Promise<string> {
@@ -97,19 +98,7 @@ export class Pool {
     // price per share
     const term = await this.multiPool.getMultiTerm();
     const pricePerShare = +(await term.getUnlockedPricePerShare());
-
     const tParam = daysUntilExpiry / (365 * timeStretch);
-
-    console.log("pool parameters ", parameters);
-    console.log("term price per share ", pricePerShare);
-    console.log("bond reserves ", bonds);
-    console.log("share reserves ", shares);
-    console.log("t", tParam);
-
-    console.log(((shares + totalSupply) * pricePerShare) / (bonds * mu));
-    console.log(
-      ((pricePerShare * (shares + totalSupply)) / (bonds * mu)) ** tParam,
-    );
 
     const denom =
       (((shares + totalSupply) * pricePerShare) / (bonds * mu)) ** tParam;
