@@ -15,7 +15,7 @@ export class Pool {
     this.id = id;
     this.context = context;
     this.multiPool = multiPool;
-    this.maturityDate = new Date(id + 1000);
+    this.maturityDate = new Date(id * 1000);
   }
 
   getYieldSource(): Promise<YieldSource | null> {

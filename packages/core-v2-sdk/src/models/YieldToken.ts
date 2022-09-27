@@ -12,7 +12,7 @@ export class YieldToken {
     this.id = id;
     this.context = context;
     this.term = term;
-    this.maturityDate = new Date(id + 1000);
+    this.maturityDate = new Date(id * 1000);
   }
 
   async getBaseAsset(): Promise<Token> {
