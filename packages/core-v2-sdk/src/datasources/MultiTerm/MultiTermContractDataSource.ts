@@ -66,7 +66,7 @@ export class MultiTermContractDataSource
     return null;
   }
 
-  async getBaseAsset(): Promise<string> {
+  getBaseAsset(): Promise<string> {
     return this.call("token", []);
   }
 
