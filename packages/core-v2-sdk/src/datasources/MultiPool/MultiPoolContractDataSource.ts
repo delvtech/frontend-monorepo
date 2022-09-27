@@ -2,7 +2,8 @@ import { providers } from "ethers";
 import { Pool, Pool__factory } from "@elementfi/core-v2-typechain";
 import { ContractDataSource } from "src/datasources/ContractDataSource";
 import { MultiPoolDataSource } from "./MultiPoolDataSource";
-
+import { PoolParameters, PoolReserves } from "src/types";
+import { fromBn } from "evm-bn";
 export class MultiPoolContractDataSource
   extends ContractDataSource<Pool>
   implements MultiPoolDataSource
@@ -27,10 +28,13 @@ export class MultiPoolContractDataSource
     return this.call("term", []);
   }
 
-  async getReserves(tokenId: string): Promise<{
-    shares: string;
-    bonds: string;
-  }> {
+  /**
+   * Fetches and caches the pool reserves from our datasource (contract).
+   * @notice This function returns reserves as string representation of a fixed point number.
+   * @param {number} tokenId - the pool id (expiry)
+   * @return {Promise<PoolReserves>}
+   */
+  async getPoolReserves(tokenId: number): Promise<PoolReserves> {
     const [sharesBigNumber, bondsBigNumber] = await this.call("reserves", [
       tokenId,
     ]);
@@ -40,13 +44,20 @@ export class MultiPoolContractDataSource
     };
   }
 
-  async getShareReserves(tokenId: string): Promise<string> {
-    const { shares } = await this.getReserves(tokenId);
-    return shares;
-  }
+  /**
+   * Fetches and caches the pool parameters from our datasource (contract).
+   * @notice This function also handles converting the pool parameters from a fixed point number.
+   * @param {number} tokenId - the pool id (expiry)
+   * @return {Promise<PoolParameters>}
+   */
+  async getPoolParameters(tokenId: number): Promise<PoolParameters> {
+    const [timeStretch, muBN] = await this.call("parameters", [tokenId]);
 
-  async getBondReserves(tokenId: string): Promise<any> {
-    const { bonds } = await this.getReserves(tokenId);
-    return bonds;
+    return {
+      // mu is represented as a 18 decimal fixed point number, we have to convert to a decimal
+      mu: fromBn(muBN, 18),
+      // timeStretch is represented as a 3 decimal fixed point number, we have to convert to a decimal
+      timeStretch: (timeStretch / 1e3).toString(),
+    };
   }
 }

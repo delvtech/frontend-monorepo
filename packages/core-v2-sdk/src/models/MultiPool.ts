@@ -1,6 +1,7 @@
 import { ElementContext } from "src/context";
 import { MultiPoolContractDataSource } from "src/datasources/MultiPool/MultiPoolContractDataSource";
 import { MultiPoolDataSource } from "src/datasources/MultiPool/MultiPoolDataSource";
+import { PoolParameters, PoolReserves } from "src/types";
 import { MultiTerm } from "./MultiTerm";
 import { Pool } from "./Pool";
 import { Token } from "./Token";
@@ -26,9 +27,9 @@ export class MultiPool {
       );
   }
 
-  async getPool(expiryTimestamp: number): Promise<Pool | null> {
+  async getPool(expiry: number): Promise<Pool | null> {
     // TODO: should this validate that the pool exists?
-    return new Pool(expiryTimestamp, this.context, this);
+    return new Pool(expiry, this.context, this);
   }
 
   async getPools(fromBlock?: number, toBlock?: number): Promise<Pool[]> {
@@ -52,5 +53,23 @@ export class MultiPool {
   async getBaseAsset(): Promise<Token> {
     const multiTerm = await this.getMultiTerm();
     return multiTerm.getBaseAsset();
+  }
+
+  /**
+   * Gets the pool reserves
+   * @param {number} expiry - the pool id
+   * @return {Promise<PoolReserves>} pool reserves.
+   */
+  async getPoolReserves(expiry: number): Promise<PoolReserves> {
+    return await this.dataSource.getPoolReserves(expiry);
+  }
+
+  /**
+   * Gets the pool parameters
+   * @param {number} expiry - the pool id
+   * @return {Promise<PoolParameters>} pool parameters.
+   */
+  async getPoolParameters(expiry: number): Promise<PoolParameters> {
+    return await this.dataSource.getPoolParameters(expiry);
   }
 }

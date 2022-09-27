@@ -59,4 +59,12 @@ export class MultiTerm {
   async getTVL(atBlock: number): Promise<string> {
     return "0";
   }
+
+  /**
+   * Gets the MultiTerm's unlockedSharePrice value
+   * @return {Promise<string>} The unlocked share price as a string.
+   */
+  async getUnlockedPricePerShare(): Promise<string> {
+    return await this.dataSource.getUnlockedPricePerShare();
+  }
 }

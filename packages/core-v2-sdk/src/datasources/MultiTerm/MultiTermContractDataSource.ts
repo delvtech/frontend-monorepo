@@ -3,6 +3,7 @@ import { Term, Term__factory } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
 import { MultiTermDataSource } from "./MultiTermDataSource";
 import { ContractDataSource } from "src/datasources/ContractDataSource";
+import { fromBn } from "evm-bn";
 
 export class MultiTermContractDataSource
   extends ContractDataSource<Term>
@@ -84,5 +85,16 @@ export class MultiTermContractDataSource
   async getBalanceOf(tokenId: number, address: string): Promise<string> {
     const balanceBigNumber = await this.call("balanceOf", [tokenId, address]);
     return balanceBigNumber.toString();
+  }
+
+  /**
+   * Fetches and caches the terms unlockedSharePrice value from our datasource (contract).
+   * @notice This function converts the sharePrice from a fixed point number.
+   * @param {number} tokenId - the term id (expiry)
+   * @return {Promise<string>} The unlocked share price as a string.
+   */
+  async getUnlockedPricePerShare(): Promise<string> {
+    const sharePriceBN = await this.call("unlockedSharePrice", []);
+    return fromBn(sharePriceBN, await this.getDecimals());
   }
 }
