@@ -8,7 +8,7 @@ export class MultiPoolContractDataSource
   extends ContractDataSource<Pool>
   implements MultiPoolDataSource
 {
-  constructor(address: string, provider: providers.BaseProvider) {
+  constructor(address: string, provider: providers.Provider) {
     super(Pool__factory.connect(address, provider));
   }
 

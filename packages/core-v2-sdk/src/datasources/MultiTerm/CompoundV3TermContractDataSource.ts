@@ -9,7 +9,7 @@ import { MultiTermContractDataSource } from "./MultiTermContractDataSource";
 export class CompoundV3TermContractDataSource extends MultiTermContractDataSource {
   contract: CompoundV3Term;
 
-  constructor(address: string, provider: providers.BaseProvider) {
+  constructor(address: string, provider: providers.Provider) {
     super(address, provider);
     this.contract = CompoundV3Term__factory.connect(address, provider);
   }

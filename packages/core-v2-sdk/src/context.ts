@@ -3,13 +3,13 @@ import { DataSource } from "./datasources/DataSource";
 
 export interface ElementContextOptions {
   chainId: number;
-  provider: providers.BaseProvider;
+  provider: providers.Provider;
   dataSources?: Record<string, any>[];
 }
 
 export class ElementContext {
   chainId: number;
-  provider: providers.BaseProvider;
+  provider: providers.Provider;
   dataSources: DataSource[];
 
   constructor({ chainId, provider, dataSources = [] }: ElementContextOptions) {
