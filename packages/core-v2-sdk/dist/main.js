@@ -1,6 +1,7 @@
 var $eCQIH$elementfibase = require("@elementfi/base");
 var $eCQIH$lrucache = require("lru-cache");
 var $eCQIH$elementficorev2typechain = require("@elementfi/core-v2-typechain");
+var $eCQIH$evmbn = require("evm-bn");
 var $eCQIH$ethers = require("ethers");
 
 function $parcel$exportWildcard(dest, source) {
@@ -34,6 +35,7 @@ class $f65b6b18b897f856$export$4186b0f94a8cd1c0 {
         this.provider = provider;
         this.dataSources = dataSources;
     }
+    // TODO: How can we make this more efficient, yet still flexible
     getDataSource(filter) {
         const dataSource1 = this.dataSources.find((dataSource)=>{
             let isMatch = true;
@@ -62,7 +64,9 @@ class $54e3433d3ac69f8a$export$2ed75dd8c92d9d3e {
             max: 500
         });
     }
-    cached(cacheKey, callback) {
+    // The return type will match the return type of the callback function.
+    cached(// The cache key will be reduced to a string
+    cacheKey, callback) {
         return (0, $eCQIH$elementfibase.cached)({
             cacheKey: cacheKey,
             cache: this.cache,
@@ -175,6 +179,7 @@ var $bd9ebd5a6170b777$exports = {};
 $parcel$export($bd9ebd5a6170b777$exports, "MultiPoolContractDataSource", () => $bd9ebd5a6170b777$export$3e28d0e9e34d7848);
 
 
+
 class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$export$f5a95cc94689234f) {
     constructor(address, provider){
         super((0, $eCQIH$elementficorev2typechain.Pool__factory).connect(address, provider));
@@ -193,7 +198,12 @@ class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$ex
     getMultiTerm() {
         return this.call("term", []);
     }
-    async getReserves(tokenId) {
+    /**
+   * Fetches and caches the pool reserves from our datasource (contract).
+   * @notice This function returns reserves as string representation of a fixed point number.
+   * @param {number} tokenId - the pool id (expiry)
+   * @return {Promise<PoolReserves>}
+   */ async getPoolReserves(tokenId) {
         const [sharesBigNumber, bondsBigNumber] = await this.call("reserves", [
             tokenId, 
         ]);
@@ -202,13 +212,21 @@ class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$ex
             bonds: bondsBigNumber.toString()
         };
     }
-    async getShareReserves(tokenId) {
-        const { shares: shares  } = await this.getReserves(tokenId);
-        return shares;
-    }
-    async getBondReserves(tokenId) {
-        const { bonds: bonds  } = await this.getReserves(tokenId);
-        return bonds;
+    /**
+   * Fetches and caches the pool parameters from our datasource (contract).
+   * @notice This function also handles converting the pool parameters from a fixed point number.
+   * @param {number} tokenId - the pool id (expiry)
+   * @return {Promise<PoolParameters>}
+   */ async getPoolParameters(tokenId) {
+        const [timeStretch, muBN] = await this.call("parameters", [
+            tokenId
+        ]);
+        return {
+            // mu is represented as a 18 decimal fixed point number, we have to convert to a decimal
+            mu: (0, $eCQIH$evmbn.fromBn)(muBN, 18),
+            // timeStretch is represented as a 3 decimal fixed point number, we have to convert to a decimal
+            timeStretch: (timeStretch / 1e3).toString()
+        };
     }
 }
 
@@ -219,6 +237,7 @@ var $2bc757e9b01d8e37$exports = {};
 var $d179b418267ba386$exports = {};
 
 $parcel$export($d179b418267ba386$exports, "MultiTermContractDataSource", () => $d179b418267ba386$export$2bd093a746116e9a);
+
 
 
 
@@ -266,7 +285,7 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
         // console.warn('Idk how to do that')
         return null;
     }
-    async getBaseAsset() {
+    getBaseAsset() {
         return this.call("token", []);
     }
     getSymbol(tokenId) {
@@ -288,6 +307,15 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
             address
         ]);
         return balanceBigNumber.toString();
+    }
+    /**
+   * Fetches and caches the terms unlockedSharePrice value from our datasource (contract).
+   * @notice This function converts the sharePrice from a fixed point number.
+   * @param {number} tokenId - the term id (expiry)
+   * @return {Promise<string>} The unlocked share price as a string.
+   */ async getUnlockedPricePerShare() {
+        const sharePriceBN = await this.call("unlockedSharePrice", []);
+        return (0, $eCQIH$evmbn.fromBn)(sharePriceBN, await this.getDecimals());
     }
 }
 
@@ -340,9 +368,10 @@ class $f00ba8e0ba7f8838$export$9329909b02e34fde extends (0, $d0dba6c4aa120ac9$ex
     constructor(){
         super("https://api.coingecko.com/api/v3/");
     }
+    // TODO: Add strong types for CODE and possibly ID
     async getTokenPrice(id, currency) {
         const res = await this.get(`/simple/price?ids=${id}&vs_currencies=${currency ?? "usd"}`);
-        return res[id]?.[currency] ?? 1;
+        return res[id]?.[currency] ?? null;
     }
 }
 
@@ -434,17 +463,17 @@ $parcel$export($2361706748e2a981$exports, "Token", () => $2361706748e2a981$expor
 
 
 class $2361706748e2a981$export$50792b0e93539fde {
-    constructor(address, client, dataSource){
+    constructor(address, context, dataSource){
         this.address = address;
-        this.client = client;
+        this.context = context;
         if (dataSource) this.dataSource = dataSource;
         else {
-            const tokenAPIDataSource = client.setDataSource({
+            const tokenAPIDataSource = context.registerDataSource({
                 baseURL: (0, $f00ba8e0ba7f8838$export$9329909b02e34fde).baseURL
             }, new (0, $f00ba8e0ba7f8838$export$9329909b02e34fde)());
-            this.dataSource = client.setDataSource({
+            this.dataSource = context.registerDataSource({
                 address: address
-            }, new (0, $fe6691dc6a8bbe5c$export$f746d784fcd6629)(address, client.provider, {
+            }, new (0, $fe6691dc6a8bbe5c$export$f746d784fcd6629)(address, context.provider, {
                 apiDataSource: tokenAPIDataSource
             }));
         }
@@ -492,13 +521,11 @@ var $51ba50e48c247b12$exports = {};
 
 $parcel$export($51ba50e48c247b12$exports, "Term", () => $51ba50e48c247b12$export$656c1e606ad06131);
 class $2ababb11162a7525$export$62007a0bd048d56c {
-    constructor(id, client, term){
+    constructor(id, context, term){
         this.id = id;
-        this.client = client;
+        this.context = context;
         this.term = term;
-    }
-    get maturity() {
-        return this.id;
+        this.maturityDate = new Date(id * 1000);
     }
     async getBaseAsset() {
         return this.term.getBaseAsset();
@@ -519,13 +546,11 @@ class $2ababb11162a7525$export$62007a0bd048d56c {
 
 
 class $d42f7646c857727b$export$7e27801a0b3a9d2a {
-    constructor(id, client, term){
+    constructor(id, context, term){
         this.id = id;
-        this.client = client;
+        this.context = context;
         this.term = term;
-    }
-    get maturity() {
-        return this.id;
+        this.maturityDate = new Date(id * 1000);
     }
     async getBaseAsset() {
         return this.term.getBaseAsset();
@@ -550,14 +575,12 @@ class $d42f7646c857727b$export$7e27801a0b3a9d2a {
 
 
 class $51ba50e48c247b12$export$656c1e606ad06131 {
-    constructor(id, client, multiTerm){
+    constructor(id, context, multiTerm){
         this.id = id;
-        this.client = client;
+        this.context = context;
         this.multiTerm = multiTerm;
-        this.principalToken = new (0, $2ababb11162a7525$export$62007a0bd048d56c)(id, client, this);
-    }
-    get maturity() {
-        return this.id;
+        this.principalToken = new (0, $2ababb11162a7525$export$62007a0bd048d56c)(id, context, this);
+        this.maturityDate = new Date(id * 1000);
     }
     getYieldSource() {
         return this.multiTerm.getYieldSource();
@@ -574,35 +597,35 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
     }
     // TODO: How do I get the token ID with a start and end date?
     getYieldToken(startTimeStamp) {
-        return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(this.id, this.client, this);
+        return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(this.id, this.context, this);
     }
 }
 
 
 class $73142241d07e4549$export$44a06e384a6d2ed0 {
-    constructor(address, client, dataSource){
+    constructor(address, context, dataSource){
         this.address = address;
-        this.client = client;
-        this.dataSource = dataSource ?? client.setDataSource({
+        this.context = context;
+        this.dataSource = dataSource ?? context.registerDataSource({
             address: address
-        }, new (0, $d179b418267ba386$export$2bd093a746116e9a)(address, client.provider));
+        }, new (0, $d179b418267ba386$export$2bd093a746116e9a)(address, context.provider));
     }
     async getTerm(expiryTimestamp) {
         // TODO: should this validate that the term exists?
-        return new (0, $51ba50e48c247b12$export$656c1e606ad06131)(expiryTimestamp, this.client, this);
+        return new (0, $51ba50e48c247b12$export$656c1e606ad06131)(expiryTimestamp, this.context, this);
     }
     async getTerms(fromBlock, toBlock) {
-        const termIds = await this.dataSource.getTermIds(fromBlock, toBlock);
-        return termIds.map((id)=>new (0, $51ba50e48c247b12$export$656c1e606ad06131)(id, this.client, this));
+        const termIds = await this.dataSource.getTermIds(fromBlock, toBlock ?? await this.context.provider.getBlockNumber());
+        return termIds.map((id)=>new (0, $51ba50e48c247b12$export$656c1e606ad06131)(id, this.context, this));
     }
     async getYieldSource() {
         const address = await this.dataSource.getYieldSource();
         if (!address) return null;
-        return new (0, $43a71ca2139b91c6$export$5b513f5c41d35e50)(address, this.client);
+        return new (0, $43a71ca2139b91c6$export$5b513f5c41d35e50)(address, this.context);
     }
     async getBaseAsset() {
         const address = await this.dataSource.getBaseAsset();
-        return new (0, $2361706748e2a981$export$50792b0e93539fde)(address, this.client);
+        return new (0, $2361706748e2a981$export$50792b0e93539fde)(address, this.context);
     }
     getDecimals() {
         return this.dataSource.getDecimals();
@@ -611,21 +634,32 @@ class $73142241d07e4549$export$44a06e384a6d2ed0 {
     async getTVL(atBlock) {
         return "0";
     }
+    /**
+   * Gets the MultiTerm's unlockedSharePrice value
+   * @return {Promise<string>} The unlocked share price as a string.
+   */ async getUnlockedPricePerShare() {
+        return await this.dataSource.getUnlockedPricePerShare();
+    }
 }
 
 
 var $5c922a29083dd917$exports = {};
 
 $parcel$export($5c922a29083dd917$exports, "Pool", () => $5c922a29083dd917$export$14963ee5c8637e11);
+async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
+    const current = await provider.getBlockNumber();
+    const currentBlock = await provider.getBlock(current);
+    return currentBlock.timestamp;
+}
+
+
 
 class $5c922a29083dd917$export$14963ee5c8637e11 {
-    constructor(id, client, multiPool){
+    constructor(id, context, multiPool){
         this.id = id;
-        this.client = client;
+        this.context = context;
         this.multiPool = multiPool;
-    }
-    get maturity() {
-        return this.id;
+        this.maturityDate = new Date(id * 1000);
     }
     getYieldSource() {
         return this.multiPool.getYieldSource();
@@ -633,14 +667,62 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
     getBaseAsset() {
         return this.multiPool.getBaseAsset();
     }
-    // TODO:
-    async getBaseAssetReserves() {
-        return "0";
+    /**
+   * Gets the bond and shares reserves for the pol.
+   * @return {Promise<PoolReserves>}
+   */ async getReserves() {
+        return await this.multiPool.getPoolReserves(this.id);
+    }
+    /**
+   * Gets the bond reserves total from the pool.
+   * @return {Promise<string>} Bond reserves as a string.
+   */ async getBondReserves() {
+        const { bonds: bonds  } = await this.getReserves();
+        return bonds;
+    }
+    /**
+   * Gets the share reserves total from the pool.
+   * @return {Promise<string>} Share reserves as a string.
+   */ async getShareReserves() {
+        const { shares: shares  } = await this.getReserves();
+        return shares;
     }
     async shareAsset() {
         const yieldSource = await this.getYieldSource();
         if (!yieldSource) return null;
-        return new (0, $2361706748e2a981$export$50792b0e93539fde)(yieldSource.address, this.client);
+        return new (0, $2361706748e2a981$export$50792b0e93539fde)(yieldSource.address, this.context);
+    }
+    /**
+   * Gets the pool parameters, timeStretch and mu (initial price per share).
+   * @return {Promise<PoolParameters>}
+   */ async getParameters() {
+        return await this.multiPool.getPoolParameters(this.id);
+    }
+    /**
+   * Gets principle token spot price from the pool, disregarding slippage.
+   * @dev Formula source: https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500
+   * @return {Promise<string>} Principle token spot price.
+   */ async getSpotPrice() {
+        // fetch reserves
+        const reserves = await this.getReserves();
+        // cast to number
+        const bonds = +reserves.bonds;
+        const shares = +reserves.shares;
+        const totalSupply = bonds + shares;
+        // calculate seconds until expiry
+        const currentBlockTimestamp = await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider);
+        const secondsUntilExpiry = this.id - currentBlockTimestamp;
+        const daysUntilExpiry = secondsUntilExpiry / 86400;
+        // pool parameters
+        const parameters = await this.getParameters();
+        const mu = +parameters.mu;
+        const timeStretch = +parameters.timeStretch;
+        // price per share
+        const term = await this.multiPool.getMultiTerm();
+        const pricePerShare = +await term.getUnlockedPricePerShare();
+        const tParam = daysUntilExpiry / (365 * timeStretch);
+        const denom = ((shares + totalSupply) * pricePerShare / (bonds * mu)) ** tParam;
+        return (1 / denom).toString();
     }
 }
 
@@ -653,12 +735,12 @@ class $db3c4c3da11ea48c$export$38f2878d4d50407d {
             address: address
         }, new (0, $bd9ebd5a6170b777$export$3e28d0e9e34d7848)(address, context.provider));
     }
-    async getPool(expiryTimestamp) {
+    async getPool(expiry) {
         // TODO: should this validate that the pool exists?
-        return new (0, $5c922a29083dd917$export$14963ee5c8637e11)(expiryTimestamp, this.context, this);
+        return new (0, $5c922a29083dd917$export$14963ee5c8637e11)(expiry, this.context, this);
     }
     async getPools(fromBlock, toBlock) {
-        const poolIds = await this.dataSource.getPoolIds(fromBlock, toBlock);
+        const poolIds = await this.dataSource.getPoolIds(fromBlock, toBlock ?? await this.context.provider.getBlockNumber());
         return poolIds.map((id)=>new (0, $5c922a29083dd917$export$14963ee5c8637e11)(id, this.context, this));
     }
     async getMultiTerm() {
@@ -672,6 +754,20 @@ class $db3c4c3da11ea48c$export$38f2878d4d50407d {
     async getBaseAsset() {
         const multiTerm = await this.getMultiTerm();
         return multiTerm.getBaseAsset();
+    }
+    /**
+   * Gets the pool reserves
+   * @param {number} expiry - the pool id
+   * @return {Promise<PoolReserves>} pool reserves.
+   */ async getPoolReserves(expiry) {
+        return await this.dataSource.getPoolReserves(expiry);
+    }
+    /**
+   * Gets the pool parameters
+   * @param {number} expiry - the pool id
+   * @return {Promise<PoolParameters>} pool parameters.
+   */ async getPoolParameters(expiry) {
+        return await this.dataSource.getPoolParameters(expiry);
     }
 }
 
