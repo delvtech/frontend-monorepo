@@ -9,4 +9,5 @@ export interface MultiTermDataSource {
   getName: (termId: number) => Promise<string>;
   getBalanceOf: (termId: number, address: string) => Promise<string>;
   getUnlockedPricePerShare: () => Promise<string>;
+  getTotalSupply: (termId: number) => Promise<string>;
 }

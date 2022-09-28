@@ -4,6 +4,7 @@ import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts
 import { MultiTermDataSource } from "./MultiTermDataSource";
 import { ContractDataSource } from "src/datasources/ContractDataSource";
 import { fromBn } from "evm-bn";
+import { isPT } from "src/utils/token/isPT";
 
 export class MultiTermContractDataSource
   extends ContractDataSource<Term>
@@ -32,9 +33,14 @@ export class MultiTermContractDataSource
     );
   }
 
+  /**
+   * Gets all terms that have been created from the datasource (contract).
+   * @param {number} fromBlock - Optional, start block number to search from.
+   * @param {number} toBlock - Optional, end block number to search to.
+   * @return {Promise<number[]>} A promise of an array of unique term ids.
+   */
   async getTermIds(fromBlock?: number, toBlock?: number): Promise<number[]> {
     return this.cached(["getTermIds", fromBlock, toBlock], async () => {
-      // TODO: Filter out yield token addresses
       const events = await this.getTransferEvents(
         // new mints result in a transfer from the zero address
         ethers.constants.AddressZero,
@@ -42,8 +48,14 @@ export class MultiTermContractDataSource
         fromBlock,
         toBlock,
       );
+
       return Array.from(
-        new Set(events.map((event) => event.args.id.toNumber())),
+        new Set(
+          events
+            // filter out YTs
+            .filter((event) => isPT(event.args.id))
+            .map((event) => event.args.id.toNumber()),
+        ),
       );
     });
   }
@@ -96,5 +108,15 @@ export class MultiTermContractDataSource
   async getUnlockedPricePerShare(): Promise<string> {
     const sharePriceBN = await this.call("unlockedSharePrice", []);
     return fromBn(sharePriceBN, await this.getDecimals());
+  }
+
+  /**
+   * Gets the total supply of a certain term.
+   * @param {number} termId - the term id (expiry)
+   * @return {Promise<string>} total supply represented as a string
+   */
+  async getTotalSupply(termId: number): Promise<string> {
+    const supply = await this.call("totalSupply", [termId]);
+    return fromBn(supply, await this.getDecimals());
   }
 }
