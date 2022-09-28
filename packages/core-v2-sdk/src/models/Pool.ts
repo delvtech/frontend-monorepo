@@ -6,6 +6,10 @@ import { MultiPool } from "./MultiPool";
 import { Token } from "./Token";
 import { YieldSource } from "./YieldSource";
 
+/**
+ * Pool model class.
+ * @class
+ */
 export class Pool {
   id: number;
   context: ElementContext;
@@ -13,6 +17,12 @@ export class Pool {
   lpToken: LPToken;
   maturityDate: Date;
 
+  /**
+   * Creates a Pool model.
+   * @param {number} id - the pool id (expiry)
+   * @param {ElementContext} context - Context object for the sdk.
+   * @param {MultiPool} multiPool - the MultiPool model where this pool is stored.
+   */
   constructor(id: number, context: ElementContext, multiPool: MultiPool) {
     this.id = id;
     this.context = context;
@@ -21,16 +31,27 @@ export class Pool {
     this.maturityDate = new Date(id * 1000);
   }
 
+  /**
+   * @async
+   * Gets yield source for this pool.
+   * @return {Promise<YieldSource | null>}
+   */
   getYieldSource(): Promise<YieldSource | null> {
     return this.multiPool.getYieldSource();
   }
 
+  /**
+   * @async
+   * Gets the base asset for this pool.
+   * @return {Promise<Token>}
+   */
   getBaseAsset(): Promise<Token> {
     return this.multiPool.getBaseAsset();
   }
 
   /**
-   * Gets the bond and shares reserves for the pol.
+   * @async
+   * Gets the bond and shares reserves for the pool.
    * @return {Promise<PoolReserves>}
    */
   async getReserves(): Promise<PoolReserves> {
@@ -38,6 +59,7 @@ export class Pool {
   }
 
   /**
+   * @async
    * Gets the bond reserves total from the pool.
    * @return {Promise<string>} Bond reserves as a string.
    */
@@ -47,6 +69,7 @@ export class Pool {
   }
 
   /**
+   * @async
    * Gets the share reserves total from the pool.
    * @return {Promise<string>} Share reserves as a string.
    */
@@ -55,6 +78,11 @@ export class Pool {
     return shares;
   }
 
+  /**
+   * Gets the share asset of this pool.
+   * @async
+   * @return {Promise<Token | null>}
+   */
   async getShareAsset(): Promise<Token | null> {
     const yieldSource = await this.getYieldSource();
     if (!yieldSource) {
@@ -64,6 +92,7 @@ export class Pool {
   }
 
   /**
+   * @async
    * Gets the pool parameters, timeStretch and mu (initial price per share).
    * @return {Promise<PoolParameters>}
    */
@@ -72,8 +101,8 @@ export class Pool {
   }
 
   /**
-   * Gets principle token spot price from the pool, disregarding slippage.
-   * @dev Formula source: https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500
+   * Gets principal token spot price from the pool, disregarding slippage, denominated in the base asset.
+   * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500} for formula source.
    * @return {Promise<string>} Principle token spot price.
    */
   async getSpotPrice(): Promise<string> {
@@ -106,5 +135,21 @@ export class Pool {
     const denom =
       (((shares + totalSupply) * pricePerShare) / (bonds * mu)) ** tParam;
     return (1 / denom).toString();
+  }
+
+  /**
+   * Gets the TVL for this pool, denominated in the base asset.
+   * @async
+   * @return {Promise<string>} tvl represented as a string.
+   */
+  async getTVL(): Promise<string> {
+    // bond price in terms of underlying
+    const bondPrice = await this.getSpotPrice();
+    const sharePrice = await (
+      await this.multiPool.getMultiTerm()
+    ).getUnlockedPricePerShare();
+    const { bonds, shares } = await this.getReserves();
+    const tvl = +bondPrice * +bonds + +shares * +sharePrice;
+    return tvl.toString();
   }
 }
