@@ -61,4 +61,40 @@ export class MultiPoolContractDataSource
       timeStretch: (timeStretch / 1e3).toString(),
     };
   }
+
+  /**
+   * Fetches the base asset address from our datasource (contract).
+   */
+  getBaseAsset(): Promise<string> {
+    return this.call("token", []);
+  }
+
+  /**
+   * Fetches the symbol for a given poolId from our datasource (contract).
+   */
+  getSymbol(poolId: number): Promise<string> {
+    return this.call("symbol", [poolId]);
+  }
+
+  /**
+   * Fetches the number of decimals used by tokens in our datasource (contract).
+   */
+  getDecimals(): Promise<number> {
+    return this.call("decimals", []);
+  }
+
+  /**
+   * Fetches the name for a given poolId from our datasource (contract).
+   */
+  getName(poolId: number): Promise<string> {
+    return this.call("name", [poolId]);
+  }
+
+  /**
+   * Fetches an address's balance of a given poolId from our datasource (contract).
+   */
+  async getBalanceOf(poolId: number, address: string): Promise<string> {
+    const balanceBigNumber = await this.call("balanceOf", [poolId, address]);
+    return balanceBigNumber.toString();
+  }
 }

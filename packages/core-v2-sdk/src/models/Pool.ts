@@ -1,6 +1,7 @@
 import { ElementContext } from "src/context";
 import { PoolParameters, PoolReserves } from "src/types";
 import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
+import { LPToken } from "./LPToken";
 import { MultiPool } from "./MultiPool";
 import { Token } from "./Token";
 import { YieldSource } from "./YieldSource";
@@ -9,12 +10,14 @@ export class Pool {
   id: number;
   context: ElementContext;
   multiPool: MultiPool;
+  lpToken: LPToken;
   maturityDate: Date;
 
   constructor(id: number, context: ElementContext, multiPool: MultiPool) {
     this.id = id;
     this.context = context;
     this.multiPool = multiPool;
+    this.lpToken = new LPToken(id, context, this);
     this.maturityDate = new Date(id * 1000);
   }
 

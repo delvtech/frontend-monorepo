@@ -56,6 +56,13 @@ export class MultiPool {
   }
 
   /**
+   * Gets the number of decimals used by this Multi Pool
+   */
+  getDecimals(): Promise<number> {
+    return this.dataSource.getDecimals();
+  }
+
+  /**
    * Gets the pool reserves
    * @param {number} poolId - the pool id
    * @return {Promise<PoolReserves>} pool reserves.
