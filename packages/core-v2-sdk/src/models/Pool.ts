@@ -8,7 +8,6 @@ import { YieldSource } from "./YieldSource";
 
 /**
  * Pool model class.
- * @class
  */
 export class Pool {
   id: number;
