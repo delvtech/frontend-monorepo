@@ -21,7 +21,7 @@ export const resolvers: types.Resolvers<ElementGraphQLContext> = {
       const term = await new MultiTerm(
         multiTermAddress,
         elementContext,
-      ).getTerm(+maturity);
+      ).getTerm(maturity / 1e3);
       if (term) {
         const { id: idNumber, maturityDate, multiTerm } = term;
         const maturity = maturityDate.getTime();
@@ -60,7 +60,7 @@ export const resolvers: types.Resolvers<ElementGraphQLContext> = {
       const pool = await new MultiPool(
         multiPoolAddress,
         elementContext,
-      ).getPool(+maturity);
+      ).getPool(maturity / 1e3);
       if (pool) {
         const { id: idNumber, maturityDate, multiPool } = pool;
         const maturity = maturityDate.getTime();
