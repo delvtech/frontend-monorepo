@@ -1,4 +1,4 @@
-import { getDefaultProvider, providers } from "ethers";
+import { providers } from "ethers";
 import { ElementContext } from "src/context";
 import goerliAddresses from "./goerliAddresses.json";
 import { MultiPool } from "src/models/MultiPool";
@@ -15,6 +15,7 @@ async function example(): Promise<void> {
   const firstPool = pools[0];
 
   console.log(await firstPool.getSpotPrice());
+  console.log(await firstPool.getTVL());
 }
 
 example();
