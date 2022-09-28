@@ -4,6 +4,7 @@ import { ContractDataSource } from "src/datasources/ContractDataSource";
 import { MultiPoolDataSource } from "./MultiPoolDataSource";
 import { PoolParameters, PoolReserves } from "src/types";
 import { fromBn } from "evm-bn";
+
 export class MultiPoolContractDataSource
   extends ContractDataSource<Pool>
   implements MultiPoolDataSource
@@ -31,12 +32,12 @@ export class MultiPoolContractDataSource
   /**
    * Fetches and caches the pool reserves from our datasource (contract).
    * @notice This function returns reserves as string representation of a fixed point number.
-   * @param {number} tokenId - the pool id (expiry)
+   * @param {number} poolId - the pool id (expiry)
    * @return {Promise<PoolReserves>}
    */
-  async getPoolReserves(tokenId: number): Promise<PoolReserves> {
+  async getPoolReserves(poolId: number): Promise<PoolReserves> {
     const [sharesBigNumber, bondsBigNumber] = await this.call("reserves", [
-      tokenId,
+      poolId,
     ]);
     return {
       shares: sharesBigNumber.toString(),
@@ -47,11 +48,11 @@ export class MultiPoolContractDataSource
   /**
    * Fetches and caches the pool parameters from our datasource (contract).
    * @notice This function also handles converting the pool parameters from a fixed point number.
-   * @param {number} tokenId - the pool id (expiry)
+   * @param {number} poolId - the pool id (expiry)
    * @return {Promise<PoolParameters>}
    */
-  async getPoolParameters(tokenId: number): Promise<PoolParameters> {
-    const [timeStretch, muBN] = await this.call("parameters", [tokenId]);
+  async getPoolParameters(poolId: number): Promise<PoolParameters> {
+    const [timeStretch, muBN] = await this.call("parameters", [poolId]);
 
     return {
       // mu is represented as a 18 decimal fixed point number, we have to convert to a decimal
