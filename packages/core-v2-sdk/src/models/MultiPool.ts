@@ -7,11 +7,21 @@ import { Pool } from "./Pool";
 import { Token } from "./Token";
 import { YieldSource } from "./YieldSource";
 
+/**
+ * MultiPool model class.
+ * @class
+ */
 export class MultiPool {
   address: string;
   context: ElementContext;
   dataSource: MultiPoolDataSource;
 
+  /**
+   * Create a MultiPool model.
+   * @param {string} address - MultiPool contract address
+   * @param {ElementContext} context - Context object for the sdk.
+   * @param {MultiPoolDataSource} dataSource - Optional custom datasource for this model. Defaults to {@link MultiPoolContractDataSource}
+   */
   constructor(
     address: string,
     context: ElementContext,
@@ -27,11 +37,24 @@ export class MultiPool {
       );
   }
 
+  /**
+   * Gets a Pool by the poolId from this MultiPool.
+   * @async
+   * @param {number} poolId - the poolId
+   * @return {Pool | null} A pool model, returns null if pool does not exist.
+   */
   async getPool(poolId: number): Promise<Pool | null> {
     // TODO: should this validate that the pool exists?
     return new Pool(poolId, this.context, this);
   }
 
+  /**
+   * Gets all the Pools from this MultiPool. Searches by PoolRegisteredEvents.
+   * @async
+   * @param {number} fromBlock - Optional, start block number to search from.
+   * @param {number} toBlock - Optional, end block number to search to.
+   * @return {Promise<Pool[]>}
+   */
   async getPools(fromBlock?: number, toBlock?: number): Promise<Pool[]> {
     const poolIds = await this.dataSource.getPoolIds(
       fromBlock,
@@ -40,16 +63,33 @@ export class MultiPool {
     return poolIds.map((id) => new Pool(id, this.context, this));
   }
 
+  /**
+   * Gets the associated MultiTerm model.
+   * @async
+   * @return {Promise<MultiTerm>}
+   */
   async getMultiTerm(): Promise<MultiTerm> {
     const address = await this.dataSource.getMultiTerm();
     return new MultiTerm(address, this.context);
   }
 
+  /**
+   * Gets the yield source the associated MultiTerm contract deposits into.
+   * @async
+   * @function getYieldSource
+   * @return {Promise<YieldSource | null>}
+   */
   async getYieldSource(): Promise<YieldSource | null> {
     const multiTerm = await this.getMultiTerm();
     return multiTerm.getYieldSource();
   }
 
+  /**
+   * Gets the base asset from the associated MultiTerm contract.
+   * @async
+   * @function getBaseAsset
+   * @return {Promise<Token>} ERC20 token.
+   */
   async getBaseAsset(): Promise<Token> {
     const multiTerm = await this.getMultiTerm();
     return multiTerm.getBaseAsset();
@@ -64,6 +104,7 @@ export class MultiPool {
 
   /**
    * Gets the pool reserves
+   * @async
    * @param {number} poolId - the pool id
    * @return {Promise<PoolReserves>} pool reserves.
    */
