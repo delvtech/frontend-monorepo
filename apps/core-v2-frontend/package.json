@@ -17,7 +17,7 @@
     "@popperjs/core": "^2.11.2",
     "@rainbow-me/rainbowkit": "^0.4.6",
     "@svgr/webpack": "^6.2.1",
-    "@tailwindcss/forms": "^0.5.0",
+    "@tailwindcss/forms": "^0.5.3",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.isfunction": "^3.0.6",
     "@types/lodash.isnumber": "^3.0.6",
