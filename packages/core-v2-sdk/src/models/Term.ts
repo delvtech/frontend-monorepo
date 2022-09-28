@@ -29,11 +29,11 @@ export class Term {
   }
 
   // TODO:
-  async tvl(atBlock: number): Promise<string> {
+  async getTVL(atBlock: number): Promise<string> {
     return "0";
   }
 
-  createdAtBlock(): Promise<number | null> {
+  getCreatedAtBlock(): Promise<number | null> {
     return this.multiTerm.dataSource.getCreatedAtBlock(this.id);
   }
 
