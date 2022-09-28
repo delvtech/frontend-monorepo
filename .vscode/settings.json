@@ -21,5 +21,6 @@
     "packages/component-library",
     "packages/core-v2-graphql",
     "packages/base"
-  ]
+  ],
+  "dotenv.enableAutocloaking": false
 }

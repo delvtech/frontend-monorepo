@@ -1,69 +1,89 @@
-import { CoreV2Context } from "src/context";
-import { MultiTerm, Resolvers } from "src/generated";
-import {
-  PoolModel,
-  TokenModel,
-  TermModel,
-  YieldSourceModel,
-  MultiPoolModel,
-  MultiTermModel,
-} from "src/models";
+import { MultiPool, MultiTerm, Token } from "@elementfi/core-v2-sdk";
+import { ElementGraphQLContext } from "src/context";
+import * as types from "src/generated";
 
-export const resolvers: Resolvers<CoreV2Context> = {
+export const resolvers: types.Resolvers<ElementGraphQLContext> = {
   Query: {
-    multiTerm: (_, { address, yieldSource: yieldSourceName }, context) => {
-      let multiTerm: MultiTerm | null = null;
+    multiTerm: (_, { address, yieldSource }, { elementContext }) => {
       if (address) {
-        multiTerm = MultiTermModel.getByAddress({ address, context });
-      } else if (yieldSourceName) {
-        const yieldSource = YieldSourceModel.getByName({
-          name: yieldSourceName,
-          context,
-        });
-        multiTerm = MultiTermModel.getByYieldSource({
-          yieldSource,
-          context,
-        });
+        return new MultiTerm(address, elementContext);
+      } else if (yieldSource) {
+        // TODO: How will yield source names be mapped to multiterms?
       }
-      return multiTerm || null;
+      return null;
     },
 
-    term: (_, { multiTerm: multiTermAddress, maturity }, context) => {
-      const multiTerm = MultiTermModel.getByAddress({
-        address: multiTermAddress,
-        context,
-      });
-      const term = TermModel.getByMaturity({ maturity, multiTerm, context });
-      return term || null;
+    term: async (
+      _,
+      { multiTerm: multiTermAddress, maturity },
+      { elementContext },
+    ) => {
+      const term = await new MultiTerm(
+        multiTermAddress,
+        elementContext,
+      ).getTerm(+maturity);
+      if (term) {
+        const { id: idNumber, maturityDate, multiTerm } = term;
+        const maturity = maturityDate.getTime();
+        const id = idNumber.toString();
+        return {
+          id,
+          multiTerm,
+          maturity,
+          principalToken: {
+            id,
+            maturity,
+          },
+        };
+      }
+      return null;
     },
 
     // terms: (_, { yieldSource: yieldSourceName }, context) => {
 
     // },
 
-    multiPool: (_, { yieldSource: yieldSourceName }, context) => {
-      const yieldSource = YieldSourceModel.getByName({
-        name: yieldSourceName,
-        context,
-      });
-      const multiPool = MultiPoolModel.getByYieldSource({
-        yieldSource,
-        context,
-      });
-      return multiPool || null;
+    multiPool: (_, { address, yieldSource }, { elementContext }) => {
+      if (address) {
+        return new MultiPool(address, elementContext);
+      } else if (yieldSource) {
+        // TODO: How will yield source names be mapped to multiPools?
+      }
+      return null;
     },
 
-    pool: (_, { multiPool: multiPoolAddress, maturity }, context) => {
-      const multiPool = MultiPoolModel.getByAddress({
-        address: multiPoolAddress,
-        context,
-      });
-      const pool = PoolModel.getByMaturity({ maturity, multiPool, context });
-      return pool || null;
+    pool: async (
+      _,
+      { multiPool: multiPoolAddress, maturity },
+      { elementContext },
+    ) => {
+      const pool = await new MultiPool(
+        multiPoolAddress,
+        elementContext,
+      ).getPool(+maturity);
+      if (pool) {
+        const { id: idNumber, maturityDate, multiPool } = pool;
+        const maturity = maturityDate.getTime();
+        const id = idNumber.toString();
+        return {
+          id,
+          multiPool,
+          maturity,
+          lpToken: {
+            id,
+            maturity,
+          },
+          principalToken: {
+            id,
+            maturity,
+          },
+        };
+      }
+      return null;
     },
 
-    token: async (_, { address }, context) => {
-      return await TokenModel.getByAddress({ address, context });
+    token: async (_, { address }) => {
+      return { address };
     },
 
     // pools: (_, { yieldSource: yieldSourceName }, context) => {
@@ -163,21 +183,15 @@ export const resolvers: Resolvers<CoreV2Context> = {
   // },
 
   Token: {
-    balanceOf: async (token, { owner }, context) => {
-      return await TokenModel.getBalanceOf({
-        address: token.address,
-        owner,
-        context,
-      });
+    balanceOf: (token, { owner }, { elementContext }) => {
+      return new Token(token.address, elementContext).getBalanceOf(owner);
     },
 
-    allowance: async (token, { owner, spender }, context) => {
-      return await TokenModel.getAllowance({
-        address: token.address,
+    allowance: async (token, { owner, spender }, { elementContext }) => {
+      return new Token(token.address, elementContext).getAllowance(
         owner,
         spender,
-        context,
-      });
+      );
     },
   },
 
