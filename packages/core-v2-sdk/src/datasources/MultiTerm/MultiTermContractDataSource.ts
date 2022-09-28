@@ -48,14 +48,14 @@ export class MultiTermContractDataSource
     });
   }
 
-  getCreatedAtBlock(tokenId: number): Promise<number | null> {
-    return this.cached(["getCreatedAtBlock", tokenId], async () => {
+  getCreatedAtBlock(termId: number): Promise<number | null> {
+    return this.cached(["getCreatedAtBlock", termId], async () => {
       const events = await this.getTransferEvents(
         // new mints result in a transfer from the zero address
         ethers.constants.AddressZero,
         null,
       );
-      const firstTransferEvent = events.find(({ args }) => args.id.eq(tokenId));
+      const firstTransferEvent = events.find(({ args }) => args.id.eq(termId));
       return firstTransferEvent?.blockNumber || null;
     });
   }
@@ -70,27 +70,27 @@ export class MultiTermContractDataSource
     return this.call("token", []);
   }
 
-  getSymbol(tokenId: number): Promise<string> {
-    return this.call("symbol", [tokenId]);
+  getSymbol(termId: number): Promise<string> {
+    return this.call("symbol", [termId]);
   }
 
   getDecimals(): Promise<number> {
     return this.call("decimals", []);
   }
 
-  getName(tokenId: number): Promise<string> {
-    return this.call("name", [tokenId]);
+  getName(termId: number): Promise<string> {
+    return this.call("name", [termId]);
   }
 
-  async getBalanceOf(tokenId: number, address: string): Promise<string> {
-    const balanceBigNumber = await this.call("balanceOf", [tokenId, address]);
+  async getBalanceOf(termId: number, address: string): Promise<string> {
+    const balanceBigNumber = await this.call("balanceOf", [termId, address]);
     return balanceBigNumber.toString();
   }
 
   /**
    * Fetches and caches the terms unlockedSharePrice value from our datasource (contract).
    * @notice This function converts the sharePrice from a fixed point number.
-   * @param {number} tokenId - the term id (expiry)
+   * @param {number} termId - the term id (expiry)
    * @return {Promise<string>} The unlocked share price as a string.
    */
   async getUnlockedPricePerShare(): Promise<string> {

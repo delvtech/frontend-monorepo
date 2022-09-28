@@ -27,9 +27,9 @@ export class MultiPool {
       );
   }
 
-  async getPool(expiry: number): Promise<Pool | null> {
+  async getPool(poolId: number): Promise<Pool | null> {
     // TODO: should this validate that the pool exists?
-    return new Pool(expiry, this.context, this);
+    return new Pool(poolId, this.context, this);
   }
 
   async getPools(fromBlock?: number, toBlock?: number): Promise<Pool[]> {
@@ -56,20 +56,27 @@ export class MultiPool {
   }
 
   /**
+   * Gets the number of decimals used by this Multi Pool
+   */
+  getDecimals(): Promise<number> {
+    return this.dataSource.getDecimals();
+  }
+
+  /**
    * Gets the pool reserves
-   * @param {number} expiry - the pool id
+   * @param {number} poolId - the pool id
    * @return {Promise<PoolReserves>} pool reserves.
    */
-  async getPoolReserves(expiry: number): Promise<PoolReserves> {
-    return await this.dataSource.getPoolReserves(expiry);
+  async getPoolReserves(poolId: number): Promise<PoolReserves> {
+    return await this.dataSource.getPoolReserves(poolId);
   }
 
   /**
    * Gets the pool parameters
-   * @param {number} expiry - the pool id
+   * @param {number} poolId - the pool id
    * @return {Promise<PoolParameters>} pool parameters.
    */
-  async getPoolParameters(expiry: number): Promise<PoolParameters> {
-    return await this.dataSource.getPoolParameters(expiry);
+  async getPoolParameters(poolId: number): Promise<PoolParameters> {
+    return await this.dataSource.getPoolParameters(poolId);
   }
 }

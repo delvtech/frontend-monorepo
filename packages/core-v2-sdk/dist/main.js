@@ -1,5 +1,5 @@
-var $eCQIH$elementfibase = require("@elementfi/base");
 var $eCQIH$lrucache = require("lru-cache");
+var $eCQIH$elementfibase = require("@elementfi/base");
 var $eCQIH$elementficorev2typechain = require("@elementfi/core-v2-typechain");
 var $eCQIH$evmbn = require("evm-bn");
 var $eCQIH$ethers = require("ethers");
@@ -201,11 +201,11 @@ class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$ex
     /**
    * Fetches and caches the pool reserves from our datasource (contract).
    * @notice This function returns reserves as string representation of a fixed point number.
-   * @param {number} tokenId - the pool id (expiry)
+   * @param {number} poolId - the pool id (expiry)
    * @return {Promise<PoolReserves>}
-   */ async getPoolReserves(tokenId) {
+   */ async getPoolReserves(poolId) {
         const [sharesBigNumber, bondsBigNumber] = await this.call("reserves", [
-            tokenId, 
+            poolId, 
         ]);
         return {
             shares: sharesBigNumber.toString(),
@@ -215,11 +215,11 @@ class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$ex
     /**
    * Fetches and caches the pool parameters from our datasource (contract).
    * @notice This function also handles converting the pool parameters from a fixed point number.
-   * @param {number} tokenId - the pool id (expiry)
+   * @param {number} poolId - the pool id (expiry)
    * @return {Promise<PoolParameters>}
-   */ async getPoolParameters(tokenId) {
+   */ async getPoolParameters(poolId) {
         const [timeStretch, muBN] = await this.call("parameters", [
-            tokenId
+            poolId
         ]);
         return {
             // mu is represented as a 18 decimal fixed point number, we have to convert to a decimal
@@ -227,6 +227,39 @@ class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$ex
             // timeStretch is represented as a 3 decimal fixed point number, we have to convert to a decimal
             timeStretch: (timeStretch / 1e3).toString()
         };
+    }
+    /**
+   * Fetches the base asset address from our datasource (contract).
+   */ getBaseAsset() {
+        return this.call("token", []);
+    }
+    /**
+   * Fetches the symbol for a given poolId from our datasource (contract).
+   */ getSymbol(poolId) {
+        return this.call("symbol", [
+            poolId
+        ]);
+    }
+    /**
+   * Fetches the number of decimals used by tokens in our datasource (contract).
+   */ getDecimals() {
+        return this.call("decimals", []);
+    }
+    /**
+   * Fetches the name for a given poolId from our datasource (contract).
+   */ getName(poolId) {
+        return this.call("name", [
+            poolId
+        ]);
+    }
+    /**
+   * Fetches an address's balance of a given poolId from our datasource (contract).
+   */ async getBalanceOf(poolId, address) {
+        const balanceBigNumber = await this.call("balanceOf", [
+            poolId,
+            address
+        ]);
+        return balanceBigNumber.toString();
     }
 }
 
@@ -269,14 +302,14 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
             return Array.from(new Set(events.map((event)=>event.args.id.toNumber())));
         });
     }
-    getCreatedAtBlock(tokenId) {
+    getCreatedAtBlock(termId) {
         return this.cached([
             "getCreatedAtBlock",
-            tokenId
+            termId
         ], async ()=>{
             const events = await this.getTransferEvents(// new mints result in a transfer from the zero address
             (0, $eCQIH$ethers.ethers).constants.AddressZero, null);
-            const firstTransferEvent = events.find(({ args: args  })=>args.id.eq(tokenId));
+            const firstTransferEvent = events.find(({ args: args  })=>args.id.eq(termId));
             return firstTransferEvent?.blockNumber || null;
         });
     }
@@ -288,22 +321,22 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
     getBaseAsset() {
         return this.call("token", []);
     }
-    getSymbol(tokenId) {
+    getSymbol(termId) {
         return this.call("symbol", [
-            tokenId
+            termId
         ]);
     }
     getDecimals() {
         return this.call("decimals", []);
     }
-    getName(tokenId) {
+    getName(termId) {
         return this.call("name", [
-            tokenId
+            termId
         ]);
     }
-    async getBalanceOf(tokenId, address) {
+    async getBalanceOf(termId, address) {
         const balanceBigNumber = await this.call("balanceOf", [
-            tokenId,
+            termId,
             address
         ]);
         return balanceBigNumber.toString();
@@ -311,7 +344,7 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
     /**
    * Fetches and caches the terms unlockedSharePrice value from our datasource (contract).
    * @notice This function converts the sharePrice from a fixed point number.
-   * @param {number} tokenId - the term id (expiry)
+   * @param {number} termId - the term id (expiry)
    * @return {Promise<string>} The unlocked share price as a string.
    */ async getUnlockedPricePerShare() {
         const sharePriceBN = await this.call("unlockedSharePrice", []);
@@ -393,7 +426,7 @@ class $fe6691dc6a8bbe5c$export$f746d784fcd6629 {
     }
     async getPrice(currency) {
         // TODO: find a more reliable way to get the id
-        const id = await (await this.getName()).toLowerCase();
+        const id = (await this.getName()).toLowerCase();
         return this.apiDataSource.getTokenPrice(id, currency);
     }
     async getAllowance(owner, spender) {
@@ -653,12 +686,38 @@ async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
 }
 
 
+class $8af14f8f6b4799b0$export$84f20e6ecc12f354 {
+    constructor(id, context, pool){
+        this.id = id;
+        this.context = context;
+        this.pool = pool;
+        this.maturityDate = new Date(id * 1000);
+    }
+    async getBaseAsset() {
+        return this.pool.getBaseAsset();
+    }
+    async getSymbol() {
+        return this.pool.multiPool.dataSource.getSymbol(this.id);
+    }
+    async getDecimals() {
+        return this.pool.multiPool.getDecimals();
+    }
+    async getName() {
+        return this.pool.multiPool.dataSource.getName(this.id);
+    }
+    async getBalanceOf(address) {
+        return this.pool.multiPool.dataSource.getBalanceOf(this.id, address);
+    }
+}
+
+
 
 class $5c922a29083dd917$export$14963ee5c8637e11 {
     constructor(id, context, multiPool){
         this.id = id;
         this.context = context;
         this.multiPool = multiPool;
+        this.lpToken = new (0, $8af14f8f6b4799b0$export$84f20e6ecc12f354)(id, context, this);
         this.maturityDate = new Date(id * 1000);
     }
     getYieldSource() {
@@ -735,9 +794,9 @@ class $db3c4c3da11ea48c$export$38f2878d4d50407d {
             address: address
         }, new (0, $bd9ebd5a6170b777$export$3e28d0e9e34d7848)(address, context.provider));
     }
-    async getPool(expiry) {
+    async getPool(poolId) {
         // TODO: should this validate that the pool exists?
-        return new (0, $5c922a29083dd917$export$14963ee5c8637e11)(expiry, this.context, this);
+        return new (0, $5c922a29083dd917$export$14963ee5c8637e11)(poolId, this.context, this);
     }
     async getPools(fromBlock, toBlock) {
         const poolIds = await this.dataSource.getPoolIds(fromBlock, toBlock ?? await this.context.provider.getBlockNumber());
@@ -756,18 +815,23 @@ class $db3c4c3da11ea48c$export$38f2878d4d50407d {
         return multiTerm.getBaseAsset();
     }
     /**
+   * Gets the number of decimals used by this Multi Pool
+   */ getDecimals() {
+        return this.dataSource.getDecimals();
+    }
+    /**
    * Gets the pool reserves
-   * @param {number} expiry - the pool id
+   * @param {number} poolId - the pool id
    * @return {Promise<PoolReserves>} pool reserves.
-   */ async getPoolReserves(expiry) {
-        return await this.dataSource.getPoolReserves(expiry);
+   */ async getPoolReserves(poolId) {
+        return await this.dataSource.getPoolReserves(poolId);
     }
     /**
    * Gets the pool parameters
-   * @param {number} expiry - the pool id
+   * @param {number} poolId - the pool id
    * @return {Promise<PoolParameters>} pool parameters.
-   */ async getPoolParameters(expiry) {
-        return await this.dataSource.getPoolParameters(expiry);
+   */ async getPoolParameters(poolId) {
+        return await this.dataSource.getPoolParameters(poolId);
     }
 }
 
@@ -893,6 +957,7 @@ async function $2199ecd2883db3b5$export$3191c47e10722ce4(amount, poolAddress, si
 }
 
 
+$parcel$exportWildcard(module.exports, $f65b6b18b897f856$exports);
 $parcel$exportWildcard(module.exports, $54e3433d3ac69f8a$exports);
 $parcel$exportWildcard(module.exports, $20adc394a346779f$exports);
 $parcel$exportWildcard(module.exports, $d0dba6c4aa120ac9$exports);
@@ -922,7 +987,6 @@ $parcel$exportWildcard(module.exports, $9dde791ff857a61d$exports);
 $parcel$exportWildcard(module.exports, $36cbfb79cc4b34b2$exports);
 $parcel$exportWildcard(module.exports, $9c1766b6f9f74658$exports);
 $parcel$exportWildcard(module.exports, $2199ecd2883db3b5$exports);
-$parcel$exportWildcard(module.exports, $f65b6b18b897f856$exports);
 
 
 //# sourceMappingURL=main.js.map

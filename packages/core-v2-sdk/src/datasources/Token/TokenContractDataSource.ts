@@ -22,7 +22,7 @@ export class TokenContractDataSource implements TokenDataSource {
     this.apiDataSource = options?.apiDataSource ?? new CoinGeckoAPIDataSource();
     this.erc20DataSource =
       options?.erc20DataSource ??
-      new ContractDataSource<ERC20>(ERC20__factory.connect(address, provider));
+      new ContractDataSource(ERC20__factory.connect(address, provider));
   }
 
   getSymbol(): Promise<string> {
@@ -39,7 +39,7 @@ export class TokenContractDataSource implements TokenDataSource {
 
   async getPrice(currency: string): Promise<number | null> {
     // TODO: find a more reliable way to get the id
-    const id = await (await this.getName()).toLowerCase();
+    const id = (await this.getName()).toLowerCase();
     return this.apiDataSource.getTokenPrice(id, currency);
   }
 
