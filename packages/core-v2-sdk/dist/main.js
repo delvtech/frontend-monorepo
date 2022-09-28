@@ -589,10 +589,10 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
         return this.multiTerm.getBaseAsset();
     }
     // TODO:
-    async tvl(atBlock) {
+    async getTVL(atBlock) {
         return "0";
     }
-    createdAtBlock() {
+    getCreatedAtBlock() {
         return this.multiTerm.dataSource.getCreatedAtBlock(this.id);
     }
     // TODO: How do I get the token ID with a start and end date?
@@ -687,7 +687,7 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         const { shares: shares  } = await this.getReserves();
         return shares;
     }
-    async shareAsset() {
+    async getShareAsset() {
         const yieldSource = await this.getYieldSource();
         if (!yieldSource) return null;
         return new (0, $2361706748e2a981$export$50792b0e93539fde)(yieldSource.address, this.context);

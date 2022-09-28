@@ -52,7 +52,7 @@ export class Pool {
     return shares;
   }
 
-  async shareAsset(): Promise<Token | null> {
+  async getShareAsset(): Promise<Token | null> {
     const yieldSource = await this.getYieldSource();
     if (!yieldSource) {
       return null;

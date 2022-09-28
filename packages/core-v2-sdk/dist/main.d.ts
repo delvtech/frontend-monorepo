@@ -229,8 +229,8 @@ export class Term {
     constructor(id: number, context: ElementContext, multiTerm: MultiTerm);
     getYieldSource(): Promise<YieldSource | null>;
     getBaseAsset(): Promise<Token>;
-    tvl(atBlock: number): Promise<string>;
-    createdAtBlock(): Promise<number | null>;
+    getTVL(atBlock: number): Promise<string>;
+    getCreatedAtBlock(): Promise<number | null>;
     getYieldToken(startTimeStamp: number): YieldToken;
 }
 export class MultiTerm {
@@ -273,7 +273,7 @@ export class Pool {
      * @return {Promise<string>} Share reserves as a string.
      */
     getShareReserves(): Promise<string>;
-    shareAsset(): Promise<Token | null>;
+    getShareAsset(): Promise<Token | null>;
     /**
      * Gets the pool parameters, timeStretch and mu (initial price per share).
      * @return {Promise<PoolParameters>}
