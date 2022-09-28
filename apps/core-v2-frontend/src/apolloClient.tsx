@@ -11,5 +11,5 @@ export const apolloClient = new ApolloClient({
       // TODO: Clean this up
       chainId: parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "5"),
     }),
-  }), // TODO: Find a better solution
+  }),
 });
