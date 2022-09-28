@@ -2,25 +2,30 @@ import { providers, BaseContract, BigNumberish, ContractTransaction, Overrides, 
 import LRUCache from "lru-cache";
 import { Pool as _Pool1, Term as _Term1, ERC4626Term, CompoundV3Term, ERC20, ERC4626 } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
+interface DataSource extends Record<string, any> {
+}
 export interface ElementContextOptions {
     chainId: number;
-    provider: providers.BaseProvider;
+    provider: providers.Provider;
     dataSources?: Record<string, any>[];
 }
 export class ElementContext {
     chainId: number;
-    provider: providers.BaseProvider;
-    dataSources: Record<string, any>[];
+    provider: providers.Provider;
+    dataSources: DataSource[];
     constructor({ chainId, provider, dataSources }: ElementContextOptions);
     getDataSource<T extends Record<string, any>>(filter: Partial<T>): T | null;
     registerDataSource<T extends Record<string, any>>(filter: Partial<T>, dataSource: T): T;
 }
-export class CachedDataSource {
+export class CachedDataSource implements DataSource {
     cache: LRUCache<string, any>;
     constructor(cache?: LRUCache<string, any>);
-    cached<T extends (...args: any) => any>(cacheKey: unknown, callback: T): ReturnType<T>;
+    cached<T extends (...args: any) => any, TKey = any>(cacheKey: TKey, callback: T): ReturnType<T>;
 }
 type AnyFunction = (...args: any) => any;
+/**
+ * Get a union of all keys/properties on T that are functions
+ */
 export type FunctionKeys<T> = Exclude<{
     [K in keyof T]: T[K] extends AnyFunction ? K : never;
 }[keyof T], undefined>;
@@ -51,23 +56,39 @@ export class HTTPDataSource<T = any> extends CachedDataSource {
     put<T>(path: string, options: RequestInit): Promise<T>;
     delete<T>(path: string, options?: RequestInit): Promise<T>;
 }
+interface PoolReserves {
+    bonds: string;
+    shares: string;
+}
+interface PoolParameters {
+    mu: string;
+    timeStretch: string;
+}
 export interface MultiPoolDataSource {
     address: string;
     getPoolIds: (fromBlock?: number, toBlock?: number) => Promise<number[]>;
     getMultiTerm: () => Promise<string>;
-    getShareReserves: (tokenId: string) => Promise<string>;
-    getBondReserves: (tokenId: string) => Promise<string>;
+    getPoolReserves: (tokenId: number) => Promise<PoolReserves>;
+    getPoolParameters: (tokenId: number) => Promise<PoolParameters>;
 }
 export class MultiPoolContractDataSource extends ContractDataSource<_Pool1> implements MultiPoolDataSource {
-    constructor(address: string, provider: providers.BaseProvider);
+    constructor(address: string, provider: providers.Provider);
     getPoolIds(fromBlock?: number, toBlock?: number): Promise<number[]>;
     getMultiTerm(): Promise<string>;
-    getReserves(tokenId: string): Promise<{
-        shares: string;
-        bonds: string;
-    }>;
-    getShareReserves(tokenId: string): Promise<string>;
-    getBondReserves(tokenId: string): Promise<any>;
+    /**
+     * Fetches and caches the pool reserves from our datasource (contract).
+     * @notice This function returns reserves as string representation of a fixed point number.
+     * @param {number} tokenId - the pool id (expiry)
+     * @return {Promise<PoolReserves>}
+     */
+    getPoolReserves(tokenId: number): Promise<PoolReserves>;
+    /**
+     * Fetches and caches the pool parameters from our datasource (contract).
+     * @notice This function also handles converting the pool parameters from a fixed point number.
+     * @param {number} tokenId - the pool id (expiry)
+     * @return {Promise<PoolParameters>}
+     */
+    getPoolParameters(tokenId: number): Promise<PoolParameters>;
 }
 export interface MultiTermDataSource {
     address: string;
@@ -79,9 +100,10 @@ export interface MultiTermDataSource {
     getDecimals: () => Promise<number>;
     getName: (tokenId: number) => Promise<string>;
     getBalanceOf: (tokenId: number, address: string) => Promise<string>;
+    getUnlockedPricePerShare: () => Promise<string>;
 }
 export class MultiTermContractDataSource extends ContractDataSource<_Term1> implements MultiTermDataSource {
-    constructor(address: string, provider: providers.BaseProvider);
+    constructor(address: string, provider: providers.Provider);
     getTransferEvents(from?: string | null, to?: string | null, fromBlock?: number, toBlock?: number): Promise<TransferSingleEvent[]>;
     getTermIds(fromBlock?: number, toBlock?: number): Promise<number[]>;
     getCreatedAtBlock(tokenId: number): Promise<number | null>;
@@ -91,15 +113,22 @@ export class MultiTermContractDataSource extends ContractDataSource<_Term1> impl
     getDecimals(): Promise<number>;
     getName(tokenId: number): Promise<string>;
     getBalanceOf(tokenId: number, address: string): Promise<string>;
+    /**
+     * Fetches and caches the terms unlockedSharePrice value from our datasource (contract).
+     * @notice This function converts the sharePrice from a fixed point number.
+     * @param {number} tokenId - the term id (expiry)
+     * @return {Promise<string>} The unlocked share price as a string.
+     */
+    getUnlockedPricePerShare(): Promise<string>;
 }
 export class ERC4626TermContractDataSource extends MultiTermContractDataSource {
     contract: ERC4626Term;
-    constructor(address: string, provider: providers.BaseProvider);
+    constructor(address: string, provider: providers.Provider);
     getYieldSourceAddress(this: ContractDataSource<ERC4626Term>): Promise<string>;
 }
 export class CompoundV3TermContractDataSource extends MultiTermContractDataSource {
     contract: CompoundV3Term;
-    constructor(address: string, provider: providers.BaseProvider);
+    constructor(address: string, provider: providers.Provider);
     getYieldSourceAddress(this: ContractDataSource<CompoundV3Term>): Promise<string>;
 }
 export interface TokenDataSource {
@@ -107,30 +136,30 @@ export interface TokenDataSource {
     getSymbol: () => Promise<string>;
     getDecimals: () => Promise<number>;
     getName: () => Promise<string>;
-    getPrice: (currency: string) => Promise<number>;
+    getPrice: (currency: string) => Promise<number | null>;
     getAllowance: (owner: string, spender: string) => Promise<string>;
     getBalanceOf: (address: string) => Promise<string>;
 }
 export interface TokenAPIDataSource {
-    getTokenPrice: (id: string, currency: string) => Promise<number>;
+    getTokenPrice: (id: string, currency: string) => Promise<number | null>;
 }
 export class CoinGeckoAPIDataSource extends HTTPDataSource {
     static baseURL: "https://api.coingecko.com/api/v3/";
     constructor();
-    getTokenPrice<ID extends string, CODE extends string>(id: ID, currency: CODE): Promise<number>;
+    getTokenPrice<ID extends string, CODE extends string>(id: ID, currency: CODE): Promise<number | null>;
 }
 export class TokenContractDataSource implements TokenDataSource {
     address: string;
     apiDataSource: TokenAPIDataSource;
     erc20DataSource: ContractDataSource<ERC20>;
-    constructor(address: string, provider: providers.BaseProvider, options?: {
+    constructor(address: string, provider: providers.Provider, options?: {
         apiDataSource?: TokenAPIDataSource;
         erc20DataSource?: ContractDataSource<ERC20>;
     });
     getSymbol(): Promise<string>;
     getDecimals(): Promise<number>;
     getName(): Promise<string>;
-    getPrice(currency: string): Promise<number>;
+    getPrice(currency: string): Promise<number | null>;
     getAllowance(owner: string, spender: string): Promise<string>;
     getBalanceOf(address: string): Promise<string>;
 }
@@ -144,7 +173,7 @@ export class UnknownYieldSourceDataSource extends CachedDataSource implements Yi
     getName(): Promise<string>;
 }
 export class ERC4626ContractDataSource extends ContractDataSource<ERC4626> implements YieldSourceDataSource {
-    constructor(address: string, provider: providers.BaseProvider);
+    constructor(address: string, provider: providers.Provider);
     getName(): Promise<string>;
 }
 export class Token {
@@ -155,7 +184,7 @@ export class Token {
     getSymbol(): Promise<string>;
     getDecimals(): Promise<number>;
     getName(): Promise<string>;
-    getPrice(currency: string): Promise<number>;
+    getPrice(currency: string): Promise<number | null>;
     getAllowance(owner: string, spender: string): Promise<string>;
     getBalanceOf(address: string): Promise<string>;
 }
@@ -170,8 +199,8 @@ declare class PrincipalToken {
     id: number;
     context: ElementContext;
     term: Term;
+    maturityDate: Date;
     constructor(id: number, context: ElementContext, term: Term);
-    get maturity(): number;
     getBaseAsset(): Promise<Token>;
     getSymbol(): Promise<string>;
     getDecimals(): Promise<number>;
@@ -182,8 +211,8 @@ declare class YieldToken {
     id: number;
     context: ElementContext;
     term: Term;
+    maturityDate: Date;
     constructor(id: number, context: ElementContext, term: Term);
-    get maturity(): number;
     getBaseAsset(): Promise<Token>;
     getSymbol(): Promise<string>;
     getDecimals(): Promise<number>;
@@ -196,8 +225,8 @@ export class Term {
     context: ElementContext;
     multiTerm: MultiTerm;
     principalToken: PrincipalToken;
+    maturityDate: Date;
     constructor(id: number, context: ElementContext, multiTerm: MultiTerm);
-    get maturity(): number;
     getYieldSource(): Promise<YieldSource | null>;
     getBaseAsset(): Promise<Token>;
     tvl(atBlock: number): Promise<string>;
@@ -215,28 +244,70 @@ export class MultiTerm {
     getBaseAsset(): Promise<Token>;
     getDecimals(): Promise<number>;
     getTVL(atBlock: number): Promise<string>;
+    /**
+     * Gets the MultiTerm's unlockedSharePrice value
+     * @return {Promise<string>} The unlocked share price as a string.
+     */
+    getUnlockedPricePerShare(): Promise<string>;
 }
 export class Pool {
     id: number;
     context: ElementContext;
     multiPool: MultiPool;
+    maturityDate: Date;
     constructor(id: number, context: ElementContext, multiPool: MultiPool);
-    get maturity(): number;
     getYieldSource(): Promise<YieldSource | null>;
     getBaseAsset(): Promise<Token>;
-    getBaseAssetReserves(): Promise<string>;
+    /**
+     * Gets the bond and shares reserves for the pol.
+     * @return {Promise<PoolReserves>}
+     */
+    getReserves(): Promise<PoolReserves>;
+    /**
+     * Gets the bond reserves total from the pool.
+     * @return {Promise<string>} Bond reserves as a string.
+     */
+    getBondReserves(): Promise<string>;
+    /**
+     * Gets the share reserves total from the pool.
+     * @return {Promise<string>} Share reserves as a string.
+     */
+    getShareReserves(): Promise<string>;
     shareAsset(): Promise<Token | null>;
+    /**
+     * Gets the pool parameters, timeStretch and mu (initial price per share).
+     * @return {Promise<PoolParameters>}
+     */
+    getParameters(): Promise<PoolParameters>;
+    /**
+     * Gets principle token spot price from the pool, disregarding slippage.
+     * @dev Formula source: https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500
+     * @return {Promise<string>} Principle token spot price.
+     */
+    getSpotPrice(): Promise<string>;
 }
 export class MultiPool {
     address: string;
     context: ElementContext;
     dataSource: MultiPoolDataSource;
     constructor(address: string, context: ElementContext, dataSource?: MultiPoolDataSource);
-    getPool(expiryTimestamp: number): Promise<Pool | null>;
+    getPool(expiry: number): Promise<Pool | null>;
     getPools(fromBlock?: number, toBlock?: number): Promise<Pool[]>;
     getMultiTerm(): Promise<MultiTerm>;
     getYieldSource(): Promise<YieldSource | null>;
     getBaseAsset(): Promise<Token>;
+    /**
+     * Gets the pool reserves
+     * @param {number} expiry - the pool id
+     * @return {Promise<PoolReserves>} pool reserves.
+     */
+    getPoolReserves(expiry: number): Promise<PoolReserves>;
+    /**
+     * Gets the pool parameters
+     * @param {number} expiry - the pool id
+     * @return {Promise<PoolParameters>} pool parameters.
+     */
+    getPoolParameters(expiry: number): Promise<PoolParameters>;
 }
 /**
  * A method to buy yield tokens.  Unclear at this point if this is simply performing the internal flashloan to perform a YTC.

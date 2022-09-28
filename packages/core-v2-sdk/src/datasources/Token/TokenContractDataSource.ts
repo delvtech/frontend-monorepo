@@ -12,7 +12,7 @@ export class TokenContractDataSource implements TokenDataSource {
 
   constructor(
     address: string,
-    provider: providers.BaseProvider,
+    provider: providers.Provider,
     options?: {
       apiDataSource?: TokenAPIDataSource;
       erc20DataSource?: ContractDataSource<ERC20>;

@@ -9,7 +9,7 @@ export class MultiTermContractDataSource
   extends ContractDataSource<Term>
   implements MultiTermDataSource
 {
-  constructor(address: string, provider: providers.BaseProvider) {
+  constructor(address: string, provider: providers.Provider) {
     super(Term__factory.connect(address, provider));
   }
 
