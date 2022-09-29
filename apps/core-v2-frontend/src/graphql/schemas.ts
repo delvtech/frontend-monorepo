@@ -2,8 +2,8 @@
  * Boilerplate for bootstrapping the elf-graphql codegen, see packages.json
  * build:graphql script.
  */
-import { coreV2Schema } from "@elementfi/core-v2-graphql";
+import { elementSchema } from "@elementfi/core-v2-graphql";
 
-const schemas = [coreV2Schema];
+const schemas = [elementSchema];
 
 export default schemas;

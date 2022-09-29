@@ -1,26 +1,18 @@
-import { providers } from "ethers";
+import { getDefaultProvider, providers } from "ethers";
 import { MockProvider } from "ethereum-waffle";
 import { ChainId } from "@elementfi/base";
-import { getAddressList } from "./addressLists";
 
-const envAddressList = getAddressList();
+const { CHAIN_ID, PROVIDER_URI, NODE_ENV } = process.env;
 
-export function getProvider(
-  chainId = envAddressList.chainId,
-): providers.Provider {
-  switch (chainId) {
-    case ChainId.MAINNET:
-      return providers.getDefaultProvider(process.env.MAINNET_URI);
-    case ChainId.GOERLI:
-      return providers.getDefaultProvider(process.env.GOERLI_URI);
-    case ChainId.LOCAL:
-    default:
-      return getLocalhostProvider();
+export function getProvider(chainId = Number(CHAIN_ID)): providers.Provider {
+  if (chainId === ChainId.LOCAL) {
+    getLocalhostProvider();
   }
+  return getDefaultProvider(PROVIDER_URI || chainId);
 }
 
 function getLocalhostProvider() {
-  if (process.env.NODE_ENV === "test") {
+  if (NODE_ENV === "test") {
     return new MockProvider();
   }
   return new providers.JsonRpcProvider("http://127.0.0.1:8545");

@@ -10,7 +10,7 @@ type Query {
     baseAsset: [ID!]
   ): [MultiTerm]!
 
-  term(multiTerm: ID!, maturity: String!): Term
+  term(multiTerm: ID!, maturity: Int!): Term
   terms(
     baseAssets: [ID!]
     multiTerms: [ID!]
@@ -19,9 +19,9 @@ type Query {
     holders: [ID!]
   ): [Term]
 
-  multiPool(yieldSource: ID!): MultiPool
+  multiPool(address: ID, yieldSource: ID!): MultiPool
   "Look up the pool for a given maturity date"
-  pool(multiPool: ID!, maturity: String!): Pool
+  pool(multiPool: ID!, maturity: Int!): Pool
   pools(multiPool: ID!): [Pool]
 
   token(address: ID!): Token
@@ -53,13 +53,12 @@ type MultiTerm {
 type Term {
   id: ID!
   multiTerm: MultiTerm!
-  name: String!
   "Timestamp in milliseconds since unix epoch"
-  maturity: String!
+  maturity: Int!
+  principalToken: PrincipalToken!
   "Possibly fetched from a registry"
   yieldSource: YieldSource
   baseAsset: Token
-  principalToken: PrincipalToken
   "startDate must be between created and maturity"
   yieldToken(startDate: String!): YieldToken
   pool: Pool
@@ -77,30 +76,29 @@ type Term {
 }
 
 type YieldToken {
-  address: ID!
-  tokenId: ID!
+  id: ID!
   startDate: String!
-  maturity: String!
+  maturity: Int!
+  term: Term
   accruedInterest: String
 }
 
 type PrincipalToken {
-  address: ID!
-  tokenId: ID!
-  maturity: String!
-  "price in terms of base asset or fiat"
-  pool: Pool
+  id: ID!
+  maturity: Int!
+  term: Term
+  # "price in terms of base asset or fiat"
   # price: String
   # priceFiat: String
-  " the token this principal token will resolve 1 to 1 to."
+  "the token this principal token will resolve 1 to 1 to."
   baseAsset: Token
 }
 
 type Token {
   address: ID!
-  symbol: String!
-  decimals: String!
-  name: String!
+  symbol: String
+  decimals: String
+  name: String
   price: String
   allowance(owner: String!, spender: String!): String
   balanceOf(owner: String!): String
@@ -110,14 +108,17 @@ type MultiPool {
   address: ID!
   "Possibly fetched from a registry"
   yieldSource: YieldSource
-  pool(maturity: String!): Pool
+  pool(maturity: Int!): Pool
   pools: [Pool]
 }
 
 type Pool {
   id: ID!
   multiPool: MultiPool!
-  maturity: String!
+  maturity: Int!
+  # ePyvUSDC (ep = element principal)
+  lpToken: LPToken!
+  principalToken: PrincipalToken!
   yieldSource: YieldSource
   # USDC
   baseAsset: Token
@@ -125,10 +126,7 @@ type Pool {
   # yvUSDC (yv = yearn vault)
   shareAsset: Token
   shareAssetReserves: String
-  # ePyvUSDC (ep = element principal)
-  principalToken: PrincipalToken
   principalTokenReserves: String
-  lpToken: Token
   # price in terms of base asset or fiat
   price: String
   priceFiat: String
@@ -136,6 +134,12 @@ type Pool {
   tvl: String
   buyPreview(baseAssetAmountIn: String!): BuySwapPreview
   sellPreview(principalAmountTokenIn: String!): SellSwapPreview
+}
+
+type LPToken {
+  id: ID!
+  maturity: Int!
+  pool: Pool
 }
 
 type BuySwapPreview {

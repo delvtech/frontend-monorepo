@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@elementfi/base": "*",
-    "@elementfi/core-v2-typechain": "*",
+    "@elementfi/core-v2-sdk": "*",
     "@graphql-tools/schema": "^8.3.13",
     "cross-env": "^7.0.3"
   },

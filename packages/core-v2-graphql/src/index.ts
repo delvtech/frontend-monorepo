@@ -1,16 +1,16 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { Graph } from "@elementfi/graphql";
 import { resolvers } from "./resolvers";
-import { initContext } from "./context/init";
+import { initContext } from "./context";
 import typeDefs from "./v2.graphql";
 
-export const coreV2Schema = makeExecutableSchema({
+export const elementSchema = makeExecutableSchema({
   resolvers,
   typeDefs,
 });
 
-export const coreV2Graph: Graph = {
-  schema: coreV2Schema,
+export const elementGraph: Graph = {
+  schema: elementSchema,
   initContext,
 };
 
