@@ -1,5 +1,6 @@
 export * from "./context";
 
+export * from "./datasources/DataSource";
 export * from "./datasources/CachedDataSource";
 export * from "./datasources/ContractDataSource";
 export * from "./datasources/HTTPDataSource";
@@ -22,12 +23,15 @@ export * from "./datasources/YieldSource/YieldSourceDataSource";
 export * from "./datasources/YieldSource/UnknownYieldSourceDataSource";
 export * from "./datasources/YieldSource/ERC4626ContractDataSource";
 
+export * from "./models/LPToken";
 export * from "./models/MultiPool";
 export * from "./models/MultiTerm";
 export * from "./models/Pool";
+export * from "./models/PrincipalToken";
 export * from "./models/Term";
 export * from "./models/Token";
 export * from "./models/YieldSource";
+export * from "./models/YieldToken";
 
 export * from "./utils/buyYieldTokens/buyYieldTokens";
 export * from "./utils/calcSwapCongergentCurvePool/calculateTradePrincipalTokens";
