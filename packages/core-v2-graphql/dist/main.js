@@ -36,7 +36,7 @@ const $e3560cee69deb57e$export$f62412552be5daf2 = {
             return null;
         },
         term: async (_, { multiTerm: multiTermAddress , maturity: maturity  }, { elementContext: elementContext  })=>{
-            const term = await new (0, $bsQ4Z$elementficorev2sdk.MultiTerm)(multiTermAddress, elementContext).getTerm(+maturity);
+            const term = await new (0, $bsQ4Z$elementficorev2sdk.MultiTerm)(multiTermAddress, elementContext).getTerm(maturity / 1e3);
             if (term) {
                 const { id: idNumber , maturityDate: maturityDate , multiTerm: multiTerm  } = term;
                 const maturity = maturityDate.getTime();
@@ -61,7 +61,7 @@ const $e3560cee69deb57e$export$f62412552be5daf2 = {
             return null;
         },
         pool: async (_, { multiPool: multiPoolAddress , maturity: maturity  }, { elementContext: elementContext  })=>{
-            const pool = await new (0, $bsQ4Z$elementficorev2sdk.MultiPool)(multiPoolAddress, elementContext).getPool(+maturity);
+            const pool = await new (0, $bsQ4Z$elementficorev2sdk.MultiPool)(multiPoolAddress, elementContext).getPool(maturity / 1e3);
             if (pool) {
                 const { id: idNumber , maturityDate: maturityDate , multiPool: multiPool  } = pool;
                 const maturity = maturityDate.getTime();
@@ -82,10 +82,8 @@ const $e3560cee69deb57e$export$f62412552be5daf2 = {
             }
             return null;
         },
-        token: async (_, { address: address  })=>{
-            return {
-                address: address
-            };
+        token: async (_, { address: address  }, { elementContext: elementContext  })=>{
+            return new (0, $bsQ4Z$elementficorev2sdk.Token)(address, elementContext);
         }
     },
     // MultiTerm: {

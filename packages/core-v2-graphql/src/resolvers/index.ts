@@ -82,8 +82,8 @@ export const resolvers: types.Resolvers<ElementGraphQLContext> = {
       return null;
     },
 
-    token: async (_, { address }) => {
-      return { address };
+    token: async (_, { address }, { elementContext }) => {
+      return new Token(address, elementContext);
     },
 
     // pools: (_, { yieldSource: yieldSourceName }, context) => {
