@@ -14,7 +14,12 @@ export class ElementContext {
 
   constructor({ chainId, provider, dataSources = [] }: ElementContextOptions) {
     this.chainId = chainId;
-    this.provider = provider || getDefaultProvider(chainId);
+    if (!provider) {
+      console.warn(
+        "You are using the default provider, subject to rate limiting.",
+      );
+    }
+    this.provider = provider ?? getDefaultProvider(chainId);
     this.dataSources = dataSources;
   }
 
