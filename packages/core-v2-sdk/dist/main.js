@@ -1,8 +1,8 @@
+var $eCQIH$ethers = require("ethers");
 var $eCQIH$lrucache = require("lru-cache");
 var $eCQIH$elementfibase = require("@elementfi/base");
 var $eCQIH$elementficorev2typechain = require("@elementfi/core-v2-typechain");
 var $eCQIH$evmbn = require("evm-bn");
-var $eCQIH$ethers = require("ethers");
 
 function $parcel$exportWildcard(dest, source) {
   Object.keys(source).forEach(function(key) {
@@ -29,10 +29,11 @@ function $parcel$interopDefault(a) {
 var $f65b6b18b897f856$exports = {};
 
 $parcel$export($f65b6b18b897f856$exports, "ElementContext", () => $f65b6b18b897f856$export$4186b0f94a8cd1c0);
+
 class $f65b6b18b897f856$export$4186b0f94a8cd1c0 {
     constructor({ chainId: chainId , provider: provider , dataSources: dataSources = []  }){
         this.chainId = chainId;
-        this.provider = provider;
+        this.provider = provider || (0, $eCQIH$ethers.getDefaultProvider)(chainId);
         this.dataSources = dataSources;
     }
     // TODO: How can we make this more efficient, yet still flexible
@@ -51,6 +52,9 @@ class $f65b6b18b897f856$export$4186b0f94a8cd1c0 {
         return dataSource;
     }
 }
+
+
+var $cabaabaa231f1af1$exports = {};
 
 
 var $54e3433d3ac69f8a$exports = {};
@@ -482,6 +486,34 @@ class $3b777295048083ac$export$2404bedfffaf4ac extends (0, $20adc394a346779f$exp
 }
 
 
+var $8af14f8f6b4799b0$exports = {};
+
+$parcel$export($8af14f8f6b4799b0$exports, "LPToken", () => $8af14f8f6b4799b0$export$84f20e6ecc12f354);
+class $8af14f8f6b4799b0$export$84f20e6ecc12f354 {
+    constructor(id, context, pool){
+        this.id = id;
+        this.context = context;
+        this.pool = pool;
+        this.maturityDate = new Date(id * 1000);
+    }
+    async getBaseAsset() {
+        return this.pool.getBaseAsset();
+    }
+    async getSymbol() {
+        return this.pool.multiPool.dataSource.getSymbol(this.id);
+    }
+    async getDecimals() {
+        return this.pool.multiPool.getDecimals();
+    }
+    async getName() {
+        return this.pool.multiPool.dataSource.getName(this.id);
+    }
+    async getBalanceOf(address) {
+        return this.pool.multiPool.dataSource.getBalanceOf(this.id, address);
+    }
+}
+
+
 var $db3c4c3da11ea48c$exports = {};
 
 $parcel$export($db3c4c3da11ea48c$exports, "MultiPool", () => $db3c4c3da11ea48c$export$38f2878d4d50407d);
@@ -553,6 +585,9 @@ class $43a71ca2139b91c6$export$5b513f5c41d35e50 {
 var $51ba50e48c247b12$exports = {};
 
 $parcel$export($51ba50e48c247b12$exports, "Term", () => $51ba50e48c247b12$export$656c1e606ad06131);
+var $2ababb11162a7525$exports = {};
+
+$parcel$export($2ababb11162a7525$exports, "PrincipalToken", () => $2ababb11162a7525$export$62007a0bd048d56c);
 class $2ababb11162a7525$export$62007a0bd048d56c {
     constructor(id, context, term){
         this.id = id;
@@ -578,6 +613,9 @@ class $2ababb11162a7525$export$62007a0bd048d56c {
 }
 
 
+var $d42f7646c857727b$exports = {};
+
+$parcel$export($d42f7646c857727b$exports, "YieldToken", () => $d42f7646c857727b$export$7e27801a0b3a9d2a);
 class $d42f7646c857727b$export$7e27801a0b3a9d2a {
     constructor(id, context, term){
         this.id = id;
@@ -686,53 +724,44 @@ async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
 }
 
 
-class $8af14f8f6b4799b0$export$84f20e6ecc12f354 {
-    constructor(id, context, pool){
-        this.id = id;
-        this.context = context;
-        this.pool = pool;
-        this.maturityDate = new Date(id * 1000);
-    }
-    async getBaseAsset() {
-        return this.pool.getBaseAsset();
-    }
-    async getSymbol() {
-        return this.pool.multiPool.dataSource.getSymbol(this.id);
-    }
-    async getDecimals() {
-        return this.pool.multiPool.getDecimals();
-    }
-    async getName() {
-        return this.pool.multiPool.dataSource.getName(this.id);
-    }
-    async getBalanceOf(address) {
-        return this.pool.multiPool.dataSource.getBalanceOf(this.id, address);
-    }
-}
-
 
 
 class $5c922a29083dd917$export$14963ee5c8637e11 {
-    constructor(id, context, multiPool){
+    /**
+   * Creates a Pool model.
+   * @param {number} id - the pool id (expiry)
+   * @param {ElementContext} context - Context object for the sdk.
+   * @param {MultiPool} multiPool - the MultiPool model where this pool is stored.
+   */ constructor(id, context, multiPool){
         this.id = id;
         this.context = context;
         this.multiPool = multiPool;
         this.lpToken = new (0, $8af14f8f6b4799b0$export$84f20e6ecc12f354)(id, context, this);
         this.maturityDate = new Date(id * 1000);
     }
-    getYieldSource() {
+    /**
+   * @async
+   * Gets yield source for this pool.
+   * @return {Promise<YieldSource | null>}
+   */ getYieldSource() {
         return this.multiPool.getYieldSource();
     }
-    getBaseAsset() {
+    /**
+   * @async
+   * Gets the base asset for this pool.
+   * @return {Promise<Token>}
+   */ getBaseAsset() {
         return this.multiPool.getBaseAsset();
     }
     /**
-   * Gets the bond and shares reserves for the pol.
+   * @async
+   * Gets the bond and shares reserves for the pool.
    * @return {Promise<PoolReserves>}
    */ async getReserves() {
         return await this.multiPool.getPoolReserves(this.id);
     }
     /**
+   * @async
    * Gets the bond reserves total from the pool.
    * @return {Promise<string>} Bond reserves as a string.
    */ async getBondReserves() {
@@ -740,26 +769,32 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         return bonds;
     }
     /**
+   * @async
    * Gets the share reserves total from the pool.
    * @return {Promise<string>} Share reserves as a string.
    */ async getShareReserves() {
         const { shares: shares  } = await this.getReserves();
         return shares;
     }
-    async getShareAsset() {
+    /**
+   * Gets the share asset of this pool.
+   * @async
+   * @return {Promise<Token | null>}
+   */ async getShareAsset() {
         const yieldSource = await this.getYieldSource();
         if (!yieldSource) return null;
         return new (0, $2361706748e2a981$export$50792b0e93539fde)(yieldSource.address, this.context);
     }
     /**
+   * @async
    * Gets the pool parameters, timeStretch and mu (initial price per share).
    * @return {Promise<PoolParameters>}
    */ async getParameters() {
         return await this.multiPool.getPoolParameters(this.id);
     }
     /**
-   * Gets principle token spot price from the pool, disregarding slippage.
-   * @dev Formula source: https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500
+   * Gets principal token spot price from the pool, disregarding slippage, denominated in the base asset.
+   * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500} for formula source.
    * @return {Promise<string>} Principle token spot price.
    */ async getSpotPrice() {
         // fetch reserves
@@ -783,34 +818,76 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         const denom = ((shares + totalSupply) * pricePerShare / (bonds * mu)) ** tParam;
         return (1 / denom).toString();
     }
+    /**
+   * Gets the TVL for this pool, denominated in the base asset.
+   * @async
+   * @return {Promise<string>} tvl represented as a string.
+   */ async getTVL() {
+        // bond price in terms of underlying
+        const bondPrice = await this.getSpotPrice();
+        const sharePrice = await (await this.multiPool.getMultiTerm()).getUnlockedPricePerShare();
+        const { bonds: bonds , shares: shares  } = await this.getReserves();
+        const tvl = +bondPrice * +bonds + +shares * +sharePrice;
+        return tvl.toString();
+    }
 }
 
 
 class $db3c4c3da11ea48c$export$38f2878d4d50407d {
-    constructor(address, context, dataSource){
+    /**
+   * Create a MultiPool model.
+   * @param {string} address - MultiPool contract address
+   * @param {ElementContext} context - Context object for the sdk.
+   * @param {MultiPoolDataSource} dataSource - Optional custom datasource for this model. Defaults to {@link MultiPoolContractDataSource}
+   */ constructor(address, context, dataSource){
         this.address = address;
         this.context = context;
         this.dataSource = dataSource ?? context.registerDataSource({
             address: address
         }, new (0, $bd9ebd5a6170b777$export$3e28d0e9e34d7848)(address, context.provider));
     }
-    async getPool(poolId) {
+    /**
+   * Gets a Pool by the poolId from this MultiPool.
+   * @async
+   * @param {number} poolId - the poolId
+   * @return {Pool | null} A pool model, returns null if pool does not exist.
+   */ async getPool(poolId) {
         // TODO: should this validate that the pool exists?
         return new (0, $5c922a29083dd917$export$14963ee5c8637e11)(poolId, this.context, this);
     }
-    async getPools(fromBlock, toBlock) {
+    /**
+   * Gets all the Pools from this MultiPool. Searches by PoolRegisteredEvents.
+   * @async
+   * @param {number} fromBlock - Optional, start block number to search from.
+   * @param {number} toBlock - Optional, end block number to search to.
+   * @return {Promise<Pool[]>}
+   */ async getPools(fromBlock, toBlock) {
         const poolIds = await this.dataSource.getPoolIds(fromBlock, toBlock ?? await this.context.provider.getBlockNumber());
         return poolIds.map((id)=>new (0, $5c922a29083dd917$export$14963ee5c8637e11)(id, this.context, this));
     }
-    async getMultiTerm() {
+    /**
+   * Gets the associated MultiTerm model.
+   * @async
+   * @return {Promise<MultiTerm>}
+   */ async getMultiTerm() {
         const address = await this.dataSource.getMultiTerm();
         return new (0, $73142241d07e4549$export$44a06e384a6d2ed0)(address, this.context);
     }
-    async getYieldSource() {
+    /**
+   * Gets the yield source the associated MultiTerm contract deposits into.
+   * @async
+   * @function getYieldSource
+   * @return {Promise<YieldSource | null>}
+   */ async getYieldSource() {
         const multiTerm = await this.getMultiTerm();
         return multiTerm.getYieldSource();
     }
-    async getBaseAsset() {
+    /**
+   * Gets the base asset from the associated MultiTerm contract.
+   * @async
+   * @function getBaseAsset
+   * @return {Promise<Token>} ERC20 token.
+   */ async getBaseAsset() {
         const multiTerm = await this.getMultiTerm();
         return multiTerm.getBaseAsset();
     }
@@ -821,6 +898,7 @@ class $db3c4c3da11ea48c$export$38f2878d4d50407d {
     }
     /**
    * Gets the pool reserves
+   * @async
    * @param {number} poolId - the pool id
    * @return {Promise<PoolReserves>} pool reserves.
    */ async getPoolReserves(poolId) {
@@ -834,6 +912,8 @@ class $db3c4c3da11ea48c$export$38f2878d4d50407d {
         return await this.dataSource.getPoolParameters(poolId);
     }
 }
+
+
 
 
 
@@ -987,6 +1067,10 @@ $parcel$exportWildcard(module.exports, $9dde791ff857a61d$exports);
 $parcel$exportWildcard(module.exports, $36cbfb79cc4b34b2$exports);
 $parcel$exportWildcard(module.exports, $9c1766b6f9f74658$exports);
 $parcel$exportWildcard(module.exports, $2199ecd2883db3b5$exports);
+$parcel$exportWildcard(module.exports, $cabaabaa231f1af1$exports);
+$parcel$exportWildcard(module.exports, $8af14f8f6b4799b0$exports);
+$parcel$exportWildcard(module.exports, $2ababb11162a7525$exports);
+$parcel$exportWildcard(module.exports, $d42f7646c857727b$exports);
 
 
 //# sourceMappingURL=main.js.map

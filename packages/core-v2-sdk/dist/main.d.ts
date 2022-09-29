@@ -2,11 +2,11 @@ import { providers, BaseContract, BigNumberish, ContractTransaction, Overrides, 
 import LRUCache from "lru-cache";
 import { Pool as _Pool1, Term as _Term1, ERC4626Term, CompoundV3Term, ERC20, ERC4626 } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
-interface DataSource extends Record<string, any> {
+export interface DataSource extends Record<string, any> {
 }
 export interface ElementContextOptions {
     chainId: number;
-    provider: providers.Provider;
+    provider?: providers.Provider;
     dataSources?: Record<string, any>[];
 }
 export class ElementContext {
@@ -220,7 +220,7 @@ export class YieldSource {
     constructor(address: string, context: ElementContext, dataSource?: YieldSourceDataSource);
     getName(): Promise<string>;
 }
-declare class PrincipalToken {
+export class PrincipalToken {
     id: number;
     context: ElementContext;
     term: Term;
@@ -232,7 +232,7 @@ declare class PrincipalToken {
     getName(): Promise<string>;
     getBalanceOf(address: string): Promise<string>;
 }
-declare class YieldToken {
+export class YieldToken {
     id: number;
     context: ElementContext;
     term: Term;
@@ -275,64 +275,55 @@ export class MultiTerm {
      */
     getUnlockedPricePerShare(): Promise<string>;
 }
-declare class LPToken {
-    id: number;
-    context: ElementContext;
-    pool: Pool;
-    maturityDate: Date;
-    constructor(id: number, context: ElementContext, pool: Pool);
-    getBaseAsset(): Promise<Token>;
-    getSymbol(): Promise<string>;
-    getDecimals(): Promise<number>;
-    getName(): Promise<string>;
-    getBalanceOf(address: string): Promise<string>;
-}
-export class Pool {
-    id: number;
-    context: ElementContext;
-    multiPool: MultiPool;
-    lpToken: LPToken;
-    maturityDate: Date;
-    constructor(id: number, context: ElementContext, multiPool: MultiPool);
-    getYieldSource(): Promise<YieldSource | null>;
-    getBaseAsset(): Promise<Token>;
-    /**
-     * Gets the bond and shares reserves for the pol.
-     * @return {Promise<PoolReserves>}
-     */
-    getReserves(): Promise<PoolReserves>;
-    /**
-     * Gets the bond reserves total from the pool.
-     * @return {Promise<string>} Bond reserves as a string.
-     */
-    getBondReserves(): Promise<string>;
-    /**
-     * Gets the share reserves total from the pool.
-     * @return {Promise<string>} Share reserves as a string.
-     */
-    getShareReserves(): Promise<string>;
-    getShareAsset(): Promise<Token | null>;
-    /**
-     * Gets the pool parameters, timeStretch and mu (initial price per share).
-     * @return {Promise<PoolParameters>}
-     */
-    getParameters(): Promise<PoolParameters>;
-    /**
-     * Gets principle token spot price from the pool, disregarding slippage.
-     * @dev Formula source: https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500
-     * @return {Promise<string>} Principle token spot price.
-     */
-    getSpotPrice(): Promise<string>;
-}
+/**
+ * MultiPool model class.
+ * @class
+ */
 export class MultiPool {
     address: string;
     context: ElementContext;
     dataSource: MultiPoolDataSource;
+    /**
+     * Create a MultiPool model.
+     * @param {string} address - MultiPool contract address
+     * @param {ElementContext} context - Context object for the sdk.
+     * @param {MultiPoolDataSource} dataSource - Optional custom datasource for this model. Defaults to {@link MultiPoolContractDataSource}
+     */
     constructor(address: string, context: ElementContext, dataSource?: MultiPoolDataSource);
+    /**
+     * Gets a Pool by the poolId from this MultiPool.
+     * @async
+     * @param {number} poolId - the poolId
+     * @return {Pool | null} A pool model, returns null if pool does not exist.
+     */
     getPool(poolId: number): Promise<Pool | null>;
+    /**
+     * Gets all the Pools from this MultiPool. Searches by PoolRegisteredEvents.
+     * @async
+     * @param {number} fromBlock - Optional, start block number to search from.
+     * @param {number} toBlock - Optional, end block number to search to.
+     * @return {Promise<Pool[]>}
+     */
     getPools(fromBlock?: number, toBlock?: number): Promise<Pool[]>;
+    /**
+     * Gets the associated MultiTerm model.
+     * @async
+     * @return {Promise<MultiTerm>}
+     */
     getMultiTerm(): Promise<MultiTerm>;
+    /**
+     * Gets the yield source the associated MultiTerm contract deposits into.
+     * @async
+     * @function getYieldSource
+     * @return {Promise<YieldSource | null>}
+     */
     getYieldSource(): Promise<YieldSource | null>;
+    /**
+     * Gets the base asset from the associated MultiTerm contract.
+     * @async
+     * @function getBaseAsset
+     * @return {Promise<Token>} ERC20 token.
+     */
     getBaseAsset(): Promise<Token>;
     /**
      * Gets the number of decimals used by this Multi Pool
@@ -340,6 +331,7 @@ export class MultiPool {
     getDecimals(): Promise<number>;
     /**
      * Gets the pool reserves
+     * @async
      * @param {number} poolId - the pool id
      * @return {Promise<PoolReserves>} pool reserves.
      */
@@ -350,6 +342,89 @@ export class MultiPool {
      * @return {Promise<PoolParameters>} pool parameters.
      */
     getPoolParameters(poolId: number): Promise<PoolParameters>;
+}
+/**
+ * Pool model class.
+ */
+export class Pool {
+    id: number;
+    context: ElementContext;
+    multiPool: MultiPool;
+    lpToken: LPToken;
+    maturityDate: Date;
+    /**
+     * Creates a Pool model.
+     * @param {number} id - the pool id (expiry)
+     * @param {ElementContext} context - Context object for the sdk.
+     * @param {MultiPool} multiPool - the MultiPool model where this pool is stored.
+     */
+    constructor(id: number, context: ElementContext, multiPool: MultiPool);
+    /**
+     * @async
+     * Gets yield source for this pool.
+     * @return {Promise<YieldSource | null>}
+     */
+    getYieldSource(): Promise<YieldSource | null>;
+    /**
+     * @async
+     * Gets the base asset for this pool.
+     * @return {Promise<Token>}
+     */
+    getBaseAsset(): Promise<Token>;
+    /**
+     * @async
+     * Gets the bond and shares reserves for the pool.
+     * @return {Promise<PoolReserves>}
+     */
+    getReserves(): Promise<PoolReserves>;
+    /**
+     * @async
+     * Gets the bond reserves total from the pool.
+     * @return {Promise<string>} Bond reserves as a string.
+     */
+    getBondReserves(): Promise<string>;
+    /**
+     * @async
+     * Gets the share reserves total from the pool.
+     * @return {Promise<string>} Share reserves as a string.
+     */
+    getShareReserves(): Promise<string>;
+    /**
+     * Gets the share asset of this pool.
+     * @async
+     * @return {Promise<Token | null>}
+     */
+    getShareAsset(): Promise<Token | null>;
+    /**
+     * @async
+     * Gets the pool parameters, timeStretch and mu (initial price per share).
+     * @return {Promise<PoolParameters>}
+     */
+    getParameters(): Promise<PoolParameters>;
+    /**
+     * Gets principal token spot price from the pool, disregarding slippage, denominated in the base asset.
+     * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500} for formula source.
+     * @return {Promise<string>} Principle token spot price.
+     */
+    getSpotPrice(): Promise<string>;
+    /**
+     * Gets the TVL for this pool, denominated in the base asset.
+     * @async
+     * @return {Promise<string>} tvl represented as a string.
+     */
+    getTVL(): Promise<string>;
+}
+export class LPToken {
+    id: number;
+    context: ElementContext;
+    pool: Pool;
+    maturityDate: Date;
+    constructor(id: number, context: ElementContext, pool: Pool);
+    getBaseAsset(): Promise<Token>;
+    getSymbol(): Promise<string>;
+    getDecimals(): Promise<number>;
+    getName(): Promise<string>;
+    getBalanceOf(address: string): Promise<string>;
 }
 /**
  * A method to buy yield tokens.  Unclear at this point if this is simply performing the internal flashloan to perform a YTC.
