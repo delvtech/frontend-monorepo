@@ -1,16 +1,15 @@
-import { providers } from "ethers";
+import { getDefaultProvider } from "ethers";
 import { ElementContext } from "src/context";
 import goerliAddresses from "./goerliAddresses.json";
 import { MultiPool } from "src/models/MultiPool";
 
 const chainId = 5;
-const provider = new providers.JsonRpcProvider(
-  "https://eth-goerli.g.alchemy.com/v2/ZU061eKvP2lTufzgSAw-lVEu935c-BCG",
-);
+const provider = getDefaultProvider(process.env.PROVIDER_URI || chainId);
 
 async function example(): Promise<void> {
   const context = new ElementContext({ chainId, provider });
   const usdcMultiPool = new MultiPool(goerliAddresses.USDC_Pool, context);
+
   const pools = await usdcMultiPool.getPools();
   const firstPool = pools[0];
 
