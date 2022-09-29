@@ -1,9 +1,9 @@
-import { providers } from "ethers";
+import { getDefaultProvider, providers } from "ethers";
 import { DataSource } from "./datasources/DataSource";
 
 export interface ElementContextOptions {
   chainId: number;
-  provider: providers.Provider;
+  provider?: providers.Provider;
   dataSources?: Record<string, any>[];
 }
 
@@ -14,7 +14,7 @@ export class ElementContext {
 
   constructor({ chainId, provider, dataSources = [] }: ElementContextOptions) {
     this.chainId = chainId;
-    this.provider = provider;
+    this.provider = provider || getDefaultProvider(chainId);
     this.dataSources = dataSources;
   }
 
