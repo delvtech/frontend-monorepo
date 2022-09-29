@@ -132,7 +132,7 @@ export class Pool {
     const tParam = daysUntilExpiry / (365 * timeStretch);
 
     const denom =
-      (((shares + totalSupply) * pricePerShare) / (bonds * mu)) ** tParam;
+      (((bonds + totalSupply) * pricePerShare) / (shares * mu)) ** tParam;
     return (1 / denom).toString();
   }
 
