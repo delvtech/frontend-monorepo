@@ -39,12 +39,10 @@ export class MultiPool {
 
   /**
    * Gets a Pool by the poolId from this MultiPool.
-   * @async
    * @param {number} poolId - the poolId
-   * @return {Pool | null} A pool model, returns null if pool does not exist.
+   * @return {Pool}
    */
-  async getPool(poolId: number): Promise<Pool | null> {
-    // TODO: should this validate that the pool exists?
+  getPool(poolId: number): Pool {
     return new Pool(poolId, this.context, this);
   }
 
