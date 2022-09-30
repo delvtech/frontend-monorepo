@@ -3,6 +3,8 @@ import { PoolParameters, PoolReserves } from "src/types";
 import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
 import { LPToken } from "./LPToken";
 import { MultiPool } from "./MultiPool";
+import { MultiTerm } from "./MultiTerm";
+import { Term } from "./Term";
 import { Token } from "./Token";
 import { YieldSource } from "./YieldSource";
 
@@ -28,6 +30,25 @@ export class Pool {
     this.multiPool = multiPool;
     this.lpToken = new LPToken(id, context, this);
     this.maturityDate = new Date(id * 1000);
+  }
+
+  /**
+   * @async
+   * Gets the associated MultiTerm model for this pool.
+   * @return {Promise<YieldSource | null>}
+   */
+  getMultTerm(): Promise<MultiTerm> {
+    return this.multiPool.getMultiTerm();
+  }
+
+  /**
+   * @async
+   * Gets the associated Term model for this pool.
+   * @return {Promise<YieldSource | null>}
+   */
+  async getTerm(): Promise<Term | null> {
+    const multiTerm = await this.multiPool.getMultiTerm();
+    return multiTerm.getTerm(this.id);
   }
 
   /**
