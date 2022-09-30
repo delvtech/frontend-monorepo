@@ -37,7 +37,7 @@ export class Pool {
    * Gets the associated MultiTerm model for this pool.
    * @return {Promise<YieldSource | null>}
    */
-  getMultiPool(): Promise<MultiTerm> {
+  getMultTerm(): Promise<MultiTerm> {
     return this.multiPool.getMultiTerm();
   }
 
