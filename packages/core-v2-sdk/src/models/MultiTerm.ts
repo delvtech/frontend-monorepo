@@ -33,8 +33,8 @@ export class MultiTerm {
   /**
    * Gets a Term by the termId from this MultiTerm.
    * @async
-   * @param {number} poolId - the poolId
-   * @return {Pool | null} A pool model
+   * @param {number} termId - the termId
+   * @return {Promise<Term>}
    */
   async getTerm(termId: number): Promise<Term> {
     return new Term(termId, this.context, this);
@@ -45,7 +45,7 @@ export class MultiTerm {
    * @async
    * @param {number} fromBlock - Optional, start block number to search from.
    * @param {number} toBlock - Optional, end block number to search to.
-   * @return {Promise<Pool[]>}
+   * @return {Promise<Term[]>}
    */
   async getTerms(fromBlock?: number, toBlock?: number): Promise<Term[]> {
     const termIds = await this.dataSource.getTermIds(
