@@ -6,6 +6,10 @@ import { YieldSource } from "./YieldSource";
 import { Term } from "./Term";
 import { BigNumber } from "bignumber.js";
 
+/**
+ * MultiTerm model class.
+ * @class
+ */
 export class MultiTerm {
   address: string;
   context: ElementContext;
@@ -26,11 +30,23 @@ export class MultiTerm {
       );
   }
 
-  async getTerm(expiryTimestamp: number): Promise<Term | null> {
-    // TODO: should this validate that the term exists?
-    return new Term(expiryTimestamp, this.context, this);
+  /**
+   * Gets a Term by the termId from this MultiTerm.
+   * @async
+   * @param {number} termId - the termId
+   * @return {Promise<Term>}
+   */
+  async getTerm(termId: number): Promise<Term> {
+    return new Term(termId, this.context, this);
   }
 
+  /**
+   * Gets all the Terms from this MultiTerm. Searches by TransferSingleEvents.
+   * @async
+   * @param {number} fromBlock - Optional, start block number to search from.
+   * @param {number} toBlock - Optional, end block number to search to.
+   * @return {Promise<Term[]>}
+   */
   async getTerms(fromBlock?: number, toBlock?: number): Promise<Term[]> {
     const termIds = await this.dataSource.getTermIds(
       fromBlock,
@@ -39,6 +55,12 @@ export class MultiTerm {
     return termIds.map((id) => new Term(id, this.context, this));
   }
 
+  /**
+   * Gets the yield source this MultiTerm deposits into.
+   * @async
+   * @function getYieldSource
+   * @return {Promise<YieldSource | null>}
+   */
   async getYieldSource(): Promise<YieldSource | null> {
     const address = await this.dataSource.getYieldSource();
     if (!address) {
@@ -47,11 +69,22 @@ export class MultiTerm {
     return new YieldSource(address, this.context);
   }
 
+  /**
+   * Gets the base asset as a Token model.
+   * @async
+   * @function getBaseAsset
+   * @return {Promise<Token>} ERC20 token.
+   */
   async getBaseAsset(): Promise<Token> {
     const address = await this.dataSource.getBaseAsset();
     return new Token(address, this.context);
   }
 
+  /**
+   * Gets the number of decimals used by this MultiTerm.
+   * @async
+   * @return {Promise<number>} The number of decimals.
+   */
   getDecimals(): Promise<number> {
     return this.dataSource.getDecimals();
   }
