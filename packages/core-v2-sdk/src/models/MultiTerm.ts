@@ -4,6 +4,7 @@ import { MultiTermContractDataSource } from "src/datasources/MultiTerm/MultiTerm
 import { Token } from "./Token";
 import { YieldSource } from "./YieldSource";
 import { Term } from "./Term";
+import { BigNumber } from "bignumber.js";
 
 export class MultiTerm {
   address: string;
@@ -55,13 +56,25 @@ export class MultiTerm {
     return this.dataSource.getDecimals();
   }
 
-  // TODO:
-  async getTVL(atBlock: number): Promise<string> {
-    return "0";
+  /**
+   * Gets the TVL for the MultiTerm contract, the sum of all term TVLs.
+   * @async
+   * @return {Promise<string>} TVL represented as a string in terms of underlying.
+   */
+  async getTVL(): Promise<string> {
+    const terms = await this.getTerms();
+
+    let tvl: BigNumber = new BigNumber(0);
+    for (const term of terms) {
+      tvl = tvl.plus(await term.getTVL());
+    }
+
+    return tvl.toString();
   }
 
   /**
    * Gets the MultiTerm's unlockedSharePrice value
+   * @async
    * @return {Promise<string>} The unlocked share price as a string.
    */
   async getUnlockedPricePerShare(): Promise<string> {

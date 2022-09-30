@@ -28,9 +28,15 @@ export class Term {
     return this.multiTerm.getBaseAsset();
   }
 
-  // TODO:
-  async getTVL(atBlock: number): Promise<string> {
-    return "0";
+  /**
+   * Gets the TVL of this term, in terms of the underlying token
+   * @todo Does not account for accrued interest, need access to _underlying(ShareState.locked)
+   * @param {number} termId - the term id (expiry)
+   * @return {Promise<string>} total supply represented as a string as a decimal number
+   */
+  getTVL(): Promise<string> {
+    const balance = this.multiTerm.dataSource.getTotalSupply(this.id);
+    return balance;
   }
 
   getCreatedAtBlock(): Promise<number | null> {

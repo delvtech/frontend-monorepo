@@ -12,9 +12,18 @@ async function example(): Promise<void> {
 
   const pools = await usdcMultiPool.getPools();
   const firstPool = pools[0];
+  const firstPoolId = pools[0].id;
 
   console.log(await firstPool.getSpotPrice());
   console.log(await firstPool.getTVL());
+  const usdcMultiTerm = await usdcMultiPool.getMultiTerm();
+  const usdcTerm = await usdcMultiTerm.getTerm(firstPoolId);
+  // console.log(await usdcTerm?.getTVL());
+  console.log(await usdcMultiTerm.getTVL());
+  // console.log(usdcMultiTerm.address);
+  // console.log(firstPoolId);
+
+  // console.log(await firstPool.getSpotPrice());
 }
 
 example();
