@@ -8,11 +8,11 @@ export class PrincipalToken {
   term: Term;
   maturityDate: Date;
 
-  constructor(id: string, context: ElementContext, term: Term) {
-    this.id = id;
+  constructor(context: ElementContext, term: Term) {
+    this.id = term.id;
     this.context = context;
     this.term = term;
-    this.maturityDate = new Date(+id * 1000);
+    this.maturityDate = new Date(+term.id * 1000);
   }
 
   async getBaseAsset(): Promise<Token> {

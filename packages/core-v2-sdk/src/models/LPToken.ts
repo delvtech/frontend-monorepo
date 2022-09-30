@@ -8,11 +8,11 @@ export class LPToken {
   pool: Pool;
   maturityDate: Date;
 
-  constructor(id: string, context: ElementContext, pool: Pool) {
-    this.id = id;
+  constructor(context: ElementContext, pool: Pool) {
+    this.id = pool.id;
     this.context = context;
     this.pool = pool;
-    this.maturityDate = new Date(+id * 1000);
+    this.maturityDate = new Date(+pool.id * 1000);
   }
 
   async getBaseAsset(): Promise<Token> {
