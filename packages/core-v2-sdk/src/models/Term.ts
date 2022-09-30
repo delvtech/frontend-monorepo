@@ -34,8 +34,8 @@ export class Term {
    * @param {number} termId - the term id (expiry)
    * @return {Promise<string>} total supply represented as a string as a decimal number
    */
-  async getTVL(): Promise<string> {
-    const balance = await this.multiTerm.dataSource.getTotalSupply(this.id);
+  getTVL(): Promise<string> {
+    const balance = this.multiTerm.dataSource.getTotalSupply(this.id);
     return balance;
   }
 
