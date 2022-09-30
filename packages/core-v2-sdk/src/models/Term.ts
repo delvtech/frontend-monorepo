@@ -1,4 +1,5 @@
 import { ElementContext } from "src/context";
+import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
 import { MultiTerm } from "./MultiTerm";
 import { PrincipalToken } from "./PrincipalToken";
 import { Token } from "./Token";
@@ -46,5 +47,28 @@ export class Term {
   // TODO: How do I get the token ID with a start and end date?
   getYieldToken(startTimeStamp: number): YieldToken {
     return new YieldToken(this.id, this.context, this);
+  }
+
+  /**
+   * Gets the time remaining of the term in seconds. If expired, returns zero.
+   * @async
+   * @return {Promise<number>} time remaining in seconds
+   */
+  async getSecondsUntilExpiry(): Promise<number> {
+    const currentBlockTimestamp = await getCurrentBlockTimestamp(
+      this.context.provider,
+    );
+    const secondsRemaining = this.id - currentBlockTimestamp;
+    return secondsRemaining < 0 ? 0 : secondsRemaining;
+  }
+
+  /**
+   * Gets the time remaining of the term in days. If expired, returns zero.
+   * @async
+   * @return {Promise<number>} time remaining in days
+   */
+  async getDaysUntilExpiry(): Promise<number> {
+    const secondsUntilExpiry = await this.getSecondsUntilExpiry();
+    return secondsUntilExpiry / 86400;
   }
 }
