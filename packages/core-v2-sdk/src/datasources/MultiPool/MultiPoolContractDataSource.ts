@@ -14,7 +14,7 @@ export class MultiPoolContractDataSource
     super(Pool__factory.connect(address, provider));
   }
 
-  getPoolIds(fromBlock?: number, toBlock?: number): Promise<number[]> {
+  getPoolIds(fromBlock?: number, toBlock?: number): Promise<string[]> {
     return this.cached(["getPoolIds", fromBlock, toBlock], async () => {
       const eventFilter = this.contract.filters.PoolRegistered();
       const events = await this.contract.queryFilter(
@@ -22,7 +22,7 @@ export class MultiPoolContractDataSource
         fromBlock,
         toBlock,
       );
-      return events.map((event) => event.args.poolId.toNumber());
+      return events.map((event) => event.args.poolId.toHexString());
     });
   }
 
@@ -33,10 +33,10 @@ export class MultiPoolContractDataSource
   /**
    * Fetches and caches the pool reserves from our datasource (contract).
    * @notice This function returns reserves as string representation of a fixed point number.
-   * @param {number} poolId - the pool id (expiry)
+   * @param {string} poolId - the pool id (expiry)
    * @return {Promise<PoolReserves>}
    */
-  async getPoolReserves(poolId: number): Promise<PoolReserves> {
+  async getPoolReserves(poolId: string): Promise<PoolReserves> {
     const [sharesBigNumber, bondsBigNumber] = await this.call("reserves", [
       poolId,
     ]);
@@ -51,10 +51,10 @@ export class MultiPoolContractDataSource
   /**
    * Fetches and caches the pool parameters from our datasource (contract).
    * @notice This function also handles converting the pool parameters from a fixed point number.
-   * @param {number} poolId - the pool id (expiry)
+   * @param {string} poolId - the pool id (expiry)
    * @return {Promise<PoolParameters>}
    */
-  async getPoolParameters(poolId: number): Promise<PoolParameters> {
+  async getPoolParameters(poolId: string): Promise<PoolParameters> {
     const [timeStretch, muBN] = await this.call("parameters", [poolId]);
 
     return {
@@ -75,7 +75,7 @@ export class MultiPoolContractDataSource
   /**
    * Fetches the symbol for a given poolId from our datasource (contract).
    */
-  getSymbol(poolId: number): Promise<string> {
+  getSymbol(poolId: string): Promise<string> {
     return this.call("symbol", [poolId]);
   }
 
@@ -89,14 +89,14 @@ export class MultiPoolContractDataSource
   /**
    * Fetches the name for a given poolId from our datasource (contract).
    */
-  getName(poolId: number): Promise<string> {
+  getName(poolId: string): Promise<string> {
     return this.call("name", [poolId]);
   }
 
   /**
    * Fetches an address's balance of a given poolId from our datasource (contract).
    */
-  async getBalanceOf(poolId: number, address: string): Promise<string> {
+  async getBalanceOf(poolId: string, address: string): Promise<string> {
     const balanceBigNumber = await this.call("balanceOf", [poolId, address]);
     return balanceBigNumber.toString();
   }

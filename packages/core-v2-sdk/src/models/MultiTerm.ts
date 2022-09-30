@@ -32,10 +32,10 @@ export class MultiTerm {
 
   /**
    * Gets a Term by the termId from this MultiTerm.
-   * @param {number} termId - the termId
+   * @param {string} termId - the termId
    * @return {Term}
    */
-  getTerm(termId: number): Term {
+  getTerm(termId: string): Term {
     return new Term(termId, this.context, this);
   }
 

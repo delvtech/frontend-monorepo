@@ -2,13 +2,13 @@ import { PoolParameters, PoolReserves } from "src/types";
 
 export interface MultiPoolDataSource {
   address: string;
-  getPoolIds: (fromBlock?: number, toBlock?: number) => Promise<number[]>;
+  getPoolIds: (fromBlock?: number, toBlock?: number) => Promise<string[]>;
   getMultiTerm: () => Promise<string>;
-  getPoolReserves: (poolId: number) => Promise<PoolReserves>;
-  getPoolParameters: (poolId: number) => Promise<PoolParameters>;
+  getPoolReserves: (poolId: string) => Promise<PoolReserves>;
+  getPoolParameters: (poolId: string) => Promise<PoolParameters>;
   getBaseAsset: () => Promise<string>;
-  getSymbol: (poolId: number) => Promise<string>;
+  getSymbol: (poolId: string) => Promise<string>;
   getDecimals: () => Promise<number>;
-  getName: (poolId: number) => Promise<string>;
-  getBalanceOf: (poolId: number, address: string) => Promise<string>;
+  getName: (poolId: string) => Promise<string>;
+  getBalanceOf: (poolId: string, address: string) => Promise<string>;
 }

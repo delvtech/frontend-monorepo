@@ -3,16 +3,16 @@ import { Term } from "./Term";
 import { Token } from "./Token";
 
 export class PrincipalToken {
-  id: number;
+  id: string;
   context: ElementContext;
   term: Term;
   maturityDate: Date;
 
-  constructor(id: number, context: ElementContext, term: Term) {
+  constructor(id: string, context: ElementContext, term: Term) {
     this.id = id;
     this.context = context;
     this.term = term;
-    this.maturityDate = new Date(id * 1000);
+    this.maturityDate = new Date(+id * 1000);
   }
 
   async getBaseAsset(): Promise<Token> {

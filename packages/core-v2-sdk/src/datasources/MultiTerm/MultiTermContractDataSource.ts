@@ -41,7 +41,7 @@ export class MultiTermContractDataSource
    * @param {number} toBlock - Optional, end block number to search to.
    * @return {Promise<number[]>} A promise of an array of unique term ids.
    */
-  async getTermIds(fromBlock?: number, toBlock?: number): Promise<number[]> {
+  async getTermIds(fromBlock?: number, toBlock?: number): Promise<string[]> {
     return this.cached(["getTermIds", fromBlock, toBlock], async () => {
       const events = await this.getTransferEvents(
         // new mints result in a transfer from the zero address
@@ -56,13 +56,13 @@ export class MultiTermContractDataSource
           events
             // filter out YTs
             .filter((event) => isPT(event.args.id))
-            .map((event) => event.args.id.toNumber()),
+            .map((event) => event.args.id.toHexString()),
         ),
       );
     });
   }
 
-  getCreatedAtBlock(termId: number): Promise<number | null> {
+  getCreatedAtBlock(termId: string): Promise<number | null> {
     return this.cached(["getCreatedAtBlock", termId], async () => {
       const events = await this.getTransferEvents(
         // new mints result in a transfer from the zero address
@@ -84,7 +84,7 @@ export class MultiTermContractDataSource
     return this.call("token", []);
   }
 
-  getSymbol(termId: number): Promise<string> {
+  getSymbol(termId: string): Promise<string> {
     return this.call("symbol", [termId]);
   }
 
@@ -92,11 +92,11 @@ export class MultiTermContractDataSource
     return this.call("decimals", []);
   }
 
-  getName(termId: number): Promise<string> {
+  getName(termId: string): Promise<string> {
     return this.call("name", [termId]);
   }
 
-  async getBalanceOf(termId: number, address: string): Promise<string> {
+  async getBalanceOf(termId: string, address: string): Promise<string> {
     const balanceBigNumber = await this.call("balanceOf", [termId, address]);
     return balanceBigNumber.toString();
   }
@@ -117,7 +117,7 @@ export class MultiTermContractDataSource
    * @param {number} termId - the term id (expiry)
    * @return {Promise<string>} total supply represented as a string
    */
-  async getTotalSupply(termId: number): Promise<string> {
+  async getTotalSupply(termId: string): Promise<string> {
     const supply = await this.call("totalSupply", [termId]);
     return fromBn(supply, await this.getDecimals());
   }
@@ -128,7 +128,7 @@ export class MultiTermContractDataSource
    * @param {Signer} signer - Ethers signer object.
    * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
    * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
-   * @param {number} termId - The term id (expiry).
+   * @param {string} termId - The term id (expiry).
    * @param {BigNumber} amount - Amount of underlying tokens to use to mint.
    * @param {string} ptDestination - Address to receive principal tokens.
    * @param {string} ytDestination - Address to receive yield tokens.
@@ -137,7 +137,7 @@ export class MultiTermContractDataSource
    */
   async lock(
     signer: Signer,
-    termId: number,
+    termId: string,
     assetIds: string[],
     assetAmounts: string[],
     amount: BigNumber,

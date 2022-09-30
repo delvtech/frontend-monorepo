@@ -12,7 +12,7 @@ import { YieldSource } from "./YieldSource";
  * Pool model class.
  */
 export class Pool {
-  id: number;
+  id: string;
   guid: string;
   context: ElementContext;
   multiPool: MultiPool;
@@ -25,13 +25,13 @@ export class Pool {
    * @param {ElementContext} context - Context object for the sdk.
    * @param {MultiPool} multiPool - the MultiPool model where this pool is stored.
    */
-  constructor(id: number, context: ElementContext, multiPool: MultiPool) {
+  constructor(id: string, context: ElementContext, multiPool: MultiPool) {
     this.id = id;
     this.guid = `${multiPool.address}${id}`;
     this.context = context;
     this.multiPool = multiPool;
     this.lpToken = new LPToken(id, context, this);
-    this.maturityDate = new Date(id * 1000);
+    this.maturityDate = new Date(+id * 1000);
   }
 
   /**
@@ -134,8 +134,9 @@ export class Pool {
     const bonds = +reserves.bonds;
     const shares = +reserves.shares;
     const totalSupply = bonds + shares;
+    const expiry = +this.id;
     const daysUntilExpiry = await getDaysUntilTimestamp(
-      this.id,
+      expiry,
       this.context.provider,
     );
 
@@ -181,7 +182,7 @@ export class Pool {
     const poolParams = await this.getParameters();
     const timeStretch = +poolParams.timeStretch;
     const daysUntilExpiry =
-      (await getDaysUntilTimestamp(this.id, this.context.provider)) *
+      (await getDaysUntilTimestamp(+this.id, this.context.provider)) *
       timeStretch;
     const daysFractionOfYear = daysUntilExpiry / 365;
     const oneMinusSpotPrice = 1 - spotPrice;

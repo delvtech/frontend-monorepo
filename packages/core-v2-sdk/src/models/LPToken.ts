@@ -3,16 +3,16 @@ import { Pool } from "./Pool";
 import { Token } from "./Token";
 
 export class LPToken {
-  id: number;
+  id: string;
   context: ElementContext;
   pool: Pool;
   maturityDate: Date;
 
-  constructor(id: number, context: ElementContext, pool: Pool) {
+  constructor(id: string, context: ElementContext, pool: Pool) {
     this.id = id;
     this.context = context;
     this.pool = pool;
-    this.maturityDate = new Date(id * 1000);
+    this.maturityDate = new Date(+id * 1000);
   }
 
   async getBaseAsset(): Promise<Token> {
