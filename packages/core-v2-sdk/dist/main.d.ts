@@ -276,6 +276,18 @@ export class Term {
     getTVL(): Promise<string>;
     getCreatedAtBlock(): Promise<number | null>;
     getYieldToken(startTimeStamp: number): YieldToken;
+    /**
+     * Gets the time remaining of the term in seconds. If expired, returns zero.
+     * @async
+     * @return {Promise<number>} time remaining in seconds
+     */
+    getSecondsUntilExpiry(): Promise<number>;
+    /**
+     * Gets the time remaining of the term in days. If expired, returns zero.
+     * @async
+     * @return {Promise<number>} time remaining in days
+     */
+    getDaysUntilExpiry(): Promise<number>;
 }
 /**
  * MultiTerm model class.

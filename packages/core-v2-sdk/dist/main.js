@@ -607,6 +607,13 @@ class $43a71ca2139b91c6$export$5b513f5c41d35e50 {
 var $51ba50e48c247b12$exports = {};
 
 $parcel$export($51ba50e48c247b12$exports, "Term", () => $51ba50e48c247b12$export$656c1e606ad06131);
+async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
+    const current = await provider.getBlockNumber();
+    const currentBlock = await provider.getBlock(current);
+    return currentBlock.timestamp;
+}
+
+
 var $2ababb11162a7525$exports = {};
 
 $parcel$export($2ababb11162a7525$exports, "PrincipalToken", () => $2ababb11162a7525$export$62007a0bd048d56c);
@@ -697,6 +704,23 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
     getYieldToken(startTimeStamp) {
         return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(this.id, this.context, this);
     }
+    /**
+   * Gets the time remaining of the term in seconds. If expired, returns zero.
+   * @async
+   * @return {Promise<number>} time remaining in seconds
+   */ async getSecondsUntilExpiry() {
+        const currentBlockTimestamp = await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider);
+        const secondsRemaining = this.id - currentBlockTimestamp;
+        return secondsRemaining < 0 ? 0 : secondsRemaining;
+    }
+    /**
+   * Gets the time remaining of the term in days. If expired, returns zero.
+   * @async
+   * @return {Promise<number>} time remaining in days
+   */ async getDaysUntilExpiry() {
+        const secondsUntilExpiry = await this.getSecondsUntilExpiry();
+        return secondsUntilExpiry / 86400;
+    }
 }
 
 
@@ -776,12 +800,6 @@ class $73142241d07e4549$export$44a06e384a6d2ed0 {
 var $5c922a29083dd917$exports = {};
 
 $parcel$export($5c922a29083dd917$exports, "Pool", () => $5c922a29083dd917$export$14963ee5c8637e11);
-async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
-    const current = await provider.getBlockNumber();
-    const currentBlock = await provider.getBlock(current);
-    return currentBlock.timestamp;
-}
-
 
 
 
