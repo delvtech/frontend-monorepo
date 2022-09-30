@@ -1,3 +1,4 @@
+import BigNumber from "bignumber.js";
 import { ElementContext } from "src/context";
 import { PoolParameters, PoolReserves } from "src/types";
 import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
@@ -123,7 +124,7 @@ export class Pool {
   /**
    * Gets principal token spot price from the pool, disregarding slippage, denominated in the base asset.
    * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500} for formula source.
-   * @return {Promise<string>} Principle token spot price.
+   * @return {Promise<string>} Principle token spot price, denoted in base asset.
    */
   async getSpotPrice(): Promise<string> {
     // fetch reserves
@@ -132,15 +133,8 @@ export class Pool {
     // cast to number
     const bonds = +reserves.bonds;
     const shares = +reserves.shares;
-
     const totalSupply = bonds + shares;
-
-    // calculate seconds until expiry
-    const currentBlockTimestamp = await getCurrentBlockTimestamp(
-      this.context.provider,
-    );
-    const secondsUntilExpiry = this.id - currentBlockTimestamp;
-    const daysUntilExpiry = secondsUntilExpiry / 86400;
+    const daysUntilExpiry = await this.getDaysUntilExpiry();
 
     // pool parameters
     const parameters = await this.getParameters();
@@ -171,5 +165,45 @@ export class Pool {
     const { bonds, shares } = await this.getReserves();
     const tvl = +bondPrice * +bonds + +shares * +sharePrice;
     return tvl.toString();
+  }
+
+  /**
+   * Gets the time remaining of the term in seconds. If expired, returns zero.
+   * @async
+   * @return {Promise<number>} time remaining in seconds
+   */
+  async getSecondsUntilExpiry(): Promise<number> {
+    const currentBlockTimestamp = await getCurrentBlockTimestamp(
+      this.context.provider,
+    );
+    const secondsRemaining = this.id - currentBlockTimestamp;
+    return secondsRemaining < 0 ? 0 : secondsRemaining;
+  }
+
+  /**
+   * Gets the time remaining of the term in days. If expired, returns zero.
+   * @async
+   * @return {Promise<number>} time remaining in days
+   */
+  async getDaysUntilExpiry(): Promise<number> {
+    const secondsUntilExpiry = await this.getSecondsUntilExpiry();
+    return secondsUntilExpiry / 86400;
+  }
+
+  /**
+   * Calculates the Fixed APR of the principal token in this pool.
+   * @async
+   * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L487} for formula source.
+   * @return {Promise<string>} Fixed APR represented as a string, not rounded.
+   */
+  async getFixedAPR(): Promise<string> {
+    const spotPrice = +(await this.getSpotPrice());
+    const poolParams = await this.getParameters();
+    const timeStretch = +poolParams.timeStretch;
+    const daysUntilExpiry = (await this.getDaysUntilExpiry()) * timeStretch;
+    const daysFractionOfYear = daysUntilExpiry / 365;
+    const oneMinusSpotPrice = 1 - spotPrice;
+    const apr = (oneMinusSpotPrice / spotPrice / daysFractionOfYear) * 100;
+    return apr.toString();
   }
 }
