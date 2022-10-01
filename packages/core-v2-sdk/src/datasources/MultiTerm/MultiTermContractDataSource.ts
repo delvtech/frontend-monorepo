@@ -39,7 +39,7 @@ export class MultiTermContractDataSource
    * Gets all terms that have been created from the datasource (contract).
    * @param {number} fromBlock - Optional, start block number to search from.
    * @param {number} toBlock - Optional, end block number to search to.
-   * @return {Promise<number[]>} A promise of an array of unique term ids.
+   * @return {Promise<string[]>} A promise of an array of unique term ids.
    */
   async getTermIds(fromBlock?: number, toBlock?: number): Promise<string[]> {
     return this.cached(["getTermIds", fromBlock, toBlock], async () => {
