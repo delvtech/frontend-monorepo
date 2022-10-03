@@ -126,10 +126,17 @@ export interface MultiTermDataSource {
     getName: (termId: number) => Promise<string>;
     getBalanceOf: (termId: number, address: string) => Promise<string>;
     getUnlockedPricePerShare: () => Promise<string>;
+    getTotalSupply: (termId: number) => Promise<string>;
 }
 export class MultiTermContractDataSource extends ContractDataSource<_Term1> implements MultiTermDataSource {
     constructor(address: string, provider: providers.Provider);
     getTransferEvents(from?: string | null, to?: string | null, fromBlock?: number, toBlock?: number): Promise<TransferSingleEvent[]>;
+    /**
+     * Gets all terms that have been created from the datasource (contract).
+     * @param {number} fromBlock - Optional, start block number to search from.
+     * @param {number} toBlock - Optional, end block number to search to.
+     * @return {Promise<number[]>} A promise of an array of unique term ids.
+     */
     getTermIds(fromBlock?: number, toBlock?: number): Promise<number[]>;
     getCreatedAtBlock(termId: number): Promise<number | null>;
     getYieldSource(): Promise<null>;
@@ -145,6 +152,12 @@ export class MultiTermContractDataSource extends ContractDataSource<_Term1> impl
      * @return {Promise<string>} The unlocked share price as a string.
      */
     getUnlockedPricePerShare(): Promise<string>;
+    /**
+     * Gets the total supply of a certain term.
+     * @param {number} termId - the term id (expiry)
+     * @return {Promise<string>} total supply represented as a string
+     */
+    getTotalSupply(termId: number): Promise<string>;
 }
 export class ERC4626TermContractDataSource extends MultiTermContractDataSource {
     contract: ERC4626Term;
@@ -254,23 +267,81 @@ export class Term {
     constructor(id: number, context: ElementContext, multiTerm: MultiTerm);
     getYieldSource(): Promise<YieldSource | null>;
     getBaseAsset(): Promise<Token>;
-    getTVL(atBlock: number): Promise<string>;
+    /**
+     * Gets the TVL of this term, in terms of the underlying token
+     * @todo Does not account for accrued interest, need access to _underlying(ShareState.locked)
+     * @param {number} termId - the term id (expiry)
+     * @return {Promise<string>} total supply represented as a string as a decimal number
+     */
+    getTVL(): Promise<string>;
     getCreatedAtBlock(): Promise<number | null>;
     getYieldToken(startTimeStamp: number): YieldToken;
+    /**
+     * Gets the time remaining of the term in seconds. If expired, returns zero.
+     * @async
+     * @return {Promise<number>} time remaining in seconds
+     */
+    getSecondsUntilExpiry(): Promise<number>;
+    /**
+     * Gets the time remaining of the term in days. If expired, returns zero.
+     * @async
+     * @return {Promise<number>} time remaining in days
+     */
+    getDaysUntilExpiry(): Promise<number>;
 }
+/**
+ * MultiTerm model class.
+ * @class
+ */
 export class MultiTerm {
     address: string;
     context: ElementContext;
     dataSource: MultiTermDataSource;
     constructor(address: string, context: ElementContext, dataSource?: MultiTermDataSource);
-    getTerm(expiryTimestamp: number): Promise<Term | null>;
+    /**
+     * Gets a Term by the termId from this MultiTerm.
+     * @async
+     * @param {number} termId - the termId
+     * @return {Promise<Term>}
+     */
+    getTerm(termId: number): Promise<Term>;
+    /**
+     * Gets all the Terms from this MultiTerm. Searches by TransferSingleEvents.
+     * @async
+     * @param {number} fromBlock - Optional, start block number to search from.
+     * @param {number} toBlock - Optional, end block number to search to.
+     * @return {Promise<Term[]>}
+     */
     getTerms(fromBlock?: number, toBlock?: number): Promise<Term[]>;
+    /**
+     * Gets the yield source this MultiTerm deposits into.
+     * @async
+     * @function getYieldSource
+     * @return {Promise<YieldSource | null>}
+     */
     getYieldSource(): Promise<YieldSource | null>;
+    /**
+     * Gets the base asset as a Token model.
+     * @async
+     * @function getBaseAsset
+     * @return {Promise<Token>} ERC20 token.
+     */
     getBaseAsset(): Promise<Token>;
+    /**
+     * Gets the number of decimals used by this MultiTerm.
+     * @async
+     * @return {Promise<number>} The number of decimals.
+     */
     getDecimals(): Promise<number>;
-    getTVL(atBlock: number): Promise<string>;
+    /**
+     * Gets the TVL for the MultiTerm contract, the sum of all term TVLs.
+     * @async
+     * @return {Promise<string>} TVL represented as a string in terms of underlying.
+     */
+    getTVL(): Promise<string>;
     /**
      * Gets the MultiTerm's unlockedSharePrice value
+     * @async
      * @return {Promise<string>} The unlocked share price as a string.
      */
     getUnlockedPricePerShare(): Promise<string>;
@@ -361,6 +432,18 @@ export class Pool {
     constructor(id: number, context: ElementContext, multiPool: MultiPool);
     /**
      * @async
+     * Gets the associated MultiTerm model for this pool.
+     * @return {Promise<YieldSource | null>}
+     */
+    getMultTerm(): Promise<MultiTerm>;
+    /**
+     * @async
+     * Gets the associated Term model for this pool.
+     * @return {Promise<YieldSource | null>}
+     */
+    getTerm(): Promise<Term | null>;
+    /**
+     * @async
      * Gets yield source for this pool.
      * @return {Promise<YieldSource | null>}
      */
@@ -404,7 +487,7 @@ export class Pool {
     /**
      * Gets principal token spot price from the pool, disregarding slippage, denominated in the base asset.
      * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500} for formula source.
-     * @return {Promise<string>} Principle token spot price.
+     * @return {Promise<string>} Principle token spot price, denoted in base asset.
      */
     getSpotPrice(): Promise<string>;
     /**
@@ -413,6 +496,25 @@ export class Pool {
      * @return {Promise<string>} tvl represented as a string.
      */
     getTVL(): Promise<string>;
+    /**
+     * Gets the time remaining of the term in seconds. If expired, returns zero.
+     * @async
+     * @return {Promise<number>} time remaining in seconds
+     */
+    getSecondsUntilExpiry(): Promise<number>;
+    /**
+     * Gets the time remaining of the term in days. If expired, returns zero.
+     * @async
+     * @return {Promise<number>} time remaining in days
+     */
+    getDaysUntilExpiry(): Promise<number>;
+    /**
+     * Calculates the Fixed APR of the principal token in this pool.
+     * @async
+     * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L487} for formula source.
+     * @return {Promise<string>} Fixed APR represented as a string, not rounded.
+     */
+    getFixedAPR(): Promise<string>;
 }
 export class LPToken {
     id: number;

@@ -1,6 +1,6 @@
 import { ElementContext } from "src/context";
 import { PoolParameters, PoolReserves } from "src/types";
-import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
+import { getDaysUntilTimestamp } from "src/utils/time/getDaysUntilTimestamp";
 import { LPToken } from "./LPToken";
 import { MultiPool } from "./MultiPool";
 import { MultiTerm } from "./MultiTerm";
@@ -123,7 +123,7 @@ export class Pool {
   /**
    * Gets principal token spot price from the pool, disregarding slippage, denominated in the base asset.
    * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500} for formula source.
-   * @return {Promise<string>} Principle token spot price.
+   * @return {Promise<string>} Principle token spot price, denoted in base asset.
    */
   async getSpotPrice(): Promise<string> {
     // fetch reserves
@@ -132,15 +132,11 @@ export class Pool {
     // cast to number
     const bonds = +reserves.bonds;
     const shares = +reserves.shares;
-
     const totalSupply = bonds + shares;
-
-    // calculate seconds until expiry
-    const currentBlockTimestamp = await getCurrentBlockTimestamp(
+    const daysUntilExpiry = await getDaysUntilTimestamp(
+      this.id,
       this.context.provider,
     );
-    const secondsUntilExpiry = this.id - currentBlockTimestamp;
-    const daysUntilExpiry = secondsUntilExpiry / 86400;
 
     // pool parameters
     const parameters = await this.getParameters();
@@ -171,5 +167,24 @@ export class Pool {
     const { bonds, shares } = await this.getReserves();
     const tvl = +bondPrice * +bonds + +shares * +sharePrice;
     return tvl.toString();
+  }
+
+  /**
+   * Calculates the Fixed APR of the principal token in this pool.
+   * @async
+   * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L487} for formula source.
+   * @return {Promise<string>} Fixed APR represented as a string, not rounded.
+   */
+  async getFixedAPR(): Promise<string> {
+    const spotPrice = +(await this.getSpotPrice());
+    const poolParams = await this.getParameters();
+    const timeStretch = +poolParams.timeStretch;
+    const daysUntilExpiry =
+      (await getDaysUntilTimestamp(this.id, this.context.provider)) *
+      timeStretch;
+    const daysFractionOfYear = daysUntilExpiry / 365;
+    const oneMinusSpotPrice = 1 - spotPrice;
+    const apr = (oneMinusSpotPrice / spotPrice / daysFractionOfYear) * 100;
+    return apr.toString();
   }
 }

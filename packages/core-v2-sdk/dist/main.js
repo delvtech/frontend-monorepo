@@ -3,6 +3,7 @@ var $eCQIH$lrucache = require("lru-cache");
 var $eCQIH$elementfibase = require("@elementfi/base");
 var $eCQIH$elementficorev2typechain = require("@elementfi/core-v2-typechain");
 var $eCQIH$evmbn = require("evm-bn");
+var $eCQIH$bignumberjs = require("bignumber.js");
 
 function $parcel$exportWildcard(dest, source) {
   Object.keys(source).forEach(function(key) {
@@ -33,7 +34,8 @@ $parcel$export($f65b6b18b897f856$exports, "ElementContext", () => $f65b6b18b897f
 class $f65b6b18b897f856$export$4186b0f94a8cd1c0 {
     constructor({ chainId: chainId , provider: provider , dataSources: dataSources = []  }){
         this.chainId = chainId;
-        this.provider = provider || (0, $eCQIH$ethers.getDefaultProvider)(chainId);
+        if (!provider) console.warn("You are using the default provider, subject to rate limiting.");
+        this.provider = provider ?? (0, $eCQIH$ethers.getDefaultProvider)(chainId);
         this.dataSources = dataSources;
     }
     // TODO: How can we make this more efficient, yet still flexible
@@ -278,6 +280,11 @@ $parcel$export($d179b418267ba386$exports, "MultiTermContractDataSource", () => $
 
 
 
+function $6ff8d0293b29261d$export$238876ec612ad57e(tokenId) {
+    return !tokenId.toHexString().startsWith("0x8");
+}
+
+
 class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$export$f5a95cc94689234f) {
     constructor(address, provider){
         super((0, $eCQIH$elementficorev2typechain.Term__factory).connect(address, provider));
@@ -294,16 +301,21 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
             return this.contract.queryFilter(eventFilter, fromBlock, toBlock);
         });
     }
-    async getTermIds(fromBlock, toBlock) {
+    /**
+   * Gets all terms that have been created from the datasource (contract).
+   * @param {number} fromBlock - Optional, start block number to search from.
+   * @param {number} toBlock - Optional, end block number to search to.
+   * @return {Promise<number[]>} A promise of an array of unique term ids.
+   */ async getTermIds(fromBlock, toBlock) {
         return this.cached([
             "getTermIds",
             fromBlock,
             toBlock
         ], async ()=>{
-            // TODO: Filter out yield token addresses
             const events = await this.getTransferEvents(// new mints result in a transfer from the zero address
             (0, $eCQIH$ethers.ethers).constants.AddressZero, null, fromBlock, toBlock);
-            return Array.from(new Set(events.map((event)=>event.args.id.toNumber())));
+            return Array.from(new Set(events// filter out YTs
+            .filter((event)=>(0, $6ff8d0293b29261d$export$238876ec612ad57e)(event.args.id)).map((event)=>event.args.id.toNumber())));
         });
     }
     getCreatedAtBlock(termId) {
@@ -353,6 +365,16 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
    */ async getUnlockedPricePerShare() {
         const sharePriceBN = await this.call("unlockedSharePrice", []);
         return (0, $eCQIH$evmbn.fromBn)(sharePriceBN, await this.getDecimals());
+    }
+    /**
+   * Gets the total supply of a certain term.
+   * @param {number} termId - the term id (expiry)
+   * @return {Promise<string>} total supply represented as a string
+   */ async getTotalSupply(termId) {
+        const supply = await this.call("totalSupply", [
+            termId
+        ]);
+        return (0, $eCQIH$evmbn.fromBn)(supply, await this.getDecimals());
     }
 }
 
@@ -585,6 +607,13 @@ class $43a71ca2139b91c6$export$5b513f5c41d35e50 {
 var $51ba50e48c247b12$exports = {};
 
 $parcel$export($51ba50e48c247b12$exports, "Term", () => $51ba50e48c247b12$export$656c1e606ad06131);
+async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
+    const current = await provider.getBlockNumber();
+    const currentBlock = await provider.getBlock(current);
+    return currentBlock.timestamp;
+}
+
+
 var $2ababb11162a7525$exports = {};
 
 $parcel$export($2ababb11162a7525$exports, "PrincipalToken", () => $2ababb11162a7525$export$62007a0bd048d56c);
@@ -659,9 +688,14 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
     getBaseAsset() {
         return this.multiTerm.getBaseAsset();
     }
-    // TODO:
-    async getTVL(atBlock) {
-        return "0";
+    /**
+   * Gets the TVL of this term, in terms of the underlying token
+   * @todo Does not account for accrued interest, need access to _underlying(ShareState.locked)
+   * @param {number} termId - the term id (expiry)
+   * @return {Promise<string>} total supply represented as a string as a decimal number
+   */ getTVL() {
+        const balance = this.multiTerm.dataSource.getTotalSupply(this.id);
+        return balance;
     }
     getCreatedAtBlock() {
         return this.multiTerm.dataSource.getCreatedAtBlock(this.id);
@@ -670,7 +704,25 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
     getYieldToken(startTimeStamp) {
         return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(this.id, this.context, this);
     }
+    /**
+   * Gets the time remaining of the term in seconds. If expired, returns zero.
+   * @async
+   * @return {Promise<number>} time remaining in seconds
+   */ async getSecondsUntilExpiry() {
+        const currentBlockTimestamp = await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider);
+        const secondsRemaining = this.id - currentBlockTimestamp;
+        return secondsRemaining < 0 ? 0 : secondsRemaining;
+    }
+    /**
+   * Gets the time remaining of the term in days. If expired, returns zero.
+   * @async
+   * @return {Promise<number>} time remaining in days
+   */ async getDaysUntilExpiry() {
+        const secondsUntilExpiry = await this.getSecondsUntilExpiry();
+        return secondsUntilExpiry / 86400;
+    }
 }
+
 
 
 class $73142241d07e4549$export$44a06e384a6d2ed0 {
@@ -681,32 +733,63 @@ class $73142241d07e4549$export$44a06e384a6d2ed0 {
             address: address
         }, new (0, $d179b418267ba386$export$2bd093a746116e9a)(address, context.provider));
     }
-    async getTerm(expiryTimestamp) {
-        // TODO: should this validate that the term exists?
-        return new (0, $51ba50e48c247b12$export$656c1e606ad06131)(expiryTimestamp, this.context, this);
+    /**
+   * Gets a Term by the termId from this MultiTerm.
+   * @async
+   * @param {number} termId - the termId
+   * @return {Promise<Term>}
+   */ async getTerm(termId) {
+        return new (0, $51ba50e48c247b12$export$656c1e606ad06131)(termId, this.context, this);
     }
-    async getTerms(fromBlock, toBlock) {
+    /**
+   * Gets all the Terms from this MultiTerm. Searches by TransferSingleEvents.
+   * @async
+   * @param {number} fromBlock - Optional, start block number to search from.
+   * @param {number} toBlock - Optional, end block number to search to.
+   * @return {Promise<Term[]>}
+   */ async getTerms(fromBlock, toBlock) {
         const termIds = await this.dataSource.getTermIds(fromBlock, toBlock ?? await this.context.provider.getBlockNumber());
         return termIds.map((id)=>new (0, $51ba50e48c247b12$export$656c1e606ad06131)(id, this.context, this));
     }
-    async getYieldSource() {
+    /**
+   * Gets the yield source this MultiTerm deposits into.
+   * @async
+   * @function getYieldSource
+   * @return {Promise<YieldSource | null>}
+   */ async getYieldSource() {
         const address = await this.dataSource.getYieldSource();
         if (!address) return null;
         return new (0, $43a71ca2139b91c6$export$5b513f5c41d35e50)(address, this.context);
     }
-    async getBaseAsset() {
+    /**
+   * Gets the base asset as a Token model.
+   * @async
+   * @function getBaseAsset
+   * @return {Promise<Token>} ERC20 token.
+   */ async getBaseAsset() {
         const address = await this.dataSource.getBaseAsset();
         return new (0, $2361706748e2a981$export$50792b0e93539fde)(address, this.context);
     }
-    getDecimals() {
+    /**
+   * Gets the number of decimals used by this MultiTerm.
+   * @async
+   * @return {Promise<number>} The number of decimals.
+   */ getDecimals() {
         return this.dataSource.getDecimals();
     }
-    // TODO:
-    async getTVL(atBlock) {
-        return "0";
+    /**
+   * Gets the TVL for the MultiTerm contract, the sum of all term TVLs.
+   * @async
+   * @return {Promise<string>} TVL represented as a string in terms of underlying.
+   */ async getTVL() {
+        const terms = await this.getTerms();
+        let tvl = new (0, $eCQIH$bignumberjs.BigNumber)(0);
+        for (const term of terms)tvl = tvl.plus(await term.getTVL());
+        return tvl.toString();
     }
     /**
    * Gets the MultiTerm's unlockedSharePrice value
+   * @async
    * @return {Promise<string>} The unlocked share price as a string.
    */ async getUnlockedPricePerShare() {
         return await this.dataSource.getUnlockedPricePerShare();
@@ -717,12 +800,6 @@ class $73142241d07e4549$export$44a06e384a6d2ed0 {
 var $5c922a29083dd917$exports = {};
 
 $parcel$export($5c922a29083dd917$exports, "Pool", () => $5c922a29083dd917$export$14963ee5c8637e11);
-async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
-    const current = await provider.getBlockNumber();
-    const currentBlock = await provider.getBlock(current);
-    return currentBlock.timestamp;
-}
-
 
 
 
@@ -738,6 +815,21 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         this.multiPool = multiPool;
         this.lpToken = new (0, $8af14f8f6b4799b0$export$84f20e6ecc12f354)(id, context, this);
         this.maturityDate = new Date(id * 1000);
+    }
+    /**
+   * @async
+   * Gets the associated MultiTerm model for this pool.
+   * @return {Promise<YieldSource | null>}
+   */ getMultTerm() {
+        return this.multiPool.getMultiTerm();
+    }
+    /**
+   * @async
+   * Gets the associated Term model for this pool.
+   * @return {Promise<YieldSource | null>}
+   */ async getTerm() {
+        const multiTerm = await this.multiPool.getMultiTerm();
+        return multiTerm.getTerm(this.id);
     }
     /**
    * @async
@@ -795,7 +887,7 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
     /**
    * Gets principal token spot price from the pool, disregarding slippage, denominated in the base asset.
    * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500} for formula source.
-   * @return {Promise<string>} Principle token spot price.
+   * @return {Promise<string>} Principle token spot price, denoted in base asset.
    */ async getSpotPrice() {
         // fetch reserves
         const reserves = await this.getReserves();
@@ -803,10 +895,7 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         const bonds = +reserves.bonds;
         const shares = +reserves.shares;
         const totalSupply = bonds + shares;
-        // calculate seconds until expiry
-        const currentBlockTimestamp = await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider);
-        const secondsUntilExpiry = this.id - currentBlockTimestamp;
-        const daysUntilExpiry = secondsUntilExpiry / 86400;
+        const daysUntilExpiry = await this.getDaysUntilExpiry();
         // pool parameters
         const parameters = await this.getParameters();
         const mu = +parameters.mu;
@@ -815,7 +904,7 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         const term = await this.multiPool.getMultiTerm();
         const pricePerShare = +await term.getUnlockedPricePerShare();
         const tParam = daysUntilExpiry / (365 * timeStretch);
-        const denom = ((shares + totalSupply) * pricePerShare / (bonds * mu)) ** tParam;
+        const denom = ((bonds + totalSupply) * pricePerShare / (shares * mu)) ** tParam;
         return (1 / denom).toString();
     }
     /**
@@ -829,6 +918,38 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         const { bonds: bonds , shares: shares  } = await this.getReserves();
         const tvl = +bondPrice * +bonds + +shares * +sharePrice;
         return tvl.toString();
+    }
+    /**
+   * Gets the time remaining of the term in seconds. If expired, returns zero.
+   * @async
+   * @return {Promise<number>} time remaining in seconds
+   */ async getSecondsUntilExpiry() {
+        const currentBlockTimestamp = await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider);
+        const secondsRemaining = this.id - currentBlockTimestamp;
+        return secondsRemaining < 0 ? 0 : secondsRemaining;
+    }
+    /**
+   * Gets the time remaining of the term in days. If expired, returns zero.
+   * @async
+   * @return {Promise<number>} time remaining in days
+   */ async getDaysUntilExpiry() {
+        const secondsUntilExpiry = await this.getSecondsUntilExpiry();
+        return secondsUntilExpiry / 86400;
+    }
+    /**
+   * Calculates the Fixed APR of the principal token in this pool.
+   * @async
+   * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L487} for formula source.
+   * @return {Promise<string>} Fixed APR represented as a string, not rounded.
+   */ async getFixedAPR() {
+        const spotPrice = +await this.getSpotPrice();
+        const poolParams = await this.getParameters();
+        const timeStretch = +poolParams.timeStretch;
+        const daysUntilExpiry = await this.getDaysUntilExpiry() * timeStretch;
+        const daysFractionOfYear = daysUntilExpiry / 365;
+        const oneMinusSpotPrice = 1 - spotPrice;
+        const apr = oneMinusSpotPrice / spotPrice / daysFractionOfYear * 100;
+        return apr.toString();
     }
 }
 
@@ -1038,6 +1159,7 @@ async function $2199ecd2883db3b5$export$3191c47e10722ce4(amount, poolAddress, si
 
 
 $parcel$exportWildcard(module.exports, $f65b6b18b897f856$exports);
+$parcel$exportWildcard(module.exports, $cabaabaa231f1af1$exports);
 $parcel$exportWildcard(module.exports, $54e3433d3ac69f8a$exports);
 $parcel$exportWildcard(module.exports, $20adc394a346779f$exports);
 $parcel$exportWildcard(module.exports, $d0dba6c4aa120ac9$exports);
@@ -1054,12 +1176,15 @@ $parcel$exportWildcard(module.exports, $f00ba8e0ba7f8838$exports);
 $parcel$exportWildcard(module.exports, $38c20ee8daaa11b0$exports);
 $parcel$exportWildcard(module.exports, $047c4a05380e9203$exports);
 $parcel$exportWildcard(module.exports, $3b777295048083ac$exports);
+$parcel$exportWildcard(module.exports, $8af14f8f6b4799b0$exports);
 $parcel$exportWildcard(module.exports, $db3c4c3da11ea48c$exports);
 $parcel$exportWildcard(module.exports, $73142241d07e4549$exports);
 $parcel$exportWildcard(module.exports, $5c922a29083dd917$exports);
+$parcel$exportWildcard(module.exports, $2ababb11162a7525$exports);
 $parcel$exportWildcard(module.exports, $51ba50e48c247b12$exports);
 $parcel$exportWildcard(module.exports, $2361706748e2a981$exports);
 $parcel$exportWildcard(module.exports, $43a71ca2139b91c6$exports);
+$parcel$exportWildcard(module.exports, $d42f7646c857727b$exports);
 $parcel$exportWildcard(module.exports, $a6ef1106a8ce388b$exports);
 $parcel$exportWildcard(module.exports, $98797cba267d5720$exports);
 $parcel$exportWildcard(module.exports, $7141e549f83aab3e$exports);
@@ -1067,10 +1192,6 @@ $parcel$exportWildcard(module.exports, $9dde791ff857a61d$exports);
 $parcel$exportWildcard(module.exports, $36cbfb79cc4b34b2$exports);
 $parcel$exportWildcard(module.exports, $9c1766b6f9f74658$exports);
 $parcel$exportWildcard(module.exports, $2199ecd2883db3b5$exports);
-$parcel$exportWildcard(module.exports, $cabaabaa231f1af1$exports);
-$parcel$exportWildcard(module.exports, $8af14f8f6b4799b0$exports);
-$parcel$exportWildcard(module.exports, $2ababb11162a7525$exports);
-$parcel$exportWildcard(module.exports, $d42f7646c857727b$exports);
 
 
 //# sourceMappingURL=main.js.map
