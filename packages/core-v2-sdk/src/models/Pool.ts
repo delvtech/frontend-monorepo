@@ -1,7 +1,6 @@
-import BigNumber from "bignumber.js";
 import { ElementContext } from "src/context";
 import { PoolParameters, PoolReserves } from "src/types";
-import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
+import { getDaysUntilTimestamp } from "src/utils/time/getDaysUntilTimestamp";
 import { LPToken } from "./LPToken";
 import { MultiPool } from "./MultiPool";
 import { MultiTerm } from "./MultiTerm";
@@ -134,7 +133,10 @@ export class Pool {
     const bonds = +reserves.bonds;
     const shares = +reserves.shares;
     const totalSupply = bonds + shares;
-    const daysUntilExpiry = await this.getDaysUntilExpiry();
+    const daysUntilExpiry = await getDaysUntilTimestamp(
+      this.id,
+      this.context.provider,
+    );
 
     // pool parameters
     const parameters = await this.getParameters();
@@ -168,29 +170,6 @@ export class Pool {
   }
 
   /**
-   * Gets the time remaining of the term in seconds. If expired, returns zero.
-   * @async
-   * @return {Promise<number>} time remaining in seconds
-   */
-  async getSecondsUntilExpiry(): Promise<number> {
-    const currentBlockTimestamp = await getCurrentBlockTimestamp(
-      this.context.provider,
-    );
-    const secondsRemaining = this.id - currentBlockTimestamp;
-    return secondsRemaining < 0 ? 0 : secondsRemaining;
-  }
-
-  /**
-   * Gets the time remaining of the term in days. If expired, returns zero.
-   * @async
-   * @return {Promise<number>} time remaining in days
-   */
-  async getDaysUntilExpiry(): Promise<number> {
-    const secondsUntilExpiry = await this.getSecondsUntilExpiry();
-    return secondsUntilExpiry / 86400;
-  }
-
-  /**
    * Calculates the Fixed APR of the principal token in this pool.
    * @async
    * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L487} for formula source.
@@ -200,7 +179,9 @@ export class Pool {
     const spotPrice = +(await this.getSpotPrice());
     const poolParams = await this.getParameters();
     const timeStretch = +poolParams.timeStretch;
-    const daysUntilExpiry = (await this.getDaysUntilExpiry()) * timeStretch;
+    const daysUntilExpiry =
+      (await getDaysUntilTimestamp(this.id, this.context.provider)) *
+      timeStretch;
     const daysFractionOfYear = daysUntilExpiry / 365;
     const oneMinusSpotPrice = 1 - spotPrice;
     const apr = (oneMinusSpotPrice / spotPrice / daysFractionOfYear) * 100;
