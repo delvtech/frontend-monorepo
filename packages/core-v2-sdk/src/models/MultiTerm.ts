@@ -32,11 +32,10 @@ export class MultiTerm {
 
   /**
    * Gets a Term by the termId from this MultiTerm.
-   * @async
    * @param {number} termId - the termId
-   * @return {Promise<Term>}
+   * @return {Term}
    */
-  async getTerm(termId: number): Promise<Term> {
+  getTerm(termId: number): Term {
     return new Term(termId, this.context, this);
   }
 

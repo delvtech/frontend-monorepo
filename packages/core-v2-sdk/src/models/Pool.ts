@@ -33,20 +33,19 @@ export class Pool {
   }
 
   /**
-   * @async
    * Gets the associated MultiTerm model for this pool.
-   * @return {Promise<YieldSource | null>}
+   * @return {Promise<MultiTerm>}
    */
-  getMultTerm(): Promise<MultiTerm> {
+  getMultiTerm(): Promise<MultiTerm> {
     return this.multiPool.getMultiTerm();
   }
 
   /**
    * @async
    * Gets the associated Term model for this pool.
-   * @return {Promise<YieldSource | null>}
+   * @return {Promise<Term>}
    */
-  async getTerm(): Promise<Term | null> {
+  async getTerm(): Promise<Term> {
     const multiTerm = await this.multiPool.getMultiTerm();
     return multiTerm.getTerm(this.id);
   }
