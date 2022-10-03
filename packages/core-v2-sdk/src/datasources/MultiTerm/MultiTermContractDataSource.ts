@@ -1,10 +1,12 @@
-import { ethers, providers } from "ethers";
+import { BigNumber, ethers, providers, Signer } from "ethers";
 import { Term, Term__factory } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
 import { MultiTermDataSource } from "./MultiTermDataSource";
 import { ContractDataSource } from "src/datasources/ContractDataSource";
 import { fromBn } from "evm-bn";
+import { isYT } from "src/utils/token/isYT";
 import { isPT } from "src/utils/token/isPT";
+import { MintResponse } from "src/types";
 
 export class MultiTermContractDataSource
   extends ContractDataSource<Term>
@@ -118,5 +120,55 @@ export class MultiTermContractDataSource
   async getTotalSupply(termId: number): Promise<string> {
     const supply = await this.call("totalSupply", [termId]);
     return fromBn(supply, await this.getDecimals());
+  }
+
+  async mint(
+    signer: Signer,
+    termId: number,
+    amount: string,
+    ptDestination: string,
+    ytDestination: string,
+    ytBeginDate: number,
+    hasPrefunding = false,
+  ): Promise<MintResponse> {
+    const amountBn = BigNumber.from(amount);
+    if (amountBn.lte(0)) {
+      throw new Error("Underlying amount has to be greater than zero.");
+    }
+    const multiTerm = this.contract.connect(signer);
+    const txn = await multiTerm.lock(
+      [],
+      [],
+      amountBn,
+      hasPrefunding,
+      ytDestination,
+      ptDestination,
+      ytBeginDate,
+      termId,
+    );
+    // console.log(txn.data);
+
+    const receipt = await txn.wait();
+
+    const events = receipt.events!;
+    const transferSingleLogs = events.filter((event) => {
+      return (
+        event.event === "TransferSingle" &&
+        event.args?.from === ethers.constants.AddressZero
+      );
+    });
+
+    console.log(transferSingleLogs);
+
+    // maybe can just check index but not verified events will be ordered
+    const ytMintEvent = transferSingleLogs.find((log) => isYT(log.args!.id))!;
+    const ptMintEvent = transferSingleLogs.find((log) => isPT(log.args!.id))!;
+
+    console.log(ytMintEvent, ptMintEvent);
+
+    return {
+      principalTokens: BigNumber.from(ptMintEvent.args!.value).toString(),
+      yieldTokens: BigNumber.from(ytMintEvent.args!.value).toString(),
+    };
   }
 }

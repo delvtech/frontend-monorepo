@@ -1,4 +1,5 @@
 import { ElementContext } from "src/context";
+import { MintParameters, MintResponse } from "src/types";
 import { MultiTerm } from "./MultiTerm";
 import { PrincipalToken } from "./PrincipalToken";
 import { Token } from "./Token";
@@ -48,5 +49,27 @@ export class Term {
   // TODO: How do I get the token ID with a start and end date?
   getYieldToken(startTimeStamp: number): YieldToken {
     return new YieldToken(this.id, this.context, this);
+  }
+
+  async mint(parameters: MintParameters): Promise<MintResponse> {
+    const {
+      signer,
+      amount,
+      ptDestination,
+      ytBeginDate,
+      hasPrefunding,
+      ytDestination,
+    } = {
+      ...parameters,
+    };
+    return await this.multiTerm.dataSource.mint(
+      signer,
+      this.id,
+      amount,
+      ptDestination,
+      ytDestination,
+      ytBeginDate,
+      false,
+    );
   }
 }
