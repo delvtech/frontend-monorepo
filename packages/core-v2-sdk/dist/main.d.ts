@@ -260,6 +260,7 @@ export class YieldToken {
 }
 export class Term {
     id: number;
+    guid: string;
     context: ElementContext;
     multiTerm: MultiTerm;
     principalToken: PrincipalToken;
@@ -405,6 +406,7 @@ export class MultiPool {
  */
 export class Pool {
     id: number;
+    guid: string;
     context: ElementContext;
     multiPool: MultiPool;
     lpToken: LPToken;

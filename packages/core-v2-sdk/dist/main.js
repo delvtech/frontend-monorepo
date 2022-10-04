@@ -671,6 +671,7 @@ class $d42f7646c857727b$export$7e27801a0b3a9d2a {
 class $51ba50e48c247b12$export$656c1e606ad06131 {
     constructor(id, context, multiTerm){
         this.id = id;
+        this.guid = `${multiTerm.address}${id}`;
         this.context = context;
         this.multiTerm = multiTerm;
         this.principalToken = new (0, $2ababb11162a7525$export$62007a0bd048d56c)(id, context, this);
@@ -806,6 +807,7 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
    * @param {MultiPool} multiPool - the MultiPool model where this pool is stored.
    */ constructor(id, context, multiPool){
         this.id = id;
+        this.guid = `${multiPool.address}${id}`;
         this.context = context;
         this.multiPool = multiPool;
         this.lpToken = new (0, $8af14f8f6b4799b0$export$84f20e6ecc12f354)(id, context, this);
