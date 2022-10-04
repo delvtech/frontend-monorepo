@@ -10,15 +10,6 @@ export interface PoolParameters {
   timeStretch: string;
 }
 
-export interface MintParameters {
-  signer: Signer;
-  amount: string;
-  ptDestination: string;
-  ytDestination: string;
-  ytBeginDate: number;
-  hasPrefunding: boolean;
-}
-
 export interface MintResponse {
   principalTokens: string;
   yieldTokens: string;

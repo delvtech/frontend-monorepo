@@ -56,8 +56,8 @@ export class Term {
 
   /**
    * Convenience method that mints fixed and variable positions in a term using underlying tokens.
-   * This function assumes the token receiver is the signer address and the destination for two positions are the same.
-   * @notice This function converts the sharePrice from a fixed point number.
+   * This function assumes the token receiver is the signer address and the destination for both token positions are the same.
+   * @async
    * @param {Signer} signer - Ethers signer object.
    * @param {string} amount - Amount of underlying tokens to use to mint.
    * @return {Promise<MintResponse>}

@@ -124,7 +124,7 @@ export class MultiTermContractDataSource
 
   /**
    * Wraps the lock function in the Term contract, allows caller lto mint fixed and variable positions in a term.
-   * @notice This function converts the sharePrice from a fixed point number.
+   * @async
    * @param {Signer} signer - Ethers signer object.
    * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
    * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
