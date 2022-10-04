@@ -95,6 +95,7 @@ class $20adc394a346779f$export$f5a95cc94689234f extends (0, $54e3433d3ac69f8a$ex
     call(property, args) {
         return this.cached([
             property,
+            this.address,
             ...args
         ], ()=>{
             const contract = this.contract;
@@ -607,13 +608,6 @@ class $43a71ca2139b91c6$export$5b513f5c41d35e50 {
 var $51ba50e48c247b12$exports = {};
 
 $parcel$export($51ba50e48c247b12$exports, "Term", () => $51ba50e48c247b12$export$656c1e606ad06131);
-async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
-    const current = await provider.getBlockNumber();
-    const currentBlock = await provider.getBlock(current);
-    return currentBlock.timestamp;
-}
-
-
 var $2ababb11162a7525$exports = {};
 
 $parcel$export($2ababb11162a7525$exports, "PrincipalToken", () => $2ababb11162a7525$export$62007a0bd048d56c);
@@ -704,23 +698,6 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
     getYieldToken(startTimeStamp) {
         return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(this.id, this.context, this);
     }
-    /**
-   * Gets the time remaining of the term in seconds. If expired, returns zero.
-   * @async
-   * @return {Promise<number>} time remaining in seconds
-   */ async getSecondsUntilExpiry() {
-        const currentBlockTimestamp = await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider);
-        const secondsRemaining = this.id - currentBlockTimestamp;
-        return secondsRemaining < 0 ? 0 : secondsRemaining;
-    }
-    /**
-   * Gets the time remaining of the term in days. If expired, returns zero.
-   * @async
-   * @return {Promise<number>} time remaining in days
-   */ async getDaysUntilExpiry() {
-        const secondsUntilExpiry = await this.getSecondsUntilExpiry();
-        return secondsUntilExpiry / 86400;
-    }
 }
 
 
@@ -735,10 +712,9 @@ class $73142241d07e4549$export$44a06e384a6d2ed0 {
     }
     /**
    * Gets a Term by the termId from this MultiTerm.
-   * @async
    * @param {number} termId - the termId
-   * @return {Promise<Term>}
-   */ async getTerm(termId) {
+   * @return {Term}
+   */ getTerm(termId) {
         return new (0, $51ba50e48c247b12$export$656c1e606ad06131)(termId, this.context, this);
     }
     /**
@@ -800,6 +776,25 @@ class $73142241d07e4549$export$44a06e384a6d2ed0 {
 var $5c922a29083dd917$exports = {};
 
 $parcel$export($5c922a29083dd917$exports, "Pool", () => $5c922a29083dd917$export$14963ee5c8637e11);
+async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
+    const current = await provider.getBlockNumber();
+    const currentBlock = await provider.getBlock(current);
+    return currentBlock.timestamp;
+}
+
+
+async function $1817d10c133d5a0f$export$fec8442715c47d8b(end, provider) {
+    const currentBlockTimestamp = await (0, $c55952b507d79662$export$e16a9e8da7a04919)(provider);
+    const secondsRemaining = end - currentBlockTimestamp;
+    return secondsRemaining < 0 ? 0 : secondsRemaining;
+}
+
+
+async function $8b9e4060a562c68b$export$fa72f61bcf5e310d(end, provider) {
+    const seconds = await (0, $1817d10c133d5a0f$export$fec8442715c47d8b)(end, provider);
+    return seconds / 86400;
+}
+
 
 
 
@@ -817,16 +812,15 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         this.maturityDate = new Date(id * 1000);
     }
     /**
-   * @async
    * Gets the associated MultiTerm model for this pool.
-   * @return {Promise<YieldSource | null>}
-   */ getMultTerm() {
+   * @return {Promise<MultiTerm>}
+   */ getMultiTerm() {
         return this.multiPool.getMultiTerm();
     }
     /**
    * @async
    * Gets the associated Term model for this pool.
-   * @return {Promise<YieldSource | null>}
+   * @return {Promise<Term>}
    */ async getTerm() {
         const multiTerm = await this.multiPool.getMultiTerm();
         return multiTerm.getTerm(this.id);
@@ -895,7 +889,7 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         const bonds = +reserves.bonds;
         const shares = +reserves.shares;
         const totalSupply = bonds + shares;
-        const daysUntilExpiry = await this.getDaysUntilExpiry();
+        const daysUntilExpiry = await (0, $8b9e4060a562c68b$export$fa72f61bcf5e310d)(this.id, this.context.provider);
         // pool parameters
         const parameters = await this.getParameters();
         const mu = +parameters.mu;
@@ -920,23 +914,6 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         return tvl.toString();
     }
     /**
-   * Gets the time remaining of the term in seconds. If expired, returns zero.
-   * @async
-   * @return {Promise<number>} time remaining in seconds
-   */ async getSecondsUntilExpiry() {
-        const currentBlockTimestamp = await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider);
-        const secondsRemaining = this.id - currentBlockTimestamp;
-        return secondsRemaining < 0 ? 0 : secondsRemaining;
-    }
-    /**
-   * Gets the time remaining of the term in days. If expired, returns zero.
-   * @async
-   * @return {Promise<number>} time remaining in days
-   */ async getDaysUntilExpiry() {
-        const secondsUntilExpiry = await this.getSecondsUntilExpiry();
-        return secondsUntilExpiry / 86400;
-    }
-    /**
    * Calculates the Fixed APR of the principal token in this pool.
    * @async
    * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L487} for formula source.
@@ -945,7 +922,7 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         const spotPrice = +await this.getSpotPrice();
         const poolParams = await this.getParameters();
         const timeStretch = +poolParams.timeStretch;
-        const daysUntilExpiry = await this.getDaysUntilExpiry() * timeStretch;
+        const daysUntilExpiry = await (0, $8b9e4060a562c68b$export$fa72f61bcf5e310d)(this.id, this.context.provider) * timeStretch;
         const daysFractionOfYear = daysUntilExpiry / 365;
         const oneMinusSpotPrice = 1 - spotPrice;
         const apr = oneMinusSpotPrice / spotPrice / daysFractionOfYear * 100;
@@ -969,11 +946,9 @@ class $db3c4c3da11ea48c$export$38f2878d4d50407d {
     }
     /**
    * Gets a Pool by the poolId from this MultiPool.
-   * @async
    * @param {number} poolId - the poolId
-   * @return {Pool | null} A pool model, returns null if pool does not exist.
-   */ async getPool(poolId) {
-        // TODO: should this validate that the pool exists?
+   * @return {Pool}
+   */ getPool(poolId) {
         return new (0, $5c922a29083dd917$export$14963ee5c8637e11)(poolId, this.context, this);
     }
     /**
