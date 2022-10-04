@@ -260,6 +260,7 @@ export class YieldToken {
 }
 export class Term {
     id: number;
+    guid: string;
     context: ElementContext;
     multiTerm: MultiTerm;
     principalToken: PrincipalToken;
@@ -276,18 +277,6 @@ export class Term {
     getTVL(): Promise<string>;
     getCreatedAtBlock(): Promise<number | null>;
     getYieldToken(startTimeStamp: number): YieldToken;
-    /**
-     * Gets the time remaining of the term in seconds. If expired, returns zero.
-     * @async
-     * @return {Promise<number>} time remaining in seconds
-     */
-    getSecondsUntilExpiry(): Promise<number>;
-    /**
-     * Gets the time remaining of the term in days. If expired, returns zero.
-     * @async
-     * @return {Promise<number>} time remaining in days
-     */
-    getDaysUntilExpiry(): Promise<number>;
 }
 /**
  * MultiTerm model class.
@@ -300,11 +289,10 @@ export class MultiTerm {
     constructor(address: string, context: ElementContext, dataSource?: MultiTermDataSource);
     /**
      * Gets a Term by the termId from this MultiTerm.
-     * @async
      * @param {number} termId - the termId
-     * @return {Promise<Term>}
+     * @return {Term}
      */
-    getTerm(termId: number): Promise<Term>;
+    getTerm(termId: number): Term;
     /**
      * Gets all the Terms from this MultiTerm. Searches by TransferSingleEvents.
      * @async
@@ -363,11 +351,10 @@ export class MultiPool {
     constructor(address: string, context: ElementContext, dataSource?: MultiPoolDataSource);
     /**
      * Gets a Pool by the poolId from this MultiPool.
-     * @async
      * @param {number} poolId - the poolId
-     * @return {Pool | null} A pool model, returns null if pool does not exist.
+     * @return {Pool}
      */
-    getPool(poolId: number): Promise<Pool | null>;
+    getPool(poolId: number): Pool;
     /**
      * Gets all the Pools from this MultiPool. Searches by PoolRegisteredEvents.
      * @async
@@ -419,6 +406,7 @@ export class MultiPool {
  */
 export class Pool {
     id: number;
+    guid: string;
     context: ElementContext;
     multiPool: MultiPool;
     lpToken: LPToken;
@@ -431,17 +419,16 @@ export class Pool {
      */
     constructor(id: number, context: ElementContext, multiPool: MultiPool);
     /**
-     * @async
      * Gets the associated MultiTerm model for this pool.
-     * @return {Promise<YieldSource | null>}
+     * @return {Promise<MultiTerm>}
      */
-    getMultTerm(): Promise<MultiTerm>;
+    getMultiTerm(): Promise<MultiTerm>;
     /**
      * @async
      * Gets the associated Term model for this pool.
-     * @return {Promise<YieldSource | null>}
+     * @return {Promise<Term>}
      */
-    getTerm(): Promise<Term | null>;
+    getTerm(): Promise<Term>;
     /**
      * @async
      * Gets yield source for this pool.
@@ -496,18 +483,6 @@ export class Pool {
      * @return {Promise<string>} tvl represented as a string.
      */
     getTVL(): Promise<string>;
-    /**
-     * Gets the time remaining of the term in seconds. If expired, returns zero.
-     * @async
-     * @return {Promise<number>} time remaining in seconds
-     */
-    getSecondsUntilExpiry(): Promise<number>;
-    /**
-     * Gets the time remaining of the term in days. If expired, returns zero.
-     * @async
-     * @return {Promise<number>} time remaining in days
-     */
-    getDaysUntilExpiry(): Promise<number>;
     /**
      * Calculates the Fixed APR of the principal token in this pool.
      * @async

@@ -13,6 +13,7 @@ import { YieldSource } from "./YieldSource";
  */
 export class Pool {
   id: number;
+  guid: string;
   context: ElementContext;
   multiPool: MultiPool;
   lpToken: LPToken;
@@ -26,6 +27,7 @@ export class Pool {
    */
   constructor(id: number, context: ElementContext, multiPool: MultiPool) {
     this.id = id;
+    this.guid = `${multiPool.address}${id}`;
     this.context = context;
     this.multiPool = multiPool;
     this.lpToken = new LPToken(id, context, this);
