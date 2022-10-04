@@ -122,49 +122,67 @@ export class MultiTermContractDataSource
     return fromBn(supply, await this.getDecimals());
   }
 
-  async mint(
+  /**
+   * Wraps the lock function in the Term contract, allows caller lto mint fixed and variable positions in a term.
+   * @notice This function converts the sharePrice from a fixed point number.
+   * @param {Signer} signer - Ethers signer object.
+   * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
+   * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
+   * @param {number} termId - The term id (expiry).
+   * @param {string} amount - Amount of underlying tokens to use to mint.
+   * @param {string} ptDestination - Address to receive principal tokens.
+   * @param {string} ytDestination - Address to receive yield tokens.
+   * @param {string} hasPreFunding- Have any funds already been sent to the contract, not commonly used for EOAs.
+   * @return {Promise<MintResponse>}
+   */
+  async lock(
     signer: Signer,
     termId: number,
+    assetIds: string[],
+    assetAmounts: string[],
     amount: string,
     ptDestination: string,
     ytDestination: string,
     ytBeginDate: number,
-    hasPrefunding = false,
+    hasPreFunding: boolean,
   ): Promise<MintResponse> {
-    const amountBn = BigNumber.from(amount);
-    if (amountBn.lte(0)) {
-      throw new Error("Underlying amount has to be greater than zero.");
+    if (assetAmounts.length !== assetIds.length) {
+      throw new Error(
+        "Error MultiTermDataSource.Lock(): assetIds and assetAmounts must be the same length.",
+      );
     }
+
+    const assetIdsUnique = new Set(assetIds);
+    if (assetIdsUnique.size !== assetIds.length) {
+      throw new Error(
+        "Error MultiTermDataSource.Lock(): assetIds list is not unique.",
+      );
+    }
+
     const multiTerm = this.contract.connect(signer);
     const txn = await multiTerm.lock(
-      [],
-      [],
-      amountBn,
-      hasPrefunding,
+      assetIds,
+      assetAmounts,
+      amount,
+      hasPreFunding,
       ytDestination,
       ptDestination,
       ytBeginDate,
       termId,
     );
-    // console.log(txn.data);
-
     const receipt = await txn.wait();
-
+    // can safely assume that any successful transaction will have events and event arguments
     const events = receipt.events!;
     const transferSingleLogs = events.filter((event) => {
       return (
         event.event === "TransferSingle" &&
-        event.args?.from === ethers.constants.AddressZero
+        event.args!.from === ethers.constants.AddressZero
       );
     });
-
-    console.log(transferSingleLogs);
 
     // maybe can just check index but not verified events will be ordered
     const ytMintEvent = transferSingleLogs.find((log) => isYT(log.args!.id))!;
     const ptMintEvent = transferSingleLogs.find((log) => isPT(log.args!.id))!;
-
-    console.log(ytMintEvent, ptMintEvent);
 
     return {
       principalTokens: BigNumber.from(ptMintEvent.args!.value).toString(),

@@ -1,5 +1,8 @@
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+import { Wallet } from "ethers";
 import { ElementContext } from "src/context";
-import { MintParameters, MintResponse } from "src/types";
+import { MintResponse } from "src/types";
+import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
 import { MultiTerm } from "./MultiTerm";
 import { PrincipalToken } from "./PrincipalToken";
 import { Token } from "./Token";
@@ -51,24 +54,27 @@ export class Term {
     return new YieldToken(this.id, this.context, this);
   }
 
-  async mint(parameters: MintParameters): Promise<MintResponse> {
-    const {
-      signer,
-      amount,
-      ptDestination,
-      ytBeginDate,
-      hasPrefunding,
-      ytDestination,
-    } = {
-      ...parameters,
-    };
-    return await this.multiTerm.dataSource.mint(
+  /**
+   * Convenience method that mints fixed and variable positions in a term using underlying tokens.
+   * This function assumes the token receiver is the signer address and the destination for two positions are the same.
+   * @notice This function converts the sharePrice from a fixed point number.
+   * @param {Signer} signer - Ethers signer object.
+   * @param {string} amount - Amount of underlying tokens to use to mint.
+   * @return {Promise<MintResponse>}
+   */
+  async mint(
+    signer: SignerWithAddress | Wallet,
+    amount: string,
+  ): Promise<MintResponse> {
+    return await this.multiTerm.dataSource.lock(
       signer,
       this.id,
+      [],
+      [],
       amount,
-      ptDestination,
-      ytDestination,
-      ytBeginDate,
+      signer.address,
+      signer.address,
+      (await getCurrentBlockTimestamp(this.context.provider)) + 100,
       false,
     );
   }

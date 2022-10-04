@@ -36,16 +36,7 @@ async function example(): Promise<void> {
   const currentBlockTimestamp = await getCurrentBlockTimestamp(provider);
 
   const term = await firstPool.getTerm();
-  console.log(
-    await term.mint({
-      signer: wallet,
-      amount: (10_000 * 1e6).toString(),
-      ptDestination: wallet.address,
-      ytDestination: wallet.address,
-      ytBeginDate: currentBlockTimestamp + 1000,
-      hasPrefunding: false,
-    }),
-  );
+  console.log(await term.mint(wallet, (10_000 * 1e6).toString()));
 }
 
 example();

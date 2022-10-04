@@ -13,13 +13,15 @@ export interface MultiTermDataSource {
   getBalanceOf: (termId: number, address: string) => Promise<string>;
   getUnlockedPricePerShare: () => Promise<string>;
   getTotalSupply: (termId: number) => Promise<string>;
-  mint: (
+  lock: (
     signer: Signer,
     termId: number,
+    assetIds: string[],
+    assetAmounts: string[],
     amount: string,
     ptDestination: string,
     ytDestination: string,
     ytBeginDate: number,
-    hasPrefunding: boolean,
+    hasPreFunding: boolean,
   ) => Promise<MintResponse>;
 }
