@@ -1,10 +1,12 @@
-import { ethers, providers } from "ethers";
+import { BigNumber, ethers, providers, Signer } from "ethers";
 import { Term, Term__factory } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
 import { MultiTermDataSource } from "./MultiTermDataSource";
 import { ContractDataSource } from "src/datasources/ContractDataSource";
-import { fromBn } from "evm-bn";
+import { fromBn, toBn } from "evm-bn";
+import { isYT } from "src/utils/token/isYT";
 import { isPT } from "src/utils/token/isPT";
+import { MintResponse } from "src/types";
 
 export class MultiTermContractDataSource
   extends ContractDataSource<Term>
@@ -118,5 +120,73 @@ export class MultiTermContractDataSource
   async getTotalSupply(termId: number): Promise<string> {
     const supply = await this.call("totalSupply", [termId]);
     return fromBn(supply, await this.getDecimals());
+  }
+
+  /**
+   * Wraps the lock function in the Term contract, allows caller to mint fixed and variable positions in a term.
+   * @async
+   * @param {Signer} signer - Ethers signer object.
+   * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
+   * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
+   * @param {number} termId - The term id (expiry).
+   * @param {BigNumber} amount - Amount of underlying tokens to use to mint.
+   * @param {string} ptDestination - Address to receive principal tokens.
+   * @param {string} ytDestination - Address to receive yield tokens.
+   * @param {string} hasPreFunding- Have any funds already been sent to the contract, not commonly used for EOAs.
+   * @return {Promise<MintResponse>}
+   */
+  async lock(
+    signer: Signer,
+    termId: number,
+    assetIds: string[],
+    assetAmounts: string[],
+    amount: BigNumber,
+    ptDestination: string,
+    ytDestination: string,
+    ytBeginDate: number,
+    hasPreFunding: boolean,
+  ): Promise<MintResponse> {
+    if (assetAmounts.length !== assetIds.length) {
+      console.error(
+        "Error MultiTermDataSource.Lock(): assetIds and assetAmounts must be the same length.",
+      );
+    }
+
+    const assetIdsUnique = new Set(assetIds);
+    if (assetIdsUnique.size !== assetIds.length) {
+      console.error(
+        "Error MultiTermDataSource.Lock(): assetIds list is not unique.",
+      );
+    }
+
+    const multiTerm = this.contract.connect(signer);
+    const txn = await multiTerm.lock(
+      assetIds,
+      assetAmounts,
+      amount,
+      hasPreFunding,
+      ytDestination,
+      ptDestination,
+      ytBeginDate,
+      termId,
+    );
+    const receipt = await txn.wait();
+    // can safely assume that any successful transaction will have events and event arguments
+    const events = receipt.events!;
+    const transferSingleLogs = events.filter((event) => {
+      return (
+        event.event === "TransferSingle" &&
+        event.args!.from === ethers.constants.AddressZero
+      );
+    });
+
+    // maybe can just check index but not verified events will be ordered
+    const ytMintEvent = transferSingleLogs.find((log) => isYT(log.args!.id))!;
+    const ptMintEvent = transferSingleLogs.find((log) => isPT(log.args!.id))!;
+
+    return {
+      principalTokens: (ptMintEvent.args!.value as BigNumber).toString(),
+      yieldTokens: (ytMintEvent.args!.value as BigNumber).toString(),
+    };
   }
 }

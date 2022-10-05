@@ -1,7 +1,8 @@
-import { providers, BaseContract, BigNumberish, ContractTransaction, Overrides, Signer } from "ethers";
+import { providers, BaseContract, BigNumber, Signer, Wallet, BigNumberish, ContractTransaction, Overrides } from "ethers";
 import LRUCache from "lru-cache";
 import { Pool as _Pool1, Term as _Term1, ERC4626Term, CompoundV3Term, ERC20, ERC4626 } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 export interface DataSource extends Record<string, any> {
 }
 export interface ElementContextOptions {
@@ -63,6 +64,10 @@ interface PoolReserves {
 interface PoolParameters {
     mu: string;
     timeStretch: string;
+}
+interface MintResponse {
+    principalTokens: string;
+    yieldTokens: string;
 }
 export interface MultiPoolDataSource {
     address: string;
@@ -127,6 +132,7 @@ export interface MultiTermDataSource {
     getBalanceOf: (termId: number, address: string) => Promise<string>;
     getUnlockedPricePerShare: () => Promise<string>;
     getTotalSupply: (termId: number) => Promise<string>;
+    lock: (signer: Signer, termId: number, assetIds: string[], assetAmounts: string[], amount: BigNumber, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean) => Promise<MintResponse>;
 }
 export class MultiTermContractDataSource extends ContractDataSource<_Term1> implements MultiTermDataSource {
     constructor(address: string, provider: providers.Provider);
@@ -158,6 +164,20 @@ export class MultiTermContractDataSource extends ContractDataSource<_Term1> impl
      * @return {Promise<string>} total supply represented as a string
      */
     getTotalSupply(termId: number): Promise<string>;
+    /**
+     * Wraps the lock function in the Term contract, allows caller to mint fixed and variable positions in a term.
+     * @async
+     * @param {Signer} signer - Ethers signer object.
+     * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
+     * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
+     * @param {number} termId - The term id (expiry).
+     * @param {BigNumber} amount - Amount of underlying tokens to use to mint.
+     * @param {string} ptDestination - Address to receive principal tokens.
+     * @param {string} ytDestination - Address to receive yield tokens.
+     * @param {string} hasPreFunding- Have any funds already been sent to the contract, not commonly used for EOAs.
+     * @return {Promise<MintResponse>}
+     */
+    lock(signer: Signer, termId: number, assetIds: string[], assetAmounts: string[], amount: BigNumber, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean): Promise<MintResponse>;
 }
 export class ERC4626TermContractDataSource extends MultiTermContractDataSource {
     contract: ERC4626Term;
@@ -277,6 +297,15 @@ export class Term {
     getTVL(): Promise<string>;
     getCreatedAtBlock(): Promise<number | null>;
     getYieldToken(startTimeStamp: number): YieldToken;
+    /**
+     * Convenience method that mints fixed and variable positions in a term using underlying tokens.
+     * This function assumes the token receiver is the signer address and the destination for both token positions are the same.
+     * @async
+     * @param {Signer} signer - Ethers signer object.
+     * @param {string} amount - Amount of underlying tokens to use to mint.
+     * @return {Promise<MintResponse>}
+     */
+    mint(signer: SignerWithAddress | Wallet, amount: string): Promise<MintResponse>;
 }
 /**
  * MultiTerm model class.

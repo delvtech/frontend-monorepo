@@ -95,7 +95,6 @@ class $20adc394a346779f$export$f5a95cc94689234f extends (0, $54e3433d3ac69f8a$ex
     call(property, args) {
         return this.cached([
             property,
-            this.address,
             ...args
         ], ()=>{
             const contract = this.contract;
@@ -281,6 +280,21 @@ $parcel$export($d179b418267ba386$exports, "MultiTermContractDataSource", () => $
 
 
 
+const $4a4b662dc565d96c$export$7b6afb4232a53135 = "0x8000000000000000000000000000000000000000000000000000000000000000";
+
+
+function $4ff6911a82243538$export$e6aa4d1f02dd6fdd(tokenId) {
+    const idHex = tokenId.toHexString();
+    const isYT1 = // yield token ids are always 66 characters, ie: "0x" + 64 hex characters
+    // (whereas principal tokens are shorter in length)
+    idHex.length === 66 && // yield token ids always start with 0x8 (1 in binary)
+    idHex.startsWith("0x8") && // This is a special yield token used for accounting in the
+    // pools, disregard it.
+    idHex !== (0, $4a4b662dc565d96c$export$7b6afb4232a53135);
+    return isYT1;
+}
+
+
 function $6ff8d0293b29261d$export$238876ec612ad57e(tokenId) {
     return !tokenId.toHexString().startsWith("0x8");
 }
@@ -376,6 +390,38 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
             termId
         ]);
         return (0, $eCQIH$evmbn.fromBn)(supply, await this.getDecimals());
+    }
+    /**
+   * Wraps the lock function in the Term contract, allows caller to mint fixed and variable positions in a term.
+   * @async
+   * @param {Signer} signer - Ethers signer object.
+   * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
+   * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
+   * @param {number} termId - The term id (expiry).
+   * @param {BigNumber} amount - Amount of underlying tokens to use to mint.
+   * @param {string} ptDestination - Address to receive principal tokens.
+   * @param {string} ytDestination - Address to receive yield tokens.
+   * @param {string} hasPreFunding- Have any funds already been sent to the contract, not commonly used for EOAs.
+   * @return {Promise<MintResponse>}
+   */ async lock(signer, termId, assetIds, assetAmounts, amount, ptDestination, ytDestination, ytBeginDate, hasPreFunding) {
+        if (assetAmounts.length !== assetIds.length) console.error("Error MultiTermDataSource.Lock(): assetIds and assetAmounts must be the same length.");
+        const assetIdsUnique = new Set(assetIds);
+        if (assetIdsUnique.size !== assetIds.length) console.error("Error MultiTermDataSource.Lock(): assetIds list is not unique.");
+        const multiTerm = this.contract.connect(signer);
+        const txn = await multiTerm.lock(assetIds, assetAmounts, amount, hasPreFunding, ytDestination, ptDestination, ytBeginDate, termId);
+        const receipt = await txn.wait();
+        // can safely assume that any successful transaction will have events and event arguments
+        const events = receipt.events;
+        const transferSingleLogs = events.filter((event)=>{
+            return event.event === "TransferSingle" && event.args.from === (0, $eCQIH$ethers.ethers).constants.AddressZero;
+        });
+        // maybe can just check index but not verified events will be ordered
+        const ytMintEvent = transferSingleLogs.find((log)=>(0, $4ff6911a82243538$export$e6aa4d1f02dd6fdd)(log.args.id));
+        const ptMintEvent = transferSingleLogs.find((log)=>(0, $6ff8d0293b29261d$export$238876ec612ad57e)(log.args.id));
+        return {
+            principalTokens: ptMintEvent.args.value.toString(),
+            yieldTokens: ytMintEvent.args.value.toString()
+        };
     }
 }
 
@@ -608,6 +654,14 @@ class $43a71ca2139b91c6$export$5b513f5c41d35e50 {
 var $51ba50e48c247b12$exports = {};
 
 $parcel$export($51ba50e48c247b12$exports, "Term", () => $51ba50e48c247b12$export$656c1e606ad06131);
+
+async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
+    const current = await provider.getBlockNumber();
+    const currentBlock = await provider.getBlock(current);
+    return currentBlock.timestamp;
+}
+
+
 var $2ababb11162a7525$exports = {};
 
 $parcel$export($2ababb11162a7525$exports, "PrincipalToken", () => $2ababb11162a7525$export$62007a0bd048d56c);
@@ -699,6 +753,16 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
     getYieldToken(startTimeStamp) {
         return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(this.id, this.context, this);
     }
+    /**
+   * Convenience method that mints fixed and variable positions in a term using underlying tokens.
+   * This function assumes the token receiver is the signer address and the destination for both token positions are the same.
+   * @async
+   * @param {Signer} signer - Ethers signer object.
+   * @param {string} amount - Amount of underlying tokens to use to mint.
+   * @return {Promise<MintResponse>}
+   */ async mint(signer, amount) {
+        return await this.multiTerm.dataSource.lock(signer, this.id, [], [], (0, $eCQIH$evmbn.toBn)(amount, await this.multiTerm.getDecimals()), signer.address, signer.address, await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider) + 100, false);
+    }
 }
 
 
@@ -777,12 +841,6 @@ class $73142241d07e4549$export$44a06e384a6d2ed0 {
 var $5c922a29083dd917$exports = {};
 
 $parcel$export($5c922a29083dd917$exports, "Pool", () => $5c922a29083dd917$export$14963ee5c8637e11);
-async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
-    const current = await provider.getBlockNumber();
-    const currentBlock = await provider.getBlock(current);
-    return currentBlock.timestamp;
-}
-
 
 async function $1817d10c133d5a0f$export$fec8442715c47d8b(end, provider) {
     const currentBlockTimestamp = await (0, $c55952b507d79662$export$e16a9e8da7a04919)(provider);

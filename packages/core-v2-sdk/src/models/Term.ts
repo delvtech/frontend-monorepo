@@ -1,4 +1,9 @@
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+import { Wallet } from "ethers";
+import { toBn } from "evm-bn";
 import { ElementContext } from "src/context";
+import { MintResponse } from "src/types";
+import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
 import { MultiTerm } from "./MultiTerm";
 import { PrincipalToken } from "./PrincipalToken";
 import { Token } from "./Token";
@@ -48,5 +53,30 @@ export class Term {
   // TODO: How do I get the token ID with a start and end date?
   getYieldToken(startTimeStamp: number): YieldToken {
     return new YieldToken(this.id, this.context, this);
+  }
+
+  /**
+   * Convenience method that mints fixed and variable positions in a term using underlying tokens.
+   * This function assumes the token receiver is the signer address and the destination for both token positions are the same.
+   * @async
+   * @param {Signer} signer - Ethers signer object.
+   * @param {string} amount - Amount of underlying tokens to use to mint.
+   * @return {Promise<MintResponse>}
+   */
+  async mint(
+    signer: SignerWithAddress | Wallet,
+    amount: string,
+  ): Promise<MintResponse> {
+    return await this.multiTerm.dataSource.lock(
+      signer,
+      this.id,
+      [],
+      [],
+      toBn(amount, await this.multiTerm.getDecimals()),
+      signer.address,
+      signer.address,
+      (await getCurrentBlockTimestamp(this.context.provider)) + 100,
+      false,
+    );
   }
 }
