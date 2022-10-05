@@ -33,7 +33,7 @@ async function example(): Promise<void> {
   // console.log(await firstPool.getSpotPrice());
 
   const term = await firstPool.getTerm();
-  console.log(await term.mint(wallet, (10_000 * 1e6).toString()));
+  console.log(await term.mint(wallet, "10000.1023".toString()));
 }
 
 example();

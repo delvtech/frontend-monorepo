@@ -1,4 +1,4 @@
-import { Signer } from "ethers";
+import { BigNumber, Signer } from "ethers";
 import { MintResponse } from "src/types";
 
 export interface MultiTermDataSource {
@@ -18,7 +18,7 @@ export interface MultiTermDataSource {
     termId: number,
     assetIds: string[],
     assetAmounts: string[],
-    amount: string,
+    amount: BigNumber,
     ptDestination: string,
     ytDestination: string,
     ytBeginDate: number,

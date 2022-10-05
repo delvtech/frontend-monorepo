@@ -398,7 +398,7 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
    * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
    * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
    * @param {number} termId - The term id (expiry).
-   * @param {string} amount - Amount of underlying tokens to use to mint.
+   * @param {BigNumber} amount - Amount of underlying tokens to use to mint.
    * @param {string} ptDestination - Address to receive principal tokens.
    * @param {string} ytDestination - Address to receive yield tokens.
    * @param {string} hasPreFunding- Have any funds already been sent to the contract, not commonly used for EOAs.
@@ -419,8 +419,8 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
         const ytMintEvent = transferSingleLogs.find((log)=>(0, $4ff6911a82243538$export$e6aa4d1f02dd6fdd)(log.args.id));
         const ptMintEvent = transferSingleLogs.find((log)=>(0, $6ff8d0293b29261d$export$238876ec612ad57e)(log.args.id));
         return {
-            principalTokens: (0, $eCQIH$ethers.BigNumber).from(ptMintEvent.args.value).toString(),
-            yieldTokens: (0, $eCQIH$ethers.BigNumber).from(ytMintEvent.args.value).toString()
+            principalTokens: ptMintEvent.args.value.toString(),
+            yieldTokens: ytMintEvent.args.value.toString()
         };
     }
 }
@@ -654,6 +654,7 @@ class $43a71ca2139b91c6$export$5b513f5c41d35e50 {
 var $51ba50e48c247b12$exports = {};
 
 $parcel$export($51ba50e48c247b12$exports, "Term", () => $51ba50e48c247b12$export$656c1e606ad06131);
+
 async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
     const current = await provider.getBlockNumber();
     const currentBlock = await provider.getBlock(current);
@@ -760,7 +761,7 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
    * @param {string} amount - Amount of underlying tokens to use to mint.
    * @return {Promise<MintResponse>}
    */ async mint(signer, amount) {
-        return await this.multiTerm.dataSource.lock(signer, this.id, [], [], amount, signer.address, signer.address, await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider) + 100, false);
+        return await this.multiTerm.dataSource.lock(signer, this.id, [], [], (0, $eCQIH$evmbn.toBn)(amount, await this.multiTerm.getDecimals()), signer.address, signer.address, await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider) + 100, false);
     }
 }
 
@@ -841,6 +842,19 @@ var $5c922a29083dd917$exports = {};
 
 $parcel$export($5c922a29083dd917$exports, "Pool", () => $5c922a29083dd917$export$14963ee5c8637e11);
 
+async function $1817d10c133d5a0f$export$fec8442715c47d8b(end, provider) {
+    const currentBlockTimestamp = await (0, $c55952b507d79662$export$e16a9e8da7a04919)(provider);
+    const secondsRemaining = end - currentBlockTimestamp;
+    return secondsRemaining < 0 ? 0 : secondsRemaining;
+}
+
+
+async function $8b9e4060a562c68b$export$fa72f61bcf5e310d(end, provider) {
+    const seconds = await (0, $1817d10c133d5a0f$export$fec8442715c47d8b)(end, provider);
+    return seconds / 86400;
+}
+
+
 
 
 class $5c922a29083dd917$export$14963ee5c8637e11 {
@@ -851,22 +865,22 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
    * @param {MultiPool} multiPool - the MultiPool model where this pool is stored.
    */ constructor(id, context, multiPool){
         this.id = id;
+        this.guid = `${multiPool.address}${id}`;
         this.context = context;
         this.multiPool = multiPool;
         this.lpToken = new (0, $8af14f8f6b4799b0$export$84f20e6ecc12f354)(id, context, this);
         this.maturityDate = new Date(id * 1000);
     }
     /**
-   * @async
    * Gets the associated MultiTerm model for this pool.
-   * @return {Promise<YieldSource | null>}
-   */ getMultTerm() {
+   * @return {Promise<MultiTerm>}
+   */ getMultiTerm() {
         return this.multiPool.getMultiTerm();
     }
     /**
    * @async
    * Gets the associated Term model for this pool.
-   * @return {Promise<YieldSource | null>}
+   * @return {Promise<Term>}
    */ async getTerm() {
         const multiTerm = await this.multiPool.getMultiTerm();
         return multiTerm.getTerm(this.id);
@@ -935,7 +949,7 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         const bonds = +reserves.bonds;
         const shares = +reserves.shares;
         const totalSupply = bonds + shares;
-        const daysUntilExpiry = await this.getDaysUntilExpiry();
+        const daysUntilExpiry = await (0, $8b9e4060a562c68b$export$fa72f61bcf5e310d)(this.id, this.context.provider);
         // pool parameters
         const parameters = await this.getParameters();
         const mu = +parameters.mu;
@@ -960,23 +974,6 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         return tvl.toString();
     }
     /**
-   * Gets the time remaining of the term in seconds. If expired, returns zero.
-   * @async
-   * @return {Promise<number>} time remaining in seconds
-   */ async getSecondsUntilExpiry() {
-        const currentBlockTimestamp = await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider);
-        const secondsRemaining = this.id - currentBlockTimestamp;
-        return secondsRemaining < 0 ? 0 : secondsRemaining;
-    }
-    /**
-   * Gets the time remaining of the term in days. If expired, returns zero.
-   * @async
-   * @return {Promise<number>} time remaining in days
-   */ async getDaysUntilExpiry() {
-        const secondsUntilExpiry = await this.getSecondsUntilExpiry();
-        return secondsUntilExpiry / 86400;
-    }
-    /**
    * Calculates the Fixed APR of the principal token in this pool.
    * @async
    * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L487} for formula source.
@@ -985,7 +982,7 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         const spotPrice = +await this.getSpotPrice();
         const poolParams = await this.getParameters();
         const timeStretch = +poolParams.timeStretch;
-        const daysUntilExpiry = await this.getDaysUntilExpiry() * timeStretch;
+        const daysUntilExpiry = await (0, $8b9e4060a562c68b$export$fa72f61bcf5e310d)(this.id, this.context.provider) * timeStretch;
         const daysFractionOfYear = daysUntilExpiry / 365;
         const oneMinusSpotPrice = 1 - spotPrice;
         const apr = oneMinusSpotPrice / spotPrice / daysFractionOfYear * 100;

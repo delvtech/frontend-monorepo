@@ -1,4 +1,4 @@
-import { providers, BaseContract, Signer, Wallet, BigNumberish, ContractTransaction, Overrides } from "ethers";
+import { providers, BaseContract, BigNumber, Signer, Wallet, BigNumberish, ContractTransaction, Overrides } from "ethers";
 import LRUCache from "lru-cache";
 import { Pool as _Pool1, Term as _Term1, ERC4626Term, CompoundV3Term, ERC20, ERC4626 } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
@@ -132,7 +132,7 @@ export interface MultiTermDataSource {
     getBalanceOf: (termId: number, address: string) => Promise<string>;
     getUnlockedPricePerShare: () => Promise<string>;
     getTotalSupply: (termId: number) => Promise<string>;
-    lock: (signer: Signer, termId: number, assetIds: string[], assetAmounts: string[], amount: string, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean) => Promise<MintResponse>;
+    lock: (signer: Signer, termId: number, assetIds: string[], assetAmounts: string[], amount: BigNumber, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean) => Promise<MintResponse>;
 }
 export class MultiTermContractDataSource extends ContractDataSource<_Term1> implements MultiTermDataSource {
     constructor(address: string, provider: providers.Provider);
@@ -171,13 +171,13 @@ export class MultiTermContractDataSource extends ContractDataSource<_Term1> impl
      * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
      * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
      * @param {number} termId - The term id (expiry).
-     * @param {string} amount - Amount of underlying tokens to use to mint.
+     * @param {BigNumber} amount - Amount of underlying tokens to use to mint.
      * @param {string} ptDestination - Address to receive principal tokens.
      * @param {string} ytDestination - Address to receive yield tokens.
      * @param {string} hasPreFunding- Have any funds already been sent to the contract, not commonly used for EOAs.
      * @return {Promise<MintResponse>}
      */
-    lock(signer: Signer, termId: number, assetIds: string[], assetAmounts: string[], amount: string, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean): Promise<MintResponse>;
+    lock(signer: Signer, termId: number, assetIds: string[], assetAmounts: string[], amount: BigNumber, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean): Promise<MintResponse>;
 }
 export class ERC4626TermContractDataSource extends MultiTermContractDataSource {
     contract: ERC4626Term;

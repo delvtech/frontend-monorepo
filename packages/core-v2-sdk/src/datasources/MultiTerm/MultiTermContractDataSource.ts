@@ -3,7 +3,7 @@ import { Term, Term__factory } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
 import { MultiTermDataSource } from "./MultiTermDataSource";
 import { ContractDataSource } from "src/datasources/ContractDataSource";
-import { fromBn } from "evm-bn";
+import { fromBn, toBn } from "evm-bn";
 import { isYT } from "src/utils/token/isYT";
 import { isPT } from "src/utils/token/isPT";
 import { MintResponse } from "src/types";
@@ -129,7 +129,7 @@ export class MultiTermContractDataSource
    * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
    * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
    * @param {number} termId - The term id (expiry).
-   * @param {string} amount - Amount of underlying tokens to use to mint.
+   * @param {BigNumber} amount - Amount of underlying tokens to use to mint.
    * @param {string} ptDestination - Address to receive principal tokens.
    * @param {string} ytDestination - Address to receive yield tokens.
    * @param {string} hasPreFunding- Have any funds already been sent to the contract, not commonly used for EOAs.
@@ -140,7 +140,7 @@ export class MultiTermContractDataSource
     termId: number,
     assetIds: string[],
     assetAmounts: string[],
-    amount: string,
+    amount: BigNumber,
     ptDestination: string,
     ytDestination: string,
     ytBeginDate: number,
@@ -185,8 +185,8 @@ export class MultiTermContractDataSource
     const ptMintEvent = transferSingleLogs.find((log) => isPT(log.args!.id))!;
 
     return {
-      principalTokens: BigNumber.from(ptMintEvent.args!.value).toString(),
-      yieldTokens: BigNumber.from(ytMintEvent.args!.value).toString(),
+      principalTokens: (ptMintEvent.args!.value as BigNumber).toString(),
+      yieldTokens: (ytMintEvent.args!.value as BigNumber).toString(),
     };
   }
 }
