@@ -74,7 +74,7 @@ export function calcSwapPrincipalPool(
       );
 
       // We get back NaN when there are insufficient reserves
-      if (!calcOutNumber) {
+      if (!calcOutNumber || calcOutNumber < 0) {
         return {
           amountOut: "0",
           amountIn: amount,
@@ -83,7 +83,8 @@ export function calcSwapPrincipalPool(
       }
 
       const calcOut =
-        clipStringValueToDecimals(calcOutNumber.toString(), decimals) ?? "0";
+        clipStringValueToDecimals(calcOutNumber.toFixed(decimals), decimals) ??
+        "0";
 
       const amountIn = amount;
       const amountOut = calcOut;

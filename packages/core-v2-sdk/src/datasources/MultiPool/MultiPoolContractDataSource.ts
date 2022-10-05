@@ -4,6 +4,7 @@ import { ContractDataSource } from "src/datasources/ContractDataSource";
 import { MultiPoolDataSource } from "./MultiPoolDataSource";
 import { PoolParameters, PoolReserves } from "src/types";
 import { fromBn } from "evm-bn";
+import { formatUnits } from "ethers/lib/utils";
 
 export class MultiPoolContractDataSource
   extends ContractDataSource<Pool>
@@ -39,9 +40,11 @@ export class MultiPoolContractDataSource
     const [sharesBigNumber, bondsBigNumber] = await this.call("reserves", [
       poolId,
     ]);
+    const decimals = await this.call("decimals", []);
+
     return {
-      shares: sharesBigNumber.toString(),
-      bonds: bondsBigNumber.toString(),
+      shares: formatUnits(sharesBigNumber, decimals),
+      bonds: formatUnits(bondsBigNumber, decimals),
     };
   }
 

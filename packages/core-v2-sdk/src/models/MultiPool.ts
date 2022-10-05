@@ -106,8 +106,8 @@ export class MultiPool {
    * @param {number} poolId - the pool id
    * @return {Promise<PoolReserves>} pool reserves.
    */
-  async getPoolReserves(poolId: number): Promise<PoolReserves> {
-    return await this.dataSource.getPoolReserves(poolId);
+  getPoolReserves(poolId: number): Promise<PoolReserves> {
+    return this.dataSource.getPoolReserves(poolId);
   }
 
   /**

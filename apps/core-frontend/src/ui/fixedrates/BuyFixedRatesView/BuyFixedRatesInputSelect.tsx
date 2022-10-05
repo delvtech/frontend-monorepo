@@ -58,7 +58,11 @@ export function BuyFixedRatesInputSelect({
           itemPredicate={(_, s) => s.address !== selectedToken.address}
           itemRenderer={({ symbol, address }, { handleClick }) => (
             // div -> button possibly broken something
-            <button className={classNames(tw("p-1"))} onClick={handleClick}>
+            <button
+              key={address}
+              className={classNames(tw("p-1"))}
+              onClick={handleClick}
+            >
               <LabeledText
                 containerClassName={tw("p-4")}
                 icon={inputTokenIconsByAddress[address]({
