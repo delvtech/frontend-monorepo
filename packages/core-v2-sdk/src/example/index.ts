@@ -1,8 +1,7 @@
-import { getDefaultProvider, Signer, Wallet } from "ethers";
+import { getDefaultProvider, Wallet } from "ethers";
 import { ElementContext } from "src/context";
 import goerliAddresses from "./goerliAddresses.json";
 import { MultiPool } from "src/models/MultiPool";
-import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
 
 const chainId = 5;
 const provider = getDefaultProvider(process.env.PROVIDER_URI || chainId);
@@ -19,7 +18,7 @@ async function example(): Promise<void> {
 
   const pools = await usdcMultiPool.getPools();
   const firstPool = pools[0];
-  const firstPoolId = pools[0].id;
+  // const firstPoolId = pools[0].id;
 
   // console.log(await firstPool.getSpotPrice());
   // console.log(await firstPool.getTVL());
@@ -32,8 +31,6 @@ async function example(): Promise<void> {
   // console.log(firstPoolId);
 
   // console.log(await firstPool.getSpotPrice());
-
-  const currentBlockTimestamp = await getCurrentBlockTimestamp(provider);
 
   const term = await firstPool.getTerm();
   console.log(await term.mint(wallet, (10_000 * 1e6).toString()));

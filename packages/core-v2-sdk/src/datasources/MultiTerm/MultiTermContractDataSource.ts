@@ -123,7 +123,7 @@ export class MultiTermContractDataSource
   }
 
   /**
-   * Wraps the lock function in the Term contract, allows caller lto mint fixed and variable positions in a term.
+   * Wraps the lock function in the Term contract, allows caller to mint fixed and variable positions in a term.
    * @async
    * @param {Signer} signer - Ethers signer object.
    * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
@@ -147,14 +147,14 @@ export class MultiTermContractDataSource
     hasPreFunding: boolean,
   ): Promise<MintResponse> {
     if (assetAmounts.length !== assetIds.length) {
-      throw new Error(
+      console.error(
         "Error MultiTermDataSource.Lock(): assetIds and assetAmounts must be the same length.",
       );
     }
 
     const assetIdsUnique = new Set(assetIds);
     if (assetIdsUnique.size !== assetIds.length) {
-      throw new Error(
+      console.error(
         "Error MultiTermDataSource.Lock(): assetIds list is not unique.",
       );
     }
