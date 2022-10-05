@@ -1,5 +1,6 @@
+import { toBn } from "evm-bn";
 import { ElementContext } from "src/context";
-import { PoolParameters, PoolReserves } from "src/types";
+import { PoolParameters, PoolReserves, SignerOrWallet } from "src/types";
 import { getDaysUntilTimestamp } from "src/utils/time/getDaysUntilTimestamp";
 import { LPToken } from "./LPToken";
 import { MultiPool } from "./MultiPool";
@@ -33,6 +34,10 @@ export class Pool {
     this.lpToken = new LPToken(context, this);
     this.maturityDate = new Date(+id * 1000);
   }
+
+  /* -------------------------------------------------------------------------- */
+  /*                                Reads                                       */
+  /* -------------------------------------------------------------------------- */
 
   /**
    * Gets the associated MultiTerm model for this pool.
@@ -188,5 +193,32 @@ export class Pool {
     const oneMinusSpotPrice = 1 - spotPrice;
     const apr = (oneMinusSpotPrice / spotPrice / daysFractionOfYear) * 100;
     return apr.toString();
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                                Writes                                      */
+  /* -------------------------------------------------------------------------- */
+
+  /**
+   * Deposits underlying tokens to create a LP position.
+   * @async
+   * @param {SignerOrWallet} signer - Ethers signer object, used to sign and publish the transaction.
+   * @param {amount} string - Amount of underlying tokens to provide to the pool, a string decimal.
+   * @return {Promise<string>} - Amount of LP tokens received.
+   */
+  async provideLiquidity(
+    signer: SignerOrWallet,
+    amount: string,
+    minAmountOut: string,
+  ): Promise<void> {
+    const decimals = await this.multiPool.getDecimals();
+    const address = await signer.getAddress();
+    this.multiPool.dataSource.depositUnderlying(
+      signer,
+      toBn(amount, decimals),
+      this.id,
+      address,
+      toBn(minAmountOut, decimals),
+    );
   }
 }

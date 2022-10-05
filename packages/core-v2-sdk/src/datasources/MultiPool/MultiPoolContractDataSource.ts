@@ -1,4 +1,4 @@
-import { providers } from "ethers";
+import { BigNumber, providers, Signer } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 import { Pool, Pool__factory } from "@elementfi/core-v2-typechain";
 import { PoolParameters, PoolReserves } from "src/types";
@@ -87,16 +87,37 @@ export class MultiPoolContractDataSource
   /**
    * Fetches the name for a given poolId from our datasource (contract).
    */
-  getName(poolId: string): Promise<string> {
+  getName(poolId: number): Promise<string> {
     return this.call("name", [poolId]);
   }
 
   /**
    * Fetches an address's balance of a given poolId from our datasource (contract).
    */
-  async getBalanceOf(poolId: string, address: string): Promise<string> {
+  async getBalanceOf(poolId: number, address: string): Promise<string> {
     const balanceBigNumber = await this.call("balanceOf", [poolId, address]);
     const decimals = await this.getDecimals();
     return formatUnits(balanceBigNumber, decimals);
+  }
+
+  async depositUnderlying(
+    signer: Signer,
+    amount: BigNumber,
+    poolId: number,
+    destination: string,
+    minOutput: BigNumber,
+  ): Promise<string> {
+    const multiPool = this.contract.connect(signer);
+    const transaction = await multiPool.depositUnderlying(
+      amount,
+      poolId,
+      destination,
+      minOutput,
+    );
+
+    const receipt = await transaction.wait();
+
+    console.log(receipt.events);
+    return "";
   }
 }

@@ -22,14 +22,9 @@ async function example(): Promise<void> {
   // const firstPoolId = pools[0].id;
 
   // console.log(await firstPool.getSpotPrice());
-  // console.log(await firstPool.getTVL());
-  // const usdcMultiTerm = await usdcMultiPool.getMultiTerm();
-  // const usdcTerm = await usdcMultiTerm.getTerm(firstPoolId);
-  // // console.log(await usdcTerm?.getTVL());
-  // console.log(await usdcMultiTerm.getTVL());
-  // console.log(await firstPool.getFixedAPR());
-  // console.log(usdcMultiTerm.address);
-  // console.log(firstPoolId);
+  const firstPoolId = firstPool.id;
+
+  console.log(firstPool.provideLiquidity(wallet, "50000", "0"));
 
   // console.log(await firstPool.getSpotPrice());
 
