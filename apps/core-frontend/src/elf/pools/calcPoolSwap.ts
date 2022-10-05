@@ -73,6 +73,7 @@ export function calcSwapInGivenOutCCPoolUNSAFE(
   return amountY;
 }
 
+// TODO: Rewrite this with a fixed point math lib
 export function calcSwapCCPoolUNSAFE(
   xAmount: string,
   xReserves: string,
