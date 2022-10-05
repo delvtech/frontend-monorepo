@@ -23,8 +23,8 @@ async function example(): Promise<void> {
 
   // console.log(await firstPool.getSpotPrice());
   const firstPoolId = firstPool.id;
-
-  console.log(firstPool.provideLiquidity(wallet, "50000", "0"));
+  console.log(firstPoolId);
+  console.log(await firstPool.provideLiquidity(wallet, "50000", "0"));
 
   // console.log(await firstPool.getSpotPrice());
 
