@@ -39,9 +39,9 @@ export class MultiTermContractDataSource
    * Gets all terms that have been created from the datasource (contract).
    * @param {number} fromBlock - Optional, start block number to search from.
    * @param {number} toBlock - Optional, end block number to search to.
-   * @return {Promise<number[]>} A promise of an array of unique term ids.
+   * @return {Promise<string[]>} A promise of an array of unique term ids.
    */
-  async getTermIds(fromBlock?: number, toBlock?: number): Promise<number[]> {
+  async getTermIds(fromBlock?: number, toBlock?: number): Promise<string[]> {
     return this.cached(["getTermIds", fromBlock, toBlock], async () => {
       const events = await this.getTransferEvents(
         // new mints result in a transfer from the zero address
@@ -56,20 +56,20 @@ export class MultiTermContractDataSource
           events
             // filter out YTs
             .filter((event) => isPT(event.args.id))
-            .map((event) => event.args.id.toNumber()),
+            .map((event) => event.args.id.toHexString()),
         ),
       );
     });
   }
 
-  getCreatedAtBlock(termId: number): Promise<number | null> {
-    return this.cached(["getCreatedAtBlock", termId], async () => {
+  getCreatedAtBlock(tokenId: string): Promise<number | null> {
+    return this.cached(["getCreatedAtBlock", tokenId], async () => {
       const events = await this.getTransferEvents(
         // new mints result in a transfer from the zero address
         ethers.constants.AddressZero,
         null,
       );
-      const firstTransferEvent = events.find(({ args }) => args.id.eq(termId));
+      const firstTransferEvent = events.find(({ args }) => args.id.eq(tokenId));
       return firstTransferEvent?.blockNumber || null;
     });
   }
@@ -84,27 +84,26 @@ export class MultiTermContractDataSource
     return this.call("token", []);
   }
 
-  getSymbol(termId: number): Promise<string> {
-    return this.call("symbol", [termId]);
+  getSymbol(tokenId: string): Promise<string> {
+    return this.call("symbol", [tokenId]);
   }
 
   getDecimals(): Promise<number> {
     return this.call("decimals", []);
   }
 
-  getName(termId: number): Promise<string> {
-    return this.call("name", [termId]);
+  getName(tokenId: string): Promise<string> {
+    return this.call("name", [tokenId]);
   }
 
-  async getBalanceOf(termId: number, address: string): Promise<string> {
-    const balanceBigNumber = await this.call("balanceOf", [termId, address]);
+  async getBalanceOf(tokenId: string, address: string): Promise<string> {
+    const balanceBigNumber = await this.call("balanceOf", [tokenId, address]);
     return balanceBigNumber.toString();
   }
 
   /**
    * Fetches and caches the terms unlockedSharePrice value from our datasource (contract).
    * @notice This function converts the sharePrice from a fixed point number.
-   * @param {number} termId - the term id (expiry)
    * @return {Promise<string>} The unlocked share price as a string.
    */
   async getUnlockedPricePerShare(): Promise<string> {
@@ -113,12 +112,12 @@ export class MultiTermContractDataSource
   }
 
   /**
-   * Gets the total supply of a certain term.
-   * @param {number} termId - the term id (expiry)
+   * Gets the total supply of a certain token.
+   * @param {string} tokenId - the token id (expiry)
    * @return {Promise<string>} total supply represented as a string
    */
-  async getTotalSupply(termId: number): Promise<string> {
-    const supply = await this.call("totalSupply", [termId]);
+  async getTotalSupply(tokenId: string): Promise<string> {
+    const supply = await this.call("totalSupply", [tokenId]);
     return fromBn(supply, await this.getDecimals());
   }
 
@@ -128,7 +127,7 @@ export class MultiTermContractDataSource
    * @param {Signer} signer - Ethers signer object.
    * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
    * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
-   * @param {number} termId - The term id (expiry).
+   * @param {string} termId - The term id (expiry).
    * @param {BigNumber} amount - Amount of underlying tokens to use to mint.
    * @param {string} ptDestination - Address to receive principal tokens.
    * @param {string} ytDestination - Address to receive yield tokens.
@@ -137,7 +136,7 @@ export class MultiTermContractDataSource
    */
   async lock(
     signer: Signer,
-    termId: number,
+    termId: string,
     assetIds: string[],
     assetAmounts: string[],
     amount: BigNumber,

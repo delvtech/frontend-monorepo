@@ -3,6 +3,7 @@ var $eCQIH$lrucache = require("lru-cache");
 var $eCQIH$elementfibase = require("@elementfi/base");
 var $eCQIH$elementficorev2typechain = require("@elementfi/core-v2-typechain");
 var $eCQIH$evmbn = require("evm-bn");
+var $eCQIH$etherslibutils = require("ethers/lib/utils");
 var $eCQIH$bignumberjs = require("bignumber.js");
 
 function $parcel$exportWildcard(dest, source) {
@@ -34,8 +35,7 @@ $parcel$export($f65b6b18b897f856$exports, "ElementContext", () => $f65b6b18b897f
 class $f65b6b18b897f856$export$4186b0f94a8cd1c0 {
     constructor({ chainId: chainId , provider: provider , dataSources: dataSources = []  }){
         this.chainId = chainId;
-        if (!provider) console.warn("You are using the default provider, subject to rate limiting.");
-        this.provider = provider ?? (0, $eCQIH$ethers.getDefaultProvider)(chainId);
+        this.provider = provider || (0, $eCQIH$ethers.getDefaultProvider)(chainId);
         this.dataSources = dataSources;
     }
     // TODO: How can we make this more efficient, yet still flexible
@@ -95,6 +95,7 @@ class $20adc394a346779f$export$f5a95cc94689234f extends (0, $54e3433d3ac69f8a$ex
     call(property, args) {
         return this.cached([
             property,
+            this.address,
             ...args
         ], ()=>{
             const contract = this.contract;
@@ -186,6 +187,7 @@ $parcel$export($bd9ebd5a6170b777$exports, "MultiPoolContractDataSource", () => $
 
 
 
+
 class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$export$f5a95cc94689234f) {
     constructor(address, provider){
         super((0, $eCQIH$elementficorev2typechain.Pool__factory).connect(address, provider));
@@ -198,7 +200,7 @@ class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$ex
         ], async ()=>{
             const eventFilter = this.contract.filters.PoolRegistered();
             const events = await this.contract.queryFilter(eventFilter, fromBlock, toBlock);
-            return events.map((event)=>event.args.poolId.toNumber());
+            return events.map((event)=>event.args.poolId.toHexString());
         });
     }
     getMultiTerm() {
@@ -207,21 +209,22 @@ class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$ex
     /**
    * Fetches and caches the pool reserves from our datasource (contract).
    * @notice This function returns reserves as string representation of a fixed point number.
-   * @param {number} poolId - the pool id (expiry)
+   * @param {string} poolId - the pool id (expiry)
    * @return {Promise<PoolReserves>}
    */ async getPoolReserves(poolId) {
         const [sharesBigNumber, bondsBigNumber] = await this.call("reserves", [
             poolId, 
         ]);
+        const decimals = await this.call("decimals", []);
         return {
-            shares: sharesBigNumber.toString(),
-            bonds: bondsBigNumber.toString()
+            shares: (0, $eCQIH$etherslibutils.formatUnits)(sharesBigNumber, decimals),
+            bonds: (0, $eCQIH$etherslibutils.formatUnits)(bondsBigNumber, decimals)
         };
     }
     /**
    * Fetches and caches the pool parameters from our datasource (contract).
    * @notice This function also handles converting the pool parameters from a fixed point number.
-   * @param {number} poolId - the pool id (expiry)
+   * @param {string} poolId - the pool id (expiry)
    * @return {Promise<PoolParameters>}
    */ async getPoolParameters(poolId) {
         const [timeStretch, muBN] = await this.call("parameters", [
@@ -280,26 +283,6 @@ $parcel$export($d179b418267ba386$exports, "MultiTermContractDataSource", () => $
 
 
 
-const $4a4b662dc565d96c$export$7b6afb4232a53135 = "0x8000000000000000000000000000000000000000000000000000000000000000";
-
-
-function $4ff6911a82243538$export$e6aa4d1f02dd6fdd(tokenId) {
-    const idHex = tokenId.toHexString();
-    const isYT1 = // yield token ids are always 66 characters, ie: "0x" + 64 hex characters
-    // (whereas principal tokens are shorter in length)
-    idHex.length === 66 && // yield token ids always start with 0x8 (1 in binary)
-    idHex.startsWith("0x8") && // This is a special yield token used for accounting in the
-    // pools, disregard it.
-    idHex !== (0, $4a4b662dc565d96c$export$7b6afb4232a53135);
-    return isYT1;
-}
-
-
-function $6ff8d0293b29261d$export$238876ec612ad57e(tokenId) {
-    return !tokenId.toHexString().startsWith("0x8");
-}
-
-
 class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$export$f5a95cc94689234f) {
     constructor(address, provider){
         super((0, $eCQIH$elementficorev2typechain.Term__factory).connect(address, provider));
@@ -316,21 +299,16 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
             return this.contract.queryFilter(eventFilter, fromBlock, toBlock);
         });
     }
-    /**
-   * Gets all terms that have been created from the datasource (contract).
-   * @param {number} fromBlock - Optional, start block number to search from.
-   * @param {number} toBlock - Optional, end block number to search to.
-   * @return {Promise<number[]>} A promise of an array of unique term ids.
-   */ async getTermIds(fromBlock, toBlock) {
+    async getTermIds(fromBlock, toBlock) {
         return this.cached([
             "getTermIds",
             fromBlock,
             toBlock
         ], async ()=>{
+            // TODO: Filter out yield token addresses
             const events = await this.getTransferEvents(// new mints result in a transfer from the zero address
             (0, $eCQIH$ethers.ethers).constants.AddressZero, null, fromBlock, toBlock);
-            return Array.from(new Set(events// filter out YTs
-            .filter((event)=>(0, $6ff8d0293b29261d$export$238876ec612ad57e)(event.args.id)).map((event)=>event.args.id.toNumber())));
+            return Array.from(new Set(events.map((event)=>event.args.id.toNumber())));
         });
     }
     getCreatedAtBlock(termId) {
@@ -380,48 +358,6 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
    */ async getUnlockedPricePerShare() {
         const sharePriceBN = await this.call("unlockedSharePrice", []);
         return (0, $eCQIH$evmbn.fromBn)(sharePriceBN, await this.getDecimals());
-    }
-    /**
-   * Gets the total supply of a certain term.
-   * @param {number} termId - the term id (expiry)
-   * @return {Promise<string>} total supply represented as a string
-   */ async getTotalSupply(termId) {
-        const supply = await this.call("totalSupply", [
-            termId
-        ]);
-        return (0, $eCQIH$evmbn.fromBn)(supply, await this.getDecimals());
-    }
-    /**
-   * Wraps the lock function in the Term contract, allows caller to mint fixed and variable positions in a term.
-   * @async
-   * @param {Signer} signer - Ethers signer object.
-   * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
-   * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
-   * @param {number} termId - The term id (expiry).
-   * @param {BigNumber} amount - Amount of underlying tokens to use to mint.
-   * @param {string} ptDestination - Address to receive principal tokens.
-   * @param {string} ytDestination - Address to receive yield tokens.
-   * @param {string} hasPreFunding- Have any funds already been sent to the contract, not commonly used for EOAs.
-   * @return {Promise<MintResponse>}
-   */ async lock(signer, termId, assetIds, assetAmounts, amount, ptDestination, ytDestination, ytBeginDate, hasPreFunding) {
-        if (assetAmounts.length !== assetIds.length) console.error("Error MultiTermDataSource.Lock(): assetIds and assetAmounts must be the same length.");
-        const assetIdsUnique = new Set(assetIds);
-        if (assetIdsUnique.size !== assetIds.length) console.error("Error MultiTermDataSource.Lock(): assetIds list is not unique.");
-        const multiTerm = this.contract.connect(signer);
-        const txn = await multiTerm.lock(assetIds, assetAmounts, amount, hasPreFunding, ytDestination, ptDestination, ytBeginDate, termId);
-        const receipt = await txn.wait();
-        // can safely assume that any successful transaction will have events and event arguments
-        const events = receipt.events;
-        const transferSingleLogs = events.filter((event)=>{
-            return event.event === "TransferSingle" && event.args.from === (0, $eCQIH$ethers.ethers).constants.AddressZero;
-        });
-        // maybe can just check index but not verified events will be ordered
-        const ytMintEvent = transferSingleLogs.find((log)=>(0, $4ff6911a82243538$export$e6aa4d1f02dd6fdd)(log.args.id));
-        const ptMintEvent = transferSingleLogs.find((log)=>(0, $6ff8d0293b29261d$export$238876ec612ad57e)(log.args.id));
-        return {
-            principalTokens: ptMintEvent.args.value.toString(),
-            yieldTokens: ytMintEvent.args.value.toString()
-        };
     }
 }
 
@@ -666,11 +602,11 @@ var $2ababb11162a7525$exports = {};
 
 $parcel$export($2ababb11162a7525$exports, "PrincipalToken", () => $2ababb11162a7525$export$62007a0bd048d56c);
 class $2ababb11162a7525$export$62007a0bd048d56c {
-    constructor(id, context, term){
-        this.id = id;
+    constructor(context, term){
+        this.id = term.id;
         this.context = context;
         this.term = term;
-        this.maturityDate = new Date(id * 1000);
+        this.maturityDate = new Date(+term.id * 1000);
     }
     async getBaseAsset() {
         return this.term.getBaseAsset();
@@ -694,11 +630,13 @@ var $d42f7646c857727b$exports = {};
 
 $parcel$export($d42f7646c857727b$exports, "YieldToken", () => $d42f7646c857727b$export$7e27801a0b3a9d2a);
 class $d42f7646c857727b$export$7e27801a0b3a9d2a {
-    constructor(id, context, term){
-        this.id = id;
+    constructor(startTime, context, term){
+        const startTimeBits = (startTime / 1000).toString(16).padStart(31, "0");
+        const expiryBits = term.id.replace(/^0x/, "").padStart(32, "0");
+        this.id = `0x8${startTimeBits}${expiryBits}`;
         this.context = context;
         this.term = term;
-        this.maturityDate = new Date(id * 1000);
+        this.maturityDate = new Date(+term.id * 1000);
     }
     async getBaseAsset() {
         return this.term.getBaseAsset();
@@ -728,8 +666,8 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
         this.guid = `${multiTerm.address}${id}`;
         this.context = context;
         this.multiTerm = multiTerm;
-        this.principalToken = new (0, $2ababb11162a7525$export$62007a0bd048d56c)(id, context, this);
-        this.maturityDate = new Date(id * 1000);
+        this.principalToken = new (0, $2ababb11162a7525$export$62007a0bd048d56c)(context, this);
+        this.maturityDate = new Date(+id * 1000);
     }
     getYieldSource() {
         return this.multiTerm.getYieldSource();
@@ -749,9 +687,8 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
     getCreatedAtBlock() {
         return this.multiTerm.dataSource.getCreatedAtBlock(this.id);
     }
-    // TODO: How do I get the token ID with a start and end date?
-    getYieldToken(startTimeStamp) {
-        return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(this.id, this.context, this);
+    getYieldToken(startTime) {
+        return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(startTime, this.context, this);
     }
     /**
    * Convenience method that mints fixed and variable positions in a term using underlying tokens.
@@ -777,7 +714,7 @@ class $73142241d07e4549$export$44a06e384a6d2ed0 {
     }
     /**
    * Gets a Term by the termId from this MultiTerm.
-   * @param {number} termId - the termId
+   * @param {string} termId - the termId
    * @return {Term}
    */ getTerm(termId) {
         return new (0, $51ba50e48c247b12$export$656c1e606ad06131)(termId, this.context, this);
@@ -868,8 +805,8 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         this.guid = `${multiPool.address}${id}`;
         this.context = context;
         this.multiPool = multiPool;
-        this.lpToken = new (0, $8af14f8f6b4799b0$export$84f20e6ecc12f354)(id, context, this);
-        this.maturityDate = new Date(id * 1000);
+        this.lpToken = new (0, $8af14f8f6b4799b0$export$84f20e6ecc12f354)(context, this);
+        this.maturityDate = new Date(+id * 1000);
     }
     /**
    * Gets the associated MultiTerm model for this pool.
@@ -949,7 +886,8 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         const bonds = +reserves.bonds;
         const shares = +reserves.shares;
         const totalSupply = bonds + shares;
-        const daysUntilExpiry = await (0, $8b9e4060a562c68b$export$fa72f61bcf5e310d)(this.id, this.context.provider);
+        const expiry = +this.id;
+        const daysUntilExpiry = await (0, $8b9e4060a562c68b$export$fa72f61bcf5e310d)(expiry, this.context.provider);
         // pool parameters
         const parameters = await this.getParameters();
         const mu = +parameters.mu;
@@ -982,7 +920,7 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
         const spotPrice = +await this.getSpotPrice();
         const poolParams = await this.getParameters();
         const timeStretch = +poolParams.timeStretch;
-        const daysUntilExpiry = await (0, $8b9e4060a562c68b$export$fa72f61bcf5e310d)(this.id, this.context.provider) * timeStretch;
+        const daysUntilExpiry = await (0, $8b9e4060a562c68b$export$fa72f61bcf5e310d)(+this.id, this.context.provider) * timeStretch;
         const daysFractionOfYear = daysUntilExpiry / 365;
         const oneMinusSpotPrice = 1 - spotPrice;
         const apr = oneMinusSpotPrice / spotPrice / daysFractionOfYear * 100;
@@ -1006,7 +944,7 @@ class $db3c4c3da11ea48c$export$38f2878d4d50407d {
     }
     /**
    * Gets a Pool by the poolId from this MultiPool.
-   * @param {number} poolId - the poolId
+   * @param {string} poolId - the poolId
    * @return {Pool}
    */ getPool(poolId) {
         return new (0, $5c922a29083dd917$export$14963ee5c8637e11)(poolId, this.context, this);
@@ -1055,14 +993,14 @@ class $db3c4c3da11ea48c$export$38f2878d4d50407d {
     /**
    * Gets the pool reserves
    * @async
-   * @param {number} poolId - the pool id
+   * @param {string} poolId - the pool id
    * @return {Promise<PoolReserves>} pool reserves.
-   */ async getPoolReserves(poolId) {
-        return await this.dataSource.getPoolReserves(poolId);
+   */ getPoolReserves(poolId) {
+        return this.dataSource.getPoolReserves(poolId);
     }
     /**
    * Gets the pool parameters
-   * @param {number} poolId - the pool id
+   * @param {string} poolId - the pool id
    * @return {Promise<PoolParameters>} pool parameters.
    */ async getPoolParameters(poolId) {
         return await this.dataSource.getPoolParameters(poolId);
@@ -1194,7 +1132,6 @@ async function $2199ecd2883db3b5$export$3191c47e10722ce4(amount, poolAddress, si
 
 
 $parcel$exportWildcard(module.exports, $f65b6b18b897f856$exports);
-$parcel$exportWildcard(module.exports, $cabaabaa231f1af1$exports);
 $parcel$exportWildcard(module.exports, $54e3433d3ac69f8a$exports);
 $parcel$exportWildcard(module.exports, $20adc394a346779f$exports);
 $parcel$exportWildcard(module.exports, $d0dba6c4aa120ac9$exports);
@@ -1211,15 +1148,12 @@ $parcel$exportWildcard(module.exports, $f00ba8e0ba7f8838$exports);
 $parcel$exportWildcard(module.exports, $38c20ee8daaa11b0$exports);
 $parcel$exportWildcard(module.exports, $047c4a05380e9203$exports);
 $parcel$exportWildcard(module.exports, $3b777295048083ac$exports);
-$parcel$exportWildcard(module.exports, $8af14f8f6b4799b0$exports);
 $parcel$exportWildcard(module.exports, $db3c4c3da11ea48c$exports);
 $parcel$exportWildcard(module.exports, $73142241d07e4549$exports);
 $parcel$exportWildcard(module.exports, $5c922a29083dd917$exports);
-$parcel$exportWildcard(module.exports, $2ababb11162a7525$exports);
 $parcel$exportWildcard(module.exports, $51ba50e48c247b12$exports);
 $parcel$exportWildcard(module.exports, $2361706748e2a981$exports);
 $parcel$exportWildcard(module.exports, $43a71ca2139b91c6$exports);
-$parcel$exportWildcard(module.exports, $d42f7646c857727b$exports);
 $parcel$exportWildcard(module.exports, $a6ef1106a8ce388b$exports);
 $parcel$exportWildcard(module.exports, $98797cba267d5720$exports);
 $parcel$exportWildcard(module.exports, $7141e549f83aab3e$exports);
@@ -1227,6 +1161,10 @@ $parcel$exportWildcard(module.exports, $9dde791ff857a61d$exports);
 $parcel$exportWildcard(module.exports, $36cbfb79cc4b34b2$exports);
 $parcel$exportWildcard(module.exports, $9c1766b6f9f74658$exports);
 $parcel$exportWildcard(module.exports, $2199ecd2883db3b5$exports);
+$parcel$exportWildcard(module.exports, $cabaabaa231f1af1$exports);
+$parcel$exportWildcard(module.exports, $8af14f8f6b4799b0$exports);
+$parcel$exportWildcard(module.exports, $2ababb11162a7525$exports);
+$parcel$exportWildcard(module.exports, $d42f7646c857727b$exports);
 
 
 //# sourceMappingURL=main.js.map

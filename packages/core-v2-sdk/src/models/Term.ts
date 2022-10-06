@@ -11,20 +11,20 @@ import { YieldSource } from "./YieldSource";
 import { YieldToken } from "./YieldToken";
 
 export class Term {
-  id: number;
+  id: string;
   guid: string;
   context: ElementContext;
   multiTerm: MultiTerm;
   principalToken: PrincipalToken;
   maturityDate: Date;
 
-  constructor(id: number, context: ElementContext, multiTerm: MultiTerm) {
+  constructor(id: string, context: ElementContext, multiTerm: MultiTerm) {
     this.id = id;
     this.guid = `${multiTerm.address}${id}`;
     this.context = context;
     this.multiTerm = multiTerm;
-    this.principalToken = new PrincipalToken(id, context, this);
-    this.maturityDate = new Date(id * 1000);
+    this.principalToken = new PrincipalToken(context, this);
+    this.maturityDate = new Date(+id * 1000);
   }
 
   getYieldSource(): Promise<YieldSource | null> {
@@ -50,9 +50,8 @@ export class Term {
     return this.multiTerm.dataSource.getCreatedAtBlock(this.id);
   }
 
-  // TODO: How do I get the token ID with a start and end date?
-  getYieldToken(startTimeStamp: number): YieldToken {
-    return new YieldToken(this.id, this.context, this);
+  getYieldToken(startTime: number): YieldToken {
+    return new YieldToken(startTime, this.context, this);
   }
 
   /**

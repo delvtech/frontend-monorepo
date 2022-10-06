@@ -39,10 +39,10 @@ export class MultiPool {
 
   /**
    * Gets a Pool by the poolId from this MultiPool.
-   * @param {number} poolId - the poolId
+   * @param {string} poolId - the poolId
    * @return {Pool}
    */
-  getPool(poolId: number): Pool {
+  getPool(poolId: string): Pool {
     return new Pool(poolId, this.context, this);
   }
 
@@ -103,19 +103,19 @@ export class MultiPool {
   /**
    * Gets the pool reserves
    * @async
-   * @param {number} poolId - the pool id
+   * @param {string} poolId - the pool id
    * @return {Promise<PoolReserves>} pool reserves.
    */
-  getPoolReserves(poolId: number): Promise<PoolReserves> {
+  getPoolReserves(poolId: string): Promise<PoolReserves> {
     return this.dataSource.getPoolReserves(poolId);
   }
 
   /**
    * Gets the pool parameters
-   * @param {number} poolId - the pool id
+   * @param {string} poolId - the pool id
    * @return {Promise<PoolParameters>} pool parameters.
    */
-  async getPoolParameters(poolId: number): Promise<PoolParameters> {
+  async getPoolParameters(poolId: string): Promise<PoolParameters> {
     return await this.dataSource.getPoolParameters(poolId);
   }
 }

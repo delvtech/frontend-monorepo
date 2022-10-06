@@ -3,19 +3,19 @@ import { MintResponse } from "src/types";
 
 export interface MultiTermDataSource {
   address: string;
-  getTermIds: (fromBlock?: number, toBlock?: number) => Promise<number[]>;
-  getCreatedAtBlock: (termId: number) => Promise<number | null>;
+  getTermIds: (fromBlock?: number, toBlock?: number) => Promise<string[]>;
+  getCreatedAtBlock: (tokenId: string) => Promise<number | null>;
   getYieldSource: () => Promise<string | null>;
   getBaseAsset: () => Promise<string>;
-  getSymbol: (termId: number) => Promise<string>;
+  getSymbol: (tokenId: string) => Promise<string>;
   getDecimals: () => Promise<number>;
-  getName: (termId: number) => Promise<string>;
-  getBalanceOf: (termId: number, address: string) => Promise<string>;
+  getName: (tokenId: string) => Promise<string>;
+  getBalanceOf: (tokenId: string, address: string) => Promise<string>;
   getUnlockedPricePerShare: () => Promise<string>;
-  getTotalSupply: (termId: number) => Promise<string>;
+  getTotalSupply: (tokenId: string) => Promise<string>;
   lock: (
     signer: Signer,
-    termId: number,
+    termId: string,
     assetIds: string[],
     assetAmounts: string[],
     amount: BigNumber,

@@ -3,16 +3,18 @@ import { Term } from "./Term";
 import { Token } from "./Token";
 
 export class YieldToken {
-  id: number;
+  id: string;
   context: ElementContext;
   term: Term;
   maturityDate: Date;
 
-  constructor(id: number, context: ElementContext, term: Term) {
-    this.id = id;
+  constructor(startTime: number, context: ElementContext, term: Term) {
+    const startTimeBits = (startTime / 1000).toString(16).padStart(31, "0");
+    const expiryBits = term.id.replace(/^0x/, "").padStart(32, "0");
+    this.id = `0x8${startTimeBits}${expiryBits}`;
     this.context = context;
     this.term = term;
-    this.maturityDate = new Date(id * 1000);
+    this.maturityDate = new Date(+term.id * 1000);
   }
 
   async getBaseAsset(): Promise<Token> {
