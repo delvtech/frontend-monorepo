@@ -1,4 +1,4 @@
-import { providers, BaseContract, BigNumber, Signer, Wallet, BigNumberish, ContractTransaction, Overrides } from "ethers";
+import { providers, BaseContract, Signer, Wallet, BigNumberish, ContractTransaction, Overrides } from "ethers";
 import LRUCache from "lru-cache";
 import { Pool as _Pool1, Term as _Term1, ERC4626Term, CompoundV3Term, ERC20, ERC4626 } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
@@ -132,7 +132,7 @@ export interface MultiTermDataSource {
     getBalanceOf: (tokenId: string, address: string) => Promise<string>;
     getUnlockedPricePerShare: () => Promise<string>;
     getTotalSupply: (tokenId: string) => Promise<string>;
-    lock: (signer: Signer, termId: string, assetIds: string[], assetAmounts: string[], amount: BigNumber, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean) => Promise<MintResponse>;
+    lock: (signer: Signer, termId: string, assetIds: string[], assetAmounts: string[], amount: string, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean) => Promise<MintResponse>;
 }
 export class MultiTermContractDataSource extends ContractDataSource<_Term1> implements MultiTermDataSource {
     constructor(address: string, provider: providers.Provider);
@@ -176,7 +176,7 @@ export class MultiTermContractDataSource extends ContractDataSource<_Term1> impl
      * @param {string} hasPreFunding- Have any funds already been sent to the contract, not commonly used for EOAs.
      * @return {Promise<MintResponse>}
      */
-    lock(signer: Signer, termId: string, assetIds: string[], assetAmounts: string[], amount: BigNumber, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean): Promise<MintResponse>;
+    lock(signer: Signer, termId: string, assetIds: string[], assetAmounts: string[], amount: string, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean): Promise<MintResponse>;
 }
 export class ERC4626TermContractDataSource extends MultiTermContractDataSource {
     contract: ERC4626Term;

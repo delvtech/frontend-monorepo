@@ -1,6 +1,5 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { Wallet } from "ethers";
-import { toBn } from "evm-bn";
 import { ElementContext } from "src/context";
 import { MintResponse } from "src/types";
 import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
@@ -71,7 +70,7 @@ export class Term {
       this.id,
       [],
       [],
-      toBn(amount, await this.multiTerm.getDecimals()),
+      amount,
       signer.address,
       signer.address,
       (await getCurrentBlockTimestamp(this.context.provider)) + 100,

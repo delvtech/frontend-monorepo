@@ -1,10 +1,9 @@
 import { providers } from "ethers";
+import { formatUnits } from "ethers/lib/utils";
 import { Pool, Pool__factory } from "@elementfi/core-v2-typechain";
+import { PoolParameters, PoolReserves } from "src/types";
 import { ContractDataSource } from "src/datasources/ContractDataSource";
 import { MultiPoolDataSource } from "./MultiPoolDataSource";
-import { PoolParameters, PoolReserves } from "src/types";
-import { fromBn } from "evm-bn";
-import { formatUnits } from "ethers/lib/utils";
 
 export class MultiPoolContractDataSource
   extends ContractDataSource<Pool>
@@ -40,8 +39,7 @@ export class MultiPoolContractDataSource
     const [sharesBigNumber, bondsBigNumber] = await this.call("reserves", [
       poolId,
     ]);
-    const decimals = await this.call("decimals", []);
-
+    const decimals = await this.getDecimals();
     return {
       shares: formatUnits(sharesBigNumber, decimals),
       bonds: formatUnits(bondsBigNumber, decimals),
@@ -55,11 +53,11 @@ export class MultiPoolContractDataSource
    * @return {Promise<PoolParameters>}
    */
   async getPoolParameters(poolId: string): Promise<PoolParameters> {
-    const [timeStretch, muBN] = await this.call("parameters", [poolId]);
+    const [timeStretch, muBigNumber] = await this.call("parameters", [poolId]);
 
     return {
       // mu is represented as a 18 decimal fixed point number, we have to convert to a decimal
-      mu: fromBn(muBN, 18),
+      mu: formatUnits(muBigNumber, 18),
       // timeStretch is represented as a 3 decimal fixed point number, we have to convert to a decimal
       timeStretch: (timeStretch / 1e3).toString(),
     };
@@ -98,6 +96,7 @@ export class MultiPoolContractDataSource
    */
   async getBalanceOf(poolId: string, address: string): Promise<string> {
     const balanceBigNumber = await this.call("balanceOf", [poolId, address]);
-    return balanceBigNumber.toString();
+    const decimals = await this.getDecimals();
+    return formatUnits(balanceBigNumber, decimals);
   }
 }

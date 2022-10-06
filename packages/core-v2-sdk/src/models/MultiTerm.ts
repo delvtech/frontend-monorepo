@@ -4,7 +4,8 @@ import { MultiTermContractDataSource } from "src/datasources/MultiTerm/MultiTerm
 import { Token } from "./Token";
 import { YieldSource } from "./YieldSource";
 import { Term } from "./Term";
-import { BigNumber } from "bignumber.js";
+import { formatUnits, parseUnits } from "ethers/lib/utils";
+import { BigNumber } from "ethers";
 
 /**
  * MultiTerm model class.
@@ -95,13 +96,13 @@ export class MultiTerm {
    */
   async getTVL(): Promise<string> {
     const terms = await this.getTerms();
-
-    let tvl: BigNumber = new BigNumber(0);
+    const decimals = await this.getDecimals();
+    let tvl: BigNumber = BigNumber.from(0);
     for (const term of terms) {
-      tvl = tvl.plus(await term.getTVL());
+      tvl = tvl.add(parseUnits(await term.getTVL(), decimals));
     }
 
-    return tvl.toString();
+    return formatUnits(tvl, decimals);
   }
 
   /**

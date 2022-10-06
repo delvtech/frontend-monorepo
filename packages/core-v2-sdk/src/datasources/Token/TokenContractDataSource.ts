@@ -1,4 +1,5 @@
 import { providers } from "ethers";
+import { formatUnits } from "ethers/lib/utils";
 import { ERC20, ERC20__factory } from "@elementfi/core-v2-typechain";
 import { ContractDataSource } from "src/datasources/ContractDataSource";
 import { TokenAPIDataSource } from "src/datasources/TokenAPI/TokenAPIDataSource";
@@ -48,13 +49,15 @@ export class TokenContractDataSource implements TokenDataSource {
       owner,
       spender,
     ]);
-    return balanceBigNumber.toString();
+    const decimals = await this.getDecimals();
+    return formatUnits(balanceBigNumber, decimals);
   }
 
   async getBalanceOf(address: string): Promise<string> {
     const balanceBigNumber = await this.erc20DataSource.call("balanceOf", [
       address,
     ]);
-    return balanceBigNumber.toString();
+    const decimals = await this.getDecimals();
+    return formatUnits(balanceBigNumber, decimals);
   }
 }

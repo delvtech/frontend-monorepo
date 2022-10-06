@@ -48,7 +48,6 @@
     "@elementfi/base": "*",
     "@elementfi/core-v2-typechain": "*",
     "bignumber.js": "^9.1.0",
-    "evm-bn": "^1.1.2",
     "lru-cache": "^7.14.0"
   },
   "devDependencies": {

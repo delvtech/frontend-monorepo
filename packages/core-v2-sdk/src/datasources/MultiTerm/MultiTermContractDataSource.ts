@@ -1,12 +1,12 @@
 import { BigNumber, ethers, providers, Signer } from "ethers";
+import { formatUnits, parseUnits } from "ethers/lib/utils";
 import { Term, Term__factory } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
-import { MultiTermDataSource } from "./MultiTermDataSource";
-import { ContractDataSource } from "src/datasources/ContractDataSource";
-import { fromBn, toBn } from "evm-bn";
+import { MintResponse } from "src/types";
 import { isYT } from "src/utils/token/isYT";
 import { isPT } from "src/utils/token/isPT";
-import { MintResponse } from "src/types";
+import { ContractDataSource } from "src/datasources/ContractDataSource";
+import { MultiTermDataSource } from "./MultiTermDataSource";
 
 export class MultiTermContractDataSource
   extends ContractDataSource<Term>
@@ -98,7 +98,8 @@ export class MultiTermContractDataSource
 
   async getBalanceOf(tokenId: string, address: string): Promise<string> {
     const balanceBigNumber = await this.call("balanceOf", [tokenId, address]);
-    return balanceBigNumber.toString();
+    const decimals = await this.getDecimals();
+    return formatUnits(balanceBigNumber, decimals);
   }
 
   /**
@@ -107,8 +108,9 @@ export class MultiTermContractDataSource
    * @return {Promise<string>} The unlocked share price as a string.
    */
   async getUnlockedPricePerShare(): Promise<string> {
-    const sharePriceBN = await this.call("unlockedSharePrice", []);
-    return fromBn(sharePriceBN, await this.getDecimals());
+    const sharePriceBigNumber = await this.call("unlockedSharePrice", []);
+    const decimals = await this.getDecimals();
+    return formatUnits(sharePriceBigNumber, decimals);
   }
 
   /**
@@ -117,8 +119,9 @@ export class MultiTermContractDataSource
    * @return {Promise<string>} total supply represented as a string
    */
   async getTotalSupply(tokenId: string): Promise<string> {
-    const supply = await this.call("totalSupply", [tokenId]);
-    return fromBn(supply, await this.getDecimals());
+    const supplyBigNumber = await this.call("totalSupply", [tokenId]);
+    const decimals = await this.getDecimals();
+    return formatUnits(supplyBigNumber, decimals);
   }
 
   /**
@@ -139,7 +142,7 @@ export class MultiTermContractDataSource
     termId: string,
     assetIds: string[],
     assetAmounts: string[],
-    amount: BigNumber,
+    amount: string,
     ptDestination: string,
     ytDestination: string,
     ytBeginDate: number,
@@ -158,11 +161,14 @@ export class MultiTermContractDataSource
       );
     }
 
+    const decimals = await this.getDecimals();
+    const amountBigNumber = parseUnits(amount, decimals);
+
     const multiTerm = this.contract.connect(signer);
     const txn = await multiTerm.lock(
       assetIds,
       assetAmounts,
-      amount,
+      amountBigNumber,
       hasPreFunding,
       ytDestination,
       ptDestination,
@@ -177,15 +183,18 @@ export class MultiTermContractDataSource
         event.event === "TransferSingle" &&
         event.args!.from === ethers.constants.AddressZero
       );
-    });
+    }) as TransferSingleEvent[];
 
     // maybe can just check index but not verified events will be ordered
-    const ytMintEvent = transferSingleLogs.find((log) => isYT(log.args!.id))!;
-    const ptMintEvent = transferSingleLogs.find((log) => isPT(log.args!.id))!;
+    const ytMintEvent = transferSingleLogs.find((log) => isYT(log.args.id))!;
+    const ytBigNumber = ytMintEvent.args.value;
+
+    const ptMintEvent = transferSingleLogs.find((log) => isPT(log.args.id))!;
+    const ptBigNumber = ptMintEvent.args.value;
 
     return {
-      principalTokens: (ptMintEvent.args!.value as BigNumber).toString(),
-      yieldTokens: (ytMintEvent.args!.value as BigNumber).toString(),
+      principalTokens: formatUnits(ptBigNumber, decimals),
+      yieldTokens: formatUnits(ytBigNumber, decimals),
     };
   }
 }
