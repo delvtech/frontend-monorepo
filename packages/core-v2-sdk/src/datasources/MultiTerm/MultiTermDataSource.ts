@@ -18,7 +18,7 @@ export interface MultiTermDataSource {
     termId: string,
     assetIds: string[],
     assetAmounts: string[],
-    amount: BigNumber,
+    amount: string,
     ptDestination: string,
     ytDestination: string,
     ytBeginDate: number,

@@ -1,5 +1,5 @@
 import { BigNumber, ethers, providers, Signer } from "ethers";
-import { formatUnits } from "ethers/lib/utils";
+import { formatUnits, parseUnits } from "ethers/lib/utils";
 import { Term, Term__factory } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
 import { MintResponse } from "src/types";
@@ -142,7 +142,7 @@ export class MultiTermContractDataSource
     termId: string,
     assetIds: string[],
     assetAmounts: string[],
-    amount: BigNumber,
+    amount: string,
     ptDestination: string,
     ytDestination: string,
     ytBeginDate: number,
@@ -161,11 +161,14 @@ export class MultiTermContractDataSource
       );
     }
 
+    const decimals = await this.getDecimals();
+    const amountBigNumber = parseUnits(amount, decimals);
+
     const multiTerm = this.contract.connect(signer);
     const txn = await multiTerm.lock(
       assetIds,
       assetAmounts,
-      amount,
+      amountBigNumber,
       hasPreFunding,
       ytDestination,
       ptDestination,
@@ -188,8 +191,6 @@ export class MultiTermContractDataSource
 
     const ptMintEvent = transferSingleLogs.find((log) => isPT(log.args.id))!;
     const ptBigNumber = ptMintEvent.args.value;
-
-    const decimals = await this.getDecimals();
 
     return {
       principalTokens: formatUnits(ptBigNumber, decimals),

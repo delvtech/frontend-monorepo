@@ -71,7 +71,7 @@ export class Term {
       this.id,
       [],
       [],
-      toBn(amount, await this.multiTerm.getDecimals()),
+      amount,
       signer.address,
       signer.address,
       (await getCurrentBlockTimestamp(this.context.provider)) + 100,
