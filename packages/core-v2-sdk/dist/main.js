@@ -2,9 +2,7 @@ var $eCQIH$ethers = require("ethers");
 var $eCQIH$lrucache = require("lru-cache");
 var $eCQIH$elementfibase = require("@elementfi/base");
 var $eCQIH$elementficorev2typechain = require("@elementfi/core-v2-typechain");
-var $eCQIH$evmbn = require("evm-bn");
 var $eCQIH$etherslibutils = require("ethers/lib/utils");
-var $eCQIH$bignumberjs = require("bignumber.js");
 
 function $parcel$exportWildcard(dest, source) {
   Object.keys(source).forEach(function(key) {
@@ -35,7 +33,8 @@ $parcel$export($f65b6b18b897f856$exports, "ElementContext", () => $f65b6b18b897f
 class $f65b6b18b897f856$export$4186b0f94a8cd1c0 {
     constructor({ chainId: chainId , provider: provider , dataSources: dataSources = []  }){
         this.chainId = chainId;
-        this.provider = provider || (0, $eCQIH$ethers.getDefaultProvider)(chainId);
+        if (!provider) console.warn("You are using the default provider, subject to rate limiting.");
+        this.provider = provider ?? (0, $eCQIH$ethers.getDefaultProvider)(chainId);
         this.dataSources = dataSources;
     }
     // TODO: How can we make this more efficient, yet still flexible
@@ -187,7 +186,6 @@ $parcel$export($bd9ebd5a6170b777$exports, "MultiPoolContractDataSource", () => $
 
 
 
-
 class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$export$f5a95cc94689234f) {
     constructor(address, provider){
         super((0, $eCQIH$elementficorev2typechain.Pool__factory).connect(address, provider));
@@ -215,7 +213,7 @@ class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$ex
         const [sharesBigNumber, bondsBigNumber] = await this.call("reserves", [
             poolId, 
         ]);
-        const decimals = await this.call("decimals", []);
+        const decimals = await this.getDecimals();
         return {
             shares: (0, $eCQIH$etherslibutils.formatUnits)(sharesBigNumber, decimals),
             bonds: (0, $eCQIH$etherslibutils.formatUnits)(bondsBigNumber, decimals)
@@ -227,12 +225,12 @@ class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$ex
    * @param {string} poolId - the pool id (expiry)
    * @return {Promise<PoolParameters>}
    */ async getPoolParameters(poolId) {
-        const [timeStretch, muBN] = await this.call("parameters", [
+        const [timeStretch, muBigNumber] = await this.call("parameters", [
             poolId
         ]);
         return {
             // mu is represented as a 18 decimal fixed point number, we have to convert to a decimal
-            mu: (0, $eCQIH$evmbn.fromBn)(muBN, 18),
+            mu: (0, $eCQIH$etherslibutils.formatUnits)(muBigNumber, 18),
             // timeStretch is represented as a 3 decimal fixed point number, we have to convert to a decimal
             timeStretch: (timeStretch / 1e3).toString()
         };
@@ -268,7 +266,8 @@ class $bd9ebd5a6170b777$export$3e28d0e9e34d7848 extends (0, $20adc394a346779f$ex
             poolId,
             address
         ]);
-        return balanceBigNumber.toString();
+        const decimals = await this.getDecimals();
+        return (0, $eCQIH$etherslibutils.formatUnits)(balanceBigNumber, decimals);
     }
 }
 
@@ -280,6 +279,26 @@ var $d179b418267ba386$exports = {};
 
 $parcel$export($d179b418267ba386$exports, "MultiTermContractDataSource", () => $d179b418267ba386$export$2bd093a746116e9a);
 
+
+
+const $4a4b662dc565d96c$export$7b6afb4232a53135 = "0x8000000000000000000000000000000000000000000000000000000000000000";
+
+
+function $4ff6911a82243538$export$e6aa4d1f02dd6fdd(tokenId) {
+    const idHex = tokenId.toHexString();
+    const isYT1 = // yield token ids are always 66 characters, ie: "0x" + 64 hex characters
+    // (whereas principal tokens are shorter in length)
+    idHex.length === 66 && // yield token ids always start with 0x8 (1 in binary)
+    idHex.startsWith("0x8") && // This is a special yield token used for accounting in the
+    // pools, disregard it.
+    idHex !== (0, $4a4b662dc565d96c$export$7b6afb4232a53135);
+    return isYT1;
+}
+
+
+function $6ff8d0293b29261d$export$238876ec612ad57e(tokenId) {
+    return !tokenId.toHexString().startsWith("0x8");
+}
 
 
 
@@ -299,26 +318,31 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
             return this.contract.queryFilter(eventFilter, fromBlock, toBlock);
         });
     }
-    async getTermIds(fromBlock, toBlock) {
+    /**
+   * Gets all terms that have been created from the datasource (contract).
+   * @param {number} fromBlock - Optional, start block number to search from.
+   * @param {number} toBlock - Optional, end block number to search to.
+   * @return {Promise<string[]>} A promise of an array of unique term ids.
+   */ async getTermIds(fromBlock, toBlock) {
         return this.cached([
             "getTermIds",
             fromBlock,
             toBlock
         ], async ()=>{
-            // TODO: Filter out yield token addresses
             const events = await this.getTransferEvents(// new mints result in a transfer from the zero address
             (0, $eCQIH$ethers.ethers).constants.AddressZero, null, fromBlock, toBlock);
-            return Array.from(new Set(events.map((event)=>event.args.id.toNumber())));
+            return Array.from(new Set(events// filter out YTs
+            .filter((event)=>(0, $6ff8d0293b29261d$export$238876ec612ad57e)(event.args.id)).map((event)=>event.args.id.toHexString())));
         });
     }
-    getCreatedAtBlock(termId) {
+    getCreatedAtBlock(tokenId) {
         return this.cached([
             "getCreatedAtBlock",
-            termId
+            tokenId
         ], async ()=>{
             const events = await this.getTransferEvents(// new mints result in a transfer from the zero address
             (0, $eCQIH$ethers.ethers).constants.AddressZero, null);
-            const firstTransferEvent = events.find(({ args: args  })=>args.id.eq(termId));
+            const firstTransferEvent = events.find(({ args: args  })=>args.id.eq(tokenId));
             return firstTransferEvent?.blockNumber || null;
         });
     }
@@ -330,34 +354,82 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
     getBaseAsset() {
         return this.call("token", []);
     }
-    getSymbol(termId) {
+    getSymbol(tokenId) {
         return this.call("symbol", [
-            termId
+            tokenId
         ]);
     }
     getDecimals() {
         return this.call("decimals", []);
     }
-    getName(termId) {
+    getName(tokenId) {
         return this.call("name", [
-            termId
+            tokenId
         ]);
     }
-    async getBalanceOf(termId, address) {
+    async getBalanceOf(tokenId, address) {
         const balanceBigNumber = await this.call("balanceOf", [
-            termId,
+            tokenId,
             address
         ]);
-        return balanceBigNumber.toString();
+        const decimals = await this.getDecimals();
+        return (0, $eCQIH$etherslibutils.formatUnits)(balanceBigNumber, decimals);
     }
     /**
    * Fetches and caches the terms unlockedSharePrice value from our datasource (contract).
    * @notice This function converts the sharePrice from a fixed point number.
-   * @param {number} termId - the term id (expiry)
    * @return {Promise<string>} The unlocked share price as a string.
    */ async getUnlockedPricePerShare() {
-        const sharePriceBN = await this.call("unlockedSharePrice", []);
-        return (0, $eCQIH$evmbn.fromBn)(sharePriceBN, await this.getDecimals());
+        const sharePriceBigNumber = await this.call("unlockedSharePrice", []);
+        const decimals = await this.getDecimals();
+        return (0, $eCQIH$etherslibutils.formatUnits)(sharePriceBigNumber, decimals);
+    }
+    /**
+   * Gets the total supply of a certain token.
+   * @param {string} tokenId - the token id (expiry)
+   * @return {Promise<string>} total supply represented as a string
+   */ async getTotalSupply(tokenId) {
+        const supplyBigNumber = await this.call("totalSupply", [
+            tokenId
+        ]);
+        const decimals = await this.getDecimals();
+        return (0, $eCQIH$etherslibutils.formatUnits)(supplyBigNumber, decimals);
+    }
+    /**
+   * Wraps the lock function in the Term contract, allows caller to mint fixed and variable positions in a term.
+   * @async
+   * @param {Signer} signer - Ethers signer object.
+   * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
+   * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
+   * @param {string} termId - The term id (expiry).
+   * @param {BigNumber} amount - Amount of underlying tokens to use to mint.
+   * @param {string} ptDestination - Address to receive principal tokens.
+   * @param {string} ytDestination - Address to receive yield tokens.
+   * @param {string} hasPreFunding- Have any funds already been sent to the contract, not commonly used for EOAs.
+   * @return {Promise<MintResponse>}
+   */ async lock(signer, termId, assetIds, assetAmounts, amount, ptDestination, ytDestination, ytBeginDate, hasPreFunding) {
+        if (assetAmounts.length !== assetIds.length) console.error("Error MultiTermDataSource.Lock(): assetIds and assetAmounts must be the same length.");
+        const assetIdsUnique = new Set(assetIds);
+        if (assetIdsUnique.size !== assetIds.length) console.error("Error MultiTermDataSource.Lock(): assetIds list is not unique.");
+        const decimals = await this.getDecimals();
+        const amountBigNumber = (0, $eCQIH$etherslibutils.parseUnits)(amount, decimals);
+        const multiTerm = this.contract.connect(signer);
+        const txn = await multiTerm.lock(assetIds, assetAmounts, amountBigNumber, hasPreFunding, ytDestination, ptDestination, ytBeginDate, termId);
+        const receipt = await txn.wait();
+        // can safely assume that any successful transaction will have events and event arguments
+        const events = receipt.events;
+        const transferSingleLogs = events.filter((event)=>{
+            return event.event === "TransferSingle" && event.args.from === (0, $eCQIH$ethers.ethers).constants.AddressZero;
+        });
+        // maybe can just check index but not verified events will be ordered
+        const ytMintEvent = transferSingleLogs.find((log)=>(0, $4ff6911a82243538$export$e6aa4d1f02dd6fdd)(log.args.id));
+        const ytBigNumber = ytMintEvent.args.value;
+        const ptMintEvent = transferSingleLogs.find((log)=>(0, $6ff8d0293b29261d$export$238876ec612ad57e)(log.args.id));
+        const ptBigNumber = ptMintEvent.args.value;
+        return {
+            principalTokens: (0, $eCQIH$etherslibutils.formatUnits)(ptBigNumber, decimals),
+            yieldTokens: (0, $eCQIH$etherslibutils.formatUnits)(ytBigNumber, decimals)
+        };
     }
 }
 
@@ -402,6 +474,7 @@ var $fe6691dc6a8bbe5c$exports = {};
 $parcel$export($fe6691dc6a8bbe5c$exports, "TokenContractDataSource", () => $fe6691dc6a8bbe5c$export$f746d784fcd6629);
 
 
+
 var $f00ba8e0ba7f8838$exports = {};
 
 $parcel$export($f00ba8e0ba7f8838$exports, "CoinGeckoAPIDataSource", () => $f00ba8e0ba7f8838$export$9329909b02e34fde);
@@ -443,13 +516,15 @@ class $fe6691dc6a8bbe5c$export$f746d784fcd6629 {
             owner,
             spender, 
         ]);
-        return balanceBigNumber.toString();
+        const decimals = await this.getDecimals();
+        return (0, $eCQIH$etherslibutils.formatUnits)(balanceBigNumber, decimals);
     }
     async getBalanceOf(address) {
         const balanceBigNumber = await this.erc20DataSource.call("balanceOf", [
             address, 
         ]);
-        return balanceBigNumber.toString();
+        const decimals = await this.getDecimals();
+        return (0, $eCQIH$etherslibutils.formatUnits)(balanceBigNumber, decimals);
     }
 }
 
@@ -495,11 +570,11 @@ var $8af14f8f6b4799b0$exports = {};
 
 $parcel$export($8af14f8f6b4799b0$exports, "LPToken", () => $8af14f8f6b4799b0$export$84f20e6ecc12f354);
 class $8af14f8f6b4799b0$export$84f20e6ecc12f354 {
-    constructor(id, context, pool){
-        this.id = id;
+    constructor(context, pool){
+        this.id = pool.id;
         this.context = context;
         this.pool = pool;
-        this.maturityDate = new Date(id * 1000);
+        this.maturityDate = new Date(+pool.id * 1000);
     }
     async getBaseAsset() {
         return this.pool.getBaseAsset();
@@ -590,7 +665,6 @@ class $43a71ca2139b91c6$export$5b513f5c41d35e50 {
 var $51ba50e48c247b12$exports = {};
 
 $parcel$export($51ba50e48c247b12$exports, "Term", () => $51ba50e48c247b12$export$656c1e606ad06131);
-
 async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
     const current = await provider.getBlockNumber();
     const currentBlock = await provider.getBlock(current);
@@ -698,9 +772,10 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
    * @param {string} amount - Amount of underlying tokens to use to mint.
    * @return {Promise<MintResponse>}
    */ async mint(signer, amount) {
-        return await this.multiTerm.dataSource.lock(signer, this.id, [], [], (0, $eCQIH$evmbn.toBn)(amount, await this.multiTerm.getDecimals()), signer.address, signer.address, await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider) + 100, false);
+        return await this.multiTerm.dataSource.lock(signer, this.id, [], [], amount, signer.address, signer.address, await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider) + 100, false);
     }
 }
+
 
 
 
@@ -761,9 +836,10 @@ class $73142241d07e4549$export$44a06e384a6d2ed0 {
    * @return {Promise<string>} TVL represented as a string in terms of underlying.
    */ async getTVL() {
         const terms = await this.getTerms();
-        let tvl = new (0, $eCQIH$bignumberjs.BigNumber)(0);
-        for (const term of terms)tvl = tvl.plus(await term.getTVL());
-        return tvl.toString();
+        const decimals = await this.getDecimals();
+        let tvl = (0, $eCQIH$ethers.BigNumber).from(0);
+        for (const term of terms)tvl = tvl.add((0, $eCQIH$etherslibutils.parseUnits)(await term.getTVL(), decimals));
+        return (0, $eCQIH$etherslibutils.formatUnits)(tvl, decimals);
     }
     /**
    * Gets the MultiTerm's unlockedSharePrice value
@@ -1132,6 +1208,7 @@ async function $2199ecd2883db3b5$export$3191c47e10722ce4(amount, poolAddress, si
 
 
 $parcel$exportWildcard(module.exports, $f65b6b18b897f856$exports);
+$parcel$exportWildcard(module.exports, $cabaabaa231f1af1$exports);
 $parcel$exportWildcard(module.exports, $54e3433d3ac69f8a$exports);
 $parcel$exportWildcard(module.exports, $20adc394a346779f$exports);
 $parcel$exportWildcard(module.exports, $d0dba6c4aa120ac9$exports);
@@ -1148,12 +1225,15 @@ $parcel$exportWildcard(module.exports, $f00ba8e0ba7f8838$exports);
 $parcel$exportWildcard(module.exports, $38c20ee8daaa11b0$exports);
 $parcel$exportWildcard(module.exports, $047c4a05380e9203$exports);
 $parcel$exportWildcard(module.exports, $3b777295048083ac$exports);
+$parcel$exportWildcard(module.exports, $8af14f8f6b4799b0$exports);
 $parcel$exportWildcard(module.exports, $db3c4c3da11ea48c$exports);
 $parcel$exportWildcard(module.exports, $73142241d07e4549$exports);
 $parcel$exportWildcard(module.exports, $5c922a29083dd917$exports);
+$parcel$exportWildcard(module.exports, $2ababb11162a7525$exports);
 $parcel$exportWildcard(module.exports, $51ba50e48c247b12$exports);
 $parcel$exportWildcard(module.exports, $2361706748e2a981$exports);
 $parcel$exportWildcard(module.exports, $43a71ca2139b91c6$exports);
+$parcel$exportWildcard(module.exports, $d42f7646c857727b$exports);
 $parcel$exportWildcard(module.exports, $a6ef1106a8ce388b$exports);
 $parcel$exportWildcard(module.exports, $98797cba267d5720$exports);
 $parcel$exportWildcard(module.exports, $7141e549f83aab3e$exports);
@@ -1161,10 +1241,6 @@ $parcel$exportWildcard(module.exports, $9dde791ff857a61d$exports);
 $parcel$exportWildcard(module.exports, $36cbfb79cc4b34b2$exports);
 $parcel$exportWildcard(module.exports, $9c1766b6f9f74658$exports);
 $parcel$exportWildcard(module.exports, $2199ecd2883db3b5$exports);
-$parcel$exportWildcard(module.exports, $cabaabaa231f1af1$exports);
-$parcel$exportWildcard(module.exports, $8af14f8f6b4799b0$exports);
-$parcel$exportWildcard(module.exports, $2ababb11162a7525$exports);
-$parcel$exportWildcard(module.exports, $d42f7646c857727b$exports);
 
 
 //# sourceMappingURL=main.js.map
