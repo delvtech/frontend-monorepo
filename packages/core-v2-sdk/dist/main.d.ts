@@ -71,34 +71,34 @@ interface MintResponse {
 }
 export interface MultiPoolDataSource {
     address: string;
-    getPoolIds: (fromBlock?: number, toBlock?: number) => Promise<number[]>;
+    getPoolIds: (fromBlock?: number, toBlock?: number) => Promise<string[]>;
     getMultiTerm: () => Promise<string>;
-    getPoolReserves: (poolId: number) => Promise<PoolReserves>;
-    getPoolParameters: (poolId: number) => Promise<PoolParameters>;
+    getPoolReserves: (poolId: string) => Promise<PoolReserves>;
+    getPoolParameters: (poolId: string) => Promise<PoolParameters>;
     getBaseAsset: () => Promise<string>;
-    getSymbol: (poolId: number) => Promise<string>;
+    getSymbol: (poolId: string) => Promise<string>;
     getDecimals: () => Promise<number>;
-    getName: (poolId: number) => Promise<string>;
-    getBalanceOf: (poolId: number, address: string) => Promise<string>;
+    getName: (poolId: string) => Promise<string>;
+    getBalanceOf: (poolId: string, address: string) => Promise<string>;
 }
 export class MultiPoolContractDataSource extends ContractDataSource<_Pool1> implements MultiPoolDataSource {
     constructor(address: string, provider: providers.Provider);
-    getPoolIds(fromBlock?: number, toBlock?: number): Promise<number[]>;
+    getPoolIds(fromBlock?: number, toBlock?: number): Promise<string[]>;
     getMultiTerm(): Promise<string>;
     /**
      * Fetches and caches the pool reserves from our datasource (contract).
      * @notice This function returns reserves as string representation of a fixed point number.
-     * @param {number} poolId - the pool id (expiry)
+     * @param {string} poolId - the pool id (expiry)
      * @return {Promise<PoolReserves>}
      */
-    getPoolReserves(poolId: number): Promise<PoolReserves>;
+    getPoolReserves(poolId: string): Promise<PoolReserves>;
     /**
      * Fetches and caches the pool parameters from our datasource (contract).
      * @notice This function also handles converting the pool parameters from a fixed point number.
-     * @param {number} poolId - the pool id (expiry)
+     * @param {string} poolId - the pool id (expiry)
      * @return {Promise<PoolParameters>}
      */
-    getPoolParameters(poolId: number): Promise<PoolParameters>;
+    getPoolParameters(poolId: string): Promise<PoolParameters>;
     /**
      * Fetches the base asset address from our datasource (contract).
      */
@@ -106,7 +106,7 @@ export class MultiPoolContractDataSource extends ContractDataSource<_Pool1> impl
     /**
      * Fetches the symbol for a given poolId from our datasource (contract).
      */
-    getSymbol(poolId: number): Promise<string>;
+    getSymbol(poolId: string): Promise<string>;
     /**
      * Fetches the number of decimals used by tokens in our datasource (contract).
      */
@@ -114,25 +114,25 @@ export class MultiPoolContractDataSource extends ContractDataSource<_Pool1> impl
     /**
      * Fetches the name for a given poolId from our datasource (contract).
      */
-    getName(poolId: number): Promise<string>;
+    getName(poolId: string): Promise<string>;
     /**
      * Fetches an address's balance of a given poolId from our datasource (contract).
      */
-    getBalanceOf(poolId: number, address: string): Promise<string>;
+    getBalanceOf(poolId: string, address: string): Promise<string>;
 }
 export interface MultiTermDataSource {
     address: string;
-    getTermIds: (fromBlock?: number, toBlock?: number) => Promise<number[]>;
-    getCreatedAtBlock: (termId: number) => Promise<number | null>;
+    getTermIds: (fromBlock?: number, toBlock?: number) => Promise<string[]>;
+    getCreatedAtBlock: (tokenId: string) => Promise<number | null>;
     getYieldSource: () => Promise<string | null>;
     getBaseAsset: () => Promise<string>;
-    getSymbol: (termId: number) => Promise<string>;
+    getSymbol: (tokenId: string) => Promise<string>;
     getDecimals: () => Promise<number>;
-    getName: (termId: number) => Promise<string>;
-    getBalanceOf: (termId: number, address: string) => Promise<string>;
+    getName: (tokenId: string) => Promise<string>;
+    getBalanceOf: (tokenId: string, address: string) => Promise<string>;
     getUnlockedPricePerShare: () => Promise<string>;
-    getTotalSupply: (termId: number) => Promise<string>;
-    lock: (signer: Signer, termId: number, assetIds: string[], assetAmounts: string[], amount: BigNumber, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean) => Promise<MintResponse>;
+    getTotalSupply: (tokenId: string) => Promise<string>;
+    lock: (signer: Signer, termId: string, assetIds: string[], assetAmounts: string[], amount: BigNumber, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean) => Promise<MintResponse>;
 }
 export class MultiTermContractDataSource extends ContractDataSource<_Term1> implements MultiTermDataSource {
     constructor(address: string, provider: providers.Provider);
@@ -141,43 +141,42 @@ export class MultiTermContractDataSource extends ContractDataSource<_Term1> impl
      * Gets all terms that have been created from the datasource (contract).
      * @param {number} fromBlock - Optional, start block number to search from.
      * @param {number} toBlock - Optional, end block number to search to.
-     * @return {Promise<number[]>} A promise of an array of unique term ids.
+     * @return {Promise<string[]>} A promise of an array of unique term ids.
      */
-    getTermIds(fromBlock?: number, toBlock?: number): Promise<number[]>;
-    getCreatedAtBlock(termId: number): Promise<number | null>;
+    getTermIds(fromBlock?: number, toBlock?: number): Promise<string[]>;
+    getCreatedAtBlock(tokenId: string): Promise<number | null>;
     getYieldSource(): Promise<null>;
     getBaseAsset(): Promise<string>;
-    getSymbol(termId: number): Promise<string>;
+    getSymbol(tokenId: string): Promise<string>;
     getDecimals(): Promise<number>;
-    getName(termId: number): Promise<string>;
-    getBalanceOf(termId: number, address: string): Promise<string>;
+    getName(tokenId: string): Promise<string>;
+    getBalanceOf(tokenId: string, address: string): Promise<string>;
     /**
      * Fetches and caches the terms unlockedSharePrice value from our datasource (contract).
      * @notice This function converts the sharePrice from a fixed point number.
-     * @param {number} termId - the term id (expiry)
      * @return {Promise<string>} The unlocked share price as a string.
      */
     getUnlockedPricePerShare(): Promise<string>;
     /**
-     * Gets the total supply of a certain term.
-     * @param {number} termId - the term id (expiry)
+     * Gets the total supply of a certain token.
+     * @param {string} tokenId - the token id (expiry)
      * @return {Promise<string>} total supply represented as a string
      */
-    getTotalSupply(termId: number): Promise<string>;
+    getTotalSupply(tokenId: string): Promise<string>;
     /**
      * Wraps the lock function in the Term contract, allows caller to mint fixed and variable positions in a term.
      * @async
      * @param {Signer} signer - Ethers signer object.
      * @param {string[]} assetIds -  The array of PT, YT and Unlocked share identifiers.
      * @param {string[]} assetAmounts - The amount of each input PT, YT and Unlocked share to use
-     * @param {number} termId - The term id (expiry).
+     * @param {string} termId - The term id (expiry).
      * @param {BigNumber} amount - Amount of underlying tokens to use to mint.
      * @param {string} ptDestination - Address to receive principal tokens.
      * @param {string} ytDestination - Address to receive yield tokens.
      * @param {string} hasPreFunding- Have any funds already been sent to the contract, not commonly used for EOAs.
      * @return {Promise<MintResponse>}
      */
-    lock(signer: Signer, termId: number, assetIds: string[], assetAmounts: string[], amount: BigNumber, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean): Promise<MintResponse>;
+    lock(signer: Signer, termId: string, assetIds: string[], assetAmounts: string[], amount: BigNumber, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean): Promise<MintResponse>;
 }
 export class ERC4626TermContractDataSource extends MultiTermContractDataSource {
     contract: ERC4626Term;
@@ -254,11 +253,11 @@ export class YieldSource {
     getName(): Promise<string>;
 }
 export class PrincipalToken {
-    id: number;
+    id: string;
     context: ElementContext;
     term: Term;
     maturityDate: Date;
-    constructor(id: number, context: ElementContext, term: Term);
+    constructor(context: ElementContext, term: Term);
     getBaseAsset(): Promise<Token>;
     getSymbol(): Promise<string>;
     getDecimals(): Promise<number>;
@@ -266,11 +265,11 @@ export class PrincipalToken {
     getBalanceOf(address: string): Promise<string>;
 }
 export class YieldToken {
-    id: number;
+    id: string;
     context: ElementContext;
     term: Term;
     maturityDate: Date;
-    constructor(id: number, context: ElementContext, term: Term);
+    constructor(startTime: number, context: ElementContext, term: Term);
     getBaseAsset(): Promise<Token>;
     getSymbol(): Promise<string>;
     getDecimals(): Promise<number>;
@@ -279,13 +278,13 @@ export class YieldToken {
     getAccruedInterest(): Promise<string>;
 }
 export class Term {
-    id: number;
+    id: string;
     guid: string;
     context: ElementContext;
     multiTerm: MultiTerm;
     principalToken: PrincipalToken;
     maturityDate: Date;
-    constructor(id: number, context: ElementContext, multiTerm: MultiTerm);
+    constructor(id: string, context: ElementContext, multiTerm: MultiTerm);
     getYieldSource(): Promise<YieldSource | null>;
     getBaseAsset(): Promise<Token>;
     /**
@@ -296,7 +295,7 @@ export class Term {
      */
     getTVL(): Promise<string>;
     getCreatedAtBlock(): Promise<number | null>;
-    getYieldToken(startTimeStamp: number): YieldToken;
+    getYieldToken(startTime: number): YieldToken;
     /**
      * Convenience method that mints fixed and variable positions in a term using underlying tokens.
      * This function assumes the token receiver is the signer address and the destination for both token positions are the same.
@@ -318,10 +317,10 @@ export class MultiTerm {
     constructor(address: string, context: ElementContext, dataSource?: MultiTermDataSource);
     /**
      * Gets a Term by the termId from this MultiTerm.
-     * @param {number} termId - the termId
+     * @param {string} termId - the termId
      * @return {Term}
      */
-    getTerm(termId: number): Term;
+    getTerm(termId: string): Term;
     /**
      * Gets all the Terms from this MultiTerm. Searches by TransferSingleEvents.
      * @async
@@ -380,10 +379,10 @@ export class MultiPool {
     constructor(address: string, context: ElementContext, dataSource?: MultiPoolDataSource);
     /**
      * Gets a Pool by the poolId from this MultiPool.
-     * @param {number} poolId - the poolId
+     * @param {string} poolId - the poolId
      * @return {Pool}
      */
-    getPool(poolId: number): Pool;
+    getPool(poolId: string): Pool;
     /**
      * Gets all the Pools from this MultiPool. Searches by PoolRegisteredEvents.
      * @async
@@ -419,22 +418,22 @@ export class MultiPool {
     /**
      * Gets the pool reserves
      * @async
-     * @param {number} poolId - the pool id
+     * @param {string} poolId - the pool id
      * @return {Promise<PoolReserves>} pool reserves.
      */
-    getPoolReserves(poolId: number): Promise<PoolReserves>;
+    getPoolReserves(poolId: string): Promise<PoolReserves>;
     /**
      * Gets the pool parameters
-     * @param {number} poolId - the pool id
+     * @param {string} poolId - the pool id
      * @return {Promise<PoolParameters>} pool parameters.
      */
-    getPoolParameters(poolId: number): Promise<PoolParameters>;
+    getPoolParameters(poolId: string): Promise<PoolParameters>;
 }
 /**
  * Pool model class.
  */
 export class Pool {
-    id: number;
+    id: string;
     guid: string;
     context: ElementContext;
     multiPool: MultiPool;
@@ -446,7 +445,7 @@ export class Pool {
      * @param {ElementContext} context - Context object for the sdk.
      * @param {MultiPool} multiPool - the MultiPool model where this pool is stored.
      */
-    constructor(id: number, context: ElementContext, multiPool: MultiPool);
+    constructor(id: string, context: ElementContext, multiPool: MultiPool);
     /**
      * Gets the associated MultiTerm model for this pool.
      * @return {Promise<MultiTerm>}
@@ -521,11 +520,11 @@ export class Pool {
     getFixedAPR(): Promise<string>;
 }
 export class LPToken {
-    id: number;
+    id: string;
     context: ElementContext;
     pool: Pool;
     maturityDate: Date;
-    constructor(id: number, context: ElementContext, pool: Pool);
+    constructor(context: ElementContext, pool: Pool);
     getBaseAsset(): Promise<Token>;
     getSymbol(): Promise<string>;
     getDecimals(): Promise<number>;
