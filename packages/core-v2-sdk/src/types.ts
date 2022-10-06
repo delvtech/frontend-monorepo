@@ -1,5 +1,3 @@
-import { Signer } from "ethers";
-
 export interface PoolReserves {
   bonds: string;
   shares: string;
