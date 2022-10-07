@@ -80,8 +80,7 @@ export class TokenContractDataSource implements TokenDataSource {
         ? parseUnits(amount, await this.getDecimals())
         : ethers.constants.MaxUint256,
     );
-    const r = await transaction.wait(); // will throw an error if transaction fails
-    console.log(r.transactionHash);
+    await transaction.wait(); // will throw an error if transaction fails
     return true;
   }
 }

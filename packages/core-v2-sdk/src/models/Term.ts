@@ -1,5 +1,4 @@
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { Signer, Wallet } from "ethers";
+import { Signer } from "ethers";
 import { ElementContext } from "src/context";
 import { MintResponse } from "src/types";
 import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";

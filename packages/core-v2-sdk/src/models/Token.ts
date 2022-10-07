@@ -63,11 +63,7 @@ export class Token {
    * @param {string} [amount] - Amount approved for, defaults to maximum.
    * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
    */
-  async approve(
-    signer: Signer,
-    who: string,
-    amount?: string,
-  ): Promise<boolean> {
+  approve(signer: Signer, who: string, amount?: string): Promise<boolean> {
     return this.dataSource.approve(signer, who, amount);
   }
 }
