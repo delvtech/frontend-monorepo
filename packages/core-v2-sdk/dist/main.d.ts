@@ -1,8 +1,7 @@
-import { providers, BaseContract, Signer, Wallet, BigNumberish, ContractTransaction, Overrides } from "ethers";
+import { providers, BaseContract, Signer, BigNumberish, ContractTransaction, Overrides } from "ethers";
 import LRUCache from "lru-cache";
 import { Pool as _Pool1, Term as _Term1, ERC4626Term, CompoundV3Term, ERC20, ERC4626 } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 export interface DataSource extends Record<string, any> {
 }
 export interface ElementContextOptions {
@@ -196,6 +195,7 @@ export interface TokenDataSource {
     getPrice: (currency: string) => Promise<number | null>;
     getAllowance: (owner: string, spender: string) => Promise<string>;
     getBalanceOf: (address: string) => Promise<string>;
+    approve: (signer: Signer, who: string, amount?: string) => Promise<boolean>;
 }
 export interface TokenAPIDataSource {
     getTokenPrice: (id: string, currency: string) => Promise<number | null>;
@@ -219,6 +219,14 @@ export class TokenContractDataSource implements TokenDataSource {
     getPrice(currency: string): Promise<number | null>;
     getAllowance(owner: string, spender: string): Promise<string>;
     getBalanceOf(address: string): Promise<string>;
+    /**
+     * Sets approval of token access up to a certain amount
+     * @param {Signer} signer - Signer.
+     * @param {string} who - Address to approve access to.
+     * @param {string} [amount] - Amount approved for, defaults to maximum.
+     * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
+     */
+    approve(signer: Signer, who: string, amount?: string): Promise<boolean>;
 }
 export interface YieldSourceDataSource {
     address: string;
@@ -244,6 +252,14 @@ export class Token {
     getPrice(currency: string): Promise<number | null>;
     getAllowance(owner: string, spender: string): Promise<string>;
     getBalanceOf(address: string): Promise<string>;
+    /**
+     * Sets approval of token access up to a certain amount
+     * @param {Signer} signer - Signer.
+     * @param {string} who - Address to approve access to.
+     * @param {string} [amount] - Amount approved for, defaults to maximum.
+     * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
+     */
+    approve(signer: Signer, who: string, amount?: string): Promise<boolean>;
 }
 export class YieldSource {
     address: string;
@@ -304,7 +320,7 @@ export class Term {
      * @param {string} amount - Amount of underlying tokens to use to mint.
      * @return {Promise<MintResponse>}
      */
-    mint(signer: SignerWithAddress | Wallet, amount: string): Promise<MintResponse>;
+    mint(signer: Signer, amount: string): Promise<MintResponse>;
 }
 /**
  * MultiTerm model class.
