@@ -8,5 +8,9 @@ export interface TokenDataSource {
   getPrice: (currency: string) => Promise<number | null>;
   getAllowance: (owner: string, spender: string) => Promise<string>;
   getBalanceOf: (address: string) => Promise<string>;
-  approve: (signer: Signer, who: string, amount?: string) => Promise<boolean>;
+  approve: (
+    signer: Signer,
+    spender: string,
+    amount?: string,
+  ) => Promise<boolean>;
 }

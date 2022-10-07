@@ -64,18 +64,18 @@ export class TokenContractDataSource implements TokenDataSource {
   /**
    * Sets approval of token access up to a certain amount
    * @param {Signer} signer - Signer.
-   * @param {string} who - Address to approve access to.
+   * @param {string} spender - Address to approve access to.
    * @param {string} [amount] - Amount approved for, defaults to maximum.
    * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
    */
   async approve(
     signer: Signer,
-    who: string,
+    spender: string,
     amount?: string,
   ): Promise<boolean> {
     const token = this.erc20DataSource.contract.connect(signer);
     const transaction = await token.approve(
-      who,
+      spender,
       amount
         ? parseUnits(amount, await this.getDecimals())
         : ethers.constants.MaxUint256,
