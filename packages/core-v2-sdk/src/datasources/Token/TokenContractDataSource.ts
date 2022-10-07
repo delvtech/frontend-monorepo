@@ -1,5 +1,5 @@
-import { providers } from "ethers";
-import { formatUnits } from "ethers/lib/utils";
+import { ethers, providers, Signer } from "ethers";
+import { formatUnits, parseUnits } from "ethers/lib/utils";
 import { ERC20, ERC20__factory } from "@elementfi/core-v2-typechain";
 import { ContractDataSource } from "src/datasources/ContractDataSource";
 import { TokenAPIDataSource } from "src/datasources/TokenAPI/TokenAPIDataSource";
@@ -59,5 +59,29 @@ export class TokenContractDataSource implements TokenDataSource {
     ]);
     const decimals = await this.getDecimals();
     return formatUnits(balanceBigNumber, decimals);
+  }
+
+  /**
+   * Sets approval of token access up to a certain amount
+   * @param {Signer} signer - Signer.
+   * @param {string} who - Address to approve access to.
+   * @param {string} [amount] - Amount approved for, defaults to maximum.
+   * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
+   */
+  async approve(
+    signer: Signer,
+    who: string,
+    amount?: string,
+  ): Promise<boolean> {
+    const token = this.erc20DataSource.contract.connect(signer);
+    const transaction = await token.approve(
+      who,
+      amount
+        ? parseUnits(amount, await this.getDecimals())
+        : ethers.constants.MaxUint256,
+    );
+    const r = await transaction.wait(); // will throw an error if transaction fails
+    console.log(r.transactionHash);
+    return true;
   }
 }

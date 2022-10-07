@@ -1,7 +1,8 @@
-import { getDefaultProvider, Wallet } from "ethers";
+import { constants, getDefaultProvider, Wallet } from "ethers";
 import { ElementContext } from "src/context";
 import goerliAddresses from "./goerliAddresses.json";
 import { MultiPool } from "src/models/MultiPool";
+import { Token } from "..";
 
 const chainId = 5;
 const provider = getDefaultProvider(process.env.PROVIDER_URI || chainId);
@@ -34,7 +35,11 @@ async function example(): Promise<void> {
 
   const term = await firstPool.getTerm();
   // console.log(await term.multiTerm.getTVL());
-  console.log(await term.mint(wallet, "10000"));
+  // console.log(await term.mint(wallet, "10000"));
+  const dai = new Token("0xB09FB09D0B77d8F11D431E906BA73b38a71922b0", context);
+  console.log(
+    await dai.approve(wallet, "0x5a063D2Bfcf35192B10ba756a6256f084992F5d7"),
+  );
 }
 
 example();

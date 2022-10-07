@@ -1,3 +1,4 @@
+import { Signer } from "ethers";
 import { ElementContext } from "src/context";
 import { TokenContractDataSource } from "src/datasources/Token/TokenContractDataSource";
 import { TokenDataSource } from "src/datasources/Token/TokenDataSource";
@@ -53,5 +54,20 @@ export class Token {
 
   getBalanceOf(address: string): Promise<string> {
     return this.dataSource.getBalanceOf(address);
+  }
+
+  /**
+   * Sets approval of token access up to a certain amount
+   * @param {Signer} signer - Signer.
+   * @param {string} who - Address to approve access to.
+   * @param {string} [amount] - Amount approved for, defaults to maximum.
+   * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
+   */
+  async approve(
+    signer: Signer,
+    who: string,
+    amount?: string,
+  ): Promise<boolean> {
+    return this.dataSource.approve(signer, who, amount);
   }
 }

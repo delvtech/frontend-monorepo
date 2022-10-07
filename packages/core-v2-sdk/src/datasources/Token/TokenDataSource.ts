@@ -1,3 +1,5 @@
+import { Signer } from "ethers";
+
 export interface TokenDataSource {
   address: string;
   getSymbol: () => Promise<string>;
@@ -6,4 +8,5 @@ export interface TokenDataSource {
   getPrice: (currency: string) => Promise<number | null>;
   getAllowance: (owner: string, spender: string) => Promise<string>;
   getBalanceOf: (address: string) => Promise<string>;
+  approve: (signer: Signer, who: string, amount?: string) => Promise<boolean>;
 }

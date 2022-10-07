@@ -475,6 +475,7 @@ $parcel$export($fe6691dc6a8bbe5c$exports, "TokenContractDataSource", () => $fe66
 
 
 
+
 var $f00ba8e0ba7f8838$exports = {};
 
 $parcel$export($f00ba8e0ba7f8838$exports, "CoinGeckoAPIDataSource", () => $f00ba8e0ba7f8838$export$9329909b02e34fde);
@@ -525,6 +526,19 @@ class $fe6691dc6a8bbe5c$export$f746d784fcd6629 {
         ]);
         const decimals = await this.getDecimals();
         return (0, $eCQIH$etherslibutils.formatUnits)(balanceBigNumber, decimals);
+    }
+    /**
+   * Sets approval of token access up to a certain amount
+   * @param {Signer} signer - Signer.
+   * @param {string} who - Address to approve access to.
+   * @param {string} [amount] - Amount approved for, defaults to maximum.
+   * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
+   */ async approve(signer, who, amount) {
+        const token = this.erc20DataSource.contract.connect(signer);
+        const transaction = await token.approve(who, amount ? (0, $eCQIH$etherslibutils.parseUnits)(amount, await this.getDecimals()) : (0, $eCQIH$ethers.ethers).constants.MaxUint256);
+        const r = await transaction.wait(); // will throw an error if transaction fails
+        console.log(r.transactionHash);
+        return true;
     }
 }
 
@@ -640,6 +654,15 @@ class $2361706748e2a981$export$50792b0e93539fde {
     }
     getBalanceOf(address) {
         return this.dataSource.getBalanceOf(address);
+    }
+    /**
+   * Sets approval of token access up to a certain amount
+   * @param {Signer} signer - Signer.
+   * @param {string} who - Address to approve access to.
+   * @param {string} [amount] - Amount approved for, defaults to maximum.
+   * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
+   */ async approve(signer, who, amount) {
+        return this.dataSource.approve(signer, who, amount);
     }
 }
 
@@ -772,7 +795,8 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
    * @param {string} amount - Amount of underlying tokens to use to mint.
    * @return {Promise<MintResponse>}
    */ async mint(signer, amount) {
-        return await this.multiTerm.dataSource.lock(signer, this.id, [], [], amount, signer.address, signer.address, await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider) + 100, false);
+        const signerAddress = await signer.getAddress();
+        return await this.multiTerm.dataSource.lock(signer, this.id, [], [], amount, signerAddress, signerAddress, await (0, $c55952b507d79662$export$e16a9e8da7a04919)(this.context.provider) + 100, false);
     }
 }
 
