@@ -1,5 +1,5 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { Wallet } from "ethers";
+import { Signer, Wallet } from "ethers";
 import { ElementContext } from "src/context";
 import { MintResponse } from "src/types";
 import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
@@ -61,18 +61,16 @@ export class Term {
    * @param {string} amount - Amount of underlying tokens to use to mint.
    * @return {Promise<MintResponse>}
    */
-  async mint(
-    signer: SignerWithAddress | Wallet,
-    amount: string,
-  ): Promise<MintResponse> {
+  async mint(signer: Signer, amount: string): Promise<MintResponse> {
+    const signerAddress = await signer.getAddress();
     return await this.multiTerm.dataSource.lock(
       signer,
       this.id,
       [],
       [],
       amount,
-      signer.address,
-      signer.address,
+      signerAddress,
+      signerAddress,
       (await getCurrentBlockTimestamp(this.context.provider)) + 100,
       false,
     );
