@@ -1,4 +1,4 @@
-import { providers, BaseContract, Signer, BigNumberish, ContractTransaction, Overrides } from "ethers";
+import { providers, BaseContract, Signer } from "ethers";
 import LRUCache from "lru-cache";
 import { Pool as _Pool1, Term as _Term1, ERC4626Term, CompoundV3Term, ERC20, ERC4626 } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
@@ -134,6 +134,34 @@ export interface MultiTermDataSource {
     getTotalSupply: (tokenId: string) => Promise<string>;
     lock: (signer: Signer, termId: string, assetIds: string[], assetAmounts: string[], amount: string, ptDestination: string, ytDestination: string, ytBeginDate: number, hasPreFunding: boolean) => Promise<MintResponse>;
 }
+/**
+ * Get the data stored in a token id
+ * @param {string} tokenId - The token id to decode
+ * @return An object containing the data stored in the id
+ */
+export function decodeTokenId(tokenId: string): {
+    isYieldToken: boolean;
+    /**
+     * The start timestamp in milliseconds
+     */
+    startTime: number | null;
+    /**
+     * The maturity timestamp in milliseconds
+     */
+    maturity: number;
+};
+/**
+ * Determines whether or not the specified tokenId is a principle token.
+ * @param {BigNumber} tokenId - token id
+ * @return {boolean} whether or not is a principle token
+ */
+export function isPT(tokenId: string): boolean;
+/**
+ * Determines whether or not the specified tokenId is a yield token.
+ * @param {BigNumber} tokenId - token id
+ * @return {boolean} whether or not is a yield token
+ */
+export function isYT(tokenId: string): boolean;
 export class MultiTermContractDataSource extends ContractDataSource<_Term1> implements MultiTermDataSource {
     constructor(address: string, provider: providers.Provider);
     getTransferEvents(from?: string | null, to?: string | null, fromBlock?: number, toBlock?: number): Promise<TransferSingleEvent[]>;
@@ -288,6 +316,14 @@ export class PrincipalToken {
     getName(): Promise<string>;
     getBalanceOf(address: string): Promise<string>;
 }
+/**
+ * Get a token id
+ * @param {number} maturity - The maturity timestamp in milliseconds
+ * @param {number} startTime - The optional start time timestamp in milliseconds
+ * @param {boolean} isYieldToken - Whether or not the token is a yield token
+ * @return A token id
+ */
+export function encodeTokenId(maturity: number, startTime?: number, isYieldToken?: boolean): string;
 export class YieldToken {
     id: string;
     context: ElementContext;
@@ -476,7 +512,7 @@ export class Pool {
     maturityDate: Date;
     /**
      * Creates a Pool model.
-     * @param {number} id - the pool id (expiry)
+     * @param {number} id - the pool id
      * @param {ElementContext} context - Context object for the sdk.
      * @param {MultiPool} multiPool - the MultiPool model where this pool is stored.
      */
@@ -566,73 +602,5 @@ export class LPToken {
     getName(): Promise<string>;
     getBalanceOf(address: string): Promise<string>;
 }
-/**
- * A method to buy yield tokens.  Unclear at this point if this is simply performing the internal flashloan to perform a YTC.
- * @param tokenAddress
- * @param vaultAddress
- * @param amount
- * @param signer
- * @param overrides
- * @returns
- */
-export function buyYieldTokens(tokenAddress: string, vaultAddress: string, amount: BigNumberish, signer: Signer, overrides?: Overrides): Promise<ContractTransaction>;
-/**
- * calculates a trade of prinicipal tokens
- * this is likely to get a lot more complicated with swap kinds, exact in, exact out etc
- * @param tokenAmountsIn
- * @param tokenReserves
- * @returns
- */
-export function calcSwapConvergentCurvePool(tokenAmountsIn: BigNumberish[], tokenReserves: BigNumberish[]): string;
-/**
- * calculates an amount of LP tokens out for an amount of asset provided.  could be single sided or double sided.
- * this one is likely to get a lot more complicated.  there could be join kinds like exact amount in, exact amount out etc.
- * @param tokenAmountsIn
- * @param tokenReserves
- * @returns
- */
-export function calculateLPTokensOut(tokenAmountsIn: BigNumberish[], tokenReserves: BigNumberish[]): string;
-/**
- * A function to provide liquidity to a v2 term
- * @param tokensInAddresses
- * @param amounts
- * @param vaultAddress
- * @param slippage
- * @param signer
- * @param overrides
- * @returns
- */
-export function provideLiquidity(amounts: BigNumberish[], tokensInAddresses: string[], vaultAddress: string, slippage: BigNumberish, signer: Signer, overrides?: Overrides): Promise<ContractTransaction>;
-/**
- * redeem liquidity after the term is mature to the underlying
- * @param amount
- * @param poolAddress
- * @param signer
- * @param overrides
- * @returns
- */
-export function redeemLiquidity(amount: BigNumberish, poolAddress: string, signer: Signer, overrides?: Overrides): Promise<ContractTransaction>;
-/**
- * performs a trade of principal tokens on a v2 pool
- * this is likely to get a lot more complicated with swap kinds, exact in, exact out etc
- * @param tokenInAddress
- * @param tokenOutAddress
- * @param vaultAddress
- * @param amount
- * @param slippage
- * @param signer
- * @param overrides
- * @returns
- */
-export function tradePrincipalTokens(amount: BigNumberish, tokenInAddress: string, tokenOutAddress: string, vaultAddress: string, slippage: BigNumberish, signer: Signer, overrides?: Overrides): Promise<ContractTransaction>;
-/**
- * withdraw liquidity before the term is expired to underlying and pts
- * @param amount
- * @param poolAddress
- * @param signer
- * @param overrides
- * @returns
- */
-export function withdrawLiquidity(amount: BigNumberish, poolAddress: string, signer: Signer, overrides?: Overrides): Promise<ContractTransaction>;
 
 //# sourceMappingURL=main.d.ts.map
