@@ -122,6 +122,7 @@ export class MultiPoolContractDataSource extends ContractDataSource<_Pool1> impl
 export interface MultiTermDataSource {
     address: string;
     getTermIds: (fromBlock?: number, toBlock?: number) => Promise<string[]>;
+    getYieldTokenIds: (fromBlock?: number, toBlock?: number) => Promise<string[]>;
     getCreatedAtBlock: (tokenId: string) => Promise<number | null>;
     getYieldSource: () => Promise<string | null>;
     getBaseAsset: () => Promise<string>;
@@ -143,6 +144,13 @@ export class MultiTermContractDataSource extends ContractDataSource<_Term1> impl
      * @return {Promise<string[]>} A promise of an array of unique term ids.
      */
     getTermIds(fromBlock?: number, toBlock?: number): Promise<string[]>;
+    /**
+     * Gets all yield token that have been created from the datasource (contract).
+     * @param {number} fromBlock - Optional, start block number to search from.
+     * @param {number} toBlock - Optional, end block number to search to.
+     * @return {Promise<string[]>} A promise of an array of unique term ids.
+     */
+    getYieldTokenIds(fromBlock?: number, toBlock?: number): Promise<string[]>;
     getCreatedAtBlock(tokenId: string): Promise<number | null>;
     getYieldSource(): Promise<null>;
     getBaseAsset(): Promise<string>;
@@ -301,6 +309,20 @@ export class Term {
     maturityDate: Date;
     constructor(id: string, context: ElementContext, multiTerm: MultiTerm);
     getYieldSource(): Promise<YieldSource | null>;
+    /**
+     * Gets a Yield Tokens from this Term based on start time.
+     * @param {number} startTime - The start time timestamp in milliseconds.
+     * @return {YieldToken}
+     */
+    getYieldToken(startTime: number): YieldToken;
+    /**
+     * Gets all the Yield Tokens from this Term. Searches by TransferSingleEvents.
+     * @async
+     * @param {number} fromBlock - Optional, start block number to search from.
+     * @param {number} toBlock - Optional, end block number to search to.
+     * @return {Promise<YieldToken[]>}
+     */
+    getYieldTokens(fromBlock?: number, toBlock?: number): Promise<YieldToken[]>;
     getBaseAsset(): Promise<Token>;
     /**
      * Gets the TVL of this term, in terms of the underlying token
@@ -310,7 +332,6 @@ export class Term {
      */
     getTVL(): Promise<string>;
     getCreatedAtBlock(): Promise<number | null>;
-    getYieldToken(startTime: number): YieldToken;
     /**
      * Convenience method that mints fixed and variable positions in a term using underlying tokens.
      * This function assumes the token receiver is the signer address and the destination for both token positions are the same.

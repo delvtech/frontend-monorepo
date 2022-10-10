@@ -1,8 +1,8 @@
 var $eCQIH$ethers = require("ethers");
 var $eCQIH$lrucache = require("lru-cache");
 var $eCQIH$elementfibase = require("@elementfi/base");
-var $eCQIH$elementficorev2typechain = require("@elementfi/core-v2-typechain");
 var $eCQIH$etherslibutils = require("ethers/lib/utils");
+var $eCQIH$elementficorev2typechain = require("@elementfi/core-v2-typechain");
 
 function $parcel$exportWildcard(dest, source) {
   Object.keys(source).forEach(function(key) {
@@ -283,20 +283,31 @@ $parcel$export($d179b418267ba386$exports, "MultiTermContractDataSource", () => $
 const $4a4b662dc565d96c$export$7b6afb4232a53135 = "0x8000000000000000000000000000000000000000000000000000000000000000";
 
 
-function $4ff6911a82243538$export$e6aa4d1f02dd6fdd(tokenId) {
-    const idHex = tokenId.toHexString();
-    const isYT1 = // yield token ids are always 66 characters, ie: "0x" + 64 hex characters
-    // (whereas principal tokens are shorter in length)
-    idHex.length === 66 && // yield token ids always start with 0x8 (1 in binary)
-    idHex.startsWith("0x8") && // This is a special yield token used for accounting in the
-    // pools, disregard it.
-    idHex !== (0, $4a4b662dc565d96c$export$7b6afb4232a53135);
-    return isYT1;
+function $053d9a990d236ae4$export$21656a5e9c0fd04c(tokenId) {
+    // A full token id is a 66 characters long, starting with 0x and followed by
+    // a 256 bit string constructed as such:
+    // [ isYieldToken 1-bit ][ startTimeInSeconds 127-bit ][ expiry 128-bit ]
+    const isLongForm = tokenId.length === 66;
+    return {
+        isYieldToken: // yield token ids are always in long form
+        isLongForm && // yield token ids always start with 0x8 (1 in binary)
+        tokenId.startsWith("0x8") && // This is a special yield token used for accounting in the
+        // pools, disregard it.
+        tokenId !== (0, $4a4b662dc565d96c$export$7b6afb4232a53135),
+        startTime: isLongForm ? +`0x${tokenId.slice(3, 34)}` * 1000 : null,
+        maturity: +`0x${isLongForm ? tokenId.slice(-32) : tokenId.slice(2)}` * 1000
+    };
 }
 
 
 function $6ff8d0293b29261d$export$238876ec612ad57e(tokenId) {
-    return !tokenId.toHexString().startsWith("0x8");
+    return !(0, $053d9a990d236ae4$export$21656a5e9c0fd04c)(tokenId).isYieldToken;
+}
+
+
+
+function $4ff6911a82243538$export$e6aa4d1f02dd6fdd(tokenId) {
+    return (0, $053d9a990d236ae4$export$21656a5e9c0fd04c)(tokenId).isYieldToken;
 }
 
 
@@ -331,7 +342,25 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
             const events = await this.getTransferEvents(// new mints result in a transfer from the zero address
             (0, $eCQIH$ethers.ethers).constants.AddressZero, null, fromBlock, toBlock);
             return Array.from(new Set(events// filter out YTs
-            .filter((event)=>(0, $6ff8d0293b29261d$export$238876ec612ad57e)(event.args.id)).map((event)=>event.args.id.toHexString())));
+            .filter(({ args: args  })=>(0, $6ff8d0293b29261d$export$238876ec612ad57e)(args.id.toHexString())).map(({ args: args  })=>args.id.toHexString())));
+        });
+    }
+    /**
+   * Gets all yield token that have been created from the datasource (contract).
+   * @param {number} fromBlock - Optional, start block number to search from.
+   * @param {number} toBlock - Optional, end block number to search to.
+   * @return {Promise<string[]>} A promise of an array of unique term ids.
+   */ // TODO: How can these be fetched more efficiently and/or filtered by term?
+    async getYieldTokenIds(fromBlock, toBlock) {
+        return this.cached([
+            "getYieldTokenIds",
+            fromBlock,
+            toBlock
+        ], async ()=>{
+            const events = await this.getTransferEvents(// new mints result in a transfer from the zero address
+            (0, $eCQIH$ethers.ethers).constants.AddressZero, null, fromBlock, toBlock);
+            return Array.from(new Set(events// filter out PTs
+            .filter(({ args: args  })=>(0, $4ff6911a82243538$export$e6aa4d1f02dd6fdd)(args.id.toHexString())).map(({ args: args  })=>args.id.toHexString())));
         });
     }
     getCreatedAtBlock(tokenId) {
@@ -417,14 +446,15 @@ class $d179b418267ba386$export$2bd093a746116e9a extends (0, $20adc394a346779f$ex
         const receipt = await txn.wait();
         // can safely assume that any successful transaction will have events and event arguments
         const events = receipt.events;
-        const transferSingleLogs = events.filter((event)=>{
-            return event.event === "TransferSingle" && event.args.from === (0, $eCQIH$ethers.ethers).constants.AddressZero;
+        const transferSingleEvents = events.filter((event)=>{
+            return event.event === "TransferSingle" && event.args && event.args.from === (0, $eCQIH$ethers.ethers).constants.AddressZero;
         });
-        // maybe can just check index but not verified events will be ordered
-        const ytMintEvent = transferSingleLogs.find((log)=>(0, $4ff6911a82243538$export$e6aa4d1f02dd6fdd)(log.args.id));
-        const ytBigNumber = ytMintEvent.args.value;
-        const ptMintEvent = transferSingleLogs.find((log)=>(0, $6ff8d0293b29261d$export$238876ec612ad57e)(log.args.id));
-        const ptBigNumber = ptMintEvent.args.value;
+        // Events are not guaranteed to be in a specific order so we check the id
+        // argument of each event to infer the token type.
+        const ptMintEvent = transferSingleEvents.find(({ args: args  })=>(0, $6ff8d0293b29261d$export$238876ec612ad57e)(args.id.toHexString()));
+        const ptBigNumber = (0, $eCQIH$ethers.BigNumber).from(ptMintEvent?.args.value);
+        const ytMintEvent = transferSingleEvents.find(({ args: args  })=>(0, $4ff6911a82243538$export$e6aa4d1f02dd6fdd)(args.id.toHexString()));
+        const ytBigNumber = (0, $eCQIH$ethers.BigNumber).from(ytMintEvent?.args.value);
         return {
             principalTokens: (0, $eCQIH$etherslibutils.formatUnits)(ptBigNumber, decimals),
             yieldTokens: (0, $eCQIH$etherslibutils.formatUnits)(ytBigNumber, decimals)
@@ -693,6 +723,7 @@ async function $c55952b507d79662$export$e16a9e8da7a04919(provider) {
 }
 
 
+
 var $2ababb11162a7525$exports = {};
 
 $parcel$export($2ababb11162a7525$exports, "PrincipalToken", () => $2ababb11162a7525$export$62007a0bd048d56c);
@@ -724,11 +755,20 @@ class $2ababb11162a7525$export$62007a0bd048d56c {
 var $d42f7646c857727b$exports = {};
 
 $parcel$export($d42f7646c857727b$exports, "YieldToken", () => $d42f7646c857727b$export$7e27801a0b3a9d2a);
+
+function $4245306dc702b3b1$export$1a2bc1332803452e(maturity, startTime = 0, isYieldToken = false) {
+    const firstBit = isYieldToken ? 8 : 0;
+    const startTimeBits = (startTime / 1000).toString(16).padStart(31, "0");
+    const maturityHex = (maturity / 1000).toString(16);
+    const maturityBits = maturityHex.padStart(32, "0");
+    return isYieldToken || startTime ? `0x${firstBit}${startTimeBits}${maturityBits}` : `0x${maturityHex}`;
+}
+
+
 class $d42f7646c857727b$export$7e27801a0b3a9d2a {
     constructor(startTime, context, term){
-        const startTimeBits = (startTime / 1000).toString(16).padStart(31, "0");
-        const expiryBits = term.id.replace(/^0x/, "").padStart(32, "0");
-        this.id = `0x8${startTimeBits}${expiryBits}`;
+        const { maturity: maturity  } = (0, $053d9a990d236ae4$export$21656a5e9c0fd04c)(term.id);
+        this.id = (0, $4245306dc702b3b1$export$1a2bc1332803452e)(maturity, startTime, true);
         this.context = context;
         this.term = term;
         this.maturityDate = new Date(+term.id * 1000);
@@ -766,6 +806,29 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
     getYieldSource() {
         return this.multiTerm.getYieldSource();
     }
+    /**
+   * Gets a Yield Tokens from this Term based on start time.
+   * @param {number} startTime - The start time timestamp in milliseconds.
+   * @return {YieldToken}
+   */ getYieldToken(startTime) {
+        return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(startTime, this.context, this);
+    }
+    /**
+   * Gets all the Yield Tokens from this Term. Searches by TransferSingleEvents.
+   * @async
+   * @param {number} fromBlock - Optional, start block number to search from.
+   * @param {number} toBlock - Optional, end block number to search to.
+   * @return {Promise<YieldToken[]>}
+   */ async getYieldTokens(fromBlock, toBlock) {
+        const ids = await this.multiTerm.dataSource.getYieldTokenIds(fromBlock, toBlock);
+        return ids.filter((id)=>{
+            const { maturity: maturity  } = (0, $053d9a990d236ae4$export$21656a5e9c0fd04c)(id);
+            return maturity === this.maturityDate.getTime();
+        }).map((id)=>{
+            const { startTime: startTime  } = (0, $053d9a990d236ae4$export$21656a5e9c0fd04c)(id);
+            return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(startTime, this.context, this);
+        });
+    }
     getBaseAsset() {
         return this.multiTerm.getBaseAsset();
     }
@@ -780,9 +843,6 @@ class $51ba50e48c247b12$export$656c1e606ad06131 {
     }
     getCreatedAtBlock() {
         return this.multiTerm.dataSource.getCreatedAtBlock(this.id);
-    }
-    getYieldToken(startTime) {
-        return new (0, $d42f7646c857727b$export$7e27801a0b3a9d2a)(startTime, this.context, this);
     }
     /**
    * Convenience method that mints fixed and variable positions in a term using underlying tokens.
