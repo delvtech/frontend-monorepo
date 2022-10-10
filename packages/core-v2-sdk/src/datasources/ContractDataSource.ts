@@ -31,7 +31,7 @@ export class ContractDataSource<
     property: K,
     args: T[K] extends AnyFunction ? Parameters<T[K]> : never,
   ): T[K] extends AnyFunction ? ReturnType<T[K]> : never {
-    return this.cached([property, this.address, ...args], () => {
+    return this.cached([property, ...args], () => {
       const contract = this.contract as T;
       const fn = contract[property] as unknown as AnyFunction;
       return fn(...args);
