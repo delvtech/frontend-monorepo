@@ -21,7 +21,8 @@ export class Term {
     this.context = context;
     this.multiTerm = multiTerm;
     this.principalToken = new PrincipalToken(context, this);
-    this.maturityDate = new Date(+id * 1000);
+    const { maturity } = decodeTokenId(id);
+    this.maturityDate = new Date(maturity);
   }
 
   getYieldSource(): Promise<YieldSource | null> {

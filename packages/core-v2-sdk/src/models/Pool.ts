@@ -31,7 +31,8 @@ export class Pool {
     this.context = context;
     this.multiPool = multiPool;
     this.lpToken = new LPToken(context, this);
-    this.maturityDate = new Date(+id * 1000);
+    const { maturity } = decodeTokenId(id);
+    this.maturityDate = new Date(maturity);
   }
 
   /**

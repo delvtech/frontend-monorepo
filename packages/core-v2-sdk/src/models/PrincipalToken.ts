@@ -12,7 +12,7 @@ export class PrincipalToken {
     this.id = term.id;
     this.context = context;
     this.term = term;
-    this.maturityDate = new Date(+term.id * 1000);
+    this.maturityDate = term.maturityDate;
   }
 
   async getBaseAsset(): Promise<Token> {
