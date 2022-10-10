@@ -1,9 +1,10 @@
-import { BigNumber, Signer } from "ethers";
+import { Signer } from "ethers";
 import { MintResponse } from "src/types";
 
 export interface MultiTermDataSource {
   address: string;
   getTermIds: (fromBlock?: number, toBlock?: number) => Promise<string[]>;
+  getYieldTokenIds: (fromBlock?: number, toBlock?: number) => Promise<string[]>;
   getCreatedAtBlock: (tokenId: string) => Promise<number | null>;
   getYieldSource: () => Promise<string | null>;
   getBaseAsset: () => Promise<string>;

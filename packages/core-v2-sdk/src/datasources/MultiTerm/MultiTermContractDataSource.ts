@@ -3,8 +3,8 @@ import { formatUnits, parseUnits } from "ethers/lib/utils";
 import { Term, Term__factory } from "@elementfi/core-v2-typechain";
 import { TransferSingleEvent } from "@elementfi/core-v2-typechain/dist/contracts/Term";
 import { MintResponse } from "src/types";
-import { isYT } from "src/utils/token/isYT";
 import { isPT } from "src/utils/token/isPT";
+import { isYT } from "src/utils/token/isYT";
 import { ContractDataSource } from "src/datasources/ContractDataSource";
 import { MultiTermDataSource } from "./MultiTermDataSource";
 
@@ -55,8 +55,39 @@ export class MultiTermContractDataSource
         new Set(
           events
             // filter out YTs
-            .filter((event) => isPT(event.args.id))
-            .map((event) => event.args.id.toHexString()),
+            .filter(({ args }) => isPT(args.id.toHexString()))
+            .map(({ args }) => args.id.toHexString()),
+        ),
+      );
+    });
+  }
+
+  /**
+   * Gets all yield token that have been created from the datasource (contract).
+   * @param {number} fromBlock - Optional, start block number to search from.
+   * @param {number} toBlock - Optional, end block number to search to.
+   * @return {Promise<string[]>} A promise of an array of unique term ids.
+   */
+  // TODO: How can these be fetched more efficiently and/or filtered by term?
+  async getYieldTokenIds(
+    fromBlock?: number,
+    toBlock?: number,
+  ): Promise<string[]> {
+    return this.cached(["getYieldTokenIds", fromBlock, toBlock], async () => {
+      const events = await this.getTransferEvents(
+        // new mints result in a transfer from the zero address
+        ethers.constants.AddressZero,
+        null,
+        fromBlock,
+        toBlock,
+      );
+
+      return Array.from(
+        new Set(
+          events
+            // filter out PTs
+            .filter(({ args }) => isYT(args.id.toHexString()))
+            .map(({ args }) => args.id.toHexString()),
         ),
       );
     });
@@ -177,20 +208,26 @@ export class MultiTermContractDataSource
     );
     const receipt = await txn.wait();
     // can safely assume that any successful transaction will have events and event arguments
-    const events = receipt.events!;
-    const transferSingleLogs = events.filter((event) => {
+    const events = receipt.events as ethers.Event[];
+    const transferSingleEvents = events.filter((event) => {
       return (
         event.event === "TransferSingle" &&
-        event.args!.from === ethers.constants.AddressZero
+        event.args &&
+        event.args.from === ethers.constants.AddressZero
       );
     }) as TransferSingleEvent[];
 
-    // maybe can just check index but not verified events will be ordered
-    const ytMintEvent = transferSingleLogs.find((log) => isYT(log.args.id))!;
-    const ytBigNumber = ytMintEvent.args.value;
+    // Events are not guaranteed to be in a specific order so we check the id
+    // argument of each event to infer the token type.
+    const ptMintEvent = transferSingleEvents.find(({ args }) =>
+      isPT(args.id.toHexString()),
+    );
+    const ptBigNumber = BigNumber.from(ptMintEvent?.args.value);
 
-    const ptMintEvent = transferSingleLogs.find((log) => isPT(log.args.id))!;
-    const ptBigNumber = ptMintEvent.args.value;
+    const ytMintEvent = transferSingleEvents.find(({ args }) =>
+      isYT(args.id.toHexString()),
+    );
+    const ytBigNumber = BigNumber.from(ytMintEvent?.args.value);
 
     return {
       principalTokens: formatUnits(ptBigNumber, decimals),
