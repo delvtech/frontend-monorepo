@@ -87,24 +87,24 @@ export class MultiPoolContractDataSource
   /**
    * Fetches the name for a given poolId from our datasource (contract).
    */
-  getName(poolId: number): Promise<string> {
+  getName(poolId: string): Promise<string> {
     return this.call("name", [poolId]);
   }
 
   /**
    * Fetches an address's balance of a given poolId from our datasource (contract).
    */
-  async getBalanceOf(poolId: number, address: string): Promise<string> {
+  async getBalanceOf(poolId: string, address: string): Promise<string> {
     const balanceBigNumber = await this.call("balanceOf", [poolId, address]);
     const decimals = await this.getDecimals();
     return formatUnits(balanceBigNumber, decimals);
   }
 
   /**
-   * Wraps the depositUnderlying function in the Pool contract, allows caller to create an LP position for a pool.
-   * @param {Signer} signer -Ethers signer object, used to sign and publish the transaction.
+   * Wraps the depositUnderlying function in the Pool contract, allows caller to create an LP position for a pool using the base asset.
+   * @param {Signer} signer - Ethers signer object, used to sign and publish the transaction.
    * @param {BigNumber} amount - Amount of underlying tokens to create LP position.
-   * @param {number} poolId - Address to receive principal tokens.
+   * @param {string} poolId - Address to receive principal tokens.
    * @param {string} destination - Address to receive LP tokens.
    * @param {BigNumber} minOutput- Minimum amount of LP tokens caller should receive. Contract throws an error if not met.
    * @return {Promise<string>} Amount of LP tokens created and sent to destination address.
@@ -112,7 +112,7 @@ export class MultiPoolContractDataSource
   async depositUnderlying(
     signer: Signer,
     amount: BigNumber,
-    poolId: number,
+    poolId: string,
     destination: string,
     minOutput: BigNumber,
   ): Promise<string> {

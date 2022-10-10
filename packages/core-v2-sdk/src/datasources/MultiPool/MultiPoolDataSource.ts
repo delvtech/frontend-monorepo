@@ -14,8 +14,8 @@ export interface MultiPoolDataSource {
   getBaseAsset: () => Promise<string>;
   getSymbol: (poolId: string) => Promise<string>;
   getDecimals: () => Promise<number>;
-  getName: (poolId: number) => Promise<string>;
-  getBalanceOf: (poolId: number, address: string) => Promise<string>;
+  getName: (poolId: string) => Promise<string>;
+  getBalanceOf: (poolId: string, address: string) => Promise<string>;
 
   /* -------------------------------------------------------------------------- */
   /*                                Writes                                      */
@@ -23,7 +23,7 @@ export interface MultiPoolDataSource {
   depositUnderlying: (
     signer: Signer,
     amount: BigNumber,
-    poolId: number,
+    poolId: string,
     destination: string,
     minOutput: BigNumber,
   ) => Promise<string>;

@@ -1,6 +1,7 @@
-import { toBn } from "evm-bn";
+import { Signer } from "ethers";
+import { parseUnits } from "ethers/lib/utils";
 import { ElementContext } from "src/context";
-import { PoolParameters, PoolReserves, SignerOrWallet } from "src/types";
+import { PoolParameters, PoolReserves } from "src/types";
 import { getDaysUntilTimestamp } from "src/utils/time/getDaysUntilTimestamp";
 import { LPToken } from "./LPToken";
 import { MultiPool } from "./MultiPool";
@@ -207,7 +208,7 @@ export class Pool {
    * @return {Promise<string>} - Amount of LP tokens received.
    */
   async provideLiquidity(
-    signer: SignerOrWallet,
+    signer: Signer,
     amount: string,
     minAmountOut: string,
   ): Promise<void> {
@@ -215,10 +216,10 @@ export class Pool {
     const address = await signer.getAddress();
     this.multiPool.dataSource.depositUnderlying(
       signer,
-      toBn(amount, decimals),
+      parseUnits(amount, decimals),
       this.id,
       address,
-      toBn(minAmountOut, decimals),
+      parseUnits(minAmountOut, decimals),
     );
   }
 }
