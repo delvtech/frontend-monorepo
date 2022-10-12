@@ -1,3 +1,4 @@
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { ConvergentCurvePool, Vault } from "@elementfi/core-typechain/dist/v1";
 import { ConvergentCurvePool as ConvergentCurvePoolV1_1 } from "@elementfi/core-typechain/dist/v1.1";
 import sortBy from "lodash.sortby";
@@ -53,6 +54,12 @@ export function useExitConvergentCurvePool(
     },
   );
 
+  const { data: feesBond } = useSmartContractReadCall(pool, "feesBond");
+  const { data: feesUnderlying } = useSmartContractReadCall(
+    pool,
+    "feesUnderlying",
+  );
+
   const onExitPool = useCallback(async () => {
     // grab these right when we exit to try to get the latest values
     const totalSupply = await pool.totalSupply();
@@ -70,6 +77,7 @@ export function useExitConvergentCurvePool(
     // governanceFeesBond and governanceFeesUnderlying so poolGovFees will just be [0, 0].
     let poolGovFees: BigNumber[] = [BigNumber.from(0), BigNumber.from(0)];
     try {
+      // these will fail for pool v1 contracts
       const poolGovFeesBond = await poolv1_1.governanceFeesBond();
       const poolGovFeesUnderlying = await poolv1_1.governanceFeesUnderlying();
       poolGovFees = sortBy(
@@ -81,14 +89,15 @@ export function useExitConvergentCurvePool(
       ).map((a) => a.fees);
     } catch (error) {}
 
-    // get sorted protocol fees by token address.
-    let poolFees: BigNumber[] = [BigNumber.from(0), BigNumber.from(0)];
-    const poolFeesBond = await pool.feesBond();
-    const poolFeesUnderlying = await pool.feesUnderlying();
-    poolFees = sortBy(
+    // get sorted protocol fees by token address.  feesBond and feesUnderlying exist on both v1 and
+    // v1.1 contracts.
+    const poolFees = sortBy(
       [
-        { address: bondAddress, fees: poolFeesBond },
-        { address: underlyingAddress, fees: poolFeesUnderlying },
+        { address: bondAddress, fees: feesBond || BigNumber.from(0) },
+        {
+          address: underlyingAddress,
+          fees: feesUnderlying || BigNumber.from(0),
+        },
       ],
       (o) => o.address,
     ).map((a) => a.fees);
@@ -111,13 +120,15 @@ export function useExitConvergentCurvePool(
     }
     exitPool(exitPoolCallArgs);
   }, [
-    account,
-    exitPool,
-    lpIn,
     pool,
-    poolv1_1,
     poolId,
+    feesBond,
+    feesUnderlying,
     poolInfo.extensions.convergentPoolFactory,
+    account,
+    lpIn,
+    exitPool,
+    poolv1_1,
   ]);
 
   return {
