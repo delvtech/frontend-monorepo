@@ -73,9 +73,11 @@ export function useExitConvergentCurvePool(
     const bondAddress = await pool.bond();
     const underlyingAddress = await pool.underlying();
 
-    // get sorted governance fees by token address.  for v1 contracts, there are no methods
-    // governanceFeesBond and governanceFeesUnderlying so poolGovFees will just be [0, 0].
+    // get sorted governance and protocol fees by token address.  for v1 contracts, there are no
+    // methods governanceFeesBond and governanceFeesUnderlying so poolGovFees and poolFees will both
+    // just be [0, 0].
     let poolGovFees: BigNumber[] = [BigNumber.from(0), BigNumber.from(0)];
+    let poolFees: BigNumber[] = [BigNumber.from(0), BigNumber.from(0)];
     try {
       // these will fail for pool v1 contracts
       const poolGovFeesBond = await poolv1_1.governanceFeesBond();
@@ -87,20 +89,19 @@ export function useExitConvergentCurvePool(
         ],
         (o) => o.address,
       ).map((a) => a.fees);
-    } catch (error) {}
 
-    // get sorted protocol fees by token address.  feesBond and feesUnderlying exist on both v1 and
-    // v1.1 contracts.
-    const poolFees = sortBy(
-      [
-        { address: bondAddress, fees: feesBond || BigNumber.from(0) },
-        {
-          address: underlyingAddress,
-          fees: feesUnderlying || BigNumber.from(0),
-        },
-      ],
-      (o) => o.address,
-    ).map((a) => a.fees);
+      // get sorted protocol fees by token address.
+      poolFees = sortBy(
+        [
+          { address: bondAddress, fees: feesBond || BigNumber.from(0) },
+          {
+            address: underlyingAddress,
+            fees: feesUnderlying || BigNumber.from(0),
+          },
+        ],
+        (o) => o.address,
+      ).map((a) => a.fees);
+    } catch (error) {}
 
     const exitPoolCallArgs = makeExitPoolCallArgs(
       poolId,
