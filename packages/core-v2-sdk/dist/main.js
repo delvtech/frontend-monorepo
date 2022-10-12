@@ -94,7 +94,6 @@ class $20adc394a346779f$export$f5a95cc94689234f extends (0, $54e3433d3ac69f8a$ex
     call(property, args) {
         return this.cached([
             property,
-            this.address,
             ...args
         ], ()=>{
             const contract = this.contract;
@@ -530,14 +529,13 @@ class $fe6691dc6a8bbe5c$export$f746d784fcd6629 {
     /**
    * Sets approval of token access up to a certain amount
    * @param {Signer} signer - Signer.
-   * @param {string} who - Address to approve access to.
+   * @param {string} spender - Address to approve access to.
    * @param {string} [amount] - Amount approved for, defaults to maximum.
    * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
-   */ async approve(signer, who, amount) {
+   */ async approve(signer, spender, amount) {
         const token = this.erc20DataSource.contract.connect(signer);
-        const transaction = await token.approve(who, amount ? (0, $eCQIH$etherslibutils.parseUnits)(amount, await this.getDecimals()) : (0, $eCQIH$ethers.ethers).constants.MaxUint256);
-        const r = await transaction.wait(); // will throw an error if transaction fails
-        console.log(r.transactionHash);
+        const transaction = await token.approve(spender, amount ? (0, $eCQIH$etherslibutils.parseUnits)(amount, await this.getDecimals()) : (0, $eCQIH$ethers.ethers).constants.MaxUint256);
+        await transaction.wait(); // will throw an error if transaction fails
         return true;
     }
 }
@@ -658,11 +656,11 @@ class $2361706748e2a981$export$50792b0e93539fde {
     /**
    * Sets approval of token access up to a certain amount
    * @param {Signer} signer - Signer.
-   * @param {string} who - Address to approve access to.
+   * @param {string} spender - Address to approve access to.
    * @param {string} [amount] - Amount approved for, defaults to maximum.
    * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
-   */ async approve(signer, who, amount) {
-        return this.dataSource.approve(signer, who, amount);
+   */ approve(signer, spender, amount) {
+        return this.dataSource.approve(signer, spender, amount);
     }
 }
 
@@ -760,7 +758,6 @@ class $d42f7646c857727b$export$7e27801a0b3a9d2a {
 class $51ba50e48c247b12$export$656c1e606ad06131 {
     constructor(id, context, multiTerm){
         this.id = id;
-        this.guid = `${multiTerm.address}${id}`;
         this.context = context;
         this.multiTerm = multiTerm;
         this.principalToken = new (0, $2ababb11162a7525$export$62007a0bd048d56c)(context, this);
@@ -902,7 +899,6 @@ class $5c922a29083dd917$export$14963ee5c8637e11 {
    * @param {MultiPool} multiPool - the MultiPool model where this pool is stored.
    */ constructor(id, context, multiPool){
         this.id = id;
-        this.guid = `${multiPool.address}${id}`;
         this.context = context;
         this.multiPool = multiPool;
         this.lpToken = new (0, $8af14f8f6b4799b0$export$84f20e6ecc12f354)(context, this);

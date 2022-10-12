@@ -35265,8 +35265,8 @@ zen-observable@0.8.15:
   version "1.0.2"
   resolved "https://codeload.github.com/a16z/zkp-merkle-airdrop-lib/tar.gz/c5e938fd167402c1b630c8f6c38553721ed0bfca"
   dependencies:
-    circomlibjs "^0.0.8"
-    snarkjs "^0.4.10"
+    circomlibjs "0.0.8"
+    snarkjs "0.4.10"
 
 zustand@^4.0.0-rc.1:
   version "4.0.0-rc.1"

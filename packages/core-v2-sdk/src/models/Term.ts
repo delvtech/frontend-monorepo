@@ -10,7 +10,6 @@ import { YieldToken } from "./YieldToken";
 
 export class Term {
   id: string;
-  guid: string;
   context: ElementContext;
   multiTerm: MultiTerm;
   principalToken: PrincipalToken;
@@ -18,7 +17,6 @@ export class Term {
 
   constructor(id: string, context: ElementContext, multiTerm: MultiTerm) {
     this.id = id;
-    this.guid = `${multiTerm.address}${id}`;
     this.context = context;
     this.multiTerm = multiTerm;
     this.principalToken = new PrincipalToken(context, this);

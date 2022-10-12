@@ -195,7 +195,7 @@ export interface TokenDataSource {
     getPrice: (currency: string) => Promise<number | null>;
     getAllowance: (owner: string, spender: string) => Promise<string>;
     getBalanceOf: (address: string) => Promise<string>;
-    approve: (signer: Signer, who: string, amount?: string) => Promise<boolean>;
+    approve: (signer: Signer, spender: string, amount?: string) => Promise<boolean>;
 }
 export interface TokenAPIDataSource {
     getTokenPrice: (id: string, currency: string) => Promise<number | null>;
@@ -222,11 +222,11 @@ export class TokenContractDataSource implements TokenDataSource {
     /**
      * Sets approval of token access up to a certain amount
      * @param {Signer} signer - Signer.
-     * @param {string} who - Address to approve access to.
+     * @param {string} spender - Address to approve access to.
      * @param {string} [amount] - Amount approved for, defaults to maximum.
      * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
      */
-    approve(signer: Signer, who: string, amount?: string): Promise<boolean>;
+    approve(signer: Signer, spender: string, amount?: string): Promise<boolean>;
 }
 export interface YieldSourceDataSource {
     address: string;
@@ -255,11 +255,11 @@ export class Token {
     /**
      * Sets approval of token access up to a certain amount
      * @param {Signer} signer - Signer.
-     * @param {string} who - Address to approve access to.
+     * @param {string} spender - Address to approve access to.
      * @param {string} [amount] - Amount approved for, defaults to maximum.
      * @return {Promise<boolean>} successful - Boolean denoting a successful approval.
      */
-    approve(signer: Signer, who: string, amount?: string): Promise<boolean>;
+    approve(signer: Signer, spender: string, amount?: string): Promise<boolean>;
 }
 export class YieldSource {
     address: string;
@@ -295,7 +295,6 @@ export class YieldToken {
 }
 export class Term {
     id: string;
-    guid: string;
     context: ElementContext;
     multiTerm: MultiTerm;
     principalToken: PrincipalToken;
@@ -450,7 +449,6 @@ export class MultiPool {
  */
 export class Pool {
     id: string;
-    guid: string;
     context: ElementContext;
     multiPool: MultiPool;
     lpToken: LPToken;
