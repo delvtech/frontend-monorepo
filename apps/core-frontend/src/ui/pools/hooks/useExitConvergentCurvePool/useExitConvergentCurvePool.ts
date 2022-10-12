@@ -1,4 +1,6 @@
 import { ConvergentCurvePool, Vault } from "@elementfi/core-typechain/dist/v1";
+import { ConvergentCurvePool as ConvergentCurvePoolV1_1 } from "@elementfi/core-typechain/dist/v1.1";
+import sortBy from "lodash.sortby";
 import { PrincipalPoolTokenInfo } from "@elementfi/core-tokenlist";
 import { ExitRequest } from "integrations/balancer/ExitRequest";
 import { BALANCER_POOL_LP_TOKEN_DECIMALS } from "integrations/balancer/pools";
@@ -34,6 +36,7 @@ export function useExitConvergentCurvePool(
 } {
   const { poolId } = poolInfo.extensions;
   const pool = getPoolContract(poolInfo.address) as ConvergentCurvePool;
+  const poolv1_1 = getPoolContract(poolInfo.address) as ConvergentCurvePoolV1_1;
   const {
     mutate: exitPool,
     isLoading,
@@ -60,12 +63,44 @@ export function useExitConvergentCurvePool(
       return decimals;
     });
 
+    const bondAddress = await pool.bond();
+    const underlyingAddress = await pool.underlying();
+
+    // get sorted governance fees by token address.  for v1 contracts, there are no methods
+    // governanceFeesBond and governanceFeesUnderlying so poolGovFees will just be [0, 0].
+    let poolGovFees: BigNumber[] = [BigNumber.from(0), BigNumber.from(0)];
+    try {
+      const poolGovFeesBond = await poolv1_1.governanceFeesBond();
+      const poolGovFeesUnderlying = await poolv1_1.governanceFeesUnderlying();
+      poolGovFees = sortBy(
+        [
+          { address: bondAddress, fees: poolGovFeesBond },
+          { address: underlyingAddress, fees: poolGovFeesUnderlying },
+        ],
+        (o) => o.address,
+      ).map((a) => a.fees);
+    } catch (error) {}
+
+    // get sorted protocol fees by token address.
+    let poolFees: BigNumber[] = [BigNumber.from(0), BigNumber.from(0)];
+    const poolFeesBond = await pool.feesBond();
+    const poolFeesUnderlying = await pool.feesUnderlying();
+    poolFees = sortBy(
+      [
+        { address: bondAddress, fees: poolFeesBond },
+        { address: underlyingAddress, fees: poolFeesUnderlying },
+      ],
+      (o) => o.address,
+    ).map((a) => a.fees);
+
     const exitPoolCallArgs = makeExitPoolCallArgs(
       poolId,
       poolInfo.extensions.convergentPoolFactory,
       account,
       poolTokens,
       poolTokenReserves,
+      poolGovFees,
+      poolFees,
       poolTokenDecimals,
       totalSupply,
       lpIn,
@@ -80,6 +115,7 @@ export function useExitConvergentCurvePool(
     exitPool,
     lpIn,
     pool,
+    poolv1_1,
     poolId,
     poolInfo.extensions.convergentPoolFactory,
   ]);
@@ -100,6 +136,8 @@ function makeExitPoolCallArgs(
   account: string | null | undefined,
   poolTokens: string[] | undefined,
   poolTokenReserves: BigNumber[] | undefined,
+  poolGovFees: BigNumber[] | undefined,
+  poolFees: BigNumber[] | undefined,
   poolTokenDecimals: number[],
   totalSupply: BigNumber | undefined,
   lpIn: string,
@@ -109,6 +147,8 @@ function makeExitPoolCallArgs(
     !account ||
     !poolTokens ||
     !poolTokenReserves ||
+    !poolGovFees ||
+    !poolFees ||
     !totalSupply
   ) {
     return;
@@ -126,6 +166,8 @@ function makeExitPoolCallArgs(
     lpIn,
     totalSupply,
     poolTokenReserves,
+    poolGovFees,
+    poolFees,
     poolTokenDecimals,
   ) as BigNumber[];
 
@@ -159,6 +201,8 @@ function getPoolTokenMinAmountsOut(
   lpIn: string,
   totalSupply: BigNumber,
   poolTokenReserves: BigNumber[],
+  poolGovFees: BigNumber[],
+  poolFees: BigNumber[],
   poolTokenDecimals: number[],
 ) {
   const totalSupplyString = formatUnits(
@@ -167,11 +211,11 @@ function getPoolTokenMinAmountsOut(
   );
 
   const xReservesString = formatUnits(
-    poolTokenReserves[0],
+    poolTokenReserves[0].sub(poolFees[0]).sub(poolGovFees[0]),
     poolTokenDecimals[0],
   );
   const yReservesString = formatUnits(
-    poolTokenReserves[1],
+    poolTokenReserves[1].sub(poolFees[1]).sub(poolGovFees[1]),
     poolTokenDecimals[1],
   );
 
