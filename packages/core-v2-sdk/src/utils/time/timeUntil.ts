@@ -4,5 +4,5 @@
  * @return {number} time remaining in milliseconds
  */
 export function timeUntil(timestamp: number): number {
-  return Math.max(Date.now() - timestamp, 0);
+  return Math.max(timestamp - Date.now(), 0);
 }

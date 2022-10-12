@@ -950,7 +950,7 @@ var $5c922a29083dd917$exports = {};
 $parcel$export($5c922a29083dd917$exports, "Pool", () => $5c922a29083dd917$export$14963ee5c8637e11);
 
 function $285b8de1fb07fede$export$83ab38cbce6bfe42(timestamp) {
-    return Math.max(Date.now() - timestamp, 0);
+    return Math.max(timestamp - Date.now(), 0);
 }
 
 
