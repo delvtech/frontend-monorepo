@@ -73,9 +73,11 @@ export function useExitConvergentCurvePool(
     const bondAddress = await pool.bond();
     const underlyingAddress = await pool.underlying();
 
-    // get sorted governance and protocol fees by token address.  for v1 contracts, there are no
-    // methods governanceFeesBond and governanceFeesUnderlying so poolGovFees and poolFees will both
-    // just be [0, 0].
+    // For v1.1 convergent curve pool contracts, we need to subtract the governance and protocol
+    // fees from the reserves before calculating the amounts out of the tokens. So, here we get
+    // sorted governance and protocol fees by token address.  For v1 contracts, there are no methods
+    // governanceFeesBond and governanceFeesUnderlying, so poolGovFees and poolFees will both just be
+    // [0, 0].
     let poolGovFees: BigNumber[] = [BigNumber.from(0), BigNumber.from(0)];
     let poolFees: BigNumber[] = [BigNumber.from(0), BigNumber.from(0)];
     try {
