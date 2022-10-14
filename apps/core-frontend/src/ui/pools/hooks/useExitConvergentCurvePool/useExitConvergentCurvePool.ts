@@ -1,7 +1,4 @@
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { ConvergentCurvePool, Vault } from "@elementfi/core-typechain/dist/v1";
-import { ConvergentCurvePool as ConvergentCurvePoolV1_1 } from "@elementfi/core-typechain/dist/v1.1";
-import sortBy from "lodash.sortby";
 import { PrincipalPoolTokenInfo } from "@elementfi/core-tokenlist";
 import { ExitRequest } from "integrations/balancer/ExitRequest";
 import { BALANCER_POOL_LP_TOKEN_DECIMALS } from "integrations/balancer/pools";
@@ -37,7 +34,6 @@ export function useExitConvergentCurvePool(
 } {
   const { poolId } = poolInfo.extensions;
   const pool = getPoolContract(poolInfo.address) as ConvergentCurvePool;
-  const poolv1_1 = getPoolContract(poolInfo.address) as ConvergentCurvePoolV1_1;
   const {
     mutate: exitPool,
     isLoading,
@@ -54,12 +50,6 @@ export function useExitConvergentCurvePool(
     },
   );
 
-  const { data: feesBond } = useSmartContractReadCall(pool, "feesBond");
-  const { data: feesUnderlying } = useSmartContractReadCall(
-    pool,
-    "feesUnderlying",
-  );
-
   const onExitPool = useCallback(async () => {
     // grab these right when we exit to try to get the latest values
     const totalSupply = await pool.totalSupply();
@@ -70,49 +60,12 @@ export function useExitConvergentCurvePool(
       return decimals;
     });
 
-    const bondAddress = await pool.bond();
-    const underlyingAddress = await pool.underlying();
-
-    // For v1.1 convergent curve pool contracts, we need to subtract the governance and protocol
-    // fees from the reserves before calculating the amounts out of the tokens. So, here we get
-    // sorted governance and protocol fees by token address.  For v1 contracts, there are no methods
-    // governanceFeesBond and governanceFeesUnderlying, so poolGovFees and poolFees will both just be
-    // [0, 0].
-    let poolGovFees: BigNumber[] = [BigNumber.from(0), BigNumber.from(0)];
-    let poolFees: BigNumber[] = [BigNumber.from(0), BigNumber.from(0)];
-    try {
-      // these will fail for pool v1 contracts
-      const poolGovFeesBond = await poolv1_1.governanceFeesBond();
-      const poolGovFeesUnderlying = await poolv1_1.governanceFeesUnderlying();
-      poolGovFees = sortBy(
-        [
-          { address: bondAddress, fees: poolGovFeesBond },
-          { address: underlyingAddress, fees: poolGovFeesUnderlying },
-        ],
-        (o) => o.address,
-      ).map((a) => a.fees);
-
-      // get sorted protocol fees by token address.
-      poolFees = sortBy(
-        [
-          { address: bondAddress, fees: feesBond || BigNumber.from(0) },
-          {
-            address: underlyingAddress,
-            fees: feesUnderlying || BigNumber.from(0),
-          },
-        ],
-        (o) => o.address,
-      ).map((a) => a.fees);
-    } catch (error) {}
-
     const exitPoolCallArgs = makeExitPoolCallArgs(
       poolId,
       poolInfo.extensions.convergentPoolFactory,
       account,
       poolTokens,
       poolTokenReserves,
-      poolGovFees,
-      poolFees,
       poolTokenDecimals,
       totalSupply,
       lpIn,
@@ -123,15 +76,12 @@ export function useExitConvergentCurvePool(
     }
     exitPool(exitPoolCallArgs);
   }, [
+    account,
+    exitPool,
+    lpIn,
     pool,
     poolId,
-    feesBond,
-    feesUnderlying,
     poolInfo.extensions.convergentPoolFactory,
-    account,
-    lpIn,
-    exitPool,
-    poolv1_1,
   ]);
 
   return {
@@ -150,8 +100,6 @@ function makeExitPoolCallArgs(
   account: string | null | undefined,
   poolTokens: string[] | undefined,
   poolTokenReserves: BigNumber[] | undefined,
-  poolGovFees: BigNumber[] | undefined,
-  poolFees: BigNumber[] | undefined,
   poolTokenDecimals: number[],
   totalSupply: BigNumber | undefined,
   lpIn: string,
@@ -161,8 +109,6 @@ function makeExitPoolCallArgs(
     !account ||
     !poolTokens ||
     !poolTokenReserves ||
-    !poolGovFees ||
-    !poolFees ||
     !totalSupply
   ) {
     return;
@@ -180,8 +126,6 @@ function makeExitPoolCallArgs(
     lpIn,
     totalSupply,
     poolTokenReserves,
-    poolGovFees,
-    poolFees,
     poolTokenDecimals,
   ) as BigNumber[];
 
@@ -215,8 +159,6 @@ function getPoolTokenMinAmountsOut(
   lpIn: string,
   totalSupply: BigNumber,
   poolTokenReserves: BigNumber[],
-  poolGovFees: BigNumber[],
-  poolFees: BigNumber[],
   poolTokenDecimals: number[],
 ) {
   const totalSupplyString = formatUnits(
@@ -225,11 +167,11 @@ function getPoolTokenMinAmountsOut(
   );
 
   const xReservesString = formatUnits(
-    poolTokenReserves[0].sub(poolFees[0]).sub(poolGovFees[0]),
+    poolTokenReserves[0],
     poolTokenDecimals[0],
   );
   const yReservesString = formatUnits(
-    poolTokenReserves[1].sub(poolFees[1]).sub(poolGovFees[1]),
+    poolTokenReserves[1],
     poolTokenDecimals[1],
   );
 
