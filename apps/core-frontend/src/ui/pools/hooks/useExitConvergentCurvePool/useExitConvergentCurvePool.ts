@@ -190,18 +190,18 @@ function getPoolTokenMinAmountsOut(
     return undefined;
   }
 
-  // Pad this by 0.3% to account for changing pool reserves. We are guaranteeing
-  // you'll receive at least 99.7% of what you try to withdraw.
+  // Pad this by 25% to account for changing pool reserves. We are guaranteeing
+  // you'll receive at least 75% of what you try to withdraw.
   const xNeededPadded = parseUnits(
     clipFixNumberToStringDecimals(
-      getSafeFixedNumber(xNeeded).mulUnsafe(getSafeFixedNumber("0.997")),
+      getSafeFixedNumber(xNeeded).mulUnsafe(getSafeFixedNumber("0.75")),
       poolTokenDecimals[0],
     ),
     poolTokenDecimals[0],
   );
   const yNeededPadded = parseUnits(
     clipFixNumberToStringDecimals(
-      getSafeFixedNumber(yNeeded).mulUnsafe(getSafeFixedNumber("0.997")),
+      getSafeFixedNumber(yNeeded).mulUnsafe(getSafeFixedNumber("0.75")),
       poolTokenDecimals[1],
     ),
     poolTokenDecimals[1],
