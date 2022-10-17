@@ -1,5 +1,6 @@
+import { ReactElement, useCallback, useState } from "react";
+
 import { Button, Callout, Intent } from "@blueprintjs/core";
-import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
 import {
   PrincipalPoolTokenInfo,
   PrincipalTokenInfo,
@@ -7,9 +8,22 @@ import {
   YieldPoolTokenInfo,
   YieldTokenInfo,
 } from "@elementfi/core-tokenlist";
-import { Web3Provider } from "@ethersproject/providers";
+import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
+import { Provider, Web3Provider } from "@ethersproject/providers";
+import { AddressesJson } from "addresses/addresses";
+import { formatBalance } from "base/formatBalance/formatBalance";
+import { getPoolInfoForPrincipalToken } from "elf/pools/ccpool";
+import { getPoolContract } from "elf/pools/getPoolContract";
+import { getPoolTokens } from "elf/pools/getPoolTokens";
+import { PoolContract } from "elf/pools/PoolContract";
+import { ConvergentCurvePool as ConvergentCurvePoolV1_1 } from "@elementfi/core-typechain/dist/v1.1";
+import { PoolInfo } from "elf/pools/PoolInfo";
+import { isYieldPool } from "elf/pools/weightedPool";
+import { BigNumber, Signer } from "ethers";
+import { formatUnits, parseUnits } from "ethers/lib/utils";
 import { BALANCER_POOL_LP_TOKEN_DECIMALS } from "integrations/balancer/pools";
-import tw from "efi-tailwindcss-classnames";
+import zipObject from "lodash.zipobject";
+import { t } from "ttag";
 import { useNumericInput } from "ui/base/hooks/useNumericInput/useNumericInput";
 import { useIsTailwindSmallScreen } from "ui/base/mediaBreakpoints";
 import { useSmartContractReadCall } from "ui/contracts/useSmartContractReadCall/useSmartContractReadCall";
@@ -23,17 +37,9 @@ import { PoolStakeStats } from "ui/pools/UnstakingPanel/PoolStakeStats";
 import { useTokenBalanceOf } from "ui/token/hooks/useTokenBalanceOf";
 import { ElementIcon } from "ui/token/TokenIcon";
 import { ConnectWalletDialog } from "ui/wallets/ConnectWalletDialog/ConnectWalletDialog";
-import { formatBalance } from "base/formatBalance/formatBalance";
-import { getPoolContract } from "elf/pools/getPoolContract";
-import { getPoolTokens } from "elf/pools/getPoolTokens";
-import { PoolContract } from "elf/pools/PoolContract";
-import { PoolInfo } from "elf/pools/PoolInfo";
-import { isYieldPool } from "elf/pools/weightedPool";
-import { BigNumber, Signer } from "ethers";
-import { formatUnits, parseUnits } from "ethers/lib/utils";
-import zipObject from "lodash.zipobject";
-import { ReactElement, useCallback, useState } from "react";
-import { t } from "ttag";
+
+import tw from "efi-tailwindcss-classnames";
+import { ConvergentCurvePool__factory } from "@elementfi/core-typechain/dist/v1.1";
 
 interface UnstakeCardProps {
   signer: Signer | undefined;
@@ -250,18 +256,86 @@ function useCalculateAssetsOut(
   baseAssetInfo: TokenInfo,
   termAssetInfo: TokenInfo,
 ) {
-  const { data: [addresses, poolBalances] = [] } = usePoolTokens(pool);
+  const {
+    data: [
+      addresses = [],
+      poolBalances = [BigNumber.from(0), BigNumber.from(0)],
+    ] = [],
+    isFetched: isPoolBalancesFetched,
+  } = usePoolTokens(pool);
+  const poolInfo = getPoolInfoForPrincipalToken(termAssetInfo.address);
+  const {
+    extensions: { convergentPoolFactory, bond, underlying },
+  } = poolInfo;
   const { decimals: baseAssetDecimals } = baseAssetInfo;
   const { data: totalSupply } = useSmartContractReadCall(pool, "totalSupply");
+
+  const isV1_1CCPool =
+    convergentPoolFactory ===
+    AddressesJson.addresses.convergentPoolFactoryAddress.v1_1;
+
+  const { data: feesBond = BigNumber.from(0) } = useSmartContractReadCall(
+    pool as ConvergentCurvePoolV1_1,
+    "feesBond",
+    {
+      enabled: isV1_1CCPool,
+    },
+  );
+  const { data: feesUnderyling = BigNumber.from(0) } = useSmartContractReadCall(
+    pool as ConvergentCurvePoolV1_1,
+    "feesUnderlying",
+    {
+      enabled: isV1_1CCPool,
+    },
+  );
+  const { data: govFeesBond = BigNumber.from(0) } = useSmartContractReadCall(
+    pool as ConvergentCurvePoolV1_1,
+    "governanceFeesBond",
+    {
+      enabled: isV1_1CCPool,
+    },
+  );
+  const { data: govFeesUnderlying = BigNumber.from(0) } =
+    useSmartContractReadCall(
+      pool as ConvergentCurvePoolV1_1,
+      "governanceFeesUnderlying",
+      {
+        enabled: isV1_1CCPool,
+      },
+    );
+
   const shareOut = totalSupply
     ? Number(unstakeValue) /
       Number(formatUnits(totalSupply, BALANCER_POOL_LP_TOKEN_DECIMALS))
     : 0;
 
+  // for V1.1 CCPools, we need to subtract fees from the reserves before calculating the amounts out.
+  const adjustedPoolBalances: number[] = poolBalances.map(
+    (bn) => +formatUnits(bn, baseAssetDecimals),
+  );
+
+  if (isV1_1CCPool && isPoolBalancesFetched) {
+    const totalBondFees = formatUnits(feesBond.add(govFeesBond), 18);
+    const totalUnderlyingFees = formatUnits(
+      feesUnderyling.add(govFeesUnderlying),
+      18,
+    );
+
+    const bondIndex = addresses.findIndex((address) => address === bond);
+    const underlyingIndex = addresses.findIndex(
+      (address) => address === underlying,
+    );
+
+    adjustedPoolBalances[bondIndex] =
+      adjustedPoolBalances[bondIndex] - +totalBondFees;
+    adjustedPoolBalances[underlyingIndex] =
+      adjustedPoolBalances[underlyingIndex] - +totalUnderlyingFees;
+  }
+
   const baseAssetOutValue = calculatePoolShareLiquidity(
     shareOut,
     addresses,
-    poolBalances,
+    adjustedPoolBalances,
     baseAssetInfo.address,
     baseAssetDecimals,
   );
@@ -269,7 +343,7 @@ function useCalculateAssetsOut(
   const termAssetOutValue = calculatePoolShareLiquidity(
     shareOut,
     addresses,
-    poolBalances,
+    adjustedPoolBalances,
     termAssetInfo.address,
     termAssetInfo.decimals,
   );
@@ -287,7 +361,7 @@ function useCalculateAssetsOut(
 function calculatePoolShareLiquidity(
   poolShares: number | undefined,
   poolTokenAddresses: string[] | undefined,
-  poolTokenReserves: BigNumber[] | undefined,
+  poolTokenReserves: number[] | undefined,
   tokenAddress: string | undefined,
   tokenDecimals: number | undefined,
 ): number | undefined {
@@ -301,8 +375,7 @@ function calculatePoolShareLiquidity(
   ) {
     const reservesByAddress = zipObject(poolTokenAddresses, poolTokenReserves);
     const reserves = reservesByAddress[tokenAddress];
-    const reservesNumber = +formatUnits(reserves ?? 0, tokenDecimals);
-    baseAssetLiquidity = poolShares * reservesNumber;
+    baseAssetLiquidity = poolShares * reserves;
   }
   return baseAssetLiquidity;
 }
