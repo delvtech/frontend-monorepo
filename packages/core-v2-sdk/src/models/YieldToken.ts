@@ -12,7 +12,7 @@ export class YieldToken {
 
   constructor(startTime: number, context: ElementContext, term: Term) {
     const { maturity } = decodeTokenId(term.id);
-    this.id = encodeTokenId(maturity, startTime, true);
+    this.id = encodeTokenId(maturity, startTime);
     this.context = context;
     this.term = term;
     this.maturityDate = term.maturityDate;
