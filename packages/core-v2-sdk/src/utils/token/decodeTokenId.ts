@@ -8,11 +8,11 @@ import { UNLOCKED_YT_ID } from "src/utils/constants";
 export function decodeTokenId(tokenId: string): {
   isYieldToken: boolean;
   /**
-   * The start timestamp in milliseconds
+   * The start timestamp in seconds
    */
   startTime: number | null;
   /**
-   * The maturity timestamp in milliseconds
+   * The maturity timestamp in seconds
    */
   maturity: number;
 } {
@@ -29,7 +29,7 @@ export function decodeTokenId(tokenId: string): {
       // This is a special yield token used for accounting in the
       // pools, disregard it.
       tokenId !== UNLOCKED_YT_ID,
-    startTime: isLongForm ? +`0x${tokenId.slice(3, 34)}` * 1000 : null,
-    maturity: +`0x${isLongForm ? tokenId.slice(-32) : tokenId.slice(2)}` * 1000,
+    startTime: isLongForm ? +`0x${tokenId.slice(3, 34)}` : null,
+    maturity: +`0x${isLongForm ? tokenId.slice(-32) : tokenId.slice(2)}`,
   };
 }

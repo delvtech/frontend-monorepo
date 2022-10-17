@@ -22,7 +22,7 @@ export class Term {
     this.multiTerm = multiTerm;
     this.principalToken = new PrincipalToken(context, this);
     const { maturity } = decodeTokenId(id);
-    this.maturityDate = new Date(maturity);
+    this.maturityDate = new Date(maturity * 1000);
   }
 
   getYieldSource(): Promise<YieldSource | null> {
@@ -56,7 +56,7 @@ export class Term {
     return ids
       .filter((id) => {
         const { maturity } = decodeTokenId(id);
-        return maturity === this.maturityDate.getTime();
+        return maturity * 1000 === this.maturityDate.getTime();
       })
       .map((id) => {
         const { startTime } = decodeTokenId(id);

@@ -32,7 +32,7 @@ export class Pool {
     this.multiPool = multiPool;
     this.lpToken = new LPToken(context, this);
     const { maturity } = decodeTokenId(id);
-    this.maturityDate = new Date(maturity);
+    this.maturityDate = new Date(maturity * 1000);
   }
 
   /**
@@ -137,7 +137,8 @@ export class Pool {
     const totalSupply = bonds + shares;
 
     const { maturity } = decodeTokenId(this.id);
-    const daysUntilExpiry = timeUntil(maturity) / ONE_DAY_IN_MILLISECONDS;
+    const daysUntilExpiry =
+      timeUntil(maturity * 1000) / ONE_DAY_IN_MILLISECONDS;
 
     // pool parameters
     const parameters = await this.getParameters();
@@ -182,7 +183,7 @@ export class Pool {
     const timeStretch = +poolParams.timeStretch;
     const { maturity } = decodeTokenId(this.id);
     const daysUntilExpiry =
-      (timeUntil(maturity) / ONE_DAY_IN_MILLISECONDS) * timeStretch;
+      (timeUntil(maturity * 1000) / ONE_DAY_IN_MILLISECONDS) * timeStretch;
     const daysFractionOfYear = daysUntilExpiry / 365;
     const oneMinusSpotPrice = 1 - spotPrice;
     const apr = (oneMinusSpotPrice / spotPrice / daysFractionOfYear) * 100;
