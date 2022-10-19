@@ -2455,12 +2455,12 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@blueprintjs/colors@^4.0.0-alpha.3", "@blueprintjs/colors@^4.1.3":
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/colors/-/colors-4.1.3.tgz#7e0a32a086bdc68ea51df0dda1f94913dbd874c1"
-  integrity sha512-ANRQZT5h9+zC8B/y0S9B+SqEpicL0XRT4drAhiPFHBrOStRZWzOh3bPrwNSPqr7tdShxYtMyxbH+fkHMetZaxg==
+"@blueprintjs/colors@^4.0.0-alpha.3", "@blueprintjs/colors@^4.1.7":
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/colors/-/colors-4.1.7.tgz#3ccac41eabc3245da20669e6aafafe6c0271d264"
+  integrity sha512-4qmwwNabzJ6TbdWLjfVFqoCz6OPZpPDV6xvSmnEnS6tWSQ+bepi/ybzx3kKOGtNk1lu0tFDU6tnVti7uz23XaQ==
 
-"@blueprintjs/core@^3.51.2", "@blueprintjs/core@^3.52.0", "@blueprintjs/core@^3.53.0", "@blueprintjs/core@^3.54.0":
+"@blueprintjs/core@^3.52.0", "@blueprintjs/core@^3.53.0", "@blueprintjs/core@^3.54.0":
   version "3.54.0"
   resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.54.0.tgz#7269f34eccdf0d2874377c5ad973ca2a31562221"
   integrity sha512-u2c1s6MNn0ocxhnC6CuiG5g3KV6b4cKUvSobznepA9SC3/AL1s3XOvT7DLWoHRv2B/vBOHFYEDzLw2/vlcGGZg==
@@ -2478,21 +2478,21 @@
     react-transition-group "^2.9.0"
     tslib "~2.3.1"
 
-"@blueprintjs/core@^4.3.2":
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-4.3.2.tgz#a17c70373a6b01ebb5fcc5aa2f3099d4c6909541"
-  integrity sha512-Fs5HmK+ApApuMrcMXPWQTPLHUPl7QV/W2liZTMiAwQpb7jB11XCprmDZPh3Kk8KGcxzGdrXBg8OGsP6rEn5Tug==
+"@blueprintjs/core@^4.11.4", "@blueprintjs/core@^4.3.2":
+  version "4.11.4"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-4.11.4.tgz#842436370a82d6bccfe26bdb789e057746ccac58"
+  integrity sha512-YgcOmCaCXapDkKaphXpR6/8qoTwdnxjquVvClcc6uX9vTHfvFdCX0Wm1rCpxkyI9SO+BUPc/MFjWcWhW+5nN4g==
   dependencies:
-    "@blueprintjs/colors" "^4.1.3"
-    "@blueprintjs/icons" "^4.2.6"
-    "@juggle/resize-observer" "^3.3.1"
-    "@types/dom4" "^2.0.1"
-    classnames "^2.2"
+    "@blueprintjs/colors" "^4.1.7"
+    "@blueprintjs/icons" "^4.8.0"
+    "@juggle/resize-observer" "^3.4.0"
+    "@types/dom4" "^2.0.2"
+    classnames "^2.3.2"
     dom4 "^2.1.5"
     normalize.css "^8.0.1"
     popper.js "^1.16.1"
     react-popper "^1.3.7"
-    react-transition-group "^4.4.1"
+    react-transition-group "^4.4.5"
     tslib "~2.3.1"
 
 "@blueprintjs/icons@^3.31.0", "@blueprintjs/icons@^3.33.0":
@@ -2503,13 +2503,13 @@
     classnames "^2.2"
     tslib "~2.3.1"
 
-"@blueprintjs/icons@^4.2.6":
-  version "4.2.6"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-4.2.6.tgz#cf328e184c551f8df1905737d9ed8b43fd5eb790"
-  integrity sha512-wA0pNMWoDfeyC2kPYvgQ2H2iLVdGAtVNa7bHB9ZO0MKufzGXeyt0fKj2s6jFETa5MxXxfCt4hfSNSgv2+TRsbg==
+"@blueprintjs/icons@^4.8.0":
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-4.8.0.tgz#376cc9500475695a776d4bcac6b38a07eb440916"
+  integrity sha512-odvkqqbryiaRU5w914c42PgqaEVB/XxTRCH1/fieeACuJYnC2KOLSU1IQOathg44L3PrB4xADhg+gZ6YhXR/4Q==
   dependencies:
     change-case "^4.1.2"
-    classnames "^2.2"
+    classnames "^2.3.2"
     tslib "~2.3.1"
 
 "@blueprintjs/popover2@^0.12.8":
@@ -5004,10 +5004,10 @@
     "@json-rpc-tools/types" "^1.7.6"
     "@pedrouid/environment" "^1.0.1"
 
-"@juggle/resize-observer@^3.3.1":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.3.1.tgz#b50a781709c81e10701004214340f25475a171a0"
-  integrity sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw==
+"@juggle/resize-observer@^3.3.1", "@juggle/resize-observer@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
+  integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
 
 "@ledgerhq/devices@^4.74.2", "@ledgerhq/devices@^4.78.0":
   version "4.78.0"
@@ -9153,7 +9153,7 @@
   dependencies:
     "@types/ms" "*"
 
-"@types/dom4@^2.0.1":
+"@types/dom4@^2.0.1", "@types/dom4@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@types/dom4/-/dom4-2.0.2.tgz#6495303f049689ce936ed328a3e5ede9c51408ee"
   integrity sha512-Rt4IC1T7xkCWa0OG1oSsPa0iqnxlDeQqKXZAHrQGLb7wFGncWm85MaxKUjAGejOrUynOgWlFi4c6S6IyJwoK4g==
@@ -13931,7 +13931,7 @@ circom_runtime@0.1.14:
     ffjavascript "0.2.39"
     fnv-plus "^1.3.1"
 
-circomlibjs@^0.0.8:
+circomlibjs@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/circomlibjs/-/circomlibjs-0.0.8.tgz#c2d1130d2d99fbb22f3d40ac19f347d768eace76"
   integrity sha512-oZFYapLO0mfiA+i2GU/V7bRNEEPjVcwV4M444nU5lNsdSJpqLwD57m9zxTD5m/KeY7WQ3lEAC9NNKEPQHu7s1w==
@@ -13967,10 +13967,10 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@*, classnames@^2.2, classnames@^2.2.5, classnames@^2.2.6, classnames@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
-  integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
+classnames@*, classnames@^2.2, classnames@^2.2.5, classnames@^2.2.6, classnames@^2.3.1, classnames@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
+  integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
 
 clean-css@^4.2.3:
   version "4.2.4"
@@ -27947,10 +27947,10 @@ react-transition-group@2.9.0, react-transition-group@^2.9.0:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react-transition-group@^4.4.1, react-transition-group@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.2.tgz#8b59a56f09ced7b55cbd53c36768b922890d5470"
-  integrity sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg==
+react-transition-group@^4.4.2, react-transition-group@^4.4.5:
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.5.tgz#e53d4e3f3344da8521489fbef8f2581d42becdd1"
+  integrity sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==
   dependencies:
     "@babel/runtime" "^7.5.5"
     dom-helpers "^5.0.1"
@@ -29511,7 +29511,7 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-snarkjs@0.4.10, snarkjs@^0.4.10:
+snarkjs@0.4.10:
   version "0.4.10"
   resolved "https://registry.yarnpkg.com/snarkjs/-/snarkjs-0.4.10.tgz#5a8048e691af8f3e6016014ba2cb0e916f508be1"
   integrity sha512-YWgxso7CGcSfkyDGraVjPuBJtq6GEsZ16YBJj2eD0TFum2D5BxnawvyTo4p/7UpctAT0r05DoHo80zgaWnbIKA==
