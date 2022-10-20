@@ -204,8 +204,8 @@ export async function deployGovernanace(
   // finalize permissions for timeLock contract, coreVoting is the owner so that it can post proposals
   // to the timelock.  gsc is authorized for some reason.  remove the address that deployed this contract.
   // await timeLock.deauthorize(signer.address);
-  // await timeLock.authorize(gscCoreVoting.address);
-  // await timeLock.setOwner(coreVoting.address);
+  await timeLock.authorize(gscCoreVoting.address);
+  await timeLock.setOwner(coreVoting.address);
   console.log("set permissions for time lock contract");
 
   // finalize permissions for gscCoreVoting contract, gscVault authorized to make proposals without
@@ -215,6 +215,7 @@ export async function deployGovernanace(
   console.log("set permissions for time gsc core voting");
 
   // finalize permissions for vestingVault contract
+  // await vestingVault.setManager(timeLock.address);
   // await vestingVault.setTimelock(timeLock.address);
   console.log("Set permissions for vesting vault");
 

@@ -49,6 +49,7 @@
   "scripts": {
     "start": "npx hardhat node",
     "start-ethernal": "cross-env SYNC_ETHERNAL=1 npx hardhat node",
+    "execute-vault-upgrade": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/createVestingProposal.ts --network localhost",
     "build-tokenlist": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat build-tokenlist --network localhost",
     "deploy-contracts": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/main.ts --network localhost --no-compile && npm run build-tokenlist",
     "test-claiming": "cross-env TS_NODE_TRANSPILE_ONLY=1 npx hardhat run src/scripts/testClaiming.ts --network localhost --no-compile",

@@ -1,3 +1,4 @@
+import { vestingContract } from "src/contracts";
 import "hardhat-ethernal";
 
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
@@ -33,8 +34,14 @@ async function main() {
   const accounts = signers.map((s) => s.address);
   const governanceContracts = await deployGovernanace(hre, owner, signers);
   console.log("governanceContracts", governanceContracts);
-  const { elementToken, lockingVault, vestingVault, treasury, gscVault } =
-    governanceContracts;
+  const {
+    elementToken,
+    lockingVault,
+    vestingVault,
+    treasury,
+    gscVault,
+    timeLock,
+  } = governanceContracts;
 
   await giveVotingPowerToAccount(owner, "50", elementToken, lockingVault);
   await giveVotingPowerToAccount(signer1, "50", elementToken, lockingVault);
@@ -50,6 +57,16 @@ async function main() {
   await giveTreasuryVotingTokens(owner, treasury, elementToken);
 
   await allocateGrants(hre, elementToken, vestingVault, signers);
+
+  // finalize permissions for vestingVault contract
+  const vestingVaultContract = VestingVault__factory.connect(
+    vestingVault,
+    owner,
+  );
+  await vestingVaultContract.setManager(timeLock);
+  await vestingVaultContract.setTimelock(timeLock);
+
+  console.log("Set permissions for vesting vault");
 
   await joinGSC(gscMember1, gscVault, [lockingVault], ["0x00"]);
   await joinGSC(gscMember2, gscVault, [lockingVault], ["0x00"]);
