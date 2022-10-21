@@ -309,14 +309,16 @@ function useCalculateAssetsOut(
       Number(formatUnits(totalSupply, BALANCER_POOL_LP_TOKEN_DECIMALS))
     : 0;
 
-  // for V1.1 CCPools, we need to subtract fees from the reserves before calculating the amounts out.
+  // for V1.1 CCPools, we need to subtract fees from the reserves before calculating the amounts
+  // out.
   const adjustedPoolBalances: number[] = poolBalances.map(
     (bn) => +formatUnits(bn, baseAssetDecimals),
   );
 
   if (isV1_1CCPool && isPoolBalancesFetched) {
-    const totalBondFees = formatUnits(feesBond.add(govFeesBond), 18);
-    const totalUnderlyingFees = formatUnits(
+    // fees are always normalized to 18 decimals in ConvergentCurvePool
+    const totalBondFees = +formatUnits(feesBond.add(govFeesBond), 18);
+    const totalUnderlyingFees = +formatUnits(
       feesUnderyling.add(govFeesUnderlying),
       18,
     );
@@ -327,9 +329,9 @@ function useCalculateAssetsOut(
     );
 
     adjustedPoolBalances[bondIndex] =
-      adjustedPoolBalances[bondIndex] - +totalBondFees;
+      adjustedPoolBalances[bondIndex] - totalBondFees;
     adjustedPoolBalances[underlyingIndex] =
-      adjustedPoolBalances[underlyingIndex] - +totalUnderlyingFees;
+      adjustedPoolBalances[underlyingIndex] - totalUnderlyingFees;
   }
 
   const baseAssetOutValue = calculatePoolShareLiquidity(
