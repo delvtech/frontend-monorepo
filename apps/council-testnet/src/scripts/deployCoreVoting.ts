@@ -17,7 +17,7 @@ export async function deployCoreVoting(
   // can start executing after 10 blocks
   lockDuration: BigNumberish = "10",
   // can vote for 15 blocks
-  extraVotingTime: BigNumberish = "15",
+  extraVotingTime: BigNumberish = "150",
 ): Promise<CoreVoting> {
   const coreVotingDeployer = new CoreVoting__factory(signer);
   const coreVotingContract = await coreVotingDeployer.deploy(

@@ -1,5 +1,7 @@
+import { SimpleProxy__factory } from "./../../../../packages/peripherals/typechain/factories/SimpleProxy__factory";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import {
+  SimpleProxy,
   VestingVault,
   VestingVault__factory,
 } from "@elementfi/council-typechain";
@@ -20,13 +22,20 @@ export async function deployVestingVault(
     staleBlockLag,
   );
 
-  await syncContractWithEthernal(
-    hre,
-    "VestingVault",
+  const simpleProxyDeployer = new SimpleProxy__factory(signer);
+  const simpleProxy = (await simpleProxyDeployer.deploy(
+    timelockAddress, // governance
     vestingVaultContract.address,
+  )) as unknown as SimpleProxy & VestingVault;
+
+  await syncContractWithEthernal(hre, "SimpleProxy", simpleProxy.address);
+
+  const vestingVault = VestingVault__factory.connect(
+    simpleProxy.address,
+    signer,
   );
+  await vestingVault.initialize(signer.address, signer.address);
+  console.log("vestingVault", vestingVault.address);
 
-  await vestingVaultContract.initialize(signer.address, signer.address);
-
-  return vestingVaultContract;
+  return vestingVault;
 }
