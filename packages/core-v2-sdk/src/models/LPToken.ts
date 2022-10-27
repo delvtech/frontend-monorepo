@@ -12,7 +12,7 @@ export class LPToken {
     this.id = pool.id;
     this.context = context;
     this.pool = pool;
-    this.maturityDate = new Date(+pool.id * 1000);
+    this.maturityDate = pool.maturityDate;
   }
 
   async getBaseAsset(): Promise<Token> {

@@ -2,6 +2,7 @@ import { Signer } from "ethers";
 import { ElementContext } from "src/context";
 import { MintResponse } from "src/types";
 import { getCurrentBlockTimestamp } from "src/utils/ethereum/getCurrentBlockNumber";
+import { decodeTokenId } from "src/utils/token/decodeTokenId";
 import { MultiTerm } from "./MultiTerm";
 import { PrincipalToken } from "./PrincipalToken";
 import { Token } from "./Token";
@@ -20,11 +21,47 @@ export class Term {
     this.context = context;
     this.multiTerm = multiTerm;
     this.principalToken = new PrincipalToken(context, this);
-    this.maturityDate = new Date(+id * 1000);
+    const { maturity } = decodeTokenId(id);
+    this.maturityDate = new Date(maturity * 1000);
   }
 
   getYieldSource(): Promise<YieldSource | null> {
     return this.multiTerm.getYieldSource();
+  }
+
+  /**
+   * Gets a Yield Tokens from this Term based on start time.
+   * @param {number} startTime - The start time timestamp in milliseconds.
+   * @return {YieldToken}
+   */
+  getYieldToken(startTime: number): YieldToken {
+    return new YieldToken(startTime, this.context, this);
+  }
+
+  /**
+   * Gets all the Yield Tokens from this Term. Searches by TransferSingleEvents.
+   * @async
+   * @param {number} fromBlock - Optional, start block number to search from.
+   * @param {number} toBlock - Optional, end block number to search to.
+   * @return {Promise<YieldToken[]>}
+   */
+  async getYieldTokens(
+    fromBlock?: number,
+    toBlock?: number,
+  ): Promise<YieldToken[]> {
+    const ids = await this.multiTerm.dataSource.getYieldTokenIds(
+      fromBlock,
+      toBlock,
+    );
+    return ids
+      .filter((id) => {
+        const { maturity } = decodeTokenId(id);
+        return maturity * 1000 === this.maturityDate.getTime();
+      })
+      .map((id) => {
+        const { startTime } = decodeTokenId(id);
+        return new YieldToken(startTime as number, this.context, this);
+      });
   }
 
   getBaseAsset(): Promise<Token> {
@@ -44,10 +81,6 @@ export class Term {
 
   getCreatedAtBlock(): Promise<number | null> {
     return this.multiTerm.dataSource.getCreatedAtBlock(this.id);
-  }
-
-  getYieldToken(startTime: number): YieldToken {
-    return new YieldToken(startTime, this.context, this);
   }
 
   /**

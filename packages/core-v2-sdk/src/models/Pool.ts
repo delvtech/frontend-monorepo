@@ -1,6 +1,8 @@
+import { ONE_DAY_IN_MILLISECONDS } from "@elementfi/base";
 import { ElementContext } from "src/context";
 import { PoolParameters, PoolReserves } from "src/types";
-import { getDaysUntilTimestamp } from "src/utils/time/getDaysUntilTimestamp";
+import { timeUntil } from "src/utils/time/timeUntil";
+import { decodeTokenId } from "src/utils/token/decodeTokenId";
 import { LPToken } from "./LPToken";
 import { MultiPool } from "./MultiPool";
 import { MultiTerm } from "./MultiTerm";
@@ -20,7 +22,7 @@ export class Pool {
 
   /**
    * Creates a Pool model.
-   * @param {number} id - the pool id (expiry)
+   * @param {number} id - the pool id
    * @param {ElementContext} context - Context object for the sdk.
    * @param {MultiPool} multiPool - the MultiPool model where this pool is stored.
    */
@@ -29,7 +31,8 @@ export class Pool {
     this.context = context;
     this.multiPool = multiPool;
     this.lpToken = new LPToken(context, this);
-    this.maturityDate = new Date(+id * 1000);
+    const { maturity } = decodeTokenId(id);
+    this.maturityDate = new Date(maturity * 1000);
   }
 
   /**
@@ -132,11 +135,10 @@ export class Pool {
     const bonds = +reserves.bonds;
     const shares = +reserves.shares;
     const totalSupply = bonds + shares;
-    const expiry = +this.id;
-    const daysUntilExpiry = await getDaysUntilTimestamp(
-      expiry,
-      this.context.provider,
-    );
+
+    const { maturity } = decodeTokenId(this.id);
+    const daysUntilExpiry =
+      timeUntil(maturity * 1000) / ONE_DAY_IN_MILLISECONDS;
 
     // pool parameters
     const parameters = await this.getParameters();
@@ -179,9 +181,9 @@ export class Pool {
     const spotPrice = +(await this.getSpotPrice());
     const poolParams = await this.getParameters();
     const timeStretch = +poolParams.timeStretch;
+    const { maturity } = decodeTokenId(this.id);
     const daysUntilExpiry =
-      (await getDaysUntilTimestamp(+this.id, this.context.provider)) *
-      timeStretch;
+      (timeUntil(maturity * 1000) / ONE_DAY_IN_MILLISECONDS) * timeStretch;
     const daysFractionOfYear = daysUntilExpiry / 365;
     const oneMinusSpotPrice = 1 - spotPrice;
     const apr = (oneMinusSpotPrice / spotPrice / daysFractionOfYear) * 100;
