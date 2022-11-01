@@ -30,7 +30,7 @@
     "@elementfi/eslint-config": "*",
     "@uniswap/token-lists": "https://github.com/Uniswap/token-lists.git#add-array-extension-support",
     "dotenv": "^16.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.26.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "prettier": "2.6.2",

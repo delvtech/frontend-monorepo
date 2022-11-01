@@ -20,7 +20,7 @@
   "dependencies": {
     "@elementfi/eslint-config": "*",
     "@elementfi/prettier-config": "*",
-    "eslint": "^7.32.0",
+    "eslint": "^8.26.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "prettier": "2.6.2"
