@@ -42,7 +42,7 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "ethers": "^5.6.6",
-    "hardhat": "^2.5.0",
+    "hardhat": "^2.12.2",
     "prettier": "2.6.2",
     "prettier-plugin-solidity": "^1.0.0-alpha.58",
     "solhint-plugin-prettier": "^0.0.5",
