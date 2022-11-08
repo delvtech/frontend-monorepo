@@ -86,7 +86,7 @@ exports.mainnetTokenList = {
       description: "The yield position, ie: Yearn yvcrvLUSD",
     },
   },
-  timestamp: "2022-08-29T21:27:04.438Z",
+  timestamp: "2022-11-08T23:16:35.169Z",
   version: {
     major: 0,
     minor: 0,
@@ -119,6 +119,13 @@ exports.mainnetTokenList = {
       address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
       symbol: "DAI",
       name: "Dai Stablecoin",
+      decimals: 18,
+    },
+    {
+      chainId: 1,
+      address: "0xA13a9247ea42D743238089903570127DdA72fE44",
+      symbol: "bb-a-USD",
+      name: "Balancer Aave Boosted StablePool",
       decimals: 18,
     },
     {
@@ -497,6 +504,17 @@ exports.mainnetTokenList = {
     },
     {
       chainId: 1,
+      address: "0x7043eE2e2A4bCB3f781827942e7BEfd9a583f3C9",
+      symbol: "yvBalancer-BoostedAaveUSD",
+      decimals: 18,
+      name: "element yvBalancer-BoostedAaveUSD",
+      tags: ["assetproxy"],
+      extensions: {
+        vault: "0xc5F3D11580c41cD07104e9AF154Fc6428bb93c73",
+      },
+    },
+    {
+      chainId: 1,
       address: "0x5fA5B62c8AF877CB37031e0a3B2f34A78e3C56A6",
       symbol: "yvCurve-LUSD",
       decimals: 18,
@@ -629,6 +647,14 @@ exports.mainnetTokenList = {
       symbol: "yvCurve-alUSD",
       decimals: 18,
       name: "Curve alUSD Pool yVault",
+      tags: ["vault"],
+    },
+    {
+      chainId: 1,
+      address: "0xc5F3D11580c41cD07104e9AF154Fc6428bb93c73",
+      symbol: "yvBalancer-BoostedAaveUSD",
+      decimals: 18,
+      name: "Balancer Boosted Aave USD Pool yVault",
       tags: ["vault"],
     },
     {
@@ -1145,6 +1171,22 @@ exports.mainnetTokenList = {
     },
     {
       chainId: 1,
+      address: "0x7E4FEE0C14673dB4F1526fdbeA53819e5808a9b5",
+      symbol: "ePyvBalancer-BoostedAaveUSD-04MAY23",
+      decimals: 18,
+      extensions: {
+        underlying: "0xA13a9247ea42D743238089903570127DdA72fE44",
+        position: "0x7043eE2e2A4bCB3f781827942e7BEfd9a583f3C9",
+        interestToken: "0xE242b0690D5d4009C3EccB9286409F3082fbD13c",
+        unlockTimestamp: 1683206136,
+        createdAtTimestamp: 1667421959,
+      },
+      name: "bb-a-USD Principal Token",
+      tags: ["eP"],
+      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+    },
+    {
+      chainId: 1,
       address: "0xBabD64a87881d8df7680907fcde176FF11Fa0292",
       symbol: "eYyvCurveLUSD-28SEP21",
       decimals: 18,
@@ -1587,6 +1629,20 @@ exports.mainnetTokenList = {
         tranche: "0x724e3073317d4B1A8d0c6E89B137eA5af1f4051e",
         underlying: "0x06325440D014e39736583c165C2963BA99fAf14E",
         unlockTimestamp: 1677243924,
+      },
+      tags: ["eY"],
+      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+    },
+    {
+      chainId: 1,
+      address: "0xE242b0690D5d4009C3EccB9286409F3082fbD13c",
+      symbol: "eYyvBalancer-BoostedAaveUSD-04MAY23",
+      decimals: 18,
+      name: "bb-a-USD Yield Token",
+      extensions: {
+        tranche: "0x7E4FEE0C14673dB4F1526fdbeA53819e5808a9b5",
+        underlying: "0xA13a9247ea42D743238089903570127DdA72fE44",
+        unlockTimestamp: 1683206136,
       },
       tags: ["eY"],
       logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
@@ -2169,6 +2225,24 @@ exports.mainnetTokenList = {
     },
     {
       chainId: 1,
+      address: "0x28b0379D98fb80Da460C190c95f97C74302214B1",
+      symbol: "LPePyvBalancer-BoostedAaveUSD-04MAY23",
+      decimals: 18,
+      extensions: {
+        convergentPoolFactory: "0xE88628700eaE9213169D715148ac5A5F47B5dCd9",
+        bond: "0x7E4FEE0C14673dB4F1526fdbeA53819e5808a9b5",
+        underlying: "0xA13a9247ea42D743238089903570127DdA72fE44",
+        poolId:
+          "0x28b0379d98fb80da460c190c95f97c74302214b10002000000000000000003c0",
+        unitSeconds: 1620718086,
+        expiration: 1683206136,
+        createdAtTimestamp: 1667830151,
+      },
+      name: "LP Element Principal Token yvBalancer-BoostedAaveUSD-04MAY23",
+      tags: ["ccpool"],
+    },
+    {
+      chainId: 1,
       address: "0xDe620bb8BE43ee54d7aa73f8E99A7409Fe511084",
       symbol: "LPeYyvCurveLUSD-28SEP21",
       decimals: 18,
@@ -2575,7 +2649,7 @@ exports.goerliTokenList = {
       description: "The yield position, ie: Yearn yvcrvLUSD",
     },
   },
-  timestamp: "2022-08-29T21:26:36.539Z",
+  timestamp: "2022-11-08T23:16:09.652Z",
   version: {
     major: 0,
     minor: 0,
