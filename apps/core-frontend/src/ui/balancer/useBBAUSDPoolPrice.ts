@@ -1,7 +1,4 @@
-import {
-  StablePool,
-  StablePool__factory,
-} from "@elementfi/core-typechain/dist/v1.1";
+import { StablePool__factory } from "@elementfi/core-typechain/dist/v1.1";
 import { AddressesJson } from "addresses/addresses";
 import { balancerVaultContract } from "elf/balancer/vault";
 import { defaultProvider } from "elf/providers/providers";
@@ -79,13 +76,14 @@ export function useBBAUSDPrice({
       // request the token's rate, and multiply it by it's reserve balance
       const balanceRateProducts = await Promise.all(
         zippedPoolTokens.map(async ([address, balance]) => {
-          const contract = getContractForAddress(address as string);
+          const contract = getContractForAddress(address as unknown as string);
           const tokenRate = (await contract.getRate()) as BigNumber;
           // TODO: also multiply this by the actual price of usdc, usdt, or dai
           // respectively, but realistically this is going to change things by
           // like .001 cent, so it's not really worth it.
           const product =
-            +formatEther(tokenRate) * +formatEther(balance as BigNumber);
+            +formatEther(tokenRate) *
+            +formatEther(balance as unknown as BigNumber);
           return product;
         }),
       );
