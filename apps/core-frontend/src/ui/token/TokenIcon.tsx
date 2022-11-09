@@ -19,6 +19,7 @@ import usdtIcon from "static/logos/svg/usdt.svg?url";
 import threeCrvIcon from "static/logos/svg/3crv.svg?url";
 import wethIcon from "static/logos/svg/WETH.svg?url";
 import wbtcIcon from "static/logos/svg/WBTC.svg?url";
+import bbaUsdc from "static/logos/bb-a-usdc.png";
 import { useDarkMode } from "ui/prefs/useDarkMode/useDarkMode";
 import { SvgIcon } from "ui/base/SvgIcon";
 
@@ -224,6 +225,23 @@ export function CrvStethIcon({
       className={className}
       style={style}
       src={crvStethIcon}
+      height={height}
+      width={width}
+    />
+  );
+}
+export function BbaUsdcIcon({
+  height,
+  width,
+  className,
+  style,
+}: IconProps): ReactElement {
+  return (
+    <SvgIcon
+      alt={"bb-a-usdc"}
+      className={className}
+      style={style}
+      src={bbaUsdc.src}
       height={height}
       width={width}
     />
