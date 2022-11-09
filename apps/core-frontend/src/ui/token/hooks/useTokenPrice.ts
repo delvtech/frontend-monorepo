@@ -14,8 +14,9 @@ import { useCurveStablecoinPoolVirtualPrice } from "ui/curve/stablePools";
 import { AddressesJson } from "addresses/addresses";
 import { isMainnet } from "base/ethereum/ethereum";
 import { getTokenInfo } from "tokenlists/tokenlists";
-import { QueryObserverResult, useQuery } from "react-query";
+import { QueryObserverResult } from "react-query";
 import { Currency, Money } from "ts-money";
+import { useBBAUSDPrice } from "ui/balancer/useBBAUSDPoolPrice";
 
 const {
   chainId,
@@ -60,14 +61,13 @@ export function useTokenPrice<TContract extends ERC20>(
   const steCrvPriceResult = useSteCrvPrice({ enabled: isSteCrv });
 
   const isBbaUsd = contract.address === bbaUsdAddress;
-  // TODO: Figure out how to price the bb-a-usd token
-  return useQuery({
-    queryKey: "this-is-a-test",
-    queryFn: () => Money.fromDecimal(1, currency),
-    enabled: isBbaUsd,
-  });
+  const bbaUSDPriceResult = useBBAUSDPrice({ enabled: isBbaUsd });
 
   // Because of the nature of hooks, we must return the correct token price here at the end.
+  if (isBbaUsd) {
+    return bbaUSDPriceResult;
+  }
+
   if (isCurveStablePool(contract.address)) {
     return curveStablePoolPriceResult;
   }
