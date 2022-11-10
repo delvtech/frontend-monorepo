@@ -16,10 +16,16 @@ import { isMainnet } from "base/ethereum/ethereum";
 import { getTokenInfo } from "tokenlists/tokenlists";
 import { QueryObserverResult } from "react-query";
 import { Currency, Money } from "ts-money";
+import { useBBAUSDPrice } from "ui/balancer/useBBAUSDPoolPrice";
 
 const {
   chainId,
-  addresses: { crvtricryptoAddress, crv3cryptoAddress, stecrvAddress },
+  addresses: {
+    crvtricryptoAddress,
+    crv3cryptoAddress,
+    stecrvAddress,
+    "bb-a-usdAddress": bbaUsdAddress,
+  },
 } = AddressesJson;
 
 export function useTokenPrice<TContract extends ERC20>(
@@ -54,7 +60,14 @@ export function useTokenPrice<TContract extends ERC20>(
   const isSteCrv = contract.address === stecrvAddress;
   const steCrvPriceResult = useSteCrvPrice({ enabled: isSteCrv });
 
+  const isBbaUsd = contract.address === bbaUsdAddress;
+  const bbaUSDPriceResult = useBBAUSDPrice({ enabled: isBbaUsd });
+
   // Because of the nature of hooks, we must return the correct token price here at the end.
+  if (isBbaUsd) {
+    return bbaUSDPriceResult;
+  }
+
   if (isCurveStablePool(contract.address)) {
     return curveStablePoolPriceResult;
   }

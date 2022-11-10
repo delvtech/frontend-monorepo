@@ -22,6 +22,7 @@ import {
   AlusdIcon,
   MimIcon,
   StethIcon,
+  BbaUsdcIcon,
 } from "ui/token/TokenIcon";
 import ContractAddresses from "addresses/addresses";
 import { CryptoAsset, CryptoAssetType } from "elf/crypto/CryptoAsset";
@@ -41,6 +42,7 @@ const CryptoIconSvg: Record<string, TokenIcon> = {
   [ContractAddresses.wbtcAddress]: WbtcIcon,
   [ContractAddresses["mim-3lp3crv-fAddress"]]: CrvMimIcon,
   [ContractAddresses.eurscrvAddress]: CrvEursIcon,
+  [ContractAddresses["bb-a-usdAddress"]]: BbaUsdcIcon,
   [MainnetExtraAddresses.lusdAddress]: LusdIcon,
 
   [MainnetExtraAddresses.threeCrvAddress]: ThreeCrvIcon,

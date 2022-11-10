@@ -20,7 +20,8 @@
     "userProxyContractAddress": "0xD8a5a9b31c3C0232E196d518E89Fd8bF83AcAd43",
     "wbtcAddress": "0x0000000000000000000000000000000000000000",
     "weightedPoolFactoryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
-    "wethAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+    "wethAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "bb-a-usdAddress": "0x0000000000000000000000000000000000000000"
   },
   "chainId": 31337,
   "safelist": []

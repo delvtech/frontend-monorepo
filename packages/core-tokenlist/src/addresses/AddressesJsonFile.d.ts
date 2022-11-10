@@ -21,6 +21,7 @@ export interface AddressesJsonFile {
     "lusd3crv-fAddress": string;
     "alusd3crv-fAddress": string;
     "mim-3lp3crv-fAddress": string;
+    "bb-a-usdAddress": string;
   };
   safelist: string[];
 }
