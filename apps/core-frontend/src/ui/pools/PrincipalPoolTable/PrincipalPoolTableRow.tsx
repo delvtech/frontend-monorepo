@@ -77,6 +77,13 @@ export function PrincipalPoolTableRow(
   const { data: vaultInfo } = useYearnVault(vaultSymbol, vaultAddress);
   const { apy } = vaultInfo || {};
   const vaultApy = apy ? getYearnVaultAPY(apy) : 0;
+  // Hack to show a NEW label in case yearn isn't showing an apy for a vault
+  // yet. This was introduced when the bb-a-usd term was added, since it was
+  // released around the same time they launched the vault.
+  let vaultApyLabel = formatPercent(vaultApy);
+  if (vaultApy === 0) {
+    vaultApyLabel = t`✨ NEW ✨`;
+  }
 
   // Pool
   const liquidity = useTotalFiatLiquidity(principalPoolTokenInfo);
@@ -139,7 +146,7 @@ export function PrincipalPoolTableRow(
 
         {/* Vault APY */}
         <div className={tw("flex", "justify-center", "font-bold")}>
-          {formatPercent(vaultApy)}
+          {vaultApyLabel}
         </div>
 
         {/* Principal Price */}

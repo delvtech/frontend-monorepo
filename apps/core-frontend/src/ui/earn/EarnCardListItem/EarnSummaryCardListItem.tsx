@@ -53,6 +53,13 @@ export function EarnSummaryCardListItem(
 
   const { isDarkMode } = useDarkMode();
   const ptStakingAPY = useStakingAPY(principalPoolInfo);
+  // Hack to show a NEW label in case yearn isn't showing an apy for a vault
+  // yet. This was introduced when the bb-a-usd term was added, since it was
+  // released around the same time they launched the vault.
+  let vaultApyLabel = formatPercent(vaultApy);
+  if (vaultApy === 0) {
+    vaultApyLabel = t`✨ NEW ✨`;
+  }
 
   return (
     <div className={tw("w-full", "space-y-2")}>
@@ -95,7 +102,7 @@ export function EarnSummaryCardListItem(
           <div className={tw("flex", "justify-end")}>
             <span className={classNames(Classes.TEXT_MUTED, tw("text-sm"))}>
               {t`Vault APY: `}
-              {formatPercent(vaultApy)}
+              {vaultApyLabel}
             </span>
           </div>
         </div>
