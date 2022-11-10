@@ -59,6 +59,14 @@ export function EarnSummaryCard(props: EarnSummaryCardProps): JSX.Element {
   const fixedYield = useTokenYield(principalPoolInfo, "principal");
   const ptStakingAPY = useStakingAPY(principalPoolInfo);
 
+  // Hack to show a NEW label in case yearn isn't showing an apy for a vault
+  // yet. This was introduced when the bb-a-usd term was added, since it was
+  // released around the same time they launched the vault.
+  let vaultAPYLabel = formatPercent(vaultApy);
+  if (vaultApy === 0) {
+    vaultAPYLabel = t`✨ NEW ✨`;
+  }
+
   return (
     <Card onClick={onToggleExpand} className={tw("w-full", "flex", "p-5")}>
       <div className={styles.earnGrid}>
@@ -78,7 +86,7 @@ export function EarnSummaryCard(props: EarnSummaryCardProps): JSX.Element {
 
         {/* Vault APY */}
         <div className={tw("flex", "justify-center", "font-bold")}>
-          {formatPercent(vaultApy)}
+          {vaultAPYLabel}
         </div>
 
         {/* LP APYs */}

@@ -47,6 +47,13 @@ export function TermSummary(props: TermSummaryProps): ReactElement {
 
   const { display_name: displayName, type, apy } = vaultInfo || {};
   const vaultApy = apy ? getYearnVaultAPY(apy) : 0;
+  // Hack to show a NEW label in case yearn isn't showing an apy for a vault
+  // yet. This was introduced when the bb-a-usd term was added, since it was
+  // released around the same time they launched the vault.
+  let vaultApyLabel = formatPercent(vaultApy);
+  if (vaultApy === 0) {
+    vaultApyLabel = t`✨ NEW ✨`;
+  }
 
   const startDateLabel = startTimeMs
     ? formatAbbreviatedDate(new Date(startTimeMs))
@@ -104,7 +111,7 @@ export function TermSummary(props: TermSummaryProps): ReactElement {
                 )}
               >{t`Vault APY`}</span>
               <div className={classNames("h5", tw("space-x-4", "lg:truncate"))}>
-                {formatPercent(vaultApy)}
+                {vaultApyLabel}
               </div>
             </div>
           )}
