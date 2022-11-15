@@ -52,7 +52,7 @@
     "@elementfi/parcel-transformer-graphql-document-node": "*",
     "@elementfi/prettier-config": "*",
     "@ethersproject/providers": "^5.6.8",
-    "eslint": "7.32.0",
+    "eslint": "8.27.0",
     "ethereum-waffle": "^3.4.4",
     "graphql": "^16.5.0",
     "husky": "^8.0.1",
