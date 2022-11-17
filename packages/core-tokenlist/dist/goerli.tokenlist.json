@@ -31,7 +31,7 @@
       "description": "The yield position, ie: Yearn yvcrvLUSD"
     }
   },
-  "timestamp": "2022-11-16T19:30:50.498Z",
+  "timestamp": "2022-11-17T01:22:49.421Z",
   "version": {
     "major": 0,
     "minor": 0,
@@ -313,6 +313,22 @@
     },
     {
       "chainId": 5,
+      "address": "0xafde1563E64d2A2669CAC60Cb96D5f9F0213F50f",
+      "symbol": "eP:yUSDC:17-NOV-23-GMT",
+      "decimals": 6,
+      "extensions": {
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "position": "0xb47E7a1fD90630CfC0868d90Cb8F518578010cFe",
+        "interestToken": "0x3460709C55AA3F84070c2e4Ec1B5e844CE070B0E",
+        "unlockTimestamp": 1700258052,
+        "createdAtTimestamp": 1668635688
+      },
+      "name": "USDC Principal Token",
+      "tags": ["eP"],
+      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+    },
+    {
+      "chainId": 5,
       "address": "0x91dDF92af38Afac1B59F450dDb94ddab10a11490",
       "symbol": "eYyvCurve-stETH",
       "decimals": 18,
@@ -461,6 +477,20 @@
         "tranche": "0x8837544D730Ef1F81c5E8bC69a214e7f2f7a82b2",
         "underlying": "0x5bD768CCE8C529CDF23B136bB486a81f64985B92",
         "unlockTimestamp": 1684482204
+      },
+      "tags": ["eY"],
+      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+    },
+    {
+      "chainId": 5,
+      "address": "0x3460709C55AA3F84070c2e4Ec1B5e844CE070B0E",
+      "symbol": "eY:yUSDC:17-NOV-23-GMT",
+      "decimals": 6,
+      "name": "USDC Yield Token",
+      "extensions": {
+        "tranche": "0xafde1563E64d2A2669CAC60Cb96D5f9F0213F50f",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "unlockTimestamp": 1700258052
       },
       "tags": ["eY"],
       "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
@@ -650,6 +680,23 @@
         "createdAtTimestamp": 1668606792
       },
       "name": "LP Principal Token eyDAI:19-MAY-23-GMT",
+      "tags": ["ccpool"]
+    },
+    {
+      "chainId": 5,
+      "address": "0x2F9f302adB1a965f0B3CAbe29E970c727e3e1Dc0",
+      "symbol": "LPeP:yUSDC:17-NOV-23-GMT",
+      "decimals": 18,
+      "extensions": {
+        "convergentPoolFactory": "0x662a5e11D5769A02E1b444F1952AC575fB8cBB87",
+        "bond": "0xafde1563E64d2A2669CAC60Cb96D5f9F0213F50f",
+        "underlying": "0x78dEca24CBa286C0f8d56370f5406B48cFCE2f86",
+        "poolId": "0x2f9f302adb1a965f0b3cabe29e970c727e3e1dc00002000000000000000000b8",
+        "unitSeconds": 875187766,
+        "expiration": 1700258052,
+        "createdAtTimestamp": 1668635892
+      },
+      "name": "LP Principal Token yUSDC:17-NOV-23-GMT",
       "tags": ["ccpool"]
     },
     {
