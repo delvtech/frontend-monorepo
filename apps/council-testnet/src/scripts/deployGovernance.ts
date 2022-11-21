@@ -1,25 +1,18 @@
+import { getLatestBlockNumber } from "src/utils/getLatestBlockNumber";
+import { provider } from "./../../../core-testnet/src/tokenlist/weightedPools";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import {
-  MerkleRewards,
-  MockERC20,
-  MockERC20__factory,
-} from "@elementfi/council-typechain";
-import { BigNumber } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { ethers } from "hardhat";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
-import { Account, getMerkleTree } from "src/merkle";
-import { deployAirdrop } from "src/scripts/deployAirdrop";
+
 import { deployCoreVoting } from "src/scripts/deployCoreVoting";
 import { deployGSCVault } from "src/scripts/deployGSCVault";
 import { deployLockingVault } from "src/scripts/deployLockingVault";
+import { deploySpender } from "src/scripts/deploySpender";
 import { deployTimelock } from "src/scripts/deployTimelock";
 import { deployTreasury } from "src/scripts/deployTreasury";
 import { deployVestingVault } from "src/scripts/deployVestingVault";
 import { deployVotingToken } from "src/scripts/deployVotingToken";
-import { deploySpender } from "src/scripts/deploySpender";
-
-const FIFTY_VOTING_TOKENS = parseEther("50");
 
 const SMALL_SPEND_LIMIT = parseEther("1");
 const MEDIUM_SPEND_LIMIT = parseEther("10");
@@ -49,12 +42,9 @@ export interface GovernanceContracts {
 export async function deployGovernanace(
   hre: HardhatRuntimeEnvironment,
   signer: SignerWithAddress,
-  signers: SignerWithAddress[],
 ): Promise<GovernanceContracts> {
-  console.log(
-    "signers",
-    signers.map((s) => s.address),
-  );
+  console.log("signer", signer.address);
+  console.log("block", await hre.ethers.provider.getBlockNumber());
   const votingToken = await deployVotingToken(hre, signer);
   console.log("deployed voting token");
 
@@ -72,8 +62,8 @@ export async function deployGovernanace(
     ethers.constants.AddressZero,
     // can execute a proposal 10 blocks after it gets created
     "10",
-    // can vote on a proposal up to 15 blocks from when it gets created
-    "15",
+    // can vote on a proposal up to 300k blocks ~ 1 week on goerli
+    300_000,
   );
   console.log("deployed empty core voting");
 
@@ -121,9 +111,9 @@ export async function deployGovernanace(
     signer,
     votingToken.address,
     timeLock.address,
-    // set to 50 to make sure queryVotePower doesn't bork because there are only 60 blocks when we
-    // deploy and the stale block lag can't go below 0
-    50,
+    // set queryVotePower 300k.  a user's vote power can be used on proposal for this long.
+    // can vote on a proposal up to 300k blocks ~ 1 week on goerli
+    300_000,
   );
   console.log("deployed locking vault");
 
@@ -133,33 +123,11 @@ export async function deployGovernanace(
     signer,
     votingToken.address,
     timeLock.address,
-    // set to 50 to make sure queryVotePower doesn't bork because there are only 60 blocks when we
-    // deploy and the stale block lag can't go below 0
-    50,
+    // set queryVotePower 300k.  a user's vote power can be used on proposal for this long.
+    // can vote on a proposal up to 300k blocks ~ 1 week on goerli
+    300_000,
   );
   console.log("deployed vesting vault");
-
-  // give out some grants to signers[2] and signers[3]
-
-  const accounts: Account[] = [];
-  for (const i in signers) {
-    accounts.push({
-      address: signers[i].address,
-      value: FIFTY_VOTING_TOKENS,
-    });
-  }
-
-  const merkleTree = getMerkleTree(accounts);
-
-  const airdropContract = await deployAirdrop(
-    hre,
-    signer,
-    votingToken.address,
-    coreVoting.address,
-    merkleTree,
-    lockingVault.address,
-  );
-  console.log("deployed airdrop contract");
 
   const treasuryContract = await deployTreasury(hre, signer, timeLock.address);
   console.log("deployed treasury contract");
@@ -175,51 +143,41 @@ export async function deployGovernanace(
     HIGH_SPEND_LIMIT,
   );
 
-  await giveRewardsVaultTokens(accounts, votingToken, signer, airdropContract);
-  console.log("airdrop contract seeded with element tokens ");
-
   // add approved voting vaults. signer is still the owner so we can set these
   await coreVoting.changeVaultStatus(lockingVault.address, true);
   await coreVoting.changeVaultStatus(vestingVault.address, true);
   console.log("added vaults to core voting");
 
-  // authorize the signer so they can create proposals later (back door for testnet scripts)
-  await gscCoreVoting.authorize(signer.address);
-  // set idle duration to 1 second so that we can test voting immediately
-  await gscVault.setIdleDuration(1);
+  // set idle duration to 1 minute
+  await gscVault.setIdleDuration(60);
   // add approved governance vaults. signer is still the owner so we can set these
   await gscCoreVoting.changeVaultStatus(gscVault.address, true);
   console.log("added vaults to gsc core voting");
 
-  // NOTE: these are disabled right now because we need ownership of the contracts to set values
-  // such that we can create expired proposals etc. to set up the tesnet
-
   // finalize permissions for coreVoting contract, gscCoreVoting is authorized to make proposoals
   // without needing minimum proposal power, setting the owner to timelock so that it can execute
   // proposals.
-  // await coreVoting.authorize(gscCoreVoting.address);
-  // await coreVoting.setOwner(timeLock.address);
+  await coreVoting.setOwner(timeLock.address);
   console.log("set permissions for core voting");
 
-  // finalize permissions for timeLock contract, coreVoting is the owner so that it can post proposals
-  // to the timelock.  gsc is authorized for some reason.  remove the address that deployed this contract.
-  // await timeLock.deauthorize(signer.address);
-  // await timeLock.authorize(gscCoreVoting.address);
-  // await timeLock.setOwner(coreVoting.address);
+  // finalize permissions for timeLock contract,
+  // gsc is authorized so that it can delay the execution of proposals in the timelock
+  await timeLock.authorize(gscCoreVoting.address);
+  // coreVoting is the owner so that it can post proposals to the timelock.
+  await timeLock.setOwner(coreVoting.address);
   console.log("set permissions for time lock contract");
 
-  // finalize permissions for gscCoreVoting contract, gscVault authorized to make proposals without
-  // vote.  gscVault set as owner so it can execute proposals.
-  // await gscCoreVoting.authorize(gscVault.address);
-  // await gscCoreVoting.setOwner(gscVault.address);
+  // finalize permissions for gscCoreVoting contract
+  // timelock is owner so upgrades to this contract have to go through normal proposal flow.
+  await gscCoreVoting.setOwner(timeLock.address);
   console.log("set permissions for time gsc core voting");
 
   // finalize permissions for vestingVault contract
-  // await vestingVault.setTimelock(timeLock.address);
+  await vestingVault.setTimelock(timeLock.address);
   console.log("Set permissions for vesting vault");
 
   return {
-    airdrop: airdropContract.address,
+    airdrop: ethers.constants.AddressZero,
     coreVoting: coreVoting.address,
     discordTier1Airdrop: ethers.constants.AddressZero,
     discordTier2Airdrop: ethers.constants.AddressZero,
@@ -238,22 +196,4 @@ export async function deployGovernanace(
     treasury: treasuryContract.address,
     vestingVault: vestingVault.address,
   };
-}
-
-async function giveRewardsVaultTokens(
-  accounts: Account[],
-  votingToken: MockERC20,
-  signer: SignerWithAddress,
-  optimisticRewardsVault: MerkleRewards,
-) {
-  const totalValueBN = accounts.reduce((total: BigNumber, account: Account) => {
-    const { value } = account;
-    return total.add(value);
-  }, BigNumber.from(0));
-  const tokenContract = MockERC20__factory.connect(votingToken.address, signer);
-  const setBalanceTx = await tokenContract.setBalance(
-    optimisticRewardsVault.address,
-    totalValueBN,
-  );
-  await setBalanceTx.wait(1);
 }
