@@ -17,7 +17,7 @@ import {
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
-import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
+import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface MockHistoryTrackerInterface extends ethers.utils.Interface {
   functions: {
@@ -35,20 +35,20 @@ interface MockHistoryTrackerInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "find", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "findAndClear",
-    values: [BigNumberish, BigNumberish],
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "loadBounds",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "loadTop", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "multiPush",
-    values: [BigNumberish[]],
+    values: [BigNumberish[]]
   ): string;
   encodeFunctionData(
     functionFragment: "peekArrayData",
-    values: [BigNumberish, BigNumberish],
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "push", values: [BigNumberish]): string;
 
@@ -56,14 +56,14 @@ interface MockHistoryTrackerInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "find", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "findAndClear",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "loadBounds", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "loadTop", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "multiPush", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "peekArrayData",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "push", data: BytesLike): Result;
 
@@ -76,26 +76,26 @@ export class MockHistoryTracker extends BaseContract {
   deployed(): Promise<this>;
 
   listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
   off<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   on<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   once<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): this;
 
   listeners(eventName?: string): Array<Listener>;
@@ -108,7 +108,7 @@ export class MockHistoryTracker extends BaseContract {
   queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
     event: TypedEventFilter<EventArgsArray, EventArgsObject>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
   interface: MockHistoryTrackerInterface;
@@ -116,7 +116,7 @@ export class MockHistoryTracker extends BaseContract {
   functions: {
     clear(
       newMin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     find(which: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -124,7 +124,7 @@ export class MockHistoryTracker extends BaseContract {
     findAndClear(
       which: BigNumberish,
       stale: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     loadBounds(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
@@ -133,24 +133,24 @@ export class MockHistoryTracker extends BaseContract {
 
     multiPush(
       toBePushed: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     peekArrayData(
       start: BigNumberish,
       end: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber[], BigNumber[]]>;
 
     push(
       data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
 
   clear(
     newMin: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   find(which: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
@@ -158,7 +158,7 @@ export class MockHistoryTracker extends BaseContract {
   findAndClear(
     which: BigNumberish,
     stale: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   loadBounds(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
@@ -167,18 +167,18 @@ export class MockHistoryTracker extends BaseContract {
 
   multiPush(
     toBePushed: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   peekArrayData(
     start: BigNumberish,
     end: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<[BigNumber[], BigNumber[]]>;
 
   push(
     data: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -189,7 +189,7 @@ export class MockHistoryTracker extends BaseContract {
     findAndClear(
       which: BigNumberish,
       stale: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     loadBounds(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
@@ -198,13 +198,13 @@ export class MockHistoryTracker extends BaseContract {
 
     multiPush(
       toBePushed: BigNumberish[],
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     peekArrayData(
       start: BigNumberish,
       end: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber[], BigNumber[]]>;
 
     push(data: BigNumberish, overrides?: CallOverrides): Promise<void>;
@@ -215,7 +215,7 @@ export class MockHistoryTracker extends BaseContract {
   estimateGas: {
     clear(
       newMin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     find(which: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
@@ -223,7 +223,7 @@ export class MockHistoryTracker extends BaseContract {
     findAndClear(
       which: BigNumberish,
       stale: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     loadBounds(overrides?: CallOverrides): Promise<BigNumber>;
@@ -232,36 +232,36 @@ export class MockHistoryTracker extends BaseContract {
 
     multiPush(
       toBePushed: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     peekArrayData(
       start: BigNumberish,
       end: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     push(
       data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     clear(
       newMin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     find(
       which: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     findAndClear(
       which: BigNumberish,
       stale: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     loadBounds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -270,18 +270,18 @@ export class MockHistoryTracker extends BaseContract {
 
     multiPush(
       toBePushed: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     peekArrayData(
       start: BigNumberish,
       end: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     push(
       data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -17,7 +17,7 @@ import {
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
-import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
+import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface GSCVaultInterface extends ethers.utils.Interface {
   functions: {
@@ -44,51 +44,51 @@ interface GSCVaultInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "authorized", values: [string]): string;
   encodeFunctionData(
     functionFragment: "coreVoting",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "deauthorize", values: [string]): string;
   encodeFunctionData(
     functionFragment: "getUserVaults",
-    values: [string],
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "idleDuration",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "isAuthorized",
-    values: [string],
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "kick",
-    values: [string, BytesLike[]],
+    values: [string, BytesLike[]]
   ): string;
   encodeFunctionData(functionFragment: "members", values: [string]): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "proveMembership",
-    values: [string[], BytesLike[]],
+    values: [string[], BytesLike[]]
   ): string;
   encodeFunctionData(
     functionFragment: "queryVotePower",
-    values: [string, BigNumberish, BytesLike],
+    values: [string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "setCoreVoting",
-    values: [string],
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "setIdleDuration",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "setOwner", values: [string]): string;
   encodeFunctionData(
     functionFragment: "setVotePowerBound",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "votingPowerBound",
-    values?: undefined,
+    values?: undefined
   ): string;
 
   decodeFunctionResult(functionFragment: "authorize", data: BytesLike): Result;
@@ -96,47 +96,47 @@ interface GSCVaultInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "coreVoting", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "deauthorize",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "getUserVaults",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "idleDuration",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "isAuthorized",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "kick", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "members", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "proveMembership",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "queryVotePower",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "setCoreVoting",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "setIdleDuration",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setOwner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setVotePowerBound",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "votingPowerBound",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
 
   events: {
@@ -148,32 +148,40 @@ interface GSCVaultInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "MembershipProved"): EventFragment;
 }
 
+export type KickedEvent = TypedEvent<
+  [string, BigNumber] & { who: string; when: BigNumber }
+>;
+
+export type MembershipProvedEvent = TypedEvent<
+  [string, BigNumber] & { who: string; when: BigNumber }
+>;
+
 export class GSCVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
   listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
   off<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   on<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   once<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): this;
 
   listeners(eventName?: string): Array<Listener>;
@@ -186,7 +194,7 @@ export class GSCVault extends BaseContract {
   queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
     event: TypedEventFilter<EventArgsArray, EventArgsObject>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
   interface: GSCVaultInterface;
@@ -194,7 +202,7 @@ export class GSCVault extends BaseContract {
   functions: {
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     authorized(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
@@ -203,7 +211,7 @@ export class GSCVault extends BaseContract {
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     getUserVaults(who: string, overrides?: CallOverrides): Promise<[string[]]>;
@@ -215,12 +223,12 @@ export class GSCVault extends BaseContract {
     kick(
       who: string,
       extraData: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     members(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber] & { joined: BigNumber }>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
@@ -228,34 +236,34 @@ export class GSCVault extends BaseContract {
     proveMembership(
       votingVaults: string[],
       extraData: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     queryVotePower(
       who: string,
       arg1: BigNumberish,
       arg2: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     setCoreVoting(
       _newVoting: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setIdleDuration(
       _idleDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setVotePowerBound(
       _newBound: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     votingPowerBound(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -263,7 +271,7 @@ export class GSCVault extends BaseContract {
 
   authorize(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   authorized(arg0: string, overrides?: CallOverrides): Promise<boolean>;
@@ -272,7 +280,7 @@ export class GSCVault extends BaseContract {
 
   deauthorize(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   getUserVaults(who: string, overrides?: CallOverrides): Promise<string[]>;
@@ -284,7 +292,7 @@ export class GSCVault extends BaseContract {
   kick(
     who: string,
     extraData: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   members(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -294,34 +302,34 @@ export class GSCVault extends BaseContract {
   proveMembership(
     votingVaults: string[],
     extraData: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   queryVotePower(
     who: string,
     arg1: BigNumberish,
     arg2: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   setCoreVoting(
     _newVoting: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setIdleDuration(
     _idleDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setOwner(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setVotePowerBound(
     _newBound: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   votingPowerBound(overrides?: CallOverrides): Promise<BigNumber>;
@@ -344,7 +352,7 @@ export class GSCVault extends BaseContract {
     kick(
       who: string,
       extraData: BytesLike[],
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     members(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -354,49 +362,59 @@ export class GSCVault extends BaseContract {
     proveMembership(
       votingVaults: string[],
       extraData: BytesLike[],
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     queryVotePower(
       who: string,
       arg1: BigNumberish,
       arg2: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setCoreVoting(_newVoting: string, overrides?: CallOverrides): Promise<void>;
 
     setIdleDuration(
       _idleDuration: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setOwner(who: string, overrides?: CallOverrides): Promise<void>;
 
     setVotePowerBound(
       _newBound: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     votingPowerBound(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
+    "Kicked(address,uint256)"(
+      who?: string | null,
+      when?: null
+    ): TypedEventFilter<[string, BigNumber], { who: string; when: BigNumber }>;
+
     Kicked(
       who?: string | null,
-      when?: null,
+      when?: null
+    ): TypedEventFilter<[string, BigNumber], { who: string; when: BigNumber }>;
+
+    "MembershipProved(address,uint256)"(
+      who?: string | null,
+      when?: null
     ): TypedEventFilter<[string, BigNumber], { who: string; when: BigNumber }>;
 
     MembershipProved(
       who?: string | null,
-      when?: null,
+      when?: null
     ): TypedEventFilter<[string, BigNumber], { who: string; when: BigNumber }>;
   };
 
   estimateGas: {
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     authorized(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -405,7 +423,7 @@ export class GSCVault extends BaseContract {
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     getUserVaults(who: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -417,7 +435,7 @@ export class GSCVault extends BaseContract {
     kick(
       who: string,
       extraData: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     members(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -427,34 +445,34 @@ export class GSCVault extends BaseContract {
     proveMembership(
       votingVaults: string[],
       extraData: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     queryVotePower(
       who: string,
       arg1: BigNumberish,
       arg2: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setCoreVoting(
       _newVoting: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setIdleDuration(
       _idleDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setVotePowerBound(
       _newBound: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     votingPowerBound(overrides?: CallOverrides): Promise<BigNumber>;
@@ -463,42 +481,42 @@ export class GSCVault extends BaseContract {
   populateTransaction: {
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     authorized(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     coreVoting(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     getUserVaults(
       who: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     idleDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isAuthorized(
       who: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     kick(
       who: string,
       extraData: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     members(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -506,34 +524,34 @@ export class GSCVault extends BaseContract {
     proveMembership(
       votingVaults: string[],
       extraData: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     queryVotePower(
       who: string,
       arg1: BigNumberish,
       arg2: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setCoreVoting(
       _newVoting: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setIdleDuration(
       _idleDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setVotePowerBound(
       _newBound: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     votingPowerBound(overrides?: CallOverrides): Promise<PopulatedTransaction>;

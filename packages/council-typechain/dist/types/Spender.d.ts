@@ -17,7 +17,7 @@ import {
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
-import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
+import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface SpenderInterface extends ethers.utils.Interface {
   functions: {
@@ -43,46 +43,46 @@ interface SpenderInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "authorized", values: [string]): string;
   encodeFunctionData(
     functionFragment: "blockExpenditure",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "deauthorize", values: [string]): string;
   encodeFunctionData(
     functionFragment: "highSpend",
-    values: [BigNumberish, string],
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "highSpendLimit",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "isAuthorized",
-    values: [string],
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "mediumSpend",
-    values: [BigNumberish, string],
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "mediumSpendLimit",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "removeToken",
-    values: [BigNumberish, string],
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "setLimits",
-    values: [BigNumberish[]],
+    values: [BigNumberish[]]
   ): string;
   encodeFunctionData(functionFragment: "setOwner", values: [string]): string;
   encodeFunctionData(
     functionFragment: "smallSpend",
-    values: [BigNumberish, string],
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "smallSpendLimit",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "token", values?: undefined): string;
 
@@ -90,40 +90,40 @@ interface SpenderInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "authorized", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "blockExpenditure",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "deauthorize",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "highSpend", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "highSpendLimit",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "isAuthorized",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "mediumSpend",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "mediumSpendLimit",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "removeToken",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setLimits", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "setOwner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "smallSpend", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "smallSpendLimit",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "token", data: BytesLike): Result;
 
@@ -136,26 +136,26 @@ export class Spender extends BaseContract {
   deployed(): Promise<this>;
 
   listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
   off<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   on<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   once<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): this;
 
   listeners(eventName?: string): Array<Listener>;
@@ -168,7 +168,7 @@ export class Spender extends BaseContract {
   queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
     event: TypedEventFilter<EventArgsArray, EventArgsObject>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
   interface: SpenderInterface;
@@ -176,25 +176,25 @@ export class Spender extends BaseContract {
   functions: {
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     authorized(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     blockExpenditure(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     highSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     highSpendLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -204,7 +204,7 @@ export class Spender extends BaseContract {
     mediumSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     mediumSpendLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -214,23 +214,23 @@ export class Spender extends BaseContract {
     removeToken(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setLimits(
       limits: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     smallSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     smallSpendLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -240,25 +240,25 @@ export class Spender extends BaseContract {
 
   authorize(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   authorized(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
   blockExpenditure(
     arg0: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   deauthorize(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   highSpend(
     amount: BigNumberish,
     destination: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   highSpendLimit(overrides?: CallOverrides): Promise<BigNumber>;
@@ -268,7 +268,7 @@ export class Spender extends BaseContract {
   mediumSpend(
     amount: BigNumberish,
     destination: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   mediumSpendLimit(overrides?: CallOverrides): Promise<BigNumber>;
@@ -278,23 +278,23 @@ export class Spender extends BaseContract {
   removeToken(
     amount: BigNumberish,
     destination: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setLimits(
     limits: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setOwner(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   smallSpend(
     amount: BigNumberish,
     destination: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   smallSpendLimit(overrides?: CallOverrides): Promise<BigNumber>;
@@ -308,7 +308,7 @@ export class Spender extends BaseContract {
 
     blockExpenditure(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     deauthorize(who: string, overrides?: CallOverrides): Promise<void>;
@@ -316,7 +316,7 @@ export class Spender extends BaseContract {
     highSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     highSpendLimit(overrides?: CallOverrides): Promise<BigNumber>;
@@ -326,7 +326,7 @@ export class Spender extends BaseContract {
     mediumSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     mediumSpendLimit(overrides?: CallOverrides): Promise<BigNumber>;
@@ -336,7 +336,7 @@ export class Spender extends BaseContract {
     removeToken(
       amount: BigNumberish,
       destination: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setLimits(limits: BigNumberish[], overrides?: CallOverrides): Promise<void>;
@@ -346,7 +346,7 @@ export class Spender extends BaseContract {
     smallSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     smallSpendLimit(overrides?: CallOverrides): Promise<BigNumber>;
@@ -359,25 +359,25 @@ export class Spender extends BaseContract {
   estimateGas: {
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     authorized(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     blockExpenditure(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     highSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     highSpendLimit(overrides?: CallOverrides): Promise<BigNumber>;
@@ -387,7 +387,7 @@ export class Spender extends BaseContract {
     mediumSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     mediumSpendLimit(overrides?: CallOverrides): Promise<BigNumber>;
@@ -397,23 +397,23 @@ export class Spender extends BaseContract {
     removeToken(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setLimits(
       limits: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     smallSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     smallSpendLimit(overrides?: CallOverrides): Promise<BigNumber>;
@@ -424,41 +424,41 @@ export class Spender extends BaseContract {
   populateTransaction: {
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     authorized(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     blockExpenditure(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     highSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     highSpendLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isAuthorized(
       who: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     mediumSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     mediumSpendLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -468,23 +468,23 @@ export class Spender extends BaseContract {
     removeToken(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setLimits(
       limits: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     smallSpend(
       amount: BigNumberish,
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     smallSpendLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;

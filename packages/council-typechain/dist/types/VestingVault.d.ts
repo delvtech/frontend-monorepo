@@ -17,7 +17,7 @@ import {
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
-import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
+import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface VestingVaultInterface extends ethers.utils.Interface {
   functions: {
@@ -45,7 +45,7 @@ interface VestingVaultInterface extends ethers.utils.Interface {
 
   encodeFunctionData(
     functionFragment: "acceptGrant",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "addGrantAndDelegate",
@@ -55,66 +55,66 @@ interface VestingVaultInterface extends ethers.utils.Interface {
       BigNumberish,
       BigNumberish,
       BigNumberish,
-      string,
-    ],
+      string
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "changeUnvestedMultiplier",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "claim", values?: undefined): string;
   encodeFunctionData(functionFragment: "delegate", values: [string]): string;
   encodeFunctionData(
     functionFragment: "deposit",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "getGrant", values: [string]): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [string, string],
+    values: [string, string]
   ): string;
   encodeFunctionData(functionFragment: "manager", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "queryVotePower",
-    values: [string, BigNumberish, BytesLike],
+    values: [string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "queryVotePowerView",
-    values: [string, BigNumberish],
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "removeGrant", values: [string]): string;
   encodeFunctionData(functionFragment: "setManager", values: [string]): string;
   encodeFunctionData(functionFragment: "setTimelock", values: [string]): string;
   encodeFunctionData(
     functionFragment: "staleBlockLag",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "timelock", values?: undefined): string;
   encodeFunctionData(functionFragment: "token", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "unvestedMultiplier",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "updateVotingPower",
-    values: [string],
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw",
-    values: [BigNumberish, string],
+    values: [BigNumberish, string]
   ): string;
 
   decodeFunctionResult(
     functionFragment: "acceptGrant",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "addGrantAndDelegate",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "changeUnvestedMultiplier",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "claim", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "delegate", data: BytesLike): Result;
@@ -124,34 +124,34 @@ interface VestingVaultInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "manager", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "queryVotePower",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "queryVotePowerView",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "removeGrant",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setManager", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setTimelock",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "staleBlockLag",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "timelock", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "token", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "unvestedMultiplier",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "updateVotingPower",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
@@ -162,32 +162,36 @@ interface VestingVaultInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "VoteChange"): EventFragment;
 }
 
+export type VoteChangeEvent = TypedEvent<
+  [string, string, BigNumber] & { to: string; from: string; amount: BigNumber }
+>;
+
 export class VestingVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
   listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
   off<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   on<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   once<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): this;
 
   listeners(eventName?: string): Array<Listener>;
@@ -200,14 +204,14 @@ export class VestingVault extends BaseContract {
   queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
     event: TypedEventFilter<EventArgsArray, EventArgsObject>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
   interface: VestingVaultInterface;
 
   functions: {
     acceptGrant(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     addGrantAndDelegate(
@@ -217,31 +221,31 @@ export class VestingVault extends BaseContract {
       _expiration: BigNumberish,
       _cliff: BigNumberish,
       _delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     changeUnvestedMultiplier(
       _multiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     claim(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     delegate(
       _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     deposit(
       _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     getGrant(
       _who: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<
       [
         [
@@ -252,7 +256,7 @@ export class VestingVault extends BaseContract {
           BigNumber,
           BigNumber,
           string,
-          [BigNumber, BigNumber],
+          [BigNumber, BigNumber]
         ] & {
           allocation: BigNumber;
           withdrawn: BigNumber;
@@ -262,14 +266,14 @@ export class VestingVault extends BaseContract {
           latestVotingPower: BigNumber;
           delegatee: string;
           range: [BigNumber, BigNumber];
-        },
+        }
       ]
     >;
 
     initialize(
       manager_: string,
       timelock_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     manager(overrides?: CallOverrides): Promise<[string]>;
@@ -278,28 +282,28 @@ export class VestingVault extends BaseContract {
       user: string,
       blockNumber: BigNumberish,
       arg2: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     queryVotePowerView(
       user: string,
       blockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     removeGrant(
       _who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setManager(
       manager_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setTimelock(
       timelock_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     staleBlockLag(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -312,18 +316,18 @@ export class VestingVault extends BaseContract {
 
     updateVotingPower(
       _who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     withdraw(
       _amount: BigNumberish,
       _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
 
   acceptGrant(
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   addGrantAndDelegate(
@@ -333,31 +337,31 @@ export class VestingVault extends BaseContract {
     _expiration: BigNumberish,
     _cliff: BigNumberish,
     _delegatee: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   changeUnvestedMultiplier(
     _multiplier: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   claim(
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   delegate(
     _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   deposit(
     _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   getGrant(
     _who: string,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<
     [
       BigNumber,
@@ -367,7 +371,7 @@ export class VestingVault extends BaseContract {
       BigNumber,
       BigNumber,
       string,
-      [BigNumber, BigNumber],
+      [BigNumber, BigNumber]
     ] & {
       allocation: BigNumber;
       withdrawn: BigNumber;
@@ -383,7 +387,7 @@ export class VestingVault extends BaseContract {
   initialize(
     manager_: string,
     timelock_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   manager(overrides?: CallOverrides): Promise<string>;
@@ -392,28 +396,28 @@ export class VestingVault extends BaseContract {
     user: string,
     blockNumber: BigNumberish,
     arg2: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   queryVotePowerView(
     user: string,
     blockNumber: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   removeGrant(
     _who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setManager(
     manager_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setTimelock(
     timelock_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   staleBlockLag(overrides?: CallOverrides): Promise<BigNumber>;
@@ -426,13 +430,13 @@ export class VestingVault extends BaseContract {
 
   updateVotingPower(
     _who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   withdraw(
     _amount: BigNumberish,
     _recipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -445,12 +449,12 @@ export class VestingVault extends BaseContract {
       _expiration: BigNumberish,
       _cliff: BigNumberish,
       _delegatee: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     changeUnvestedMultiplier(
       _multiplier: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     claim(overrides?: CallOverrides): Promise<void>;
@@ -461,7 +465,7 @@ export class VestingVault extends BaseContract {
 
     getGrant(
       _who: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<
       [
         BigNumber,
@@ -471,7 +475,7 @@ export class VestingVault extends BaseContract {
         BigNumber,
         BigNumber,
         string,
-        [BigNumber, BigNumber],
+        [BigNumber, BigNumber]
       ] & {
         allocation: BigNumber;
         withdrawn: BigNumber;
@@ -487,7 +491,7 @@ export class VestingVault extends BaseContract {
     initialize(
       manager_: string,
       timelock_: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     manager(overrides?: CallOverrides): Promise<string>;
@@ -496,13 +500,13 @@ export class VestingVault extends BaseContract {
       user: string,
       blockNumber: BigNumberish,
       arg2: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     queryVotePowerView(
       user: string,
       blockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     removeGrant(_who: string, overrides?: CallOverrides): Promise<void>;
@@ -524,15 +528,24 @@ export class VestingVault extends BaseContract {
     withdraw(
       _amount: BigNumberish,
       _recipient: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
+    "VoteChange(address,address,int256)"(
+      to?: string | null,
+      from?: string | null,
+      amount?: null
+    ): TypedEventFilter<
+      [string, string, BigNumber],
+      { to: string; from: string; amount: BigNumber }
+    >;
+
     VoteChange(
       to?: string | null,
       from?: string | null,
-      amount?: null,
+      amount?: null
     ): TypedEventFilter<
       [string, string, BigNumber],
       { to: string; from: string; amount: BigNumber }
@@ -541,7 +554,7 @@ export class VestingVault extends BaseContract {
 
   estimateGas: {
     acceptGrant(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     addGrantAndDelegate(
@@ -551,26 +564,26 @@ export class VestingVault extends BaseContract {
       _expiration: BigNumberish,
       _cliff: BigNumberish,
       _delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     changeUnvestedMultiplier(
       _multiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     claim(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     delegate(
       _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     deposit(
       _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     getGrant(_who: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -578,7 +591,7 @@ export class VestingVault extends BaseContract {
     initialize(
       manager_: string,
       timelock_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     manager(overrides?: CallOverrides): Promise<BigNumber>;
@@ -587,28 +600,28 @@ export class VestingVault extends BaseContract {
       user: string,
       blockNumber: BigNumberish,
       arg2: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     queryVotePowerView(
       user: string,
       blockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     removeGrant(
       _who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setManager(
       manager_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setTimelock(
       timelock_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     staleBlockLag(overrides?: CallOverrides): Promise<BigNumber>;
@@ -621,19 +634,19 @@ export class VestingVault extends BaseContract {
 
     updateVotingPower(
       _who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     withdraw(
       _amount: BigNumberish,
       _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     acceptGrant(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     addGrantAndDelegate(
@@ -643,37 +656,37 @@ export class VestingVault extends BaseContract {
       _expiration: BigNumberish,
       _cliff: BigNumberish,
       _delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     changeUnvestedMultiplier(
       _multiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     claim(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     delegate(
       _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     deposit(
       _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     getGrant(
       _who: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     initialize(
       manager_: string,
       timelock_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     manager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -682,28 +695,28 @@ export class VestingVault extends BaseContract {
       user: string,
       blockNumber: BigNumberish,
       arg2: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     queryVotePowerView(
       user: string,
       blockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     removeGrant(
       _who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setManager(
       manager_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setTimelock(
       timelock_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     staleBlockLag(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -713,18 +726,18 @@ export class VestingVault extends BaseContract {
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     unvestedMultiplier(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     updateVotingPower(
       _who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
       _amount: BigNumberish,
       _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

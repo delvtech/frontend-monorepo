@@ -17,7 +17,7 @@ import {
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
-import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
+import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface TestCoreVotingInterface extends ethers.utils.Interface {
   functions: {
@@ -56,66 +56,66 @@ interface TestCoreVotingInterface extends ethers.utils.Interface {
 
   encodeFunctionData(
     functionFragment: "DAY_IN_BLOCKS",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "approvedVaults",
-    values: [string],
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "authorize", values: [string]): string;
   encodeFunctionData(functionFragment: "authorized", values: [string]): string;
   encodeFunctionData(
     functionFragment: "baseQuorum",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "changeExtraVotingTime",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "changeVaultStatus",
-    values: [string, boolean],
+    values: [string, boolean]
   ): string;
   encodeFunctionData(functionFragment: "deauthorize", values: [string]): string;
   encodeFunctionData(
     functionFragment: "dummyValue",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "execute",
-    values: [BigNumberish, string[], BytesLike[]],
+    values: [BigNumberish, string[], BytesLike[]]
   ): string;
   encodeFunctionData(
     functionFragment: "extraVoteTime",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getCustomQuorum",
-    values: [string, BytesLike],
+    values: [string, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getProposalData",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getProposalVotingPower",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getVaultStatus",
-    values: [string],
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "isAuthorized",
-    values: [string],
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "lockDuration",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "minProposalPower",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -126,136 +126,136 @@ interface TestCoreVotingInterface extends ethers.utils.Interface {
       string[],
       BytesLike[],
       BigNumberish,
-      BigNumberish,
-    ],
+      BigNumberish
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "proposalCount",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "proposals",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "quorums",
-    values: [string, BytesLike],
+    values: [string, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "setCustomQuorum",
-    values: [string, BytesLike, BigNumberish],
+    values: [string, BytesLike, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setDefaultQuorum",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setLockDuration",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setMinProposalPower",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "setOwner", values: [string]): string;
   encodeFunctionData(
     functionFragment: "updateDummy",
-    values: [BigNumberish],
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "vote",
-    values: [string[], BytesLike[], BigNumberish, BigNumberish],
+    values: [string[], BytesLike[], BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "votes",
-    values: [string, BigNumberish],
+    values: [string, BigNumberish]
   ): string;
 
   decodeFunctionResult(
     functionFragment: "DAY_IN_BLOCKS",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "approvedVaults",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "authorize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "authorized", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "baseQuorum", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "changeExtraVotingTime",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "changeVaultStatus",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "deauthorize",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "dummyValue", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "execute", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "extraVoteTime",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "getCustomQuorum",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "getProposalData",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "getProposalVotingPower",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "getVaultStatus",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "isAuthorized",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "lockDuration",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "minProposalPower",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "proposal", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "proposalCount",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "proposals", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "quorums", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setCustomQuorum",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "setDefaultQuorum",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "setLockDuration",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "setMinProposalPower",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setOwner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "updateDummy",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "vote", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "votes", data: BytesLike): Result;
@@ -271,32 +271,57 @@ interface TestCoreVotingInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "Voted"): EventFragment;
 }
 
+export type ProposalCreatedEvent = TypedEvent<
+  [BigNumber, BigNumber, BigNumber, BigNumber] & {
+    proposalId: BigNumber;
+    created: BigNumber;
+    execution: BigNumber;
+    expiration: BigNumber;
+  }
+>;
+
+export type ProposalExecutedEvent = TypedEvent<
+  [BigNumber] & { proposalId: BigNumber }
+>;
+
+export type VotedEvent = TypedEvent<
+  [
+    string,
+    BigNumber,
+    [BigNumber, number] & { votingPower: BigNumber; castBallot: number }
+  ] & {
+    voter: string;
+    proposalId: BigNumber;
+    vote: [BigNumber, number] & { votingPower: BigNumber; castBallot: number };
+  }
+>;
+
 export class TestCoreVoting extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
   listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
   off<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   on<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   once<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): this;
 
   listeners(eventName?: string): Array<Listener>;
@@ -309,7 +334,7 @@ export class TestCoreVoting extends BaseContract {
   queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
     event: TypedEventFilter<EventArgsArray, EventArgsObject>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
   interface: TestCoreVotingInterface;
@@ -321,7 +346,7 @@ export class TestCoreVoting extends BaseContract {
 
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     authorized(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
@@ -330,18 +355,18 @@ export class TestCoreVoting extends BaseContract {
 
     changeExtraVotingTime(
       _extraVoteTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     changeVaultStatus(
       vault: string,
       isValid: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     dummyValue(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -350,7 +375,7 @@ export class TestCoreVoting extends BaseContract {
       proposalId: BigNumberish,
       targets: string[],
       calldatas: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     extraVoteTime(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -358,30 +383,30 @@ export class TestCoreVoting extends BaseContract {
     getCustomQuorum(
       _target: string,
       _selector: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getProposalData(
       _proposalID: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<
       [
         string,
         BigNumber,
         BigNumber,
         BigNumber,
-        [BigNumber, BigNumber, BigNumber],
+        [BigNumber, BigNumber, BigNumber]
       ]
     >;
 
     getProposalVotingPower(
       proposalId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[[BigNumber, BigNumber, BigNumber]]>;
 
     getVaultStatus(
       _vault: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     isAuthorized(who: string, overrides?: CallOverrides): Promise<[boolean]>;
@@ -399,14 +424,14 @@ export class TestCoreVoting extends BaseContract {
       calldatas: BytesLike[],
       lastCall: BigNumberish,
       ballot: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     proposalCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     proposals(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         proposalHash: string;
@@ -421,39 +446,39 @@ export class TestCoreVoting extends BaseContract {
     quorums(
       target: string,
       functionSelector: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     setCustomQuorum(
       target: string,
       selector: BytesLike,
       quorum: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setDefaultQuorum(
       quorum: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setLockDuration(
       _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setMinProposalPower(
       _minProposalPower: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     updateDummy(
       _newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     vote(
@@ -461,13 +486,13 @@ export class TestCoreVoting extends BaseContract {
       extraVaultData: BytesLike[],
       proposalId: BigNumberish,
       ballot: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     votes(
       arg0: string,
       arg1: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<
       [BigNumber, number] & { votingPower: BigNumber; castBallot: number }
     >;
@@ -479,7 +504,7 @@ export class TestCoreVoting extends BaseContract {
 
   authorize(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   authorized(arg0: string, overrides?: CallOverrides): Promise<boolean>;
@@ -488,18 +513,18 @@ export class TestCoreVoting extends BaseContract {
 
   changeExtraVotingTime(
     _extraVoteTime: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   changeVaultStatus(
     vault: string,
     isValid: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   deauthorize(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   dummyValue(overrides?: CallOverrides): Promise<BigNumber>;
@@ -508,7 +533,7 @@ export class TestCoreVoting extends BaseContract {
     proposalId: BigNumberish,
     targets: string[],
     calldatas: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   extraVoteTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -516,19 +541,19 @@ export class TestCoreVoting extends BaseContract {
   getCustomQuorum(
     _target: string,
     _selector: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getProposalData(
     _proposalID: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<
     [string, BigNumber, BigNumber, BigNumber, [BigNumber, BigNumber, BigNumber]]
   >;
 
   getProposalVotingPower(
     proposalId: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
   getVaultStatus(_vault: string, overrides?: CallOverrides): Promise<boolean>;
@@ -548,14 +573,14 @@ export class TestCoreVoting extends BaseContract {
     calldatas: BytesLike[],
     lastCall: BigNumberish,
     ballot: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   proposalCount(overrides?: CallOverrides): Promise<BigNumber>;
 
   proposals(
     arg0: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<
     [string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
       proposalHash: string;
@@ -570,39 +595,39 @@ export class TestCoreVoting extends BaseContract {
   quorums(
     target: string,
     functionSelector: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   setCustomQuorum(
     target: string,
     selector: BytesLike,
     quorum: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setDefaultQuorum(
     quorum: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setLockDuration(
     _lockDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setMinProposalPower(
     _minProposalPower: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setOwner(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   updateDummy(
     _newValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   vote(
@@ -610,13 +635,13 @@ export class TestCoreVoting extends BaseContract {
     extraVaultData: BytesLike[],
     proposalId: BigNumberish,
     ballot: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   votes(
     arg0: string,
     arg1: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<
     [BigNumber, number] & { votingPower: BigNumber; castBallot: number }
   >;
@@ -634,13 +659,13 @@ export class TestCoreVoting extends BaseContract {
 
     changeExtraVotingTime(
       _extraVoteTime: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     changeVaultStatus(
       vault: string,
       isValid: boolean,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     deauthorize(who: string, overrides?: CallOverrides): Promise<void>;
@@ -651,7 +676,7 @@ export class TestCoreVoting extends BaseContract {
       proposalId: BigNumberish,
       targets: string[],
       calldatas: BytesLike[],
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     extraVoteTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -659,25 +684,25 @@ export class TestCoreVoting extends BaseContract {
     getCustomQuorum(
       _target: string,
       _selector: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getProposalData(
       _proposalID: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<
       [
         string,
         BigNumber,
         BigNumber,
         BigNumber,
-        [BigNumber, BigNumber, BigNumber],
+        [BigNumber, BigNumber, BigNumber]
       ]
     >;
 
     getProposalVotingPower(
       proposalId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
     getVaultStatus(_vault: string, overrides?: CallOverrides): Promise<boolean>;
@@ -697,14 +722,14 @@ export class TestCoreVoting extends BaseContract {
       calldatas: BytesLike[],
       lastCall: BigNumberish,
       ballot: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     proposalCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposals(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         proposalHash: string;
@@ -719,36 +744,36 @@ export class TestCoreVoting extends BaseContract {
     quorums(
       target: string,
       functionSelector: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setCustomQuorum(
       target: string,
       selector: BytesLike,
       quorum: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setDefaultQuorum(
       quorum: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setLockDuration(
       _lockDuration: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setMinProposalPower(
       _minProposalPower: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setOwner(who: string, overrides?: CallOverrides): Promise<void>;
 
     updateDummy(
       _newValue: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     vote(
@@ -756,24 +781,24 @@ export class TestCoreVoting extends BaseContract {
       extraVaultData: BytesLike[],
       proposalId: BigNumberish,
       ballot: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     votes(
       arg0: string,
       arg1: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<
       [BigNumber, number] & { votingPower: BigNumber; castBallot: number }
     >;
   };
 
   filters: {
-    ProposalCreated(
+    "ProposalCreated(uint256,uint256,uint256,uint256)"(
       proposalId?: null,
       created?: null,
       execution?: null,
-      expiration?: null,
+      expiration?: null
     ): TypedEventFilter<
       [BigNumber, BigNumber, BigNumber, BigNumber],
       {
@@ -784,19 +809,58 @@ export class TestCoreVoting extends BaseContract {
       }
     >;
 
-    ProposalExecuted(
+    ProposalCreated(
       proposalId?: null,
+      created?: null,
+      execution?: null,
+      expiration?: null
+    ): TypedEventFilter<
+      [BigNumber, BigNumber, BigNumber, BigNumber],
+      {
+        proposalId: BigNumber;
+        created: BigNumber;
+        execution: BigNumber;
+        expiration: BigNumber;
+      }
+    >;
+
+    "ProposalExecuted(uint256)"(
+      proposalId?: null
     ): TypedEventFilter<[BigNumber], { proposalId: BigNumber }>;
 
-    Voted(
+    ProposalExecuted(
+      proposalId?: null
+    ): TypedEventFilter<[BigNumber], { proposalId: BigNumber }>;
+
+    "Voted(address,uint256,tuple)"(
       voter?: string | null,
       proposalId?: BigNumberish | null,
-      vote?: null,
+      vote?: null
     ): TypedEventFilter<
       [
         string,
         BigNumber,
-        [BigNumber, number] & { votingPower: BigNumber; castBallot: number },
+        [BigNumber, number] & { votingPower: BigNumber; castBallot: number }
+      ],
+      {
+        voter: string;
+        proposalId: BigNumber;
+        vote: [BigNumber, number] & {
+          votingPower: BigNumber;
+          castBallot: number;
+        };
+      }
+    >;
+
+    Voted(
+      voter?: string | null,
+      proposalId?: BigNumberish | null,
+      vote?: null
+    ): TypedEventFilter<
+      [
+        string,
+        BigNumber,
+        [BigNumber, number] & { votingPower: BigNumber; castBallot: number }
       ],
       {
         voter: string;
@@ -816,7 +880,7 @@ export class TestCoreVoting extends BaseContract {
 
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     authorized(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -825,18 +889,18 @@ export class TestCoreVoting extends BaseContract {
 
     changeExtraVotingTime(
       _extraVoteTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     changeVaultStatus(
       vault: string,
       isValid: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     dummyValue(overrides?: CallOverrides): Promise<BigNumber>;
@@ -845,7 +909,7 @@ export class TestCoreVoting extends BaseContract {
       proposalId: BigNumberish,
       targets: string[],
       calldatas: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     extraVoteTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -853,22 +917,22 @@ export class TestCoreVoting extends BaseContract {
     getCustomQuorum(
       _target: string,
       _selector: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getProposalData(
       _proposalID: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getProposalVotingPower(
       proposalId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getVaultStatus(
       _vault: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isAuthorized(who: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -886,52 +950,52 @@ export class TestCoreVoting extends BaseContract {
       calldatas: BytesLike[],
       lastCall: BigNumberish,
       ballot: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     proposalCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposals(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     quorums(
       target: string,
       functionSelector: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setCustomQuorum(
       target: string,
       selector: BytesLike,
       quorum: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setDefaultQuorum(
       quorum: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setLockDuration(
       _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setMinProposalPower(
       _minProposalPower: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     updateDummy(
       _newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     vote(
@@ -939,13 +1003,13 @@ export class TestCoreVoting extends BaseContract {
       extraVaultData: BytesLike[],
       proposalId: BigNumberish,
       ballot: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     votes(
       arg0: string,
       arg1: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
@@ -954,35 +1018,35 @@ export class TestCoreVoting extends BaseContract {
 
     approvedVaults(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     authorized(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     baseQuorum(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     changeExtraVotingTime(
       _extraVoteTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     changeVaultStatus(
       vault: string,
       isValid: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     dummyValue(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -991,7 +1055,7 @@ export class TestCoreVoting extends BaseContract {
       proposalId: BigNumberish,
       targets: string[],
       calldatas: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     extraVoteTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -999,27 +1063,27 @@ export class TestCoreVoting extends BaseContract {
     getCustomQuorum(
       _target: string,
       _selector: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getProposalData(
       _proposalID: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getProposalVotingPower(
       proposalId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getVaultStatus(
       _vault: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isAuthorized(
       who: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     lockDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1035,52 +1099,52 @@ export class TestCoreVoting extends BaseContract {
       calldatas: BytesLike[],
       lastCall: BigNumberish,
       ballot: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     proposalCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     proposals(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     quorums(
       target: string,
       functionSelector: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setCustomQuorum(
       target: string,
       selector: BytesLike,
       quorum: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setDefaultQuorum(
       quorum: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setLockDuration(
       _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setMinProposalPower(
       _minProposalPower: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     updateDummy(
       _newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     vote(
@@ -1088,13 +1152,13 @@ export class TestCoreVoting extends BaseContract {
       extraVaultData: BytesLike[],
       proposalId: BigNumberish,
       ballot: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     votes(
       arg0: string,
       arg1: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

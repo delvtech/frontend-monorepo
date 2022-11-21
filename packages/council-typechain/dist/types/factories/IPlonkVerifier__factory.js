@@ -6,40 +6,41 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.IPlonkVerifier__factory = void 0;
 var ethers_1 = require("ethers");
 var _abi = [
-  {
-    inputs: [
-      {
-        internalType: "bytes",
-        name: "proof",
-        type: "bytes",
-      },
-      {
-        internalType: "uint256[]",
-        name: "pubSignals",
-        type: "uint256[]",
-      },
-    ],
-    name: "verifyProof",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
+    {
+        inputs: [
+            {
+                internalType: "bytes",
+                name: "proof",
+                type: "bytes",
+            },
+            {
+                internalType: "uint256[]",
+                name: "pubSignals",
+                type: "uint256[]",
+            },
+        ],
+        name: "verifyProof",
+        outputs: [
+            {
+                internalType: "bool",
+                name: "",
+                type: "bool",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
 ];
 var IPlonkVerifier__factory = /** @class */ (function () {
-  function IPlonkVerifier__factory() {}
-  IPlonkVerifier__factory.createInterface = function () {
-    return new ethers_1.utils.Interface(_abi);
-  };
-  IPlonkVerifier__factory.connect = function (address, signerOrProvider) {
-    return new ethers_1.Contract(address, _abi, signerOrProvider);
-  };
-  IPlonkVerifier__factory.abi = _abi;
-  return IPlonkVerifier__factory;
-})();
+    function IPlonkVerifier__factory() {
+    }
+    IPlonkVerifier__factory.createInterface = function () {
+        return new ethers_1.utils.Interface(_abi);
+    };
+    IPlonkVerifier__factory.connect = function (address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
+    };
+    IPlonkVerifier__factory.abi = _abi;
+    return IPlonkVerifier__factory;
+}());
 exports.IPlonkVerifier__factory = IPlonkVerifier__factory;

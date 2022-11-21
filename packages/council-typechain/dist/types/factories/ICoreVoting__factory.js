@@ -6,35 +6,36 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ICoreVoting__factory = void 0;
 var ethers_1 = require("ethers");
 var _abi = [
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "vault",
-        type: "address",
-      },
-    ],
-    name: "approvedVaults",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "vault",
+                type: "address",
+            },
+        ],
+        name: "approvedVaults",
+        outputs: [
+            {
+                internalType: "bool",
+                name: "",
+                type: "bool",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
 ];
 var ICoreVoting__factory = /** @class */ (function () {
-  function ICoreVoting__factory() {}
-  ICoreVoting__factory.createInterface = function () {
-    return new ethers_1.utils.Interface(_abi);
-  };
-  ICoreVoting__factory.connect = function (address, signerOrProvider) {
-    return new ethers_1.Contract(address, _abi, signerOrProvider);
-  };
-  ICoreVoting__factory.abi = _abi;
-  return ICoreVoting__factory;
-})();
+    function ICoreVoting__factory() {
+    }
+    ICoreVoting__factory.createInterface = function () {
+        return new ethers_1.utils.Interface(_abi);
+    };
+    ICoreVoting__factory.connect = function (address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
+    };
+    ICoreVoting__factory.abi = _abi;
+    return ICoreVoting__factory;
+}());
 exports.ICoreVoting__factory = ICoreVoting__factory;

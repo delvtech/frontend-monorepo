@@ -455,7 +455,7 @@ export class ERC20PermitWithMint__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider,
+    signerOrProvider: Signer | Provider
   ): ERC20PermitWithMint {
     return new Contract(address, _abi, signerOrProvider) as ERC20PermitWithMint;
   }

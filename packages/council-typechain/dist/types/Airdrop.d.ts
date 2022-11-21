@@ -17,7 +17,7 @@ import {
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
-import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
+import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface AirdropInterface extends ethers.utils.Interface {
   functions: {
@@ -41,31 +41,31 @@ interface AirdropInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "authorized", values: [string]): string;
   encodeFunctionData(
     functionFragment: "claim",
-    values: [BigNumberish, BigNumberish, BytesLike[], string],
+    values: [BigNumberish, BigNumberish, BytesLike[], string]
   ): string;
   encodeFunctionData(
     functionFragment: "claimAndDelegate",
-    values: [BigNumberish, string, BigNumberish, BytesLike[], string],
+    values: [BigNumberish, string, BigNumberish, BytesLike[], string]
   ): string;
   encodeFunctionData(functionFragment: "claimed", values: [string]): string;
   encodeFunctionData(functionFragment: "deauthorize", values: [string]): string;
   encodeFunctionData(
     functionFragment: "expiration",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "isAuthorized",
-    values: [string],
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "lockingVault",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "reclaim", values: [string]): string;
   encodeFunctionData(
     functionFragment: "rewardsRoot",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "setOwner", values: [string]): string;
   encodeFunctionData(functionFragment: "token", values?: undefined): string;
@@ -75,27 +75,27 @@ interface AirdropInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "claim", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "claimAndDelegate",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "claimed", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "deauthorize",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "expiration", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isAuthorized",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "lockingVault",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "reclaim", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "rewardsRoot",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setOwner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "token", data: BytesLike): Result;
@@ -109,26 +109,26 @@ export class Airdrop extends BaseContract {
   deployed(): Promise<this>;
 
   listeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
   off<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   on<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   once<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
-    listener: TypedListener<EventArgsArray, EventArgsObject>,
+    listener: TypedListener<EventArgsArray, EventArgsObject>
   ): this;
   removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
-    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
+    eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
   ): this;
 
   listeners(eventName?: string): Array<Listener>;
@@ -141,7 +141,7 @@ export class Airdrop extends BaseContract {
   queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
     event: TypedEventFilter<EventArgsArray, EventArgsObject>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
   interface: AirdropInterface;
@@ -149,7 +149,7 @@ export class Airdrop extends BaseContract {
   functions: {
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     authorized(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
@@ -159,7 +159,7 @@ export class Airdrop extends BaseContract {
       totalGrant: BigNumberish,
       merkleProof: BytesLike[],
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     claimAndDelegate(
@@ -168,14 +168,14 @@ export class Airdrop extends BaseContract {
       totalGrant: BigNumberish,
       merkleProof: BytesLike[],
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     claimed(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     expiration(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -188,14 +188,14 @@ export class Airdrop extends BaseContract {
 
     reclaim(
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     rewardsRoot(overrides?: CallOverrides): Promise<[string]>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     token(overrides?: CallOverrides): Promise<[string]>;
@@ -203,7 +203,7 @@ export class Airdrop extends BaseContract {
 
   authorize(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   authorized(arg0: string, overrides?: CallOverrides): Promise<boolean>;
@@ -213,7 +213,7 @@ export class Airdrop extends BaseContract {
     totalGrant: BigNumberish,
     merkleProof: BytesLike[],
     destination: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   claimAndDelegate(
@@ -222,14 +222,14 @@ export class Airdrop extends BaseContract {
     totalGrant: BigNumberish,
     merkleProof: BytesLike[],
     destination: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   claimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   deauthorize(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   expiration(overrides?: CallOverrides): Promise<BigNumber>;
@@ -242,14 +242,14 @@ export class Airdrop extends BaseContract {
 
   reclaim(
     destination: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   rewardsRoot(overrides?: CallOverrides): Promise<string>;
 
   setOwner(
     who: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   token(overrides?: CallOverrides): Promise<string>;
@@ -264,7 +264,7 @@ export class Airdrop extends BaseContract {
       totalGrant: BigNumberish,
       merkleProof: BytesLike[],
       destination: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     claimAndDelegate(
@@ -273,7 +273,7 @@ export class Airdrop extends BaseContract {
       totalGrant: BigNumberish,
       merkleProof: BytesLike[],
       destination: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     claimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -302,7 +302,7 @@ export class Airdrop extends BaseContract {
   estimateGas: {
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     authorized(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -312,7 +312,7 @@ export class Airdrop extends BaseContract {
       totalGrant: BigNumberish,
       merkleProof: BytesLike[],
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     claimAndDelegate(
@@ -321,14 +321,14 @@ export class Airdrop extends BaseContract {
       totalGrant: BigNumberish,
       merkleProof: BytesLike[],
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     claimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     expiration(overrides?: CallOverrides): Promise<BigNumber>;
@@ -341,14 +341,14 @@ export class Airdrop extends BaseContract {
 
     reclaim(
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     rewardsRoot(overrides?: CallOverrides): Promise<BigNumber>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
@@ -357,12 +357,12 @@ export class Airdrop extends BaseContract {
   populateTransaction: {
     authorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     authorized(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     claim(
@@ -370,7 +370,7 @@ export class Airdrop extends BaseContract {
       totalGrant: BigNumberish,
       merkleProof: BytesLike[],
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     claimAndDelegate(
@@ -379,24 +379,24 @@ export class Airdrop extends BaseContract {
       totalGrant: BigNumberish,
       merkleProof: BytesLike[],
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     claimed(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     deauthorize(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     expiration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isAuthorized(
       who: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     lockingVault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -405,14 +405,14 @@ export class Airdrop extends BaseContract {
 
     reclaim(
       destination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     rewardsRoot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setOwner(
       who: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
