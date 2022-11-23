@@ -9,7 +9,7 @@ import {
   YieldTokenInfo,
 } from "@elementfi/core-tokenlist";
 import { ERC20 } from "@elementfi/core-typechain/dist/libraries";
-import { Provider, Web3Provider } from "@ethersproject/providers";
+import { Web3Provider } from "@ethersproject/providers";
 import { AddressesJson } from "addresses/addresses";
 import { formatBalance } from "base/formatBalance/formatBalance";
 import { getPoolInfoForPrincipalToken } from "elf/pools/ccpool";
@@ -39,7 +39,7 @@ import { ElementIcon } from "ui/token/TokenIcon";
 import { ConnectWalletDialog } from "ui/wallets/ConnectWalletDialog/ConnectWalletDialog";
 
 import tw from "efi-tailwindcss-classnames";
-import { ConvergentCurvePool__factory } from "@elementfi/core-typechain/dist/v1.1";
+import { isPrincipalToken } from "elf/tranche/tranches";
 
 interface UnstakeCardProps {
   signer: Signer | undefined;
@@ -263,10 +263,14 @@ function useCalculateAssetsOut(
     ] = [],
     isFetched: isPoolBalancesFetched,
   } = usePoolTokens(pool);
-  const poolInfo = getPoolInfoForPrincipalToken(termAssetInfo.address);
+  // term assets can be either principal tokens or yield tokens, so we must
+  // narrow this type before we try and lookup the principal token pool
+  const principalTokenAddress = isPrincipalToken(termAssetInfo)
+    ? termAssetInfo.address
+    : (termAssetInfo as YieldTokenInfo).extensions.tranche;
   const {
     extensions: { convergentPoolFactory, bond, underlying },
-  } = poolInfo;
+  } = getPoolInfoForPrincipalToken(principalTokenAddress);
   const { decimals: baseAssetDecimals } = baseAssetInfo;
   const { data: totalSupply } = useSmartContractReadCall(pool, "totalSupply");
 
