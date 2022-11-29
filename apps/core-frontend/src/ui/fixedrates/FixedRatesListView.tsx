@@ -25,7 +25,11 @@ export function FixedRatesListView(
   // TODO: Implement custom sorting UI?
   const sortedPrincipalTokenInfos = useMemo(() => {
     return [...openPrincipalTokenInfos]
-      .sort((info) => info.extensions.createdAtTimestamp)
+      .sort(
+        (info1, info2) =>
+          info1.extensions.createdAtTimestamp -
+          info2.extensions.createdAtTimestamp,
+      )
       .reverse();
   }, [openPrincipalTokenInfos]);
 
