@@ -22,15 +22,12 @@ export function FixedRatesListView(
 ): ReactElement {
   const openPrincipalTokenInfos = useOpenPrincipalTokenInfos();
 
-  // TODO: Implement custom sorting UI?
   const sortedPrincipalTokenInfos = useMemo(() => {
-    return [...openPrincipalTokenInfos]
-      .sort(
-        (info1, info2) =>
-          info1.extensions.createdAtTimestamp -
-          info2.extensions.createdAtTimestamp,
-      )
-      .reverse();
+    return [...openPrincipalTokenInfos].sort(
+      (info1, info2) =>
+        info2.extensions.createdAtTimestamp -
+        info1.extensions.createdAtTimestamp,
+    );
   }, [openPrincipalTokenInfos]);
 
   return (
