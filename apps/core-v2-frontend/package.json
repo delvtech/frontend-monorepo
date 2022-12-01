@@ -30,7 +30,7 @@
     "@types/testing-library__jest-dom": "^5.14.3",
     "autoprefixer": "^10.4.8",
     "classnames": "^2.3.1",
-    "eslint-plugin-tailwindcss": "^3.4.4",
+    "eslint-plugin-tailwindcss": "^3.7.1",
     "ethers": "^5.6.9",
     "graphql": "^16.5.0",
     "@apollo/client": "^3.6.9",
