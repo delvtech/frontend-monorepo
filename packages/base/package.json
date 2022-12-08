@@ -33,7 +33,7 @@
     "@elementfi/eslint-config": "*",
     "@elementfi/prettier-config": "*",
     "d3-time-format": "^3.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.29.0",
     "ethers": "^5.6.6",
     "fast-json-stable-stringify": "^2.1.0",
     "husky": "^7.0.4",
