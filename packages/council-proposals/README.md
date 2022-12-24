@@ -6,7 +6,7 @@ Our mapping of on-chain and off-chain proposals.
 
 - Setup `.env` with Alchemy API keys.
 
-- Scape proposal information from snapshot and commonwealth
+- Scrape proposal information from snapshot and commonwealth
 
 ```bash
 yarn workspace @elementfi council-proposals scrape:all
