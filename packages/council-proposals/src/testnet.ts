@@ -135,7 +135,7 @@ const gscForumLinksByProposalId: Record<string, string> = {};
     console.log("");
 
     fs.writeFileSync(
-      "src/proposals/testnet.proposals.json",
+      "src/proposals/json/testnet.proposals.json",
       proposalsJsonString,
     );
 
@@ -149,7 +149,7 @@ const gscForumLinksByProposalId: Record<string, string> = {};
     console.log(gscProposalsJsonString);
 
     fs.writeFileSync(
-      "src/proposals/testnet-gsc.proposals.json",
+      "src/proposals/json/testnet-gsc.proposals.json",
       gscProposalsJsonString,
     );
 

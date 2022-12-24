@@ -35,20 +35,26 @@ const gscCoreVotingContract = CoreVoting__factory.connect(
  */
 const snapshotIdsByProposalId: Record<string, string> = {
   "1": "0x46785a4b78a9d03aeb5cdeb1c3ca4ae02cf9e5aca508e59bef405d16a7c8b4a6",
+  "2": "0x132d4d3e0580349d938d22c844ce088ba2e5f394fc28b41f2927856746b125d7",
 };
 
 const targetsByProposalId: Record<string, string[]> = {
   "1": ["0x81758f3361A769016eae4844072FA6d7f828a651"],
+  "2": ["0x81758f3361A769016eae4844072FA6d7f828a651"],
 };
 
 const callDatasByProposalId: Record<string, string[]> = {
   "1": [
     "0x88b49b8332b3be434fca12a37af693421116ab7c7682da00e7283c2530502de382b0464b",
   ],
+  "2": [
+    "0x88b49b83757c3f7dc43dd8d093cac4e51a40fd716858a29ec3d616a89eceb3acf87922d5",
+  ],
 };
 
 const forumLinksByProposalId: Record<string, string> = {
   "1": "https://forum.element.fi/discussion/4631-egp2-increase-gsc-quorum-threshold",
+  "2": "https://forum.element.fi/discussion/6504-egp15-element-fixed-borrow-protocol-grant-proposal-by-component",
 };
 
 const gscSnapshotIdsByProposalId: Record<string, string> = {};
@@ -98,7 +104,7 @@ const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
     const proposalsJsonString = JSON.stringify(proposalsJson, null, 2);
 
     fs.writeFileSync(
-      "src/proposals/mainnet.proposals.json",
+      "src/proposals/json/mainnet.proposals.json",
       proposalsJsonString,
     );
 
@@ -110,7 +116,7 @@ const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
     const gscProposalsJsonString = JSON.stringify(gscProposalsJson, null, 2);
 
     fs.writeFileSync(
-      "src/proposals/mainnet-gsc.proposals.json",
+      "src/proposals/json/mainnet-gsc.proposals.json",
       gscProposalsJsonString,
     );
     process.exit(0);

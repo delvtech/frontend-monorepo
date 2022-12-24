@@ -105,7 +105,7 @@ const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
     const proposalsJsonString = JSON.stringify(proposalsJson, null, 2);
 
     fs.writeFileSync(
-      "src/proposals/goerli.proposals.json",
+      "src/proposals/json/goerli.proposals.json",
       proposalsJsonString,
     );
 
@@ -129,7 +129,7 @@ const gscProposalsToSkip = currentGscProposalsJson.proposals.map(
     const gscProposalsJsonString = JSON.stringify(gscProposalsJson, null, 2);
 
     fs.writeFileSync(
-      "src/proposals/goerli-gsc.proposals.json",
+      "src/proposals/json/goerli-gsc.proposals.json",
       gscProposalsJsonString,
     );
     process.exit(0);
