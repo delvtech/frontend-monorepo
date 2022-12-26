@@ -2,8 +2,8 @@ import testnetProposals from "proposals/json/testnet.proposals";
 import testnetGscProposals from "proposals/json/testnet-gsc.proposals";
 import goerliProposals from "proposals/json/goerli.proposals";
 import goerliGscProposals from "proposals/json/goerli-gsc.proposals";
-import mainnetProposals from "proposals/json/mainnet.proposals";
-import mainnetGscProposals from "proposals/json/mainnet-gsc.proposals";
+import mainnetProposals from "./proposals/json/mainnet.proposals.json";
+import mainnetGscProposals from "./proposals/json/mainnet-gsc.proposals.json";
 export interface Proposal {
     /**
      * A hash of the targets and calldatas for the proposal

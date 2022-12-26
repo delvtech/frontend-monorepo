@@ -20,7 +20,7 @@
     "tsc": "^2.0.3",
     "tsconfig-paths": "^4.0.0"
   },
-  "source": "src/index2.ts",
+  "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
