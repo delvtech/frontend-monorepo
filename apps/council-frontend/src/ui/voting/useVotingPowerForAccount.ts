@@ -7,8 +7,7 @@ import { useVestingVaultVotingPower } from "src/ui/voting/useVestingVaultVotingP
 export function useVotingPowerForAccountAtLatestBlock(
   account: string | undefined | null,
 ): string {
-  const { data: latestBlockNumber } = useLatestBlockNumber();
-  return useVotingPowerForAccount(account, latestBlockNumber);
+  return useVotingPowerForAccount(account);
 }
 
 /**

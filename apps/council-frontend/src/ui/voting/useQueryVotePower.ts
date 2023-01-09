@@ -5,12 +5,12 @@ import {
   OptimisticRewards,
   VestingVault,
 } from "@elementfi/council-typechain";
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain/src/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { formatEther } from "@ethersproject/units";
 import { BytesLike, ethers } from "ethers";
 import { Logger } from "ethers/lib/utils";
 
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
+import { defaultProvider } from "src/providers/providers";
 
 /**
  * Use this to get the current vote power.
@@ -24,14 +24,16 @@ export function useQueryVotePower(
   atBlockNumber?: number,
   extraData?: BytesLike,
 ): string {
-  const { data: latestBlockNumber } = useLatestBlockNumber();
-  const blockNumber = atBlockNumber || latestBlockNumber;
-
   // TODO: use useSmartContractReadCall when onError is overridable and when we can disable ethers
   // logging
   const { data: votePower } = useQuery({
+    queryKey: ["queryVotePower", account, vaultContract.address, atBlockNumber],
     queryFn: async () => {
       try {
+        let blockNumber = atBlockNumber;
+        if (atBlockNumber === undefined) {
+          blockNumber = await defaultProvider.getBlockNumber();
+        }
         // TODO: find a better solution for this.
         // ethers.js will spit out an error message that we can't disable without turning off the
         // logger.  because the smart contract code for queryVotePower returns an error if the
@@ -51,11 +53,11 @@ export function useQueryVotePower(
         }
       }
     },
-    queryKey: ["queryVotePower", account, vaultContract.address, atBlockNumber],
     /* We want to cache the previous stale data until a refresh.
       This boolean prevents data from being kept when account is disconnected */
     keepPreviousData: !!account,
-    enabled: !!account && !!blockNumber && !!extraData,
+    enabled: !!account && !!extraData,
+    staleTime: Infinity,
   });
 
   return formatEther(votePower || 0);
@@ -71,14 +73,17 @@ export function useQueryVotePowerView(
   vaultContract: LockingVault | VestingVault,
   atBlockNumber?: number,
 ): string {
-  const { data: latestBlockNumber } = useLatestBlockNumber();
-  const blockNumber = atBlockNumber || latestBlockNumber;
-
   // TODO: use useSmartContractReadCall when onError is overridable and when we can disable ethers
   // logging
   const { data: votePower } = useQuery({
+    queryKey: ["queryVotePower", account, vaultContract.address, atBlockNumber],
     queryFn: async () => {
       try {
+        let blockNumber = atBlockNumber;
+        if (atBlockNumber === undefined) {
+          blockNumber = await defaultProvider.getBlockNumber();
+        }
+
         // TODO: find a better solution for this.
         // ethers.js will spit out an error message that we can't disable without turning off the
         // logger.  because the smart contract code for queryVotePower returns an error if the
@@ -97,45 +102,12 @@ export function useQueryVotePowerView(
         }
       }
     },
-    queryKey: ["queryVotePower", account, vaultContract.address, atBlockNumber],
     /* We want to cache the previous stale data until a refresh.
       This boolean prevents data from being kept when account is disconnected */
     keepPreviousData: !!account,
-    enabled: !!account && !!blockNumber,
+    enabled: !!account,
+    staleTime: Infinity,
   });
 
   return formatEther(votePower || 0);
-}
-
-/**
- * @deprecated - this throws errors if there is no vote power found for an account.  because of this
- * we wrote hooks with custom useQuery calls to block these errors.
- * Use this to get the historical voting power.
- *
- * This does not take into account whether or not the voting power is stale.
- */
-export function useQueryVotePowerViewOld(
-  account: string | undefined | null,
-  vaultContract: LockingVault | VestingVault,
-  atBlockNumber?: number,
-): string {
-  const { data: latestBlockNumber } = useLatestBlockNumber();
-
-  const blockNumber = atBlockNumber || latestBlockNumber;
-
-  // TODO: use method in useQueryVotePower instead of useSmartContractReadCall so that we can
-  // prevent flooding of errors in the console
-  const { data: votingPower } = useSmartContractReadCall(
-    vaultContract,
-    "queryVotePowerView",
-    {
-      callArgs: [account as string, blockNumber as number],
-      /* We want to cache the previous stale data until a refresh.
-      This boolean prevents data from being kept when account is disconnected */
-      keepPreviousData: !!account,
-      enabled: !!account && !!blockNumber,
-    },
-  );
-
-  return formatEther(votingPower || 0);
 }
