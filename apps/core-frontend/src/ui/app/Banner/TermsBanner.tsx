@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { jt, t } from "ttag";
+import { t } from "ttag";
 import { AnchorButton, Button, Dialog, Intent } from "@blueprintjs/core";
 import { useDarkMode } from "ui/prefs/useDarkMode/useDarkMode";
 import classNames from "classnames";
@@ -18,12 +18,6 @@ const setAcceptedTOS = () => {
 export const TOS_URL =
   "https://elementfi.s3.us-east-2.amazonaws.com/element-finance-terms-of-service.pdf";
 
-const elementFinanceDiscordSupportChannelLink = (
-  <a
-    key="discord-support-channel-link"
-    href="https://discord.gg/tmn6h3XFV8"
-  >{t`here`}</a>
-);
 export const TermsBanner = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const { darkModeClassName } = useDarkMode();
@@ -46,20 +40,24 @@ export const TermsBanner = (): ReactElement => {
       canOutsideClickClose={false}
       title={t`Element.fi Terms and Conditions`}
     >
-      <div className="px-4">
+      <div className="space-y-4 px-4">
+        <p>
+          {t`Element Finance, Inc. is committed to building an open, compliant,
+          responsible system. We believe in building products for a healthy
+          ecosystem. Although we don't control the Protocol, which is open
+          source, this UI employs a series of compliance filters and internal
+          controls. Element Finance maintains no control or custody of user
+          funds.`}
+        </p>
         <p>
           {t`By clicking "Certify and Accept Terms", you represent and warrant that you (and any person on behalf of whom you are using Element’s platform/services) are:`}
         </p>
-
         <ol className="list-inside list-decimal space-y-4">
           <li>{t`NOT identified on any list of sanctioned parties such as, for example, the lists maintained by the United Nations Security Council, the U.S. government (including the U.S. Treasury Department's Specially Designated Nationals (SDN) list, Foreign Sanctions Evaders list, the Sectoral Sanctions Identification List, the Non-SDN Menu Based Sanctions List), the European Union (EU) or its member states, and the government of your or such person’s home country if you or any such person is located outside the U.S. and EU;`}</li>
           <li>{t`NOT located, ordinarily resident, organized, established, or domiciled in Cuba, Iran, North Korea, Syria, the Crimea region (including Sevastopol), or the self-proclaimed Donetsk People’s Republic or Luhansk People’s Republic regions;`}</li>
           <li>{t`NOT owned or controlled by, or acting on behalf of, a person, an entity or the government of a country/territory identified in (2) or (3) above or the Government of Venezuela (including any of its agencies, instrumentalities or entities owned or controlled by it); and`}</li>
           <li>{t`NOT directly or indirectly using any funds derived from, or otherwise representing the proceeds of, any illegal activities, to conduct activities on Element’s platform or use Element’s services.`}</li>
         </ol>
-
-        <p>{jt`If you think that you have been improperly restricted, please contact our 
-      Discord Support channel ${elementFinanceDiscordSupportChannelLink}.`}</p>
         <p>{t`Continued use of this service constitutes acceptance of our Terms of Service
        and Privacy Policy.`}</p>
       </div>
