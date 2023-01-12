@@ -22,12 +22,13 @@ import { getCryptoDecimals } from "elf/crypto/getCryptoDecimals";
 interface TransactionDrawerProps {
   account: string | null | undefined;
   confirmButtonDisabled?: boolean;
+  confirmButtonIntent?: Intent;
+  confirmButtonLabel: string;
   isOpen: boolean;
   library: Web3Provider | undefined;
   onClose: () => void;
   onConfirmTransaction: () => void;
   transactionDetails?: ReactElement | null;
-  buttonLabel: string;
   walletApprovalInfos?: WalletApprovalInfo[];
   transactionPending?: boolean;
   transactionError?: Error;
@@ -43,8 +44,9 @@ export function TransactionDrawer({
   onConfirmTransaction,
   transactionDetails,
   confirmButtonDisabled: confirmButtonDisabledFromProps,
+  confirmButtonIntent: confirmButtonIntentFromProps = Intent.PRIMARY,
   walletApprovalInfos = [],
-  buttonLabel,
+  confirmButtonLabel: confirmButtonLabelFromProps,
   transactionPending = false,
   transactionSuccess = false,
   transactionFailed = false,
@@ -66,7 +68,7 @@ export function TransactionDrawer({
   );
 
   const confirmButtonLabel = getConfirmButtonLabel(
-    buttonLabel,
+    confirmButtonLabelFromProps,
     account,
     transactionFailed,
   );
@@ -80,7 +82,8 @@ export function TransactionDrawer({
       transactionPending,
     );
 
-  const buttonIntent = getConfirmButtonIntent(
+  const confirmButtonIntent = getConfirmButtonIntent(
+    confirmButtonIntentFromProps,
     transactionSuccess,
     transactionFailed,
   );
@@ -127,7 +130,7 @@ export function TransactionDrawer({
             loading={transactionPending}
             fill
             disabled={confirmButtonDisabled}
-            intent={buttonIntent}
+            intent={confirmButtonIntent}
             className={tw("h-16")}
             large
             outlined
@@ -137,7 +140,7 @@ export function TransactionDrawer({
           </Button>
           {helperText && (
             <Tag
-              intent={buttonIntent}
+              intent={confirmButtonIntent}
               minimal
               large
               fill
@@ -157,10 +160,11 @@ export function TransactionDrawer({
 }
 
 function getConfirmButtonIntent(
+  intent: Intent,
   transactionSuccess: boolean,
   transactionError: boolean,
 ) {
-  let buttonIntent: Intent = Intent.PRIMARY;
+  let buttonIntent: Intent = intent;
   if (transactionSuccess) {
     buttonIntent = Intent.SUCCESS;
   }

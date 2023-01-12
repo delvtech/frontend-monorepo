@@ -63,7 +63,7 @@ export function ZapTokensTransactionConfirmationDrawer({
       library={library}
       onConfirmTransaction={onConfirmZapTokens}
       confirmButtonDisabled={!canZap}
-      buttonLabel={buttonLabel}
+      confirmButtonLabel={buttonLabel}
       walletApprovalInfos={walletApprovalInfos}
       transactionPending={isLoading}
       transactionFailed={isError}

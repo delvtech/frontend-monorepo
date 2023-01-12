@@ -138,7 +138,7 @@ export function MintTransactionConfirmationDrawer({
 
   return (
     <TransactionDrawer
-      buttonLabel={t`Mint`}
+      confirmButtonLabel={t`Mint`}
       transactionPending={isLoading || loadingPermits}
       transactionError={error as Error | undefined}
       transactionFailed={isError}

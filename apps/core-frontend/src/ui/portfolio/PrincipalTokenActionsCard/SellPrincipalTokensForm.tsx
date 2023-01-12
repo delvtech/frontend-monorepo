@@ -149,6 +149,8 @@ export function SellPrincipalTokensForm(
       </div>
       <SwapTokensTransactionConfirmationDrawer
         buttonLabel={t`Sell`}
+        buttonDisabled={buttonDisabled}
+        buttonIntent={buttonIntent}
         tokenInAddress={ptAddress}
         tokenInSymbol={ptSymbol}
         tokenInDecimals={ptDecimals}

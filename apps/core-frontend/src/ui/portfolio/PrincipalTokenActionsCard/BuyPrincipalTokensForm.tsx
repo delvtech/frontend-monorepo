@@ -168,6 +168,8 @@ export function BuyPrincipalTokensForm(
       </div>
       <SwapTokensTransactionConfirmationDrawer
         buttonLabel={t`Buy`}
+        buttonIntent={buttonIntent}
+        buttonDisabled={buttonDisabled}
         tokenInAddress={baseAssetBalancerAddress}
         tokenInSymbol={baseAssetSymbol}
         tokenInDecimals={baseAssetDecimals}
