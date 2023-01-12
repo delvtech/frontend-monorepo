@@ -27,6 +27,7 @@ import { getToleranceAmount } from "elf/trade/getToleranceAmount";
 import { TermAssetType } from "elf/tranche/TermAssetType";
 import { AddressesJson } from "addresses/addresses";
 import { WalletApprovalInfo } from "elf/wallets/WalletApprovalInfo";
+import { Intent } from "@blueprintjs/core";
 
 interface SwapTokensTransactionConfirmationDrawerProps {
   account: string | null | undefined;
@@ -34,7 +35,8 @@ interface SwapTokensTransactionConfirmationDrawerProps {
   poolInfo: PoolInfo;
 
   buttonLabel?: string;
-
+  buttonIntent: Intent;
+  buttonDisabled: boolean;
   amountIn: string;
   amountOut: string;
   swapKind: SwapKind;
@@ -67,6 +69,8 @@ export function SwapTokensTransactionConfirmationDrawer({
   tokenOutSymbol,
   tokenOutDecimals,
   buttonLabel = t`Trade`,
+  buttonDisabled,
+  buttonIntent,
   spotPrice,
   amountIn,
   amountOut,
@@ -173,7 +177,9 @@ export function SwapTokensTransactionConfirmationDrawer({
       account={account}
       library={library}
       onConfirmTransaction={onConfirmSwapTokens}
-      buttonLabel={buttonLabel}
+      confirmButtonLabel={buttonLabel}
+      confirmButtonIntent={buttonIntent}
+      confirmButtonDisabled={buttonDisabled}
       walletApprovalInfos={walletApprovalInfos}
       transactionPending={isLoading}
       transactionFailed={isError}

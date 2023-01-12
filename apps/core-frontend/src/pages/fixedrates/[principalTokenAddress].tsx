@@ -11,8 +11,10 @@ import {
 } from "next";
 import { ReactElement } from "react";
 import { getTokenInfo } from "tokenlists/tokenlists";
-import { BuyFixedRatesViewProps } from "ui/fixedrates/BuyFixedRatesView/BuyFixedRatesView";
-import { BuyFixedRatesViewWithZap } from "ui/fixedrates/BuyFixedRatesView/BuyFixedRatesViewWithZap";
+import {
+  BuyFixedRatesViewWithZap,
+  BuyFixedRatesViewProps,
+} from "ui/fixedrates/BuyFixedRatesView/BuyFixedRatesViewWithZap";
 
 export async function getStaticProps({
   params,

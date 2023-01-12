@@ -115,7 +115,7 @@ export function StakingConfirmationDrawer({
       transactionFailed={isStakeError}
       transactionError={stakeError}
       confirmButtonDisabled={confirmButtonDisabled}
-      buttonLabel={t`Add liquidity`}
+      confirmButtonLabel={t`Add liquidity`}
       isOpen={isOpen}
       onClose={onClose}
       onConfirmTransaction={onStake}

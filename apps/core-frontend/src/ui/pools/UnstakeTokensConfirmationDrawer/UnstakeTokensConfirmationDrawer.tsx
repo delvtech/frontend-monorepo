@@ -63,7 +63,7 @@ export function UnstakeConfirmationDrawer({
       transactionError={unstakeError}
       transactionFailed={isUnstakeError}
       confirmButtonDisabled={false}
-      buttonLabel={t`Remove liquidity`}
+      confirmButtonLabel={t`Remove liquidity`}
       isOpen={isOpen}
       onClose={onClose}
       onConfirmTransaction={onUnstake}

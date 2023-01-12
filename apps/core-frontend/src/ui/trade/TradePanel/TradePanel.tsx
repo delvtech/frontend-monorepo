@@ -308,6 +308,12 @@ export function TradePanel(props: TradePanelProps): ReactElement {
         </Callout>
       ) : null}
       <SwapTokensTransactionConfirmationDrawer
+        buttonDisabled={submitButtonDisabled}
+        buttonIntent={
+          submitButtonError || !canPerformTransaction
+            ? Intent.DANGER
+            : Intent.PRIMARY
+        }
         tokenInAddress={tokenInAddress}
         tokenInSymbol={tokenInSymbol}
         tokenInDecimals={tokenInDecimals}

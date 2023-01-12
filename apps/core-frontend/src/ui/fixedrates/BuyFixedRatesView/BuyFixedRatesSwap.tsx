@@ -170,7 +170,9 @@ export function BuyFixedRatesSwap({
       </Button>
 
       <SwapTokensTransactionConfirmationDrawer
-        buttonLabel={t`Buy`}
+        buttonLabel={hasInputError ? buttonErrorMessage : t`Buy`}
+        buttonDisabled={hasInputError}
+        buttonIntent={hasInputError ? Intent.DANGER : Intent.PRIMARY}
         tokenInAddress={baseAssetUnderlyingAddress}
         tokenInSymbol={baseAssetSymbol}
         tokenInDecimals={baseAssetDecimals}
