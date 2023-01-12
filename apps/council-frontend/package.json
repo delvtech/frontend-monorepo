@@ -20,6 +20,7 @@
     "@heroicons/react": "^1.0.6",
     "@metamask/jazzicon": "^2.0.0",
     "@popperjs/core": "^2.11.2",
+    "@pushprotocol/restapi": "^0.2.2",
     "@rainbow-me/rainbowkit": "^0.4.6",
     "@reactchartjs/react-chart.js": "^1.0.0-rc.3",
     "@storybook/addon-a11y": "^6.4.19",
