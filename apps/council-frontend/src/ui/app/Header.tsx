@@ -45,14 +45,16 @@ function Header(): ReactElement {
               </span>
             </Tooltip>
             <Tooltip content={t`${TooltipDefinition.PUSH_DESCRIPTION}`}>
-              <Button
-                loading={loading}
-                onClick={toggleUserStatus}
-                className="mr-4"
-              >
-                <PushIcon className="mr-2" />
-                {isSubscribed ? "Unsubscribe" : "Subscribe"}
-              </Button>
+              <span className="hidden lg:inline">
+                <Button
+                  loading={loading}
+                  onClick={toggleUserStatus}
+                  className="mr-4 "
+                >
+                  <PushIcon className="mr-2" />
+                  {isSubscribed ? "Unsubscribe" : "Subscribe"}
+                </Button>
+              </span>
             </Tooltip>
           </div>
         ) : null}
