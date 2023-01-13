@@ -11,9 +11,13 @@ import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
+import Button from "src/ui/base/Button/Button";
+import PushIcon from "src/ui/base/svg/PushLogo";
+import { usePushSubscribe } from "src/ui/push/usePushSubscribe";
 
 function Header(): ReactElement {
   const { address } = useAccount();
+  const { toggleUserStatus, loading, isSubscribed } = usePushSubscribe();
 
   const amountDeposited = useDeposited(address) || "0";
   const formattedAmountDeposited = parseFloat(amountDeposited).toFixed(2);
@@ -39,6 +43,16 @@ function Header(): ReactElement {
                   <span className="hidden lg:inline"> ELFI</span>
                 </span>
               </span>
+            </Tooltip>
+            <Tooltip content={t`${TooltipDefinition.PUSH_DESCRIPTION}`}>
+              <Button
+                loading={loading}
+                onClick={toggleUserStatus}
+                className="mr-4"
+              >
+                <PushIcon className="mr-2" />
+                {isSubscribed ? "Unsubscribe" : "Subscribe"}
+              </Button>
             </Tooltip>
           </div>
         ) : null}
