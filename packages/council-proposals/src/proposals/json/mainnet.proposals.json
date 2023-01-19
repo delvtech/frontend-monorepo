@@ -53,6 +53,24 @@
       "calldatas": [""],
       "snapshotId": "",
       "forumLink": ""
+    },
+    {
+      "proposalId": "3",
+      "description": "EGP-15\nTitle: Element Fixed Borrow Protocol Grant Proposal (By Component)\nAuthor(s): @Christian St.Louis @Rahul\nType: Grant Proposal\nDate Proposed: <2022-08-03>\nDate Edited: <2022-09-10>\n\n## References\nYield Token Compounding & github\nComponent.fi\n\n## Sentence Summary\nComponent is proposing a 274,414.06 ELFI voting token grant to build a fixed borrow protocol on top of Element Finance and for building the YTC tool.\n\n## Why 274,414.06 ELFI?\nThe token technically has no monetary value at the moment and so it's difficult to give a reason from an up to date monetary standpoint. The monetary value we took into consideration is based on the most recent public valuation from Element's Series A fundraise. Second to this, the distribution of this ELFI is a step towards becoming more involved in governance and the governance steering council. We believe that given Component's previous work and the amount of time and work that is going into this protocol, that we should have the ability to have significant involvement in governance as a result of our contribution. This is possible either through delegation or direct involvement.\n\n## Paragraph Summary\nThe proceeds of this grant will enable us to build a protocol offering competitive, low-cost, fixed-rate borrowing on Compound Finance and Aave. Component has been an active contributor to Element Finance since early 2021 and will continue to launch new integrations for fixed rates on Element Finance. This grant ensures a long term relationship where Component will be part of growing, generating revenue and decentralizing the Element DAO.\n\n## Grant Size & Milestones\n\nWe are proposing a total grant amount of 274,414.06 ELFI tokens, representing approximately 0.669% of the fully-diluted Element DAO Treasury. Listed below are the proposed milestones.\n\nYTC Retro - Retroactive grant distribution for the Yield Token Compounding tool\n\n*Grant size: 19,531.25 ELFI*\nGrant to be released: Full grant size released upon onchain approval of the proposal\nv1.0 - Existing borrowers on Compound & AAVE are able to convert their variable borrow rates to fixed rates\n\n*Grant size: 109,450.12 ELFI*\nGrant to be released: 54,725.06 ELFI upon onchain approval of the proposal and 54,725.06 ELFI upon completion\nv2.1 & v2.2 - v1.0 repurposed and built on Element v2 and the Full Fixed Borrow protocol where you can be a new borrower (on Element v2)\n\n*Grant size: 145,432.69 ELFI*\nGrant to be released: 72,716.345 ELFI onset of v2.1 & v2.2 product development and 72,716.345 ELFI upon release of both v2.1 and v2.2\n\nKey Note We will only move forward with v2.1 and v2.2 (which are both to be built on Element V2) depending on the success and uptake of v1.0 (built on Element V1).\n\n## Further Information\n\nThis is a shortened version, you can find more information in the discussion link below.",
+      "title": "EGP-15: Element Fixed Borrow Protocol Grant Proposal (By Component)",
+      "proposalHash": "0x69b1cf8970c5f46fdd7e56a15f0eed75e63f439f482153204c5f1d01a22488c1",
+      "unlock": 16457237,
+      "lastCall": 16538501,
+      "created": 16437748,
+      "createdTimestamp": 1674093839,
+      "expiration": 16489717,
+      "quorum": "1100000.0",
+      "targets": ["0x81758f3361A769016eae4844072FA6d7f828a651"],
+      "calldatas": [
+        "0x88b49b83757c3f7dc43dd8d093cac4e51a40fd716858a29ec3d616a89eceb3acf87922d5"
+      ],
+      "snapshotId": "0x132d4d3e0580349d938d22c844ce088ba2e5f394fc28b41f2927856746b125d7",
+      "forumLink": "https://forum.element.fi/discussion/6504-egp15-element-fixed-borrow-protocol-grant-proposal-by-component"
     }
   ]
 }
