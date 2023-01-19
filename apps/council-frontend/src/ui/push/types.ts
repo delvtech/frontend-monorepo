@@ -50,5 +50,3 @@ export type Payload = {
   userAddress: string;
   env: string;
 };
-
-export type PushAction = "subscribe" | "unsubscribe";

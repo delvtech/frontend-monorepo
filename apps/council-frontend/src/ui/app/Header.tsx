@@ -52,7 +52,7 @@ function Header(): ReactElement {
                   className="mr-4 "
                 >
                   <PushIcon className="mr-2" />
-                  {isSubscribed ? "Unsubscribe" : "Subscribe"}
+                  {isSubscribed ? "Opt-out" : "Opt-in"}
                 </Button>
               </span>
             </Tooltip>
