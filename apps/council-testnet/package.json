@@ -33,7 +33,7 @@
     "@types/node": "^14.17.20",
     "chai": "^4.3.4",
     "cross-env": "^7.0.3",
-    "eslint": "^7.32.0",
+    "eslint": "^8.33.0",
     "ethers": "^5.6.6",
     "hardhat": "^2.6.6",
     "prettier": "2.6.2",
