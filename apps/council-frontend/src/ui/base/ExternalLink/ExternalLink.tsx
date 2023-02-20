@@ -21,12 +21,12 @@ function ExternalLink({
       rel="noreferrer"
       className={classNames(
         className,
-        "flex shrink-0 items-center gap-2 decoration-current underline-offset-2 hover:underline",
+        "flex shrink-0 items-center decoration-current underline-offset-2 hover:underline",
       )}
     >
       {text ?? children}
       {showIcon && (
-        <ExternalLinkIcon className="h-4 w-4 shrink-0 text-current" />
+        <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0 text-current" />
       )}
     </a>
   );
