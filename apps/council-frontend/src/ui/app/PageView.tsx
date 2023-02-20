@@ -1,7 +1,7 @@
 import React, { Fragment, ReactElement, ReactNode } from "react";
 import { ChainId, ChainNames } from "@elementfi/base";
 import classNames from "classnames";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 import { addressesJson } from "src/addresses";
 import Footer from "src/ui/app/Footer";
@@ -10,6 +10,7 @@ import Sidebar from "src/ui/app/Sidebar";
 import SimpleDialog from "src/ui/base/Dialog/Dialog";
 import H3 from "src/ui/base/H3/H3";
 import Button from "src/ui/base/Button/Button";
+import ElementUrl from "src/urls";
 
 interface PageViewProps {
   children?: ReactNode;
@@ -22,6 +23,18 @@ interface PageViewProps {
   showFooter?: boolean;
 }
 
+const councilLink = (
+  <a
+    href={ElementUrl.COUNCIL_UI}
+    target="_blank"
+    rel="noreferrer"
+    className={classNames(
+      "text-principalRoyalBlue decoration-current underline-offset-2 hover:underline",
+    )}
+  >
+    governance.element.fi
+  </a>
+);
 export default function PageView(props: PageViewProps): ReactElement {
   const {
     children,
@@ -50,6 +63,10 @@ export default function PageView(props: PageViewProps): ReactElement {
         <div className="flex h-full w-full flex-1 flex-col items-center p-6">
           {showHeader ? <Header /> : null}
 
+          <p className="mt-4 rounded-xl bg-red-200 p-4">
+            {jt`This UI will be deprecated on April 1st, 2023. Visit the new UI at
+            ${councilLink}`}
+          </p>
           <div
             className={classNames(
               "mt-6 h-full w-full flex-1",
