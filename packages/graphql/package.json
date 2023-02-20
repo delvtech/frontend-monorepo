@@ -63,7 +63,7 @@
     "@elementfi/prettier-config": "*",
     "@types/node": "^17.0.42",
     "@types/yargs": "^17.0.10",
-    "eslint": "^7.32.0",
+    "eslint": "^8.34.0",
     "graphql": "^16.5.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
