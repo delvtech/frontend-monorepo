@@ -53,7 +53,7 @@
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.36.0",
     "ethers": "^5.4.1",
-    "hardhat": "^2.5.0",
+    "hardhat": "^2.13.0",
     "lodash.uniq": "^4.5.0",
     "lodash.zip": "^4.2.0",
     "node-fetch": "^2.6.6",
