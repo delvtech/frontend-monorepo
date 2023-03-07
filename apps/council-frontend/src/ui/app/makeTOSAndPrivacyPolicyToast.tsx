@@ -37,7 +37,6 @@ export function makeTOSAndPrivacyPolicyToast({
           onAgreeClick();
           toast.dismiss(TOAST_HASH);
         }}
-        className="daisy-btn daisy-btn-sm daisy-btn-outline"
       >
         I Agree
       </Button>
