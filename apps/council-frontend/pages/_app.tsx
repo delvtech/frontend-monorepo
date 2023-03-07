@@ -7,7 +7,7 @@ import "@rainbow-me/rainbowkit/styles.css";
 // styles/globals.css must be the last css import in order to overwrite the previous css imports
 import "styles/globals.css";
 
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import {
@@ -28,6 +28,8 @@ import { Notifications } from "src/ui/notifications/Notifications";
 import CustomAvatar from "src/ui/wallet/CustomAvatar";
 import { wagmiClient } from "src/wagmiClient";
 import { chains } from "src/provider";
+import { getLocalStorage } from "@elementfi/base";
+import { makeTOSAndPrivacyPolicyToast } from "src/ui/app/makeTOSAndPrivacyPolicyToast";
 
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
@@ -41,6 +43,7 @@ const apolloClient = new ApolloClient({
 // eslint-disable-next-line no-console
 console.log(addressesJson);
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
+  useToastTOSAndPrivacyPolicy();
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} avatar={CustomAvatar}>
@@ -56,4 +59,18 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
   );
 }
 
+function useToastTOSAndPrivacyPolicy() {
+  const { setItem, getItem } = getLocalStorage();
+
+  useEffect(() => {
+    if (!getItem("approve-tos-and-privacy-policy")) {
+      makeTOSAndPrivacyPolicyToast({
+        onAgreeClick: () =>
+          setItem("approve-tos-and-privacy-policy", JSON.stringify(true)),
+      });
+    }
+    // Only do this once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+}
 export default MyApp;

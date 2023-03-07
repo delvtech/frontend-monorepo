@@ -48,7 +48,7 @@ export type LocalStorage = {
     setItem: (key: string, value: string) => boolean;
     clear: () => void;
 };
-export function useLocalStorage(): LocalStorage;
+export function getLocalStorage(): LocalStorage;
 export interface FixedFormat {
     /**
      * number of decimals to use for fixed point math
