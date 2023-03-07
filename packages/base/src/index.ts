@@ -10,7 +10,7 @@ export * from "src/cache/cached";
 export * from "src/constants/emptyArray";
 export * from "src/debug/useConsole";
 export * from "src/ethereum/ethereum";
-export * from "src/localstorage/useLocalStorage";
+export * from "src/localstorage/getLocalStorage";
 export * from "src/math/fixedPoint";
 export * from "src/merkle/merkle";
 export * from "src/money/convertToFiatBalance";

@@ -123,10 +123,10 @@ const $17cb476856efe655$export$99abd183ce604255 = (0, $kVMNA$etherslibutils.pars
 const $17cb476856efe655$export$883ac2ca342d37f3 = "0x0000000000000000000000000000000000000000";
 
 
-var $247abb57baf8e530$exports = {};
+var $f7ae3a6e80060616$exports = {};
 
-$parcel$export($247abb57baf8e530$exports, "useLocalStorage", () => $247abb57baf8e530$export$86e2cef2561044ac);
-function $247abb57baf8e530$export$86e2cef2561044ac() {
+$parcel$export($f7ae3a6e80060616$exports, "getLocalStorage", () => $f7ae3a6e80060616$export$d3720feff416e85b);
+function $f7ae3a6e80060616$export$d3720feff416e85b() {
     const isBrowser = typeof window !== "undefined";
     const getItem = (key)=>{
         return isBrowser ? window.localStorage[key] : "";
@@ -303,7 +303,7 @@ function $cba8d800ce7bcb4e$export$456e5585408a0e3b(pref) {
 
 
 function $6f1c40978ac1640b$export$967ec28199d3ad70(id, defaultValue) {
-    const efiLocalStorage = (0, $247abb57baf8e530$export$86e2cef2561044ac)();
+    const efiLocalStorage = (0, $f7ae3a6e80060616$export$d3720feff416e85b)();
     const getPrefFromLocalStorage = $6f1c40978ac1640b$var$useGetPrefFromLocalStorage(efiLocalStorage);
     const queryClient = (0, $kVMNA$reactquery.useQueryClient)();
     const queryKey = $6f1c40978ac1640b$var$usePrefQueryKey(id);
@@ -506,7 +506,7 @@ $parcel$exportWildcard(module.exports, $f34c70895ba47bf3$exports);
 $parcel$exportWildcard(module.exports, $a199ce3284f2ec67$exports);
 $parcel$exportWildcard(module.exports, $070df8e59a3d40c0$exports);
 $parcel$exportWildcard(module.exports, $17cb476856efe655$exports);
-$parcel$exportWildcard(module.exports, $247abb57baf8e530$exports);
+$parcel$exportWildcard(module.exports, $f7ae3a6e80060616$exports);
 $parcel$exportWildcard(module.exports, $68a1eb75299460be$exports);
 $parcel$exportWildcard(module.exports, $97d843f38382edc0$exports);
 $parcel$exportWildcard(module.exports, $cc3fa230b27e0bf9$exports);
