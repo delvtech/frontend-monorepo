@@ -4,9 +4,9 @@ rm -rf elf-council
 echo "Downloading contracts..."
 
 if [[ -z "${GITHUB_TOKEN}" ]]; then
-  git clone git@github.com:element-fi/protocol_v2.git protocol-v2
+  git clone git@github.com:delv-tech/protocol_v2.git protocol-v2
 else
- git clone https://$GITHUB_TOKEN@github.com/element-fi/protocol_v2.git protocol-v2
+ git clone https://$GITHUB_TOKEN@github.com/delv-tech/protocol_v2.git protocol-v2
 fi
 
 # blow away old-contracts

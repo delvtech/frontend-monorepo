@@ -37,7 +37,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Contracts
 
-The smart contracts associated with this project can be found [here](https://github.com/element-fi/nft-contracts). The generated typechain classes have been migrated already. Any updates to the contract will require manual migration of types.
+The smart contracts associated with this project can be found [here](https://github.com/delv-tech/nft-contracts). The generated typechain classes have been migrated already. Any updates to the contract will require manual migration of types.
 
 Contract addresses can be found in the `src/addresses` folder. Mainnet, Goerli, and local chains are supported. Mainnet and Goerli contracts are live, but local development will require a local instance of a hardhat network running. There are some helpful scripts in the contract repo for easily deploying the contracts to a local chain.
 

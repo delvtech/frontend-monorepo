@@ -124,7 +124,7 @@ export class Pool {
 
   /**
    * Gets principal token spot price from the pool, disregarding slippage, denominated in the base asset.
-   * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500} for formula source.
+   * @see {@link https://github.com/delv-tech/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L500} for formula source.
    * @return {Promise<string>} Principle token spot price, denoted in base asset.
    */
   async getSpotPrice(): Promise<string> {
@@ -174,7 +174,7 @@ export class Pool {
   /**
    * Calculates the Fixed APR of the principal token in this pool.
    * @async
-   * @see {@link https://github.com/element-fi/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L487} for formula source.
+   * @see {@link https://github.com/delv-tech/analysis/blob/83ca31c690caa168274ef5d8cd807d040d9b9f59/scripts/PricingModels2.py#L487} for formula source.
    * @return {Promise<string>} Fixed APR represented as a string, not rounded.
    */
   async getFixedAPR(): Promise<string> {

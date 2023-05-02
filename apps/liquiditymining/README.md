@@ -8,7 +8,7 @@ This is a NextJS project and is intended to be deployed to Vercel.
 ## Installation
 
 ```bash
- git clone git@github.com:element-fi/frontend-monorepo.git
+ git clone git@github.com:delv-tech/frontend-monorepo.git
 
  # run yarn at the top level
  cd frontend-monorepo
@@ -16,7 +16,7 @@ This is a NextJS project and is intended to be deployed to Vercel.
 ```
 
 NOTE: All commands are intended to be run with the monorepo's `yarn` and `node`
-verions, see: https://github.com/element-fi/frontend-monorepo#readme
+verions, see: https://github.com/delv-tech/frontend-monorepo#readme
 
 ## Environment variables
 

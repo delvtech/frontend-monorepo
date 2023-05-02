@@ -37,13 +37,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/element-fi/frontend-monorepo.git"
+    "url": "https://github.com/delv-tech/frontend-monorepo.git"
   },
   "author": "Element Finance (https://www.element.fi)",
   "bugs": {
-    "url": "https://github.com/element-fi/frontend-monorepo/issues"
+    "url": "https://github.com/delv-tech/frontend-monorepo/issues"
   },
-  "homepage": "https://github.com/element-fi/frontend-monorepo/tree/main/packages/core-v2-sdk#readme",
+  "homepage": "https://github.com/delv-tech/frontend-monorepo/tree/main/packages/core-v2-sdk#readme",
   "dependencies": {
     "@elementfi/base": "*",
     "@elementfi/core-v2-typechain": "*",

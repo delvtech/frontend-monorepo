@@ -107,7 +107,7 @@
     "typescript": "^4.7.4"
   },
   "name": "council-frontend",
-  "homepage": "https://github.com/element-fi/frontend-monorepo",
+  "homepage": "https://github.com/delv-tech/frontend-monorepo",
   "private": true,
   "scripts": {
     "build": "next build",
