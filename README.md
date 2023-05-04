@@ -16,7 +16,7 @@ This repo contains frontend packages and applications that are maintained by Ele
 
 ## Development
 
-1. Clone the repo: `git clone git@github.com:element-fi/frontend-monorepo.git`
+1. Clone the repo: `git clone git@github.com:delv-tech/frontend-monorepo.git`
 2. Run `yarn` at the top-level to install all packages across every workspace
 
 ### Installing new packages

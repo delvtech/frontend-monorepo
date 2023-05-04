@@ -23,14 +23,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/element-fi/react-query-typechain.git"
+    "url": "git+https://github.com/delv-tech/react-query-typechain.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/element-fi/react-query-typechain/issues"
+    "url": "https://github.com/delv-tech/react-query-typechain/issues"
   },
-  "homepage": "https://github.com/element-fi/react-query-typechain#readme",
+  "homepage": "https://github.com/delv-tech/react-query-typechain#readme",
   "dependencies": {
     "@elementfi/eslint-config": "*",
     "@elementfi/prettier-config": "*",

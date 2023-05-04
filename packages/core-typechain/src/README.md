@@ -1,5 +1,5 @@
 The src/ directory holds the hand-curated Element smart contracts (.sol files) copied over
-manually from https://github.com/element-fi/elf-contracts
+manually from https://github.com/delv-tech/elf-contracts
 
 They are organized by release version, so that consumers can easily access the
 correct typechain class for any given contract they need, past or present.
