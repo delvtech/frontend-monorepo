@@ -1,6 +1,6 @@
 # Council GraphQL
 
-A package designed to be used with [@elementfi/graphql](https://github.com/delv-tech/frontend-monorepo/tree/main/packages/graphql) to interact with the [Council](https://github.com/delv-tech/council) contracts using GraphQL.
+A package designed to be used with [@elementfi/graphql](https://github.com/delvtech/frontend-monorepo/tree/main/packages/graphql) to interact with the [Council](https://github.com/delvtech/council) contracts using GraphQL.
 
 ## TODO
 

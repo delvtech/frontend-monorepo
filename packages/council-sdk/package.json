@@ -19,14 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/delv-tech/frontend-monorepo.git"
+    "url": "git+https://github.com/delvtech/frontend-monorepo.git"
   },
   "author": "Matthew Brown",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/delv-tech/frontend-monorepo/issues"
+    "url": "https://github.com/delvtech/frontend-monorepo/issues"
   },
-  "homepage": "https://github.com/delv-tech/frontend-monorepo/apps/#readme",
+  "homepage": "https://github.com/delvtech/frontend-monorepo/apps/#readme",
   "dependencies": {
     "@elementfi/core-typechain": "*",
     "@elementfi/council-typechain": "*",

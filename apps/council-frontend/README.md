@@ -17,8 +17,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You'll also need to follow the README instructions for the [elf-council-merkle](https://github.com/delv-tech/elf-council-merkle) and
-[elf-council-testnet](https://github.com/delv-tech/elf-council-testnet) repos. In total you'll need 4 terminal windows running processes. Here is a
+You'll also need to follow the README instructions for the [elf-council-merkle](https://github.com/delvtech/elf-council-merkle) and
+[elf-council-testnet](https://github.com/delvtech/elf-council-testnet) repos. In total you'll need 4 terminal windows running processes. Here is a
 diagram to help:
 ![Deveopment Setup](./elf-council-dev-setup.png)
 

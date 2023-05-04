@@ -7,7 +7,7 @@ Typechain codegen for generating Typescript classes and types for elf-council
 Run
 
 ```
-npm install git+https://github.com/delv-tech/elf-council-typechain.git
+npm install git+https://github.com/delvtech/elf-council-typechain.git
 ```
 
 ## Here, take this!
@@ -16,7 +16,7 @@ Since this repo is not an npm package, it can be helpful to include this simple 
 
 ```
   "scripts": {
-    "update-elf-council-typechain": "npm install git+https://github.com/delv-tech/elf-council-typechain.git"
+    "update-elf-council-typechain": "npm install git+https://github.com/delvtech/elf-council-typechain.git"
   },
 ```
 
