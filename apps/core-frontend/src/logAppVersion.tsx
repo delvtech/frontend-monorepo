@@ -3,8 +3,8 @@ import { AddressesJson } from "addresses/addresses";
 
 export function logAppVersion(): void {
   const { version, date } = versionJson;
-  const versionUrl = `https://github.com/delv-tech/frontend-monorepo/commit/${version}`;
-  const unreleasedUrl = `https://github.com/delv-tech/frontend-monorepo/compare/${version}...main`;
+  const versionUrl = `https://github.com/delvtech/frontend-monorepo/commit/${version}`;
+  const unreleasedUrl = `https://github.com/delvtech/frontend-monorepo/compare/${version}...main`;
 
   // eslint-disable-next-line no-console
   console.log(`%cBuild date: ${date}`, "font-size:12px");

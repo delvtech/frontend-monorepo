@@ -75,7 +75,7 @@
     "typescript": "^4.7.4"
   },
   "name": "core-v2-frontend",
-  "homepage": "https://github.com/delv-tech/liquidity-mining-ui",
+  "homepage": "https://github.com/delvtech/liquidity-mining-ui",
   "private": true,
   "scripts": {
     "build": "next build",

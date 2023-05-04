@@ -11,7 +11,7 @@ export enum ElementUrl {
   TWITTER = "https://twitter.com/element_fi",
   // resources
   DOCS = "https://docs.element.fi/governance-council",
-  GITHUB = "https://github.com/delv-tech",
+  GITHUB = "https://github.com/delvtech",
   MEDIUM = "https://medium.com/element-finance",
 }
 
