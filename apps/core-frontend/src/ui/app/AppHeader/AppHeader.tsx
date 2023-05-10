@@ -20,6 +20,7 @@ import { ElementLogo } from "ui/base/ElementLogo";
 import { useDarkMode } from "ui/prefs/useDarkMode/useDarkMode";
 import { usePendingTransactionPref } from "ui/transactions/usePendingTransactionPref/usePendingTransactionPref";
 import { ConnectWalletButton } from "ui/wallets/ConnectWalletButton/ConnectWalletButton";
+import { ExperimentalBanner } from "ui/page/ExperimentalBanner/ExperimentalBanner";
 
 interface AppHeaderProps {
   chainId: number | undefined;
@@ -44,6 +45,7 @@ export function AppHeader({
 
   return (
     <div className={tw("flex", "w-full", "flex-col")}>
+      <ExperimentalBanner />
       {/* Mobile */}
       <div
         className={tw(
