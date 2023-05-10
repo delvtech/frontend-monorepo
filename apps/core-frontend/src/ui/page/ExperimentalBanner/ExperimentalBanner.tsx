@@ -22,11 +22,6 @@ export function ExperimentalBanner({
   className,
 }: ExperimentalBannerProps): ReactElement | null {
   const { isDarkMode } = useDarkMode();
-  const { bannerIsVisible, hideBanner } = useBannerPref();
-
-  if (!bannerIsVisible) {
-    return null;
-  }
 
   return (
     <div
@@ -55,8 +50,7 @@ export function ExperimentalBanner({
         style={{
           color: isDarkMode ? undefined : Colors.DARK_GRAY3,
         }}
-      >{t`This application is experimental, please do your own research.`}</span>
-      <Button onClick={hideBanner} icon={IconNames.DELETE} minimal small />
+      >{t`The Element V1 UI will be sunset on November 4th, 2023. After this date, this website will be taken down.`}</span>
     </div>
   );
 }
