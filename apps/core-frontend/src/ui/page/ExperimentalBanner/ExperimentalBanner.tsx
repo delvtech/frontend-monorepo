@@ -50,7 +50,7 @@ export function ExperimentalBanner({
         style={{
           color: isDarkMode ? undefined : Colors.DARK_GRAY3,
         }}
-      >{t`The Element V1 UI will be sunset on November 4th, 2023. After this date, this website will be taken down.`}</span>
+      >{t`The Element V1 UI will sunset on November 4th, 2023. After this date, this website will be taken down.`}</span>
     </div>
   );
 }
