@@ -137,6 +137,7 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "add:language": "bash ./scripts/add-language.sh",
     "build": "next build",
+    "export": "next export",
     "build:goerli-app": "bash ./scripts/build.sh goerli",
     "build:mainnet-app": "bash ./scripts/build.sh mainnet",
     "build:coingecko-json": "bash ./scripts/build-coingecko-json.sh",
