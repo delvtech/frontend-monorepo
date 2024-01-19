@@ -1,10 +1,11 @@
 name: Update delegates.json
 
 on:
+  workflow_dispatch:
   # Triggers the workflow every 2 weeks (the 1 and 15 of the month @ 1am)
   # https://crontab.guru/#0_1_1,15_*_*
-  schedule:
-    - cron: "0 1 1,15 * *"
+  # schedule:
+  #   - cron: "0 1 1,15 * *"
 
 jobs:
   update_routes:
@@ -14,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           persist-credentials: false
-          node-version: "14"
+          node-version: "16"
           cache: yarn
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
