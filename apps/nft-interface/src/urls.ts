@@ -2,7 +2,6 @@ import { BigNumber } from "ethers";
 
 export const DISCORD_URL = "https://discord.gg/pvnUHuAsQ2";
 export const TWITTER_URL = "https://twitter.com/Element_DAO";
-export const ELEMENT_FI_URL = "https://element.fi/";
 export const COUNCIL_URL = "https://gov.element.fi/";
 export const COUNCIL_DELEGATE_URL = "https://gov.element.fi/voters";
 export const COUNCIL_DOC_URL =
