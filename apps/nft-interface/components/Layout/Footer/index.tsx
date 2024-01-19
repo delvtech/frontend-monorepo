@@ -11,7 +11,7 @@ import Logo from "public/assets/svg/logo.svg";
 import { ReactElement } from "react";
 import { Fade } from "react-awesome-reveal";
 import {
-  COUNCIL_DELEGATE_URL,
+  ELEMENT_GOV_URL,
   COUNCIL_DOC_URL,
   COUNCIL_URL,
   DISCORD_URL,
@@ -54,9 +54,11 @@ export const Footer = (): ReactElement => {
           </div>
           <div>
             <h4>Governance</h4>
-            <ExternalLink href={COUNCIL_URL}>Council</ExternalLink>
-            <ExternalLink href={COUNCIL_DELEGATE_URL}>Delegate</ExternalLink>
+            <ExternalLink href={ELEMENT_GOV_URL}>
+              Element Governance
+            </ExternalLink>
             <ExternalLink href={COUNCIL_DOC_URL}>Documentation</ExternalLink>
+            <ExternalLink href={COUNCIL_URL}>Council Framework</ExternalLink>
           </div>
           <div>
             <h4>Social</h4>

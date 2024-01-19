@@ -12,7 +12,6 @@ import Link from "next/link";
 import { ReactElement } from "react";
 import { Fade } from "react-awesome-reveal";
 import { isFeatureEnabled } from "src/features";
-import { COUNCIL_URL } from "src/urls";
 
 export const HeroSection = (): ReactElement => {
   return (
@@ -35,15 +34,6 @@ export const HeroSection = (): ReactElement => {
                     <Link passHref href="/mint">
                       <PrimaryButton as="a">Start minting</PrimaryButton>
                     </Link>
-                    <a
-                      target="_blank"
-                      href={COUNCIL_URL}
-                      rel="noopener noreferrer"
-                    >
-                      <PrimaryButton hasBorder as="a">
-                        The Council
-                      </PrimaryButton>
-                    </a>
                   </ButtonWrapper>
                 )}
               </ContentCenter>

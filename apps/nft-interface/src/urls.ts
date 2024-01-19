@@ -1,10 +1,9 @@
 import { BigNumber } from "ethers";
 
-export const DISCORD_URL = "https://discord.gg/EEfKmfQdtx";
-export const TWITTER_URL = "https://twitter.com/element_fi";
-export const ELEMENT_FI_URL = "https://element.fi/";
-export const COUNCIL_URL = "https://gov.element.fi/landing";
-export const COUNCIL_DELEGATE_URL = "https://gov.element.fi/delegate";
+export const DISCORD_URL = "https://discord.gg/pvnUHuAsQ2";
+export const TWITTER_URL = "https://twitter.com/Element_DAO";
+export const COUNCIL_URL = "https://council.delv.tech/";
+export const ELEMENT_GOV_URL = "https://gov.element.fi/";
 export const COUNCIL_DOC_URL =
   "https://docs.element.fi/governance-council/council-protocol-overview";
 export const ADDRESS_SCREEN_URL =

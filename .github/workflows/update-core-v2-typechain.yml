@@ -1,10 +1,11 @@
 name: update-core-v2-typechain
 
 on:
+  workflow_dispatch:
   # Triggers the workflow every day at 6pm ET (22 UTC)
   # https://crontab.guru/#0_22_*_*_*
-  schedule:
-    - cron: "0 22 * * *"
+  # schedule:
+  #   - cron: "0 22 * * *"
 
 jobs:
   update_routes:
@@ -14,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           persist-credentials: false
-          node-version: "14"
+          node-version: "16"
           cache: yarn
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile

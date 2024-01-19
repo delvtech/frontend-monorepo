@@ -2,8 +2,7 @@
   "name": "frontend-monorepo",
   "private": true,
   "engines": {
-    "yarn": "^1",
-    "node": "^14"
+    "node": "^16"
   },
   "scripts": {
     "prepare": "husky install",
