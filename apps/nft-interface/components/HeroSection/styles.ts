@@ -53,8 +53,7 @@ export const HeroSectionContainer = styled.section`
 `;
 
 export const ButtonWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   align-items: center;
   max-width: max-content;
   margin: 0 auto;
