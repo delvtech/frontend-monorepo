@@ -30,7 +30,7 @@ export function AppHamburgerButton(): ReactElement {
             text={t`About`}
           />
           <MenuItem
-            href="https://docs.element.fi"
+            href="https://docs-delv.gitbook.io/element-protocol-docs"
             target="_blank"
             rel="noreferrer"
             text={t`Docs`}

@@ -129,7 +129,7 @@ function ResourcesMenu({ onClose }: ResourcesMenuProps) {
       />
       <MenuItem
         icon={<Icon icon={IconNames.BLANK} />}
-        href="https://docs.element.fi"
+        href="https://docs-delv.gitbook.io/element-protocol-docs"
         target="_blank"
         rel="noreferrer"
         text={t`Docs`}
