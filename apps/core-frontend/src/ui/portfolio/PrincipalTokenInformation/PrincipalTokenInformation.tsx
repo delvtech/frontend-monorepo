@@ -70,12 +70,12 @@ function getElementPoolLink(
   const { address } = principalToken;
   const { address: poolAddress } = getPoolInfoForPrincipalToken(address);
   // assume testnet by default (goerli)
-  let domain = "https://testnet.element.fi";
+  let domain = "https://testnet.website.com";
   if (isGoerli(AddressesJson.chainId)) {
-    domain = "https://testnet.element.fi";
+    domain = "https://testnet.website.com";
   } else if (isMainnet(AddressesJson.chainId)) {
     // TODO: What will be the url for mainnet?
-    domain = "https://app.element.fi";
+    domain = "https://app.website.com";
   }
 
   return (
@@ -106,8 +106,8 @@ function getGoogleCalendarLink(
 
   const event: CalendarEvent = {
     title: t`Redeem ${name}`,
-    description: t`Your ${baseAssetSymbol} fixed rate term has been reached! You can now head back to https://app.element.fi/ to redeem your ${baseAssetSymbol}.`,
-    url: "https://element.fi",
+    description: t`Your ${baseAssetSymbol} fixed rate term has been reached! You can now head back to https://app.website.com/ to redeem your ${baseAssetSymbol}.`,
+    url: "https://website.com",
     start: unlockTimestamp * 1000,
     duration: [1, "hour"],
   };

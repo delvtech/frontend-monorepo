@@ -1,15 +1,15 @@
 export enum ExternalUrls {
   // apps
-  CORE_LANDING = "https://element.fi",
-  CORE_APP = "https://app.element.fi",
+  CORE_LANDING = "https://website.com",
+  CORE_APP = "https://app.website.com",
 
   // socials
-  DISCORD = "https://element.fi/discord",
-  FORUM = "https://forum.element.fi",
-  TWITTER = "https://twitter.com/element_fi",
+  DISCORD = "https://website.com/discord",
+  FORUM = "https://forum.website.com",
+  TWITTER = "https://twitter.com/website",
 
   // resources
-  DOCS = "https://docs-element-finance.gitbook.io/element-council",
+  DOCS = "https://docs-delv.gitbook.io/element-developer-docs/governance-council",
 }
 
 export default ExternalUrls;

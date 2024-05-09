@@ -53,8 +53,8 @@ const callDatasByProposalId: Record<string, string[]> = {
 };
 
 const forumLinksByProposalId: Record<string, string> = {
-  "1": "https://forum.element.fi/discussion/4631-egp2-increase-gsc-quorum-threshold",
-  "2": "https://forum.element.fi/discussion/6504-egp15-element-fixed-borrow-protocol-grant-proposal-by-component",
+  "1": "https://forum.website.com/discussion/4631-egp2-increase-gsc-quorum-threshold",
+  "2": "https://forum.website.com/discussion/6504-egp15-element-fixed-borrow-protocol-grant-proposal-by-component",
 };
 
 const gscSnapshotIdsByProposalId: Record<string, string> = {};

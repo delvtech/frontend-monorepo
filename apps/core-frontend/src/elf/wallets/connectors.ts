@@ -73,8 +73,8 @@ export const ledgerConnector = new LedgerConnector({
 });
 
 export const trezorConnector = new TrezorConnector({
-  manifestEmail: "support@element.fi",
-  manifestAppUrl: "https://app.element.fi",
+  manifestEmail: "support@website.com",
+  manifestAppUrl: "https://app.website.com",
   chainId: AddressesJson.chainId,
   url:
     AddressesJson.chainId === ChainId.MAINNET

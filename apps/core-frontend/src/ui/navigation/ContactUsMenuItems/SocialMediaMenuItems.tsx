@@ -31,7 +31,7 @@ export function SocialMediaMenuItems(): ReactElement {
         text={t`Discord`}
       />
       <MenuItem
-        href="https://twitter.com/element_fi"
+        href="https://twitter.com/delv_tech"
         target="_blank"
         className={tw("items-center")}
         icon={
@@ -48,7 +48,7 @@ export function SocialMediaMenuItems(): ReactElement {
         text={t`Twitter`}
       />
       <MenuItem
-        href="https://t.me/elementfinance"
+        href="https://t.me/example"
         target="_blank"
         className={tw("items-center")}
         icon={
@@ -65,7 +65,7 @@ export function SocialMediaMenuItems(): ReactElement {
         text={t`Telegram`}
       />
       <MenuItem
-        href="https://medium.com/element-finance"
+        href="https://medium.com/example"
         className={tw("items-center")}
         icon={
           <img

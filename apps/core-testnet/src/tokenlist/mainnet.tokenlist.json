@@ -1,6 +1,6 @@
 {
   "name": "Mainnet token list",
-  "logoURI": "https://element.fi/logo.svg",
+  "logoURI": "https://website.com/logo.svg",
   "tags": {
     "underlying": {
       "name": "Underlying asset",

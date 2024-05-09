@@ -53,7 +53,7 @@ export function EligiblePoolCardRow({
     <div className="grid grid-cols-[320px_142px_128px_112px_112px_128px_48px] items-center gap-x-10 px-4 !py-3 text-principalRoyalBlue">
       {/* Eligible LP Token */}
       <a
-        href={`https://testnet.element.fi/pools/${poolAddress}`}
+        href={`https://testnet.website.com/pools/${poolAddress}`}
         className="text-sm text-principalRoyalBlue hover:underline"
         target="_blank"
         rel="noreferrer"
@@ -84,7 +84,7 @@ export function EligiblePoolCardRow({
           content={
             <div className="flex flex-col gap-8 p-8">
               <a
-                href={"https://element.fi"}
+                href={"https://website.com"}
                 className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100"
               >
                 <PlusCircleIcon
@@ -99,7 +99,7 @@ export function EligiblePoolCardRow({
                 </div>
               </a>
               <a
-                href={"https://www.element.fi/"}
+                href={"https://www.website.com/"}
                 className="-m-3 flex items-start rounded-lg p-3 transition duration-150 ease-in-out hover:bg-gray-50"
               >
                 <MinusCircleIcon

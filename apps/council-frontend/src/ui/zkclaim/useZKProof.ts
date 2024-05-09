@@ -21,7 +21,7 @@ if (CHAIN_NAME === "mainnet-fork") {
   CHAIN_NAME = "mainnet";
 }
 // TODO: Move cdn base url to environment variable
-const cdnUrl = `https://elementfi.s3.us-east-2.amazonaws.com/rewards/${
+const cdnUrl = `https://example.s3.us-east-2.amazonaws.com/rewards/${
   CHAIN_NAME || "testnet"
 }/zkRetro`;
 

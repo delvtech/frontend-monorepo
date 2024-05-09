@@ -16,11 +16,11 @@ export const getTokenAssetURL = (id: BigNumber): string => {
 };
 
 export const TOS_URL =
-  "https://elementfi.s3.us-east-2.amazonaws.com/element-finance-terms-of-service.pdf";
+  "https://delv-public.s3.us-east-2.amazonaws.com/delv-terms-of-service.pdf";
 export const CC0_URL =
   "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt";
 export const PRIVACY_POLICY_URL =
-  "https://elementfi.s3.us-east-2.amazonaws.com/element-finance-privacy-policy.pdf";
+  "https://delv-public.s3.us-east-2.amazonaws.com/delv-privacy-policy.pdf";
 
 export const WHITELIST_URL =
-  "https://elementfi.s3.us-east-2.amazonaws.com/nft/whitelist.json";
+  "https://delv-public.s3.us-east-2.amazonaws.com/nft/whitelist.json";

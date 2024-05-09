@@ -15,11 +15,11 @@ interface IneligibleWalletDialogProps {
   isOpen: boolean;
 }
 
-const elementFinanceDiscordSupportChannelLink = (
+const discordSupportChannelLink = (
   <a
     key="discord-support-channel-link"
     href="https://discord.gg/tmn6h3XFV8"
-  >{t`Element Finance’s Discord #support channel`}</a>
+  >{t`Discord #support channel`}</a>
 );
 export default function IneligibleAccountDialog({
   isOpen,
@@ -46,7 +46,7 @@ export default function IneligibleAccountDialog({
           Protocol, and does not hold or maintain custody of user funds. In some instances, the
           filter may be temporary pending further review.`}</p>
           <p>{jt`For further information or questions,
-          please contact ${elementFinanceDiscordSupportChannelLink}, and provide the relevant
+          please contact ${discordSupportChannelLink}, and provide the relevant
           transaction date/time and wallet address.`}</p>
         </Callout>
       </div>

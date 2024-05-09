@@ -1,6 +1,6 @@
 {
   "name": "Element",
-  "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+  "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg",
   "tags": {
     "curve": {
       "name": "Curve LP token",
@@ -149,7 +149,7 @@
       },
       "name": "ETH Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -165,7 +165,7 @@
       },
       "name": "ETH Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -181,7 +181,7 @@
       },
       "name": "USDC Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -197,7 +197,7 @@
       },
       "name": "USDC Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -213,7 +213,7 @@
       },
       "name": "USDC Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -229,7 +229,7 @@
       },
       "name": "DAI Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -245,7 +245,7 @@
       },
       "name": "USDC Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -261,7 +261,7 @@
       },
       "name": "USDC Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -277,7 +277,7 @@
       },
       "name": "USDC Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -293,7 +293,7 @@
       },
       "name": "DAI Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -309,7 +309,7 @@
       },
       "name": "DAI Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -325,7 +325,7 @@
       },
       "name": "USDC Principal Token",
       "tags": ["eP"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -339,7 +339,7 @@
         "unlockTimestamp": 1621010937
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -353,7 +353,7 @@
         "unlockTimestamp": 1628210937
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -367,7 +367,7 @@
         "unlockTimestamp": 1628211057
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -381,7 +381,7 @@
         "unlockTimestamp": 1622661612
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -395,7 +395,7 @@
         "unlockTimestamp": 1623266597
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -409,7 +409,7 @@
         "unlockTimestamp": 1624901889
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -423,7 +423,7 @@
         "unlockTimestamp": 1660165080
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -437,7 +437,7 @@
         "unlockTimestamp": 1638993592
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -451,7 +451,7 @@
         "unlockTimestamp": 1649364020
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -465,7 +465,7 @@
         "unlockTimestamp": 1667464407
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -479,7 +479,7 @@
         "unlockTimestamp": 1684482204
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,
@@ -493,7 +493,7 @@
         "unlockTimestamp": 1700258052
       },
       "tags": ["eY"],
-      "logoURI": "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg"
+      "logoURI": "https://example.s3.us-east-2.amazonaws.com/logo.svg"
     },
     {
       "chainId": 5,

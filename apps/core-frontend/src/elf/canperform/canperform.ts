@@ -26,8 +26,8 @@ export const canPerformJson: CanPerformJsonFile = require(`canperform/${chainNam
 export const CAN_PERFORM_URL = getCanPerformJsonUrl();
 function getCanPerformJsonUrl() {
   if (process.env.NEXT_PUBLIC_CHAIN_NAME === "mainnet") {
-    return "https://elementfi.s3.us-east-2.amazonaws.com/mainnet.canperform.json";
+    return "https://example.s3.us-east-2.amazonaws.com/mainnet.canperform.json";
   }
 
-  return "https://elementfi.s3.us-east-2.amazonaws.com/goerli.canperform.json";
+  return "https://example.s3.us-east-2.amazonaws.com/goerli.canperform.json";
 }

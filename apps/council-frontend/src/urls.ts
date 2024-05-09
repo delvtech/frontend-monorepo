@@ -1,18 +1,18 @@
 export enum ElementUrl {
   // apps
-  CORE_LANDING = "https://element.fi",
-  CORE_APP = "https://app.element.fi",
-  NFT_APP = "https://elfiverse.element.fi",
-  COUNCIL_UI = "https://governance.element.fi",
+  CORE_LANDING = "https://website.com",
+  CORE_APP = "https://app.website.com",
+  NFT_APP = "https://elfiverse.website.com",
+  COUNCIL_UI = "https://governance.website.com",
   // socials
-  DISCORD = "https://element.fi/discord",
-  FORUM = "https://forum.element.fi",
+  DISCORD = "https://website.com/discord",
+  FORUM = "https://forum.website.com",
   TELEGRAM = "",
-  TWITTER = "https://twitter.com/element_fi",
+  TWITTER = "https://twitter.com/website",
   // resources
   DOCS = "https://docs-delv.gitbook.io/element-developer-docs/governance-council",
   GITHUB = "https://github.com/delvtech",
-  MEDIUM = "https://medium.com/element-finance",
+  MEDIUM = "https://medium.com/example",
 }
 
 export default ElementUrl;

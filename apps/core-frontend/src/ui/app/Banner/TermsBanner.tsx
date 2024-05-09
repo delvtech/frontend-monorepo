@@ -16,7 +16,7 @@ const setAcceptedTOS = () => {
 };
 
 export const TOS_URL =
-  "https://elementfi.s3.us-east-2.amazonaws.com/element-finance-terms-of-service.pdf";
+  "https://example.s3.us-east-2.amazonaws.com/example-terms-of-service.pdf";
 
 export const TermsBanner = (): ReactElement => {
   const [open, setOpen] = useState(false);

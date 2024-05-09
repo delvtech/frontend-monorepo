@@ -54,7 +54,7 @@ export function ClaimSuccessful(): ReactElement {
             )}`}
           >
             <CallToActionCard
-              label={t`Tweet @element_fi`}
+              label={t`Tweet @delv_tech`}
               icon={<TwitterIcon />}
             />
           </a>

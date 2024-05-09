@@ -24,7 +24,7 @@ export function AppHamburgerButton(): ReactElement {
       content={
         <Menu large>
           <MenuItem
-            href="https://element.fi"
+            href="https://website.com"
             target="_blank"
             rel="noreferrer"
             text={t`About`}

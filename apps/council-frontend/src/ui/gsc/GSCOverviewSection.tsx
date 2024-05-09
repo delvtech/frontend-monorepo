@@ -319,7 +319,7 @@ const forumsLink = (
     className="underline"
     target="_blank"
     rel="noopener noreferrer"
-    href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
+    href="https://forum.website.com/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
   >
     {t`forums`}
   </a>
@@ -330,7 +330,7 @@ const gscResponibilitiesLink = (
     className="underline"
     target="_blank"
     rel="noopener noreferrer"
-    href="https://forum.element.fi/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
+    href="https://forum.website.com/discussion/4146-introducing-the-call-for-delegates-members-of-the-governance-steering-council"
   >
     {t`actively discussed at this time`}
   </a>

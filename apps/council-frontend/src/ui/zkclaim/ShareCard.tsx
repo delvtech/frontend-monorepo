@@ -37,7 +37,7 @@ export default function ShareCard({ className }: ShareCardProps): ReactElement {
             )}`}
             target="_blank"
             rel="noreferrer"
-            label={t`Tweet @element_fi`}
+            label={t`Tweet @delv_tech`}
             icon={<TwitterIcon />}
           />
           <CallToActionCard
