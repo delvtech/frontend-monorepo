@@ -1,7 +1,7 @@
 import { TokenInfo } from "@uniswap/token-lists/src";
 
 /**
- * Re-exported so that elementfi can own the definitions of these types. This is
+ * Re-exported so that the app can own the definitions of these types. This is
  * useful in development, or while we wait for upstream changes to
  * uniswap/tokenlist.
  */

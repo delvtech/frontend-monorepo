@@ -19,14 +19,14 @@ export function makeTOSAndPrivacyPolicyToast({
         <AnchorButton
           variant={ButtonVariant.MINIMAL}
           className="text-center"
-          href="https://elementfi.s3.us-east-2.amazonaws.com/element-finance-terms-of-service-02-03-2023.pdf"
+          href="https://example.s3.us-east-2.amazonaws.com/element-finance-terms-of-service-02-03-2023.pdf"
         >
           Terms of Service
         </AnchorButton>
         <AnchorButton
           variant={ButtonVariant.MINIMAL}
           className="text-center"
-          href="https://elementfi.s3.us-east-2.amazonaws.com/element-finance-privacy-policy-02-03-23.pdf"
+          href="https://example.s3.us-east-2.amazonaws.com/element-finance-privacy-policy-02-03-23.pdf"
         >
           Privacy Policy
         </AnchorButton>

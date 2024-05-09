@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 export const DISCORD_URL = "https://discord.gg/pvnUHuAsQ2";
 export const TWITTER_URL = "https://twitter.com/Element_DAO";
 export const COUNCIL_URL = "https://council.delv.tech/";
-export const ELEMENT_GOV_URL = "https://gov.website.com/";
+export const ELEMENT_GOV_URL = "https://gov.element.fi/";
 export const COUNCIL_DOC_URL =
   "https://docs-delv.gitbook.io/element-developer-docs/governance-council/council-protocol-overview";
 export const ADDRESS_SCREEN_URL =
@@ -16,11 +16,11 @@ export const getTokenAssetURL = (id: BigNumber): string => {
 };
 
 export const TOS_URL =
-  "https://elementfi.s3.us-east-2.amazonaws.com/element-finance-terms-of-service.pdf";
+  "https://delv-public.s3.us-east-2.amazonaws.com/delv-terms-of-service.pdf";
 export const CC0_URL =
   "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt";
 export const PRIVACY_POLICY_URL =
-  "https://elementfi.s3.us-east-2.amazonaws.com/element-finance-privacy-policy.pdf";
+  "https://delv-public.s3.us-east-2.amazonaws.com/delv-privacy-policy.pdf";
 
 export const WHITELIST_URL =
-  "https://elementfi.s3.us-east-2.amazonaws.com/nft/whitelist.json";
+  "https://delv-public.s3.us-east-2.amazonaws.com/nft/whitelist.json";

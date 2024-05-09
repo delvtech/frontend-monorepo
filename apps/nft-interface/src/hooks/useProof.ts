@@ -4,7 +4,7 @@ import { useQuery, UseQueryResult } from "react-query";
 import { NullableAddress, ProofData, ProofDataResponse } from "src/types";
 import { ChainId } from "wallets/chains";
 
-const S3_BUCKET_URI = "https://elementfi.s3.us-east-2.amazonaws.com/nft";
+const S3_BUCKET_URI = "https://delv-public.s3.us-east-2.amazonaws.com/nft";
 
 const getProofURI = (address: string, chainId?: number) => {
   if (chainId === ChainId.GOERLI) {

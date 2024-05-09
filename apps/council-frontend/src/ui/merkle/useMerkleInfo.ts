@@ -5,7 +5,7 @@ import { formatEther } from "ethers/lib/utils";
 import { MerkleProof } from "src/merkle/MerkleProof";
 
 const ELEMENT_REWARDS_URL =
-  "https://elementfi.s3.us-east-2.amazonaws.com/rewards";
+  "https://example.s3.us-east-2.amazonaws.com/rewards";
 
 const chainName = process.env.NEXT_PUBLIC_CHAIN_NAME || "local";
 

@@ -48,7 +48,7 @@ export function SocialMediaMenuItems(): ReactElement {
         text={t`Twitter`}
       />
       <MenuItem
-        href="https://t.me/elementfinance"
+        href="https://t.me/example"
         target="_blank"
         className={tw("items-center")}
         icon={

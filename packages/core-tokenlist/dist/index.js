@@ -50,7 +50,7 @@ __exportStar(require("./tags"), exports);
 __exportStar(require("./types"), exports);
 exports.mainnetTokenList = {
   name: "Element",
-  logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+  logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
   tags: {
     curve: {
       name: "Curve LP token",
@@ -671,7 +671,7 @@ exports.mainnetTokenList = {
       },
       name: "LUSD3CRV-f Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -687,7 +687,7 @@ exports.mainnetTokenList = {
       },
       name: "LUSD3CRV-f Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -703,7 +703,7 @@ exports.mainnetTokenList = {
       },
       name: "crvTricrypto Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -719,7 +719,7 @@ exports.mainnetTokenList = {
       },
       name: "steCRV Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -735,7 +735,7 @@ exports.mainnetTokenList = {
       },
       name: "DAI Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -751,7 +751,7 @@ exports.mainnetTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -767,7 +767,7 @@ exports.mainnetTokenList = {
       },
       name: "crv3crypto Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -783,7 +783,7 @@ exports.mainnetTokenList = {
       },
       name: "WBTC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -799,7 +799,7 @@ exports.mainnetTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -815,7 +815,7 @@ exports.mainnetTokenList = {
       },
       name: "steCRV Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -831,7 +831,7 @@ exports.mainnetTokenList = {
       },
       name: "DAI Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -847,7 +847,7 @@ exports.mainnetTokenList = {
       },
       name: "alUSD3CRV-f Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -863,7 +863,7 @@ exports.mainnetTokenList = {
       },
       name: "MIM-3LP3CRV-f Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -879,7 +879,7 @@ exports.mainnetTokenList = {
       },
       name: "eursCRV Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -895,7 +895,7 @@ exports.mainnetTokenList = {
       },
       name: "steCRV Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -911,7 +911,7 @@ exports.mainnetTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -927,7 +927,7 @@ exports.mainnetTokenList = {
       },
       name: "crv3crypto Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -943,7 +943,7 @@ exports.mainnetTokenList = {
       },
       name: "MIM-3LP3CRV-f Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -959,7 +959,7 @@ exports.mainnetTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -975,7 +975,7 @@ exports.mainnetTokenList = {
       },
       name: "alUSD3CRV-f Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -991,7 +991,7 @@ exports.mainnetTokenList = {
       },
       name: "WBTC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1007,7 +1007,7 @@ exports.mainnetTokenList = {
       },
       name: "LUSD3CRV-f Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1023,7 +1023,7 @@ exports.mainnetTokenList = {
       },
       name: "DAI Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1039,7 +1039,7 @@ exports.mainnetTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1055,7 +1055,7 @@ exports.mainnetTokenList = {
       },
       name: "steCRV Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1071,7 +1071,7 @@ exports.mainnetTokenList = {
       },
       name: "DAI Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1087,7 +1087,7 @@ exports.mainnetTokenList = {
       },
       name: "LUSD3CRV-f Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1103,7 +1103,7 @@ exports.mainnetTokenList = {
       },
       name: "crv3crypto Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1119,7 +1119,7 @@ exports.mainnetTokenList = {
       },
       name: "alUSD3CRV-f Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1135,7 +1135,7 @@ exports.mainnetTokenList = {
       },
       name: "DAI Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1151,7 +1151,7 @@ exports.mainnetTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1167,7 +1167,7 @@ exports.mainnetTokenList = {
       },
       name: "steCRV Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1183,7 +1183,7 @@ exports.mainnetTokenList = {
       },
       name: "bb-a-USD Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1197,7 +1197,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1632834462,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1211,7 +1211,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1640620258,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1225,7 +1225,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1628997564,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1239,7 +1239,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1634325622,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1253,7 +1253,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1634346845,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1267,7 +1267,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1635528110,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1281,7 +1281,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1636746083,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1295,7 +1295,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1637941844,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1309,7 +1309,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1643382476,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1323,7 +1323,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1643382514,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1337,7 +1337,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1643382446,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1351,7 +1351,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1643382460,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1365,7 +1365,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1644601070,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1379,7 +1379,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1644604852,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1393,7 +1393,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1650025565,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1407,7 +1407,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1639727861,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1421,7 +1421,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1651240496,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1435,7 +1435,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1651247155,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1449,7 +1449,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1651253068,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1463,7 +1463,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1651267340,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1477,7 +1477,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1651265241,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1491,7 +1491,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1651264326,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1505,7 +1505,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1651275535,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1519,7 +1519,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1663355860,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1533,7 +1533,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1663341022,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1547,7 +1547,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1663361092,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1561,7 +1561,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1663348630,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1575,7 +1575,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1663354791,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1589,7 +1589,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1663336829,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1603,7 +1603,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1677243924,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1617,7 +1617,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1677243756,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1631,7 +1631,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1677243924,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -1645,7 +1645,7 @@ exports.mainnetTokenList = {
         unlockTimestamp: 1683206136,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 1,
@@ -2613,7 +2613,7 @@ exports.mainnetTokenList = {
 };
 exports.goerliTokenList = {
   name: "Element",
-  logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+  logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
   tags: {
     curve: {
       name: "Curve LP token",
@@ -2767,7 +2767,7 @@ exports.goerliTokenList = {
       },
       name: "ETH Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2783,7 +2783,7 @@ exports.goerliTokenList = {
       },
       name: "ETH Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2799,7 +2799,7 @@ exports.goerliTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2815,7 +2815,7 @@ exports.goerliTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2831,7 +2831,7 @@ exports.goerliTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2847,7 +2847,7 @@ exports.goerliTokenList = {
       },
       name: "DAI Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2863,7 +2863,7 @@ exports.goerliTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2879,7 +2879,7 @@ exports.goerliTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2895,7 +2895,7 @@ exports.goerliTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2911,7 +2911,7 @@ exports.goerliTokenList = {
       },
       name: "DAI Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2927,7 +2927,7 @@ exports.goerliTokenList = {
       },
       name: "DAI Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2943,7 +2943,7 @@ exports.goerliTokenList = {
       },
       name: "USDC Principal Token",
       tags: ["eP"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2957,7 +2957,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1621010937,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2971,7 +2971,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1628210937,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2985,7 +2985,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1628211057,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -2999,7 +2999,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1622661612,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -3013,7 +3013,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1623266597,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -3027,7 +3027,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1624901889,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -3041,7 +3041,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1660165080,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -3055,7 +3055,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1638993592,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -3069,7 +3069,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1649364020,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -3083,7 +3083,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1667464407,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -3097,7 +3097,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1684482204,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
@@ -3111,7 +3111,7 @@ exports.goerliTokenList = {
         unlockTimestamp: 1700258052,
       },
       tags: ["eY"],
-      logoURI: "https://elementfi.s3.us-east-2.amazonaws.com/logo.svg",
+      logoURI: "https://example.s3.us-east-2.amazonaws.com/logo.svg",
     },
     {
       chainId: 5,
