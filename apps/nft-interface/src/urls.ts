@@ -5,7 +5,7 @@ export const TWITTER_URL = "https://twitter.com/Element_DAO";
 export const COUNCIL_URL = "https://council.delv.tech/";
 export const ELEMENT_GOV_URL = "https://gov.element.fi/";
 export const COUNCIL_DOC_URL =
-  "https://docs.element.fi/governance-council/council-protocol-overview";
+  "https://docs-delv.gitbook.io/element-developer-docs/governance-council/council-protocol-overview";
 export const ADDRESS_SCREEN_URL =
   "https://6zqnxzsgja.execute-api.us-east-2.amazonaws.com/screen";
 const PINATA_GATEWAY = "https://element-fi.mypinata.cloud/ipfs/";
