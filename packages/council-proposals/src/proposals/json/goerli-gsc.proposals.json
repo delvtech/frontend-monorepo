@@ -1,6 +1,6 @@
 {
   "version": "0.0.0",
-  "snapshotSpace": "element-finance-goerli.eth",
+  "snapshotSpace": "example-goerli.eth",
   "proposals": [
     {
       "proposalId": "0",

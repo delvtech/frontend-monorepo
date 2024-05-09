@@ -9,7 +9,7 @@ export enum ExternalUrls {
   TWITTER = "https://twitter.com/element_fi",
 
   // resources
-  DOCS = "https://docs-element-finance.gitbook.io/element-council",
+  DOCS = "https://docs-delv.gitbook.io/element-developer-docs/governance-council",
 }
 
 export default ExternalUrls;

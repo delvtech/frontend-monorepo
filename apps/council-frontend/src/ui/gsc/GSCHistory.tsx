@@ -62,7 +62,7 @@ function getGSCStatusText(
                 {t`To learn more about our GSC program, its role within the Element DAO’s
             Governance, and how it affects your experience as a member`}
                 <ExternalLink
-                  href="https://medium.com/element-finance/the-governance-steering-council-63aea7732262"
+                  href="https://medium.com/delvtech/the-governance-steering-council-63aea7732262"
                   text="read more here"
                 />
               </div>
@@ -89,7 +89,7 @@ function getGSCStatusText(
                 {t`To learn more about our GSC program, its role within the Element DAO’s
                         Governance, and how it affects your experience as a member`}
                 <ExternalLink
-                  href="https://medium.com/element-finance/the-governance-steering-council-63aea7732262"
+                  href="https://medium.com/delvtech/the-governance-steering-council-63aea7732262"
                   text="read more here"
                 />
               </div>
@@ -138,7 +138,7 @@ function getGSCStatusText(
             chose to remove you from the Council. To appeal this decision please
             follow protocol you can`}
                 <ExternalLink
-                  href="https://medium.com/element-finance/the-governance-steering-council-63aea7732262"
+                  href="https://medium.com/delvtech/the-governance-steering-council-63aea7732262"
                   text="read more here"
                 />
               </div>

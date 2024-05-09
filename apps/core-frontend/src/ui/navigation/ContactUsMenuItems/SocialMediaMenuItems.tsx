@@ -65,7 +65,7 @@ export function SocialMediaMenuItems(): ReactElement {
         text={t`Telegram`}
       />
       <MenuItem
-        href="https://medium.com/element-finance"
+        href="https://medium.com/example"
         className={tw("items-center")}
         icon={
           <img

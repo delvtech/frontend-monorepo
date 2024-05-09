@@ -12,7 +12,7 @@ function getSnapshotUrl() {
     case ChainId.GOERLI:
     case ChainId.LOCAL:
     default:
-      return "https://snapshot.org/#/element-finance-goerli.eth";
+      return "https://snapshot.org/#/example-goerli.eth";
   }
 }
 
@@ -23,6 +23,6 @@ function getGSCSnapshotUrl() {
     case ChainId.GOERLI:
     case ChainId.LOCAL:
     default:
-      return "https://snapshot.org/#/element-finance-goerli.eth";
+      return "https://snapshot.org/#/example-goerli.eth";
   }
 }

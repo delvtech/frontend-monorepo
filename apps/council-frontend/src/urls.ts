@@ -12,7 +12,7 @@ export enum ElementUrl {
   // resources
   DOCS = "https://docs-delv.gitbook.io/element-developer-docs/governance-council",
   GITHUB = "https://github.com/delvtech",
-  MEDIUM = "https://medium.com/element-finance",
+  MEDIUM = "https://medium.com/example",
 }
 
 export default ElementUrl;

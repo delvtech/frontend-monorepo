@@ -13,7 +13,7 @@ interface FixedRatesListViewProps {}
 const fixedYieldLink = (
   <a
     key="fixed-yield-link"
-    href="https://medium.com/element-finance/fixed-rate-interest-markets-a-casual-users-journey-through-fixed-rate-interest-using-element-50f420df1859"
+    href="https://medium.com/delvtech/fixed-rate-interest-markets-a-casual-users-journey-through-fixed-rate-interest-using-element-50f420df1859"
     target="_noreferrer"
   >{t`Fixed Yield`}</a>
 );

@@ -40,7 +40,7 @@ const WORD_OR_ADRESS_REGEX = /(0x)?[\w]+/g;
 
 async function scrapeMainnetDelegates(): Promise<Delegate[]> {
   const response = await fetch(
-    "https://forum.website.com/api/viewComments?chain=element-finance&root_id=discussion_4146",
+    "https://forum.website.com/api/viewComments?chain=example&root_id=discussion_4146",
   );
   const data = (await response.json()) as ForumCommentsResult;
 

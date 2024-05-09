@@ -5,8 +5,8 @@ const SNAPSHOT_GRAPHQL_ENDPOINT = "https://hub.snapshot.org/graphql";
 // goerli and gsc goerli snapshot spaces currently share the same one.
 export const SNAPSHOT_SPACE_ID_MAINNET = "elfi.eth";
 export const SNAPSHOT_GSC_SPACE_ID_MAINNET = "gsc-elfi.eth";
-export const SNAPSHOT_SPACE_ID_GOERLI = "element-finance-goerli.eth";
-export const SNAPSHOT_GSC_SPACE_ID_GOERLI = "element-finance-goerli.eth";
+export const SNAPSHOT_SPACE_ID_GOERLI = "example-goerli.eth";
+export const SNAPSHOT_GSC_SPACE_ID_GOERLI = "example-goerli.eth";
 
 export interface SnapshotProposal {
   body: string;
