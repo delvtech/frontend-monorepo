@@ -122,7 +122,7 @@ function ResourcesMenu({ onClose }: ResourcesMenuProps) {
       />
       <MenuItem
         icon={<Icon icon={IconNames.BLANK} />}
-        href="https://element.fi"
+        href="https://website.com"
         target="_blank"
         rel="noreferrer"
         text={t`About`}

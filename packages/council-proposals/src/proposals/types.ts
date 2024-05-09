@@ -61,7 +61,7 @@ export interface Proposal {
 
   /**
    * A url to the forum post where the discussion lives, eg:
-   * https://forum.element.fi/discussion/4631-egp2-increase-gsc-quorum-threshold
+   * https://forum.website.com/discussion/4631-egp2-increase-gsc-quorum-threshold
    * */
   forumLink: string;
 }

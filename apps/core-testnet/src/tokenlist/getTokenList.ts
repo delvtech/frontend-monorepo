@@ -123,7 +123,7 @@ export async function getTokenList(
 
   const tokenList: TokenList = {
     name,
-    logoURI: "https://element.fi/logo.svg",
+    logoURI: "https://website.com/logo.svg",
     tags,
     timestamp: new Date().toISOString(),
     version: {

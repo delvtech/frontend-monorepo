@@ -1,6 +1,6 @@
 # council-delegates
 
-The source of truth for the Featured Delegates shown in (Element Council's delegate page)[https://gov.element.fi/delegate].
+The source of truth for the Featured Delegates shown in (Element Council's delegate page)[https://gov.website.com/delegate].
 
 ## Table of contents
 

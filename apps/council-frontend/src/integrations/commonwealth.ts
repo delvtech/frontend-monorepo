@@ -1,5 +1,5 @@
 export function getGSCCandidateUrl(
   commonwealthPostedFromAddress: string,
 ): string {
-  return `https://forum.element.fi/account/${commonwealthPostedFromAddress}`;
+  return `https://forum.website.com/account/${commonwealthPostedFromAddress}`;
 }

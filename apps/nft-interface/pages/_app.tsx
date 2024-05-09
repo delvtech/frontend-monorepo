@@ -34,9 +34,12 @@ export default function App({
         <meta content={""} name="description" />
         <meta
           property="og:url"
-          content={`https://nft.element.fi${router.asPath}`}
+          content={`https://elfiverse.delv.tech${router.asPath}`}
         />
-        <link rel="canonical" href={`https://nft.element.fi${router.asPath}`} />
+        <link
+          rel="canonical"
+          href={`https://elfiverse.delv.tech${router.asPath}`}
+        />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Elfiverse" />
         <meta property="og:description" content="Elfiverse" />
@@ -45,14 +48,14 @@ export default function App({
         <meta property="og:image:alt" content="" />
         <meta
           name="twitter:card"
-          content="https://elfiverse.element.fi/Metaname.png"
+          content="https://elfiverse.delv.tech/Metaname.png"
         />
         <meta name="twitter:site" content="@element_fi" />
         <meta name="twitter:title" content="Elfiverse" />
         <meta name="twitter:description" content="Enter the Elfiverse" />
         <meta
           name="twitter:image"
-          content="https://elfiverse.element.fi/Metaname.png"
+          content="https://elfiverse.delv.tech/Metaname.png"
         />
       </Head>
       <GlobalStyle />

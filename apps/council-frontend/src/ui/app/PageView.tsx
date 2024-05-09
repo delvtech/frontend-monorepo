@@ -32,7 +32,7 @@ const councilLink = (
       "text-principalRoyalBlue decoration-current underline-offset-2 hover:underline",
     )}
   >
-    governance.element.fi
+    governance.website.com
   </a>
 );
 export default function PageView(props: PageViewProps): ReactElement {

@@ -6,7 +6,7 @@ const SEO = {
     description: "Element ElfiVerse",
     type: "website",
     locale: "en_IE",
-    url: "https://nft.element.fi",
+    url: "https://elfiverse.delv.tech/",
     site_name: "Element",
     images: [
       {

@@ -136,7 +136,7 @@ export async function getTokenList(
   console.log("done!");
   const tokenList: TokenList = {
     name,
-    logoURI: "https://element.fi/logo.svg",
+    logoURI: "https://website.com/logo.svg",
     timestamp: new Date().toISOString(),
     version: {
       major: 0,

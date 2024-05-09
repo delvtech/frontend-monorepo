@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 export const DISCORD_URL = "https://discord.gg/pvnUHuAsQ2";
 export const TWITTER_URL = "https://twitter.com/Element_DAO";
 export const COUNCIL_URL = "https://council.delv.tech/";
-export const ELEMENT_GOV_URL = "https://gov.element.fi/";
+export const ELEMENT_GOV_URL = "https://gov.website.com/";
 export const COUNCIL_DOC_URL =
   "https://docs-delv.gitbook.io/element-developer-docs/governance-council/council-protocol-overview";
 export const ADDRESS_SCREEN_URL =
