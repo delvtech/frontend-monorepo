@@ -1,6 +1,8 @@
-## Frontend monorepo for Element Finance
+## Frontend monorepo for Element Protocol
 
-This repo contains frontend packages and applications that are maintained by Element Finance.
+
+This repo contains frontend packages and applications for the Element protocol
+and related projects.
 
 ## Required `node` version
 

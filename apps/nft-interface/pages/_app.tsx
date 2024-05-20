@@ -50,7 +50,7 @@ export default function App({
           name="twitter:card"
           content="https://elfiverse.delv.tech/Metaname.png"
         />
-        <meta name="twitter:site" content="@element_fi" />
+        <meta name="twitter:site" content="@delv_tech" />
         <meta name="twitter:title" content="Elfiverse" />
         <meta name="twitter:description" content="Enter the Elfiverse" />
         <meta
