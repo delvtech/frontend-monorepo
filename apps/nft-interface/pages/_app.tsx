@@ -57,6 +57,8 @@ export default function App({
           name="twitter:image"
           content="https://elfiverse.delv.tech/Metaname.png"
         />
+
+        <script defer data-domain="elfiverse.delv.tech" src="https://plausible.io/js/script.js"></script>
       </Head>
       <GlobalStyle />
       <DefaultSeo {...SEO} />
