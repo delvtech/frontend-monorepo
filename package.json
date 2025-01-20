@@ -2,7 +2,7 @@
   "name": "frontend-monorepo",
   "private": true,
   "engines": {
-    "node": "^16"
+    "node": ">=16"
   },
   "scripts": {
     "prepare": "husky install",
@@ -27,7 +27,8 @@
   "resolutions": {
     "@types/react": "17.0.44",
     "snarkjs": "0.4.10",
-    "cross-undici-fetch": "0.4.13"
+    "cross-undici-fetch": "0.4.13",
+    "hardhat": "2.22.18"
   },
   "devDependencies": {
     "@parcel/packager-ts": "2.6.2",
